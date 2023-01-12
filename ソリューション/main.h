@@ -54,8 +54,6 @@ typedef struct
 	D3DXVECTOR2 tex; //テクスチャ座標
 }VERTEX_3D;
 
-LPD3DXFONT GetFont();
-
 LPDIRECT3DDEVICE9 GetDevice(void);
 void SetMode(MODE mode);
 MODE GetMode(void);

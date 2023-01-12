@@ -124,7 +124,7 @@ void UpdateTitle(void)
 
 	if (Fade == FADE_NONE)
 	{
-		if (GetKeyboardPress(DIK_RETURN) || GetGamepadPress(Button_START, 0) || GetGamepadPress(Button_A, 0))
+		if (GetKeyboardPress(DIK_RETURN) || GetGamepadPress(BUTTON_START, 0) || GetGamepadPress(BUTTON_A, 0))
 		{
 			SetFade(MODE_GAME);
 		}

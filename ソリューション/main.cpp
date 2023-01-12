@@ -4,6 +4,7 @@
 //インクルード
 #include"main.h"
 #include "input.h"
+#include "debugproc.h"
 
 #include "game.h"
 #include "title.h"
@@ -12,7 +13,7 @@
 
 //マクロ定義
 #define CLASS_NAME "WindowClass"     //ウィンドウクラスの名前
-#define WINDOW_NAME "Empty"  //ウィンドウの名前
+#define WINDOW_NAME "透走"  //ウィンドウの名前
 #define ID_TIMER (131)
 #define TIMER_INTERVAL (1000/60)
 
@@ -32,12 +33,8 @@ void DrawFPS(void);
 //グローバル変数
 LPDIRECT3D9 g_pD3D = NULL;
 LPDIRECT3DDEVICE9 g_pD3DDevice = NULL;
-LPD3DXFONT g_pFont = NULL;
 
 int g_nCountFPS = 0;
-
-
-bool g_bDispDebug = false;
 
 MODE g_mode = MODE_TITLE;//開始時点のモード
 
@@ -279,17 +276,20 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	g_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
 	g_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT);
 
-	D3DXCreateFont(g_pD3DDevice, 18, 0, 0, 0, FALSE, SHIFTJIS_CHARSET, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, "Terminal", &g_pFont);
 	//透明度の設定
-	InitInput(hInstance, hWnd);
 
+	//デバイスの初期化処理
+	if (FAILED(InitDevice(hInstance, hWnd)))
+	{
+		return E_FAIL;
+	}
 
 	InitFade(g_mode);
 
 	SetFade(g_mode);
 
-
-
+	//デバッグプロックの初期化
+	InitDebugProc();
 
 	//各種オブジェクト初期化処理はここ
 	return S_OK;
@@ -304,14 +304,12 @@ void Uninit(void)
 	UninitGame();
 	UninitFade();
 
-	UninitInput();//最後
+	//デバイスの終了処理
+	UninitDevice();
 
-	//デバッグ表示破棄
-	if (g_pFont != NULL)
-	{
-		g_pFont->Release();
-		g_pFont = NULL;
-	}
+	//デバッグプロックの終了処理
+	UninitDebugProc();
+
 	//DirectX3dデバイスの破棄
 	if (g_pD3DDevice != NULL)
 	{
@@ -332,7 +330,11 @@ void Update(void)
 {
 	//各種オブジェクトの更新処理
 
-	UpdateInput();
+	//デバイスの更新
+	UpdateDevice();
+
+	//デバッグプロックの更新処理
+	UpdateDebugProc();
 
 	switch (g_mode)
 	{
@@ -348,8 +350,6 @@ void Update(void)
 	
 	}
 	UpdateFade();
-
-
 }
 //=============================================
 //描画処理
@@ -376,23 +376,11 @@ void Draw(void)
 
 		}
 
+		//デバッグプロックの描画処理
+		DrawDebugProc();
+
 		DrawFade();
 
-		if (g_bDispDebug == true)
-		{
-			DrawFPS();
-		}
-		if (GetKeyboardTrigger(DIK_F1))
-		{
-			if (g_bDispDebug == false)
-			{
-				g_bDispDebug = true;
-			}
-			else
-			{
-				g_bDispDebug = false;
-			}
-		}
 
 		g_pD3DDevice->EndScene();
 	}
@@ -404,24 +392,14 @@ void Draw(void)
 //=============================================
 //デバッグ表示
 //=============================================
-
 void DrawFPS(void)
 {
-	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
-	char aStr[256][8];
 
-
-	//文字列に代入
-	wsprintf(&aStr[0][0], "FPS:%d", g_nCountFPS);
-
-
-	//テキストを描画
-	g_pFont->DrawText(NULL, &aStr[0][0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 255, 255, 255));
 }
+
 //=============================================
 //デバイスの取得
 //=============================================
-
 LPDIRECT3DDEVICE9 GetDevice(void)
 {
 	return g_pD3DDevice;
@@ -455,12 +433,11 @@ void SetMode(MODE mode)
 	}
 	g_mode = mode;
 }
+
+//====================================================================
+//モードを所得
+//====================================================================
 MODE GetMode(void)
 {
 	return g_mode;
-}
-
-LPD3DXFONT GetFont()
-{
-	return g_pFont;
 }

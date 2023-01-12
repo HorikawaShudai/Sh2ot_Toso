@@ -6,13 +6,14 @@
 
 #include "main.h"
 
+//フェードの状態
 typedef enum
 {
 	FADE_NONE = 0,
 	FADE_IN,
 	FADE_OUT,
 	FADE_MAX,
-}FADE;//フェードの状態
+}FADE;
 
 //プロトタイプ宣言
 void InitFade(MODE modeNext);

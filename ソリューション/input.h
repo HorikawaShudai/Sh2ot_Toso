@@ -1,72 +1,85 @@
 #ifndef _INPUT_H_
 #define _INPUT_H_
 
-
-
 #include "main.h"
-//==================
-//入力処理
-//==================
-//プロトタイプ宣言
+#include "Xinput.h"
+
+#pragma comment(lib,"xinput.lib")	//入力処理
+
+//列挙型定義
 typedef enum
 {
-	Button_UP = 0,
-	Button_DOWN,
-	Button_LEFT,
-	Button_Right,
-	Button_START,
-	Button_BACK,
-	Button_LStickKey,
-	Button_RStickKey,
-	Button_LB,
-	Button_RB,
-	Button_UNKOWN_0,
-	Button_UNKOWN_1,
-	Button_A,
-	Button_B,
-	Button_X,
-	Button_Y,
-	Button_test,
-	Button_MAX
+	BUTTON_UP = 0,	//十字キーの上ボタン
+	BUTTON_DOWN,
+	BUTTON_LEFT,
+	BUTTON_RIGHT,
+	BUTTON_START,
+	BUTTON_BACK,
+	BUTTON_L_PUSH,
+	BUTTON_R_PUSH,
+	BUTTON_L,
+	BUTTON_R,
+	BUTTON_NAZO1,
+	BUTTON_NAZO2,
+	BUTTON_A,
+	BUTTON_B,
+	BUTTON_X,
+	BUTTON_Y,
+	BUTTON_MAX
 }JOYKEY;
 
 typedef enum
 {
-	
-	MOUSE_LEFT = 0,
-	MOUSE_RIGTH,
-	MOUSE_CENTER,
-	MOUSE_BUTTON1,
-	MOUSE_MAX
-}MOUSE;
+	PUSH_LEFT = 0,
+	PUSH_RIGHT,
+	PUSH_WHEEL,
+	PUSH_SIDE_1,
+	PUSH_SIDE_2,
+	PUSH_MAX,
+}MOUSE_PUSH;
 
-//デバイス
+typedef enum
+{
+	LSTICK_UP = 0,
+	LSTICK_DOWN,
+	LSTICK_RIGHT,
+	LSTICK_LEFT,
+	LSTICK_MAX,
+}JOYPAD_LSTICK;
 
-HRESULT InitInput(HINSTANCE hInstance, HWND hWnd);
-void UninitInput(void);
-void UpdateInput(void);
+//プロトタイプ宣言
+HRESULT InitDevice(HINSTANCE hInstance, HWND hWnd);
+void UninitDevice(void);
+void UpdateDevice(void);
 
-HRESULT InitMouse(HWND hWnd);
-void UninitMouse(void);
-void UpdateMouse(void);
-bool GetMousePress(MOUSE nKey);
-D3DXVECTOR3 GetMouseMove(void);
+//キーボード用
+HRESULT InitKeyboard(HWND hWnd);
+void UninitKeyboard(void);
+void UpdateKeyboard(void);
 
 bool GetKeyboardPress(int nKey);
 bool GetKeyboardTrigger(int nKey);
 bool GetKeyboardRelease(int nKey);
-bool GetKeyboardRepeat(int nKey);
 
-bool GetGamepadPress(JOYKEY Key, int nPlayer);
-bool GetGamepadTrigger(JOYKEY Key, int nPlayer);
+//ゲームパッド用
+HRESULT InitGamepad(HWND hWnd);
+void UninitGamepad(void);
+void UpdateGamepad(void);
 
-bool GetGamepadPedalL(int nPlayer);
-bool GetGamepadPedalR(int nPlayer);
-bool GetGamepadPedalTriggerL(int nPlayer);
-bool GetGamepadPedalTriggerR(int nPlayer);
-D3DXVECTOR3 GetGamePadStickL(int nPlayer, float Dead);
-D3DXVECTOR3 GetGamePadStickR(int nPlayer, float Dead);
+bool GetGamepadPress(JOYKEY key, int nPlayer);
+bool GetGamepadTrigger(JOYKEY key, int nPlayer);
+bool GetGamepadRelease(JOYKEY key, int nPlayer);
+D3DXVECTOR3 GetGamepad_Stick_Left(int nPlayer);
+D3DXVECTOR3 GetGamepad_Stick_Right(int nPlayer);
+float GetGamepad_Trigger_Left(int nPlayer);
+float GetGamepad_Trigger_Right(int nPlayer);
 
+bool GetGamepad_LStick_Trigger(int nPlayer, JOYPAD_LSTICK Type);
 
-void GetMouseDebug();
-#endif // !_INPUT_H_
+//マウス用
+HRESULT InitMouse(HWND hWnd);
+void UninitMouse(void);
+void UpdateMouse(void);
+bool GetMousePress(MOUSE_PUSH nKey);
+D3DXVECTOR3 GetMouseMove(void);
+#endif
