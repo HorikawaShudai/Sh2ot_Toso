@@ -38,7 +38,7 @@ void InitTitle(void)
 	"Data\\TEXTURE\\skate.jpg",
 	&g_pTextureTitle);*/
 
-	D3DXCreateTextureFromFile(pDevice, "Data\\TEXTURE\\Title000.png", &g_apTextureTitle[0]);
+	D3DXCreateTextureFromFile(pDevice, "Data\\TEXTURE\\Test_logo.jpg", &g_apTextureTitle[0]);
 
 
 
