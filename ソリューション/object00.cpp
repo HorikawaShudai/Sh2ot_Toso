@@ -36,7 +36,7 @@ void InitObject00(void)
 	}
 
 	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\MODEL\\fence00.x",
+	D3DXLoadMeshFromX("data\\MODEL\\wall.x",
 		D3DXMESH_SYSTEMMEM,
 		pDevice,
 		NULL,
@@ -46,7 +46,7 @@ void InitObject00(void)
 		&g_pMeshObject00[OBJECT00_NTYPE00]);
 
 	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\MODEL\\fence01.x",
+	D3DXLoadMeshFromX("data\\MODEL\\pc.x",
 		D3DXMESH_SYSTEMMEM,
 		pDevice,
 		NULL,
@@ -56,7 +56,7 @@ void InitObject00(void)
 		&g_pMeshObject00[OBJECT00_NTYPE01]);
 
 	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\MODEL\\treeD_00.x",
+	D3DXLoadMeshFromX("data\\MODEL\\desk.x",
 		D3DXMESH_SYSTEMMEM,
 		pDevice,
 		NULL,
@@ -66,7 +66,7 @@ void InitObject00(void)
 		&g_pMeshObject00[OBJECT00_NTYPE02]);
 
 	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\MODEL\\block00.x",
+	D3DXLoadMeshFromX("data\\MODEL\\fan.x",
 		D3DXMESH_SYSTEMMEM,
 		pDevice,
 		NULL,
@@ -76,7 +76,7 @@ void InitObject00(void)
 		&g_pMeshObject00[OBJECT00_NTYPE03]);
 
 	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\MODEL\\block01.x",
+	D3DXLoadMeshFromX("data\\MODEL\\locker.x",
 		D3DXMESH_SYSTEMMEM,
 		pDevice,
 		NULL,
@@ -86,7 +86,7 @@ void InitObject00(void)
 		&g_pMeshObject00[OBJECT00_NTYPE04]);
 
 	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\MODEL\\block02.x",
+	D3DXLoadMeshFromX("data\\MODEL\\whiteboard.x",
 		D3DXMESH_SYSTEMMEM,
 		pDevice,
 		NULL,
@@ -113,6 +113,13 @@ void InitObject00(void)
 			}
 		}
 	}
+
+	SetObject00(D3DXVECTOR3(-300.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE00);
+	SetObject00(D3DXVECTOR3(-200.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE01);
+	SetObject00(D3DXVECTOR3(-100.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE02);
+	SetObject00(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE03);
+	SetObject00(D3DXVECTOR3(100.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE04);
+	SetObject00(D3DXVECTOR3(200.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE05);
 }
 
 //====================================================================

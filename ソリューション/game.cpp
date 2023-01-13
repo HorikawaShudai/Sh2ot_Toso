@@ -4,6 +4,7 @@
 #include "camera.h"
 #include "light.h"
 #include "meshwall.h"
+#include "object00.h"
 
 
 bool g_bPause = false;
@@ -28,6 +29,8 @@ void InitGame()
 	InitLight();
 
 	InitMeshWall();
+
+	InitObject00();
 }
 
 //====================================================================
@@ -42,6 +45,8 @@ void UninitGame()
 	UninitLight();
 
 	UninitMeshWall();
+
+	UninitObject00();
 }
 
 //====================================================================
@@ -69,6 +74,8 @@ void UpdateGame()
 	UpdateLight();
 
 	UpdateMeshWall();
+
+	UpdateObject00();
 }
 
 //====================================================================
@@ -80,6 +87,8 @@ void DrawGame()
 	SetCamera();
 
 	DrawMeshWall();
+
+	DrawObject00();
 }
 
 //====================================================================
