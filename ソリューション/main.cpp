@@ -376,11 +376,10 @@ void Draw(void)
 
 		}
 
-		//デバッグプロックの描画処理
-		DrawDebugProc();
-
 		DrawFade();
 
+		//デバッグプロックの描画処理
+		DrawDebugProc();
 
 		g_pD3DDevice->EndScene();
 	}
@@ -394,7 +393,8 @@ void Draw(void)
 //=============================================
 void DrawFPS(void)
 {
-
+	//デバッグ変更とFPS
+	PrintDebugProc("【現在の画面】[%s]\n", g_nCountFPS);
 }
 
 //=============================================

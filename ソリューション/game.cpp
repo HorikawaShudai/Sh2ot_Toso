@@ -1,6 +1,9 @@
 #include "game.h"
 #include "Fade.h"
 #include "input.h"
+#include "camera.h"
+#include "light.h"
+#include "meshwall.h"
 
 
 bool g_bPause = false;
@@ -18,6 +21,13 @@ void InitGame()
 	srand((unsigned int)time);
 	SetGameState(GAMESTATE_READY, 60);
 
+	//カメラの初期化処理
+	InitCamera();
+
+	//ライトの初期化処理
+	InitLight();
+
+	InitMeshWall();
 }
 
 //====================================================================
@@ -25,7 +35,13 @@ void InitGame()
 //====================================================================
 void UninitGame()
 {
-	
+	//カメラの終了処理
+	UninitCamera();
+
+	//ライトの終了処理
+	UninitLight();
+
+	UninitMeshWall();
 }
 
 //====================================================================
@@ -33,16 +49,26 @@ void UninitGame()
 //====================================================================
 void UpdateGame()
 {
+	if (g_bPause == false)
+	{//ポーズ状態じゃないとき
+		FADE Fade = GetFade();
 
-	FADE Fade = GetFade();
-
-	if (Fade == FADE_NONE)
-	{
-		if (GetKeyboardPress(DIK_RETURN) || GetGamepadPress(BUTTON_A, 0) || GetGamepadPress(BUTTON_A, 0))
+		if (Fade == FADE_NONE)
 		{
-			SetFade(MODE_RESULT);
+			if (GetKeyboardPress(DIK_RETURN) || GetGamepadPress(BUTTON_A, 0) || GetGamepadPress(BUTTON_A, 0))
+			{
+				SetFade(MODE_RESULT);
+			}
 		}
 	}
+
+	//カメラの更新処理
+	UpdateCamera();
+
+	//ライトの更新処理
+	UpdateLight();
+
+	UpdateMeshWall();
 }
 
 //====================================================================
@@ -50,7 +76,10 @@ void UpdateGame()
 //====================================================================
 void DrawGame()
 {
+	//カメラの描画処理
+	SetCamera();
 
+	DrawMeshWall();
 }
 
 //====================================================================
