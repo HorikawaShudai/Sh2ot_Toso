@@ -95,6 +95,17 @@ void InitObject00(void)
 		&g_dwNumMatObject00[OBJECT00_NTYPE05],
 		&g_pMeshObject00[OBJECT00_NTYPE05]);
 
+	//Xファイルの読み込み
+	D3DXLoadMeshFromX("data\\MODEL\\officechair.x",
+		D3DXMESH_SYSTEMMEM,
+		pDevice,
+		NULL,
+		&g_pBuffMatObject00[OBJECT00_NTYPE06],
+		NULL,
+		&g_dwNumMatObject00[OBJECT00_NTYPE06],
+		&g_pMeshObject00[OBJECT00_NTYPE06]);
+
+
 	D3DXMATERIAL *pMat;	//マテリアルへのポインタ
 
 	for (int nCntNumObject = 0; nCntNumObject < OBJECT00_NTYPE_MAX; nCntNumObject++)
@@ -120,6 +131,7 @@ void InitObject00(void)
 	SetObject00(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE03);
 	SetObject00(D3DXVECTOR3(100.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE04);
 	SetObject00(D3DXVECTOR3(200.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE05);
+	SetObject00(D3DXVECTOR3(300.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE06);
 }
 
 //====================================================================
@@ -214,24 +226,11 @@ void DrawObject00(void)
 
 				if (g_Object00[nCntObject].bUse == true)
 				{
-					//switch (g_Object00[nCntObject].nType)
-					//{
-					//case OBJECT_NTYPE00:
-						//テクスチャの設定
-						pDevice->SetTexture(0, g_pTextureObject00[nCntMat][g_Object00[nCntObject].nType]);
+					//テクスチャの設定
+					pDevice->SetTexture(0, g_pTextureObject00[nCntMat][g_Object00[nCntObject].nType]);
 
-						//オブジェクト00(パーツ)の描画
-						g_pMeshObject00[g_Object00[nCntObject].nType]->DrawSubset(nCntMat);
-					//	break;
-
-					//case OBJECT_NTYPE01:
-					//	//テクスチャの設定
-					//	pDevice->SetTexture(0, g_pTextureObject00[nCntMat][OBJECT_NTYPE01]);
-
-					//	//オブジェクト00(パーツ)の描画
-					//	g_pMeshObject00[OBJECT_NTYPE01]->DrawSubset(nCntMat);
-					//	break;
-					//}
+					//オブジェクト00(パーツ)の描画
+					g_pMeshObject00[g_Object00[nCntObject].nType]->DrawSubset(nCntMat);
 				}
 			}
 		//保存していたマテリアルを戻す
