@@ -12,6 +12,7 @@ LPD3DXBUFFER g_pBuffMatObject00[OBJECT00_NTYPE_MAX] = {};				//É}ÉeÉäÉAÉãÇ÷ÇÃÉ|É
 DWORD g_dwNumMatObject00[OBJECT00_NTYPE_MAX] = {};						//É}ÉeÉäÉAÉãÇÃêî
 
 Object00 g_Object00[MAX_OBJECT00];					//ÉIÉuÉWÉFÉNÉg00ÇÃèÓïÒ
+int EditIndex;								//ÉGÉfÉBÉbÉgÉÇÅ[ÉhópÇÃî‘çÜ
 
 //====================================================================
 //ÉIÉuÉWÉFÉNÉg00ÇÃèâä˙âªèàóù
@@ -34,6 +35,7 @@ void InitObject00(void)
 		g_Object00[nCntObject].bUse = false;
 		g_Object00[nCntObject].nType = OBJECT00_NTYPE00;
 	}
+	EditIndex = 0;
 
 	//XÉtÉ@ÉCÉãÇÃì«Ç›çûÇ›
 	D3DXLoadMeshFromX("data\\MODEL\\wall.x",
@@ -239,9 +241,107 @@ void DrawObject00(void)
 }
 
 //====================================================================
+//ÉGÉfÉBÉbÉgÉÇÅ[ÉhÇÃÉIÉuÉWÉFÉNÉg00ÇÃçXêVèàóù
+//====================================================================
+void UpdateEditObject00(void)
+{
+	//ÉLÅ[É{Å[ÉhÇÃà⁄ìÆèàóù
+	if (GetKeyboardPress(DIK_UP) == true)
+	{
+		g_Object00[EditIndex].pos.z += 1.0f;
+	}
+	if (GetKeyboardPress(DIK_DOWN) == true)
+	{
+		g_Object00[EditIndex].pos.z -= 1.0f;
+	}
+	if (GetKeyboardPress(DIK_RIGHT) == true)
+	{
+		g_Object00[EditIndex].pos.x += 1.0f;
+	}
+	if (GetKeyboardPress(DIK_LEFT) == true)
+	{
+		g_Object00[EditIndex].pos.x -= 1.0f;
+	}
+
+	if (GetKeyboardTrigger(DIK_RSHIFT) == true)
+	{
+		g_Object00[EditIndex].nType++;
+
+		if (g_Object00[EditIndex].nType > OBJECT00_NTYPE_MAX - 1)
+		{
+			g_Object00[EditIndex].nType = 0;
+		}
+	}
+	if (GetKeyboardTrigger(DIK_RCONTROL) == true)
+	{
+		g_Object00[EditIndex].nType--;
+
+		if (g_Object00[EditIndex].nType < 0)
+		{
+			g_Object00[EditIndex].nType = OBJECT00_NTYPE_MAX - 1;
+		}
+	}
+
+
+	if (GetKeyboardTrigger(DIK_RETURN) == true)
+	{
+		SetObject00(g_Object00[EditIndex].pos, g_Object00[EditIndex].move, g_Object00[EditIndex].rot, g_Object00[EditIndex].nType);
+	}
+}
+
+//====================================================================
+//ÉGÉfÉBÉbÉgÉÇÅ[ÉhÇÃÉIÉuÉWÉFÉNÉg00ÇÃï`âÊèàóù
+//====================================================================
+void DrawEditObject00(void)
+{
+	//ÉfÉoÉCÉXÇÃèäìæ
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+	D3DXMATRIX mtxRot, mtxTrans;	//åvéZópÉ}ÉgÉäÉbÉNÉX
+	D3DMATERIAL9 matDef;			//åªç›ÇÃÉ}ÉeÉäÉAÉãï€ë∂óp
+	D3DXMATERIAL *pMat;				//É}ÉeÉäÉAÉãÉfÅ[É^Ç÷ÇÃÉ|ÉCÉìÉ^
+
+
+		//ÉèÅ[ÉãÉhÉ}ÉgÉäÉbÉNÉXÇÃèâä˙âª
+	D3DXMatrixIdentity(&g_Object00[EditIndex].mtxWorld);
+
+	//å¸Ç´ÇîΩâf
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, g_Object00[EditIndex].rot.y, g_Object00[EditIndex].rot.x, g_Object00[EditIndex].rot.z);
+
+	D3DXMatrixMultiply(&g_Object00[EditIndex].mtxWorld, &g_Object00[EditIndex].mtxWorld, &mtxRot);
+
+	//à íuÇîΩâf
+	D3DXMatrixTranslation(&mtxTrans, g_Object00[EditIndex].pos.x, g_Object00[EditIndex].pos.y, g_Object00[EditIndex].pos.z);
+
+	D3DXMatrixMultiply(&g_Object00[EditIndex].mtxWorld, &g_Object00[EditIndex].mtxWorld, &mtxTrans);
+
+	//ÉèÅ[ÉãÉhÉ}ÉgÉäÉbÉNÉXÇÃê›íË
+	pDevice->SetTransform(D3DTS_WORLD, &g_Object00[EditIndex].mtxWorld);
+
+	//åªç›ÇÃÉ}ÉeÉäÉAÉãÇèäìæ
+	pDevice->GetMaterial(&matDef);
+
+	//É}ÉeÉäÉAÉãÉfÅ[É^Ç÷ÇÃÉ|ÉCÉìÉ^ÇèäìæÇ∑ÇÈ
+	pMat = (D3DXMATERIAL*)g_pBuffMatObject00[g_Object00[EditIndex].nType]->GetBufferPointer();
+
+	for (int nCntMat = 0; nCntMat < (int)g_dwNumMatObject00[g_Object00[EditIndex].nType]; nCntMat++)
+	{
+		//É}ÉeÉäÉAÉãÇÃê›íË
+		pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
+
+		//ÉeÉNÉXÉ`ÉÉÇÃê›íË
+		pDevice->SetTexture(0, g_pTextureObject00[nCntMat][g_Object00[EditIndex].nType]);
+
+		//ÉIÉuÉWÉFÉNÉg00(ÉpÅ[Éc)ÇÃï`âÊ
+		g_pMeshObject00[g_Object00[EditIndex].nType]->DrawSubset(nCntMat);
+	}
+	//ï€ë∂ÇµÇƒÇ¢ÇΩÉ}ÉeÉäÉAÉãÇñﬂÇ∑
+	pDevice->SetMaterial(&matDef);
+}
+
+//====================================================================
 //ÉIÉuÉWÉFÉNÉg00ÇÃê›íËèàóù
 //====================================================================
-void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, OBJECT00_NTYPE nType)
+void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 {
 	int nCntObject;
 
@@ -255,6 +355,7 @@ void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, OBJECT00_NT
 			g_Object00[nCntObject].rot = rot;
 			g_Object00[nCntObject].nType = nType;
 			g_Object00[nCntObject].bUse = true;
+			EditIndex++;
 
 			int nNumVtx;		//í∏ì_êî
 			DWORD dwSizeFVF;	//í∏ì_ÉtÉHÅ[É}ÉbÉgÇÃÉTÉCÉY

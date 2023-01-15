@@ -28,7 +28,7 @@ typedef struct
 	D3DXVECTOR3 vtxMin;							//モデルの最小
 	D3DXVECTOR3 vtxMax;							//モデルの最大
 	int nDamageCounter;							//ダメージ状態の長さ
-	OBJECT00_NTYPE nType;							//モデルの種類
+	int nType;						//モデルの種類
 	bool bUse;									//モデルが使用されているかどうか
 }Object00;
 
@@ -37,7 +37,9 @@ void InitObject00(void);
 void UninitObject00(void);
 void UpdateObject00(void);
 void DrawObject00(void);
-void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, OBJECT00_NTYPE nType);
+void UpdateEditObject00(void);
+void DrawEditObject00(void);
+void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType);
 bool CollisionObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size);
 void CollisionObject00Shadow(D3DXVECTOR3 *pPos);
 Object00 * GetObject00(void);
