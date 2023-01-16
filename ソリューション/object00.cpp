@@ -26,6 +26,26 @@ const char *c_apModelObj[] =					//モデルデータ読み込み
 	"Data\\MODEL\\locker.x",
 	"Data\\MODEL\\whiteboard.x",
 	"Data\\MODEL\\officechair.x",
+	"Data\\MODEL\\corkboard.x",
+	"Data\\MODEL\\camera.x",
+	"Data\\MODEL\\art.x",
+	"Data\\MODEL\\document.x",
+	"Data\\MODEL\\door_side1.x",
+	"Data\\MODEL\\door_side2.x",
+	"Data\\MODEL\\doorup.x",
+	"Data\\MODEL\\illumination.x",
+	"Data\\MODEL\\jewelry.x",
+	"Data\\MODEL\\key.x",
+	"Data\\MODEL\\lightbutton.x",
+	"Data\\MODEL\\longdesk.x",
+	"Data\\MODEL\\machine.x",
+	"Data\\MODEL\\moniter.x",
+	"Data\\MODEL\\paper.x",
+	"Data\\MODEL\\pot.x",
+	"Data\\MODEL\\projecter.x",
+	"Data\\MODEL\\shelf.x",
+	"Data\\MODEL\\vent.x",
+	"Data\\MODEL\\window.x"
 };
 
 //====================================================================
