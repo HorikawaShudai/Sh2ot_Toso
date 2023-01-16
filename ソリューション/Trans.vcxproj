@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="debugproc.cpp" />
+    <ClCompile Include="edit.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="input.cpp" />
@@ -161,11 +162,13 @@
     <ClCompile Include="meshwall.cpp" />
     <ClCompile Include="object00.cpp" />
     <ClCompile Include="result.cpp" />
+    <ClCompile Include="stage.cpp" />
     <ClCompile Include="title.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h" />
     <ClInclude Include="debugproc.h" />
+    <ClInclude Include="edit.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="input.h" />
@@ -174,6 +177,7 @@
     <ClInclude Include="meshwall.h" />
     <ClInclude Include="object00.h" />
     <ClInclude Include="result.h" />
+    <ClInclude Include="stage.h" />
     <ClInclude Include="title.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

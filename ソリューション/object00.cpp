@@ -12,6 +12,7 @@ LPD3DXBUFFER g_pBuffMatObject00[OBJECT00_NTYPE_MAX] = {};				//ƒ}ƒeƒŠƒAƒ‹‚Ö‚Ìƒ|ƒ
 DWORD g_dwNumMatObject00[OBJECT00_NTYPE_MAX] = {};						//ƒ}ƒeƒŠƒAƒ‹‚Ì”
 
 Object00 g_Object00[MAX_OBJECT00];					//ƒIƒuƒWƒFƒNƒg00‚Ìî•ñ
+int EditIndex;								//ƒGƒfƒBƒbƒgƒ‚[ƒh—p‚Ì”Ô†
 
 //====================================================================
 //ƒIƒuƒWƒFƒNƒg00‚Ì‰Šú‰»ˆ—
@@ -34,6 +35,7 @@ void InitObject00(void)
 		g_Object00[nCntObject].bUse = false;
 		g_Object00[nCntObject].nType = OBJECT00_NTYPE00;
 	}
+	EditIndex = 0;
 
 	//Xƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
 	D3DXLoadMeshFromX("data\\MODEL\\wall.x",
@@ -95,6 +97,17 @@ void InitObject00(void)
 		&g_dwNumMatObject00[OBJECT00_NTYPE05],
 		&g_pMeshObject00[OBJECT00_NTYPE05]);
 
+	//Xƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+	D3DXLoadMeshFromX("data\\MODEL\\officechair.x",
+		D3DXMESH_SYSTEMMEM,
+		pDevice,
+		NULL,
+		&g_pBuffMatObject00[OBJECT00_NTYPE06],
+		NULL,
+		&g_dwNumMatObject00[OBJECT00_NTYPE06],
+		&g_pMeshObject00[OBJECT00_NTYPE06]);
+
+
 	D3DXMATERIAL *pMat;	//ƒ}ƒeƒŠƒAƒ‹‚Ö‚Ìƒ|ƒCƒ“ƒ^
 
 	for (int nCntNumObject = 0; nCntNumObject < OBJECT00_NTYPE_MAX; nCntNumObject++)
@@ -113,13 +126,6 @@ void InitObject00(void)
 			}
 		}
 	}
-
-	SetObject00(D3DXVECTOR3(-300.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE00);
-	SetObject00(D3DXVECTOR3(-200.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE01);
-	SetObject00(D3DXVECTOR3(-100.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE02);
-	SetObject00(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE03);
-	SetObject00(D3DXVECTOR3(100.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE04);
-	SetObject00(D3DXVECTOR3(200.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE05);
 }
 
 //====================================================================
@@ -214,24 +220,11 @@ void DrawObject00(void)
 
 				if (g_Object00[nCntObject].bUse == true)
 				{
-					//switch (g_Object00[nCntObject].nType)
-					//{
-					//case OBJECT_NTYPE00:
-						//ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
-						pDevice->SetTexture(0, g_pTextureObject00[nCntMat][g_Object00[nCntObject].nType]);
+					//ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
+					pDevice->SetTexture(0, g_pTextureObject00[nCntMat][g_Object00[nCntObject].nType]);
 
-						//ƒIƒuƒWƒFƒNƒg00(ƒp[ƒc)‚Ì•`‰æ
-						g_pMeshObject00[g_Object00[nCntObject].nType]->DrawSubset(nCntMat);
-					//	break;
-
-					//case OBJECT_NTYPE01:
-					//	//ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
-					//	pDevice->SetTexture(0, g_pTextureObject00[nCntMat][OBJECT_NTYPE01]);
-
-					//	//ƒIƒuƒWƒFƒNƒg00(ƒp[ƒc)‚Ì•`‰æ
-					//	g_pMeshObject00[OBJECT_NTYPE01]->DrawSubset(nCntMat);
-					//	break;
-					//}
+					//ƒIƒuƒWƒFƒNƒg00(ƒp[ƒc)‚Ì•`‰æ
+					g_pMeshObject00[g_Object00[nCntObject].nType]->DrawSubset(nCntMat);
 				}
 			}
 		//•Û‘¶‚µ‚Ä‚¢‚½ƒ}ƒeƒŠƒAƒ‹‚ğ–ß‚·
@@ -240,9 +233,117 @@ void DrawObject00(void)
 }
 
 //====================================================================
+//ƒGƒfƒBƒbƒgƒ‚[ƒh‚ÌƒIƒuƒWƒFƒNƒg00‚ÌXVˆ—
+//====================================================================
+void UpdateEditObject00(void)
+{
+	//ƒL[ƒ{[ƒh‚ÌˆÚ“®ˆ—
+	if (GetKeyboardPress(DIK_UP) == true)
+	{
+		g_Object00[EditIndex].pos.z += 1.0f;
+	}
+	if (GetKeyboardPress(DIK_DOWN) == true)
+	{
+		g_Object00[EditIndex].pos.z -= 1.0f;
+	}
+	if (GetKeyboardPress(DIK_RIGHT) == true)
+	{
+		g_Object00[EditIndex].pos.x += 1.0f;
+	}
+	if (GetKeyboardPress(DIK_LEFT) == true)
+	{
+		g_Object00[EditIndex].pos.x -= 1.0f;
+	}
+
+	if (GetKeyboardTrigger(DIK_0) == true)
+	{
+		g_Object00[EditIndex].rot.y += 1.57f;
+
+		if (g_Object00[EditIndex].rot.y >= 6.28f)
+		{
+			g_Object00[EditIndex].rot.y = 0.0f;
+		}
+	}
+
+	if (GetKeyboardTrigger(DIK_RSHIFT) == true)
+	{
+		g_Object00[EditIndex].nType++;
+
+		if (g_Object00[EditIndex].nType > OBJECT00_NTYPE_MAX - 1)
+		{
+			g_Object00[EditIndex].nType = 0;
+		}
+	}
+	if (GetKeyboardTrigger(DIK_RCONTROL) == true)
+	{
+		g_Object00[EditIndex].nType--;
+
+		if (g_Object00[EditIndex].nType < 0)
+		{
+			g_Object00[EditIndex].nType = OBJECT00_NTYPE_MAX - 1;
+		}
+	}
+
+
+	if (GetKeyboardTrigger(DIK_RETURN) == true)
+	{
+		SetObject00(g_Object00[EditIndex].pos, g_Object00[EditIndex].move, g_Object00[EditIndex].rot, g_Object00[EditIndex].nType);
+	}
+}
+
+//====================================================================
+//ƒGƒfƒBƒbƒgƒ‚[ƒh‚ÌƒIƒuƒWƒFƒNƒg00‚Ì•`‰æˆ—
+//====================================================================
+void DrawEditObject00(void)
+{
+	//ƒfƒoƒCƒX‚ÌŠ“¾
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+	D3DXMATRIX mtxRot, mtxTrans;	//ŒvZ—pƒ}ƒgƒŠƒbƒNƒX
+	D3DMATERIAL9 matDef;			//Œ»İ‚Ìƒ}ƒeƒŠƒAƒ‹•Û‘¶—p
+	D3DXMATERIAL *pMat;				//ƒ}ƒeƒŠƒAƒ‹ƒf[ƒ^‚Ö‚Ìƒ|ƒCƒ“ƒ^
+
+
+		//ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
+	D3DXMatrixIdentity(&g_Object00[EditIndex].mtxWorld);
+
+	//Œü‚«‚ğ”½‰f
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, g_Object00[EditIndex].rot.y, g_Object00[EditIndex].rot.x, g_Object00[EditIndex].rot.z);
+
+	D3DXMatrixMultiply(&g_Object00[EditIndex].mtxWorld, &g_Object00[EditIndex].mtxWorld, &mtxRot);
+
+	//ˆÊ’u‚ğ”½‰f
+	D3DXMatrixTranslation(&mtxTrans, g_Object00[EditIndex].pos.x, g_Object00[EditIndex].pos.y, g_Object00[EditIndex].pos.z);
+
+	D3DXMatrixMultiply(&g_Object00[EditIndex].mtxWorld, &g_Object00[EditIndex].mtxWorld, &mtxTrans);
+
+	//ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ìİ’è
+	pDevice->SetTransform(D3DTS_WORLD, &g_Object00[EditIndex].mtxWorld);
+
+	//Œ»İ‚Ìƒ}ƒeƒŠƒAƒ‹‚ğŠ“¾
+	pDevice->GetMaterial(&matDef);
+
+	//ƒ}ƒeƒŠƒAƒ‹ƒf[ƒ^‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğŠ“¾‚·‚é
+	pMat = (D3DXMATERIAL*)g_pBuffMatObject00[g_Object00[EditIndex].nType]->GetBufferPointer();
+
+	for (int nCntMat = 0; nCntMat < (int)g_dwNumMatObject00[g_Object00[EditIndex].nType]; nCntMat++)
+	{
+		//ƒ}ƒeƒŠƒAƒ‹‚Ìİ’è
+		pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
+
+		//ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
+		pDevice->SetTexture(0, g_pTextureObject00[nCntMat][g_Object00[EditIndex].nType]);
+
+		//ƒIƒuƒWƒFƒNƒg00(ƒp[ƒc)‚Ì•`‰æ
+		g_pMeshObject00[g_Object00[EditIndex].nType]->DrawSubset(nCntMat);
+	}
+	//•Û‘¶‚µ‚Ä‚¢‚½ƒ}ƒeƒŠƒAƒ‹‚ğ–ß‚·
+	pDevice->SetMaterial(&matDef);
+}
+
+//====================================================================
 //ƒIƒuƒWƒFƒNƒg00‚Ìİ’èˆ—
 //====================================================================
-void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, OBJECT00_NTYPE nType)
+void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 {
 	int nCntObject;
 
@@ -255,7 +356,16 @@ void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, OBJECT00_NT
 			g_Object00[nCntObject].move = move;
 			g_Object00[nCntObject].rot = rot;
 			g_Object00[nCntObject].nType = nType;
+
+			//switch (nType)
+			//{
+			//case 0:
+			//	g_Object00[nCntObject].nType = OBJECT00_NTYPE00;
+			//	break;
+			//}
+
 			g_Object00[nCntObject].bUse = true;
+			EditIndex++;
 
 			int nNumVtx;		//’¸“_”
 			DWORD dwSizeFVF;	//’¸“_ƒtƒH[ƒ}ƒbƒg‚ÌƒTƒCƒY
@@ -306,8 +416,44 @@ void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, OBJECT00_NT
 			//’¸“_ƒoƒbƒtƒ@‚ğƒAƒ“ƒƒbƒN
 			g_pMeshObject00[nType]->UnlockVertexBuffer();
 
+			CollisionRotObject00(nCntObject);
+
 			break;
 		}
+	}
+}
+
+//====================================================================
+//ƒIƒuƒWƒFƒNƒg‚Ì“–‚½‚è”»’è‚ğ‰ñ“]‚³‚¹‚éˆ—
+//====================================================================
+void CollisionRotObject00(int nCnt)
+{
+	float MaxZ, MaxX, MinZ, MinX;
+
+	MaxZ = g_Object00[nCnt].vtxMax.z;
+	MaxX = g_Object00[nCnt].vtxMax.x;
+	MinZ = g_Object00[nCnt].vtxMin.z;
+	MinX = g_Object00[nCnt].vtxMin.x;
+
+
+	if (g_Object00[nCnt].rot.y <= 0.0f)
+	{
+		g_Object00[nCnt].vtxMax.z = MaxZ;
+		g_Object00[nCnt].vtxMax.x = MaxX;
+		g_Object00[nCnt].vtxMin.z = MinZ;
+		g_Object00[nCnt].vtxMin.x = MinX;
+	}
+	else if (g_Object00[nCnt].rot.y <= 1.57f)
+	{
+
+	}
+	else if (g_Object00[nCnt].rot.y <= 3.14f)
+	{
+
+	}
+	else if (g_Object00[nCnt].rot.y <= 4.71f)
+	{
+
 	}
 }
 

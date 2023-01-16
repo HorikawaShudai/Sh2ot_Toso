@@ -1,13 +1,16 @@
 #include "game.h"
+#include "edit.h"
 #include "Fade.h"
 #include "input.h"
 #include "camera.h"
 #include "light.h"
 #include "meshwall.h"
 #include "object00.h"
+#include "stage.h"
 
 
 bool g_bPause = false;
+bool g_bEdit = false;
 GAMESTATE gGameState = GAMESTATE_NONE;
 int g_nCounterGameState = 0;
 
@@ -17,6 +20,7 @@ int g_nCounterGameState = 0;
 void InitGame()
 {
 	g_bPause = false;
+	g_bEdit = false;
 
 	DWORD time = timeGetTime();
 	srand((unsigned int)time);
@@ -31,6 +35,8 @@ void InitGame()
 	InitMeshWall();
 
 	InitObject00();
+
+	SetStage(0);
 }
 
 //====================================================================
@@ -54,8 +60,16 @@ void UninitGame()
 //====================================================================
 void UpdateGame()
 {
-	if (g_bPause == false)
-	{//ポーズ状態じゃないとき
+
+#ifdef _DEBUG
+	if (GetKeyboardTrigger(DIK_F2) == true)
+	{//f2が押されたとき
+		g_bEdit = g_bEdit ? false : true;
+	}
+#endif
+
+	if (g_bPause == false && g_bEdit == false)
+	{//ポーズ状態じゃないときかつエディット状態じゃないとき
 		FADE Fade = GetFade();
 
 		if (Fade == FADE_NONE)
@@ -75,7 +89,16 @@ void UpdateGame()
 
 	UpdateMeshWall();
 
-	UpdateObject00();
+	if (g_bEdit == true)
+	{
+		UpdateEditObject00();
+
+		UpdateEdit();
+	}
+	else
+	{
+		UpdateObject00();
+	}
 }
 
 //====================================================================
@@ -88,6 +111,10 @@ void DrawGame()
 
 	DrawMeshWall();
 
+	if (g_bEdit == true)
+	{
+		DrawEditObject00();
+	}
 	DrawObject00();
 }
 

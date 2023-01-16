@@ -116,17 +116,6 @@ void UpdateCamera(void)
 		g_camera.posV.y -= CAMERA_SPEED;
 		g_camera.posR.y -= CAMERA_SPEED;
 	}
-	if (GetKeyboardPress(DIK_RSHIFT) == true)
-	{
-		g_camera.posV.y += CAMERA_SPEED;
-		g_camera.posR.y += CAMERA_SPEED;
-
-	}
-	if (GetKeyboardPress(DIK_RCONTROL) == true)
-	{
-		g_camera.posV.y -= CAMERA_SPEED;
-		g_camera.posR.y -= CAMERA_SPEED;
-	}
 
 	//¶ƒgƒŠƒK[‚ğ‰Ÿ‚µ‚Ş‚ÆƒJƒƒ‰‚ª‰º‚ª‚é
 	g_camera.posV.y -= GetGamepad_Trigger_Left(0);
