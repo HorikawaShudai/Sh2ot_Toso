@@ -1,7 +1,7 @@
 #ifndef _OBJECT00_H_
 #define _OBJECT00_H_
 
-#define MAX_OBJECT00 (64)		//オブジェクトの最大数
+#define MAX_OBJECT00 (512)		//オブジェクトの最大数
 
 //モデルの構造体
 typedef enum
@@ -28,7 +28,7 @@ typedef struct
 	D3DXVECTOR3 vtxMin;							//モデルの最小
 	D3DXVECTOR3 vtxMax;							//モデルの最大
 	int nDamageCounter;							//ダメージ状態の長さ
-	int nType;						//モデルの種類
+	int nType;									//モデルの種類
 	bool bUse;									//モデルが使用されているかどうか
 }Object00;
 
