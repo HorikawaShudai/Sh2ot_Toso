@@ -7,6 +7,7 @@
 #include "meshwall.h"
 #include "object00.h"
 #include "stage.h"
+#include "player.h"
 
 
 bool g_bPause = false;
@@ -36,6 +37,8 @@ void InitGame()
 
 	InitObject00();
 
+	InitPlayer();
+
 	SetStage(0);
 }
 
@@ -53,6 +56,8 @@ void UninitGame()
 	UninitMeshWall();
 
 	UninitObject00();
+
+	UninitPlayer();
 }
 
 //====================================================================
@@ -98,6 +103,8 @@ void UpdateGame()
 	else
 	{
 		UpdateObject00();
+
+		UpdatePlayer();
 	}
 }
 
@@ -116,6 +123,7 @@ void DrawGame()
 		DrawEditObject00();
 	}
 	DrawObject00();
+	DrawPlayer();
 }
 
 //====================================================================
