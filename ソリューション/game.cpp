@@ -6,6 +6,7 @@
 #include "light.h"
 #include "meshwall.h"
 #include "object00.h"
+#include "stage.h"
 
 
 bool g_bPause = false;
@@ -34,6 +35,8 @@ void InitGame()
 	InitMeshWall();
 
 	InitObject00();
+
+	SetStage(0);
 }
 
 //====================================================================

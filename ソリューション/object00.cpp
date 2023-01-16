@@ -126,14 +126,6 @@ void InitObject00(void)
 			}
 		}
 	}
-
-	SetObject00(D3DXVECTOR3(-300.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE00);
-	SetObject00(D3DXVECTOR3(-200.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE01);
-	SetObject00(D3DXVECTOR3(-100.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE02);
-	SetObject00(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE03);
-	SetObject00(D3DXVECTOR3(100.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE04);
-	SetObject00(D3DXVECTOR3(200.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE05);
-	SetObject00(D3DXVECTOR3(300.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE06);
 }
 
 //====================================================================
@@ -263,6 +255,16 @@ void UpdateEditObject00(void)
 		g_Object00[EditIndex].pos.x -= 1.0f;
 	}
 
+	if (GetKeyboardTrigger(DIK_0) == true)
+	{
+		g_Object00[EditIndex].rot.y += 1.57f;
+
+		if (g_Object00[EditIndex].rot.y >= 6.28f)
+		{
+			g_Object00[EditIndex].rot.y = 0.0f;
+		}
+	}
+
 	if (GetKeyboardTrigger(DIK_RSHIFT) == true)
 	{
 		g_Object00[EditIndex].nType++;
@@ -354,6 +356,14 @@ void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 			g_Object00[nCntObject].move = move;
 			g_Object00[nCntObject].rot = rot;
 			g_Object00[nCntObject].nType = nType;
+
+			//switch (nType)
+			//{
+			//case 0:
+			//	g_Object00[nCntObject].nType = OBJECT00_NTYPE00;
+			//	break;
+			//}
+
 			g_Object00[nCntObject].bUse = true;
 			EditIndex++;
 
@@ -406,8 +416,44 @@ void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 			//頂点バッファをアンロック
 			g_pMeshObject00[nType]->UnlockVertexBuffer();
 
+			CollisionRotObject00(nCntObject);
+
 			break;
 		}
+	}
+}
+
+//====================================================================
+//オブジェクトの当たり判定を回転させる処理
+//====================================================================
+void CollisionRotObject00(int nCnt)
+{
+	float MaxZ, MaxX, MinZ, MinX;
+
+	MaxZ = g_Object00[nCnt].vtxMax.z;
+	MaxX = g_Object00[nCnt].vtxMax.x;
+	MinZ = g_Object00[nCnt].vtxMin.z;
+	MinX = g_Object00[nCnt].vtxMin.x;
+
+
+	if (g_Object00[nCnt].rot.y <= 0.0f)
+	{
+		g_Object00[nCnt].vtxMax.z = MaxZ;
+		g_Object00[nCnt].vtxMax.x = MaxX;
+		g_Object00[nCnt].vtxMin.z = MinZ;
+		g_Object00[nCnt].vtxMin.x = MinX;
+	}
+	else if (g_Object00[nCnt].rot.y <= 1.57f)
+	{
+
+	}
+	else if (g_Object00[nCnt].rot.y <= 3.14f)
+	{
+
+	}
+	else if (g_Object00[nCnt].rot.y <= 4.71f)
+	{
+
 	}
 }
 
