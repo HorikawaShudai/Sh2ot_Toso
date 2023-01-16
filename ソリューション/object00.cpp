@@ -494,15 +494,24 @@ void CollisionRotObject00(int nCnt)
 	}
 	else if (g_Object00[nCnt].rot.y <= 1.57f)
 	{
-
+		g_Object00[nCnt].vtxMax.z = -MinX;
+		g_Object00[nCnt].vtxMax.x = MaxZ;
+		g_Object00[nCnt].vtxMin.z = -MaxX;
+		g_Object00[nCnt].vtxMin.x = MinZ;
 	}
 	else if (g_Object00[nCnt].rot.y <= 3.14f)
 	{
-
+		g_Object00[nCnt].vtxMax.z = -MinZ;
+		g_Object00[nCnt].vtxMax.x = -MinX;
+		g_Object00[nCnt].vtxMin.z = -MaxZ;
+		g_Object00[nCnt].vtxMin.x = -MaxX;
 	}
 	else if (g_Object00[nCnt].rot.y <= 4.71f)
 	{
-
+		g_Object00[nCnt].vtxMax.z = MaxX;
+		g_Object00[nCnt].vtxMax.x = -MinZ;
+		g_Object00[nCnt].vtxMin.z = MinX;
+		g_Object00[nCnt].vtxMin.x =- MaxZ;
 	}
 }
 
