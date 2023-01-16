@@ -235,11 +235,11 @@ void UpdateEditObject00(void)
 		{
 			EditPos.x -= 1.0f;
 		}
-		if (GetKeyboardTrigger(DIK_RSHIFT) == true)
+		if (GetKeyboardPress(DIK_RSHIFT) == true)
 		{
 			EditPos.y += 1.0f;
 		}
-		if (GetKeyboardTrigger(DIK_RCONTROL) == true)
+		if (GetKeyboardPress(DIK_RCONTROL) == true)
 		{
 			EditPos.y -= 1.0f;
 		}
