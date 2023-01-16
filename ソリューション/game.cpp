@@ -102,6 +102,9 @@ void UpdateGame()
 		UpdateEditObject00();
 
 		PrintDebugProc("ƒJƒƒ‰‚Ì‹“_ˆÚ“®yWzyAzySzyDz\n");
+		PrintDebugProc("ƒJƒƒ‰‚Ì’‹“_ˆÚ“® yIzyJzyKzyLz\n");
+		PrintDebugProc("ƒJƒƒ‰‚Ìã‰ºˆÚ“® y¶SHIFTzy¶CTRLz\n");
+		PrintDebugProc("ƒvƒŒƒCƒ„[‚ÌˆÚ“®ˆÚ“® yTzyFzyGzyHz\n");
 	}
 	else
 	{
