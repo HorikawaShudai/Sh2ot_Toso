@@ -2,6 +2,7 @@
 #include "object00.h"
 #include "camera.h"
 #include "input.h"
+#include "debugproc.h"
 
 #define OBJECT00_LIFE (7)		//オブジェクトの体力
 
@@ -13,6 +14,8 @@ DWORD g_dwNumMatObject00[OBJECT00_NTYPE_MAX] = {};						//マテリアルの数
 
 Object00 g_Object00[MAX_OBJECT00];					//オブジェクト00の情報
 int EditIndex;								//エディットモード用の番号
+D3DXVECTOR3 EditPos;						//エディットモードのオブジェクトの位置
+int EditType;						//エディットモードのオブジェクトの種類
 
 const char *c_apModelObj[] =					//モデルデータ読み込み
 {
@@ -47,6 +50,8 @@ void InitObject00(void)
 		g_Object00[nCntObject].nType = OBJECT00_NTYPE00;
 	}
 	EditIndex = 0;
+	EditPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	EditType = 0;
 
 	//Xファイルの読み込み
 	for (int nCntObj = 0; nCntObj < OBJECT00_NTYPE_MAX; nCntObj++)
@@ -192,21 +197,52 @@ void DrawObject00(void)
 void UpdateEditObject00(void)
 {
 	//キーボードの移動処理
-	if (GetKeyboardPress(DIK_UP) == true)
+	if (g_Object00[EditIndex].nType == 0)
 	{
-		g_Object00[EditIndex].pos.z += 1.0f;
+		if (GetKeyboardTrigger(DIK_UP) == true)
+		{
+			EditPos.z += 100.0f;
+		}
+		if (GetKeyboardTrigger(DIK_DOWN) == true)
+		{
+			EditPos.z -= 100.0f;
+		}
+		if (GetKeyboardTrigger(DIK_RIGHT) == true)
+		{
+			EditPos.x += 100.0f;
+		}
+		if (GetKeyboardTrigger(DIK_LEFT) == true)
+		{
+			EditPos.x -= 100.0f;
+		}
 	}
-	if (GetKeyboardPress(DIK_DOWN) == true)
+
+	if(g_Object00[EditIndex].nType != 0)
 	{
-		g_Object00[EditIndex].pos.z -= 1.0f;
-	}
-	if (GetKeyboardPress(DIK_RIGHT) == true)
-	{
-		g_Object00[EditIndex].pos.x += 1.0f;
-	}
-	if (GetKeyboardPress(DIK_LEFT) == true)
-	{
-		g_Object00[EditIndex].pos.x -= 1.0f;
+		if (GetKeyboardPress(DIK_UP) == true)
+		{
+			EditPos.z += 1.0f;
+		}
+		if (GetKeyboardPress(DIK_DOWN) == true)
+		{
+			EditPos.z -= 1.0f;
+		}
+		if (GetKeyboardPress(DIK_RIGHT) == true)
+		{
+			EditPos.x += 1.0f;
+		}
+		if (GetKeyboardPress(DIK_LEFT) == true)
+		{
+			EditPos.x -= 1.0f;
+		}
+		if (GetKeyboardTrigger(DIK_RSHIFT) == true)
+		{
+			EditPos.y += 1.0f;
+		}
+		if (GetKeyboardTrigger(DIK_RCONTROL) == true)
+		{
+			EditPos.y -= 1.0f;
+		}
 	}
 
 	if (GetKeyboardTrigger(DIK_0) == true)
@@ -219,30 +255,43 @@ void UpdateEditObject00(void)
 		}
 	}
 
-	if (GetKeyboardTrigger(DIK_RSHIFT) == true)
+	if (GetKeyboardTrigger(DIK_8) == true)
 	{
-		g_Object00[EditIndex].nType++;
+		EditType++;
 
-		if (g_Object00[EditIndex].nType > OBJECT00_NTYPE_MAX - 1)
+		if (EditType > OBJECT00_NTYPE_MAX - 1)
 		{
-			g_Object00[EditIndex].nType = 0;
+			EditType = 0;
+		}
+
+		if (EditType == 0)
+		{
+			EditPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		}
 	}
-	if (GetKeyboardTrigger(DIK_RCONTROL) == true)
+	if (GetKeyboardTrigger(DIK_9) == true)
 	{
-		g_Object00[EditIndex].nType--;
+		EditType--;
 
-		if (g_Object00[EditIndex].nType < 0)
+		if (EditType < 0)
 		{
-			g_Object00[EditIndex].nType = OBJECT00_NTYPE_MAX - 1;
+			EditType = OBJECT00_NTYPE_MAX - 1;
+		}
+
+		if (EditType == 0)
+		{
+			EditPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		}
 	}
 
+	g_Object00[EditIndex].pos = EditPos;
+	g_Object00[EditIndex].nType = EditType;
 
 	if (GetKeyboardTrigger(DIK_RETURN) == true)
 	{
 		SetObject00(g_Object00[EditIndex].pos, g_Object00[EditIndex].move, g_Object00[EditIndex].rot, g_Object00[EditIndex].nType);
 	}
+	PrintDebugProc("aaaa\n");
 }
 
 //====================================================================

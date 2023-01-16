@@ -34,7 +34,12 @@ void UpdateEdit()
 		SaveEdit();
 	}
 
-	PrintDebugProc("【エディットモード中】");
+	PrintDebugProc("【エディットモード中】オブジェクト移動 【↑】【←】【↓】【→】\n");
+	PrintDebugProc("オブジェクト上下移動 【右SHIFT】【右CTRL】\n");
+	PrintDebugProc("オブジェクト切り替え 【9】\n");
+	PrintDebugProc("オブジェクト角度切り替え 【0】\n");
+	PrintDebugProc("オブジェクト設置 【ENTER】\n");
+	PrintDebugProc("オブジェクト保存 【F9】\n");
 }
 
 //====================================================================

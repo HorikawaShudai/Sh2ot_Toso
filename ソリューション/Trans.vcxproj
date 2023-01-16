@@ -162,6 +162,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="meshwall.cpp" />
     <ClCompile Include="object00.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="stage.cpp" />
     <ClCompile Include="title.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="meshwall.h" />
     <ClInclude Include="object00.h" />
+    <ClInclude Include="player.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="stage.h" />
     <ClInclude Include="title.h" />

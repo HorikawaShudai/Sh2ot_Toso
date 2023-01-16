@@ -7,6 +7,8 @@
 #include "meshwall.h"
 #include "object00.h"
 #include "stage.h"
+#include "player.h"
+#include "debugproc.h"
 
 
 bool g_bPause = false;
@@ -36,6 +38,8 @@ void InitGame()
 
 	InitObject00();
 
+	InitPlayer();
+
 	SetStage(0);
 }
 
@@ -53,6 +57,8 @@ void UninitGame()
 	UninitMeshWall();
 
 	UninitObject00();
+
+	UninitPlayer();
 }
 
 //====================================================================
@@ -91,13 +97,20 @@ void UpdateGame()
 
 	if (g_bEdit == true)
 	{
+		UpdateEdit();
+
 		UpdateEditObject00();
 
-		UpdateEdit();
+		PrintDebugProc("ƒJƒƒ‰‚Ì‹“_ˆÚ“®yWzyAzySzyDz\n");
+		PrintDebugProc("ƒJƒƒ‰‚Ì’‹“_ˆÚ“® yIzyJzyKzyLz\n");
+		PrintDebugProc("ƒJƒƒ‰‚Ìã‰ºˆÚ“® y¶SHIFTzy¶CTRLz\n");
+		PrintDebugProc("ƒvƒŒƒCƒ„[‚ÌˆÚ“®ˆÚ“® yTzyFzyGzyHz\n");
 	}
 	else
 	{
 		UpdateObject00();
+
+		UpdatePlayer();
 	}
 }
 
@@ -116,6 +129,7 @@ void DrawGame()
 		DrawEditObject00();
 	}
 	DrawObject00();
+	DrawPlayer();
 }
 
 //====================================================================
