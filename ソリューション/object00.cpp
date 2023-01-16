@@ -14,6 +14,17 @@ DWORD g_dwNumMatObject00[OBJECT00_NTYPE_MAX] = {};						//マテリアルの数
 Object00 g_Object00[MAX_OBJECT00];					//オブジェクト00の情報
 int EditIndex;								//エディットモード用の番号
 
+const char *c_apModelObj[] =					//モデルデータ読み込み
+{
+	"Data\\MODEL\\wall.x",
+	"Data\\MODEL\\pc.x",
+	"Data\\MODEL\\desk.x",
+	"Data\\MODEL\\fan.x",
+	"Data\\MODEL\\locker.x",
+	"Data\\MODEL\\whiteboard.x",
+	"Data\\MODEL\\officechair.x",
+};
+
 //====================================================================
 //オブジェクト00の初期化処理
 //====================================================================
@@ -38,74 +49,17 @@ void InitObject00(void)
 	EditIndex = 0;
 
 	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\MODEL\\wall.x",
-		D3DXMESH_SYSTEMMEM,
-		pDevice,
-		NULL,
-		&g_pBuffMatObject00[OBJECT00_NTYPE00],
-		NULL,
-		&g_dwNumMatObject00[OBJECT00_NTYPE00],
-		&g_pMeshObject00[OBJECT00_NTYPE00]);
-
-	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\MODEL\\pc.x",
-		D3DXMESH_SYSTEMMEM,
-		pDevice,
-		NULL,
-		&g_pBuffMatObject00[OBJECT00_NTYPE01],
-		NULL,
-		&g_dwNumMatObject00[OBJECT00_NTYPE01],
-		&g_pMeshObject00[OBJECT00_NTYPE01]);
-
-	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\MODEL\\desk.x",
-		D3DXMESH_SYSTEMMEM,
-		pDevice,
-		NULL,
-		&g_pBuffMatObject00[OBJECT00_NTYPE02],
-		NULL,
-		&g_dwNumMatObject00[OBJECT00_NTYPE02],
-		&g_pMeshObject00[OBJECT00_NTYPE02]);
-
-	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\MODEL\\fan.x",
-		D3DXMESH_SYSTEMMEM,
-		pDevice,
-		NULL,
-		&g_pBuffMatObject00[OBJECT00_NTYPE03],
-		NULL,
-		&g_dwNumMatObject00[OBJECT00_NTYPE03],
-		&g_pMeshObject00[OBJECT00_NTYPE03]);
-
-	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\MODEL\\locker.x",
-		D3DXMESH_SYSTEMMEM,
-		pDevice,
-		NULL,
-		&g_pBuffMatObject00[OBJECT00_NTYPE04],
-		NULL,
-		&g_dwNumMatObject00[OBJECT00_NTYPE04],
-		&g_pMeshObject00[OBJECT00_NTYPE04]);
-
-	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\MODEL\\whiteboard.x",
-		D3DXMESH_SYSTEMMEM,
-		pDevice,
-		NULL,
-		&g_pBuffMatObject00[OBJECT00_NTYPE05],
-		NULL,
-		&g_dwNumMatObject00[OBJECT00_NTYPE05],
-		&g_pMeshObject00[OBJECT00_NTYPE05]);
-
-	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\MODEL\\officechair.x",
-		D3DXMESH_SYSTEMMEM,
-		pDevice,
-		NULL,
-		&g_pBuffMatObject00[OBJECT00_NTYPE06],
-		NULL,
-		&g_dwNumMatObject00[OBJECT00_NTYPE06],
-		&g_pMeshObject00[OBJECT00_NTYPE06]);
+	for (int nCntObj = 0; nCntObj < OBJECT00_NTYPE_MAX; nCntObj++)
+	{
+		D3DXLoadMeshFromX(c_apModelObj[nCntObj],
+			D3DXMESH_SYSTEMMEM,
+			pDevice,
+			NULL,
+			&g_pBuffMatObject00[nCntObj],
+			NULL,
+			&g_dwNumMatObject00[nCntObj],
+			&g_pMeshObject00[nCntObj]);
+	}
 
 
 	D3DXMATERIAL *pMat;	//マテリアルへのポインタ

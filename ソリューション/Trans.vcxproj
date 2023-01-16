@@ -154,6 +154,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="edit.cpp" />
+    <ClCompile Include="enemy.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="input.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="edit.h" />
+    <ClInclude Include="enemy.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="input.h" />

@@ -25,11 +25,14 @@ typedef struct
 	D3DXVECTOR3 move;							//位置
 	D3DXVECTOR3 rot;							//向き
 	D3DXMATRIX mtxWorld;						//ワールドマトリックス
+	LPDIRECT3DTEXTURE9 pTexture[30];			//テクスチャへのポインタ
+
 	D3DXVECTOR3 vtxMin;							//モデルの最小
 	D3DXVECTOR3 vtxMax;							//モデルの最大
 	int nDamageCounter;							//ダメージ状態の長さ
-	int nType;						//モデルの種類
+	int nType;									//モデルの種類
 	bool bUse;									//モデルが使用されているかどうか
+	int nIdxModelParent; //親子設定
 }Object00;
 
 //プロトタイプ宣言
