@@ -9,7 +9,7 @@
 #include "stage.h"
 #include "player.h"
 #include "debugproc.h"
-
+#include "enemy.h"
 
 bool g_bPause = false;
 bool g_bEdit = false;
@@ -40,6 +40,8 @@ void InitGame()
 
 	InitPlayer();
 
+	InitEnemy();
+
 	SetStage(0);
 }
 
@@ -59,6 +61,7 @@ void UninitGame()
 	UninitObject00();
 
 	UninitPlayer();
+	UninitEnemy();
 }
 
 //====================================================================
@@ -111,6 +114,8 @@ void UpdateGame()
 		UpdateObject00();
 
 		UpdatePlayer();
+
+		UpdateEnemy();
 	}
 }
 
@@ -130,6 +135,7 @@ void DrawGame()
 	}
 	DrawObject00();
 	DrawPlayer();
+	DrawEnemy();
 }
 
 //====================================================================

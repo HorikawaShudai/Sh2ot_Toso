@@ -28,11 +28,6 @@ typedef struct
 	D3DXVECTOR3 vtxMax;							//モデルの最大
 	int nDamageCounter;							//ダメージ状態の長さ
 	Object00 aModel[NUM_ENEMYMODEL]; //持ってるモデルの情報
-	LPDIRECT3DTEXTURE9 pTexture[30];	//テクスチャへのポインタ
-	LPD3DXMESH pMesh;		//メッシュ(頂点情報)へのポインタ
-	LPD3DXBUFFER pBuffMat;	//マテリアルへのポインタ
-	D3DXMATERIAL pMatData[80];	//マテリアルのデータ
-	DWORD dwNumMat;			//マテリアルの数
 	int nType;						//モデルの種類
 	bool bUse;									//モデルが使用されているかどうか
 }ENEMY;

@@ -1,3 +1,8 @@
+<<<<<<< HEAD
 ﻿  title.cpp
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+﻿  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+>>>>>>> eb047ca9b17787510d16f65b85d8cf73282e23ca

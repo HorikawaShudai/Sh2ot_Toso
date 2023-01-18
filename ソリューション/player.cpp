@@ -43,7 +43,7 @@ void InitPlayer(void)
 	DWORD dwSizeFVF;	//頂点フォーマットのサイズ
 	BYTE *pVtxBuff;		//頂点バッファへのポインタ
 
-	g_Player.pos = D3DXVECTOR3(0.0f, 0.0f, 100.0f);
+	g_Player.pos = D3DXVECTOR3(0.0f, 0.0f, -20.0f);
 	g_Player.posOld = D3DXVECTOR3(0.0f, 300.0f, -400.0f);
 	g_Player.move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	g_Player.NormarizeMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -71,7 +71,7 @@ void InitPlayer(void)
 	g_Player.nNumModel = 1;
 
 	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\MODEL\\pc.x",
+	D3DXLoadMeshFromX("data\\MODEL\\player.x",
 		D3DXMESH_SYSTEMMEM,
 		pDevice,
 		NULL,
