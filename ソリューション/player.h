@@ -1,24 +1,79 @@
-//============================
-//
-//プレイヤー処理(player.h)
-//Author:早川 友貴
-//
-//============================
+#ifndef _PLAYER_H_
+#define _PLAYER_H_
 
-#ifndef _PLAYER_H_   //このマクロ定義がされていなかったら
-#define _PLAYER_H_   //2重インクルード防止のマクロを定義する
+//マクロ定義
+#define MAX_MODEL (32)	//モデルの最大数
 
-#include "main.h"
+//モデルの構造体
+typedef struct
+{
+	D3DXVECTOR3 pos;							//現在の位置
+	D3DXVECTOR3 posOld;							//過去の位置
+	D3DXVECTOR3 move;							//移動量
+	D3DXVECTOR3 vecMove;						//移動ベクトル
+	D3DXVECTOR3 rot;							//向き
+	D3DXMATRIX mtxWorld;						//ワールドマトリックス
+	int nIndexModelParent;						//親モデルのインデックス
+}Model;
+
+//プレイヤーの構造体
+typedef enum
+{
+	PLAYER_NORMAL = 0,
+	PLAYER_WAIT,
+	PLAYER_DAMAGE,
+	PLAYER_HIT,
+	PLAYER_STATE_MAX,
+
+}PLAYER_STATE;
+
+//プレイヤーの構造体
+typedef enum
+{
+	PLAYER_ACTION_WAIT = 0,
+	PLAYER_ACTION_MOVE,
+	PLAYER_ACTION_JUMP,
+	PLAYER_ACTION_MAX,
+
+}PLAYER_ACTION;
+
+//モデルの構造体
+typedef struct
+{
+	D3DXVECTOR3 pos;							//現在の位置
+	D3DXVECTOR3 posOld;							//過去の位置
+	D3DXVECTOR3 move;							//移動量
+	D3DXVECTOR3 NormarizeMove;					//移動量
+	D3DXVECTOR3 rot;							//向き
+	D3DXMATRIX mtxWorld;						//ワールドマトリックス
+	D3DXVECTOR3 vtxMin;							//モデルの最小
+	D3DXVECTOR3 vtxMax;							//モデルの最大
+	PLAYER_STATE State;							//プレイヤーの状態
+	PLAYER_ACTION Action;						//プレイヤーの行動
+	int nLife;									//プレイヤーの体力
+	int nNextLife;								//プレイヤーが引き継ぐ体力
+	int nWaitCounter;							//待機状態の長さ
+	int nDamageCounter;							//ダメージ状態の長さ
+	int nHitCounter;							//ヒット状態の長さ
+	Model aModel[MAX_MODEL];					//モデル(パーツ)
+	int nNumModel;								//モデル(パーツ)の総数
+	bool bJump;									//ジャンプが使用できるかどうか
+	bool bUse;									//プレイヤーが使用できるかどうか
+	D3DXMATERIAL pMatH;							//ヒット状態のマテリアル
+	D3DXMATERIAL pMatD;							//ダメージ状態のマテリアル
+	D3DXMATERIAL pMatW;							//待機状態のマテリアル
+}Player;
 
 //プロトタイプ宣言
 void InitPlayer(void);
 void UninitPlayer(void);
 void UpdatePlayer(void);
+void PlayerMotion(void);
+void PlayerMoveInput(void);
+void PlayerRotUpdate(void);
+void PlayerHit(void);
+void CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY, float MinY);
 void DrawPlayer(void);
-D3DXVECTOR3 PosPlayer(void);
-D3DXVECTOR3 RotPlayer(void);
-void MovePlayer(void);
-void AnglePlayer(void);
-
+void SetNextLife(void);
+Player * GetPlayer(void);
 #endif
-

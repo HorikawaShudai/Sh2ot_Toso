@@ -15,6 +15,7 @@ DWORD g_dwNumMatObject00[OBJECT00_NTYPE_MAX] = {};						//マテリアルの数
 Object00 g_Object00[MAX_OBJECT00];					//オブジェクト00の情報
 int EditIndex;								//エディットモード用の番号
 D3DXVECTOR3 EditPos;						//エディットモードのオブジェクトの位置
+D3DXVECTOR3 EditRot;						//エディットモードのオブジェクトの向き
 int EditType;						//エディットモードのオブジェクトの種類
 
 const char *c_apModelObj[] =					//モデルデータ読み込み
@@ -26,6 +27,29 @@ const char *c_apModelObj[] =					//モデルデータ読み込み
 	"Data\\MODEL\\locker.x",
 	"Data\\MODEL\\whiteboard.x",
 	"Data\\MODEL\\officechair.x",
+	"Data\\MODEL\\corkboard.x",
+	"Data\\MODEL\\camera.x",
+	"Data\\MODEL\\art.x",
+	"Data\\MODEL\\document.x",
+	"Data\\MODEL\\door_side1.x",
+	"Data\\MODEL\\door_side2.x",
+	"Data\\MODEL\\doorup.x",
+	"Data\\MODEL\\illumination.x",
+	"Data\\MODEL\\jewelry.x",
+	"Data\\MODEL\\key.x",
+	"Data\\MODEL\\lightbutton.x",
+	"Data\\MODEL\\longdesk.x",
+	"Data\\MODEL\\machine.x",
+	"Data\\MODEL\\moniter.x",
+	"Data\\MODEL\\paper.x",
+	"Data\\MODEL\\pot.x",
+	"Data\\MODEL\\projecter.x",
+	"Data\\MODEL\\shelf.x",
+	"Data\\MODEL\\vent.x",
+	"Data\\MODEL\\window.x",
+	"Data\\MODEL\\desk_pc.x",
+	"Data\\MODEL\\projecter2.x",
+	"Data\\MODEL\\screen.x"
 };
 
 //====================================================================
@@ -48,9 +72,11 @@ void InitObject00(void)
 		g_Object00[nCntObject].vtxMax = D3DXVECTOR3(-1000.0f, -1000.0f, -1000.0f);
 		g_Object00[nCntObject].bUse = false;
 		g_Object00[nCntObject].nType = OBJECT00_NTYPE00;
+		g_Object00[nCntObject].pMatE.MatD3D.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
 	}
 	EditIndex = 0;
 	EditPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	EditRot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	EditType = 0;
 
 	//Xファイルの読み込み
@@ -196,67 +222,69 @@ void DrawObject00(void)
 //====================================================================
 void UpdateEditObject00(void)
 {
-	//キーボードの移動処理
+	//キーボードの移動処理----------
 	if (g_Object00[EditIndex].nType == 0)
-	{
+	{//選択されているオブジェクトが壁の時
 		if (GetKeyboardTrigger(DIK_UP) == true)
-		{
+		{//前移動
 			EditPos.z += 100.0f;
 		}
 		if (GetKeyboardTrigger(DIK_DOWN) == true)
-		{
+		{//後ろ移動
 			EditPos.z -= 100.0f;
 		}
 		if (GetKeyboardTrigger(DIK_RIGHT) == true)
-		{
+		{//右移動
 			EditPos.x += 100.0f;
 		}
 		if (GetKeyboardTrigger(DIK_LEFT) == true)
-		{
+		{//左移動
 			EditPos.x -= 100.0f;
 		}
 	}
 
 	if(g_Object00[EditIndex].nType != 0)
-	{
+	{//選択されているオブジェクトが壁以外の時
 		if (GetKeyboardPress(DIK_UP) == true)
-		{
+		{//前移動
 			EditPos.z += 1.0f;
 		}
 		if (GetKeyboardPress(DIK_DOWN) == true)
-		{
+		{//後ろ移動
 			EditPos.z -= 1.0f;
 		}
 		if (GetKeyboardPress(DIK_RIGHT) == true)
-		{
+		{//右移動
 			EditPos.x += 1.0f;
 		}
 		if (GetKeyboardPress(DIK_LEFT) == true)
-		{
+		{//左移動
 			EditPos.x -= 1.0f;
 		}
-		if (GetKeyboardTrigger(DIK_RSHIFT) == true)
-		{
+		if (GetKeyboardPress(DIK_RSHIFT) == true)
+		{//上移動
 			EditPos.y += 1.0f;
 		}
-		if (GetKeyboardTrigger(DIK_RCONTROL) == true)
-		{
+		if (GetKeyboardPress(DIK_RCONTROL) == true)
+		{//下移動
 			EditPos.y -= 1.0f;
 		}
 	}
 
+	//オブジェクトの回転処理
 	if (GetKeyboardTrigger(DIK_0) == true)
 	{
-		g_Object00[EditIndex].rot.y += 1.57f;
+		EditRot.y += 1.57f;
 
-		if (g_Object00[EditIndex].rot.y >= 6.28f)
+		if (EditRot.y >= 6.28f)
 		{
-			g_Object00[EditIndex].rot.y = 0.0f;
+			EditRot.y = 0.0f;
 		}
 	}
 
-	if (GetKeyboardTrigger(DIK_8) == true)
-	{
+	//オブジェクトの切り替え処理----------
+	if (GetKeyboardTrigger(DIK_9) == true)
+	{//９キーで次のタイプのオブジェクトにする
 		EditType++;
 
 		if (EditType > OBJECT00_NTYPE_MAX - 1)
@@ -269,8 +297,8 @@ void UpdateEditObject00(void)
 			EditPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		}
 	}
-	if (GetKeyboardTrigger(DIK_9) == true)
-	{
+	if (GetKeyboardTrigger(DIK_8) == true)
+	{//８キーで前のタイプのオブジェクトにする
 		EditType--;
 
 		if (EditType < 0)
@@ -284,14 +312,28 @@ void UpdateEditObject00(void)
 		}
 	}
 
+	//エディットモードの変更をオブジェクトに反映させる
 	g_Object00[EditIndex].pos = EditPos;
+	g_Object00[EditIndex].rot = EditRot;
 	g_Object00[EditIndex].nType = EditType;
 
+	//オブジェクトの削除処理(重なっているもの)----------
+	if (GetKeyboardTrigger(DIK_BACKSPACE))
+	{
+		EditCollisionObject00(g_Object00[EditIndex].pos, g_Object00[EditIndex].vtxMin, g_Object00[EditIndex].vtxMax, 20.0f);
+	}
+
+	//オブジェクトの削除処理(CTRL+Z)----------
+	if (GetKeyboardTrigger(DIK_Z) == true && GetKeyboardPress(DIK_LCONTROL) == true)
+	{
+		FalseObject00();
+	}
+
+	//オブジェクトの設置処理----------
 	if (GetKeyboardTrigger(DIK_RETURN) == true)
 	{
 		SetObject00(g_Object00[EditIndex].pos, g_Object00[EditIndex].move, g_Object00[EditIndex].rot, g_Object00[EditIndex].nType);
 	}
-	PrintDebugProc("aaaa\n");
 }
 
 //====================================================================
@@ -331,7 +373,7 @@ void DrawEditObject00(void)
 	for (int nCntMat = 0; nCntMat < (int)g_dwNumMatObject00[g_Object00[EditIndex].nType]; nCntMat++)
 	{
 		//マテリアルの設定
-		pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
+		pDevice->SetMaterial(&g_Object00[EditIndex].pMatE.MatD3D);
 
 		//テクスチャの設定
 		pDevice->SetTexture(0, g_pTextureObject00[nCntMat][g_Object00[EditIndex].nType]);
@@ -427,6 +469,49 @@ void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 }
 
 //====================================================================
+//オブジェクト00の削除処理
+//====================================================================
+void FalseObject00(void)
+{
+	int nCntObject;
+
+	for (nCntObject = MAX_OBJECT00; nCntObject >= 0; nCntObject--)
+	{
+		if (g_Object00[nCntObject].bUse == true)
+		{
+			g_Object00[nCntObject].bUse = false;
+			EditIndex--;
+			break;
+		}
+	}
+}
+
+//====================================================================
+//プレイヤーとの当たり判定処理
+//====================================================================
+bool EditCollisionObject00(D3DXVECTOR3 pPos, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size)
+{
+	bool bON = false;
+
+	for (int nCntObject = 0; nCntObject < MAX_OBJECT00; nCntObject++)
+	{
+		if (g_Object00[nCntObject].bUse == true)
+		{
+			if (
+				pPos.y + Size >= g_Object00[nCntObject].pos.y + g_Object00[nCntObject].vtxMin.y && pPos.y - Size <= g_Object00[nCntObject].pos.y + g_Object00[nCntObject].vtxMax.y &&
+				pPos.x + Size >= g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMin.x && pPos.x - Size <= g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMax.x &&
+				pPos.z + Size >= g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMin.z && pPos.z - Size <= g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMax.z
+				)
+			{//オブジェクト同士が重なっている
+				g_Object00[nCntObject].bUse = false;
+				bON = true;
+			}
+		}
+	}
+	return bON;
+}
+
+//====================================================================
 //オブジェクトの当たり判定を回転させる処理
 //====================================================================
 void CollisionRotObject00(int nCnt)
@@ -448,15 +533,24 @@ void CollisionRotObject00(int nCnt)
 	}
 	else if (g_Object00[nCnt].rot.y <= 1.57f)
 	{
-
+		g_Object00[nCnt].vtxMax.z = -MinX;
+		g_Object00[nCnt].vtxMax.x = MaxZ;
+		g_Object00[nCnt].vtxMin.z = -MaxX;
+		g_Object00[nCnt].vtxMin.x = MinZ;
 	}
 	else if (g_Object00[nCnt].rot.y <= 3.14f)
 	{
-
+		g_Object00[nCnt].vtxMax.z = -MinZ;
+		g_Object00[nCnt].vtxMax.x = -MinX;
+		g_Object00[nCnt].vtxMin.z = -MaxZ;
+		g_Object00[nCnt].vtxMin.x = -MaxX;
 	}
 	else if (g_Object00[nCnt].rot.y <= 4.71f)
 	{
-
+		g_Object00[nCnt].vtxMax.z = MaxX;
+		g_Object00[nCnt].vtxMax.x = -MinZ;
+		g_Object00[nCnt].vtxMin.z = MinX;
+		g_Object00[nCnt].vtxMin.x =- MaxZ;
 	}
 }
 

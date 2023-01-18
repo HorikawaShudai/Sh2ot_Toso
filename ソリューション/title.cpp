@@ -3,9 +3,6 @@
 #include "input.h"
 #include "Fade.h"
 
-
-
-
 //ƒ}ƒNƒ’è‹`
 #define NUM_Title (1) //”wŒi‚Ì”
 
