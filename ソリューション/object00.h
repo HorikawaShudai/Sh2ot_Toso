@@ -55,6 +55,7 @@ typedef struct
 	int nDamageCounter;							//ダメージ状態の長さ
 	int nType;									//モデルの種類
 	bool bUse;									//モデルが使用されているかどうか
+	D3DXMATERIAL pMatE;							//エディット状態のマテリアル
 	int nIdxModelParent; //親子設定
 }Object00;
 
@@ -66,7 +67,9 @@ void DrawObject00(void);
 void UpdateEditObject00(void);
 void DrawEditObject00(void);
 void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType);
+void FalseObject00(void);
 void CollisionRotObject00(int nCnt);
+bool EditCollisionObject00(D3DXVECTOR3 pPos, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size);
 bool CollisionObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size);
 void CollisionObject00Shadow(D3DXVECTOR3 *pPos);
 Object00 * GetObject00(void);

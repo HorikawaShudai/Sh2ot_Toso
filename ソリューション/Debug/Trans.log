@@ -1,4 +1,13 @@
+<<<<<<< HEAD
 ﻿  object00.cpp
+=======
+<<<<<<< HEAD
+﻿  object00.cpp
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+﻿  edit.cpp
+>>>>>>> 1882430efbb6c234eaf33414b52b7d3c89785f90
   コードを生成中...
   コンパイル中...
   stage.cpp
@@ -9,3 +18,4 @@
   コードを生成中...
   Trans.vcxproj -> C:\Users\student\Desktop\グループ制作1\github3\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\student\Desktop\グループ制作1\github3\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+>>>>>>> 24d8e32842b7eb96e650ee472fe02d92debd06e8
