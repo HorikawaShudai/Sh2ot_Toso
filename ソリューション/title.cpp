@@ -1,149 +1,147 @@
+//======================================================================================
+//
+// タイトル処理[title.cpp]
+// Author:
+//
+//======================================================================================
 #include "main.h"
 #include "Title.h"
 #include "input.h"
 #include "Fade.h"
 
+//**********************************************
 //マクロ定義
-#define NUM_Title (1) //背景の数
+//**********************************************
+#define NUM_TEX			(4)		// 背景の数
+#define NUM_TITLEPOS	(4)		//
+#define NUM_SELECT		(2)		//選択欄の数
 
+//**********************************************
+// テクスチャ名
+//**********************************************
+const char *c_apTitleTexName[NUM_TEX] =
+{
+	"Data\\TEXTURE\\TITLE\\TitleBg.png",			//タイトル背景
+	"Data\\TEXTURE\\TITLE\\Tousou_logo.png",		//透走ロゴ
+	"Data\\TEXTURE\\TITLE\\TitleSelect00.png",		//スタート文字
+	"Data\\TEXTURE\\TITLE\\TitleSelect01.png",		//セレクト文字
+};
+
+//**********************************************
+//プロトタイプ宣言
+//**********************************************
+void InitTitleBg(int nCntTitle);							//タイトル背景
+void InitTitleLogo(int nCntTitle);							//タイトルロゴ
+void InitTitleSelect0(int nCntTitle);						//タイトルセレクト(モード)
+void InitTitleSelect1(int nCntTitle);						//タイトルセレクト(ランキング)
+
+void UpdateTitleSelect(void);									//タイトルセレクト(ランキング)
+
+//**********************************************
 //グローバル変数
-LPDIRECT3DTEXTURE9 g_pTextureTitle = NULL;
-LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffTitle = NULL;
-LPDIRECT3DTEXTURE9 g_apTextureTitle[NUM_Title] = {}; //テクスチャへのポインタ
+//**********************************************
+LPDIRECT3DTEXTURE9 g_apTextureTitle[NUM_TEX] = {};	//テクスチャへのポインタ
+LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffTitle = NULL;			//頂点バッファへのポインタ
 
+D3DXVECTOR3 g_aTitlePos[NUM_TITLEPOS];			//タイトル画面に配置される場所
+int g_CurrentNumberTitle;						//現在選択されている番号(モード選択用)
 
-
-TITLESTATE g_TitleState = TITLESTATE_NONE;
-int g_nCounterTitle = 0;
-int g_nPlayer;
-float g_tfChoice;
-float g_tfChoiceA;
-bool g_tbChoiceA;
-//======================================
+//============================================================================
 //初期化処理
-//======================================
+//============================================================================
 void InitTitle(void)
 {
-
-
-	LPDIRECT3DDEVICE9 pDevice; //デバイスのポインタ
+	//変数宣言
 	int nCntTitle;
-	pDevice = GetDevice();
 
-	//テクスチャ読み込み
-	/*D3DXCreateTextureFromFile(pDevice,
-	"Data\\TEXTURE\\skate.jpg",
-	&g_pTextureTitle);*/
+	//デバイスへのポインタを取得
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	D3DXCreateTextureFromFile(pDevice, "Data\\TEXTURE\\Test_logo.jpg", &g_apTextureTitle[0]);
+	//グローバル宣言の初期化
+	for (nCntTitle = 0; nCntTitle < NUM_TITLEPOS; nCntTitle++)
+	{
+		g_aTitlePos[nCntTitle] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	}
+	g_CurrentNumberTitle = 0;
 
+	for (nCntTitle = 0; nCntTitle < NUM_TEX; nCntTitle++)
+	{//テクスチャ読み込み
+		D3DXCreateTextureFromFile(pDevice, c_apTitleTexName[nCntTitle], &g_apTextureTitle[nCntTitle]);
+	}
 
-
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * NUM_Title,
-		D3DUSAGE_WRITEONLY,
-		{ FVF_VERTEX_2D },
-		D3DPOOL_MANAGED,
+	//頂点バッファの生成
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * NUM_TEX,
+		D3DUSAGE_WRITEONLY, { FVF_VERTEX_2D }, D3DPOOL_MANAGED,
 		&g_pVtxBuffTitle,
 		NULL);
-	VERTEX_2D * pVtx;
-	g_pVtxBuffTitle->Lock(0, 0, (void**)&pVtx, 0);
-	for (nCntTitle = 0; nCntTitle < NUM_Title; nCntTitle++)
+
+	//各処理の初期化
+	for (nCntTitle = 0; nCntTitle < NUM_TEX; nCntTitle++)
 	{
-
-		//テクスチャ座標
-		pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-		pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
-		pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
-		pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
-
-		//頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		pVtx[1].pos = D3DXVECTOR3(1280.0f, 0.0f, 0.0f);
-		pVtx[2].pos = D3DXVECTOR3(0.0f, 720.0f, 0.0f);
-		pVtx[3].pos = D3DXVECTOR3(1280.0f, 720.0f, 0.0f);
-
-		//rhwの設定
-		pVtx[0].rhw = 1.0f;
-		pVtx[1].rhw = 1.0f;
-		pVtx[2].rhw = 1.0f;
-		pVtx[3].rhw = 1.0f;
-
-		//頂点カラーの設定
-		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f,1.0f);
-		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f,1.0f);
-		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f,1.0f);
-		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f,1.0f);
-
-		pVtx += 4;
+		switch (nCntTitle)
+		{
+		case 0:
+			InitTitleBg(nCntTitle);			//タイトル背景
+			break;
+		case 1:
+			InitTitleLogo(nCntTitle);		//タイトルロゴ
+			break;
+		case 2:
+			InitTitleSelect0(nCntTitle);	//選択欄(モード選択)
+			break;
+		case 3:
+			InitTitleSelect1(nCntTitle);	//選択欄(ランキング)
+			break;
+		}
 	}
-	g_pVtxBuffTitle->Unlock();
-
-	g_TitleState = TITLESTATE_NORMAL;
-	g_nCounterTitle = 0;
 }
 
-//======================================
+//============================================================================
 //終了処理
-//======================================
+//============================================================================
 void UninitTitle(void)
 {
-
-	if (g_pTextureTitle != NULL)
+	for (int nCntTitle = 0; nCntTitle < NUM_TEX; nCntTitle++)
 	{
-		g_pTextureTitle->Release();
-		g_pTextureTitle = NULL;
-	}
-	if (g_pVtxBuffTitle != NULL)
-	{
-		g_pVtxBuffTitle->Release();
-		g_pVtxBuffTitle = NULL;
-	}
-	for (int nCntTitle = 0; nCntTitle < NUM_Title; nCntTitle++)
-	{
-
+		//テクスチャの破棄
 		if (g_apTextureTitle[nCntTitle] != NULL)
 		{
 			g_apTextureTitle[nCntTitle]->Release();
 			g_apTextureTitle[nCntTitle] = NULL;
 		}
 	}
-
-}
-
-//======================================
-//更新処理
-//======================================
-void UpdateTitle(void)
-{
-
-	
-	FADE Fade = GetFade();
-
-	if (Fade == FADE_NONE)
+	//頂点バッファの破棄
+	if (g_pVtxBuffTitle != NULL)
 	{
-		if (GetKeyboardPress(DIK_RETURN) || GetGamepadPress(BUTTON_START, 0) || GetGamepadPress(BUTTON_A, 0))
-		{
-			SetFade(MODE_GAME);
-		}
+		g_pVtxBuffTitle->Release();
+		g_pVtxBuffTitle = NULL;
 	}
 }
 
-//======================================
+//============================================================================
+//更新処理
+//============================================================================
+void UpdateTitle(void)
+{
+	//選択処理
+	UpdateTitleSelect();
+}
+
+//============================================================================
 //描画処理
-//======================================
+//============================================================================
 void DrawTitle(void)
 {
-
-
-	LPDIRECT3DDEVICE9 pDevice; //デバイスのポインタ
-	pDevice = GetDevice();
-
-	pDevice->SetStreamSource(0, g_pVtxBuffTitle, 0, sizeof(VERTEX_2D));
+	//デバイスへのポインタを取得
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
-	for (int nCntTitle = 0; nCntTitle < NUM_Title; nCntTitle++)
+	//頂点バッファをデータストリームに設定
+	pDevice->SetStreamSource(0, g_pVtxBuffTitle, 0, sizeof(VERTEX_2D));
+
+	for (int nCntTitle = 0; nCntTitle < NUM_TEX; nCntTitle++)
 	{
 		//テクスチャの設定
 		pDevice->SetTexture(0, g_apTextureTitle[nCntTitle]);
@@ -151,20 +149,268 @@ void DrawTitle(void)
 		//ポリゴンの描画
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCntTitle * 4, 2);
 	}
-
-}
-void SetTitleState(TITLESTATE state, int nCounter)
-{
-	g_TitleState = state;
-	g_nCounterTitle = nCounter;
 }
 
-TITLESTATE GetTitleState()
+//************************************
+//初期化処理内
+//************************************
+void InitTitleBg(int nCntTitle)
 {
-	return g_TitleState;
+	//頂点情報へのポインタ
+	VERTEX_2D * pVtx;
+
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	g_pVtxBuffTitle->Lock(0, 0, (void**)&pVtx, 0);
+
+	pVtx += nCntTitle * 4;		//頂点情報を進める
+
+	//頂点座標の設定
+	pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(1280.0f, 0.0f, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(0.0f, 720.0f, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(1280.0f, 720.0f, 0.0f);
+
+	//テクスチャ座標
+	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+
+	//rhwの設定
+	pVtx[0].rhw = 1.0f;
+	pVtx[1].rhw = 1.0f;
+	pVtx[2].rhw = 1.0f;
+	pVtx[3].rhw = 1.0f;
+
+	//頂点カラーの設定
+	pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+	//頂点バッファのアンロック
+	g_pVtxBuffTitle->Unlock();
 }
 
-int GetPlayerNumber()
+//タイトルロゴ
+void InitTitleLogo(int nCntTitle)
 {
-	return g_nPlayer % 2;
+	//頂点情報へのポインタ
+	VERTEX_2D * pVtx;
+
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	g_pVtxBuffTitle->Lock(0, 0, (void**)&pVtx, 0);
+
+	pVtx += nCntTitle * 4;		//頂点情報を進める
+
+	//位置
+	g_aTitlePos[0] = D3DXVECTOR3(1000.0f, 50.0f, 0.0f);
+
+	//頂点座標の設定(原点は中央↑)
+	pVtx[0].pos = D3DXVECTOR3(g_aTitlePos[0].x - 150.0f, g_aTitlePos[0].y, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(g_aTitlePos[0].x + 150.0f, g_aTitlePos[0].y, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(g_aTitlePos[0].x - 150.0f, g_aTitlePos[0].y + 450.0f, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(g_aTitlePos[0].x + 150.0f, g_aTitlePos[0].y + 450.0f, 0.0f);
+
+	//テクスチャ座標
+	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+
+	//rhwの設定
+	pVtx[0].rhw = 1.0f;
+	pVtx[1].rhw = 1.0f;
+	pVtx[2].rhw = 1.0f;
+	pVtx[3].rhw = 1.0f;
+
+	//頂点カラーの設定
+	pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+	//頂点バッファのアンロック
+	g_pVtxBuffTitle->Unlock();
+}
+
+//選択(モード選択文字)
+void InitTitleSelect0(int nCntTitle)
+{
+	//頂点情報へのポインタ
+	VERTEX_2D * pVtx;
+
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	g_pVtxBuffTitle->Lock(0, 0, (void**)&pVtx, 0);
+
+	pVtx += nCntTitle * 4;		//頂点情報を進める
+
+	//位置
+	g_aTitlePos[1] = D3DXVECTOR3(200.0f, 500.0f, 0.0f);
+
+	//頂点座標の設定(原点は中央↑)
+	pVtx[0].pos = D3DXVECTOR3(g_aTitlePos[1].x - 150.0f, g_aTitlePos[1].y, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(g_aTitlePos[1].x + 150.0f, g_aTitlePos[1].y, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(g_aTitlePos[1].x - 150.0f, g_aTitlePos[1].y + 50.0f, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(g_aTitlePos[1].x + 150.0f, g_aTitlePos[1].y + 50.0f, 0.0f);
+
+	//テクスチャ座標
+	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+
+	//rhwの設定
+	pVtx[0].rhw = 1.0f;
+	pVtx[1].rhw = 1.0f;
+	pVtx[2].rhw = 1.0f;
+	pVtx[3].rhw = 1.0f;
+
+	//頂点カラーの設定
+	pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+	//頂点バッファのアンロック
+	g_pVtxBuffTitle->Unlock();
+}
+
+//選択(ランキング文字)
+void InitTitleSelect1(int nCntTitle)
+{
+	//頂点情報へのポインタ
+	VERTEX_2D * pVtx;
+
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	g_pVtxBuffTitle->Lock(0, 0, (void**)&pVtx, 0);
+
+	pVtx += nCntTitle * 4;		//頂点情報を進める
+
+	//位置
+	g_aTitlePos[2] = D3DXVECTOR3(200.0f, 600.0f, 0.0f);
+
+	//頂点座標の設定(原点は中央↑)
+	pVtx[0].pos = D3DXVECTOR3(g_aTitlePos[2].x - 120.0f, g_aTitlePos[2].y, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(g_aTitlePos[2].x + 120.0f, g_aTitlePos[2].y, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(g_aTitlePos[2].x - 120.0f, g_aTitlePos[2].y + 50.0f, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(g_aTitlePos[2].x + 120.0f, g_aTitlePos[2].y + 50.0f, 0.0f);
+
+	//テクスチャ座標
+	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+
+	//rhwの設定
+	pVtx[0].rhw = 1.0f;
+	pVtx[1].rhw = 1.0f;
+	pVtx[2].rhw = 1.0f;
+	pVtx[3].rhw = 1.0f;
+
+	//頂点カラーの設定
+	pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+	pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+	pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+	pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+
+	//頂点バッファのアンロック
+	g_pVtxBuffTitle->Unlock();
+}
+
+//************************************
+//更新処理内の処理
+//************************************
+//タイトル選択
+void UpdateTitleSelect(void)
+{
+	//フェード情報の取得
+	FADE pFade = GetFade();
+
+	//頂点情報へのポインタ
+	VERTEX_2D *pVtx;
+
+	if (GetKeyboardTrigger(DIK_S) == true/* || GetGamePadTrigger(BUTTON_0, 0) == true*/ && pFade == FADE_NONE)
+	{
+		//頂点バッファをロックし、頂点情報へのポインタを取得
+		g_pVtxBuffTitle->Lock(0, 0, (void**)&pVtx, 0);
+
+		pVtx += 8 + (g_CurrentNumberTitle * 4);
+
+		//頂点カラーの設定
+		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+
+		//頂点バッファをアンロックする
+		g_pVtxBuffTitle->Unlock();
+
+		//現在地を先に
+		g_CurrentNumberTitle = (g_CurrentNumberTitle + 1) % NUM_SELECT;
+
+		//頂点バッファをロックし、頂点情報へのポインタを取得
+		g_pVtxBuffTitle->Lock(0, 0, (void**)&pVtx, 0);
+
+		pVtx += 8 + (g_CurrentNumberTitle * 4);
+
+		//頂点カラーの設定
+		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+		//頂点バッファをアンロックする
+		g_pVtxBuffTitle->Unlock();
+	}
+	else if (GetKeyboardTrigger(DIK_W) == true/* || GetGamePadTrigger(BUTTON_1, 0) == true*/)
+	{
+		//頂点バッファをロックし、頂点情報へのポインタを取得
+		g_pVtxBuffTitle->Lock(0, 0, (void**)&pVtx, 0);
+
+		pVtx += 8 + (g_CurrentNumberTitle * 4);
+
+		//頂点カラーの設定
+		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+
+		//頂点バッファをアンロックする
+		g_pVtxBuffTitle->Unlock();
+
+		//現在地を前へ
+		g_CurrentNumberTitle = (g_CurrentNumberTitle - 1 + NUM_SELECT) % NUM_SELECT;
+
+		//頂点バッファをロックし、頂点情報へのポインタを取得
+		g_pVtxBuffTitle->Lock(0, 0, (void**)&pVtx, 0);
+
+		pVtx += 8 + (g_CurrentNumberTitle * 4);
+
+		//頂点カラーの設定
+		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+		//頂点バッファをアンロックする
+		g_pVtxBuffTitle->Unlock();
+	}
+
+	if (pFade == FADE_NONE)
+	{
+		if (GetKeyboardPress(DIK_RETURN) || GetGamepadPress(BUTTON_START, 0) || GetGamepadPress(BUTTON_A, 0))
+		{//決定キー(ENTERキー)が押された
+			//モードの設定(ゲーム画面に移行)
+			if (g_CurrentNumberTitle == 0)
+			{
+				SetFade(MODE_GAME);
+			}
+			else if (g_CurrentNumberTitle == 1)
+			{
+				//モードの設定(ゲーム画面に移行)
+				SetFade(MODE_TITLE);
+			}
+		}
+	}
 }
