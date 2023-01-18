@@ -46,7 +46,8 @@ const char *c_apModelObj[] =					//モデルデータ読み込み
 	"Data\\MODEL\\projecter.x",
 	"Data\\MODEL\\shelf.x",
 	"Data\\MODEL\\vent.x",
-	"Data\\MODEL\\window.x"
+	"Data\\MODEL\\window.x",
+	"Data\\MODEL\\desk_pc.x"
 };
 
 //====================================================================
