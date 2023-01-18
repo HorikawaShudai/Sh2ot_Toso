@@ -119,7 +119,7 @@ void UpdateResult(void)
 
 	if (Fade == FADE_NONE)
 	{
-		if (GetKeyboardPress(DIK_RETURN) || GetGamepadPress(BUTTON_A, 0) || GetGamepadPress(BUTTON_A, 0))
+		if (GetKeyboardPress(DIK_RETURN) || GetGamepadPress(BUTTON_A, 0))
 		{
 			SetFade(MODE_TITLE);
 		}
