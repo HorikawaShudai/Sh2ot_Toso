@@ -51,7 +51,6 @@ void InitPlayer(void)
 	g_Player.vtxMin = D3DXVECTOR3(1000.0f, 1000.0f, 1000.0f);
 	g_Player.vtxMax = D3DXVECTOR3(-1000.0f, -1000.0f, -1000.0f);
 	g_Player.State = PLAYER_NORMAL;
-	g_Player.Action = PLAYER_ACTION_WAIT;
 	g_Player.nLife = PLAYER_LIFE;
 	g_Player.bJump = false;
 	g_Player.bUse = true;
@@ -79,118 +78,6 @@ void InitPlayer(void)
 		NULL,
 		&g_dwNumMatPlayer,
 		&g_pMeshPlayer[0]);
-
-	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\MODEL\\wall.x",
-		D3DXMESH_SYSTEMMEM,
-		pDevice,
-		NULL,
-		&g_pBuffMatPlayer[1],
-		NULL,
-		&g_dwNumMatPlayer,
-		&g_pMeshPlayer[1]);
-
-	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\MODEL\\wall.x",
-		D3DXMESH_SYSTEMMEM,
-		pDevice,
-		NULL,
-		&g_pBuffMatPlayer[2],
-		NULL,
-		&g_dwNumMatPlayer,
-		&g_pMeshPlayer[2]);
-
-	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\MODEL\\wall.x",
-		D3DXMESH_SYSTEMMEM,
-		pDevice,
-		NULL,
-		&g_pBuffMatPlayer[3],
-		NULL,
-		&g_dwNumMatPlayer,
-		&g_pMeshPlayer[3]);
-
-	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\MODEL\\wall.x",
-		D3DXMESH_SYSTEMMEM,
-		pDevice,
-		NULL,
-		&g_pBuffMatPlayer[4],
-		NULL,
-		&g_dwNumMatPlayer,
-		&g_pMeshPlayer[4]);
-
-	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\MODEL\\wall.x",
-		D3DXMESH_SYSTEMMEM,
-		pDevice,
-		NULL,
-		&g_pBuffMatPlayer[5],
-		NULL,
-		&g_dwNumMatPlayer,
-		&g_pMeshPlayer[5]);
-
-	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\MODEL\\wall.x",
-		D3DXMESH_SYSTEMMEM,
-		pDevice,
-		NULL,
-		&g_pBuffMatPlayer[6],
-		NULL,
-		&g_dwNumMatPlayer,
-		&g_pMeshPlayer[6]);
-
-	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data\\MODEL\\wall.x",
-		D3DXMESH_SYSTEMMEM,
-		pDevice,
-		NULL,
-		&g_pBuffMatPlayer[7],
-		NULL,
-		&g_dwNumMatPlayer,
-		&g_pMeshPlayer[7]);
-
-	//各パーツの階層構造設定
-
-	//からだ
-	g_Player.aModel[0].nIndexModelParent = -1;								//親モデルのインデックスを設定
-	g_Player.aModel[0].pos = D3DXVECTOR3(0.0f, 10.0f, 0.0f);				//位置(オフセット)の初期設定
-	g_Player.aModel[0].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);					//向きの初期設定
-
-																			//あたま
-	g_Player.aModel[1].nIndexModelParent = 0;								//親モデルのインデックスを設定
-	g_Player.aModel[1].pos = D3DXVECTOR3(-0.5f, 32.0f, 0.0f);				//位置(オフセット)の初期設定
-	g_Player.aModel[1].rot = D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f);		//向きの初期設定
-
-																			//みぎて
-	g_Player.aModel[2].nIndexModelParent = 0;								//親モデルのインデックスを設定
-	g_Player.aModel[2].pos = D3DXVECTOR3(20.0f, 30.0f, 10.0f);				//位置(オフセット)の初期設定
-	g_Player.aModel[2].rot = D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f);		//向きの初期設定
-
-																			//ひだりて
-	g_Player.aModel[3].nIndexModelParent = 0;								//親モデルのインデックスを設定
-	g_Player.aModel[3].pos = D3DXVECTOR3(-20.0f, 30.0f, 10.0f);				//位置(オフセット)の初期設定
-	g_Player.aModel[3].rot = D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f);		//向きの初期設定
-
-																			//みぎあし
-	g_Player.aModel[4].nIndexModelParent = 0;								//親モデルのインデックスを設定
-	g_Player.aModel[4].pos = D3DXVECTOR3(6.0f, 10.0f, 0.0f);				//位置(オフセット)の初期設定
-	g_Player.aModel[4].rot = D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f);		//向きの初期設定
-
-																			//ひだりあし
-	g_Player.aModel[5].nIndexModelParent = 0;								//親モデルのインデックスを設定
-	g_Player.aModel[5].pos = D3DXVECTOR3(-6.0f, 10.0f, 0.0f);				//位置(オフセット)の初期設定
-	g_Player.aModel[5].rot = D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f);		//向きの初期設定
-
-																			//ぼう
-	g_Player.aModel[6].nIndexModelParent = 2;								//親モデルのインデックスを設定
-	g_Player.aModel[6].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);					//位置(オフセット)の初期設定
-	g_Player.aModel[6].rot = D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f);		//向きの初期設定
-
-																			//たて
-	g_Player.aModel[7].nIndexModelParent = 3;								//親モデルのインデックスを設定
-	g_Player.aModel[7].pos = D3DXVECTOR3(0.0f, 0.0f, 5.0f);					//位置(オフセット)の初期設定
-	g_Player.aModel[7].rot = D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f);		//向きの初期設定
 
 	for (int nCntModel = 0; nCntModel < g_Player.nNumModel; nCntModel++)
 	{
@@ -350,10 +237,6 @@ void UpdatePlayer(void)
 			g_Player.bJump = true;			//ジャンプを使用している状態にする
 		}
 	}
-	else
-	{
-		g_Player.Action = PLAYER_ACTION_JUMP;
-	}
 
 	//位置更新(入力による動き)
 	g_Player.pos += g_Player.move;
@@ -363,22 +246,6 @@ void UpdatePlayer(void)
 	{//床にふれたとき
 		g_Player.pos.y = 0.0f;	//床の上に戻す
 		g_Player.move.y = 0.0f;	//
-
-		if (g_Player.bJump == true)
-		{
-			g_Player.bJump = false;	//ジャンプを使用していない状態にする
-
-			g_Player.aModel[0].pos = D3DXVECTOR3(0.0f, 10.0f, 0.0f);				//位置(オフセット)の初期設定
-			g_Player.aModel[0].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);					//向きの初期設定
-
-																					//みぎて
-			g_Player.aModel[2].pos = D3DXVECTOR3(20.0f, 30.0f, 10.0f);				//位置(オフセット)の初期設定
-			g_Player.aModel[2].rot = D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f);		//向きの初期設定
-
-																					//ひだりて
-			g_Player.aModel[3].pos = D3DXVECTOR3(-20.0f, 30.0f, 10.0f);				//位置(オフセット)の初期設定
-			g_Player.aModel[3].rot = D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f);		//向きの初期設定
-		}
 	}
 
 	//一定速度以上で落下している時にジャンプが出来ない状態にする
@@ -399,17 +266,6 @@ void UpdatePlayer(void)
 		if (g_Player.bJump == true)
 		{
 			g_Player.bJump = false;	//ジャンプを使用していない状態にする
-
-			g_Player.aModel[0].pos = D3DXVECTOR3(0.0f, 10.0f, 0.0f);				//位置(オフセット)の初期設定
-			g_Player.aModel[0].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);					//向きの初期設定
-
-																					//みぎて
-			g_Player.aModel[2].pos = D3DXVECTOR3(20.0f, 30.0f, 10.0f);				//位置(オフセット)の初期設定
-			g_Player.aModel[2].rot = D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f);		//向きの初期設定
-
-																					//ひだりて
-			g_Player.aModel[3].pos = D3DXVECTOR3(-20.0f, 30.0f, 10.0f);				//位置(オフセット)の初期設定
-			g_Player.aModel[3].rot = D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f);		//向きの初期設定
 		}
 	}
 
@@ -431,77 +287,7 @@ void UpdatePlayer(void)
 //====================================================================
 void PlayerMotion(void)
 {
-	switch (g_Player.Action)
-	{
-	case PLAYER_ACTION_WAIT:
 
-		WaitMotionCounter++;
-
-		if (WaitMotionCounter % 20 == 0)
-		{
-			WaitMotion *= -1;
-		}
-
-		g_Player.aModel[0].pos.y -= WaitMotion * 0.5f;
-		g_Player.aModel[0].rot.x -= D3DX_PI * WaitMotion * 0.0005f;
-
-		g_Player.aModel[2].pos.y += WaitMotion * 0.5f;
-		g_Player.aModel[2].pos.z += WaitMotion * 0.25f;
-		g_Player.aModel[2].rot.x += D3DX_PI * WaitMotion * 0.0005f;
-
-		g_Player.aModel[3].pos.y += WaitMotion * 0.5f;
-		g_Player.aModel[3].pos.z += WaitMotion * 0.25f;
-		g_Player.aModel[2].rot.x += D3DX_PI * WaitMotion * 0.0005f;
-
-		MoveMotionCounter = 0;
-		JumpMotionCounter = 0;
-		JumpMotion = 1;
-
-		break;
-
-	case PLAYER_ACTION_MOVE:
-
-		MoveMotionCounter++;
-
-		if (MoveMotionCounter % 5 == 0)
-		{
-			MoveMotion *= -1;
-		}
-
-		g_Player.aModel[0].pos.y += MoveMotion;
-
-		g_Player.aModel[2].pos.z += MoveMotion;
-		g_Player.aModel[2].rot.x += D3DX_PI * MoveMotion * 0.025f;
-
-		g_Player.aModel[3].pos.z -= MoveMotion;
-
-		JumpMotionCounter = 0;
-		JumpMotion = 1;
-
-		break;
-
-	case PLAYER_ACTION_JUMP:
-
-		JumpMotionCounter++;
-
-		if (JumpMotionCounter % 13 == 0)
-		{
-			JumpMotion *= -1;
-		}
-
-		g_Player.aModel[0].pos.y += JumpMotion;
-
-		g_Player.aModel[2].pos.y += JumpMotion * 1.8f;
-		g_Player.aModel[2].pos.z -= JumpMotion * 1.2f;
-		g_Player.aModel[2].rot.x -= D3DX_PI * JumpMotion * 0.025f;
-
-		g_Player.aModel[3].pos.y += JumpMotion * 1.8f;
-		g_Player.aModel[3].pos.z -= JumpMotion * 1.2f;
-
-		MoveMotionCounter = 0;
-
-		break;
-	}
 }
 
 //====================================================================
@@ -559,47 +345,6 @@ void PlayerMoveInput(void)
 	}
 
 	g_Player.move += g_Player.NormarizeMove;
-
-	if (GetGamepad_Stick_Left(0).y != 0.0f || GetGamepad_Stick_Left(0).x != 0.0f || GetKeyboardPress(DIK_T) == true || GetKeyboardPress(DIK_F) == true || GetKeyboardPress(DIK_G) == true || GetKeyboardPress(DIK_H) == true)
-	{
-		if (bWait == true)
-		{
-			g_Player.aModel[0].pos = D3DXVECTOR3(0.0f, 10.0f, 0.0f);				//位置(オフセット)の初期設定
-			g_Player.aModel[0].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);					//向きの初期設定
-
-																					//みぎて
-			g_Player.aModel[2].pos = D3DXVECTOR3(20.0f, 30.0f, 10.0f);				//位置(オフセット)の初期設定
-			g_Player.aModel[2].rot = D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f);		//向きの初期設定
-
-																					//ひだりて
-			g_Player.aModel[3].pos = D3DXVECTOR3(-20.0f, 30.0f, 10.0f);				//位置(オフセット)の初期設定
-			g_Player.aModel[3].rot = D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f);		//向きの初期設定
-
-			bWait = false;
-		}
-
-		g_Player.Action = PLAYER_ACTION_MOVE;
-	}
-	else
-	{
-		if (bWait == false)
-		{
-			g_Player.aModel[0].pos = D3DXVECTOR3(0.0f, 10.0f, 0.0f);				//位置(オフセット)の初期設定
-			g_Player.aModel[0].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);					//向きの初期設定
-
-																					//みぎて
-			g_Player.aModel[2].pos = D3DXVECTOR3(20.0f, 30.0f, 10.0f);				//位置(オフセット)の初期設定
-			g_Player.aModel[2].rot = D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f);		//向きの初期設定
-
-																					//ひだりて
-			g_Player.aModel[3].pos = D3DXVECTOR3(-20.0f, 30.0f, 10.0f);				//位置(オフセット)の初期設定
-			g_Player.aModel[3].rot = D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f);		//向きの初期設定
-
-			bWait = true;
-		}
-
-		g_Player.Action = PLAYER_ACTION_WAIT;
-	}
 }
 
 //====================================================================
@@ -767,39 +512,6 @@ void DrawPlayer(void)
 	//全モデル(パーツ)の描画
 	for (int nCntModel = 0; nCntModel < g_Player.nNumModel; nCntModel++)
 	{
-		D3DXMATRIX mtxRotModel, mtxTransModel;	//計算用マトリックス
-		D3DXMATRIX mtxParent;	//親のマトリックス
-
-								//パーツのマトリックスを初期化
-		D3DXMatrixIdentity(&g_Player.aModel[nCntModel].mtxWorld);
-
-		//パーツの向きを反映
-		D3DXMatrixRotationYawPitchRoll(&mtxRotModel, g_Player.aModel[nCntModel].rot.y, g_Player.aModel[nCntModel].rot.x, g_Player.aModel[nCntModel].rot.z);
-
-		D3DXMatrixMultiply(&g_Player.aModel[nCntModel].mtxWorld, &g_Player.aModel[nCntModel].mtxWorld, &mtxRotModel);
-
-		//パーツの位置を反映
-		D3DXMatrixTranslation(&mtxTransModel, g_Player.aModel[nCntModel].pos.x, g_Player.aModel[nCntModel].pos.y, g_Player.aModel[nCntModel].pos.z);
-
-		D3DXMatrixMultiply(&g_Player.aModel[nCntModel].mtxWorld, &g_Player.aModel[nCntModel].mtxWorld, &mtxTransModel);
-
-		//パーツの「親のマトリックス」を設定
-		if (g_Player.aModel[nCntModel].nIndexModelParent != -1)
-		{//親モデルがある場合
-			mtxParent = g_Player.aModel[g_Player.aModel[nCntModel].nIndexModelParent].mtxWorld;	//親モデルのインデックスのマトリックスを指定する
-		}
-		else
-		{//親モデルがない場合
-			mtxParent = g_Player.mtxWorld;	//プレイヤーのマトリックスを指定する
-		}
-
-		//算出した「パーツのワールドマトリックス」と「親のマトリックス」を掛け合わせる
-		D3DXMatrixMultiply(&g_Player.aModel[nCntModel].mtxWorld,
-			&g_Player.aModel[nCntModel].mtxWorld,
-			&mtxParent);
-
-		//パーツのワールドマトリックスを設定
-		pDevice->SetTransform(D3DTS_WORLD, &g_Player.aModel[nCntModel].mtxWorld);
 
 		//マテリアルデータへのポインタを所得する
 		pMat = (D3DXMATERIAL*)g_pBuffMatPlayer[nCntModel]->GetBufferPointer();

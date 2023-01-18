@@ -300,8 +300,6 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 void Uninit(void)
 {
 	//各種オブジェクトの終了処理
-	UninitTitle();
-	UninitGame();
 	UninitFade();
 
 	//デバイスの終了処理
