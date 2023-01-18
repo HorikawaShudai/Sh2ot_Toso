@@ -30,6 +30,7 @@
 typedef enum
 {
 	MODE_TITLE = 0,
+	MODE_PLAYMODE_SELECT,
 	MODE_GAME,
 	MODE_RESULT,
 	MODE_Tutorial,
