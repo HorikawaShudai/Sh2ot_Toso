@@ -254,3 +254,8 @@ void SetCamera(void)
 	//ビューマトリックスの設定
 	pDevice->SetTransform(D3DTS_VIEW, &g_camera.mtxView);
 }
+
+D3DXVECTOR3 Getrot(void)
+{
+	return g_camera.rot;
+}
