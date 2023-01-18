@@ -160,21 +160,21 @@ void UpdateCamera(void)
 		g_camera.posV.z -= CAMERA_SPEED * sinf(g_camera.rot.y);
 	}
 
-	//左スティックによる前後移動	
-	g_camera.posV.z += GetGamepad_Stick_Left(0).y * cosf(g_camera.rot.y);
-	g_camera.posV.x += GetGamepad_Stick_Left(0).y * sinf(g_camera.rot.y);
+	////左スティックによる前後移動	
+	//g_camera.posV.z += GetGamepad_Stick_Left(0).y * cosf(g_camera.rot.y);
+	//g_camera.posV.x += GetGamepad_Stick_Left(0).y * sinf(g_camera.rot.y);
 
-	//左スティックによる左右移動
-	g_camera.posV.x += GetGamepad_Stick_Left(0).x * cosf(g_camera.rot.y);
-	g_camera.posV.z -= GetGamepad_Stick_Left(0).x * sinf(g_camera.rot.y);
+	////左スティックによる左右移動
+	//g_camera.posV.x += GetGamepad_Stick_Left(0).x * cosf(g_camera.rot.y);
+	//g_camera.posV.z -= GetGamepad_Stick_Left(0).x * sinf(g_camera.rot.y);
 
-	//左スティックによる前後移動	
-	g_camera.posR.z += GetGamepad_Stick_Left(0).y * cosf(g_camera.rot.y);
-	g_camera.posR.x += GetGamepad_Stick_Left(0).y * sinf(g_camera.rot.y);
+	////左スティックによる前後移動	
+	//g_camera.posR.z += GetGamepad_Stick_Left(0).y * cosf(g_camera.rot.y);
+	//g_camera.posR.x += GetGamepad_Stick_Left(0).y * sinf(g_camera.rot.y);
 
-	//左スティックによる左右移動
-	g_camera.posR.x += GetGamepad_Stick_Left(0).x * cosf(g_camera.rot.y);
-	g_camera.posR.z -= GetGamepad_Stick_Left(0).x * sinf(g_camera.rot.y);
+	////左スティックによる左右移動
+	//g_camera.posR.x += GetGamepad_Stick_Left(0).x * cosf(g_camera.rot.y);
+	//g_camera.posR.z -= GetGamepad_Stick_Left(0).x * sinf(g_camera.rot.y);
 
 	//モデル追従処理----------------------
 	//Model * pModel = GetModel();
