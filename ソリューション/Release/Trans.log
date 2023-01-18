@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  Fade.cpp
   camera.cpp
   debugproc.cpp
@@ -20,3 +21,7 @@
   コード生成が終了しました。
   Trans.vcxproj -> C:\Users\student\Desktop\グループ制作1\github3\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\student\Desktop\グループ制作1\github3\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+=======
+﻿  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+>>>>>>> 3dc93fe5693519f1b58da33d4916d01dbdb7ac2e
