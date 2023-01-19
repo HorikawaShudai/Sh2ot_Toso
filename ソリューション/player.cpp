@@ -24,6 +24,7 @@ LPD3DXBUFFER g_pBuffMatPlayer[32] = {};			//マテリアルへのポインタ
 DWORD g_dwNumMatPlayer = 0;						//マテリアルの数
 Player g_aPlayer[NUM_PLAYER];					//プレイヤーの情報
 int g_nIndexPlayerShadow = -1;					//影のインデックス(番号)
+int g_SelectPlayer;								//操作するプレイヤー
 
 //====================================================================
 //プレイヤーの初期化処理
@@ -44,6 +45,8 @@ void InitPlayer(void)
 		g_aPlayer[nCntPlayer].MoveState = PLAYER_MOVESTATE_STEALTH;
 		g_aPlayer[nCntPlayer].nLife = PLAYER_LIFE;
 		g_aPlayer[nCntPlayer].bUse = true;
+
+		g_SelectPlayer = 0;
 
 		g_aPlayer[nCntPlayer].nNumModel = 1;
 
@@ -109,88 +112,97 @@ void UninitPlayer(void)
 //====================================================================
 void UpdatePlayer(void)
 {
+	if (GetKeyboardTrigger(DIK_F3) == true)
+	{
+		g_SelectPlayer++;
+		if (g_SelectPlayer >= NUM_PLAYER)
+		{
+			g_SelectPlayer = 0;
+		}
+	}
 
+	//プレイヤーの状態
+	switch (g_aPlayer[g_SelectPlayer].State)
+	{
+	case PLAYER_NORMAL:
+		break;
+
+	case PLAYER_WAIT:
+		g_aPlayer[g_SelectPlayer].nWaitCounter--;
+		if (g_aPlayer[g_SelectPlayer].nWaitCounter < 0)
+		{
+			g_aPlayer[g_SelectPlayer].State = PLAYER_NORMAL;
+		}
+		break;
+
+	case PLAYER_DAMAGE:
+		g_aPlayer[g_SelectPlayer].nDamageCounter--;
+		if (g_aPlayer[g_SelectPlayer].nDamageCounter < 0)
+		{
+			g_aPlayer[g_SelectPlayer].State = PLAYER_WAIT;
+		}
+		break;
+
+	case PLAYER_HIT:
+		g_aPlayer[g_SelectPlayer].nHitCounter--;
+		if (g_aPlayer[g_SelectPlayer].nHitCounter < 0)
+		{
+			g_aPlayer[g_SelectPlayer].State = PLAYER_DAMAGE;
+		}
+		break;
+	}
+
+	g_aPlayer[g_SelectPlayer].posOld = g_aPlayer[g_SelectPlayer].pos;
+
+	//減衰係数
+	g_aPlayer[g_SelectPlayer].move.x = g_aPlayer[g_SelectPlayer].move.x * 0.5f;
+	g_aPlayer[g_SelectPlayer].move.z = g_aPlayer[g_SelectPlayer].move.z * 0.5f;
+
+	//値の切り捨て
+	if (g_aPlayer[g_SelectPlayer].move.x <= 0.005f && g_aPlayer[g_SelectPlayer].move.x >= -0.005f)
+	{
+		g_aPlayer[g_SelectPlayer].move.x = 0.0f;
+	}
+	if (g_aPlayer[g_SelectPlayer].move.z <= 0.005f && g_aPlayer[g_SelectPlayer].move.z >= -0.005f)
+	{
+		g_aPlayer[g_SelectPlayer].move.z = 0.0f;
+	}
+
+	//重力の追加
+	g_aPlayer[g_SelectPlayer].move.y -= 10.0f;
+
+	//プレイヤーの移動入力処理----------
+	PlayerMoveInput(g_SelectPlayer);
+
+	//位置更新(入力による動き)
+	g_aPlayer[g_SelectPlayer].pos += g_aPlayer[g_SelectPlayer].move;
+
+	//床の追加
+	if (g_aPlayer[g_SelectPlayer].pos.y < 0.0f)
+	{//床にふれたとき
+		g_aPlayer[g_SelectPlayer].pos.y = 0.0f;	//床の上に戻す
+		g_aPlayer[g_SelectPlayer].move.y = 0.0f;	//
+	}
+
+	//移動時にプレイヤーの向きを補正する----------
+	PlayerRotUpdate(g_SelectPlayer);
+
+	//オブジェクトとの当たり判定
+	CollisionObject00(&g_aPlayer[g_SelectPlayer].pos, &g_aPlayer[g_SelectPlayer].posOld, &g_aPlayer[g_SelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
+
+	//一周した時の向きの補正
+	if (g_aPlayer[g_SelectPlayer].rot.y > D3DX_PI * 1.0f)
+	{
+		g_aPlayer[g_SelectPlayer].rot.y -= D3DX_PI * 2.0f;
+	}
+	else if (g_aPlayer[g_SelectPlayer].rot.y < -D3DX_PI * 1.0f)
+	{
+		g_aPlayer[g_SelectPlayer].rot.y += D3DX_PI * 2.0f;
+	}
+
+	PrintDebugProc("【F3】でプレイヤー切り替え：【プレイヤー%d】\n", g_SelectPlayer + 1);
 	for (int nCntPlayer = 0; nCntPlayer < NUM_PLAYER; nCntPlayer++)
 	{
-		//プレイヤーの状態
-		switch (g_aPlayer[nCntPlayer].State)
-		{
-		case PLAYER_NORMAL:
-			break;
-
-		case PLAYER_WAIT:
-			g_aPlayer[nCntPlayer].nWaitCounter--;
-			if (g_aPlayer[nCntPlayer].nWaitCounter < 0)
-			{
-				g_aPlayer[nCntPlayer].State = PLAYER_NORMAL;
-			}
-			break;
-
-		case PLAYER_DAMAGE:
-			g_aPlayer[nCntPlayer].nDamageCounter--;
-			if (g_aPlayer[nCntPlayer].nDamageCounter < 0)
-			{
-				g_aPlayer[nCntPlayer].State = PLAYER_WAIT;
-			}
-			break;
-
-		case PLAYER_HIT:
-			g_aPlayer[nCntPlayer].nHitCounter--;
-			if (g_aPlayer[nCntPlayer].nHitCounter < 0)
-			{
-				g_aPlayer[nCntPlayer].State = PLAYER_DAMAGE;
-			}
-			break;
-		}
-
-		g_aPlayer[nCntPlayer].posOld = g_aPlayer[nCntPlayer].pos;
-
-		//減衰係数
-		g_aPlayer[nCntPlayer].move.x = g_aPlayer[nCntPlayer].move.x * 0.5f;
-		g_aPlayer[nCntPlayer].move.z = g_aPlayer[nCntPlayer].move.z * 0.5f;
-
-		//値の切り捨て
-		if (g_aPlayer[nCntPlayer].move.x <= 0.005f && g_aPlayer[nCntPlayer].move.x >= -0.005f)
-		{
-			g_aPlayer[nCntPlayer].move.x = 0.0f;
-		}
-		if (g_aPlayer[nCntPlayer].move.z <= 0.005f && g_aPlayer[nCntPlayer].move.z >= -0.005f)
-		{
-			g_aPlayer[nCntPlayer].move.z = 0.0f;
-		}
-
-		//重力の追加
-		g_aPlayer[nCntPlayer].move.y -= 10.0f;
-
-		//プレイヤーの移動入力処理----------
-		PlayerMoveInput(nCntPlayer);
-
-		//位置更新(入力による動き)
-		g_aPlayer[nCntPlayer].pos += g_aPlayer[nCntPlayer].move;
-
-		//床の追加
-		if (g_aPlayer[nCntPlayer].pos.y < 0.0f)
-		{//床にふれたとき
-			g_aPlayer[nCntPlayer].pos.y = 0.0f;	//床の上に戻す
-			g_aPlayer[nCntPlayer].move.y = 0.0f;	//
-		}
-
-		//移動時にプレイヤーの向きを補正する----------
-		PlayerRotUpdate(nCntPlayer);
-
-		//オブジェクトとの当たり判定
-		CollisionObject00(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
-
-		//一周した時の向きの補正
-		if (g_aPlayer[nCntPlayer].rot.y > D3DX_PI * 1.0f)
-		{
-			g_aPlayer[nCntPlayer].rot.y -= D3DX_PI * 2.0f;
-		}
-		else if (g_aPlayer[nCntPlayer].rot.y < -D3DX_PI * 1.0f)
-		{
-			g_aPlayer[nCntPlayer].rot.y += D3DX_PI * 2.0f;
-		}
-
 		PrintDebugProc("プレイヤー%d人目の座標【X : %f | Y : %f | Z : %f】\n", nCntPlayer, g_aPlayer[nCntPlayer].pos.x, g_aPlayer[nCntPlayer].pos.y, g_aPlayer[nCntPlayer].pos.z);
 	}
 	PrintDebugProc("左スティックの出力【%f】", GetGamepad_Stick_Left(0).y);

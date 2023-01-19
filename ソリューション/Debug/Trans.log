@@ -1,2 +1,32 @@
+<<<<<<< HEAD
 ﻿  Trans.vcxproj -> C:\Users\student\Desktop\グループ制作1\github3\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+=======
+<<<<<<< HEAD
+﻿  main.cpp
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+﻿  title.cpp
+  stage.cpp
+  result.cpp
+  PlayModeSelect.cpp
+  player.cpp
+  object00.cpp
+  meshwall.cpp
+  main.cpp
+  light.cpp
+  input.cpp
+  game.cpp
+  Fade.cpp
+  edit.cpp
+  debugproc.cpp
+  camera.cpp
+  コードを生成中...
+  コンパイル中...
+  life.cpp
+  enemy.cpp
+  コードを生成中...
+  Trans.vcxproj -> C:\Users\student\Desktop\グループ制作1\github3\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+>>>>>>> 9d286f08c43dffda6b3048c433e6ea5be6f80221
   Trans.vcxproj -> C:\Users\student\Desktop\グループ制作1\github3\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+>>>>>>> 0cb81372ffbb1951384c79312f5955677c72fe8b
