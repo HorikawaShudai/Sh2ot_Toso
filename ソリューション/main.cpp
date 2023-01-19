@@ -287,7 +287,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	InitFade(g_mode);
 
-	SetFade(g_mode);
+	SetMode(g_mode);
 
 	//デバッグプロックの初期化
 	InitDebugProc();
