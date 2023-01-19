@@ -1,6 +1,7 @@
 ﻿  title.cpp
   stage.cpp
   result.cpp
+  PlayModeSelect.cpp
   player.cpp
   object00.cpp
   meshwall.cpp
@@ -8,13 +9,14 @@
   light.cpp
   input.cpp
   game.cpp
-  enemy.cpp
+  Fade.cpp
   edit.cpp
   debugproc.cpp
   camera.cpp
-  PlayModeSelect.cpp
-  Fade.cpp
   コードを生成中...
-  LINK : 前回のインクリメンタル リンクで C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+  コンパイル中...
+  life.cpp
+  enemy.cpp
+  コードを生成中...
+  Trans.vcxproj -> C:\Users\student\Desktop\グループ制作1\github3\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\グループ制作1\github3\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)

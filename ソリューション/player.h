@@ -48,7 +48,7 @@ void UninitPlayer(void);
 void UpdatePlayer(void);
 void PlayerMoveInput(int nCnt);
 void PlayerRotUpdate(int nCnt);
-void PlayerHit(void);
+void PlayerHit(int nCnt,int nDamage);
 void CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY, float MinY);
 void DrawPlayer(void);
 Player * GetPlayer(void);

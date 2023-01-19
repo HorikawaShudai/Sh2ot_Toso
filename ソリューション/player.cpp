@@ -282,6 +282,13 @@ void PlayerMoveInput(int nCnt)
 
 		g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_STEALTHSPEED;
 		g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_STEALTHSPEED;
+	//体力が減るかどうかテスト用
+	if (GetKeyboardTrigger(DIK_M) == true)
+	{
+		PlayerHit(nCnt,1);
+	}
+
+	g_aPlayer[nCnt].move += g_aPlayer[nCnt].NormarizeMove;
 
 		//プレイヤーをステルス状態にする
 		g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;
@@ -416,7 +423,7 @@ void CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY
 			pos.y + MinY <= g_aPlayer[nCntPlayer].pos.y + 10.0f
 			)
 		{//弾とプレイヤーが当たった(Z軸)
-			PlayerHit();
+			PlayerHit(nCntPlayer,1);
 		}
 	}
 }
@@ -424,9 +431,20 @@ void CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY
 //====================================================================
 //プレイヤーのヒット処理
 //====================================================================
-void PlayerHit(void)
+void PlayerHit(int nCnt,int nDamage)
 {
+	g_aPlayer[nCnt].nLife -= nDamage;
 
+	if (g_aPlayer[nCnt].nLife <= 0)
+	{
+		g_aPlayer[nCnt].bUse = false;
+
+	}
+
+	else
+	{
+		g_aPlayer[nCnt].State = PLAYER_HIT;
+	}
 }
 
 //====================================================================
