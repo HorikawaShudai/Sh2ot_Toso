@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  stamina.cpp
   コード生成しています。
   3 of 171 functions ( 1.8%) were compiled, the rest were copied from previous compilation.
@@ -6,3 +7,7 @@
   コード生成が終了しました。
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+=======
+﻿  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+>>>>>>> 603dc4379aac527da69900e3d65dcee66642d093
