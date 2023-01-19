@@ -16,6 +16,16 @@ typedef enum
 
 }ENEMY_NTYPE;
 
+typedef enum
+{
+	ENEMYSTATE_STOP = 0,	//’âŽ~ó‘Ô
+	ENEMYSTATE_PATROL,		//„‰ñ
+	ENEMYSTATE_CHASE,		//’ÇÕ
+	ENEMYSTATE_SEEK,		//’T‚·
+	ENEMYSTATE_ATTACK,		//UŒ‚
+	ENEMYSTATE_MAX
+}ENEMYSTATE;
+
 //ƒ‚ƒfƒ‹‚Ì\‘¢‘Ì
 typedef struct
 {
