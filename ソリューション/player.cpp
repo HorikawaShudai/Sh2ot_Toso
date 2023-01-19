@@ -297,7 +297,7 @@ void PlayerMoveInput(int nCnt)
 	//体力が減るかどうかテスト用
 	if (GetKeyboardTrigger(DIK_M) == true)
 	{
-		PlayerHit(1);
+		PlayerHit(nCnt,1);
 	}
 
 	g_aPlayer[nCnt].move += g_aPlayer[nCnt].NormarizeMove;
@@ -435,7 +435,7 @@ void CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY
 			pos.y + MinY <= g_aPlayer[nCntPlayer].pos.y + 10.0f
 			)
 		{//弾とプレイヤーが当たった(Z軸)
-			PlayerHit(1);
+			PlayerHit(nCntPlayer,1);
 		}
 	}
 }
@@ -443,19 +443,19 @@ void CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY
 //====================================================================
 //プレイヤーのヒット処理
 //====================================================================
-void PlayerHit(int nDamage)
+void PlayerHit(int nCnt,int nDamage)
 {
-	g_aPlayer[0].nLife -= nDamage;
+	g_aPlayer[nCnt].nLife -= nDamage;
 
-	if (g_aPlayer[0].nLife <= 0)
+	if (g_aPlayer[nCnt].nLife <= 0)
 	{
-		g_aPlayer[0].bUse = false;
+		g_aPlayer[nCnt].bUse = false;
 
 	}
 
 	else
 	{
-		g_aPlayer[0].State = PLAYER_HIT;
+		g_aPlayer[nCnt].State = PLAYER_HIT;
 	}
 }
 
