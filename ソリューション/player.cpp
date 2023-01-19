@@ -558,6 +558,12 @@ void PlayerMoveInput(void)
 		g_Player.NormarizeMove.z *= PLAYER_SPEED;
 	}
 
+	//体力が減るかどうかテスト用
+	if (GetKeyboardTrigger(DIK_M) == true)
+	{
+		PlayerHit(1);
+	}
+
 	g_Player.move += g_Player.NormarizeMove;
 
 	if (GetGamepad_Stick_Left(0).y != 0.0f || GetGamepad_Stick_Left(0).x != 0.0f || GetKeyboardPress(DIK_T) == true || GetKeyboardPress(DIK_F) == true || GetKeyboardPress(DIK_G) == true || GetKeyboardPress(DIK_H) == true)
@@ -722,16 +728,27 @@ void CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY
 		pos.y + MinY <= g_Player.pos.y + g_Player.vtxMax.y
 		)
 	{//弾とプレイヤーが当たった(Z軸)
-		PlayerHit();
+		PlayerHit(1);
 	}
 }
 
 //====================================================================
 //プレイヤーのヒット処理
 //====================================================================
-void PlayerHit(void)
+void PlayerHit(int nDamage)
 {
+	g_Player.nLife -= nDamage;
 
+	if (g_Player.nLife <= 0)
+	{
+		g_Player.bUse = false;
+
+	}
+
+	else
+	{
+		g_Player.State = PLAYER_HIT;
+	}
 }
 
 //====================================================================

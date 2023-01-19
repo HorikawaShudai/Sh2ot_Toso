@@ -10,6 +10,7 @@
 #include "player.h"
 #include "debugproc.h"
 #include "enemy.h"
+#include "life.h"
 
 bool g_bPause = false;
 bool g_bEdit = false;
@@ -42,6 +43,8 @@ void InitGame()
 
 	InitEnemy();
 
+	InitLife();
+
 	SetStage(0);
 }
 
@@ -62,6 +65,8 @@ void UninitGame()
 
 	UninitPlayer();
 	UninitEnemy();
+
+	UninitLife();
 }
 
 //====================================================================
@@ -116,6 +121,8 @@ void UpdateGame()
 		UpdatePlayer();
 
 		UpdateEnemy();
+
+		UpdateLife();
 	}
 }
 
@@ -136,6 +143,7 @@ void DrawGame()
 	DrawObject00();
 	DrawPlayer();
 	DrawEnemy();
+	DrawLife();
 }
 
 //====================================================================

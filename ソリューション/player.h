@@ -71,7 +71,7 @@ void UpdatePlayer(void);
 void PlayerMotion(void);
 void PlayerMoveInput(void);
 void PlayerRotUpdate(void);
-void PlayerHit(void);
+void PlayerHit(int nDamage);
 void CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY, float MinY);
 void DrawPlayer(void);
 void SetNextLife(void);
