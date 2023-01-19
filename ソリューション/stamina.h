@@ -15,7 +15,7 @@ typedef struct
 	D3DXVECTOR3 pos;			//位置
 	D3DXCOLOR col;				//色
 	int nFalseTime;				//スタミナが使われていない時間のカウント
-	float fStamina;				//スタミナの横幅
+	float fGaugeSize;			//スタミナのサイズ(横幅)
 	bool bUse;					//使っているかどうか
 } Stamina;
 

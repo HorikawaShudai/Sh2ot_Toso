@@ -11,6 +11,7 @@
 #include "debugproc.h"
 #include "enemy.h"
 #include "stamina.h"
+#include "life.h"
 
 bool g_bPause = false;
 bool g_bEdit = false;
@@ -46,6 +47,9 @@ void InitGame()
 	//スタミナの初期化処理
 	InitStamina();
 
+	//ライフの初期化処理
+	InitLife();
+
 	SetStage(0);
 }
 
@@ -70,6 +74,9 @@ void UninitGame()
 
 	//スタミナの終了処理
 	UninitStamina();
+
+	//ライフの終了処理
+	UninitLife();
 }
 
 //====================================================================
@@ -127,6 +134,9 @@ void UpdateGame()
 
 		//スタミナの更新処理
 		UpdateStamina();
+
+		//ライフの更新処理
+		UpdateLife();
 	}
 }
 
@@ -153,6 +163,9 @@ void DrawGame()
 
 	//スタミナの描画処理
 	DrawStamina();
+
+	//ライフの描画処理
+	DrawLife();
 }
 
 //====================================================================

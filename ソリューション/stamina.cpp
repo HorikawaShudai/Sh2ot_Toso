@@ -17,7 +17,7 @@
 
 #define DEC_SPEED		(2.0f)		// スタミナの減るスピード
 #define RECOVERY_SPEED	(0.7f)		// スタミナの回復スピード
-#define TIRED_VALUE		(150)		// 赤ゲージに入る数値
+#define TIRED_VALUE		(STAMINA_WIDTH / 3)		// 赤ゲージに入る数値
 
 //**********************************************
 // テクスチャ名
@@ -33,7 +33,7 @@ const char *c_apStaminaTexName[NUM_TEX] =
 void InitStaminaGauge(void);						//スタミナゲージの初期化
 
 void UpdateStaminaGauge(void);						//スタミナゲージの更新
-void StaminaIAD(int nCntStamina);								//スタミナの増減
+void StaminaIAD(int nCntStamina, Player *pPlayer);								//スタミナの増減
 
 //**********************************************
 //グローバル変数
@@ -57,10 +57,10 @@ void InitStamina(void)
 	//グローバル宣言の初期化
 	for (nCntStamina = 0; nCntStamina < NUM_PLAYER; nCntStamina++)
 	{
-		g_aStamina[nCntStamina].pos = D3DXVECTOR3(SCREEN_WIDTH * 0.5f, 700.0f, 0.0f);			//位置
+		g_aStamina[nCntStamina].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			//位置
 		g_aStamina[nCntStamina].col = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.0f);						//色
 		g_aStamina[nCntStamina].nFalseTime = 0;													//スタミナが使われていないときのカウント
-		g_aStamina[nCntStamina].fStamina = STAMINA_WIDTH;										//スタミナ
+		g_aStamina[nCntStamina].fGaugeSize = STAMINA_WIDTH;										//スタミナ
 		g_aStamina[nCntStamina].bUse = false;													//使っていない状態
 	}
 
@@ -71,12 +71,16 @@ void InitStamina(void)
 	}
 
 	//頂点バッファの生成
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * NUM_TEX,
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * NUM_TEX * NUM_PLAYER,
 		D3DUSAGE_WRITEONLY, { FVF_VERTEX_2D }, D3DPOOL_MANAGED,
 		&g_pVtxBuffStamina,
 		NULL);
 	
 	InitStaminaGauge();			//スタミナゲージ
+
+	//SetStamina(D3DXVECTOR3(640.0f, 150.0f, 0.0f));
+
+	//SetStamina(D3DXVECTOR3(640.0f, 650.0f, 0.0f));
 }
 
 //============================================================================
@@ -124,29 +128,30 @@ void DrawStamina(void)
 	//頂点バッファをデータストリームに設定
 	pDevice->SetStreamSource(0, g_pVtxBuffStamina, 0, sizeof(VERTEX_2D));
 
-	for (int nCntTitle = 0; nCntTitle < NUM_TEX; nCntTitle++)
-	{
-		//テクスチャの設定
-		pDevice->SetTexture(0, g_apTextureStamina[nCntTitle]);
+	//テクスチャの設定
+	pDevice->SetTexture(0, g_apTextureStamina[0]);
 
+	for (int nCntStamina = 0; nCntStamina < NUM_PLAYER; nCntStamina++)
+	{
 		//ポリゴンの描画
-		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCntTitle * 4, 2);
+		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCntStamina * 4, 2);
 	}
 }
 
-//============================================================================
-// スタミナのセット処理
-//============================================================================
-void SetStamina(D3DXVECTOR3 pos)
-{
-	for (int nCntStamina = 0; nCntStamina < 128; nCntStamina++)
-	{
-		if (g_aStamina[nCntStamina].bUse == false)
-		{
-			g_aStamina[nCntStamina].pos = pos;
-		}
-	}
-}
+//====================================================
+//
+//====================================================
+//void SetStamina(D3DXVECTOR3 pos)
+//{
+//	for (int nCntStamina = 0; nCntStamina < NUM_PLAYER; nCntStamina++)
+//	{
+//		if (g_aStamina[nCntStamina].bUse == false)
+//		{
+//			g_aStamina[nCntStamina].pos = pos;
+//			g_aStamina[nCntStamina].bUse = true;
+//		}
+//	}
+//}
 
 //************************************
 //初期化処理内
@@ -157,18 +162,34 @@ void InitStaminaGauge(void)
 	//頂点情報へのポインタ
 	VERTEX_2D * pVtx;
 
-	//Player *pPlayer = GetPlayer();
-
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	g_pVtxBuffStamina->Lock(0, 0, (void**)&pVtx, 0);
 
 	for (int nCntStamina = 0; nCntStamina < NUM_PLAYER; nCntStamina++)
 	{
+		switch (nCntStamina)
+		{
+		case 0:
+			g_aStamina[nCntStamina].pos = D3DXVECTOR3(640.0f, 610.0f, 0.0f);
+			break;
+		case 1:
+			g_aStamina[nCntStamina].pos = D3DXVECTOR3(640.0f, 640.0f, 0.0f);
+			break;
+		case 2:
+			g_aStamina[nCntStamina].pos = D3DXVECTOR3(640.0f, 670.0f, 0.0f);
+			break;
+		case 3:
+			g_aStamina[nCntStamina].pos = D3DXVECTOR3(640.0f, 700.0f, 0.0f);
+			break;
+		}
+		
+
+
 		//頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(g_aStamina[nCntStamina].pos.x - g_aStamina[nCntStamina].fStamina,	g_aStamina[nCntStamina].pos.y - STAMINA_HEIGHT, 0.0f);
-		pVtx[1].pos = D3DXVECTOR3(g_aStamina[nCntStamina].pos.x + g_aStamina[nCntStamina].fStamina,	g_aStamina[nCntStamina].pos.y - STAMINA_HEIGHT, 0.0f);
-		pVtx[2].pos = D3DXVECTOR3(g_aStamina[nCntStamina].pos.x - g_aStamina[nCntStamina].fStamina,	g_aStamina[nCntStamina].pos.y + STAMINA_HEIGHT, 0.0f);
-		pVtx[3].pos = D3DXVECTOR3(g_aStamina[nCntStamina].pos.x + g_aStamina[nCntStamina].fStamina,	g_aStamina[nCntStamina].pos.y + STAMINA_HEIGHT, 0.0f);
+		pVtx[0].pos = D3DXVECTOR3(g_aStamina[nCntStamina].pos.x - g_aStamina[nCntStamina].fGaugeSize,	g_aStamina[nCntStamina].pos.y - STAMINA_HEIGHT, 0.0f);
+		pVtx[1].pos = D3DXVECTOR3(g_aStamina[nCntStamina].pos.x + g_aStamina[nCntStamina].fGaugeSize,	g_aStamina[nCntStamina].pos.y - STAMINA_HEIGHT, 0.0f);
+		pVtx[2].pos = D3DXVECTOR3(g_aStamina[nCntStamina].pos.x - g_aStamina[nCntStamina].fGaugeSize,	g_aStamina[nCntStamina].pos.y + STAMINA_HEIGHT, 0.0f);
+		pVtx[3].pos = D3DXVECTOR3(g_aStamina[nCntStamina].pos.x + g_aStamina[nCntStamina].fGaugeSize,	g_aStamina[nCntStamina].pos.y + STAMINA_HEIGHT, 0.0f);
 
 		//テクスチャ座標
 		pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
@@ -198,7 +219,7 @@ void InitStaminaGauge(void)
 //************************************
 //更新処理内の処理
 //************************************
-// スタミナの動き
+// スタミナの動
 void UpdateStaminaGauge(void)
 {
 	//頂点情報へのポインタ
@@ -210,18 +231,19 @@ void UpdateStaminaGauge(void)
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	g_pVtxBuffStamina->Lock(0, 0, (void**)&pVtx, 0);
 
-	for (int nCntStamina = 0; nCntStamina < NUM_PLAYER; nCntStamina++)
+	for (int nCntStamina = 0; nCntStamina < NUM_PLAYER; nCntStamina++, pPlayer++)
 	{
 		if (pPlayer->bUse == true/* && g_aStamina[nCntStamina].bUse == true*/)
 		{//使われていた場合
+
 			//スタミナの増減
-			StaminaIAD(nCntStamina);
+			StaminaIAD(nCntStamina, pPlayer);
 
 			//頂点座標の設定
-			pVtx[0].pos = D3DXVECTOR3(g_aStamina[nCntStamina].pos.x - g_aStamina[nCntStamina].fStamina, g_aStamina[nCntStamina].pos.y - STAMINA_HEIGHT, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(g_aStamina[nCntStamina].pos.x + g_aStamina[nCntStamina].fStamina, g_aStamina[nCntStamina].pos.y - STAMINA_HEIGHT, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(g_aStamina[nCntStamina].pos.x - g_aStamina[nCntStamina].fStamina, g_aStamina[nCntStamina].pos.y + STAMINA_HEIGHT, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(g_aStamina[nCntStamina].pos.x + g_aStamina[nCntStamina].fStamina, g_aStamina[nCntStamina].pos.y + STAMINA_HEIGHT, 0.0f);
+			pVtx[0].pos = D3DXVECTOR3(g_aStamina[nCntStamina].pos.x - g_aStamina[nCntStamina].fGaugeSize, g_aStamina[nCntStamina].pos.y - STAMINA_HEIGHT, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(g_aStamina[nCntStamina].pos.x + g_aStamina[nCntStamina].fGaugeSize, g_aStamina[nCntStamina].pos.y - STAMINA_HEIGHT, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(g_aStamina[nCntStamina].pos.x - g_aStamina[nCntStamina].fGaugeSize, g_aStamina[nCntStamina].pos.y + STAMINA_HEIGHT, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(g_aStamina[nCntStamina].pos.x + g_aStamina[nCntStamina].fGaugeSize, g_aStamina[nCntStamina].pos.y + STAMINA_HEIGHT, 0.0f);
 
 			//頂点カラーの設定
 			pVtx[0].col = D3DXCOLOR(g_aStamina[nCntStamina].col.r, g_aStamina[nCntStamina].col.g, g_aStamina[nCntStamina].col.b, g_aStamina[nCntStamina].col.a);
@@ -238,30 +260,24 @@ void UpdateStaminaGauge(void)
 }
 
 // スタミナの増減処理
-void StaminaIAD(int nCntStamina)
+void StaminaIAD(int nCntStamina, Player *pPlayer)
 {
 	//プレイヤー情報の取得
-	Player *pPlayer = GetPlayer();
+	//Player *pPlayer = GetPlayer();
 
 	//プレイヤーの状態がダッシュ状態の場合
 	if (pPlayer->MoveState == PLAYER_MOVESTATE_DASH)
 	{
-		g_aStamina[nCntStamina].fStamina -= 1.5f;			//スタミナを減らす
+		g_aStamina[nCntStamina].fGaugeSize -= 1.5f;			//スタミナを減らす
 
 		g_aStamina[nCntStamina].col.a = 0.5f;				//スタミナゲージを表示
 	}
-	else if(g_aStamina[nCntStamina].fStamina <= STAMINA_WIDTH)
+	else if(g_aStamina[nCntStamina].fGaugeSize <= STAMINA_WIDTH)
 	{//スタミナが減っていた場合
 
-		g_aStamina[nCntStamina].fStamina += 0.7f;			//スタミナを回復する
+		g_aStamina[nCntStamina].fGaugeSize += 0.7f;			//スタミナを回復する
 
-
-		if (g_aStamina[nCntStamina].fStamina < TIRED_VALUE)
-		{
-			g_aStamina[nCntStamina].col.r = 1.0f;
-		}
-
-		if (g_aStamina[nCntStamina].fStamina > TIRED_VALUE)
+		if (g_aStamina[nCntStamina].fGaugeSize > TIRED_VALUE)
 		{
 			g_aStamina[nCntStamina].col.r = 0.5f;
 
@@ -271,7 +287,7 @@ void StaminaIAD(int nCntStamina)
 	}
 
 	//疲労状態以外の場合
-	if (pPlayer->MoveState != PLAYER_MOVESTATE_FATIGE && g_aStamina[nCntStamina].fStamina >= STAMINA_WIDTH)
+	if (pPlayer->MoveState != PLAYER_MOVESTATE_FATIGE && g_aStamina[nCntStamina].fGaugeSize >= STAMINA_WIDTH)
 	{
 		//カウントを進める
 		g_aStamina[nCntStamina].nFalseTime++;
@@ -283,9 +299,13 @@ void StaminaIAD(int nCntStamina)
 	}
 
 	//スタミナゲージが0以下に行かないように
-	if (g_aStamina[nCntStamina].fStamina <= 0.0f)
+	if (g_aStamina[nCntStamina].fGaugeSize <= 0.0f)
 	{
-		g_aStamina[nCntStamina].fStamina = 0.0f;
+		g_aStamina[nCntStamina].fGaugeSize = 0.0f;
+
+		
+		g_aStamina[nCntStamina].col.r = 1.0f;
+		
 
 		//疲労状態にする
 		pPlayer->MoveState = PLAYER_MOVESTATE_FATIGE;

@@ -1,13 +1,16 @@
 <<<<<<< HEAD
-﻿  stamina.cpp
+﻿  game.cpp
+  life.cpp
+  player.cpp
+  stamina.cpp
   コード生成しています。
-  3 of 171 functions ( 1.8%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+  46 of 179 functions (25.7%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    23 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+  Trans.vcxproj -> C:\Users\student\Desktop\a\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\a\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
 =======
-﻿  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
->>>>>>> 603dc4379aac527da69900e3d65dcee66642d093
+﻿  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (2)\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (2)\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+>>>>>>> 2e911e4cea54de006bfa48083ac24ec71514f1fe

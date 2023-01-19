@@ -11,7 +11,7 @@
 
 //マクロ定義
 #define NUM_PLACE     (3)			//ライフの数
-#define MAX_PLAYER    (4)			//プレイヤーの最大数
+#define MAX_PLAYER    (NUM_PLAYER)			//プレイヤーの最大数
 
 #define LIFEPOS_X_0     (30.0f)		//1人目ライフのX位置
 #define LIFEPOS_Y_0     (50.0f)		//1人目ライフのY位置
