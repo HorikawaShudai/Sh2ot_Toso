@@ -288,7 +288,7 @@ void PlayerMoveInput(int nCnt)
 		PlayerHit(1);
 	}
 
-	g_Player.move += g_Player.NormarizeMove;
+	g_aPlayer[nCnt].move += g_aPlayer[nCnt].NormarizeMove;
 
 		//プレイヤーをステルス状態にする
 		g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;
@@ -433,17 +433,17 @@ void CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY
 //====================================================================
 void PlayerHit(int nDamage)
 {
-	g_Player.nLife -= nDamage;
+	g_aPlayer[0].nLife -= nDamage;
 
-	if (g_Player.nLife <= 0)
+	if (g_aPlayer[0].nLife <= 0)
 	{
-		g_Player.bUse = false;
+		g_aPlayer[0].bUse = false;
 
 	}
 
 	else
 	{
-		g_Player.State = PLAYER_HIT;
+		g_aPlayer[0].State = PLAYER_HIT;
 	}
 }
 
