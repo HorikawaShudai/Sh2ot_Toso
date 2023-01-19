@@ -8,7 +8,6 @@
 #include "debugproc.h"
 #include "fade.h"
 
-#define NUM_PLAYER (4)			//プレイヤーの最大人数
 #define PLAYER_STEALTHSPEED (1.0f)		//プレイヤーのステルススピード
 #define PLAYER_SPEED (3.0f)				//プレイヤーのスピード
 #define PLAYER_DASHSPEED (5.0f)				//プレイヤーのダッシュスピード
@@ -268,14 +267,18 @@ void PlayerMoveInput(int nCnt)
 	}
 
 	//左スティックの速度処理と移動の三段階の使い分け処理
-	if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) != 0 && GetGamepadPress(BUTTON_A, 0))
+	if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) != 0 && GetGamepadPress(BUTTON_A, 0) || GetKeyboardPress(DIK_SPACE) == true)
 	{//入力してる状態かつAボタンを押しているとき
 
-		g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_DASHSPEED;
-		g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_DASHSPEED;
+		if (g_aPlayer[nCnt].MoveState != PLAYER_MOVESTATE_FATIGE)
+		{//疲労状態以外のとき
 
-		//プレイヤーをダッシュ状態にする
-		g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_DASH;
+			g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_DASHSPEED;
+			g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_DASHSPEED;
+
+			//プレイヤーをダッシュ状態にする
+			g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_DASH;
+		}
 	}
 	else if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) < 0.95f)
 	{//左スティックを倒し切っていない状態のとき

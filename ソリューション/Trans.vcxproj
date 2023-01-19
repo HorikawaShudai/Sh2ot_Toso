@@ -166,6 +166,7 @@
     <ClCompile Include="PlayModeSelect.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="stage.cpp" />
+    <ClCompile Include="stamina.cpp" />
     <ClCompile Include="title.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +185,7 @@
     <ClInclude Include="PlayModeSelect.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="stage.h" />
+    <ClInclude Include="stamina.h" />
     <ClInclude Include="title.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

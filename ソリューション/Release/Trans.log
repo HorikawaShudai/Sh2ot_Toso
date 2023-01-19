@@ -1,31 +1,8 @@
-<<<<<<< HEAD
-﻿  camera.cpp
-  debugproc.cpp
-  edit.cpp
-  enemy.cpp
-  Fade.cpp
-  game.cpp
-  input.cpp
-  light.cpp
-  main.cpp
-  meshwall.cpp
-  object00.cpp
-  player.cpp
-  PlayModeSelect.cpp
-  result.cpp
-  stage.cpp
-  title.cpp
+﻿  stamina.cpp
   コード生成しています。
-  40 of 163 functions (24.5%) were compiled, the rest were copied from previous compilation.
-    13 functions were new in current compilation
-    33 functions had inline decision re-evaluated but remain unchanged
-=======
-﻿  player.cpp
-  コード生成しています。
-  1 of 148 functions ( 0.7%) were compiled, the rest were copied from previous compilation.
+  3 of 171 functions ( 1.8%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     1 functions had inline decision re-evaluated but remain unchanged
->>>>>>> 8fa7ca279dda446d31b020aad98dfb052c9ca821
   コード生成が終了しました。
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)

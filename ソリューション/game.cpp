@@ -10,6 +10,7 @@
 #include "player.h"
 #include "debugproc.h"
 #include "enemy.h"
+#include "stamina.h"
 
 bool g_bPause = false;
 bool g_bEdit = false;
@@ -42,6 +43,9 @@ void InitGame()
 
 	InitEnemy();
 
+	//スタミナの初期化処理
+	InitStamina();
+
 	SetStage(0);
 }
 
@@ -61,7 +65,11 @@ void UninitGame()
 	UninitObject00();
 
 	UninitPlayer();
+
 	UninitEnemy();
+
+	//スタミナの終了処理
+	UninitStamina();
 }
 
 //====================================================================
@@ -116,6 +124,9 @@ void UpdateGame()
 		UpdatePlayer();
 
 		UpdateEnemy();
+
+		//スタミナの更新処理
+		UpdateStamina();
 	}
 }
 
@@ -135,8 +146,13 @@ void DrawGame()
 	}
 
 	DrawObject00();
+
 	DrawPlayer();
+
 	DrawEnemy();
+
+	//スタミナの描画処理
+	DrawStamina();
 }
 
 //====================================================================
