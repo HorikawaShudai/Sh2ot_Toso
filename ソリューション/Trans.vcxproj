@@ -1,4 +1,4 @@
-﻿
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -158,11 +158,13 @@
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="life.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="meshwall.cpp" />
     <ClCompile Include="object00.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="PlayModeSelect.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="stage.cpp" />
     <ClCompile Include="title.cpp" />
@@ -175,11 +177,13 @@
     <ClInclude Include="Fade.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="life.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="meshwall.h" />
     <ClInclude Include="object00.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="PlayModeSelect.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="stage.h" />
     <ClInclude Include="title.h" />

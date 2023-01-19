@@ -1,3 +1,26 @@
+<<<<<<< HEAD
 ﻿  player.cpp
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+  Trans.vcxproj -> C:\Users\student\Desktop\グループ制作1\github3\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\グループ制作1\github3\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+﻿  title.cpp
+  stage.cpp
+  result.cpp
+  player.cpp
+  object00.cpp
+  meshwall.cpp
+  main.cpp
+  light.cpp
+  input.cpp
+  game.cpp
+  enemy.cpp
+  edit.cpp
+  debugproc.cpp
+  camera.cpp
+  PlayModeSelect.cpp
+  Fade.cpp
+  コードを生成中...
+  LINK : 前回のインクリメンタル リンクで C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+>>>>>>> 979325c3f12d696c1bc21972b57e3c5b6eae6a98

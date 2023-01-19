@@ -8,6 +8,7 @@
 #include "Title.h"
 #include "input.h"
 #include "Fade.h"
+#include "debugproc.h"
 
 //**********************************************
 //マクロ定義
@@ -125,6 +126,10 @@ void UpdateTitle(void)
 {
 	//選択処理
 	UpdateTitleSelect();
+
+	//デバッグ表示
+	PrintDebugProc("選択 【↑】【↓】\n");
+	PrintDebugProc("決定 【ENTER】\n");
 }
 
 //============================================================================
@@ -321,7 +326,7 @@ void InitTitleSelect1(int nCntTitle)
 //************************************
 //更新処理内の処理
 //************************************
-//タイトル選択
+//選択処理
 void UpdateTitleSelect(void)
 {
 	//フェード情報の取得
@@ -403,13 +408,12 @@ void UpdateTitleSelect(void)
 		{//決定キー(ENTERキー)が押された
 			//モードの設定(ゲーム画面に移行)
 			if (g_CurrentNumberTitle == 0)
-			{
-				SetFade(MODE_GAME);
+			{//現在の選択番号が0の場合
+				SetFade(MODE_PLAYMODE_SELECT);			//モードの設定(モード選択画面に移行)
 			}
 			else if (g_CurrentNumberTitle == 1)
-			{
-				//モードの設定(ゲーム画面に移行)
-				SetFade(MODE_TITLE);
+			{//現在の選択番号が1の場合
+				SetFade(MODE_TITLE);		//モードの設定(ランキング画面に移行)
 			}
 		}
 	}
