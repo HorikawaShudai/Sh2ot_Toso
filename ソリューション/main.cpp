@@ -10,6 +10,7 @@
 #include "title.h"
 #include "result.h"
 #include "Fade.h"
+#include "PlayModeSelect.h"
 
 //マクロ定義
 #define CLASS_NAME "WindowClass"     //ウィンドウクラスの名前
@@ -286,7 +287,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	InitFade(g_mode);
 
-	SetFade(g_mode);
+	SetMode(g_mode);
 
 	//デバッグプロックの初期化
 	InitDebugProc();
@@ -300,8 +301,6 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 void Uninit(void)
 {
 	//各種オブジェクトの終了処理
-	UninitTitle();
-	UninitGame();
 	UninitFade();
 
 	//デバイスの終了処理
@@ -338,17 +337,20 @@ void Update(void)
 
 	switch (g_mode)
 	{
-	case MODE_GAME:
-		UpdateGame();
-		break;
 	case MODE_TITLE:
 		UpdateTitle();
+		break;
+	case MODE_PLAYMODE_SELECT:
+		UpdatePlayerModeSelect();
+		break;
+	case MODE_GAME:
+		UpdateGame();
 		break;
 	case MODE_RESULT:
 		UpdateResult();
 		break;
-	
 	}
+
 	UpdateFade();
 }
 //=============================================
@@ -366,6 +368,9 @@ void Draw(void)
 		{
 		case MODE_TITLE:
 			DrawTitle();
+			break;
+		case MODE_PLAYMODE_SELECT:
+			DrawPlayerModeSelect();
 			break;
 		case MODE_GAME:
 			DrawGame();
@@ -412,6 +417,9 @@ void SetMode(MODE mode)
 	case MODE_TITLE:
 		UninitTitle();
 		break;
+	case MODE_PLAYMODE_SELECT:
+		UninitPlayerModeSelect();
+		break;
 	case MODE_GAME:
 		UninitGame();
 		break;
@@ -423,6 +431,9 @@ void SetMode(MODE mode)
 	{
 	case MODE_TITLE:
 		InitTitle();
+		break;
+	case MODE_PLAYMODE_SELECT:
+		InitPlayerModeSelect();
 		break;
 	case MODE_GAME:
 		InitGame();

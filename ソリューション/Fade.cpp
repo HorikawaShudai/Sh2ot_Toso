@@ -25,6 +25,7 @@ void InitFade(MODE modeNext)
 		D3DPOOL_MANAGED,
 		&g_pVtxBuffFade,
 		NULL);
+
 	VERTEX_2D * pVtx;
 	g_pVtxBuffFade->Lock(0, 0, (void**)&pVtx, 0);
 

@@ -43,6 +43,7 @@ const char *c_apOnOff[DEBUGTYPE_MAX] =
 const char *c_apMode[MODE_MAX] =
 {
 	"タイトル",
+	"モード選択",
 	"ゲーム",
 	"リザルト",
 };

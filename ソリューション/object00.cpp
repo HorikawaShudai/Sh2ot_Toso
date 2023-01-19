@@ -7,7 +7,7 @@
 #define OBJECT00_LIFE (7)		//オブジェクトの体力
 
 //グローバル変数
-LPDIRECT3DTEXTURE9 g_pTextureObject00[64][OBJECT00_NTYPE_MAX] = {};	//テクスチャのポインタ
+LPDIRECT3DTEXTURE9 g_pTextureObject00[64][OBJECT00_NTYPE_MAX] = {};		//テクスチャのポインタ
 LPD3DXMESH g_pMeshObject00[OBJECT00_NTYPE_MAX] = {};					//メッシュ(頂点情報)へのポインタ
 LPD3DXBUFFER g_pBuffMatObject00[OBJECT00_NTYPE_MAX] = {};				//マテリアルへのポインタ
 DWORD g_dwNumMatObject00[OBJECT00_NTYPE_MAX] = {};						//マテリアルの数
@@ -402,13 +402,6 @@ void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 			g_Object00[nCntObject].move = move;
 			g_Object00[nCntObject].rot = rot;
 			g_Object00[nCntObject].nType = nType;
-
-			//switch (nType)
-			//{
-			//case 0:
-			//	g_Object00[nCntObject].nType = OBJECT00_NTYPE00;
-			//	break;
-			//}
 
 			g_Object00[nCntObject].bUse = true;
 			EditIndex++;

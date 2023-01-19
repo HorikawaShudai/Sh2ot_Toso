@@ -88,7 +88,7 @@ void UpdateGame()
 
 		if (Fade == FADE_NONE)
 		{
-			if (GetKeyboardPress(DIK_RETURN) || GetGamepadPress(BUTTON_A, 0) || GetGamepadPress(BUTTON_A, 0))
+			if (GetKeyboardPress(DIK_RETURN))
 			{
 				SetFade(MODE_RESULT);
 			}
@@ -140,6 +140,7 @@ void DrawGame()
 	{
 		DrawEditObject00();
 	}
+
 	DrawObject00();
 	DrawPlayer();
 	DrawEnemy();
