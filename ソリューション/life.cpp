@@ -10,7 +10,7 @@
 #include "player.h"
 
 //マクロ定義
-#define NUM_PLACE     (12)			//ライフの数
+#define NUM_PLACE     (3)			//ライフの数
 #define MAX_PLAYER    (4)			//プレイヤーの最大数
 
 #define LIFEPOS_X_0     (30.0f)		//1人目ライフのX位置
@@ -160,57 +160,7 @@ void UninitLife(void)
 //=========================
 void UpdateLife(void)
 {
-	FADE pFade;
-	pFade = GetFade();
-	LPDIRECT3DDEVICE9 pDevice;
-	int nCntLife;
-	Player *pPlayer = GetPlayer();
 
-		//デバイスの取得
-		pDevice = GetDevice();
-
-		VERTEX_2D *pVtx;    //頂点情報へのポインタ
-
-		//頂点バッファをロックし、頂点情報へのポインタを取得
-		g_pVtxBuffLife->Lock(0, 0, (void**)&pVtx, 0);
-		
-		for (nCntLife = 0; nCntLife < NUM_PLACE; nCntLife++)
-		{
-			//テクスチャ座標の設定
-			pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-			pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
-			pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
-			pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
-
-			pVtx += 4;		//頂点データのポインタを4つ分進める
-		}
-		//頂点バッファをアンロックする
-		g_pVtxBuffLife->Unlock();
-
-		for (int nCnt = 0; nCnt < MAX_PLAYER; nCnt++)
-		{
-			for (nCntLife = 0; nCntLife < NUM_PLACE; nCntLife++)
-			{
-				//プレイヤーの情報を取得
-				g_anLife[nCnt].nLife = pPlayer->nLife;
-
-				//ライフの上限
-				if (g_anLife[nCnt].nLife == 0)
-				{//0になったら
-					g_anLife[nCnt].nLife = pPlayer->nLife;
-
-					/*pPlayer->state = PLAYERSTATE_DEATH;*/
-				}
-
-				if (pFade == FADE_NONE)
-				{
-					if (g_anLife[nCnt].nLife == 0)
-					{
-
-					}
-				}
-			}
-		}
 }
 
 //======================
@@ -220,6 +170,7 @@ void DrawLife(void)
 {
 	LPDIRECT3DDEVICE9 pDevice;
 
+	int nCount = 0;
 	int nCntLife;
 
 	//デバイスの取得
@@ -240,8 +191,9 @@ void DrawLife(void)
 		{
 			if (g_anLife[nCnt].bUse[nCntLife] == true)
 			{
-				pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCntLife * 4, 2);
+				pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCount * 4, 2);
 			}
+			nCount++;
 		}
 	}
 }
@@ -251,6 +203,6 @@ void DrawLife(void)
 //===================================
 void SetLife(int nLife,int nPlayer)
 {
-	g_anLife[nPlayer].nLife = nLife;
+	g_anLife[nPlayer].bUse[nLife] = false;
 }
 

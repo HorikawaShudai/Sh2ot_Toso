@@ -2,7 +2,8 @@
 #define _PLAYER_H_
 
 //マクロ定義
-#define MAX_MODEL (32)	//モデルの最大数
+#define MAX_MODEL	(32)			//モデルの最大数
+#define NUM_PLAYER	(1)			//プレイヤーの最大人数
 
 //プレイヤーの状態管理
 typedef enum
@@ -17,9 +18,10 @@ typedef enum
 //プレイヤーの状態管理
 typedef enum
 {
-	PLAYER_MOVESTATE_STEALTH = 0,
-	PLAYER_MOVESTATE_NORMAL,
-	PLAYER_MOVESTATE_DASH,
+	PLAYER_MOVESTATE_STEALTH = 0,		//ステルス
+	PLAYER_MOVESTATE_NORMAL,			//通常
+	PLAYER_MOVESTATE_DASH,				//ダッシュ
+	PLAYER_MOVESTATE_FATIGE,			//疲労
 	PLAYER_MOVESTATE_MAX,
 }PLAYER_MOVESTATE;
 
