@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  game.cpp
   life.cpp
   player.cpp
@@ -9,3 +10,7 @@
   コード生成が終了しました。
   Trans.vcxproj -> C:\Users\student\Desktop\a\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\student\Desktop\a\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+=======
+﻿  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (2)\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (2)\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+>>>>>>> 2e911e4cea54de006bfa48083ac24ec71514f1fe
