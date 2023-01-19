@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  title.cpp
   stamina.cpp
   stage.cpp
@@ -20,3 +21,8 @@
   LINK : 前回のインクリメンタル リンクで C:\Users\student\Desktop\グループ制作1\github3\Sh2ot_Toso\ソリューション\Debug\Trans.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
   Trans.vcxproj -> C:\Users\student\Desktop\グループ制作1\github3\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\student\Desktop\グループ制作1\github3\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+﻿  game.cpp
+  Trans.vcxproj -> C:\Users\student\Desktop\a\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\a\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+>>>>>>> 1144662ed2e3e04765bd39a06a33e361eb1acede
