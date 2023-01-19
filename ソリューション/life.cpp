@@ -4,7 +4,6 @@
 //Author:‘ì —F‹M
 //
 //============================
-//#include "enemy.h"
 #include "Life.h"
 #include "fade.h"
 #include "life.h"
