@@ -11,18 +11,37 @@
 #include "player.h"
 
 //マクロ定義
-#define NUM_PLACE     (3)		//ライフの数
-#define LIFEPOS_X     (30.0f)	//ライフのX位置
-#define LIFEPOS_Y     (50.0f)	//ライフのY位置
-#define LIFE_WIDTH    (20.0f)   //ライフの幅
-#define LIFE_HEIGHT	  (20.0f)   //ライフの高さ
-#define LIFE_INTERVAL (60.0f)	//ライフ同士の間隔
+#define NUM_PLACE     (3)			//ライフの数
+#define MAX_PLAYER    (4)			//プレイヤーの最大数
+
+#define LIFEPOS_X_0     (30.0f)		//1人目ライフのX位置
+#define LIFEPOS_Y_0     (50.0f)		//1人目ライフのY位置
+
+#define LIFEPOS_X_1     (600.0f)	//2人目ライフのX位置
+#define LIFEPOS_Y_1     (50.0f)		//2人目ライフのY位置
+
+#define LIFEPOS_X_2     (30.0f)		//3人目ライフのX位置
+#define LIFEPOS_Y_2     (400.0f)	//3人目ライフのY位置
+
+#define LIFEPOS_X_3     (600.0f)	//4人目ライフのX位置
+#define LIFEPOS_Y_3     (400.0f)	//4人目ライフのY位置
+
+#define LIFE_WIDTH    (20.0f)		//ライフの幅
+#define LIFE_HEIGHT	  (20.0f)		//ライフの高さ
+#define LIFE_INTERVAL (60.0f)		//ライフ同士の間隔
+
+//ライフの構造体
+typedef struct
+{
+	D3DXVECTOR3 pos;  //ライフの位置
+	int nLife;  //ライフの数
+	bool bUse;  //使われているかどうか
+}LIFE;
 
 //グローバル変数宣言
 LPDIRECT3DTEXTURE9 g_pTextureLife = NULL;  //テクスチャのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffLife = NULL; //頂点バッファへのポインタ
-D3DXVECTOR3 g_posLife;  //ライフの位置
-int g_nLife;			//ライフの値
+LIFE g_anLife[MAX_PLAYER];			//ライフの情報
 
 //=============================
 //  ライフの初期化
@@ -43,13 +62,32 @@ void InitLife(void)
 	//ライフの情報を初期化
 	for (nCntLife = 0; nCntLife < NUM_PLACE; nCntLife++)
 	{
-		g_posLife = D3DXVECTOR3(LIFEPOS_X, LIFEPOS_Y, 0.0f);  //位置を初期化
+		if (nCntLife == 0)
+		{
+			g_anLife[nCntLife].pos = D3DXVECTOR3(LIFEPOS_X_0, LIFEPOS_Y_0, 0.0f);  //1人目の位置を初期化
+		}
+
+		if (nCntLife == 1)
+		{
+			g_anLife[nCntLife].pos = D3DXVECTOR3(LIFEPOS_X_1, LIFEPOS_Y_1, 0.0f);  //2人目の位置を初期化
+		}
+
+		if (nCntLife == 2)
+		{
+			g_anLife[nCntLife].pos = D3DXVECTOR3(LIFEPOS_X_2, LIFEPOS_Y_2, 0.0f);  //3人目の位置を初期化
+		}
+
+		if (nCntLife == 3)
+		{
+			g_anLife[nCntLife].pos = D3DXVECTOR3(LIFEPOS_X_3, LIFEPOS_Y_3, 0.0f);  //4人目の位置を初期化
+		}
+
+		g_anLife[nCntLife].nLife = 3;		//ライフの値を初期化
+		g_anLife[nCntLife].bUse = false;  //使っていないことに
 	}
 
-	g_nLife = 3;		//ライフの値を初期化
-
 	//頂点バッファの生成
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * NUM_PLACE,
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * NUM_PLACE * MAX_PLAYER,
 		D3DUSAGE_WRITEONLY,
 		FVF_VERTEX_2D,
 		D3DPOOL_MANAGED,
@@ -64,10 +102,10 @@ void InitLife(void)
 	for (nCntLife = 0; nCntLife < NUM_PLACE; nCntLife++)
 	{
 		//頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(g_posLife.x - LIFE_WIDTH + (nCntLife * LIFE_INTERVAL), g_posLife.y - LIFE_HEIGHT, 0.0f);
-		pVtx[1].pos = D3DXVECTOR3(g_posLife.x + LIFE_WIDTH + (nCntLife * LIFE_INTERVAL), g_posLife.y - LIFE_HEIGHT, 0.0f);
-		pVtx[2].pos = D3DXVECTOR3(g_posLife.x - LIFE_WIDTH + (nCntLife * LIFE_INTERVAL), g_posLife.y + LIFE_HEIGHT, 0.0f);
-		pVtx[3].pos = D3DXVECTOR3(g_posLife.x + LIFE_WIDTH + (nCntLife * LIFE_INTERVAL), g_posLife.y + LIFE_HEIGHT, 0.0f);
+		pVtx[0].pos = D3DXVECTOR3(g_anLife[nCntLife].pos.x - LIFE_WIDTH + (nCntLife * LIFE_INTERVAL), g_anLife[nCntLife].pos.y - LIFE_HEIGHT, 0.0f);
+		pVtx[1].pos = D3DXVECTOR3(g_anLife[nCntLife].pos.x + LIFE_WIDTH + (nCntLife * LIFE_INTERVAL), g_anLife[nCntLife].pos.y - LIFE_HEIGHT, 0.0f);
+		pVtx[2].pos = D3DXVECTOR3(g_anLife[nCntLife].pos.x - LIFE_WIDTH + (nCntLife * LIFE_INTERVAL), g_anLife[nCntLife].pos.y + LIFE_HEIGHT, 0.0f);
+		pVtx[3].pos = D3DXVECTOR3(g_anLife[nCntLife].pos.x + LIFE_WIDTH + (nCntLife * LIFE_INTERVAL), g_anLife[nCntLife].pos.y + LIFE_HEIGHT, 0.0f);
 
 		//rhwの設定
 		pVtx[0].rhw = 1.0f;
@@ -147,19 +185,19 @@ void UpdateLife(void)
 		g_pVtxBuffLife->Unlock();
 
 		//プレイヤーの情報を取得
-		g_nLife = pPlayer->nLife;
+		g_anLife[nCntLife].nLife = pPlayer->nLife;
 
 	//ライフの上限
-	if (g_nLife == 0)
+	if (g_anLife[nCntLife].nLife == 0)
 	{//0になったら
-		g_nLife = pPlayer->nLife;
+		g_anLife[nCntLife].nLife = pPlayer->nLife;
 
 		/*pPlayer->state = PLAYERSTATE_DEATH;*/
 	}
 
 	if (pFade == FADE_NONE)
 	{
-		if (g_nLife == 0)
+		if (g_anLife[nCntLife].nLife == 0)
 		{
 			
 		}
@@ -187,8 +225,21 @@ void DrawLife(void)
 	//テクスチャの設定
 	pDevice->SetTexture(0, g_pTextureLife);
 
-	for (nCntLife = 0; nCntLife < g_nLife; nCntLife++)
+	for (nCntLife = 0; nCntLife < g_anLife[nCntLife].nLife; nCntLife++)
 	{//ポリゴンの描画
-		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCntLife * 4, 2);
+
+		if (g_anLife[nCntLife].bUse == true)
+		{
+			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCntLife * 4, 2);
+		}
 	}
 }
+
+//===================================
+//ライフの設定処理
+//===================================
+void SetLife(int nLife,int nPlayer)
+{
+	g_anLife[nPlayer].nLife = nLife;
+}
+
