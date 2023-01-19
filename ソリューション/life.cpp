@@ -49,7 +49,7 @@ LIFE g_anLife[MAX_PLAYER];			//ライフの情報
 void InitLife(void)
 {
 	LPDIRECT3DDEVICE9 pDevice;
-	int nCntLife;
+	int nCntPlayer;
 
 	//デバイスの取得
 	pDevice = GetDevice();
@@ -60,30 +60,11 @@ void InitLife(void)
 		&g_pTextureLife);
 
 	//ライフの情報を初期化
-	for (nCntLife = 0; nCntLife < NUM_PLACE; nCntLife++)
+	for (nCntPlayer = 0; nCntPlayer < NUM_PLACE; nCntPlayer++)
 	{
-		if (nCntLife == 0)
-		{
-			g_anLife[nCntLife].pos = D3DXVECTOR3(LIFEPOS_X_0, LIFEPOS_Y_0, 0.0f);  //1人目の位置を初期化
-		}
-
-		if (nCntLife == 1)
-		{
-			g_anLife[nCntLife].pos = D3DXVECTOR3(LIFEPOS_X_1, LIFEPOS_Y_1, 0.0f);  //2人目の位置を初期化
-		}
-
-		if (nCntLife == 2)
-		{
-			g_anLife[nCntLife].pos = D3DXVECTOR3(LIFEPOS_X_2, LIFEPOS_Y_2, 0.0f);  //3人目の位置を初期化
-		}
-
-		if (nCntLife == 3)
-		{
-			g_anLife[nCntLife].pos = D3DXVECTOR3(LIFEPOS_X_3, LIFEPOS_Y_3, 0.0f);  //4人目の位置を初期化
-		}
-
-		g_anLife[nCntLife].nLife = 3;		//ライフの値を初期化
-		g_anLife[nCntLife].bUse = false;  //使っていないことに
+		g_anLife[nCntPlayer].pos = D3DXVECTOR3(LIFEPOS_X_0, LIFEPOS_Y_0, 0.0f);
+		g_anLife[nCntPlayer].nLife = 3;		//ライフの値を初期化
+		g_anLife[nCntPlayer].bUse = true;  //使っていないことに
 	}
 
 	//頂点バッファの生成
@@ -99,13 +80,13 @@ void InitLife(void)
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	g_pVtxBuffLife->Lock(0, 0, (void**)&pVtx, 0);
 
-	for (nCntLife = 0; nCntLife < NUM_PLACE; nCntLife++)
+	for (nCntPlayer = 0; nCntPlayer < NUM_PLACE; nCntPlayer++)
 	{
 		//頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(g_anLife[nCntLife].pos.x - LIFE_WIDTH + (nCntLife * LIFE_INTERVAL), g_anLife[nCntLife].pos.y - LIFE_HEIGHT, 0.0f);
-		pVtx[1].pos = D3DXVECTOR3(g_anLife[nCntLife].pos.x + LIFE_WIDTH + (nCntLife * LIFE_INTERVAL), g_anLife[nCntLife].pos.y - LIFE_HEIGHT, 0.0f);
-		pVtx[2].pos = D3DXVECTOR3(g_anLife[nCntLife].pos.x - LIFE_WIDTH + (nCntLife * LIFE_INTERVAL), g_anLife[nCntLife].pos.y + LIFE_HEIGHT, 0.0f);
-		pVtx[3].pos = D3DXVECTOR3(g_anLife[nCntLife].pos.x + LIFE_WIDTH + (nCntLife * LIFE_INTERVAL), g_anLife[nCntLife].pos.y + LIFE_HEIGHT, 0.0f);
+		pVtx[0].pos = D3DXVECTOR3(g_anLife[nCntPlayer].pos.x - LIFE_WIDTH + (nCntPlayer * LIFE_INTERVAL), g_anLife[nCntPlayer].pos.y - LIFE_HEIGHT, 0.0f);
+		pVtx[1].pos = D3DXVECTOR3(g_anLife[nCntPlayer].pos.x + LIFE_WIDTH + (nCntPlayer * LIFE_INTERVAL), g_anLife[nCntPlayer].pos.y - LIFE_HEIGHT, 0.0f);
+		pVtx[2].pos = D3DXVECTOR3(g_anLife[nCntPlayer].pos.x - LIFE_WIDTH + (nCntPlayer * LIFE_INTERVAL), g_anLife[nCntPlayer].pos.y + LIFE_HEIGHT, 0.0f);
+		pVtx[3].pos = D3DXVECTOR3(g_anLife[nCntPlayer].pos.x + LIFE_WIDTH + (nCntPlayer * LIFE_INTERVAL), g_anLife[nCntPlayer].pos.y + LIFE_HEIGHT, 0.0f);
 
 		//rhwの設定
 		pVtx[0].rhw = 1.0f;
@@ -160,7 +141,7 @@ void UpdateLife(void)
 	FADE pFade;
 	pFade = GetFade();
 	LPDIRECT3DDEVICE9 pDevice;
-	int nCntLife;
+	int nCntPlayer;
 	Player *pPlayer = GetPlayer();
 
 		//デバイスの取得
@@ -171,7 +152,7 @@ void UpdateLife(void)
 		//頂点バッファをロックし、頂点情報へのポインタを取得
 		g_pVtxBuffLife->Lock(0, 0, (void**)&pVtx, 0);
 
-		for (nCntLife = 0; nCntLife < NUM_PLACE; nCntLife++)
+		for (nCntPlayer = 0; nCntPlayer < NUM_PLACE; nCntPlayer++)
 		{
 			//テクスチャ座標の設定
 			pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
@@ -185,19 +166,19 @@ void UpdateLife(void)
 		g_pVtxBuffLife->Unlock();
 
 		//プレイヤーの情報を取得
-		g_anLife[nCntLife].nLife = pPlayer->nLife;
+		g_anLife[nCntPlayer].nLife = pPlayer->nLife;
 
 	//ライフの上限
-	if (g_anLife[nCntLife].nLife == 0)
+	if (g_anLife[nCntPlayer].nLife == 0)
 	{//0になったら
-		g_anLife[nCntLife].nLife = pPlayer->nLife;
+		g_anLife[nCntPlayer].nLife = pPlayer->nLife;
 
 		/*pPlayer->state = PLAYERSTATE_DEATH;*/
 	}
 
 	if (pFade == FADE_NONE)
 	{
-		if (g_anLife[nCntLife].nLife == 0)
+		if (g_anLife[nCntPlayer].nLife == 0)
 		{
 			
 		}
@@ -211,7 +192,7 @@ void DrawLife(void)
 {
 	LPDIRECT3DDEVICE9 pDevice;
 
-	int nCntLife;
+	int nCntPlayer;
 
 	//デバイスの取得
 	pDevice = GetDevice();
@@ -225,12 +206,12 @@ void DrawLife(void)
 	//テクスチャの設定
 	pDevice->SetTexture(0, g_pTextureLife);
 
-	for (nCntLife = 0; nCntLife < g_anLife[nCntLife].nLife; nCntLife++)
+	for (nCntPlayer = 0; nCntPlayer < g_anLife[nCntPlayer].nLife; nCntPlayer++)
 	{//ポリゴンの描画
 
-		if (g_anLife[nCntLife].bUse == true)
+		if (g_anLife[nCntPlayer].bUse == true)
 		{
-			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCntLife * 4, 2);
+			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCntPlayer * 4, 2);
 		}
 	}
 }
