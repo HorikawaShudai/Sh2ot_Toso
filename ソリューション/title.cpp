@@ -409,7 +409,7 @@ void UpdateTitleSelect(void)
 			//モードの設定(ゲーム画面に移行)
 			if (g_CurrentNumberTitle == 0)
 			{//現在の選択番号が0の場合
-				SetFade(MODE_PLAYMODE_SELECT);			//モードの設定(モード選択画面に移行)
+				SetFade(MODE_NUMBERSELECT);			//モードの設定(モード選択画面に移行)
 			}
 			else if (g_CurrentNumberTitle == 1)
 			{//現在の選択番号が1の場合
