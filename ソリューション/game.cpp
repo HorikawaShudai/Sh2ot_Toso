@@ -12,7 +12,9 @@
 #include "enemy.h"
 #include "stamina.h"
 #include "life.h"
+#include "field.h"
 
+//グローバル変数宣言
 bool g_bPause = false;
 bool g_bEdit = false;
 GAMESTATE gGameState = GAMESTATE_NONE;
@@ -36,12 +38,19 @@ void InitGame()
 	//ライトの初期化処理
 	InitLight();
 
+	//床の初期化処理
+	InitField();
+
+	//メッシュ壁の初期化処理
 	InitMeshWall();
 
+	//オブジェクトの初期化処理
 	InitObject00();
 
+	//プレイヤーの初期化処理
 	InitPlayer();
 
+	//敵の初期化処理
 	InitEnemy();
 
 	//スタミナの初期化処理
@@ -64,12 +73,19 @@ void UninitGame()
 	//ライトの終了処理
 	UninitLight();
 
+	//床の終了処理
+	UninitField();
+
+	//メッシュ壁の終了処理
 	UninitMeshWall();
 
+	//オブジェクトの終了処理
 	UninitObject00();
 
+	//プレイヤーの終了処理
 	UninitPlayer();
 
+	//敵の終了処理
 	UninitEnemy();
 
 	//スタミナの終了処理
@@ -99,7 +115,7 @@ void UpdateGame()
 		if (Fade == FADE_NONE)
 		{
 			if (GetKeyboardPress(DIK_RETURN))
-			{
+			{//ENTERキーを押したときリザルトにフェード
 				SetFade(MODE_RESULT);
 			}
 		}
@@ -111,12 +127,15 @@ void UpdateGame()
 	//ライトの更新処理
 	UpdateLight();
 
+	//メッシュの壁の更新処理
 	UpdateMeshWall();
 
 	if (g_bEdit == true)
 	{
+		//エディットの更新処理
 		UpdateEdit();
 
+		//エディットモードのオブジェクトの更新処理
 		UpdateEditObject00();
 
 		PrintDebugProc("カメラの視点移動【W】【A】【S】【D】\n");
@@ -126,10 +145,16 @@ void UpdateGame()
 	}
 	else
 	{
+		//床の更新処理
+		UpdateField();
+
+		//オブジェクトの更新処理
 		UpdateObject00();
 
+		//プレイヤーの更新処理
 		UpdatePlayer();
 
+		//敵の更新処理
 		UpdateEnemy();
 
 		//スタミナの更新処理
@@ -152,13 +177,20 @@ void DrawGame()
 
 	if (g_bEdit == true)
 	{
+		//エディットモードのオブジェクト処理
 		DrawEditObject00();
 	}
 
+	//床の描画処理
+	DrawField();
+
+	//オブジェクトの描画処理
 	DrawObject00();
 
+	//プレイヤーの描画処理
 	DrawPlayer();
 
+	//敵の描画処理
 	DrawEnemy();
 
 	//スタミナの描画処理

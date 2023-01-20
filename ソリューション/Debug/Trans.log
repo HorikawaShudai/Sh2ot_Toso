@@ -1,17 +1,2 @@
-<<<<<<< HEAD
-﻿  stamina.cpp
-  Trans.vcxproj -> C:\Users\student\Desktop\a\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\a\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-﻿  object00.cpp
-  コードを生成中...
-  コンパイル中...
-  stage.cpp
-  player.cpp
-  game.cpp
-  enemy.cpp
-  edit.cpp
-  コードを生成中...
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (2)\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (2)\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
->>>>>>> 2e911e4cea54de006bfa48083ac24ec71514f1fe
+﻿  Trans.vcxproj -> C:\Users\student\Desktop\グループ制作1\github3\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\グループ制作1\github3\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
