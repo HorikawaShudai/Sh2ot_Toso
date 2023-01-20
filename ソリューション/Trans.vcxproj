@@ -165,6 +165,7 @@
     <ClCompile Include="meshwall.cpp" />
     <ClCompile Include="object00.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="PlayNumberSelect.cpp" />
     <ClCompile Include="PlayModeSelect.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="stage.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="meshwall.h" />
     <ClInclude Include="object00.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="PlayNumberSelect.h" />
     <ClInclude Include="PlayModeSelect.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="stage.h" />
