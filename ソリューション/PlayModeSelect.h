@@ -10,22 +10,22 @@
 #include "main.h"
 
 //マクロ定義
-#define NUM_PLAYMODE		(4)			//ステージの最大数
+
 
 //モード選択の構造体の定義
 typedef struct
 {
 	D3DXVECTOR3 pos;
 	int nType;
-	int CurrentSelectNumber;
+	int CurrentModeNumber;
 	bool bStage;
 } PlayerModeSelect;
 
 //プロトタイプ宣言
-void InitPlayerModeSelect(void);
-void UninitPlayerModeSelect(void);
-void UpdatePlayerModeSelect(void);
-void DrawPlayerModeSelect(void);
-PlayerModeSelect GetPlayerModeSelect(void);
+void InitPlayModeSelect(void);
+void UninitPlayModeSelect(void);
+void UpdatePlayModeSelect(void);
+void DrawPlayModeSelect(void);
+PlayerModeSelect GetPlayModeSelect(void);
 
 #endif

@@ -157,6 +157,7 @@
     <ClCompile Include="edit.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="Fade.cpp" />
+    <ClCompile Include="field.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="life.cpp" />
@@ -165,9 +166,11 @@
     <ClCompile Include="meshwall.cpp" />
     <ClCompile Include="object00.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="PlayNumberSelect.cpp" />
     <ClCompile Include="PlayModeSelect.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="stage.cpp" />
+    <ClCompile Include="stamina.cpp" />
     <ClCompile Include="title.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -177,6 +180,7 @@
     <ClInclude Include="edit.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="Fade.h" />
+    <ClInclude Include="field.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="life.h" />
@@ -185,9 +189,11 @@
     <ClInclude Include="meshwall.h" />
     <ClInclude Include="object00.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="PlayNumberSelect.h" />
     <ClInclude Include="PlayModeSelect.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="stage.h" />
+    <ClInclude Include="stamina.h" />
     <ClInclude Include="title.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

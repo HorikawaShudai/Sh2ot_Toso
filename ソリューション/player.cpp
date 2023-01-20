@@ -7,9 +7,8 @@
 #include "input.h"
 #include "debugproc.h"
 #include "fade.h"
-#include "detect.h"
+#include "life.h"
 
-#define NUM_PLAYER (4)			//プレイヤーの最大人数
 #define PLAYER_STEALTHSPEED (1.0f)		//プレイヤーのステルススピード
 #define PLAYER_SPEED (3.0f)				//プレイヤーのスピード
 #define PLAYER_DASHSPEED (5.0f)				//プレイヤーのダッシュスピード
@@ -88,23 +87,22 @@ void InitPlayer(void)
 void UninitPlayer(void)
 {
 	
-		for (int nCntModel = 0; nCntModel < 1; nCntModel++)
+	for (int nCntModel = 0; nCntModel < 1; nCntModel++)
+	{
+		//メッシュの破棄
+		if (g_pMeshPlayer[nCntModel] == NULL)
 		{
-			//メッシュの破棄
-			if (g_pMeshPlayer != NULL)
-			{
-				g_pMeshPlayer[nCntModel]->Release();
-				g_pMeshPlayer[nCntModel] = NULL;
-			}
-
-			//マテリアルの破棄
-			if (g_pBuffMatPlayer != NULL)
-			{
-				g_pBuffMatPlayer[nCntModel]->Release();
-				g_pBuffMatPlayer[nCntModel] = NULL;
-			}
+			g_pMeshPlayer[nCntModel]->Release();
+			g_pMeshPlayer[nCntModel] = NULL;
 		}
-	
+
+		//マテリアルの破棄
+		if (g_pBuffMatPlayer != NULL)
+		{
+			g_pBuffMatPlayer[nCntModel]->Release();
+			g_pBuffMatPlayer[nCntModel] = NULL;
+		}
+	}
 }
 
 //====================================================================
@@ -200,6 +198,12 @@ void UpdatePlayer(void)
 		g_aPlayer[g_SelectPlayer].rot.y += D3DX_PI * 2.0f;
 	}
 
+	//体力が減るかどうかテスト用
+	if (GetKeyboardTrigger(DIK_M) == true)
+	{
+		PlayerHit(g_SelectPlayer, 1);
+	}
+
 	PrintDebugProc("【F3】でプレイヤー切り替え：【プレイヤー%d】\n", g_SelectPlayer + 1);
 	for (int nCntPlayer = 0; nCntPlayer < NUM_PLAYER; nCntPlayer++)
 	{
@@ -283,22 +287,21 @@ void PlayerMoveInput(int nCnt)
 	if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) != 0 && GetGamepadPress(BUTTON_A, 0))
 	{//入力してる状態かつAボタンを押しているとき
 
-		g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_DASHSPEED;
-		g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_DASHSPEED;
+		if (g_aPlayer[nCnt].MoveState != PLAYER_MOVESTATE_FATIGE)
+		{//疲労状態以外のとき
 
-		//プレイヤーをダッシュ状態にする
-		g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_DASH;
+			g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_DASHSPEED;
+			g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_DASHSPEED;
+
+			//プレイヤーをダッシュ状態にする
+			g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_DASH;
+		}
 	}
 	else if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) < 0.95f)
 	{//左スティックを倒し切っていない状態のとき
 
 		g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_STEALTHSPEED;
 		g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_STEALTHSPEED;
-	//体力が減るかどうかテスト用
-	if (GetKeyboardTrigger(DIK_M) == true)
-	{
-		PlayerHit(nCnt,1);
-	}
 
 	g_aPlayer[nCnt].move += g_aPlayer[nCnt].NormarizeMove;
 
@@ -446,6 +449,9 @@ void CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY
 void PlayerHit(int nCnt,int nDamage)
 {
 	g_aPlayer[nCnt].nLife -= nDamage;
+
+	//ライフのセット処理
+	SetLife(g_aPlayer[nCnt].nLife, nCnt);
 
 	if (g_aPlayer[nCnt].nLife <= 0)
 	{

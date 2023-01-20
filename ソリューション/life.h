@@ -13,5 +13,6 @@ void InitLife(void);
 void UninitLife(void);
 void UpdateLife(void);
 void DrawLife(void);
+void SetLife(int nLife,int nPlayer);
 
 #endif

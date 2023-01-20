@@ -10,6 +10,7 @@
 #include "title.h"
 #include "result.h"
 #include "Fade.h"
+#include "PlayNumberSelect.h"
 #include "PlayModeSelect.h"
 
 //É}ÉNÉçíËã`
@@ -340,8 +341,11 @@ void Update(void)
 	case MODE_TITLE:
 		UpdateTitle();
 		break;
-	case MODE_PLAYMODE_SELECT:
-		UpdatePlayerModeSelect();
+	case MODE_NUMBERSELECT:
+		UpdatePlayNumberSelect();
+		break;
+	case MODE_PLAYMODE:
+		UpdatePlayModeSelect();
 		break;
 	case MODE_GAME:
 		UpdateGame();
@@ -369,8 +373,11 @@ void Draw(void)
 		case MODE_TITLE:
 			DrawTitle();
 			break;
-		case MODE_PLAYMODE_SELECT:
-			DrawPlayerModeSelect();
+		case MODE_NUMBERSELECT:
+			DrawPlayNumberSelect();
+			break;
+		case MODE_PLAYMODE:
+			DrawPlayModeSelect();
 			break;
 		case MODE_GAME:
 			DrawGame();
@@ -378,7 +385,6 @@ void Draw(void)
 		case MODE_RESULT:
 			DrawResult();
 			break;
-
 		}
 
 		DrawFade();
@@ -417,8 +423,11 @@ void SetMode(MODE mode)
 	case MODE_TITLE:
 		UninitTitle();
 		break;
-	case MODE_PLAYMODE_SELECT:
-		UninitPlayerModeSelect();
+	case MODE_NUMBERSELECT:
+		UninitPlayNumberSelect();
+		break;
+	case MODE_PLAYMODE:
+		UninitPlayModeSelect();
 		break;
 	case MODE_GAME:
 		UninitGame();
@@ -432,8 +441,11 @@ void SetMode(MODE mode)
 	case MODE_TITLE:
 		InitTitle();
 		break;
-	case MODE_PLAYMODE_SELECT:
-		InitPlayerModeSelect();
+	case MODE_NUMBERSELECT:
+		InitPlayNumberSelect();
+		break;
+	case MODE_PLAYMODE:
+		InitPlayModeSelect();
 		break;
 	case MODE_GAME:
 		InitGame();
