@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="debugproc.cpp" />
+    <ClCompile Include="detect.cpp" />
     <ClCompile Include="edit.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="Fade.cpp" />
@@ -168,6 +169,8 @@
     <ClCompile Include="PlayNumberSelect.cpp" />
     <ClCompile Include="PlayModeSelect.cpp" />
     <ClCompile Include="result.cpp" />
+    <ClCompile Include="score.cpp" />
+    <ClCompile Include="score_item.cpp" />
     <ClCompile Include="stage.cpp" />
     <ClCompile Include="stamina.cpp" />
     <ClCompile Include="title.cpp" />
@@ -175,6 +178,7 @@
   <ItemGroup>
     <ClInclude Include="camera.h" />
     <ClInclude Include="debugproc.h" />
+    <ClInclude Include="detect.h" />
     <ClInclude Include="edit.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="Fade.h" />
@@ -190,6 +194,8 @@
     <ClInclude Include="PlayNumberSelect.h" />
     <ClInclude Include="PlayModeSelect.h" />
     <ClInclude Include="result.h" />
+    <ClInclude Include="score.h" />
+    <ClInclude Include="score_item.h" />
     <ClInclude Include="stage.h" />
     <ClInclude Include="stamina.h" />
     <ClInclude Include="title.h" />
