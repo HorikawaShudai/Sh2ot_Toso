@@ -2,6 +2,7 @@
 #include "ENEMY.h"
 #include "camera.h"
 #include "input.h"
+#include "detect.h"
 
 #define ENEMY_LIFE (7)		//オブジェクトの体力
 
@@ -133,7 +134,8 @@ void UpdateEnemy(void)
 	{
 		if (g_Enemy[nCntObject].bUse == true)
 		{
-
+			SetDetect(g_Enemy[nCntObject].pos, nCntObject, 0.0f, 1000, DETECTTYPE_WALL);
+			SetDetect(g_Enemy[nCntObject].pos, nCntObject, D3DX_PI, 1000, DETECTTYPE_WALL);
 		}
 	}
 }

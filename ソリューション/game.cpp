@@ -12,8 +12,8 @@
 #include "enemy.h"
 #include "stamina.h"
 #include "life.h"
+#include "detect.h"
 #include "field.h"
-#include "score.h"
 
 //グローバル変数宣言
 bool g_bPause = false;
@@ -60,8 +60,9 @@ void InitGame()
 	//ライフの初期化処理
 	InitLife();
 
-	//スコアの初期化処理
-	InitScore();
+	InitDetect();
+
+	SetEnemy(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
 	SetStage(0);
 }
@@ -97,9 +98,9 @@ void UninitGame()
 
 	//ライフの終了処理
 	UninitLife();
+	UninitDetect();
 
-	//スコアの終了処理
-	UninitScore();
+	
 }
 
 //====================================================================
@@ -170,8 +171,7 @@ void UpdateGame()
 		//ライフの更新処理
 		UpdateLife();
 
-		//スコアの更新処理
-		UpdateScore();
+		UpdateDetect();
 	}
 }
 
@@ -208,9 +208,6 @@ void DrawGame()
 
 	//ライフの描画処理
 	DrawLife();
-
-	//スコアの描画処理
-	DrawScore();
 }
 
 //====================================================================

@@ -86,23 +86,21 @@ void InitPlayer(void)
 //====================================================================
 void UninitPlayer(void)
 {
-	for (int nCntPlayer = 0; nCntPlayer < NUM_PLAYER; nCntPlayer++)
+	
+	for (int nCntModel = 0; nCntModel < 1; nCntModel++)
 	{
-		for (int nCntModel = 0; nCntModel < g_aPlayer[nCntPlayer].nNumModel; nCntModel++)
+		//メッシュの破棄
+		if (g_pMeshPlayer[nCntModel] == NULL)
 		{
-			//メッシュの破棄
-			if (g_pMeshPlayer != NULL)
-			{
-				g_pMeshPlayer[nCntModel]->Release();
-				g_pMeshPlayer[nCntModel] = NULL;
-			}
+			g_pMeshPlayer[nCntModel]->Release();
+			g_pMeshPlayer[nCntModel] = NULL;
+		}
 
-			//マテリアルの破棄
-			if (g_pBuffMatPlayer != NULL)
-			{
-				g_pBuffMatPlayer[nCntModel]->Release();
-				g_pBuffMatPlayer[nCntModel] = NULL;
-			}
+		//マテリアルの破棄
+		if (g_pBuffMatPlayer != NULL)
+		{
+			g_pBuffMatPlayer[nCntModel]->Release();
+			g_pBuffMatPlayer[nCntModel] = NULL;
 		}
 	}
 }
@@ -286,7 +284,7 @@ void PlayerMoveInput(int nCnt)
 	}
 
 	//左スティックの速度処理と移動の三段階の使い分け処理
-	if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) != 0 && GetGamepadPress(BUTTON_A, 0) || GetKeyboardPress(DIK_SPACE) == true)
+	if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) != 0 && GetGamepadPress(BUTTON_A, 0))
 	{//入力してる状態かつAボタンを押しているとき
 
 		if (g_aPlayer[nCnt].MoveState != PLAYER_MOVESTATE_FATIGE)
