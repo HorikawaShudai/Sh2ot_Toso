@@ -416,3 +416,11 @@ PlayNumberSelect GetPlayNumberSelect(void)
 {
 	return g_PlayNumberSelect;
 }
+
+//========================================================================
+// ƒvƒŒƒCl”‚Ìæ“¾
+//========================================================================
+int GetPlayNumber(void)
+{
+	return g_PlayNumberSelect.CurrentSelectNumber + 1;
+}

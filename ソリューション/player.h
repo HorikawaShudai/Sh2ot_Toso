@@ -3,7 +3,7 @@
 
 //マクロ定義
 #define MAX_MODEL	(32)			//モデルの最大数
-#define NUM_PLAYER	(3)			//プレイヤーの最大人数
+#define NUM_PLAYER	(4)			//プレイヤーの最大人数
 
 //プレイヤーの状態管理
 typedef enum

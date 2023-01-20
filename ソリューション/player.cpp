@@ -8,10 +8,11 @@
 #include "debugproc.h"
 #include "fade.h"
 #include "life.h"
+#include "PlayNumberSelect.h"
 
 #define PLAYER_STEALTHSPEED (1.0f)		//プレイヤーのステルススピード
 #define PLAYER_SPEED (3.0f)				//プレイヤーのスピード
-#define PLAYER_DASHSPEED (5.0f)				//プレイヤーのダッシュスピード
+#define PLAYER_DASHSPEED (5.0f)			//プレイヤーのダッシュスピード
 #define PLAYER_ROT_SPEED (0.2f)			//プレイヤーの回転スピード
 #define PLAYER_JUMP (12.0f)				//プレイヤーのジャンプ力
 #define PLAYER_LIFE (3)					//プレイヤーの初期ライフ
@@ -34,7 +35,7 @@ void InitPlayer(void)
 	//デバイスの所得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	for (int nCntPlayer = 0; nCntPlayer < NUM_PLAYER; nCntPlayer++)
+	for (int nCntPlayer = 0; nCntPlayer < GetPlayNumber(); nCntPlayer++)
 	{
 		g_aPlayer[nCntPlayer].pos = D3DXVECTOR3(nCntPlayer * 100.0f, 0.0f, -20.0f);
 		g_aPlayer[nCntPlayer].posOld = D3DXVECTOR3(0.0f, 300.0f, -400.0f);
@@ -113,7 +114,7 @@ void UpdatePlayer(void)
 	if (GetKeyboardTrigger(DIK_F3) == true)
 	{
 		g_SelectPlayer++;
-		if (g_SelectPlayer >= NUM_PLAYER)
+		if (g_SelectPlayer >= GetPlayNumber())
 		{
 			g_SelectPlayer = 0;
 		}
@@ -205,9 +206,9 @@ void UpdatePlayer(void)
 	}
 
 	PrintDebugProc("【F3】でプレイヤー切り替え：【プレイヤー%d】\n", g_SelectPlayer + 1);
-	for (int nCntPlayer = 0; nCntPlayer < NUM_PLAYER; nCntPlayer++)
+	for (int nCntPlayer = 0; nCntPlayer < GetPlayNumber(); nCntPlayer++)
 	{
-		PrintDebugProc("プレイヤー%d人目の座標【X : %f | Y : %f | Z : %f】\n", nCntPlayer, g_aPlayer[nCntPlayer].pos.x, g_aPlayer[nCntPlayer].pos.y, g_aPlayer[nCntPlayer].pos.z);
+		PrintDebugProc("プレイヤー%d人目の座標【X : %f | Y : %f | Z : %f】\n", nCntPlayer + 1, g_aPlayer[nCntPlayer].pos.x, g_aPlayer[nCntPlayer].pos.y, g_aPlayer[nCntPlayer].pos.z);
 	}
 	PrintDebugProc("左スティックの出力【%f】", GetGamepad_Stick_Left(0).y);
 	PrintDebugProc("左スティックの出力【%f】", GetGamepad_Stick_Left(0).x);
@@ -429,16 +430,19 @@ void CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY
 {
 	for (int nCntPlayer = 0; nCntPlayer < NUM_PLAYER; nCntPlayer++)
 	{
-		if (
-			pos.z + Size >= g_aPlayer[nCntPlayer].pos.z - PLAYER_COLLISIONSIZE &&
-			pos.z - Size <= g_aPlayer[nCntPlayer].pos.z + PLAYER_COLLISIONSIZE &&
-			pos.x + Size >= g_aPlayer[nCntPlayer].pos.x - PLAYER_COLLISIONSIZE &&
-			pos.x - Size <= g_aPlayer[nCntPlayer].pos.x + PLAYER_COLLISIONSIZE &&
-			pos.y + MaxY >= g_aPlayer[nCntPlayer].pos.y - 10.0f &&
-			pos.y + MinY <= g_aPlayer[nCntPlayer].pos.y + 10.0f
-			)
-		{//弾とプレイヤーが当たった(Z軸)
-			PlayerHit(nCntPlayer,1);
+		if (g_aPlayer[nCntPlayer].bUse == true)
+		{
+			if (
+				pos.z + Size >= g_aPlayer[nCntPlayer].pos.z - PLAYER_COLLISIONSIZE &&
+				pos.z - Size <= g_aPlayer[nCntPlayer].pos.z + PLAYER_COLLISIONSIZE &&
+				pos.x + Size >= g_aPlayer[nCntPlayer].pos.x - PLAYER_COLLISIONSIZE &&
+				pos.x - Size <= g_aPlayer[nCntPlayer].pos.x + PLAYER_COLLISIONSIZE &&
+				pos.y + MaxY >= g_aPlayer[nCntPlayer].pos.y - 10.0f &&
+				pos.y + MinY <= g_aPlayer[nCntPlayer].pos.y + 10.0f
+				)
+			{//弾とプレイヤーが当たった(Z軸)
+				PlayerHit(nCntPlayer, 1);
+			}
 		}
 	}
 }
