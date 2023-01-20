@@ -75,11 +75,15 @@
     <ClCompile Include="life.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-<<<<<<< HEAD
+    <ClCompile Include="detect.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+
     <ClCompile Include="PlayNumberSelect.cpp">
-=======
+<Filter>ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="field.cpp">
->>>>>>> c7fecae35c1d1a3db7d9dcb81312ee5934edade1
+
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -138,11 +142,15 @@
     <ClInclude Include="life.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-<<<<<<< HEAD
+    <ClInclude Include="detect.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+
     <ClInclude Include="PlayNumberSelect.h">
-=======
+   <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="field.h">
->>>>>>> c7fecae35c1d1a3db7d9dcb81312ee5934edade1
+
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

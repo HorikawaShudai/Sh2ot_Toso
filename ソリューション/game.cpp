@@ -12,6 +12,7 @@
 #include "enemy.h"
 #include "stamina.h"
 #include "life.h"
+#include "detect.h"
 #include "field.h"
 
 //グローバル変数宣言
@@ -59,6 +60,10 @@ void InitGame()
 	//ライフの初期化処理
 	InitLife();
 
+	InitDetect();
+
+	SetEnemy(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+
 	SetStage(0);
 }
 
@@ -93,6 +98,9 @@ void UninitGame()
 
 	//ライフの終了処理
 	UninitLife();
+	UninitDetect();
+
+	
 }
 
 //====================================================================
@@ -162,6 +170,8 @@ void UpdateGame()
 
 		//ライフの更新処理
 		UpdateLife();
+
+		UpdateDetect();
 	}
 }
 

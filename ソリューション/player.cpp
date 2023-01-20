@@ -86,10 +86,11 @@ void InitPlayer(void)
 //====================================================================
 void UninitPlayer(void)
 {
-	for (int nCntModel = 0; nCntModel < g_aPlayer[0].nNumModel; nCntModel++)
+	
+	for (int nCntModel = 0; nCntModel < 1; nCntModel++)
 	{
 		//ƒƒbƒVƒ…‚Ì”jŠü
-		if (g_pMeshPlayer != NULL)
+		if (g_pMeshPlayer[nCntModel] == NULL)
 		{
 			g_pMeshPlayer[nCntModel]->Release();
 			g_pMeshPlayer[nCntModel] = NULL;
