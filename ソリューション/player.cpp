@@ -86,23 +86,20 @@ void InitPlayer(void)
 //====================================================================
 void UninitPlayer(void)
 {
-	for (int nCntPlayer = 0; nCntPlayer < NUM_PLAYER; nCntPlayer++)
+	for (int nCntModel = 0; nCntModel < g_aPlayer[0].nNumModel; nCntModel++)
 	{
-		for (int nCntModel = 0; nCntModel < g_aPlayer[nCntPlayer].nNumModel; nCntModel++)
+		//メッシュの破棄
+		if (g_pMeshPlayer != NULL)
 		{
-			//メッシュの破棄
-			if (g_pMeshPlayer != NULL)
-			{
-				g_pMeshPlayer[nCntModel]->Release();
-				g_pMeshPlayer[nCntModel] = NULL;
-			}
+			g_pMeshPlayer[nCntModel]->Release();
+			g_pMeshPlayer[nCntModel] = NULL;
+		}
 
-			//マテリアルの破棄
-			if (g_pBuffMatPlayer != NULL)
-			{
-				g_pBuffMatPlayer[nCntModel]->Release();
-				g_pBuffMatPlayer[nCntModel] = NULL;
-			}
+		//マテリアルの破棄
+		if (g_pBuffMatPlayer != NULL)
+		{
+			g_pBuffMatPlayer[nCntModel]->Release();
+			g_pBuffMatPlayer[nCntModel] = NULL;
 		}
 	}
 }

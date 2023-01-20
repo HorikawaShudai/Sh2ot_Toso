@@ -156,6 +156,7 @@
     <ClCompile Include="edit.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="Fade.cpp" />
+    <ClCompile Include="field.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="life.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="edit.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="Fade.h" />
+    <ClInclude Include="field.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="life.h" />
