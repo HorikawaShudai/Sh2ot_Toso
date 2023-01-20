@@ -553,7 +553,7 @@ void CollisionRotObject00(int nCnt)
 //====================================================================
 bool CollisionObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size)
 {
-	bool bON = true;
+	bool bHit = false;
 
 	for (int nCntObject = 0; nCntObject < MAX_OBJECT00; nCntObject++)
 	{
@@ -571,7 +571,7 @@ bool CollisionObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMo
 			{//壁とプレイヤーが当たった(X軸)
 				pPos->y = pPosOld->y;
 				pMove->y = 0.0f;
-				bON = false;
+				bHit = true;
 			}
 
 			if (
@@ -586,6 +586,7 @@ bool CollisionObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMo
 			{//壁とプレイヤーが当たった(Z軸)
 				pPos->z = pPosOld->z;
 				pMove->z = 0.0f;
+				bHit = true;
 			}
 
 			if (
@@ -600,10 +601,11 @@ bool CollisionObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMo
 			{//壁とプレイヤーが当たった(X軸)
 				pPos->x = pPosOld->x;
 				pMove->x = 0.0f;
+				bHit = true;
 			}
 		}
 	}
-	return bON;
+	return bHit;
 }
 
 //====================================================================

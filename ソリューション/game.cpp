@@ -11,6 +11,7 @@
 #include "debugproc.h"
 #include "enemy.h"
 #include "life.h"
+#include "detect.h"
 
 bool g_bPause = false;
 bool g_bEdit = false;
@@ -45,6 +46,10 @@ void InitGame()
 
 	InitLife();
 
+	InitDetect();
+
+	SetEnemy(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+
 	SetStage(0);
 }
 
@@ -67,6 +72,9 @@ void UninitGame()
 	UninitEnemy();
 
 	UninitLife();
+	UninitDetect();
+
+	
 }
 
 //====================================================================
@@ -123,6 +131,8 @@ void UpdateGame()
 		UpdateEnemy();
 
 		UpdateLife();
+
+		UpdateDetect();
 	}
 }
 

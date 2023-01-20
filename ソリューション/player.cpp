@@ -7,6 +7,7 @@
 #include "input.h"
 #include "debugproc.h"
 #include "fade.h"
+#include "detect.h"
 
 #define NUM_PLAYER (4)			//プレイヤーの最大人数
 #define PLAYER_STEALTHSPEED (1.0f)		//プレイヤーのステルススピード
@@ -86,9 +87,8 @@ void InitPlayer(void)
 //====================================================================
 void UninitPlayer(void)
 {
-	for (int nCntPlayer = 0; nCntPlayer < NUM_PLAYER; nCntPlayer++)
-	{
-		for (int nCntModel = 0; nCntModel < g_aPlayer[nCntPlayer].nNumModel; nCntModel++)
+	
+		for (int nCntModel = 0; nCntModel < 1; nCntModel++)
 		{
 			//メッシュの破棄
 			if (g_pMeshPlayer != NULL)
@@ -104,7 +104,7 @@ void UninitPlayer(void)
 				g_pBuffMatPlayer[nCntModel] = NULL;
 			}
 		}
-	}
+	
 }
 
 //====================================================================
