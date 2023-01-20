@@ -167,6 +167,8 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="PlayModeSelect.cpp" />
     <ClCompile Include="result.cpp" />
+    <ClCompile Include="score.cpp" />
+    <ClCompile Include="score_item.cpp" />
     <ClCompile Include="stage.cpp" />
     <ClCompile Include="stamina.cpp" />
     <ClCompile Include="title.cpp" />
@@ -188,6 +190,8 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="PlayModeSelect.h" />
     <ClInclude Include="result.h" />
+    <ClInclude Include="score.h" />
+    <ClInclude Include="score_item.h" />
     <ClInclude Include="stage.h" />
     <ClInclude Include="stamina.h" />
     <ClInclude Include="title.h" />

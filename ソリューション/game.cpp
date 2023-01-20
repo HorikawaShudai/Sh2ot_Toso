@@ -13,6 +13,7 @@
 #include "stamina.h"
 #include "life.h"
 #include "field.h"
+#include "score.h"
 
 //グローバル変数宣言
 bool g_bPause = false;
@@ -59,6 +60,9 @@ void InitGame()
 	//ライフの初期化処理
 	InitLife();
 
+	//スコアの初期化処理
+	InitScore();
+
 	SetStage(0);
 }
 
@@ -93,6 +97,9 @@ void UninitGame()
 
 	//ライフの終了処理
 	UninitLife();
+
+	//スコアの終了処理
+	UninitScore();
 }
 
 //====================================================================
@@ -162,6 +169,9 @@ void UpdateGame()
 
 		//ライフの更新処理
 		UpdateLife();
+
+		//スコアの更新処理
+		UpdateScore();
 	}
 }
 
@@ -198,6 +208,9 @@ void DrawGame()
 
 	//ライフの描画処理
 	DrawLife();
+
+	//スコアの描画処理
+	DrawScore();
 }
 
 //====================================================================
