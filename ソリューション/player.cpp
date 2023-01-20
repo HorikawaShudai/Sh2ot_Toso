@@ -288,15 +288,11 @@ void PlayerMoveInput(int nCnt)
 	if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) != 0 && GetGamepadPress(BUTTON_A, 0))
 	{//入力してる状態かつAボタンを押しているとき
 
-		if (g_aPlayer[nCnt].MoveState != PLAYER_MOVESTATE_FATIGE)
-		{//疲労状態以外のとき
+		g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_DASHSPEED;
+		g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_DASHSPEED;
 
-			g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_DASHSPEED;
-			g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_DASHSPEED;
-
-			//プレイヤーをダッシュ状態にする
-			g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_DASH;
-		}
+		//プレイヤーをダッシュ状態にする
+		g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_DASH;
 	}
 	else if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) < 0.95f)
 	{//左スティックを倒し切っていない状態のとき

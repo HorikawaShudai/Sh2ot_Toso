@@ -12,6 +12,7 @@
 
 //マクロ定義
 #define NUM_PLACE     (3)			//ライフの数
+#define MAX_PLAYER    (NUM_PLAYER)	//プレイヤーの最大数
 
 #define LIFEPOS_X_0     (30.0f)		//1人目ライフのX位置
 #define LIFEPOS_Y_0     (50.0f)		//1人目ライフのY位置
@@ -40,18 +41,25 @@ typedef struct
 //グローバル変数宣言
 LPDIRECT3DTEXTURE9 g_pTextureLife = NULL;  //テクスチャのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffLife = NULL; //頂点バッファへのポインタ
-LIFE g_anLife[NUM_PLAYER];			//ライフの情報
+LIFE g_anLife[MAX_PLAYER];			//ライフの情報
+int g_NumPlayerLife;
 
 //=============================
 //  ライフの初期化
 //=============================
 void InitLife(void)
 {
-	LPDIRECT3DDEVICE9 pDevice;
+	//デバイスの取得
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+
+	//プレイ人数情報の取得
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+
+	//変数宣言
 	int nCntLife;
 
-	//デバイスの取得
-	pDevice = GetDevice();
+	//グローバル宣言の初期化
+	g_NumPlayerLife = 0;
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
@@ -59,7 +67,7 @@ void InitLife(void)
 		&g_pTextureLife);
 
 	//ライフの情報を初期化
-	for (nCntLife = 0; nCntLife < GetPlayNumber(); nCntLife++)
+	for (nCntLife = 0; nCntLife < MAX_PLAYER; nCntLife++)
 	{
 		for (int nCnt = 0; nCnt < NUM_PLACE; nCnt++)
 		{
@@ -88,7 +96,7 @@ void InitLife(void)
 	}
 
 	//頂点バッファの生成
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * NUM_PLACE * NUM_PLAYER,
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * NUM_PLACE * MAX_PLAYER,
 		D3DUSAGE_WRITEONLY,
 		FVF_VERTEX_2D,
 		D3DPOOL_MANAGED,
@@ -99,8 +107,9 @@ void InitLife(void)
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	g_pVtxBuffLife->Lock(0, 0, (void**)&pVtx, 0);
-	for(int nCnt = 0; nCnt < NUM_PLAYER; nCnt++)
-	{ 
+
+	for(int nCnt = 0; nCnt < PlayNumber.CurrentSelectNumber; nCnt++)
+	{
 		for (nCntLife = 0; nCntLife < NUM_PLACE; nCntLife++)
 		{
 			//頂点座標の設定
@@ -168,13 +177,15 @@ void UpdateLife(void)
 //======================
 void DrawLife(void)
 {
-	LPDIRECT3DDEVICE9 pDevice;
+	//デバイスの取得
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();;
 
+	//プレイ人数情報の取得
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+
+	//変数宣言
 	int nCount = 0;
 	int nCntLife;
-
-	//デバイスの取得
-	pDevice = GetDevice();
 
 	//頂点バッファをデータストリームに設定
 	pDevice->SetStreamSource(0, g_pVtxBuffLife, 0, sizeof(VERTEX_2D));
@@ -185,7 +196,7 @@ void DrawLife(void)
 	//テクスチャの設定
 	pDevice->SetTexture(0, g_pTextureLife);
 
-	for (int nCnt = 0; nCnt < NUM_PLAYER; nCnt++)
+	for (int nCnt = 0; nCnt < PlayNumber.CurrentSelectNumber + 1; nCnt++)
 	{
 		for (nCntLife = 0; nCntLife < NUM_PLACE; nCntLife++)
 		{
