@@ -83,7 +83,7 @@ void InitItem(void)
 //====================================================================
 void UninitItem(void)
 {
-	for (int nCntNumObject = 0; nCntNumObject < OBJECT00_NTYPE_MAX; nCntNumObject++)
+	for (int nCntNumObject = 0; nCntNumObject < OBJECT_SCORE_MAX; nCntNumObject++)
 	{
 		for (int nCntTex = 0; nCntTex < 64; nCntTex++)
 		{
@@ -101,8 +101,7 @@ void UninitItem(void)
 			g_pMeshItem[nCntNumObject]->Release();
 			g_pMeshItem[nCntNumObject] = NULL;
 		}
-
-		//マテリアルの破棄
+			//マテリアルの破棄
 		if (g_pBuffMatItem[nCntNumObject] != NULL)
 		{
 			g_pBuffMatItem[nCntNumObject]->Release();
