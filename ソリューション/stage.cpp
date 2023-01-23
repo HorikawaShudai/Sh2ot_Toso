@@ -2,6 +2,7 @@
 #include "game.h"
 #include "stage.h"
 #include "object00.h"
+#include "edit.h"
 #include <stdio.h>
 
 //マクロ定義
@@ -132,7 +133,7 @@ void LoadStage(int nStageNumber)
 	FILE *pFile; //ファイルポインタを宣言
 
 	//ファイルを開く
-	pFile = fopen("data\\TEXT\\Stage00.txt", "r");
+	pFile = fopen(SET_STAGE_TEXT, "r");
 
 	if (pFile != NULL)
 	{//ファイルが開けた場合

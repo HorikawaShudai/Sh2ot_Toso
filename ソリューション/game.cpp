@@ -12,9 +12,9 @@
 #include "enemy.h"
 #include "stamina.h"
 #include "life.h"
-#include "detect.h"
 #include "field.h"
-#include "PlayNumberSelect.h"
+#include "score_item.h"
+#include "score.h"
 
 //グローバル変数宣言
 bool g_bPause = false;
@@ -61,9 +61,23 @@ void InitGame()
 	//ライフの初期化処理
 	InitLife();
 
-	InitDetect();
-
 	SetEnemy(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+
+	//スコアの初期化
+	InitScore();
+
+	//スコアアイテムの初期化
+	InitItem();
+	SetItem(D3DXVECTOR3(0.0f,0.0f,-40.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), 0);
+	SetItem(D3DXVECTOR3(40.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetItem(D3DXVECTOR3(100.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetItem(D3DXVECTOR3(150.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetItem(D3DXVECTOR3(-50.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetItem(D3DXVECTOR3(-100.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetItem(D3DXVECTOR3(-150.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetItem(D3DXVECTOR3(-200.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetItem(D3DXVECTOR3(200.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetItem(D3DXVECTOR3(250.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
 	SetStage(0);
 }
@@ -99,7 +113,13 @@ void UninitGame()
 
 	//ライフの終了処理
 	UninitLife();
-	UninitDetect();
+
+
+	//スコアの終了処理
+	UninitScore();
+
+	//アイテムの終了処理
+	UninitItem();
 
 	
 }
@@ -172,7 +192,12 @@ void UpdateGame()
 		//ライフの更新処理
 		UpdateLife();
 
-		UpdateDetect();
+
+		//スコアの更新処理
+		UpdateScore();
+
+		//スコアアイテムの更新処理
+		UpdateItem();
 	}
 }
 
@@ -181,63 +206,40 @@ void UpdateGame()
 //====================================================================
 void DrawGame()
 {
-	D3DVIEWPORT9 viewportDef;
+	//カメラの描画処理
+	SetCamera();
 
-	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+	DrawMeshWall();
 
-	//プレイ人数情報の取得
-	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
-
-	//現在のビューポートを取得
-	pDevice->GetViewport(&viewportDef);
-
-	for (int nCnt = 0; nCnt < PlayNumber.CurrentSelectNumber; nCnt++)
+	if (g_bEdit == true)
 	{
-		//カメラのセット処理
-		if (PlayNumber.CurrentSelectNumber == 1)
-		{//プレイ人数が一人の時
-			SetCamera(nCnt);				//
-		}
-		else if (PlayNumber.CurrentSelectNumber == 2)
-		{//プレイ人数が2人の時
-			SetCamera(nCnt + 1);			//
-		}
-		else if (PlayNumber.CurrentSelectNumber >= 3)
-		{//プレイ人数が一人の時
-			SetCamera(nCnt + 3);			//
-		}
-
-		//メッシュウォールの描画処理
-		DrawMeshWall();
-
-		if (g_bEdit == true)
-		{
-			//エディットモードのオブジェクト処理
-			DrawEditObject00();
-		}
-
-		//床の描画処理
-		DrawField();
-
-		//オブジェクトの描画処理
-		DrawObject00();
-
-		//プレイヤーの描画処理
-		DrawPlayer();
-
-		//敵の描画処理
-		DrawEnemy();
-
-		//スタミナの描画処理
-		DrawStamina();
-
-		//ライフの描画処理
-		DrawLife();
+		//エディットモードのオブジェクト処理
+		DrawEditObject00();
 	}
 
-	//ビューポートを元に戻す
-	pDevice->SetViewport(&viewportDef);
+	//床の描画処理
+	DrawField();
+
+	//オブジェクトの描画処理
+	DrawObject00();
+
+	//プレイヤーの描画処理
+	DrawPlayer();
+
+	//敵の描画処理
+	DrawEnemy();
+
+	//スタミナの描画処理
+	DrawStamina();
+
+	//ライフの描画処理
+	DrawLife();
+
+	//スコアの描画処理
+	DrawScore();
+
+	//スコアアイテムの描画処理
+	DrawItem();
 }
 
 //====================================================================

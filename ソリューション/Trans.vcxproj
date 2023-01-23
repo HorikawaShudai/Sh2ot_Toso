@@ -153,7 +153,6 @@
   <ItemGroup>
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="debugproc.cpp" />
-    <ClCompile Include="detect.cpp" />
     <ClCompile Include="edit.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="Fade.cpp" />
@@ -178,7 +177,6 @@
   <ItemGroup>
     <ClInclude Include="camera.h" />
     <ClInclude Include="debugproc.h" />
-    <ClInclude Include="detect.h" />
     <ClInclude Include="edit.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="Fade.h" />

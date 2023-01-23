@@ -16,7 +16,7 @@ Object00 g_Object00[MAX_OBJECT00];					//オブジェクト00の情報
 int EditIndex;								//エディットモード用の番号
 D3DXVECTOR3 EditPos;						//エディットモードのオブジェクトの位置
 D3DXVECTOR3 EditRot;						//エディットモードのオブジェクトの向き
-int EditType;						//エディットモードのオブジェクトの種類
+int EditType;								//エディットモードのオブジェクトの種類
 
 const char *c_apModelObj[] =					//モデルデータ読み込み
 {
@@ -65,7 +65,9 @@ const char *c_apModelObj[] =					//モデルデータ読み込み
 	"Data\\MODEL\\chemicalshelf.x",
 	"Data\\MODEL\\Height_Cabinet.x",
 	"Data\\MODEL\\rubble.x",
-	"Data\\MODEL\\stretcher.x"
+	"Data\\MODEL\\stretcher.x",
+	"Data\\MODEL\\catcar.x",
+	"Data\\MODEL\\fence.x"
 };
 
 //====================================================================
@@ -513,6 +515,7 @@ bool EditCollisionObject00(D3DXVECTOR3 pPos, D3DXVECTOR3 min, D3DXVECTOR3 max, f
 				)
 			{//オブジェクト同士が重なっている
 				g_Object00[nCntObject].bUse = false;
+				
 				bON = true;
 			}
 		}
