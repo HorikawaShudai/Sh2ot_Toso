@@ -14,7 +14,7 @@ LPD3DXMESH g_pMeshItem[OBJECT_SCORE_MAX] = {};					//ƒƒbƒVƒ…(’¸“_î•ñ)‚Ö‚Ìƒ|ƒCƒ
 LPD3DXBUFFER g_pBuffMatItem[OBJECT_SCORE_MAX] = {};				//ƒ}ƒeƒŠƒAƒ‹‚Ö‚Ìƒ|ƒCƒ“ƒ^
 DWORD g_dwNumMatItem[OBJECT_SCORE_MAX] = {};						//ƒ}ƒeƒŠƒAƒ‹‚Ì”
 
-Object00 g_Item[MAX_OBJECT00];					//ƒIƒuƒWƒFƒNƒg00‚Ìî•ñ
+Object00 g_Item[MAX_ITEM00];					//ƒIƒuƒWƒFƒNƒg00‚Ìî•ñ
 
 const char *c_apModeObj[] =					//ƒ‚ƒfƒ‹ƒf[ƒ^“Ç‚Ýž‚Ý
 {
@@ -31,7 +31,7 @@ void InitItem(void)
 	//ƒfƒoƒCƒX‚ÌŠ“¾
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	for (nCntObject = 0; nCntObject < MAX_OBJECT00; nCntObject++)
+	for (nCntObject = 0; nCntObject < MAX_ITEM00; nCntObject++)
 	{
 		g_Item[nCntObject].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Item[nCntObject].posOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -115,7 +115,7 @@ void UninitItem(void)
 //====================================================================
 void UpdateItem(void)
 {
-	for (int nCntObject = 0; nCntObject < MAX_OBJECT00; nCntObject++)
+	for (int nCntObject = 0; nCntObject < MAX_ITEM00; nCntObject++)
 	{
 		if (g_Item[nCntObject].bUse == true)
 		{
@@ -136,7 +136,7 @@ void DrawItem(void)
 	D3DMATERIAL9 matDef;			//Œ»Ý‚Ìƒ}ƒeƒŠƒAƒ‹•Û‘¶—p
 	D3DXMATERIAL *pMat;				//ƒ}ƒeƒŠƒAƒ‹ƒf[ƒ^‚Ö‚Ìƒ|ƒCƒ“ƒ^
 
-	for (nCntObject = 0; nCntObject < MAX_OBJECT00; nCntObject++)
+	for (nCntObject = 0; nCntObject < MAX_ITEM00; nCntObject++)
 	{
 		//ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
 		D3DXMatrixIdentity(&g_Item[nCntObject].mtxWorld);
@@ -202,7 +202,7 @@ void SetItem(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 {
 	int nCntObject;
 
-	for (nCntObject = 0; nCntObject < MAX_OBJECT00; nCntObject++)
+	for (nCntObject = 0; nCntObject < MAX_ITEM00; nCntObject++)
 	{
 		if (g_Item[nCntObject].bUse == false)
 		{
@@ -273,11 +273,11 @@ void SetItem(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 //====================================================================
 //ƒvƒŒƒCƒ„[‚Æ‚Ì“–‚½‚è”»’èˆ—
 //====================================================================
-bool CollisionItem(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size)
+bool CollisionItem(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size,int nPlayer)
 {
 	bool bHit = false;
 
-	for (int nCntObject = 0; nCntObject < MAX_OBJECT00; nCntObject++)
+	for (int nCntObject = 0; nCntObject < MAX_ITEM00; nCntObject++)
 	{
 		if (g_Item[nCntObject].bUse == true)
 		{
@@ -288,7 +288,7 @@ bool CollisionItem(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 				&& pPos->z >= g_Item[nCntObject].pos.z - 10
 				&& pPos->z <= g_Item[nCntObject].pos.z + 10)
 			{//ƒAƒCƒeƒ€‚ÆƒvƒŒƒCƒ„[‚ª“–‚½‚Á‚½(XŽ²)
-				AddScore(g_Item[nCntObject].nType);
+				AddScore(g_Item[nCntObject].nType, nPlayer);
 				g_Item[nCntObject].bUse = false;
 				bHit = true;
 			}
@@ -303,7 +303,7 @@ bool CollisionItem(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 //====================================================================
 void CollisionItemShadow(D3DXVECTOR3 *pPos)
 {
-	for (int nCntObject = 0; nCntObject < MAX_OBJECT00; nCntObject++)
+	for (int nCntObject = 0; nCntObject < MAX_ITEM00; nCntObject++)
 	{
 		if (g_Item[nCntObject].bUse == true)
 		{
