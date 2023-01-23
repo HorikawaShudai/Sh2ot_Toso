@@ -8,6 +8,7 @@
 #include "debugproc.h"
 #include "fade.h"
 #include "life.h"
+#include "PlayNumberSelect.h"
 
 #define PLAYER_STEALTHSPEED (1.0f)		//プレイヤーのステルススピード
 #define PLAYER_SPEED (3.0f)				//プレイヤーのスピード
@@ -34,7 +35,10 @@ void InitPlayer(void)
 	//デバイスの所得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	for (int nCntPlayer = 0; nCntPlayer < NUM_PLAYER; nCntPlayer++)
+	//プレイ人数情報の取得
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+
+	for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
 	{
 		g_aPlayer[nCntPlayer].pos = D3DXVECTOR3(nCntPlayer * 100.0f, 0.0f, -20.0f);
 		g_aPlayer[nCntPlayer].posOld = D3DXVECTOR3(0.0f, 300.0f, -400.0f);
@@ -86,18 +90,20 @@ void InitPlayer(void)
 //====================================================================
 void UninitPlayer(void)
 {
-	
-	for (int nCntModel = 0; nCntModel < 1; nCntModel++)
+	//プレイ人数情報の取得
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+
+	for (int nCntModel = 0; nCntModel < PlayNumber.CurrentSelectNumber; nCntModel++)
 	{
 		//メッシュの破棄
-		if (g_pMeshPlayer[nCntModel] == NULL)
+		if (g_pMeshPlayer[nCntModel] != NULL)
 		{
 			g_pMeshPlayer[nCntModel]->Release();
 			g_pMeshPlayer[nCntModel] = NULL;
 		}
 
 		//マテリアルの破棄
-		if (g_pBuffMatPlayer != NULL)
+		if (g_pBuffMatPlayer[nCntModel] != NULL)
 		{
 			g_pBuffMatPlayer[nCntModel]->Release();
 			g_pBuffMatPlayer[nCntModel] = NULL;
@@ -110,10 +116,13 @@ void UninitPlayer(void)
 //====================================================================
 void UpdatePlayer(void)
 {
+	//プレイ人数情報の取得
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+
 	if (GetKeyboardTrigger(DIK_F3) == true)
 	{
 		g_SelectPlayer++;
-		if (g_SelectPlayer >= NUM_PLAYER)
+		if (g_SelectPlayer >= PlayNumber.CurrentSelectNumber)
 		{
 			g_SelectPlayer = 0;
 		}
@@ -205,7 +214,7 @@ void UpdatePlayer(void)
 	}
 
 	PrintDebugProc("【F3】でプレイヤー切り替え：【プレイヤー%d】\n", g_SelectPlayer + 1);
-	for (int nCntPlayer = 0; nCntPlayer < NUM_PLAYER; nCntPlayer++)
+	for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
 	{
 		PrintDebugProc("プレイヤー%d人目の座標【X : %f | Y : %f | Z : %f】\n", nCntPlayer, g_aPlayer[nCntPlayer].pos.x, g_aPlayer[nCntPlayer].pos.y, g_aPlayer[nCntPlayer].pos.z);
 	}
@@ -472,7 +481,10 @@ void DrawPlayer(void)
 	D3DMATERIAL9 matDef;			//現在のマテリアル保存用
 	D3DXMATERIAL *pMat;				//マテリアルデータへのポインタ
 
-	for (int nCntPlayer = 0; nCntPlayer < NUM_PLAYER; nCntPlayer++)
+	//プレイ人数情報の取得
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+
+	for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
 	{
 		//ワールドマトリックスの初期化
 		D3DXMatrixIdentity(&g_aPlayer[nCntPlayer].mtxWorld);

@@ -14,6 +14,7 @@
 #include "life.h"
 #include "detect.h"
 #include "field.h"
+#include "PlayNumberSelect.h"
 
 //グローバル変数宣言
 bool g_bPause = false;
@@ -180,34 +181,63 @@ void UpdateGame()
 //====================================================================
 void DrawGame()
 {
-	//カメラの描画処理
-	SetCamera();
+	D3DVIEWPORT9 viewportDef;
 
-	DrawMeshWall();
+	//デバイスの取得
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	if (g_bEdit == true)
+	//プレイ人数情報の取得
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+
+	//現在のビューポートを取得
+	pDevice->GetViewport(&viewportDef);
+
+	for (int nCnt = 0; nCnt < PlayNumber.CurrentSelectNumber; nCnt++)
 	{
-		//エディットモードのオブジェクト処理
-		DrawEditObject00();
+		//カメラのセット処理
+		if (PlayNumber.CurrentSelectNumber == 1)
+		{//プレイ人数が一人の時
+			SetCamera(nCnt);				//
+		}
+		else if (PlayNumber.CurrentSelectNumber == 2)
+		{//プレイ人数が2人の時
+			SetCamera(nCnt + 1);			//
+		}
+		else if (PlayNumber.CurrentSelectNumber >= 3)
+		{//プレイ人数が一人の時
+			SetCamera(nCnt + 3);			//
+		}
+
+		//メッシュウォールの描画処理
+		DrawMeshWall();
+
+		if (g_bEdit == true)
+		{
+			//エディットモードのオブジェクト処理
+			DrawEditObject00();
+		}
+
+		//床の描画処理
+		DrawField();
+
+		//オブジェクトの描画処理
+		DrawObject00();
+
+		//プレイヤーの描画処理
+		DrawPlayer();
+
+		//敵の描画処理
+		DrawEnemy();
+
+		//スタミナの描画処理
+		DrawStamina();
+
+		//ライフの描画処理
+		DrawLife();
 	}
 
-	//床の描画処理
-	DrawField();
-
-	//オブジェクトの描画処理
-	DrawObject00();
-
-	//プレイヤーの描画処理
-	DrawPlayer();
-
-	//敵の描画処理
-	DrawEnemy();
-
-	//スタミナの描画処理
-	DrawStamina();
-
-	//ライフの描画処理
-	DrawLife();
+	//ビューポートを元に戻す
+	pDevice->SetViewport(&viewportDef);
 }
 
 //====================================================================

@@ -67,7 +67,7 @@ void InitLife(void)
 		&g_pTextureLife);
 
 	//ƒ‰ƒCƒt‚Ìî•ñ‚ğ‰Šú‰»
-	for (nCntLife = 0; nCntLife < MAX_PLAYER; nCntLife++)
+	for (nCntLife = 0; nCntLife < PlayNumber.CurrentSelectNumber; nCntLife++)
 	{
 		for (int nCnt = 0; nCnt < NUM_PLACE; nCnt++)
 		{
