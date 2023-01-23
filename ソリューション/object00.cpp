@@ -67,7 +67,8 @@ const char *c_apModelObj[] =					//モデルデータ読み込み
 	"Data\\MODEL\\rubble.x",
 	"Data\\MODEL\\stretcher.x",
 	"Data\\MODEL\\catcar.x",
-	"Data\\MODEL\\fence.x"
+	"Data\\MODEL\\fence.x",
+	"Data\\MODEL\\rock2.x"
 };
 
 //====================================================================
