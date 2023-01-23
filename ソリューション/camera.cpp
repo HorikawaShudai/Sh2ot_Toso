@@ -9,16 +9,22 @@
 #define CAMERA_VR_SPEED (0.03f)	//カメラの視点スピード
 #define CAMERA_HOMING (0.1f)	//カメラの追従スピード
 
-#define MAX_CAMERA		(8)
+#define MAX_CAMERA		(7)
 
 //グローバル変数
 Camera g_aCamera[MAX_CAMERA];	//カメラの情報
+
+int g_nCurrentCamera;			//選択されているカメラの番号
+int g_nSaveCamera;
 
 //====================================================================
 //カメラの初期化処理
 //====================================================================
 void InitCamera(void)
 {
+	//プレイ人数情報の取得
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+
 	for (int nCntCamera = 0; nCntCamera < MAX_CAMERA; nCntCamera++)
 	{
 		g_aCamera[nCntCamera].posV = D3DXVECTOR3(0.0f, 50.0f, 50.0f);
@@ -29,6 +35,23 @@ void InitCamera(void)
 		g_aCamera[nCntCamera].rot2Old = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 		g_aCamera[nCntCamera].bUse = false;
+	}
+
+
+	if (PlayNumber.CurrentSelectNumber == 1)
+	{
+		g_nCurrentCamera = 0;
+		g_nSaveCamera = 0;
+	}
+	else if (PlayNumber.CurrentSelectNumber == 2)
+	{
+		g_nCurrentCamera = 1;
+		g_nSaveCamera = 1;
+	}
+	else if (PlayNumber.CurrentSelectNumber >= 3)
+	{
+		g_nCurrentCamera = 3;
+		g_nSaveCamera = 3;
 	}
 
 	//1人用
@@ -117,131 +140,150 @@ void UninitCamera(void)
 //====================================================================
 void UpdateCamera(void)
 {
+	//プレイ人数情報の取得
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+
+	if (GetKeyboardTrigger(DIK_F4) == true)
+	{
+		g_nCurrentCamera++;			//使うカメラを変える
+
+		g_nCurrentCamera %= (PlayNumber.CurrentSelectNumber + g_nSaveCamera);			//カメラ上限まで来たら最初のカメラに戻る
+
+		if (PlayNumber.CurrentSelectNumber == 2 && g_nCurrentCamera < 1)
+		{
+			g_nCurrentCamera = 1;
+		}
+		else if (PlayNumber.CurrentSelectNumber >= 3 && g_nCurrentCamera < 3)
+		{
+			g_nCurrentCamera = 3;
+		}
+	}
+
 	for (int nCntCamera = 0; nCntCamera < MAX_CAMERA; nCntCamera++)
 	{
 		if (g_aCamera[nCntCamera].bUse == true)
 		{
-			if (g_aCamera[nCntCamera].rot2.y <= D3DX_PI * 0.5f && g_aCamera[nCntCamera].rot2.y >= -(D3DX_PI * 0.5f))
+			if (g_aCamera[g_nCurrentCamera].rot2.y <= D3DX_PI * 0.5f && g_aCamera[g_nCurrentCamera].rot2.y >= -(D3DX_PI * 0.5f))
 			{//入力
-				g_aCamera[nCntCamera].rot2Old = g_aCamera[nCntCamera].rot2;
+				g_aCamera[g_nCurrentCamera].rot2Old = g_aCamera[g_nCurrentCamera].rot2;
 
 				//キーボード
 				if (GetKeyboardPress(DIK_I) == true)
 				{
-					g_aCamera[nCntCamera].rot2.y += CAMERA_VR_SPEED;
-					g_aCamera[nCntCamera].rot2.z += CAMERA_VR_SPEED;
-					g_aCamera[nCntCamera].rot2.x += CAMERA_VR_SPEED;
+					g_aCamera[g_nCurrentCamera].rot2.y += CAMERA_VR_SPEED;
+					g_aCamera[g_nCurrentCamera].rot2.z += CAMERA_VR_SPEED;
+					g_aCamera[g_nCurrentCamera].rot2.x += CAMERA_VR_SPEED;
 				}
 				if (GetKeyboardPress(DIK_K) == true)
 				{
-					g_aCamera[nCntCamera].rot2.y -= CAMERA_VR_SPEED;
-					g_aCamera[nCntCamera].rot2.z -= CAMERA_VR_SPEED;
-					g_aCamera[nCntCamera].rot2.x -= CAMERA_VR_SPEED;
+					g_aCamera[g_nCurrentCamera].rot2.y -= CAMERA_VR_SPEED;
+					g_aCamera[g_nCurrentCamera].rot2.z -= CAMERA_VR_SPEED;
+					g_aCamera[g_nCurrentCamera].rot2.x -= CAMERA_VR_SPEED;
 				}
 
 				//右スティックの上下視点移動入力
-				g_aCamera[nCntCamera].rot2.y += GetGamepad_Stick_Right(0).y * CAMERA_VR_SPEED;
-				g_aCamera[nCntCamera].rot2.z += GetGamepad_Stick_Right(0).y * CAMERA_VR_SPEED;
-				g_aCamera[nCntCamera].rot2.x += GetGamepad_Stick_Right(0).y * CAMERA_VR_SPEED;
+				g_aCamera[g_nCurrentCamera].rot2.y += GetGamepad_Stick_Right(0).y * CAMERA_VR_SPEED;
+				g_aCamera[g_nCurrentCamera].rot2.z += GetGamepad_Stick_Right(0).y * CAMERA_VR_SPEED;
+				g_aCamera[g_nCurrentCamera].rot2.x += GetGamepad_Stick_Right(0).y * CAMERA_VR_SPEED;
 
 				if (GetMousePress(PUSH_LEFT) == true || GetMousePress(PUSH_RIGHT) == true)
 				{
-					g_aCamera[nCntCamera].rot2.y -= GetMouseMove().y * CAMERA_VR_SPEED;
-					g_aCamera[nCntCamera].rot2.z -= GetMouseMove().y * CAMERA_VR_SPEED;
-					g_aCamera[nCntCamera].rot2.x -= GetMouseMove().y * CAMERA_VR_SPEED;
+					g_aCamera[g_nCurrentCamera].rot2.y -= GetMouseMove().y * CAMERA_VR_SPEED;
+					g_aCamera[g_nCurrentCamera].rot2.z -= GetMouseMove().y * CAMERA_VR_SPEED;
+					g_aCamera[g_nCurrentCamera].rot2.x -= GetMouseMove().y * CAMERA_VR_SPEED;
 				}
 			}
 
 			//右スティックの上下視点移動入力
-			if (fabsf(g_aCamera[nCntCamera].rot2.y) > fabsf(D3DX_PI * 0.5f))
+			if (fabsf(g_aCamera[g_nCurrentCamera].rot2.y) > fabsf(D3DX_PI * 0.5f))
 			{//上限に達した時１フレーム前のrotにもどる
-				g_aCamera[nCntCamera].rot2 = g_aCamera[nCntCamera].rot2Old;
+				g_aCamera[g_nCurrentCamera].rot2 = g_aCamera[g_nCurrentCamera].rot2Old;
 			}
 
 			//キーボード
 			if (GetKeyboardPress(DIK_J) == true)
 			{
-				g_aCamera[nCntCamera].rot.y -= CAMERA_VR_SPEED;
+				g_aCamera[g_nCurrentCamera].rot.y -= CAMERA_VR_SPEED;
 
 			}
 			if (GetKeyboardPress(DIK_L) == true)
 			{
-				g_aCamera[nCntCamera].rot.y += CAMERA_VR_SPEED;
+				g_aCamera[g_nCurrentCamera].rot.y += CAMERA_VR_SPEED;
 			}
 
 			//右スティックの左右視点移動入力
-			g_aCamera[nCntCamera].rot.y += GetGamepad_Stick_Right(0).x * CAMERA_VR_SPEED;
+			g_aCamera[g_nCurrentCamera].rot.y += GetGamepad_Stick_Right(0).x * CAMERA_VR_SPEED;
 
 			if (GetMousePress(PUSH_LEFT) == true || GetMousePress(PUSH_RIGHT) == true)
 			{
-				g_aCamera[nCntCamera].rot.y += GetMouseMove().x * CAMERA_VR_SPEED;
+				g_aCamera[g_nCurrentCamera].rot.y += GetMouseMove().x * CAMERA_VR_SPEED;
 			}
 
 			//一周した時の向きの補正
-			if (g_aCamera[nCntCamera].rot.y > D3DX_PI * 1.0f)
+			if (g_aCamera[g_nCurrentCamera].rot.y > D3DX_PI * 1.0f)
 			{
-				g_aCamera[nCntCamera].rot.y -= D3DX_PI * 2.0f;
+				g_aCamera[g_nCurrentCamera].rot.y -= D3DX_PI * 2.0f;
 			}
-			else if (g_aCamera[nCntCamera].rot.y < -D3DX_PI * 1.0f)
+			else if (g_aCamera[g_nCurrentCamera].rot.y < -D3DX_PI * 1.0f)
 			{
-				g_aCamera[nCntCamera].rot.y += D3DX_PI * 2.0f;
+				g_aCamera[g_nCurrentCamera].rot.y += D3DX_PI * 2.0f;
 			}
 
 
 			//キーボード
 			if (GetKeyboardPress(DIK_LSHIFT) == true)
 			{
-				g_aCamera[nCntCamera].posV.y += CAMERA_SPEED;
-				g_aCamera[nCntCamera].posR.y += CAMERA_SPEED;
+				g_aCamera[g_nCurrentCamera].posV.y += CAMERA_SPEED;
+				g_aCamera[g_nCurrentCamera].posR.y += CAMERA_SPEED;
 
 			}
 			if (GetKeyboardPress(DIK_LCONTROL) == true)
 			{
-				g_aCamera[nCntCamera].posV.y -= CAMERA_SPEED;
-				g_aCamera[nCntCamera].posR.y -= CAMERA_SPEED;
+				g_aCamera[g_nCurrentCamera].posV.y -= CAMERA_SPEED;
+				g_aCamera[g_nCurrentCamera].posR.y -= CAMERA_SPEED;
 			}
 
 			//左トリガーを押し込むとカメラが下がる
-			g_aCamera[nCntCamera].posV.y -= GetGamepad_Trigger_Left(0);
-			g_aCamera[nCntCamera].posR.y -= GetGamepad_Trigger_Left(0);
+			g_aCamera[g_nCurrentCamera].posV.y -= GetGamepad_Trigger_Left(0);
+			g_aCamera[g_nCurrentCamera].posR.y -= GetGamepad_Trigger_Left(0);
 
 			//右トリガーを押し込むとカメラが上がる
-			g_aCamera[nCntCamera].posV.y += GetGamepad_Trigger_Right(0);
-			g_aCamera[nCntCamera].posR.y += GetGamepad_Trigger_Right(0);
+			g_aCamera[g_nCurrentCamera].posV.y += GetGamepad_Trigger_Right(0);
+			g_aCamera[g_nCurrentCamera].posR.y += GetGamepad_Trigger_Right(0);
 
 			//キーボード
 			if (GetKeyboardPress(DIK_W) == true)
 			{
-				g_aCamera[nCntCamera].posR.z += CAMERA_SPEED * cosf(g_aCamera[nCntCamera].rot.y);
-				g_aCamera[nCntCamera].posR.x += CAMERA_SPEED * sinf(g_aCamera[nCntCamera].rot.y);
+				g_aCamera[g_nCurrentCamera].posR.z += CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
+				g_aCamera[g_nCurrentCamera].posR.x += CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
 
-				g_aCamera[nCntCamera].posV.z += CAMERA_SPEED * cosf(g_aCamera[nCntCamera].rot.y);
-				g_aCamera[nCntCamera].posV.x += CAMERA_SPEED * sinf(g_aCamera[nCntCamera].rot.y);
+				g_aCamera[g_nCurrentCamera].posV.z += CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
+				g_aCamera[g_nCurrentCamera].posV.x += CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
 
 			}
 			if (GetKeyboardPress(DIK_S) == true)
 			{
-				g_aCamera[nCntCamera].posR.z += -CAMERA_SPEED * cosf(g_aCamera[nCntCamera].rot.y);
-				g_aCamera[nCntCamera].posR.x += -CAMERA_SPEED * sinf(g_aCamera[nCntCamera].rot.y);
+				g_aCamera[g_nCurrentCamera].posR.z += -CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
+				g_aCamera[g_nCurrentCamera].posR.x += -CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
 
-				g_aCamera[nCntCamera].posV.z += -CAMERA_SPEED * cosf(g_aCamera[nCntCamera].rot.y);
-				g_aCamera[nCntCamera].posV.x += -CAMERA_SPEED * sinf(g_aCamera[nCntCamera].rot.y);
+				g_aCamera[g_nCurrentCamera].posV.z += -CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
+				g_aCamera[g_nCurrentCamera].posV.x += -CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
 			}
 			if (GetKeyboardPress(DIK_A) == true)
 			{
-				g_aCamera[nCntCamera].posR.x += -CAMERA_SPEED * cosf(g_aCamera[nCntCamera].rot.y);
-				g_aCamera[nCntCamera].posR.z -= -CAMERA_SPEED * sinf(g_aCamera[nCntCamera].rot.y);
+				g_aCamera[g_nCurrentCamera].posR.x += -CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
+				g_aCamera[g_nCurrentCamera].posR.z -= -CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
 
-				g_aCamera[nCntCamera].posV.x += -CAMERA_SPEED * cosf(g_aCamera[nCntCamera].rot.y);
-				g_aCamera[nCntCamera].posV.z -= -CAMERA_SPEED * sinf(g_aCamera[nCntCamera].rot.y);
+				g_aCamera[g_nCurrentCamera].posV.x += -CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
+				g_aCamera[g_nCurrentCamera].posV.z -= -CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
 			}
 			if (GetKeyboardPress(DIK_D) == true)
 			{
-				g_aCamera[nCntCamera].posR.x += CAMERA_SPEED * cosf(g_aCamera[nCntCamera].rot.y);
-				g_aCamera[nCntCamera].posR.z -= CAMERA_SPEED * sinf(g_aCamera[nCntCamera].rot.y);
+				g_aCamera[g_nCurrentCamera].posR.x += CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
+				g_aCamera[g_nCurrentCamera].posR.z -= CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
 
-				g_aCamera[nCntCamera].posV.x += CAMERA_SPEED * cosf(g_aCamera[nCntCamera].rot.y);
-				g_aCamera[nCntCamera].posV.z -= CAMERA_SPEED * sinf(g_aCamera[nCntCamera].rot.y);
+				g_aCamera[g_nCurrentCamera].posV.x += CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
+				g_aCamera[g_nCurrentCamera].posV.z -= CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
 			}
 
 			////左スティックによる前後移動	
@@ -284,24 +326,24 @@ void UpdateCamera(void)
 				if (GetMousePress(PUSH_RIGHT) == true)
 				{
 					//視点の情報を出力する
-					g_aCamera[nCntCamera].posR.x = g_aCamera[nCntCamera].posV.x + sinf(g_aCamera[nCntCamera].rot.y) * cosf(g_aCamera[nCntCamera].rot2.z) * CAMERA_DISTANCE;
-					g_aCamera[nCntCamera].posR.z = g_aCamera[nCntCamera].posV.z + cosf(g_aCamera[nCntCamera].rot.y) * cosf(g_aCamera[nCntCamera].rot2.x) * CAMERA_DISTANCE;
-					g_aCamera[nCntCamera].posR.y = g_aCamera[nCntCamera].posV.y + sinf(g_aCamera[nCntCamera].rot2.y) * CAMERA_DISTANCE;
+					g_aCamera[g_nCurrentCamera].posR.x = g_aCamera[g_nCurrentCamera].posV.x + sinf(g_aCamera[g_nCurrentCamera].rot.y) * cosf(g_aCamera[g_nCurrentCamera].rot2.z) * CAMERA_DISTANCE;
+					g_aCamera[g_nCurrentCamera].posR.z = g_aCamera[g_nCurrentCamera].posV.z + cosf(g_aCamera[g_nCurrentCamera].rot.y) * cosf(g_aCamera[g_nCurrentCamera].rot2.x) * CAMERA_DISTANCE;
+					g_aCamera[g_nCurrentCamera].posR.y = g_aCamera[g_nCurrentCamera].posV.y + sinf(g_aCamera[g_nCurrentCamera].rot2.y) * CAMERA_DISTANCE;
 				}
 				if (GetMousePress(PUSH_LEFT) == true)
 				{
 					//視点の情報を出力する
-					g_aCamera[nCntCamera].posV.x = g_aCamera[nCntCamera].posR.x + sinf(g_aCamera[nCntCamera].rot.y) * -cosf(g_aCamera[nCntCamera].rot2.z) * CAMERA_DISTANCE;
-					g_aCamera[nCntCamera].posV.z = g_aCamera[nCntCamera].posR.z + cosf(g_aCamera[nCntCamera].rot.y) * -cosf(g_aCamera[nCntCamera].rot2.x) * CAMERA_DISTANCE;
-					g_aCamera[nCntCamera].posV.y = g_aCamera[nCntCamera].posR.y + sinf(-g_aCamera[nCntCamera].rot2.y) * CAMERA_DISTANCE;
+					g_aCamera[g_nCurrentCamera].posV.x = g_aCamera[g_nCurrentCamera].posR.x + sinf(g_aCamera[g_nCurrentCamera].rot.y) * -cosf(g_aCamera[g_nCurrentCamera].rot2.z) * CAMERA_DISTANCE;
+					g_aCamera[g_nCurrentCamera].posV.z = g_aCamera[g_nCurrentCamera].posR.z + cosf(g_aCamera[g_nCurrentCamera].rot.y) * -cosf(g_aCamera[g_nCurrentCamera].rot2.x) * CAMERA_DISTANCE;
+					g_aCamera[g_nCurrentCamera].posV.y = g_aCamera[g_nCurrentCamera].posR.y + sinf(-g_aCamera[g_nCurrentCamera].rot2.y) * CAMERA_DISTANCE;
 				}
 			}
 			else
 			{//マウス操作がされていない場合
 					//注視点の情報を出力する
-				g_aCamera[nCntCamera].posR.x = g_aCamera[nCntCamera].posV.x + sinf(g_aCamera[nCntCamera].rot.y) * cosf(g_aCamera[nCntCamera].rot2.z) * CAMERA_DISTANCE;
-				g_aCamera[nCntCamera].posR.z = g_aCamera[nCntCamera].posV.z + cosf(g_aCamera[nCntCamera].rot.y) * cosf(g_aCamera[nCntCamera].rot2.x) * CAMERA_DISTANCE;
-				g_aCamera[nCntCamera].posR.y = g_aCamera[nCntCamera].posV.y + sinf(g_aCamera[nCntCamera].rot2.y) * CAMERA_DISTANCE;
+				g_aCamera[g_nCurrentCamera].posR.x = g_aCamera[g_nCurrentCamera].posV.x + sinf(g_aCamera[g_nCurrentCamera].rot.y) * cosf(g_aCamera[g_nCurrentCamera].rot2.z) * CAMERA_DISTANCE;
+				g_aCamera[g_nCurrentCamera].posR.z = g_aCamera[g_nCurrentCamera].posV.z + cosf(g_aCamera[g_nCurrentCamera].rot.y) * cosf(g_aCamera[g_nCurrentCamera].rot2.x) * CAMERA_DISTANCE;
+				g_aCamera[g_nCurrentCamera].posR.y = g_aCamera[g_nCurrentCamera].posV.y + sinf(g_aCamera[g_nCurrentCamera].rot2.y) * CAMERA_DISTANCE;
 			}
 		}
 	}
