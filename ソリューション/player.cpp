@@ -426,25 +426,24 @@ void PlayerRotUpdate(int nCnt)
 //====================================================================
 //プレイヤーとの当たり判定
 //====================================================================
-void CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY, float MinY)
+int CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY, float MinY)
 {
+	int nHitPlayer = -1; //プレイヤーのナンバー
 	for (int nCntPlayer = 0; nCntPlayer < NUM_PLAYER; nCntPlayer++)
 	{
-		if (g_aPlayer[nCntPlayer].bUse == true)
-		{
-			if (
-				pos.z + Size >= g_aPlayer[nCntPlayer].pos.z - PLAYER_COLLISIONSIZE &&
-				pos.z - Size <= g_aPlayer[nCntPlayer].pos.z + PLAYER_COLLISIONSIZE &&
-				pos.x + Size >= g_aPlayer[nCntPlayer].pos.x - PLAYER_COLLISIONSIZE &&
-				pos.x - Size <= g_aPlayer[nCntPlayer].pos.x + PLAYER_COLLISIONSIZE &&
-				pos.y + MaxY >= g_aPlayer[nCntPlayer].pos.y - 10.0f &&
-				pos.y + MinY <= g_aPlayer[nCntPlayer].pos.y + 10.0f
-				)
-			{//弾とプレイヤーが当たった(Z軸)
-				PlayerHit(nCntPlayer, 1);
-			}
+		if (
+			pos.z + Size >= g_aPlayer[nCntPlayer].pos.z - PLAYER_COLLISIONSIZE &&
+			pos.z - Size <= g_aPlayer[nCntPlayer].pos.z + PLAYER_COLLISIONSIZE &&
+			pos.x + Size >= g_aPlayer[nCntPlayer].pos.x - PLAYER_COLLISIONSIZE &&
+			pos.x - Size <= g_aPlayer[nCntPlayer].pos.x + PLAYER_COLLISIONSIZE &&
+			pos.y + MaxY >= g_aPlayer[nCntPlayer].pos.y - 10.0f &&
+			pos.y + MinY <= g_aPlayer[nCntPlayer].pos.y + 10.0f
+			)
+		{//弾とプレイヤーが当たった(Z軸)
+			nHitPlayer = nCntPlayer;
 		}
 	}
+	return nHitPlayer;
 }
 
 //====================================================================

@@ -12,7 +12,6 @@
 #include "enemy.h"
 #include "stamina.h"
 #include "life.h"
-#include "detect.h"
 #include "field.h"
 #include "score_item.h"
 #include "score.h"
@@ -61,8 +60,6 @@ void InitGame()
 
 	//ライフの初期化処理
 	InitLife();
-
-	InitDetect();
 
 	SetEnemy(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
@@ -116,7 +113,7 @@ void UninitGame()
 
 	//ライフの終了処理
 	UninitLife();
-	UninitDetect();
+
 
 	//スコアの終了処理
 	UninitScore();
@@ -195,7 +192,6 @@ void UpdateGame()
 		//ライフの更新処理
 		UpdateLife();
 
-		UpdateDetect();
 
 		//スコアの更新処理
 		UpdateScore();

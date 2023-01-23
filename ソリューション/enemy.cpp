@@ -2,9 +2,11 @@
 #include "ENEMY.h"
 #include "camera.h"
 #include "input.h"
-#include "detect.h"
+#include "player.h"
+#include "debugproc.h"
 
 #define ENEMY_LIFE (7)		//オブジェクトの体力
+#define	DETECT_SPEED (20.0f) //探査波の速度
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureENEMY[64][ENEMY_NTYPE_MAX] = {};	//テクスチャのポインタ
@@ -40,6 +42,7 @@ void InitEnemy(void)
 	for (nCntObject = 0; nCntObject < MAX_ENEMY; nCntObject++)
 	{
 		g_Enemy[nCntObject].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_Enemy[nCntObject].Tgpos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Enemy[nCntObject].posOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Enemy[nCntObject].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Enemy[nCntObject].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -47,16 +50,16 @@ void InitEnemy(void)
 		g_Enemy[nCntObject].vtxMax = D3DXVECTOR3(-1000.0f, -1000.0f, -1000.0f);
 		g_Enemy[nCntObject].bUse = false;
 		g_Enemy[nCntObject].nType = ENEMY_NTYPE00;
-		
-			g_Enemy[nCntObject].aModel[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-			g_Enemy[nCntObject].aModel[0].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-			g_Enemy[nCntObject].aModel[0].nType = 0;
-			g_Enemy[nCntObject].aModel[0].nIdxModelParent = -1;
 
-			g_Enemy[nCntObject].aModel[1].pos = D3DXVECTOR3(0.0f, 100.0f, 0.0f);
-			g_Enemy[nCntObject].aModel[1].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-			g_Enemy[nCntObject].aModel[1].nType = 0;
-			g_Enemy[nCntObject].aModel[1].nIdxModelParent = 0;
+		g_Enemy[nCntObject].aModel[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_Enemy[nCntObject].aModel[0].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_Enemy[nCntObject].aModel[0].nType = 0;
+		g_Enemy[nCntObject].aModel[0].nIdxModelParent = -1;
+
+		g_Enemy[nCntObject].aModel[1].pos = D3DXVECTOR3(0.0f, 100.0f, 0.0f);
+		g_Enemy[nCntObject].aModel[1].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_Enemy[nCntObject].aModel[1].nType = 0;
+		g_Enemy[nCntObject].aModel[1].nIdxModelParent = 0;
 	}
 	EditIndexEnemy = 0;
 
@@ -134,8 +137,16 @@ void UpdateEnemy(void)
 	{
 		if (g_Enemy[nCntObject].bUse == true)
 		{
-			SetDetect(g_Enemy[nCntObject].pos, nCntObject, 0.0f, 1000, DETECTTYPE_WALL);
-			SetDetect(g_Enemy[nCntObject].pos, nCntObject, D3DX_PI, 1000, DETECTTYPE_WALL);
+			//各方位にある壁との距離を測定
+			g_Enemy[nCntObject].fDistanceN = DetectWall(g_Enemy[nCntObject].pos, 0.0f, 1000);
+			g_Enemy[nCntObject].fDistanceS = DetectWall(g_Enemy[nCntObject].pos, D3DX_PI, 1000);
+			g_Enemy[nCntObject].fDistanceW = DetectWall(g_Enemy[nCntObject].pos, D3DX_PI*-0.5f, 1000);
+			g_Enemy[nCntObject].fDistanceE = DetectWall(g_Enemy[nCntObject].pos, D3DX_PI*0.5f, 1000);
+
+			PrintDebugProc("\nEnemy%d北:%f\n", nCntObject, g_Enemy[nCntObject].fDistanceN);
+			PrintDebugProc("Enemy%d南:%f\n", nCntObject, g_Enemy[nCntObject].fDistanceS);
+			PrintDebugProc("Enemy%d西:%f\n", nCntObject, g_Enemy[nCntObject].fDistanceW);
+			PrintDebugProc("Enemy%d東:%f\n", nCntObject, g_Enemy[nCntObject].fDistanceE);
 		}
 	}
 }
@@ -438,4 +449,79 @@ void CollisionEnemyShadow(D3DXVECTOR3 *pPos)
 ENEMY * GetEnemy(void)
 {
 	return &g_Enemy[0];
+}
+
+float DetectWall(D3DXVECTOR3 pos, float fmoveRot, int nLife)
+{
+	DETECT Detect;
+	Detect.Startpos = pos;
+	Detect.pos = pos;
+	Detect.fmoveRot = fmoveRot;
+	Detect.nLife = nLife;
+
+	while (1)
+	{
+		Detect.posOld = Detect.pos;
+		Detect.move = D3DXVECTOR3(sinf(Detect.fmoveRot)*DETECT_SPEED, 0.0f, cosf(Detect.fmoveRot)*DETECT_SPEED);
+		Detect.pos += Detect.move;
+		Detect.nLife--;
+
+		if (CollisionObject00(&Detect.pos, &Detect.posOld, &Detect.move, D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f) == true)
+		{//壁に当たったとき
+		 //距離を割り出す
+			float fDis = (powf(Detect.Startpos.x, 2.0f) + powf(Detect.Startpos.z, 2.0f) - (powf(Detect.pos.x, 2.0f)) + powf(Detect.pos.z, 2.0f));
+			if (fDis <= 0)
+			{
+				fDis *= -1.0f;
+			}
+			Detect.fDistance = sqrtf(fDis);
+			return Detect.fDistance;
+		}
+
+		if (Detect.nLife <= 0)
+		{
+			return NULL;
+		}
+	}
+}
+bool DetectPlayer(D3DXVECTOR3*postg, D3DXVECTOR3 pos, float fmoveRot, int nLife)
+{
+	DETECT Detect;
+	Player*pPlayer = GetPlayer();
+	Detect.Startpos = pos;
+	Detect.pos = pos;
+	Detect.fmoveRot = fmoveRot;
+	Detect.nLife = nLife;
+
+	while (1)
+	{
+		Detect.posOld = Detect.pos;
+		Detect.move = D3DXVECTOR3(sinf(DETECT_SPEED)*Detect.fmoveRot, 0.0f, cosf(DETECT_SPEED)*Detect.fmoveRot);
+		Detect.pos += Detect.move;
+		Detect.nLife--;
+
+		if (CollisionObject00(&Detect.pos, &Detect.posOld, &Detect.move, D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f) == true)
+		{//壁に当たったとき
+		 //距離を割り出す
+			float fDis = (powf(Detect.Startpos.x, 2.0f) + powf(Detect.Startpos.z, 2.0f) - (powf(Detect.pos.x, 2.0f)) + powf(Detect.pos.z, 2.0f));
+			if (fDis <= 0)
+			{
+				fDis *= -1.0f;
+			}
+			Detect.fDistance = sqrtf(fDis);
+			return false;
+		}
+		Detect.nTarget = CollisionPlayer(Detect.pos, Detect.posOld, 1.0f, 0.0f, 0.0f);
+		if (Detect.nTarget  > -1)
+		{
+			for (int nCntPlayer = 0; nCntPlayer < Detect.nTarget; nCntPlayer++, pPlayer++);
+			postg = &pPlayer->pos;
+			return true;
+
+		}
+		if (Detect.nLife <= 0)
+		{
+			return false;
+		}
+	}
 }
