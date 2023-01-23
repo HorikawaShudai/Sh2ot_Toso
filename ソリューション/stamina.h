@@ -17,6 +17,7 @@ typedef struct
 	int nFalseTime;				//スタミナが使われていない時間のカウント
 	float fGaugeSize;			//スタミナのサイズ(横幅)
 	bool bUse;					//使っているかどうか
+	bool bFatige;				//疲れているかどうか
 } Stamina;
 
 //*********************************************
@@ -26,7 +27,5 @@ void InitStamina(void);
 void UninitStamina(void);
 void UpdateStamina(void);
 void DrawStamina(void);
-
-void SetStamina(D3DXVECTOR3 pos);
 
 #endif

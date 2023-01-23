@@ -16,7 +16,7 @@ Object00 g_Object00[MAX_OBJECT00];					//オブジェクト00の情報
 int EditIndex;								//エディットモード用の番号
 D3DXVECTOR3 EditPos;						//エディットモードのオブジェクトの位置
 D3DXVECTOR3 EditRot;						//エディットモードのオブジェクトの向き
-int EditType;						//エディットモードのオブジェクトの種類
+int EditType;								//エディットモードのオブジェクトの種類
 
 const char *c_apModelObj[] =					//モデルデータ読み込み
 {

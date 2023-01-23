@@ -401,6 +401,8 @@ void PlayerSelect(void)
 			{
 				SetFade(MODE_PLAYMODE);			//モードの設定(ゲーム画面に移行)
 			}
+
+			g_PlayNumberSelect.CurrentSelectNumber += 1;			//プレイ人数に合わせるため
 		}
 		else if (GetKeyboardTrigger(DIK_B) == true)
 		{//キー(B)が押された
@@ -415,4 +417,12 @@ void PlayerSelect(void)
 PlayNumberSelect GetPlayNumberSelect(void)
 {
 	return g_PlayNumberSelect;
+}
+
+//========================================================================
+// プレイ人数の取得
+//========================================================================
+int GetPlayNumber(void)
+{
+	return g_PlayNumberSelect.CurrentSelectNumber + 1;
 }

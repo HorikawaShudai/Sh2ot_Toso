@@ -1,12 +1,16 @@
-﻿  game.cpp
+﻿  PlayNumberSelect.cpp
+  edit.cpp
+  game.cpp
+  life.cpp
+  main.cpp
   object00.cpp
   player.cpp
-  score.cpp
-  score_item.cpp
+  stage.cpp
+  stamina.cpp
   コード生成しています。
-  16 of 221 functions ( 7.2%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    37 functions had inline decision re-evaluated but remain unchanged
+  51 of 223 functions (22.9%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    4 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
   Trans.vcxproj -> C:\Users\student\Desktop\グループ制作1\github3\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\student\Desktop\グループ制作1\github3\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
