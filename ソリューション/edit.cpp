@@ -59,7 +59,7 @@ void SaveEdit()
 	FILE *pFile; //ファイルポインタを宣言
 
 	//ファイルを開く
-	pFile = fopen("data\\TEXT\\Stage00.txt", "w");
+	pFile = fopen(SET_STAGE_TEXT, "w");
 
 	if (pFile != NULL)
 	{//ファイルが開けた場合

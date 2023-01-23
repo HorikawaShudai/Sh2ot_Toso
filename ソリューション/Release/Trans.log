@@ -1,24 +1,15 @@
-<<<<<<< HEAD
-﻿  player.cpp
-=======
-<<<<<<< HEAD
-﻿  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.exe
-=======
-<<<<<<< HEAD
-﻿  game.cpp
-  score.cpp
-  score_item.cpp
->>>>>>> 7db1bcdefaddf86322ff866184237d2a3a436157
+﻿  PlayNumberSelect.cpp
+  edit.cpp
+  game.cpp
+  life.cpp
+  main.cpp
+  player.cpp
+  stage.cpp
+  stamina.cpp
   コード生成しています。
-  0 of 214 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+  14 of 215 functions ( 6.5%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    32 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
-<<<<<<< HEAD
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
-=======
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.exe
->>>>>>> dfec019e97cf646c8024414b1330873930e27bc9
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
->>>>>>> 7db1bcdefaddf86322ff866184237d2a3a436157
