@@ -430,8 +430,9 @@ void PlayerRotUpdate(int nCnt)
 //====================================================================
 //プレイヤーとの当たり判定
 //====================================================================
-void CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY, float MinY)
+int CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY, float MinY)
 {
+	int nCntHit = -1;
 	for (int nCntPlayer = 0; nCntPlayer < NUM_PLAYER; nCntPlayer++)
 	{
 		if (
@@ -444,8 +445,10 @@ void CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY
 			)
 		{//弾とプレイヤーが当たった(Z軸)
 			PlayerHit(nCntPlayer,1);
+			nCntHit = nCntPlayer;
 		}
 	}
+	return nCntHit;
 }
 
 //====================================================================
