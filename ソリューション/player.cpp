@@ -9,6 +9,7 @@
 #include "fade.h"
 #include "life.h"
 #include "PlayNumberSelect.h"
+#include "score_item.h"
 
 #define PLAYER_STEALTHSPEED (1.0f)		//プレイヤーのステルススピード
 #define PLAYER_SPEED (3.0f)				//プレイヤーのスピード
@@ -196,6 +197,8 @@ void UpdatePlayer(void)
 
 	//オブジェクトとの当たり判定
 	CollisionObject00(&g_aPlayer[g_SelectPlayer].pos, &g_aPlayer[g_SelectPlayer].posOld, &g_aPlayer[g_SelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
+
+	CollisionItem(&g_aPlayer[g_SelectPlayer].pos, &g_aPlayer[g_SelectPlayer].posOld, &g_aPlayer[g_SelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f, g_SelectPlayer);
 
 	//一周した時の向きの補正
 	if (g_aPlayer[g_SelectPlayer].rot.y > D3DX_PI * 1.0f)
