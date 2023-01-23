@@ -9,11 +9,10 @@
 #include "fade.h"
 #include "life.h"
 #include "PlayNumberSelect.h"
-#include "score_item.h"
 
 #define PLAYER_STEALTHSPEED (1.0f)		//プレイヤーのステルススピード
 #define PLAYER_SPEED (3.0f)				//プレイヤーのスピード
-#define PLAYER_DASHSPEED (5.0f)			//プレイヤーのダッシュスピード
+#define PLAYER_DASHSPEED (5.0f)				//プレイヤーのダッシュスピード
 #define PLAYER_ROT_SPEED (0.2f)			//プレイヤーの回転スピード
 #define PLAYER_JUMP (12.0f)				//プレイヤーのジャンプ力
 #define PLAYER_LIFE (3)					//プレイヤーの初期ライフ
@@ -36,7 +35,10 @@ void InitPlayer(void)
 	//デバイスの所得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	for (int nCntPlayer = 0; nCntPlayer < GetPlayNumber(); nCntPlayer++)
+	//プレイ人数情報の取得
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+
+	for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
 	{
 		g_aPlayer[nCntPlayer].pos = D3DXVECTOR3(nCntPlayer * 100.0f, 0.0f, -20.0f);
 		g_aPlayer[nCntPlayer].posOld = D3DXVECTOR3(0.0f, 300.0f, -400.0f);
@@ -88,18 +90,20 @@ void InitPlayer(void)
 //====================================================================
 void UninitPlayer(void)
 {
-	
-	for (int nCntModel = 0; nCntModel < 1; nCntModel++)
+	//プレイ人数情報の取得
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+
+	for (int nCntModel = 0; nCntModel < PlayNumber.CurrentSelectNumber; nCntModel++)
 	{
 		//メッシュの破棄
-		if (g_pMeshPlayer[nCntModel] == NULL)
+		if (g_pMeshPlayer[nCntModel] != NULL)
 		{
 			g_pMeshPlayer[nCntModel]->Release();
 			g_pMeshPlayer[nCntModel] = NULL;
 		}
 
 		//マテリアルの破棄
-		if (g_pBuffMatPlayer != NULL)
+		if (g_pBuffMatPlayer[nCntModel] != NULL)
 		{
 			g_pBuffMatPlayer[nCntModel]->Release();
 			g_pBuffMatPlayer[nCntModel] = NULL;
@@ -112,10 +116,13 @@ void UninitPlayer(void)
 //====================================================================
 void UpdatePlayer(void)
 {
+	//プレイ人数情報の取得
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+
 	if (GetKeyboardTrigger(DIK_F3) == true)
 	{
 		g_SelectPlayer++;
-		if (g_SelectPlayer >= GetPlayNumber())
+		if (g_SelectPlayer >= PlayNumber.CurrentSelectNumber)
 		{
 			g_SelectPlayer = 0;
 		}
@@ -190,9 +197,6 @@ void UpdatePlayer(void)
 	//オブジェクトとの当たり判定
 	CollisionObject00(&g_aPlayer[g_SelectPlayer].pos, &g_aPlayer[g_SelectPlayer].posOld, &g_aPlayer[g_SelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
 
-	//アイテムとの当たり判定
-	CollisionItem(&g_aPlayer[g_SelectPlayer].pos, &g_aPlayer[g_SelectPlayer].posOld, &g_aPlayer[g_SelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
-
 	//一周した時の向きの補正
 	if (g_aPlayer[g_SelectPlayer].rot.y > D3DX_PI * 1.0f)
 	{
@@ -210,9 +214,9 @@ void UpdatePlayer(void)
 	}
 
 	PrintDebugProc("【F3】でプレイヤー切り替え：【プレイヤー%d】\n", g_SelectPlayer + 1);
-	for (int nCntPlayer = 0; nCntPlayer < GetPlayNumber(); nCntPlayer++)
+	for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
 	{
-		PrintDebugProc("プレイヤー%d人目の座標【X : %f | Y : %f | Z : %f】\n", nCntPlayer + 1, g_aPlayer[nCntPlayer].pos.x, g_aPlayer[nCntPlayer].pos.y, g_aPlayer[nCntPlayer].pos.z);
+		PrintDebugProc("プレイヤー%d人目の座標【X : %f | Y : %f | Z : %f】\n", nCntPlayer, g_aPlayer[nCntPlayer].pos.x, g_aPlayer[nCntPlayer].pos.y, g_aPlayer[nCntPlayer].pos.z);
 	}
 	PrintDebugProc("左スティックの出力【%f】", GetGamepad_Stick_Left(0).y);
 	PrintDebugProc("左スティックの出力【%f】", GetGamepad_Stick_Left(0).x);
@@ -428,7 +432,7 @@ void PlayerRotUpdate(int nCnt)
 //====================================================================
 int CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY, float MinY)
 {
-	int nHitPlayer = -1; //プレイヤーのナンバー
+	int nCntHit = -1;
 	for (int nCntPlayer = 0; nCntPlayer < NUM_PLAYER; nCntPlayer++)
 	{
 		if (
@@ -440,10 +444,11 @@ int CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY,
 			pos.y + MinY <= g_aPlayer[nCntPlayer].pos.y + 10.0f
 			)
 		{//弾とプレイヤーが当たった(Z軸)
-			nHitPlayer = nCntPlayer;
+			PlayerHit(nCntPlayer,1);
+			nCntHit = nCntPlayer;
 		}
 	}
-	return nHitPlayer;
+	return nCntHit;
 }
 
 //====================================================================
@@ -479,7 +484,10 @@ void DrawPlayer(void)
 	D3DMATERIAL9 matDef;			//現在のマテリアル保存用
 	D3DXMATERIAL *pMat;				//マテリアルデータへのポインタ
 
-	for (int nCntPlayer = 0; nCntPlayer < NUM_PLAYER; nCntPlayer++)
+	//プレイ人数情報の取得
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+
+	for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
 	{
 		//ワールドマトリックスの初期化
 		D3DXMatrixIdentity(&g_aPlayer[nCntPlayer].mtxWorld);

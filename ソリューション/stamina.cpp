@@ -18,7 +18,10 @@
 
 #define DEC_SPEED		(2.0f)		// スタミナの減るスピード
 #define RECOVERY_SPEED	(0.7f)		// スタミナの回復スピード
-#define TIRED_VALUE		(STAMINA_WIDTH / 3)		// 赤ゲージに入る数値
+#define TIRED_VALUE		(STAMINA_WIDTH / 3)		// 疲労ゲージの数値
+
+#define STAMINA_POS_Y0		(700.0f)	// スタミナの位置Y	(プレイ人数が2人以下) 下配置
+#define STAMINA_POS_Y1		(340.0f)	// スタミナの位置Y	(プレイ人数が3人以上) 上配置
 
 //**********************************************
 // テクスチャ名
@@ -82,10 +85,6 @@ void InitStamina(void)
 		NULL);
 	
 	InitStaminaGauge();			//スタミナゲージ
-
-	//SetStamina(D3DXVECTOR3(640.0f, 150.0f, 0.0f));
-
-	//SetStamina(D3DXVECTOR3(640.0f, 650.0f, 0.0f));
 }
 
 //============================================================================
@@ -127,6 +126,9 @@ void DrawStamina(void)
 	//デバイスへのポインタを取得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
+	//プレイ人数情報の取得
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
@@ -136,7 +138,7 @@ void DrawStamina(void)
 	//テクスチャの設定
 	pDevice->SetTexture(0, g_apTextureStamina[0]);
 
-	for (int nCntStamina = 0; nCntStamina < NUM_PLAYER; nCntStamina++)
+	for (int nCntStamina = 0; nCntStamina < PlayNumber.CurrentSelectNumber; nCntStamina++)
 	{
 		//ポリゴンの描画
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCntStamina * 4, 2);
@@ -158,50 +160,50 @@ void InitStaminaGauge(void)
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	g_pVtxBuffStamina->Lock(0, 0, (void**)&pVtx, 0);
 
-	for (int nCntStamina = 0; nCntStamina < PlayNumber.CurrentSelectNumber + 1; nCntStamina++)
+	for (int nCntStamina = 0; nCntStamina < PlayNumber.CurrentSelectNumber; nCntStamina++)
 	{
 		switch (nCntStamina)
 		{//人数によって変わるスタミナの位置、大きさを設定
 		case 0:	//1～4人
-			if (PlayNumber.CurrentSelectNumber + 1 == 1)
+			if (PlayNumber.CurrentSelectNumber == 1)
 			{//プレイ人数が1人の時
-				g_aStamina[nCntStamina].pos = D3DXVECTOR3(SCREEN_WIDTH * 0.5f, 700.0f, 0.0f);
+				g_aStamina[nCntStamina].pos = D3DXVECTOR3(SCREEN_WIDTH * 0.5f, STAMINA_POS_Y0, 0.0f);
 
-				g_fStaminaSize = STAMINA_WIDTH;
+				g_fStaminaSize = STAMINA_WIDTH;			//スタミナのサイズを設定
 			}
-			else if (PlayNumber.CurrentSelectNumber + 1 == 2)
+			else if (PlayNumber.CurrentSelectNumber == 2)
 			{//プレイ人数が2人の時
-				g_aStamina[nCntStamina].pos = D3DXVECTOR3((SCREEN_WIDTH * 0.5f) * 0.5, 700.0f, 0.0f);
+				g_aStamina[nCntStamina].pos = D3DXVECTOR3((SCREEN_WIDTH * 0.5f) * 0.5, STAMINA_POS_Y0, 0.0f);
 
-				g_fStaminaSize = STAMINA_WIDTH * 0.65f;
+				g_fStaminaSize = STAMINA_WIDTH * 0.65f;			//スタミナのサイズを設定
 			}
 			else if (PlayNumber.CurrentSelectNumber + 1 == 3 || PlayNumber.CurrentSelectNumber + 1 == 4)
 			{//プレイ人数が3人(4人)の時
-				g_aStamina[nCntStamina].pos = D3DXVECTOR3((SCREEN_WIDTH * 0.5f) * 0.5, SCREEN_HEIGHT * 0.5f, 0.0f);
+				g_aStamina[nCntStamina].pos = D3DXVECTOR3((SCREEN_WIDTH * 0.5f) * 0.5, STAMINA_POS_Y1, 0.0f);
 
-				g_fStaminaSize = STAMINA_WIDTH * 0.65f;
+				g_fStaminaSize = STAMINA_WIDTH * 0.65f;			//スタミナのサイズを設定
 			}
 			break;
 
 		case 1:	//2～4人
-			if (PlayNumber.CurrentSelectNumber + 1 == 2)
+			if (PlayNumber.CurrentSelectNumber == 2)
 			{//プレイ人数が2人の時
-				g_aStamina[nCntStamina].pos = D3DXVECTOR3((SCREEN_WIDTH * 0.5f) + (SCREEN_WIDTH * 0.25f), 700.0f, 0.0f);
+				g_aStamina[nCntStamina].pos = D3DXVECTOR3((SCREEN_WIDTH * 0.5f) + (SCREEN_WIDTH * 0.25f), STAMINA_POS_Y0, 0.0f);
 			}
 			else if (PlayNumber.CurrentSelectNumber + 1 == 3 || PlayNumber.CurrentSelectNumber + 1 == 4)
 			{//プレイ人数が3人の時
-				g_aStamina[nCntStamina].pos = D3DXVECTOR3((SCREEN_WIDTH * 0.5f) + (SCREEN_WIDTH * 0.25f), SCREEN_HEIGHT * 0.5f, 0.0f);
+				g_aStamina[nCntStamina].pos = D3DXVECTOR3((SCREEN_WIDTH * 0.5f) + (SCREEN_WIDTH * 0.25f), STAMINA_POS_Y1, 0.0f);
 			}
 			break;
 
 		case 2:	//3～4人
 			//プレイ人数が3人の時
-				g_aStamina[nCntStamina].pos = D3DXVECTOR3((SCREEN_WIDTH * 0.5f) * 0.5f, 700.0f, 0.0f);
+				g_aStamina[nCntStamina].pos = D3DXVECTOR3((SCREEN_WIDTH * 0.5f) * 0.5f, STAMINA_POS_Y0, 0.0f);
 			break;
 
 		case 3:	//4人
 			//プレイ人数が3人の時
-				g_aStamina[nCntStamina].pos = D3DXVECTOR3((SCREEN_WIDTH * 0.5f) + (SCREEN_WIDTH * 0.25f), 700.0f, 0.0f);
+				g_aStamina[nCntStamina].pos = D3DXVECTOR3((SCREEN_WIDTH * 0.5f) + (SCREEN_WIDTH * 0.25f), STAMINA_POS_Y0, 0.0f);
 			break;
 		}
 
@@ -291,11 +293,11 @@ void StaminaIAD(int nCntStamina, Player *pPlayer)
 	//プレイヤーの状態がダッシュ状態の場合
 	if (pPlayer->MoveState == PLAYER_MOVESTATE_DASH)
 	{
-		if (PlayNumber.CurrentSelectNumber /*+ 1*/ == 1)
+		if (PlayNumber.CurrentSelectNumber == 1)
 		{//1人プレイの場合
 			g_aStamina[nCntStamina].fGaugeSize -= 1.5f;			//スタミナを減らす
 		}
-		else if (PlayNumber.CurrentSelectNumber /*+ 1*/ >= 2)
+		else if (PlayNumber.CurrentSelectNumber >= 2)
 		{//複数人の場合
 			g_aStamina[nCntStamina].fGaugeSize -= (1.5f * 0.5f);			//スタミナを減らす
 		}
@@ -304,11 +306,11 @@ void StaminaIAD(int nCntStamina, Player *pPlayer)
 	}
 	else if(g_aStamina[nCntStamina].fGaugeSize <= g_fStaminaSize)
 	{//スタミナが減っていた場合
-		if (PlayNumber.CurrentSelectNumber /*+ 1*/ == 1)
+		if (PlayNumber.CurrentSelectNumber == 1)
 		{//1人プレイの場合
 			g_aStamina[nCntStamina].fGaugeSize += 0.7f;			//スタミナを回復する
 		}
-		else if (PlayNumber.CurrentSelectNumber /*+ 1*/ >= 2)
+		else if (PlayNumber.CurrentSelectNumber >= 2)
 		{//複数人プレイの場合
 			g_aStamina[nCntStamina].fGaugeSize += (0.7f * 0.5f);			//スタミナを回復する
 		}

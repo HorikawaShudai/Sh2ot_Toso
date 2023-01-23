@@ -16,12 +16,15 @@ typedef struct
 	D3DXVECTOR3 rot2Old;
 	D3DXVECTOR3 posVDest;		//目的の視点
 	D3DXVECTOR3 posRDest;		//目的の注視点
+	D3DVIEWPORT9 viewport;		//ビューポート
+
+	bool bUse;					//使われているか
 }Camera;
 
 //プロトタイプ宣言
 void InitCamera(void);
 void UninitCamera(void);
 void UpdateCamera(void);
-void SetCamera(void);
+void SetCamera(int nIdx);
 D3DXVECTOR3 Getrot(void);
 #endif
