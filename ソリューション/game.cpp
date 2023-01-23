@@ -14,6 +14,8 @@
 #include "life.h"
 #include "detect.h"
 #include "field.h"
+#include "score_item.h"
+#include "score.h"
 
 //グローバル変数宣言
 bool g_bPause = false;
@@ -64,6 +66,22 @@ void InitGame()
 
 	SetEnemy(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
+	//スコアの初期化
+	InitScore();
+
+	//スコアアイテムの初期化
+	InitItem();
+	SetItem(D3DXVECTOR3(0.0f,0.0f,-40.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), 0);
+	SetItem(D3DXVECTOR3(40.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetItem(D3DXVECTOR3(100.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetItem(D3DXVECTOR3(150.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetItem(D3DXVECTOR3(-50.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetItem(D3DXVECTOR3(-100.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetItem(D3DXVECTOR3(-150.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetItem(D3DXVECTOR3(-200.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetItem(D3DXVECTOR3(200.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetItem(D3DXVECTOR3(250.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+
 	SetStage(0);
 }
 
@@ -99,6 +117,12 @@ void UninitGame()
 	//ライフの終了処理
 	UninitLife();
 	UninitDetect();
+
+	//スコアの終了処理
+	UninitScore();
+
+	//アイテムの終了処理
+	UninitItem();
 
 	
 }
@@ -172,6 +196,12 @@ void UpdateGame()
 		UpdateLife();
 
 		UpdateDetect();
+
+		//スコアの更新処理
+		UpdateScore();
+
+		//スコアアイテムの更新処理
+		UpdateItem();
 	}
 }
 
@@ -208,6 +238,12 @@ void DrawGame()
 
 	//ライフの描画処理
 	DrawLife();
+
+	//スコアの描画処理
+	DrawScore();
+
+	//スコアアイテムの描画処理
+	DrawItem();
 }
 
 //====================================================================

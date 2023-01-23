@@ -513,6 +513,7 @@ bool EditCollisionObject00(D3DXVECTOR3 pPos, D3DXVECTOR3 min, D3DXVECTOR3 max, f
 				)
 			{//オブジェクト同士が重なっている
 				g_Object00[nCntObject].bUse = false;
+				
 				bON = true;
 			}
 		}

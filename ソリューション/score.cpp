@@ -6,8 +6,6 @@
 //============================
 #include "score.h"  
 
-//#include "sound.h"
-
 //マクロ定義
 #define NUM_PLACE		(3)		  //スコアの桁数
 #define MAX_SCORE		(128)
@@ -194,6 +192,16 @@ void AddScore(int nType)
 
 	//デバイスの取得
 	pDevice = GetDevice();
+
+	//加点をする処理
+	switch (nType)
+	{
+	case 0:
+
+		g_nScore += 1;
+
+		break;
+	}
 
 	//スコアの上限
 	if (g_nScore >= 999)
