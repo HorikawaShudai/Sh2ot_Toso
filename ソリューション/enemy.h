@@ -31,6 +31,7 @@ typedef struct
 {
 	D3DXVECTOR3 pos;							//位置
 	D3DXVECTOR3 posOld;							//位置
+	D3DXVECTOR3 Tgpos;							//目標位置
 	D3DXVECTOR3 move;							//位置
 	D3DXVECTOR3 rot;							//向き
 	D3DXMATRIX mtx;						//ワールドマトリックス
@@ -40,7 +41,25 @@ typedef struct
 	Object00 aModel[NUM_ENEMYMODEL]; //持ってるモデルの情報
 	int nType;						//モデルの種類
 	bool bUse;									//モデルが使用されているかどうか
+												//四方位への距離
+	float fDistanceN;
+	float fDistanceS;
+	float fDistanceW;
+	float fDistanceE;
 }ENEMY;
+
+//探査用構造体
+typedef struct
+{
+	D3DXVECTOR3 Startpos;
+	D3DXVECTOR3 pos;
+	D3DXVECTOR3 posOld;
+	D3DXVECTOR3 move;
+	int nTarget;
+	float fmoveRot;
+	int nLife;
+	float fDistance;
+}DETECT;
 
 //プロトタイプ宣言
 void InitEnemy(void);
@@ -54,4 +73,8 @@ void CollisionRotEnemy(int nCnt);
 bool CollisionEnemy(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size);
 void CollisionEnemyShadow(D3DXVECTOR3 *pPos);
 ENEMY * GetEnemy(void);
-#endif#pragma once
+
+float DetectWall(D3DXVECTOR3 pos, float fmoveRot, int nLife);
+bool DetectPlayer(D3DXVECTOR3*postg, D3DXVECTOR3 pos, float fmoveRot, int nLife);
+
+#endif
