@@ -1,2 +1,28 @@
-﻿  Trans.vcxproj -> C:\Users\student\Desktop\新しいフォルダー (2)\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+﻿  title.cpp
+  stamina.cpp
+  stage.cpp
+  score_item.cpp
+  score.cpp
+  result.cpp
+  player.cpp
+  object00.cpp
+  meshwall.cpp
+  main.cpp
+  light.cpp
+  life.cpp
+  input.cpp
+  game.cpp
+  field.cpp
+  enemy.cpp
+  edit.cpp
+  debugproc.cpp
+  camera.cpp
+  PlayNumberSelect.cpp
+  コードを生成中...
+  コンパイル中...
+  PlayModeSelect.cpp
+  Fade.cpp
+  コードを生成中...
+  LINK : 前回のインクリメンタル リンクで C:\Users\student\Desktop\新しいフォルダー (2)\Sh2ot_Toso\ソリューション\Debug\Trans.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
+  Trans.vcxproj -> C:\Users\student\Desktop\新しいフォルダー (2)\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\student\Desktop\新しいフォルダー (2)\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
