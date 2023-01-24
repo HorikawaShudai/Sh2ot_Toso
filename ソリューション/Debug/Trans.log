@@ -4,5 +4,10 @@
   stage.cpp
   game.cpp
   コードを生成中...
+<<<<<<< HEAD
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github3\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github3\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (3)\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (3)\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+>>>>>>> 4679a2b965ecb0705f2aee7861cf193ea0b12c64
