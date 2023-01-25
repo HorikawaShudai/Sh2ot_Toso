@@ -129,6 +129,15 @@ void UpdatePlayer(void)
 		}
 	}
 
+	if (GetKeyboardTrigger(DIK_F6) == true)
+	{
+		GetGamepad_Left_Vibrtion(0);
+	}
+	if (GetKeyboardTrigger(DIK_F7) == true)
+	{
+		GetGamepad_Left_Vibrtion_false(0);
+	}
+
 	//ƒvƒŒƒCƒ„[‚Ìó‘Ô
 	switch (g_aPlayer[g_SelectPlayer].State)
 	{

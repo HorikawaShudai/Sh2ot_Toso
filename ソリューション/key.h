@@ -1,0 +1,36 @@
+#ifndef _KEY_H_
+#define _KEY_H_
+
+#define MAX_KEY (32)		//鍵の最大数
+
+typedef enum
+{
+	KEY_TYPE_ITEM = 0,
+	KEY_TYPE_MAX,
+}KEY_TYPE;
+
+//鍵の構造体
+typedef struct
+{
+	D3DXVECTOR3 pos;							//位置
+	D3DXVECTOR3 posOld;							//位置
+	D3DXVECTOR3 move;							//位置
+	D3DXVECTOR3 rot;							//向き
+	D3DXMATRIX mtxWorld;						//ワールドマトリックス
+	LPDIRECT3DTEXTURE9 pTexture[30];			//テクスチャへのポインタ
+
+	D3DXVECTOR3 vtxMin;							//モデルの最小
+	D3DXVECTOR3 vtxMax;							//モデルの最大
+	int nType;									//モデルの種類
+	bool bUse;									//モデルが使用されているかどうか
+	int nIdxModelParent; //親子設定
+}KEY;
+
+//プロトタイプ宣言
+void InitKey(void);
+void UninitKey(void);
+void UpdateKey(void);
+void DrawKey(void);
+void SetKey(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType);
+bool CollisionKey(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size, int nPlayer);
+#endif

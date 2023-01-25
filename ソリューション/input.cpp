@@ -57,7 +57,7 @@ int g_nJoyNumCnt; //使用するジョイパッドのカウント
 XINPUT_STATE g_JoyKeyState[MAX_PLAYER];
 XINPUT_STATE g_JoyKeyStateTrigger[MAX_PLAYER];
 XINPUT_STATE g_JoyKeyStateRelease[MAX_PLAYER];
-
+XINPUT_VIBRATION vibration[MAX_PLAYER];
 //==========================================
 //  デバイスの初期化
 //==========================================
@@ -605,6 +605,29 @@ float GetGamepad_Trigger_Right(int nPlayer)
 	}
 
 	return Trigger;
+}
+
+//====================================================================
+//ゲームパッドの左のバイブレーションの処理
+//====================================================================
+void GetGamepad_Left_Vibrtion(int nPlayer)
+{
+	vibration[nPlayer].wLeftMotorSpeed = 60000;
+	vibration[nPlayer].wRightMotorSpeed = 60000;
+	XInputSetState(nPlayer, &vibration[0]);
+}
+
+//====================================================================
+//ゲームパッドの左のバイブレーションの処理
+//====================================================================
+void GetGamepad_Left_Vibrtion_false(int nPlayer)
+{
+	XINPUT_VIBRATION vibrationDef;
+
+	vibrationDef.wLeftMotorSpeed = 0;
+	vibrationDef.wRightMotorSpeed = 0;
+
+	XInputSetState(nPlayer, &vibrationDef);
 }
 
 //==========================================
