@@ -10,9 +10,11 @@
 #include "life.h"
 #include "PlayNumberSelect.h"
 #include "score_item.h"
+#include "stamina.h"
 
-#define PLAYER_STEALTHSPEED (1.0f)		//プレイヤーのステルススピード
-#define PLAYER_SPEED (3.0f)				//プレイヤーのスピード
+//マクロ定義
+#define PLAYER_STEALTHSPEED (0.5f)		//プレイヤーのステルススピード
+#define PLAYER_SPEED (2.0f)				//プレイヤーのスピード
 #define PLAYER_DASHSPEED (5.0f)				//プレイヤーのダッシュスピード
 #define PLAYER_ROT_SPEED (0.2f)			//プレイヤーの回転スピード
 #define PLAYER_JUMP (12.0f)				//プレイヤーのジャンプ力
@@ -27,6 +29,7 @@ DWORD g_dwNumMatPlayer = 0;						//マテリアルの数
 Player g_aPlayer[NUM_PLAYER];					//プレイヤーの情報
 int g_nIndexPlayerShadow = -1;					//影のインデックス(番号)
 int g_SelectPlayer;								//操作するプレイヤー
+bool g_bPlayerOps;
 
 //====================================================================
 //プレイヤーの初期化処理
@@ -52,7 +55,7 @@ void InitPlayer(void)
 		g_aPlayer[nCntPlayer].bUse = true;
 
 		g_SelectPlayer = 0;
-
+		g_bPlayerOps = false;
 		g_aPlayer[nCntPlayer].nNumModel = 1;
 
 		//Xファイルの読み込み
@@ -117,7 +120,7 @@ void UninitPlayer(void)
 //====================================================================
 void UpdatePlayer(void)
 {
-	//プレイ人数情報の取得
+	//ポインタ情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 
 	if (GetKeyboardTrigger(DIK_F3) == true)
@@ -179,8 +182,18 @@ void UpdatePlayer(void)
 	//重力の追加
 	g_aPlayer[g_SelectPlayer].move.y -= 10.0f;
 
-	//プレイヤーの移動入力処理----------
-	PlayerMoveInput(g_SelectPlayer);
+#ifdef _DEBUG
+	if (GetKeyboardTrigger(DIK_F5) == true)
+	{//キーが押された場合
+		g_bPlayerOps = g_bPlayerOps ? false : true;			//観察用モードに変更
+	}
+#endif
+
+	if (g_bPlayerOps == false)
+	{
+		//プレイヤーの移動入力処理----------
+		PlayerMoveInput(g_SelectPlayer);
+	}
 
 	//位置更新(入力による動き)
 	g_aPlayer[g_SelectPlayer].pos += g_aPlayer[g_SelectPlayer].move;
@@ -230,34 +243,38 @@ void UpdatePlayer(void)
 //====================================================================
 void PlayerMoveInput(int nCnt)
 {
+	//情報の取得
+	Stamina *pStamina = GetStamina();
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+
 	//斜め移動の速度修正用の関数を初期化する
 	g_aPlayer[nCnt].NormarizeMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	//キーボードの移動処理
-	if (GetKeyboardPress(DIK_T) == true)
+	if (GetKeyboardPress(DIK_W) == true)
 	{
 		g_aPlayer[nCnt].NormarizeMove.z += 1.0f * cosf(Getrot().y);
 		g_aPlayer[nCnt].NormarizeMove.x += 1.0f * sinf(Getrot().y);
 
 	}
-	if (GetKeyboardPress(DIK_G) == true)
+	if (GetKeyboardPress(DIK_S) == true)
 	{
 		g_aPlayer[nCnt].NormarizeMove.z += -1.0f * cosf(Getrot().y);
 		g_aPlayer[nCnt].NormarizeMove.x += -1.0f * sinf(Getrot().y);
 	}
-	if (GetKeyboardPress(DIK_F) == true)
+	if (GetKeyboardPress(DIK_A) == true)
 	{
 		g_aPlayer[nCnt].NormarizeMove.x += -1.0f * cosf(Getrot().y);
 		g_aPlayer[nCnt].NormarizeMove.z -= -1.0f * sinf(Getrot().y);
 
 	}
-	if (GetKeyboardPress(DIK_H) == true)
+	if (GetKeyboardPress(DIK_D) == true)
 	{
 		g_aPlayer[nCnt].NormarizeMove.x += 1.0f * cosf(Getrot().y);
 		g_aPlayer[nCnt].NormarizeMove.z -= 1.0f * sinf(Getrot().y);
 	}
 
-	if (GetKeyboardPress(DIK_T) == false && GetKeyboardPress(DIK_F) == false && GetKeyboardPress(DIK_G) == false && GetKeyboardPress(DIK_H) == false)
+	if (GetKeyboardPress(DIK_W) == false && GetKeyboardPress(DIK_S) == false && GetKeyboardPress(DIK_A) == false && GetKeyboardPress(DIK_D) == false)
 	{//キーボードと同時に入力できないようにする
 		if (GetGamepad_Stick_Left(0).y > 0.0f)
 		{//左スティックの上入力
@@ -289,21 +306,29 @@ void PlayerMoveInput(int nCnt)
 	D3DXVec3Normalize(&g_aPlayer[nCnt].NormarizeMove, &g_aPlayer[nCnt].NormarizeMove);
 
 	//キーボードの時の速度設定
-	if (GetKeyboardPress(DIK_T) == true || GetKeyboardPress(DIK_F) == true || GetKeyboardPress(DIK_G) == true || GetKeyboardPress(DIK_H) == true)
+	if (GetKeyboardPress(DIK_W) == true || GetKeyboardPress(DIK_S) == true || GetKeyboardPress(DIK_A) == true || GetKeyboardPress(DIK_D) == true)
 	{
 		g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_SPEED;
 		g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_SPEED;
 	}
 
+
 	//左スティックの速度処理と移動の三段階の使い分け処理
-	if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) != 0 && GetGamepadPress(BUTTON_A, 0))
+	if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) != 0 && GetGamepadPress(BUTTON_R, 0))
 	{//入力してる状態かつAボタンを押しているとき
 
-		g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_DASHSPEED;
-		g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_DASHSPEED;
+		for (int nCntStamina = 0; nCntStamina < PlayNumber.CurrentSelectNumber; nCntStamina++, pStamina++)
+		{
+			if (pStamina->bFatige == false)			//プレイヤーが走れる状態かどうか
+			{//疲労状態ではなかった場合
 
-		//プレイヤーをダッシュ状態にする
-		g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_DASH;
+				g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_DASHSPEED;
+				g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_DASHSPEED;
+
+				//プレイヤーをダッシュ状態にする
+				g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_DASH;
+			}
+		}
 	}
 	else if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) < 0.95f)
 	{//左スティックを倒し切っていない状態のとき
@@ -355,14 +380,14 @@ void PlayerRotUpdate(int nCnt)
 		g_aPlayer[nCnt].rot.y -= 0.1f;
 	}
 
-	if (GetKeyboardPress(DIK_T) == true || GetGamepad_Stick_Left(0).y > 0.1f)
+	if (GetKeyboardPress(DIK_W) == true || GetGamepad_Stick_Left(0).y > 0.1f)
 	{
-		if (GetKeyboardPress(DIK_H) == true || GetGamepad_Stick_Left(0).x > 0.1f)
+		if (GetKeyboardPress(DIK_D) == true || GetGamepad_Stick_Left(0).x > 0.1f)
 		{
 			fRotMove = atan2f(sinf(g_aPlayer[nCnt].rot.y), cosf(g_aPlayer[nCnt].rot.y));
 			fRotDest = atan2f(sinf(Getrot().y), cosf(Getrot().y)) + D3DX_PI * 0.25f;
 		}
-		else if (GetKeyboardPress(DIK_F) == true || GetGamepad_Stick_Left(0).x < -0.1f)
+		else if (GetKeyboardPress(DIK_A) == true || GetGamepad_Stick_Left(0).x < -0.1f)
 		{
 			fRotMove = atan2f(sinf(g_aPlayer[nCnt].rot.y), cosf(g_aPlayer[nCnt].rot.y));
 			fRotDest = atan2f(sinf(Getrot().y), cosf(Getrot().y)) + D3DX_PI * -0.25f;
@@ -373,14 +398,14 @@ void PlayerRotUpdate(int nCnt)
 			fRotDest = atan2f(sinf(Getrot().y), cosf(Getrot().y));
 		}
 	}
-	else if (GetKeyboardPress(DIK_G) == true || GetGamepad_Stick_Left(0).y < -0.1f)
+	else if (GetKeyboardPress(DIK_S) == true || GetGamepad_Stick_Left(0).y < -0.1f)
 	{
-		if (GetKeyboardPress(DIK_H) == true || GetGamepad_Stick_Left(0).x > 0.1f)
+		if (GetKeyboardPress(DIK_D) == true || GetGamepad_Stick_Left(0).x > 0.1f)
 		{
 			fRotMove = atan2f(sinf(g_aPlayer[nCnt].rot.y), cosf(g_aPlayer[nCnt].rot.y));
 			fRotDest = atan2f(sinf(Getrot().y), cosf(Getrot().y)) + D3DX_PI * 0.75f;
 		}
-		else if (GetKeyboardPress(DIK_F) == true || GetGamepad_Stick_Left(0).x < -0.1f)
+		else if (GetKeyboardPress(DIK_A) == true || GetGamepad_Stick_Left(0).x < -0.1f)
 		{
 			fRotMove = atan2f(sinf(g_aPlayer[nCnt].rot.y), cosf(g_aPlayer[nCnt].rot.y));
 			fRotDest = atan2f(sinf(Getrot().y), cosf(Getrot().y)) + D3DX_PI * -0.75f;
@@ -391,12 +416,12 @@ void PlayerRotUpdate(int nCnt)
 			fRotDest = atan2f(sinf(Getrot().y), cosf(Getrot().y)) + D3DX_PI;
 		}
 	}
-	else if (GetKeyboardPress(DIK_H) == true || GetGamepad_Stick_Left(0).x > 0.1f)
+	else if (GetKeyboardPress(DIK_D) == true || GetGamepad_Stick_Left(0).x > 0.1f)
 	{
 		fRotMove = atan2f(sinf(g_aPlayer[nCnt].rot.y), cosf(g_aPlayer[nCnt].rot.y));
 		fRotDest = atan2f(sinf(Getrot().y), cosf(Getrot().y)) + D3DX_PI * 0.5f;
 	}
-	else if (GetKeyboardPress(DIK_F) == true || GetGamepad_Stick_Left(0).x < -0.1f)
+	else if (GetKeyboardPress(DIK_A) == true || GetGamepad_Stick_Left(0).x < -0.1f)
 	{
 		fRotMove = atan2f(sinf(g_aPlayer[nCnt].rot.y), cosf(g_aPlayer[nCnt].rot.y));
 		fRotDest = atan2f(sinf(Getrot().y), cosf(Getrot().y)) + D3DX_PI * -0.5f;
@@ -424,7 +449,7 @@ void PlayerRotUpdate(int nCnt)
 		fRotMove += D3DX_PI * 2.0f;
 	}
 
-	if (GetKeyboardPress(DIK_T) == true || GetKeyboardPress(DIK_F) == true || GetKeyboardPress(DIK_G) == true || GetKeyboardPress(DIK_H) == true || GetGamepad_Stick_Left(0).y != 0.0f || GetGamepad_Stick_Left(0).x != 0.0f)
+	if (GetKeyboardPress(DIK_W) == true || GetKeyboardPress(DIK_A) == true || GetKeyboardPress(DIK_S) == true || GetKeyboardPress(DIK_D) == true || GetGamepad_Stick_Left(0).y != 0.0f || GetGamepad_Stick_Left(0).x != 0.0f)
 	{
 		g_aPlayer[nCnt].rot.y = fRotMove;
 	}
@@ -483,8 +508,8 @@ void DrawPlayer(void)
 {
 	//デバイスの所得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	D3DXMATRIX mtxRot, mtxTrans;	//計算用マトリックス
-	D3DMATERIAL9 matDef;			//現在のマテリアル保存用
+	D3DXMATRIX mtxRot, mtxTrans;		//計算用マトリックス
+	D3DMATERIAL9 matDef;				//現在のマテリアル保存用
 	D3DXMATERIAL *pMat;				//マテリアルデータへのポインタ
 
 	//プレイ人数情報の取得
@@ -533,6 +558,7 @@ void DrawPlayer(void)
 				}
 			}
 		}
+
 		//保存していたマテリアルを戻す
 		pDevice->SetMaterial(&matDef);
 	}
