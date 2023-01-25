@@ -1,7 +1,16 @@
-<<<<<<< HEAD
-﻿  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github3\Sh2ot_Toso\ソリューション\Trans.exe
+﻿  camera.cpp
+  edit.cpp
+  enemy.cpp
+  game.cpp
+  life.cpp
+  object00.cpp
+  player.cpp
+  score_item.cpp
+  stage.cpp
+  コード生成しています。
+  45 of 221 functions (20.4%) were compiled, the rest were copied from previous compilation.
+    2 functions were new in current compilation
+    24 functions had inline decision re-evaluated but remain unchanged
+  コード生成が終了しました。
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github3\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github3\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
-=======
-﻿  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (3)\Sh2ot_Toso\ソリューション\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (3)\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
->>>>>>> 4679a2b965ecb0705f2aee7861cf193ea0b12c64
