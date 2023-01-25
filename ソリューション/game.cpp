@@ -221,18 +221,7 @@ void DrawGame()
 	for (int nCnt = 0; nCnt < PlayNumber.CurrentSelectNumber; nCnt++)
 	{
 		//カメラのセット処理
-		if (PlayNumber.CurrentSelectNumber == 1)
-		{
-			SetCamera(nCnt);
-		}
-		else if (PlayNumber.CurrentSelectNumber == 2)
-		{
-			SetCamera(nCnt + 1);
-		}
-		else if (PlayNumber.CurrentSelectNumber >= 3)
-		{
-			SetCamera(nCnt + 3);
-		}
+		SetCamera(nCnt);
 
 		//メッシュウォールの描画処理
 		DrawMeshWall();

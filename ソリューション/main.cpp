@@ -388,6 +388,7 @@ void Draw(void)
 		}
 
 		DrawFade();
+		DrawFPS();
 
 		//デバッグプロックの描画処理
 		DrawDebugProc();
@@ -405,7 +406,7 @@ void Draw(void)
 void DrawFPS(void)
 {
 	//デバッグ変更とFPS
-	PrintDebugProc("【現在の画面】[%s]\n", g_nCountFPS);
+	PrintDebugProc("FPS:[%d]\n", g_nCountFPS);
 }
 
 //=============================================

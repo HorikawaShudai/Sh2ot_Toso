@@ -258,7 +258,7 @@ void UpdateStaminaGauge(void)
 
 	for (int nCntStamina = 0; nCntStamina < NUM_PLAYER; nCntStamina++, pPlayer++)
 	{
-		if (pPlayer->bUse == true/* && g_aStamina[nCntStamina].bUse == true*/)
+		if (pPlayer->bUse == true)
 		{//使われていた場合
 
 			//スタミナの増減
@@ -295,11 +295,11 @@ void StaminaIAD(int nCntStamina, Player *pPlayer)
 	{
 		if (PlayNumber.CurrentSelectNumber == 1)
 		{//1人プレイの場合
-			g_aStamina[nCntStamina].fGaugeSize -= 1.5f;			//スタミナを減らす
+			g_aStamina[nCntStamina].fGaugeSize -= DEC_SPEED;			//スタミナを減らす
 		}
 		else if (PlayNumber.CurrentSelectNumber >= 2)
 		{//複数人の場合
-			g_aStamina[nCntStamina].fGaugeSize -= (1.5f * 0.5f);			//スタミナを減らす
+			g_aStamina[nCntStamina].fGaugeSize -= (DEC_SPEED * 0.65f);			//スタミナを減らす
 		}
 
 		g_aStamina[nCntStamina].col.a = 0.5f;				//スタミナゲージを表示
@@ -308,14 +308,14 @@ void StaminaIAD(int nCntStamina, Player *pPlayer)
 	{//スタミナが減っていた場合
 		if (PlayNumber.CurrentSelectNumber == 1)
 		{//1人プレイの場合
-			g_aStamina[nCntStamina].fGaugeSize += 0.7f;			//スタミナを回復する
+			g_aStamina[nCntStamina].fGaugeSize += RECOVERY_SPEED;			//スタミナを回復する
 		}
 		else if (PlayNumber.CurrentSelectNumber >= 2)
 		{//複数人プレイの場合
-			g_aStamina[nCntStamina].fGaugeSize += (0.7f * 0.5f);			//スタミナを回復する
+			g_aStamina[nCntStamina].fGaugeSize += (RECOVERY_SPEED * 0.65f);			//スタミナを回復する
 		}
 		//疲労状態の時のゲージ状態
-		if (g_aStamina[nCntStamina].fGaugeSize > g_fStaminaSize / 3)
+		if (g_aStamina[nCntStamina].fGaugeSize > TIRED_VALUE)
 		{//疲労ゲージより回復したら
 			g_aStamina[nCntStamina].col.r = 0.5f;			//色を変更する
 
@@ -347,6 +347,7 @@ void StaminaIAD(int nCntStamina, Player *pPlayer)
 
 		//疲労状態にする
 		pPlayer->MoveState = PLAYER_MOVESTATE_FATIGE;
+		g_aStamina[nCntStamina].bFatige = true;
 	}
 
 	//色のが0.0f以下、1.0f以上行かないように
@@ -355,11 +356,17 @@ void StaminaIAD(int nCntStamina, Player *pPlayer)
 		g_aStamina[nCntStamina].col.a = 0.0f;
 
 		g_aStamina[nCntStamina].nFalseTime = 0;
-
-		g_aStamina[nCntStamina].bFatige = true;			//疲れている状態へ
 	}
 	else if (g_aStamina[nCntStamina].col.a >= 1.0f)
 	{//1.0f以上
 		g_aStamina[nCntStamina].col.a = 1.0f;
 	}
+}
+
+//==============================================
+//スタミナ情報の取得
+//==============================================
+Stamina *GetStamina(void)
+{
+	return &g_aStamina[0];
 }

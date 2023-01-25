@@ -28,4 +28,6 @@ void UninitStamina(void);
 void UpdateStamina(void);
 void DrawStamina(void);
 
+Stamina *GetStamina(void);
+
 #endif
