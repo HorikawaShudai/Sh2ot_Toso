@@ -304,41 +304,6 @@ void PlayerFpsCamera(void)
 			//モデル追従処理----------------------
 			Camerafollow(g_nCurrentCamera);
 
-			//キーボード
-			if (GetKeyboardPress(DIK_T) == true)
-			{
-				g_aCamera[g_nCurrentCamera].posR.z += CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
-				g_aCamera[g_nCurrentCamera].posR.x += CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
-
-				g_aCamera[g_nCurrentCamera].posV.z += CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
-				g_aCamera[g_nCurrentCamera].posV.x += CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
-
-			}
-			if (GetKeyboardPress(DIK_G) == true)
-			{
-				g_aCamera[g_nCurrentCamera].posR.z += -CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
-				g_aCamera[g_nCurrentCamera].posR.x += -CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
-
-				g_aCamera[g_nCurrentCamera].posV.z += -CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
-				g_aCamera[g_nCurrentCamera].posV.x += -CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
-			}
-			if (GetKeyboardPress(DIK_F) == true)
-			{
-				g_aCamera[g_nCurrentCamera].posR.x += -CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
-				g_aCamera[g_nCurrentCamera].posR.z -= -CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
-
-				g_aCamera[g_nCurrentCamera].posV.x += -CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
-				g_aCamera[g_nCurrentCamera].posV.z -= -CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
-			}
-			if (GetKeyboardPress(DIK_H) == true)
-			{
-				g_aCamera[g_nCurrentCamera].posR.x += CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
-				g_aCamera[g_nCurrentCamera].posR.z -= CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
-
-				g_aCamera[g_nCurrentCamera].posV.x += CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
-				g_aCamera[g_nCurrentCamera].posV.z -= CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
-			}
-
 			//マウス
 			if (GetMousePress(PUSH_LEFT) == true || GetMousePress(PUSH_RIGHT) == true)
 			{
@@ -502,50 +467,32 @@ void TpsCamera(void)
 			}
 
 			//左トリガーを押し込むとカメラが下がる
-			g_aCamera[g_nCurrentCamera].posV.y -= GetGamepad_Trigger_Left(0);
-			g_aCamera[g_nCurrentCamera].posR.y -= GetGamepad_Trigger_Left(0);
+			g_aCamera[g_nCurrentCamera].posV.y -= GetGamepad_Trigger_Left(0) * 4.0f;
+			g_aCamera[g_nCurrentCamera].posR.y -= GetGamepad_Trigger_Left(0) * 4.0f;
 
 			//右トリガーを押し込むとカメラが上がる
-			g_aCamera[g_nCurrentCamera].posV.y += GetGamepad_Trigger_Right(0);
-			g_aCamera[g_nCurrentCamera].posR.y += GetGamepad_Trigger_Right(0);
+			g_aCamera[g_nCurrentCamera].posV.y += GetGamepad_Trigger_Right(0) * 4.0f;
+			g_aCamera[g_nCurrentCamera].posR.y += GetGamepad_Trigger_Right(0) * 4.0f;
 
 
-			//キーボード
+			//カメラの移動処理
 			CameraMove(g_nCurrentCamera);
 
-			if (GetKeyboardPress(DIK_T) == true)
-			{
-				g_aCamera[g_nCurrentCamera].posR.z += CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
-				g_aCamera[g_nCurrentCamera].posR.x += CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
+			//左スティックによる前後移動	
+			g_aCamera[g_nCurrentCamera].posV.z += GetGamepad_Stick_Left(0).y * cosf(g_aCamera[g_nCurrentCamera].rot.y) * 4.0f;
+			g_aCamera[g_nCurrentCamera].posV.x += GetGamepad_Stick_Left(0).y * sinf(g_aCamera[g_nCurrentCamera].rot.y) * 4.0f;
 
-				g_aCamera[g_nCurrentCamera].posV.z += CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
-				g_aCamera[g_nCurrentCamera].posV.x += CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
+			//左スティックによる左右移動
+			g_aCamera[g_nCurrentCamera].posV.x += GetGamepad_Stick_Left(0).x * cosf(g_aCamera[g_nCurrentCamera].rot.y) * 4.0f;
+			g_aCamera[g_nCurrentCamera].posV.z -= GetGamepad_Stick_Left(0).x * sinf(g_aCamera[g_nCurrentCamera].rot.y) * 4.0f;
 
-			}
-			if (GetKeyboardPress(DIK_G) == true)
-			{
-				g_aCamera[g_nCurrentCamera].posR.z += -CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
-				g_aCamera[g_nCurrentCamera].posR.x += -CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
+			//左スティックによる前後移動	
+			g_aCamera[g_nCurrentCamera].posR.z += GetGamepad_Stick_Left(0).y * cosf(g_aCamera[g_nCurrentCamera].rot.y) * 4.0f;
+			g_aCamera[g_nCurrentCamera].posR.x += GetGamepad_Stick_Left(0).y * sinf(g_aCamera[g_nCurrentCamera].rot.y) * 4.0f;
 
-				g_aCamera[g_nCurrentCamera].posV.z += -CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
-				g_aCamera[g_nCurrentCamera].posV.x += -CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
-			}
-			if (GetKeyboardPress(DIK_F) == true)
-			{
-				g_aCamera[g_nCurrentCamera].posR.x += -CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
-				g_aCamera[g_nCurrentCamera].posR.z -= -CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
-
-				g_aCamera[g_nCurrentCamera].posV.x += -CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
-				g_aCamera[g_nCurrentCamera].posV.z -= -CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
-			}
-			if (GetKeyboardPress(DIK_H) == true)
-			{
-				g_aCamera[g_nCurrentCamera].posR.x += CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
-				g_aCamera[g_nCurrentCamera].posR.z -= CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
-
-				g_aCamera[g_nCurrentCamera].posV.x += CAMERA_SPEED * cosf(g_aCamera[g_nCurrentCamera].rot.y);
-				g_aCamera[g_nCurrentCamera].posV.z -= CAMERA_SPEED * sinf(g_aCamera[g_nCurrentCamera].rot.y);
-			}
+			//左スティックによる左右移動
+			g_aCamera[g_nCurrentCamera].posR.x += GetGamepad_Stick_Left(0).x * cosf(g_aCamera[g_nCurrentCamera].rot.y) * 4.0f;
+			g_aCamera[g_nCurrentCamera].posR.z -= GetGamepad_Stick_Left(0).x * sinf(g_aCamera[g_nCurrentCamera].rot.y) * 4.0f;
 
 			if (GetMousePress(PUSH_LEFT) == true || GetMousePress(PUSH_RIGHT) == true)
 			{
