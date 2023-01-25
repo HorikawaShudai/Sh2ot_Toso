@@ -38,6 +38,8 @@ typedef struct
 	D3DXVECTOR3 vtxMin;							//モデルの最小
 	D3DXVECTOR3 vtxMax;							//モデルの最大
 	int nDamageCounter;							//ダメージ状態の長さ
+	ENEMYSTATE state;							//状態
+	int StateCount;
 	Object00 aModel[NUM_ENEMYMODEL]; //持ってるモデルの情報
 	int nType;						//モデルの種類
 	bool bUse;									//モデルが使用されているかどうか

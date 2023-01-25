@@ -6,7 +6,9 @@
 #include "debugproc.h"
 
 #define ENEMY_LIFE (7)		//オブジェクトの体力
-#define	DETECT_SPEED (20.0f) //探査波の速度
+#define ENEMY_SPEED (0.1f) //敵の移動速度
+#define SPEED_DOWN (0.09f) //減速係数
+#define	DETECT_SPEED (50.0f) //探査波の速度
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureENEMY[64][ENEMY_NTYPE_MAX] = {};	//テクスチャのポインタ
@@ -50,6 +52,8 @@ void InitEnemy(void)
 		g_Enemy[nCntObject].vtxMax = D3DXVECTOR3(-1000.0f, -1000.0f, -1000.0f);
 		g_Enemy[nCntObject].bUse = false;
 		g_Enemy[nCntObject].nType = ENEMY_NTYPE00;
+		g_Enemy[nCntObject].state = ENEMYSTATE_STOP;
+		g_Enemy[nCntObject].StateCount = 0;
 
 		g_Enemy[nCntObject].aModel[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Enemy[nCntObject].aModel[0].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -137,6 +141,7 @@ void UpdateEnemy(void)
 	{
 		if (g_Enemy[nCntObject].bUse == true)
 		{
+			g_Enemy[nCntObject].StateCount--;
 			//各方位にある壁との距離を測定
 			g_Enemy[nCntObject].fDistanceN = DetectWall(g_Enemy[nCntObject].pos, 0.0f, 1000);
 			g_Enemy[nCntObject].fDistanceS = DetectWall(g_Enemy[nCntObject].pos, D3DX_PI, 1000);
@@ -147,6 +152,71 @@ void UpdateEnemy(void)
 			PrintDebugProc("Enemy%d南:%f\n", nCntObject, g_Enemy[nCntObject].fDistanceS);
 			PrintDebugProc("Enemy%d西:%f\n", nCntObject, g_Enemy[nCntObject].fDistanceW);
 			PrintDebugProc("Enemy%d東:%f\n", nCntObject, g_Enemy[nCntObject].fDistanceE);
+			//プレイヤー探知
+			for (int nDetect = 0; nDetect < 6; nDetect++)
+			{
+				float DetectRot = g_Enemy[nCntObject].rot.y - D3DXToRadian(45.0f) + D3DXToRadian(15.0f * nDetect);
+				if (DetectPlayer(&g_Enemy[nCntObject].Tgpos, g_Enemy[nCntObject].pos, DetectRot, 400) == true)
+				{
+					g_Enemy[nCntObject].state = ENEMYSTATE_CHASE;
+					break;
+				}
+			}
+			
+
+			if (g_Enemy[nCntObject].state == ENEMYSTATE_CHASE)
+			{//追跡状態の時
+				//ベクトルを求める
+				D3DXVECTOR3 vecEnemy = g_Enemy[nCntObject].Tgpos - g_Enemy[nCntObject].pos ;
+				vecEnemy.y = atan2f(vecEnemy.x, vecEnemy.z) / D3DX_PI;
+				PrintDebugProc("座標：x%fz%f\n", g_Enemy[nCntObject].pos.x, g_Enemy[nCntObject].pos.z);
+				PrintDebugProc("目標座標：x%fz%f\n", g_Enemy[nCntObject].Tgpos.x, g_Enemy[nCntObject].Tgpos.z);
+				PrintDebugProc("移動角度：%f\n",vecEnemy.y);
+
+				//座標の更新
+				g_Enemy[nCntObject].rot.y += vecEnemy.y - g_Enemy[nCntObject].rot.y /3;
+				g_Enemy[nCntObject].move += D3DXVECTOR3(sinf(g_Enemy[nCntObject].rot.y)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nCntObject].rot.y)*ENEMY_SPEED);
+
+				//移動量の更新
+				g_Enemy[nCntObject].pos += g_Enemy[nCntObject].move;
+				g_Enemy[nCntObject].move.x += (0.0f - g_Enemy[nCntObject].move.x)*SPEED_DOWN;
+				g_Enemy[nCntObject].move.z += (0.0f - g_Enemy[nCntObject].move.z)*SPEED_DOWN;
+
+				//目標地点に到達したとき
+				if (vecEnemy.x < 10.0f && vecEnemy.x > -10.0f && vecEnemy.z < 10.0f && vecEnemy.z > -10.0f)
+				{//探索状態に切り替える
+					g_Enemy[nCntObject].state = ENEMYSTATE_SEEK;
+					g_Enemy[nCntObject].StateCount = 30;
+				}
+			}
+
+			if (g_Enemy[nCntObject].state == ENEMYSTATE_SEEK)
+			{//探索状態の時
+				g_Enemy[nCntObject].rot.y += D3DX_PI / 20;
+			}
+
+			//角度の正常化
+			if (g_Enemy[nCntObject].rot.y > D3DX_PI)
+			{
+				g_Enemy[nCntObject].rot.y = -D3DX_PI;
+			}
+			else if (g_Enemy[nCntObject].rot.y < -D3DX_PI)
+			{
+				g_Enemy[nCntObject].rot.y = D3DX_PI;
+			}
+
+			if (g_Enemy[nCntObject].StateCount <= 0)
+			{
+				g_Enemy[nCntObject].StateCount = 0;
+				switch (g_Enemy[nCntObject].state)
+				{
+				case ENEMYSTATE_SEEK:
+					g_Enemy[nCntObject].state = ENEMYSTATE_STOP;
+					break;
+				default:
+					break;
+				}
+			}
 		}
 	}
 }
@@ -496,7 +566,7 @@ bool DetectPlayer(D3DXVECTOR3*postg, D3DXVECTOR3 pos, float fmoveRot, int nLife)
 	while (1)
 	{
 		Detect.posOld = Detect.pos;
-		Detect.move = D3DXVECTOR3(sinf(DETECT_SPEED)*Detect.fmoveRot, 0.0f, cosf(DETECT_SPEED)*Detect.fmoveRot);
+		Detect.move = D3DXVECTOR3(sinf(Detect.fmoveRot)*DETECT_SPEED, 0.0f, cosf(Detect.fmoveRot)*DETECT_SPEED);
 		Detect.pos += Detect.move;
 		Detect.nLife--;
 
@@ -514,8 +584,11 @@ bool DetectPlayer(D3DXVECTOR3*postg, D3DXVECTOR3 pos, float fmoveRot, int nLife)
 		Detect.nTarget = CollisionPlayer(Detect.pos, Detect.posOld, 1.0f, 0.0f, 0.0f);
 		if (Detect.nTarget  > -1)
 		{
-			for (int nCntPlayer = 0; nCntPlayer < Detect.nTarget; nCntPlayer++, pPlayer++);
-			postg = &pPlayer->pos;
+			for (int nCntPlayer = 0; nCntPlayer < Detect.nTarget; nCntPlayer++)
+			{
+				pPlayer++;
+			}
+			*postg = pPlayer->pos;
 			return true;
 
 		}
