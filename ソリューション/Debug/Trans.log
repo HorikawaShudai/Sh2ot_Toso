@@ -1,3 +1,38 @@
+<<<<<<< HEAD
 ﻿  player.cpp
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+﻿  player.cpp
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+<<<<<<< HEAD
+>>>>>>> f7c25b1b96c746e163431361579ee873a4e5884d
+﻿cl : コマンド ライン warning D9028: 簡易リビルド時のエラーです、通常のビルドに戻します
+  edit.cpp
+  game.cpp
+  stage.cpp
+  コードを生成中...
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github3\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github3\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+<<<<<<< HEAD
+=======
+=======
+<<<<<<< HEAD
+﻿  enemy.cpp
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+﻿  player.cpp
+cl : コマンド ライン warning D9028: 簡易リビルド時のエラーです、通常のビルドに戻します
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+>>>>>>> 90f46a7667b39f92e08543107687632d4cac6827
+>>>>>>> 4c5a7c89ec84d5393233707072b85a68d858c342
+>>>>>>> c46095df3302865e46878683e11fbae96f4fae0a
+>>>>>>> f7c25b1b96c746e163431361579ee873a4e5884d
+>>>>>>> bf9ff5b382ea27bfe20f86a06a583f2e35187f80
