@@ -435,20 +435,23 @@ void PlayerRotUpdate(int nCnt)
 //====================================================================
 int CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY, float MinY)
 {
+	//注意：intの返り値でHitの関数を呼ぶこと！
 	int nCntHit = -1;
 	for (int nCntPlayer = 0; nCntPlayer < NUM_PLAYER; nCntPlayer++)
 	{
-		if (
-			pos.z + Size >= g_aPlayer[nCntPlayer].pos.z - PLAYER_COLLISIONSIZE &&
-			pos.z - Size <= g_aPlayer[nCntPlayer].pos.z + PLAYER_COLLISIONSIZE &&
-			pos.x + Size >= g_aPlayer[nCntPlayer].pos.x - PLAYER_COLLISIONSIZE &&
-			pos.x - Size <= g_aPlayer[nCntPlayer].pos.x + PLAYER_COLLISIONSIZE &&
-			pos.y + MaxY >= g_aPlayer[nCntPlayer].pos.y - 10.0f &&
-			pos.y + MinY <= g_aPlayer[nCntPlayer].pos.y + 10.0f
-			)
-		{//弾とプレイヤーが当たった(Z軸)
-			PlayerHit(nCntPlayer,1);
-			nCntHit = nCntPlayer;
+		if (g_aPlayer[nCntPlayer].bUse == true)
+		{
+			if (
+				pos.z + Size >= g_aPlayer[nCntPlayer].pos.z - PLAYER_COLLISIONSIZE &&
+				pos.z - Size <= g_aPlayer[nCntPlayer].pos.z + PLAYER_COLLISIONSIZE &&
+				pos.x + Size >= g_aPlayer[nCntPlayer].pos.x - PLAYER_COLLISIONSIZE &&
+				pos.x - Size <= g_aPlayer[nCntPlayer].pos.x + PLAYER_COLLISIONSIZE &&
+				pos.y + MaxY >= g_aPlayer[nCntPlayer].pos.y - 10.0f &&
+				pos.y + MinY <= g_aPlayer[nCntPlayer].pos.y + 10.0f
+				)
+			{//弾とプレイヤーが当たった(Z軸)
+				nCntHit = nCntPlayer;
+			}
 		}
 	}
 	return nCntHit;
@@ -459,20 +462,28 @@ int CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY,
 //====================================================================
 void PlayerHit(int nCnt,int nDamage)
 {
-	g_aPlayer[nCnt].nLife -= nDamage;
-
-	//ライフのセット処理
-	SetLife(g_aPlayer[nCnt].nLife, nCnt);
-
-	if (g_aPlayer[nCnt].nLife <= 0)
+	if (g_aPlayer[nCnt].bUse == true)
 	{
-		g_aPlayer[nCnt].bUse = false;
+		g_aPlayer[nCnt].nLife -= nDamage;
 
-	}
+		if (g_aPlayer[nCnt].nLife <= 0)
+		{
+			g_aPlayer[nCnt].nLife = 0;
+		}
 
-	else
-	{
-		g_aPlayer[nCnt].State = PLAYER_HIT;
+		//ライフのセット処理
+		SetLife(g_aPlayer[nCnt].nLife, nCnt);
+
+		if (g_aPlayer[nCnt].nLife <= 0)
+		{
+			g_aPlayer[nCnt].bUse = false;
+
+		}
+
+		else
+		{
+			g_aPlayer[nCnt].State = PLAYER_HIT;
+		}
 	}
 }
 
