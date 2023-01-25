@@ -277,15 +277,16 @@ bool CollisionKey(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D
 	{
 		if (g_Key[nCntKey].bUse == true)
 		{
-			if (pPos->x >= g_Key[nCntKey].pos.x - 15
-				&& pPos->x <= g_Key[nCntKey].pos.x + 15
-				&& pPos->y >= g_Key[nCntKey].pos.y - 45
-				&& pPos->y <= g_Key[nCntKey].pos.y + 45
-				&& pPos->z >= g_Key[nCntKey].pos.z - 10
-				&& pPos->z <= g_Key[nCntKey].pos.z + 10)
+			if (pPos->x >= g_Key[nCntKey].pos.x - Size
+				&& pPos->x <= g_Key[nCntKey].pos.x + Size
+				&& pPos->y >= g_Key[nCntKey].pos.y - Size
+				&& pPos->y <= g_Key[nCntKey].pos.y + Size
+				&& pPos->z >= g_Key[nCntKey].pos.z - Size
+				&& pPos->z <= g_Key[nCntKey].pos.z + Size)
 			{//アイテムとプレイヤーが当たった(X軸)
 				g_Key[nCntKey].bUse = false;
 				bHit = true;
+				break;
 			}
 		}
 	}

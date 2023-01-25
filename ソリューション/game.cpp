@@ -16,6 +16,8 @@
 #include "score_item.h"
 #include "score.h"
 #include "PlayNumberSelect.h"
+#include "key.h"
+#include "keyUI.h"
 
 //グローバル変数宣言
 bool g_bPause = false;
@@ -67,6 +69,12 @@ void InitGame()
 	//スコアの初期化
 	InitScore();
 
+	//鍵の初期化処理
+	InitKey();
+
+	//鍵UIの初期化処理
+	InitKeyUI();
+
 	//スコアアイテムの初期化
 	InitItem();
 	SetItem(D3DXVECTOR3(0.0f,0.0f,-40.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), 0);
@@ -79,6 +87,10 @@ void InitGame()
 	SetItem(D3DXVECTOR3(-200.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetItem(D3DXVECTOR3(200.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetItem(D3DXVECTOR3(250.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetKey(D3DXVECTOR3(250.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetKey(D3DXVECTOR3(150.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetKey(D3DXVECTOR3(-50.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetKey(D3DXVECTOR3(50.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
 	SetStage(0);
 }
@@ -115,14 +127,17 @@ void UninitGame()
 	//ライフの終了処理
 	UninitLife();
 
-
 	//スコアの終了処理
 	UninitScore();
 
 	//アイテムの終了処理
 	UninitItem();
 
-	
+	//鍵の終了処理
+	UninitKey();
+
+	//鍵UIの終了処理
+	UninitKeyUI();
 }
 
 //====================================================================
@@ -161,7 +176,8 @@ void UpdateGame()
 	UpdateMeshWall();
 
 	if (g_bEdit == true)
-	{
+	{//エディットモードの時
+
 		//エディットの更新処理
 		UpdateEdit();
 
@@ -174,7 +190,8 @@ void UpdateGame()
 		PrintDebugProc("プレイヤーの移動移動 【T】【F】【G】【H】\n");
 	}
 	else
-	{
+	{//通常モードの時
+
 		//床の更新処理
 		UpdateField();
 
@@ -199,6 +216,12 @@ void UpdateGame()
 
 		//スコアアイテムの更新処理
 		UpdateItem();
+
+		//鍵の更新処理
+		UpdateKey();
+
+		//鍵UIの更新処理
+		UpdateKeyUI();
 	}
 }
 
@@ -221,18 +244,7 @@ void DrawGame()
 	for (int nCnt = 0; nCnt < PlayNumber.CurrentSelectNumber; nCnt++)
 	{
 		//カメラのセット処理
-		if (PlayNumber.CurrentSelectNumber == 1)
-		{
 			SetCamera(nCnt);
-		}
-		else if (PlayNumber.CurrentSelectNumber == 2)
-		{
-			SetCamera(nCnt + 1);
-		}
-		else if (PlayNumber.CurrentSelectNumber >= 3)
-		{
-			SetCamera(nCnt + 3);
-		}
 
 		//メッシュウォールの描画処理
 		DrawMeshWall();
@@ -266,6 +278,12 @@ void DrawGame()
 
 		//スコアアイテムの描画処理
 		DrawItem();
+
+		//鍵の描画処理
+		DrawKey();
+
+		//鍵UIの描画処理
+		DrawKeyUI();
 	}
 
 	//ビューポートを元に戻す

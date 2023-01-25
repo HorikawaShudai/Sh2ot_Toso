@@ -10,6 +10,8 @@
 #include "life.h"
 #include "PlayNumberSelect.h"
 #include "score_item.h"
+#include "key.h"
+#include "keyUI.h"
 
 #define PLAYER_STEALTHSPEED (1.0f)		//プレイヤーのステルススピード
 #define PLAYER_SPEED (3.0f)				//プレイヤーのスピード
@@ -50,6 +52,7 @@ void InitPlayer(void)
 		g_aPlayer[nCntPlayer].MoveState = PLAYER_MOVESTATE_STEALTH;
 		g_aPlayer[nCntPlayer].nLife = PLAYER_LIFE;
 		g_aPlayer[nCntPlayer].bUse = true;
+		g_aPlayer[nCntPlayer].bGetKey = false;
 
 		g_SelectPlayer = 0;
 
@@ -209,6 +212,19 @@ void UpdatePlayer(void)
 
 	CollisionItem(&g_aPlayer[g_SelectPlayer].pos, &g_aPlayer[g_SelectPlayer].posOld, &g_aPlayer[g_SelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f, g_SelectPlayer);
 
+	//鍵の入手処理
+	if (g_aPlayer[g_SelectPlayer].bGetKey == false)
+	{//プレイヤーが鍵を持っていない場合
+		if (GetKeyboardTrigger(DIK_E) == true)
+		{//Eキー入力
+			if (CollisionKey(&g_aPlayer[g_SelectPlayer].pos, &g_aPlayer[g_SelectPlayer].posOld, &g_aPlayer[g_SelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, g_SelectPlayer) == true)
+			{//鍵を入手出来た場合
+				g_aPlayer[g_SelectPlayer].bGetKey = true;	//鍵を入手状態にする
+				SetKeyUI(g_SelectPlayer, true);				//鍵UIを表示する
+			}
+		}
+	}
+
 	//一周した時の向きの補正
 	if (g_aPlayer[g_SelectPlayer].rot.y > D3DX_PI * 1.0f)
 	{
@@ -355,11 +371,11 @@ void PlayerRotUpdate(int nCnt)
 	fRotMove = g_aPlayer[nCnt].rot.y;
 	fRotDest = Getrot().y;
 
-	if (GetKeyboardPress(DIK_E) == true)
+	if (GetKeyboardPress(DIK_C) == true)
 	{
 		g_aPlayer[nCnt].rot.y += 0.1f;
 	}
-	if (GetKeyboardPress(DIK_Q) == true)
+	if (GetKeyboardPress(DIK_Z) == true)
 	{
 		g_aPlayer[nCnt].rot.y -= 0.1f;
 	}
@@ -444,20 +460,23 @@ void PlayerRotUpdate(int nCnt)
 //====================================================================
 int CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY, float MinY)
 {
+	//注意：intの返り値でHitの関数を呼ぶこと！
 	int nCntHit = -1;
 	for (int nCntPlayer = 0; nCntPlayer < NUM_PLAYER; nCntPlayer++)
 	{
-		if (
-			pos.z + Size >= g_aPlayer[nCntPlayer].pos.z - PLAYER_COLLISIONSIZE &&
-			pos.z - Size <= g_aPlayer[nCntPlayer].pos.z + PLAYER_COLLISIONSIZE &&
-			pos.x + Size >= g_aPlayer[nCntPlayer].pos.x - PLAYER_COLLISIONSIZE &&
-			pos.x - Size <= g_aPlayer[nCntPlayer].pos.x + PLAYER_COLLISIONSIZE &&
-			pos.y + MaxY >= g_aPlayer[nCntPlayer].pos.y - 10.0f &&
-			pos.y + MinY <= g_aPlayer[nCntPlayer].pos.y + 10.0f
-			)
-		{//弾とプレイヤーが当たった(Z軸)
-			PlayerHit(nCntPlayer,1);
-			nCntHit = nCntPlayer;
+		if (g_aPlayer[nCntPlayer].bUse == true)
+		{
+			if (
+				pos.z + Size >= g_aPlayer[nCntPlayer].pos.z - PLAYER_COLLISIONSIZE &&
+				pos.z - Size <= g_aPlayer[nCntPlayer].pos.z + PLAYER_COLLISIONSIZE &&
+				pos.x + Size >= g_aPlayer[nCntPlayer].pos.x - PLAYER_COLLISIONSIZE &&
+				pos.x - Size <= g_aPlayer[nCntPlayer].pos.x + PLAYER_COLLISIONSIZE &&
+				pos.y + MaxY >= g_aPlayer[nCntPlayer].pos.y - 10.0f &&
+				pos.y + MinY <= g_aPlayer[nCntPlayer].pos.y + 10.0f
+				)
+			{//弾とプレイヤーが当たった(Z軸)
+				nCntHit = nCntPlayer;
+			}
 		}
 	}
 	return nCntHit;
@@ -468,20 +487,28 @@ int CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY,
 //====================================================================
 void PlayerHit(int nCnt,int nDamage)
 {
-	g_aPlayer[nCnt].nLife -= nDamage;
-
-	//ライフのセット処理
-	SetLife(g_aPlayer[nCnt].nLife, nCnt);
-
-	if (g_aPlayer[nCnt].nLife <= 0)
+	if (g_aPlayer[nCnt].bUse == true)
 	{
-		g_aPlayer[nCnt].bUse = false;
+		g_aPlayer[nCnt].nLife -= nDamage;
 
-	}
+		if (g_aPlayer[nCnt].nLife <= 0)
+		{
+			g_aPlayer[nCnt].nLife = 0;
+		}
 
-	else
-	{
-		g_aPlayer[nCnt].State = PLAYER_HIT;
+		//ライフのセット処理
+		SetLife(g_aPlayer[nCnt].nLife, nCnt);
+
+		if (g_aPlayer[nCnt].nLife <= 0)
+		{
+			g_aPlayer[nCnt].bUse = false;
+
+		}
+
+		else
+		{
+			g_aPlayer[nCnt].State = PLAYER_HIT;
+		}
 	}
 }
 
