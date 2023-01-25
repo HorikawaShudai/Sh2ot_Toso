@@ -244,7 +244,7 @@ void DrawGame()
 	for (int nCnt = 0; nCnt < PlayNumber.CurrentSelectNumber; nCnt++)
 	{
 		//カメラのセット処理
-			SetCamera(nCnt);
+		SetCamera(nCnt);
 
 		//メッシュウォールの描画処理
 		DrawMeshWall();
