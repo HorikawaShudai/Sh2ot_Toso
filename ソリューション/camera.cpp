@@ -1,4 +1,3 @@
-#include "main.h"
 #include "camera.h"
 #include "input.h"
 #include "player.h"
@@ -14,13 +13,17 @@
 #define CAMERA_CORR_R			(0.8f)		//カメラ注視点の補正
 #define CAMERA_LENGTH_R			(0.0f)		//プレイヤーとカメラ注視点との距離
 
-#define MAX_CAMERA				(4)		//カメラの最大数
+#define MAX_CAMERA				(5)		//カメラの最大数
 
 //プロトタイプ宣言
 void TpsCamera(void);			//観察用カメラ
 void PlayerFpsCamera(void);		//プレイヤーの視点カメラ
 void Camerafollow(int nCurrentCamera);		//追従カメラ
 void CameraMove(int nCurrentCamera);		//カメラ移動
+
+void Titlecamera(void);
+void SelectNumberCamera(void);
+void ResultCamera(void);
 
 
 //グローバル変数
@@ -37,6 +40,7 @@ void InitCamera(void)
 {
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+	MODE mode = GetMode();
 
 	for (int nCntCamera = 0; nCntCamera < MAX_CAMERA; nCntCamera++)
 	{
@@ -52,6 +56,7 @@ void InitCamera(void)
 
 	g_nCurrentCamera = 0;			//選択されているカメラの番号を最初のカメラへ
 	g_bTpsCamera = false;			//観察用カメラを使っていない状態へ
+
 
 	switch (PlayNumber.CurrentSelectNumber)
 	{
@@ -137,6 +142,14 @@ void InitCamera(void)
 		g_aCamera[3].viewport.MaxZ = 1.0f;
 		break;
 	}
+	
+	//その他用(3Dタイトルなど)
+	g_aCamera[5].viewport.X = 0;				// 描画する画面の左上X座標
+	g_aCamera[5].viewport.Y = 0;				// 描画する画面の左上Y座標
+	g_aCamera[5].viewport.Width = 1280;			// 画面の幅
+	g_aCamera[5].viewport.Height = 720;			// 画面の高さ
+	g_aCamera[5].viewport.MinZ = 0.0f;			// 
+	g_aCamera[5].viewport.MaxZ = 1.0f;			// 
 }
 
 //====================================================================
@@ -152,26 +165,39 @@ void UninitCamera(void)
 //====================================================================
 void UpdateCamera(void)
 {
+	MODE mode = GetMode();
 
+	switch (mode)
+	{
+	case MODE_TITLE:
+		Titlecamera();
+		break;
+	case MODE_NUMBERSELECT:
+		SelectNumberCamera();
+		break;
+	case MODE_GAME:
 #ifdef _DEBUG
-	if (GetKeyboardTrigger(DIK_F5) == true)
-	{//キーが押された場合
-		g_bTpsCamera = g_bTpsCamera ? false : true;			//観察用モードに変更
-	}
+		if (GetKeyboardTrigger(DIK_F5) == true)
+		{//キーが押された場合
+			g_bTpsCamera = g_bTpsCamera ? false : true;			//観察用モードに変更
+		}
 #endif
-
-	if (g_bTpsCamera == false)
-	{
-		//プレイヤー視点カメラ
-		PlayerFpsCamera();
+		//三人称カメラを使うかどうか
+		if (g_bTpsCamera == false)
+		{//使っていない場合
+			//プレイヤー視点カメラ
+			PlayerFpsCamera();
+		}
+		else
+		{//使われている場合
+			//観察用モード
+			TpsCamera();
+		}
+		break;
+	case MODE_RESULT:
+		ResultCamera();
+		break;
 	}
-	else
-	{
-		//観察用モード
-		TpsCamera();
-	}
-
-
 }
 
 //====================================================================
@@ -221,6 +247,7 @@ void PlayerFpsCamera(void)
 {
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+	Player *pPlayer = GetPlayer();
 
 	//カメラ変更
 	if (GetKeyboardTrigger(DIK_F4) == true)
@@ -230,9 +257,9 @@ void PlayerFpsCamera(void)
 		g_nCurrentCamera %= PlayNumber.CurrentSelectNumber;			//カメラ上限まで来たら最初のカメラに戻る
 	}
 
-	for (int nCntCamera = 0; nCntCamera < MAX_CAMERA; nCntCamera++)
+	for (int nCntCamera = g_nCurrentCamera; nCntCamera < MAX_CAMERA; nCntCamera++)
 	{
-		if (g_aCamera[nCntCamera].bUse == true)
+		if (g_aCamera[nCntCamera].bUse == true && pPlayer[nCntCamera].bUse == true)
 		{
 			if (g_aCamera[g_nCurrentCamera].rot2.y <= D3DX_PI * 0.5f && g_aCamera[g_nCurrentCamera].rot2.y >= -(D3DX_PI * 0.5f))
 			{//入力
@@ -350,13 +377,13 @@ void Camerafollow(int nCurrentCamera)
 
 	//目的の視点を設定(初期値)
 	g_aCamera[nCurrentCamera].posVDest = D3DXVECTOR3(g_aCamera[nCurrentCamera].posRDest.x + (cosf(g_aCamera[nCurrentCamera].rot.z) * sinf(g_aCamera[nCurrentCamera].rot.y)) * -CAMERA_DISTANCE,
-													pPlayer->pos.y + CAMERA_HOMING_POSY,
+													pPlayer[nCurrentCamera].pos.y + CAMERA_HOMING_POSY,
 													g_aCamera[nCurrentCamera].posRDest.z + (cosf(g_aCamera[nCurrentCamera].rot.z) * cosf(g_aCamera[nCurrentCamera].rot.y)) * -CAMERA_DISTANCE);
 
 	//目的の注視点を設定(初期値)
-	g_aCamera[nCurrentCamera].posRDest = D3DXVECTOR3(pPlayer->pos.x + sinf(pPlayer->rot.y + D3DX_PI) * 0.0f,
-													pPlayer->pos.y,
-													pPlayer->pos.z + cosf(pPlayer->rot.y + D3DX_PI) * 0.0f);
+	g_aCamera[nCurrentCamera].posRDest = D3DXVECTOR3(pPlayer[nCurrentCamera].pos.x + sinf(pPlayer->rot.y + D3DX_PI) * 0.0f,
+													pPlayer[nCurrentCamera].pos.y,
+													pPlayer[nCurrentCamera].pos.z + cosf(pPlayer->rot.y + D3DX_PI) * 0.0f);
 
 	posRDiff = g_aCamera[nCurrentCamera].posRDest - g_aCamera[nCurrentCamera].posR;			//注視点の差分
 	posVDiff = g_aCamera[nCurrentCamera].posVDest - g_aCamera[nCurrentCamera].posV;			//視点の差分
@@ -373,6 +400,7 @@ void TpsCamera(void)
 {
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+	Player *pPlayer = GetPlayer();
 
 	//カメラ変更
 	if (GetKeyboardTrigger(DIK_F4) == true)
@@ -382,9 +410,9 @@ void TpsCamera(void)
 		g_nCurrentCamera %= PlayNumber.CurrentSelectNumber;			//カメラ上限まで来たら最初のカメラに戻る
 	}
 
-	for (int nCntCamera = 0; nCntCamera < MAX_CAMERA; nCntCamera++)
+	for (int nCntCamera = g_nCurrentCamera; nCntCamera < MAX_CAMERA; nCntCamera++)
 	{
-		if (g_aCamera[nCntCamera].bUse == true)
+		if (g_aCamera[nCntCamera].bUse == true && pPlayer[nCntCamera].bUse == true)
 		{
 			if (g_aCamera[g_nCurrentCamera].rot2.y <= D3DX_PI * 0.5f && g_aCamera[g_nCurrentCamera].rot2.y >= -(D3DX_PI * 0.5f))
 			{//入力
@@ -526,9 +554,9 @@ void TpsCamera(void)
 	}
 }
 
-//--------------------------------------------------------------------
+//=======================================
 //カメラの移動
-//--------------------------------------------------------------------
+//=======================================
 void CameraMove(int nCntCamera)
 {
 	//八方向移動
@@ -600,7 +628,47 @@ void CameraMove(int nCntCamera)
 	}
 }
 
-D3DXVECTOR3 Getrot(void)
+
+
+//==============================================================================================
+//3D用(タイトル画面・人数選択画面・リザルト画面)
+//==============================================================================================
+//タイトル画面
+void Titlecamera(void)
 {
-	return g_aCamera[0].rot;
+	g_aCamera[5].posV = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	g_aCamera[5].posR = D3DXVECTOR3(0.0f, 0.0f, 50.0f);
+	g_aCamera[5].vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	g_aCamera[5].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	g_aCamera[5].rot2 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	g_aCamera[5].rot2Old = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+}
+
+//人数選択画面
+void SelectNumberCamera(void)
+{
+
+}
+
+//リザルト画面
+void ResultCamera(void)
+{
+
+}
+
+
+//==========================================
+//カメラの向き情報
+//==========================================
+D3DXVECTOR3 Getrot(int nPlayer)
+{
+	return g_aCamera[g_nCurrentCamera].rot;
+}
+
+//==========================================
+//選択されているカメラ番号
+//==========================================
+int GetCurrentCamera(void)
+{
+	return g_nCurrentCamera;
 }

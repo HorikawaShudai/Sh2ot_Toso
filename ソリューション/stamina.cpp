@@ -37,7 +37,7 @@ const char *c_apStaminaTexName[NUM_TEX] =
 void InitStaminaGauge(void);						//スタミナゲージの初期化
 
 void UpdateStaminaGauge(void);						//スタミナゲージの更新
-void StaminaIAD(int nCntStamina, Player *pPlayer);								//スタミナの増減
+void StaminaIAD(int nCntStamina);								//スタミナの増減
 
 //**********************************************
 //グローバル変数
@@ -252,17 +252,19 @@ void UpdateStaminaGauge(void)
 	
 	//プレイヤー情報の取得
 	Player *pPlayer = GetPlayer();
+	//プレイ人数情報の取得
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	g_pVtxBuffStamina->Lock(0, 0, (void**)&pVtx, 0);
 
-	for (int nCntStamina = 0; nCntStamina < NUM_PLAYER; nCntStamina++, pPlayer++)
+	for (int nCntStamina = 0; nCntStamina < PlayNumber.CurrentSelectNumber; nCntStamina++)
 	{
-		if (pPlayer->bUse == true)
+		if (g_aStamina[nCntStamina].bUse == true && pPlayer[nCntStamina].bUse == true)
 		{//使われていた場合
 
 			//スタミナの増減
-			StaminaIAD(nCntStamina, pPlayer);
+			StaminaIAD(nCntStamina);
 
 			//頂点座標の設定
 			pVtx[0].pos = D3DXVECTOR3(g_aStamina[nCntStamina].pos.x - g_aStamina[nCntStamina].fGaugeSize, g_aStamina[nCntStamina].pos.y - STAMINA_HEIGHT, 0.0f);
@@ -285,13 +287,14 @@ void UpdateStaminaGauge(void)
 }
 
 // スタミナの増減処理
-void StaminaIAD(int nCntStamina, Player *pPlayer)
+void StaminaIAD(int nCntStamina)
 {
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+	Player *pPlayer = GetPlayer();
 
 	//プレイヤーの状態がダッシュ状態の場合
-	if (pPlayer->MoveState == PLAYER_MOVESTATE_DASH)
+	if (pPlayer[nCntStamina].MoveState == PLAYER_MOVESTATE_DASH)
 	{
 		if (PlayNumber.CurrentSelectNumber == 1)
 		{//1人プレイの場合
@@ -320,14 +323,14 @@ void StaminaIAD(int nCntStamina, Player *pPlayer)
 			g_aStamina[nCntStamina].col.r = 0.5f;			//色を変更する
 
 			//通常状態にする
-			pPlayer->MoveState = PLAYER_MOVESTATE_NORMAL;
+			pPlayer[nCntStamina].MoveState = PLAYER_MOVESTATE_NORMAL;
 
 			g_aStamina[nCntStamina].bFatige = false;			//疲れていない状態へ
 		}
 	}
 
 	//疲労状態以外の場合
-	if (pPlayer->MoveState != PLAYER_MOVESTATE_FATIGE && g_aStamina[nCntStamina].fGaugeSize >= g_fStaminaSize)
+	if (pPlayer[nCntStamina].MoveState != PLAYER_MOVESTATE_FATIGE && g_aStamina[nCntStamina].fGaugeSize >= g_fStaminaSize)
 	{
 		//カウントを進める
 		g_aStamina[nCntStamina].nFalseTime++;
@@ -346,7 +349,7 @@ void StaminaIAD(int nCntStamina, Player *pPlayer)
 		g_aStamina[nCntStamina].col.r = 1.0f;
 
 		//疲労状態にする
-		pPlayer->MoveState = PLAYER_MOVESTATE_FATIGE;
+		pPlayer[nCntStamina].MoveState = PLAYER_MOVESTATE_FATIGE;
 		g_aStamina[nCntStamina].bFatige = true;
 	}
 
