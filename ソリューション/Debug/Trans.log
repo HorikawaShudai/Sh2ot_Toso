@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  stamina.cpp
 <<<<<<< HEAD
   stage.cpp
@@ -17,11 +18,24 @@ light.obj : warning LNK4205: 'C:\Users\student\Documents\授業用\グループ�
   main.cpp
   game.cpp
   camera.cpp
+=======
+﻿  edit.cpp
+>>>>>>> c61c2b0b6f4804e15b96ee4059d8f665a77379f9
   コードを生成中...
   コンパイル中...
   stage.cpp
-  edit.cpp
+  score_item.cpp
+  player.cpp
+  object00.cpp
+  key.cpp
+  game.cpp
+  enemy.cpp
   コードを生成中...
+<<<<<<< HEAD
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
 >>>>>>> d9e733e4526d5209606164bb70e18e67e009b22b
+=======
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (3)\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (3)\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+>>>>>>> c61c2b0b6f4804e15b96ee4059d8f665a77379f9
