@@ -1,40 +1,19 @@
-<<<<<<< HEAD
-﻿  edit.cpp
-=======
-<<<<<<< HEAD
-﻿  camera.cpp
-  main.cpp
-  player.cpp
-  コード生成しています。
-  12 of 227 functions ( 5.3%) were compiled, the rest were copied from previous compilation.
-    1 functions were new in current compilation
-    12 functions had inline decision re-evaluated but remain unchanged
-  コード生成が終了しました。
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
-=======
-<<<<<<< HEAD
 ﻿  camera.cpp
   edit.cpp
->>>>>>> f7c25b1b96c746e163431361579ee873a4e5884d
   enemy.cpp
   game.cpp
+  key.cpp
+  keyUI.cpp
+  main.cpp
   object00.cpp
   player.cpp
   score_item.cpp
   stage.cpp
+  stamina.cpp
   コード生成しています。
-  179 of 224 functions (79.9%) were compiled, the rest were copied from previous compilation.
-    18 functions were new in current compilation
-    3 functions had inline decision re-evaluated but remain unchanged
+  79 of 246 functions (32.1%) were compiled, the rest were copied from previous compilation.
+    13 functions were new in current compilation
+    41 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github3\Sh2ot_Toso\ソリューション\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github3\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
-<<<<<<< HEAD
-=======
-=======
-﻿  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
->>>>>>> 4c5a7c89ec84d5393233707072b85a68d858c342
->>>>>>> c46095df3302865e46878683e11fbae96f4fae0a
->>>>>>> f7c25b1b96c746e163431361579ee873a4e5884d
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)

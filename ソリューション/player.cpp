@@ -11,6 +11,8 @@
 #include "PlayNumberSelect.h"
 #include "score_item.h"
 #include "stamina.h"
+#include "key.h"
+#include "keyUI.h"
 
 //マクロ定義
 #define PLAYER_STEALTHSPEED (0.5f)		//プレイヤーのステルススピード
@@ -53,6 +55,7 @@ void InitPlayer(void)
 		g_aPlayer[nCntPlayer].MoveState = PLAYER_MOVESTATE_STEALTH;
 		g_aPlayer[nCntPlayer].nLife = PLAYER_LIFE;
 		g_aPlayer[nCntPlayer].bUse = true;
+		g_aPlayer[nCntPlayer].bGetKey = false;
 
 		g_SelectPlayer = 0;
 		g_bPlayerOps = false;
@@ -130,6 +133,15 @@ void UpdatePlayer(void)
 		{
 			g_SelectPlayer = 0;
 		}
+	}
+
+	if (GetKeyboardTrigger(DIK_F6) == true)
+	{
+		GetGamepad_Left_Vibrtion(0);
+	}
+	if (GetKeyboardTrigger(DIK_F7) == true)
+	{
+		GetGamepad_Left_Vibrtion_false(0);
 	}
 
 	//プレイヤーの状態
@@ -212,6 +224,19 @@ void UpdatePlayer(void)
 	CollisionObject00(&g_aPlayer[g_SelectPlayer].pos, &g_aPlayer[g_SelectPlayer].posOld, &g_aPlayer[g_SelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
 
 	CollisionItem(&g_aPlayer[g_SelectPlayer].pos, &g_aPlayer[g_SelectPlayer].posOld, &g_aPlayer[g_SelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f, g_SelectPlayer);
+
+	//鍵の入手処理
+	if (g_aPlayer[g_SelectPlayer].bGetKey == false)
+	{//プレイヤーが鍵を持っていない場合
+		if (GetKeyboardTrigger(DIK_E) == true)
+		{//Eキー入力
+			if (CollisionKey(&g_aPlayer[g_SelectPlayer].pos, &g_aPlayer[g_SelectPlayer].posOld, &g_aPlayer[g_SelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, g_SelectPlayer) == true)
+			{//鍵を入手出来た場合
+				g_aPlayer[g_SelectPlayer].bGetKey = true;	//鍵を入手状態にする
+				SetKeyUI(g_SelectPlayer, true);				//鍵UIを表示する
+			}
+		}
+	}
 
 	//一周した時の向きの補正
 	if (g_aPlayer[g_SelectPlayer].rot.y > D3DX_PI * 1.0f)
@@ -371,11 +396,11 @@ void PlayerRotUpdate(int nCnt)
 	fRotMove = g_aPlayer[nCnt].rot.y;
 	fRotDest = Getrot().y;
 
-	if (GetKeyboardPress(DIK_E) == true)
+	if (GetKeyboardPress(DIK_C) == true)
 	{
 		g_aPlayer[nCnt].rot.y += 0.1f;
 	}
-	if (GetKeyboardPress(DIK_Q) == true)
+	if (GetKeyboardPress(DIK_Z) == true)
 	{
 		g_aPlayer[nCnt].rot.y -= 0.1f;
 	}

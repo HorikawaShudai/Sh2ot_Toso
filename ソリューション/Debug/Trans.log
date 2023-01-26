@@ -1,4 +1,5 @@
 ﻿  stamina.cpp
+<<<<<<< HEAD
   stage.cpp
   player.cpp
   main.cpp
@@ -11,3 +12,16 @@ cl : コマンド ライン warning D9028: 簡易リビルド時のエラーで�
 light.obj : warning LNK4205: 'C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github3\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github3\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github3\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+  player.cpp
+  main.cpp
+  game.cpp
+  camera.cpp
+  コードを生成中...
+  コンパイル中...
+  stage.cpp
+  edit.cpp
+  コードを生成中...
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+>>>>>>> d9e733e4526d5209606164bb70e18e67e009b22b
