@@ -138,6 +138,7 @@ void UpdatePlayer(void)
 		}
 	}*/
 
+	//カメラ番号をプレイヤーに代入
 	g_SelectPlayer = CurrentCamera;
 
 	if (GetKeyboardTrigger(DIK_F6) == true)
@@ -276,9 +277,12 @@ void UpdatePlayer(void)
 	for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
 	{
 		PrintDebugProc("プレイヤー%d人目の座標【X : %f | Y : %f | Z : %f】\n", nCntPlayer, g_aPlayer[nCntPlayer].pos.x, g_aPlayer[nCntPlayer].pos.y, g_aPlayer[nCntPlayer].pos.z);
+		PrintDebugProc("プレイヤー%d人目の移動量【X : %f | Y : %f | Z : %f】\n", nCntPlayer, g_aPlayer[nCntPlayer].move.x, g_aPlayer[nCntPlayer].move.y, g_aPlayer[nCntPlayer].move.z);
 	}
 	PrintDebugProc("左スティックの出力【%f】", GetGamepad_Stick_Left(0).y);
 	PrintDebugProc("左スティックの出力【%f】", GetGamepad_Stick_Left(0).x);
+	PrintDebugProc("右スティックの出力【%f】", GetGamepad_Stick_Right(0).y);
+	PrintDebugProc("右スティックの出力【%f】", GetGamepad_Stick_Right(0).x);
 }
 
 //====================================================================
@@ -354,24 +358,19 @@ void PlayerMoveInput(int nCnt)
 	{
 		g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_SPEED;
 		g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_SPEED;
-	}
-
+	} 
 
 	//左スティックの速度処理と移動の三段階の使い分け処理
 	if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) != 0 && GetGamepadPress(BUTTON_R, 0))
 	{//入力してる状態かつAボタンを押しているとき
+		if (pStamina[nCnt].bFatige == false)			//プレイヤーが走れる状態かどうか
+		{//疲労状態ではなかった場合
 
-		for (int nCntStamina = 0; nCntStamina < PlayNumber.CurrentSelectNumber; nCntStamina++, pStamina++)
-		{
-			if (pStamina->bFatige == false)			//プレイヤーが走れる状態かどうか
-			{//疲労状態ではなかった場合
+ 			g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_DASHSPEED;
+			g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_DASHSPEED;
 
-				g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_DASHSPEED;
-				g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_DASHSPEED;
-
-				//プレイヤーをダッシュ状態にする
-				g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_DASH;
-			}
+			//プレイヤーをダッシュ状態にする
+			g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_DASH;
 		}
 	}
 	else if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) < 0.95f)
