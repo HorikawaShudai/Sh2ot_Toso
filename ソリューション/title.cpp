@@ -10,6 +10,8 @@
 #include "Fade.h"
 #include "debugproc.h"
 #include "camera.h"
+#include "light.h"
+#include "meshdome.h"
 
 //**********************************************
 //マクロ定義
@@ -148,6 +150,9 @@ void UpdateTitle(void)
 //============================================================================
 void DrawTitle(void)
 {
+	//3D
+	Draw3DTitle();
+
 	//デバイスへのポインタを取得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
@@ -165,9 +170,6 @@ void DrawTitle(void)
 		//ポリゴンの描画
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCntTitle * 4, 2);
 	}
-
-	//3D
-	Draw3DTitle();
 }
 
 //===================================
@@ -441,23 +443,37 @@ void Init3DTitle(void)
 {
 	//カメラの初期化
 	InitCamera();
+
+	InitLight();
+
+	InitMeshDome();
 }
 
 //終了
 void Uninit3DTitle(void)
 {
-	
+	UninitCamera();
+
+	UpdateLight();
+
+	UninitMeshDome();
 }
 
 //更新
 void Update3DTitle(void)
 {
 	UpdateCamera();
+
+	UpdateLight();
+
+	UpdateMeshDome();
 }
 
 //描画
 void Draw3DTitle(void)
 {
 	SetCamera(5);
+
+	DrawMeshDome();
 }
 
