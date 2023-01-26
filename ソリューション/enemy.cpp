@@ -4,11 +4,12 @@
 #include "input.h"
 #include "player.h"
 #include "debugproc.h"
+#include "Effect.h"
 
 #define ENEMY_LIFE (7)		//オブジェクトの体力
-#define ENEMY_SPEED (0.1f) //敵の移動速度
-#define SPEED_DOWN (0.09f) //減速係数
-#define	DETECT_SPEED (50.0f) //探査波の速度
+#define ENEMY_SPEED (1.1f) //敵の移動速度
+
+#define	DETECT_SPEED (5.0f) //探査波の速度
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureENEMY[64][ENEMY_NTYPE_MAX] = {};	//テクスチャのポインタ
@@ -18,6 +19,9 @@ DWORD g_dwNumMatENEMY[ENEMY_NTYPE_MAX] = {};						//マテリアルの数
 
 ENEMY g_Enemy[MAX_ENEMY];					//敵の情報
 int EditIndexEnemy;								//エディットモード用の番号
+
+//プロトタイプ宣言
+void EnemyPatrol(int nEnemy);
 
 const char *c_apModelEnemy[] =					//モデルデータ読み込み
 {
@@ -37,7 +41,7 @@ const char *c_apModelEnemy[] =					//モデルデータ読み込み
 void InitEnemy(void)
 {
 	int nCntObject;
-
+	srand((unsigned int)timeGetTime());
 	//デバイスの所得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
@@ -50,9 +54,10 @@ void InitEnemy(void)
 		g_Enemy[nCntObject].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Enemy[nCntObject].vtxMin = D3DXVECTOR3(1000.0f, 1000.0f, 1000.0f);
 		g_Enemy[nCntObject].vtxMax = D3DXVECTOR3(-1000.0f, -1000.0f, -1000.0f);
+		g_Enemy[nCntObject].MoveState = ENEMYMOVE_NONE;
 		g_Enemy[nCntObject].bUse = false;
 		g_Enemy[nCntObject].nType = ENEMY_NTYPE00;
-		g_Enemy[nCntObject].state = ENEMYSTATE_STOP;
+		g_Enemy[nCntObject].state = ENEMYSTATE_PATROL;
 		g_Enemy[nCntObject].StateCount = 0;
 
 		g_Enemy[nCntObject].aModel[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -142,16 +147,7 @@ void UpdateEnemy(void)
 		if (g_Enemy[nCntObject].bUse == true)
 		{
 			g_Enemy[nCntObject].StateCount--;
-			//各方位にある壁との距離を測定
-			g_Enemy[nCntObject].fDistanceN = DetectWall(g_Enemy[nCntObject].pos, 0.0f, 1000);
-			g_Enemy[nCntObject].fDistanceS = DetectWall(g_Enemy[nCntObject].pos, D3DX_PI, 1000);
-			g_Enemy[nCntObject].fDistanceW = DetectWall(g_Enemy[nCntObject].pos, D3DX_PI*-0.5f, 1000);
-			g_Enemy[nCntObject].fDistanceE = DetectWall(g_Enemy[nCntObject].pos, D3DX_PI*0.5f, 1000);
-
-			PrintDebugProc("\nEnemy%d北:%f\n", nCntObject, g_Enemy[nCntObject].fDistanceN);
-			PrintDebugProc("Enemy%d南:%f\n", nCntObject, g_Enemy[nCntObject].fDistanceS);
-			PrintDebugProc("Enemy%d西:%f\n", nCntObject, g_Enemy[nCntObject].fDistanceW);
-			PrintDebugProc("Enemy%d東:%f\n", nCntObject, g_Enemy[nCntObject].fDistanceE);
+			
 			//プレイヤー探知
 			for (int nDetect = 0; nDetect < 6; nDetect++)
 			{
@@ -163,6 +159,10 @@ void UpdateEnemy(void)
 				}
 			}
 			
+			if (g_Enemy[nCntObject].state == ENEMYSTATE_PATROL)
+			{
+				EnemyPatrol(nCntObject);
+			}
 
 			if (g_Enemy[nCntObject].state == ENEMYSTATE_CHASE)
 			{//追跡状態の時
@@ -175,13 +175,9 @@ void UpdateEnemy(void)
 
 				//座標の更新
 				g_Enemy[nCntObject].rot.y += vecEnemy.y - g_Enemy[nCntObject].rot.y /3;
-				g_Enemy[nCntObject].move += D3DXVECTOR3(sinf(g_Enemy[nCntObject].rot.y)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nCntObject].rot.y)*ENEMY_SPEED);
-
-				//移動量の更新
+				g_Enemy[nCntObject].move = D3DXVECTOR3(sinf(g_Enemy[nCntObject].rot.y)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nCntObject].rot.y)*ENEMY_SPEED);
 				g_Enemy[nCntObject].pos += g_Enemy[nCntObject].move;
-				g_Enemy[nCntObject].move.x += (0.0f - g_Enemy[nCntObject].move.x)*SPEED_DOWN;
-				g_Enemy[nCntObject].move.z += (0.0f - g_Enemy[nCntObject].move.z)*SPEED_DOWN;
-
+		
 				//目標地点に到達したとき
 				if (vecEnemy.x < 10.0f && vecEnemy.x > -10.0f && vecEnemy.z < 10.0f && vecEnemy.z > -10.0f)
 				{//探索状態に切り替える
@@ -211,7 +207,7 @@ void UpdateEnemy(void)
 				switch (g_Enemy[nCntObject].state)
 				{
 				case ENEMYSTATE_SEEK:
-					g_Enemy[nCntObject].state = ENEMYSTATE_STOP;
+					g_Enemy[nCntObject].state = ENEMYSTATE_PATROL;
 					break;
 				default:
 					break;
@@ -514,13 +510,16 @@ void CollisionEnemyShadow(D3DXVECTOR3 *pPos)
 }
 
 //====================================================================
-//敵の所得
+//敵の取得
 //====================================================================
 ENEMY * GetEnemy(void)
 {
 	return &g_Enemy[0];
 }
 
+//====================================================================
+//壁の探索
+//====================================================================
 float DetectWall(D3DXVECTOR3 pos, float fmoveRot, int nLife)
 {
 	DETECT Detect;
@@ -535,7 +534,7 @@ float DetectWall(D3DXVECTOR3 pos, float fmoveRot, int nLife)
 		Detect.move = D3DXVECTOR3(sinf(Detect.fmoveRot)*DETECT_SPEED, 0.0f, cosf(Detect.fmoveRot)*DETECT_SPEED);
 		Detect.pos += Detect.move;
 		Detect.nLife--;
-
+		
 		if (CollisionObject00(&Detect.pos, &Detect.posOld, &Detect.move, D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f) == true)
 		{//壁に当たったとき
 		 //距離を割り出す
@@ -545,6 +544,7 @@ float DetectWall(D3DXVECTOR3 pos, float fmoveRot, int nLife)
 				fDis *= -1.0f;
 			}
 			Detect.fDistance = sqrtf(fDis);
+			SetEffect(Detect.pos, D3DXCOLOR(1.0f, 0.2f, 0.2f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 120.0f, 60, 0);
 			return Detect.fDistance;
 		}
 
@@ -554,6 +554,10 @@ float DetectWall(D3DXVECTOR3 pos, float fmoveRot, int nLife)
 		}
 	}
 }
+
+//====================================================================
+//プレイヤーの探索
+//====================================================================
 bool DetectPlayer(D3DXVECTOR3*postg, D3DXVECTOR3 pos, float fmoveRot, int nLife)
 {
 	DETECT Detect;
@@ -597,4 +601,100 @@ bool DetectPlayer(D3DXVECTOR3*postg, D3DXVECTOR3 pos, float fmoveRot, int nLife)
 			return false;
 		}
 	}
+}
+//====================================================================
+//巡回処理
+//====================================================================
+void EnemyPatrol(int nEnemy)
+{
+	
+		//各方位にある壁との距離を測定
+		g_Enemy[nEnemy].fDistanceN = DetectWall(g_Enemy[nEnemy].pos, 0.0f, 500);
+		g_Enemy[nEnemy].fDistanceS = DetectWall(g_Enemy[nEnemy].pos, D3DX_PI, 500);
+		g_Enemy[nEnemy].fDistanceW = DetectWall(g_Enemy[nEnemy].pos, D3DX_PI*-0.5f, 500);
+		g_Enemy[nEnemy].fDistanceE = DetectWall(g_Enemy[nEnemy].pos, D3DX_PI*0.5f, 500);
+		g_Enemy[nEnemy].fDistanceFront = DetectWall(g_Enemy[nEnemy].pos, g_Enemy[nEnemy].rot.y, 500);
+		g_Enemy[nEnemy].fDistanceLeft = DetectWall(g_Enemy[nEnemy].pos, g_Enemy[nEnemy].rot.y + D3DX_PI*-0.5f, 500);
+		g_Enemy[nEnemy].fDistanceRight = DetectWall(g_Enemy[nEnemy].pos, g_Enemy[nEnemy].rot.y + D3DX_PI*0.5f, 500);
+
+		PrintDebugProc("\nEnemy%d北:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceN);
+		PrintDebugProc("Enemy%d南:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceS);
+		PrintDebugProc("Enemy%d西:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceW);
+		PrintDebugProc("Enemy%d東:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceE);
+
+		PrintDebugProc("\nEnemy%d右:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceRight);
+		PrintDebugProc("Enemy%d左:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceLeft);
+		PrintDebugProc("Enemy%d前:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceFront);
+
+		//自身の進む方向に壁があった場合
+		if (( g_Enemy[nEnemy].fDistanceFront <= 300.0f) ||
+			 g_Enemy[nEnemy].MoveState == ENEMYMOVE_NONE)
+		{
+			int nCount = 0;
+			while (1)
+			{//ランダムに移動方向を決定
+				nCount++;
+				int nRand = rand() % 4;
+				if (g_Enemy[nEnemy].fDistanceN >= 300.0f && nRand == 0)
+				{
+					g_Enemy[nEnemy].MoveState = ENEMYMOVE_N;
+					break;
+				}
+				else if (g_Enemy[nEnemy].fDistanceS >= 300.0f && nRand == 1)
+				{
+					g_Enemy[nEnemy].MoveState = ENEMYMOVE_S;
+					break;
+				}
+				else if (g_Enemy[nEnemy].fDistanceW >= 300.0f && nRand == 2)
+				{
+					g_Enemy[nEnemy].MoveState = ENEMYMOVE_W;
+					break;
+				}
+				else if (g_Enemy[nEnemy].fDistanceE >= 300.0f && nRand == 3)
+				{
+					g_Enemy[nEnemy].MoveState = ENEMYMOVE_E;
+					break;
+				}
+				else if (((g_Enemy[nEnemy].MoveState == ENEMYMOVE_N && g_Enemy[nEnemy].fDistanceN < 150.0f) ||
+							(g_Enemy[nEnemy].MoveState == ENEMYMOVE_S && g_Enemy[nEnemy].fDistanceS < 150.0f) ||
+							(g_Enemy[nEnemy].MoveState == ENEMYMOVE_W && g_Enemy[nEnemy].fDistanceW < 150.0f) ||
+							(g_Enemy[nEnemy].MoveState == ENEMYMOVE_E && g_Enemy[nEnemy].fDistanceE < 150.0f)))
+				{
+
+					g_Enemy[nEnemy].MoveState = ENEMYMOVE_NONE;
+					break;
+				}
+			}	
+		}
+		if (g_Enemy[nEnemy].MoveState == ENEMYMOVE_N)
+		{
+			g_Enemy[nEnemy].rot.y = 0.0f;
+		}
+		else if (g_Enemy[nEnemy].MoveState == ENEMYMOVE_S)
+		{
+			g_Enemy[nEnemy].rot.y = D3DX_PI;
+		}
+		else if (g_Enemy[nEnemy].MoveState == ENEMYMOVE_W)
+		{
+			g_Enemy[nEnemy].rot.y = D3DX_PI * -0.5f;
+		}
+		else if (g_Enemy[nEnemy].MoveState == ENEMYMOVE_E)
+		{
+			g_Enemy[nEnemy].rot.y = D3DX_PI * 0.5f;
+		}
+		
+		if (g_Enemy[nEnemy].MoveState != ENEMYMOVE_NONE)
+		{//移動処理
+			if (g_Enemy[nEnemy].fDistanceLeft <= 50.0f)
+			{
+				g_Enemy[nEnemy].rot.y += D3DX_PI * 0.25f;
+			}
+			else if (g_Enemy[nEnemy].fDistanceRight <= 50.0f)
+			{
+				g_Enemy[nEnemy].rot.y += D3DX_PI * -0.25f;
+			}
+			//座標の更新
+			g_Enemy[nEnemy].move = D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y)*ENEMY_SPEED);
+			g_Enemy[nEnemy].pos += g_Enemy[nEnemy].move;
+		}
 }

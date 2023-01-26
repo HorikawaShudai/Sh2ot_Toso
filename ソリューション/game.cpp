@@ -18,6 +18,7 @@
 #include "PlayNumberSelect.h"
 #include "key.h"
 #include "keyUI.h"
+#include "Effect.h"
 
 //グローバル変数宣言
 bool g_bPause = false;
@@ -64,7 +65,8 @@ void InitGame()
 	//ライフの初期化処理
 	InitLife();
 
-	SetEnemy(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	//注意：敵の座標はn100+50を原則とする
+	SetEnemy(D3DXVECTOR3(50.0f, 0.0f, 50.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
 	//スコアの初期化
 	InitScore();
@@ -74,6 +76,9 @@ void InitGame()
 
 	//鍵UIの初期化処理
 	InitKeyUI();
+
+	//エフェクトの初期化
+	InitEffect();
 
 	//スコアアイテムの初期化
 	InitItem();
@@ -138,6 +143,9 @@ void UninitGame()
 
 	//鍵UIの終了処理
 	UninitKeyUI();
+
+	//エフェクトの終了処理
+	UninitEffect();
 }
 
 //====================================================================
@@ -222,6 +230,9 @@ void UpdateGame()
 
 		//鍵UIの更新処理
 		UpdateKeyUI();
+
+		//エフェクトの更新処理
+		UpdateEffect();
 	}
 }
 
@@ -284,6 +295,9 @@ void DrawGame()
 
 		//鍵UIの描画処理
 		DrawKeyUI();
+
+		//エフェクトの描画処理
+		DrawEffect();
 	}
 
 	//ビューポートを元に戻す

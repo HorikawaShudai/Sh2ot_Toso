@@ -154,6 +154,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="edit.cpp" />
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="field.cpp" />
@@ -166,6 +167,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="meshwall.cpp" />
     <ClCompile Include="object00.cpp" />
+    <ClCompile Include="particle.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="PlayNumberSelect.cpp" />
     <ClCompile Include="PlayModeSelect.cpp" />
@@ -180,6 +182,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="edit.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="field.h" />
@@ -192,6 +195,7 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="meshwall.h" />
     <ClInclude Include="object00.h" />
+    <ClInclude Include="particle.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="PlayNumberSelect.h" />
     <ClInclude Include="PlayModeSelect.h" />
