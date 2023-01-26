@@ -1,8 +1,40 @@
+<<<<<<< HEAD
 ﻿  time.cpp
   コード生成しています。
   30 of 255 functions (11.8%) were compiled, the rest were copied from previous compilation.
     1 functions were new in current compilation
     49 functions had inline decision re-evaluated but remain unchanged
+=======
+﻿  camera.cpp
+  debugproc.cpp
+  edit.cpp
+  enemy.cpp
+  Fade.cpp
+  field.cpp
+  game.cpp
+  input.cpp
+  key.cpp
+  keyUI.cpp
+  life.cpp
+  light.cpp
+  main.cpp
+  meshwall.cpp
+  object00.cpp
+  player.cpp
+  PlayNumberSelect.cpp
+  PlayModeSelect.cpp
+  result.cpp
+  score.cpp
+  コンパイル中...
+  score_item.cpp
+  stage.cpp
+  stamina.cpp
+  title.cpp
+  コード生成しています。
+  242 of 246 functions (98.4%) were compiled, the rest were copied from previous compilation.
+    28 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+>>>>>>> 26ac8c6b16993bb725caa539ba0a27d91baece64
   コード生成が終了しました。
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github3\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github3\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
