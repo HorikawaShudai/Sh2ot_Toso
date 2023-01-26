@@ -396,7 +396,7 @@ void Init3DSelect(void)
 //I—¹
 void Uninit3DSelect(void)
 {
-
+	UninitCamera();
 }
 
 //XV

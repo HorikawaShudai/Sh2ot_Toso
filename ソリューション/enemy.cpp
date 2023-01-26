@@ -7,7 +7,7 @@
 #include "Effect.h"
 
 #define ENEMY_LIFE (7)		//オブジェクトの体力
-#define ENEMY_SPEED (1.1f) //敵の移動速度
+#define ENEMY_SPEED (3.0f) //敵の移動速度
 
 #define	DETECT_SPEED (5.0f) //探査波の速度
 
@@ -556,6 +556,57 @@ float DetectWall(D3DXVECTOR3 pos, float fmoveRot, int nLife)
 }
 
 //====================================================================
+//壁の探索(坂本実験用)
+//====================================================================
+//float DetectWall(D3DXVECTOR3 pos, float fmoveRot, int nLife)
+//{
+//	float fDisSP, fDisP, fDis = 0.0f;
+//	DETECT Detect;
+//	Detect.Startpos = pos;
+//	Detect.pos = pos;
+//	Detect.fmoveRot = fmoveRot;
+//	Detect.nLife = nLife;
+//
+//	while (1)
+//	{
+//		Detect.posOld = Detect.pos;
+//		Detect.move = D3DXVECTOR3(sinf(Detect.fmoveRot)*DETECT_SPEED, 0.0f, cosf(Detect.fmoveRot)*DETECT_SPEED);
+//		Detect.pos += Detect.move;
+//		Detect.nLife--;
+//		
+//		if (CollisionObject00(&Detect.pos, &Detect.posOld, &Detect.move, D3DXVECTOR3(1.0f, 1.0f, 1.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f), 1.0f) == true)
+//		{//壁に当たったとき
+//		 //距離を割り出す
+//			fDisSP = powf(Detect.Startpos.x, 2.0f) + powf(Detect.Startpos.z, 2.0f);
+//			if (fDisSP <= 0)
+//			{
+//				fDisSP *= -1.0f;
+//			}
+//			fDisP = powf(Detect.pos.x, 2.0f) + powf(Detect.pos.z, 2.0f);
+//			if (fDisP <= 0)
+//			{
+//				fDisP *= -1.0f;
+//			}
+//			fDis = fDisSP - fDisP;
+//			if (fDis <= 0)
+//			{
+//				fDis *= -1.0f;
+//			}
+//
+//			Detect.fDistance = sqrtf(fDis);
+//			SetEffect(Detect.Startpos, D3DXCOLOR(0.2f, 0.2f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 120.0f, 60, 0);
+//			SetEffect(Detect.pos, D3DXCOLOR(1.0f, 0.2f, 0.2f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 120.0f, 60, 0);
+//			return Detect.fDistance;
+//		}
+//
+//		if (Detect.nLife <= 0)
+//		{
+//			return NULL;
+//		}
+//	}
+//}
+
+//====================================================================
 //プレイヤーの探索
 //====================================================================
 bool DetectPlayer(D3DXVECTOR3*postg, D3DXVECTOR3 pos, float fmoveRot, int nLife)
@@ -627,7 +678,7 @@ void EnemyPatrol(int nEnemy)
 		PrintDebugProc("Enemy%d前:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceFront);
 
 		//自身の進む方向に壁があった場合
-		if (( g_Enemy[nEnemy].fDistanceFront <= 300.0f) ||
+		if (( g_Enemy[nEnemy].fDistanceFront <= 400.0f) ||
 			 g_Enemy[nEnemy].MoveState == ENEMYMOVE_NONE)
 		{
 			int nCount = 0;
@@ -663,6 +714,10 @@ void EnemyPatrol(int nEnemy)
 
 					g_Enemy[nEnemy].MoveState = ENEMYMOVE_NONE;
 					break;
+				}
+				else
+				{
+					break;		//テスト中の無限ループ回避用に追加しました。
 				}
 			}	
 		}

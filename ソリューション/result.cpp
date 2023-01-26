@@ -174,7 +174,7 @@ void Init3DResult(void)
 //I—¹
 void Uninit3DResult(void)
 {
-
+	UninitCamera();
 }
 
 //XV

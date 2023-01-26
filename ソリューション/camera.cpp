@@ -754,7 +754,12 @@ void ManyPlayCamera(void)
 //タイトル画面
 void Titlecamera(void)
 {
-
+	g_aCamera[5].posV = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	g_aCamera[5].posR = D3DXVECTOR3(0.0f, 0.0f, 50.0f);
+	g_aCamera[5].vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	g_aCamera[5].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	g_aCamera[5].rot2 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	g_aCamera[5].rot2Old = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 }
 
 //人数選択画面
