@@ -126,15 +126,19 @@ void UpdatePlayer(void)
 {
 	//ポインタ情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+	int CurrentCamera = GetCurrentCamera();
 
-	if (GetKeyboardTrigger(DIK_F3) == true)
+	/*if (GetKeyboardTrigger(DIK_F3) == true)
 	{
-		g_SelectPlayer++;
+		g_SelectPlayer = CurrentCamera;
+
 		if (g_SelectPlayer >= PlayNumber.CurrentSelectNumber)
 		{
 			g_SelectPlayer = 0;
 		}
-	}
+	}*/
+
+	g_SelectPlayer = CurrentCamera;
 
 	if (GetKeyboardTrigger(DIK_F6) == true)
 	{
@@ -285,6 +289,7 @@ void PlayerMoveInput(int nCnt)
 	//情報の取得
 	Stamina *pStamina = GetStamina();
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+	int CurrentCamera = GetCurrentCamera();
 
 	//斜め移動の速度修正用の関数を初期化する
 	g_aPlayer[nCnt].NormarizeMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -292,50 +297,50 @@ void PlayerMoveInput(int nCnt)
 	//キーボードの移動処理
 	if (GetKeyboardPress(DIK_W) == true)
 	{
-		g_aPlayer[nCnt].NormarizeMove.z += 1.0f * cosf(Getrot().y);
-		g_aPlayer[nCnt].NormarizeMove.x += 1.0f * sinf(Getrot().y);
+		g_aPlayer[nCnt].NormarizeMove.z += 1.0f * cosf(Getrot(CurrentCamera).y);
+		g_aPlayer[nCnt].NormarizeMove.x += 1.0f * sinf(Getrot(CurrentCamera).y);
 
 	}
 	if (GetKeyboardPress(DIK_S) == true)
 	{
-		g_aPlayer[nCnt].NormarizeMove.z += -1.0f * cosf(Getrot().y);
-		g_aPlayer[nCnt].NormarizeMove.x += -1.0f * sinf(Getrot().y);
+		g_aPlayer[nCnt].NormarizeMove.z += -1.0f * cosf(Getrot(CurrentCamera).y);
+		g_aPlayer[nCnt].NormarizeMove.x += -1.0f * sinf(Getrot(CurrentCamera).y);
 	}
 	if (GetKeyboardPress(DIK_A) == true)
 	{
-		g_aPlayer[nCnt].NormarizeMove.x += -1.0f * cosf(Getrot().y);
-		g_aPlayer[nCnt].NormarizeMove.z -= -1.0f * sinf(Getrot().y);
+		g_aPlayer[nCnt].NormarizeMove.x += -1.0f * cosf(Getrot(CurrentCamera).y);
+		g_aPlayer[nCnt].NormarizeMove.z -= -1.0f * sinf(Getrot(CurrentCamera).y);
 
 	}
 	if (GetKeyboardPress(DIK_D) == true)
 	{
-		g_aPlayer[nCnt].NormarizeMove.x += 1.0f * cosf(Getrot().y);
-		g_aPlayer[nCnt].NormarizeMove.z -= 1.0f * sinf(Getrot().y);
+		g_aPlayer[nCnt].NormarizeMove.x += 1.0f * cosf(Getrot(CurrentCamera).y);
+		g_aPlayer[nCnt].NormarizeMove.z -= 1.0f * sinf(Getrot(CurrentCamera).y);
 	}
 
 	if (GetKeyboardPress(DIK_W) == false && GetKeyboardPress(DIK_S) == false && GetKeyboardPress(DIK_A) == false && GetKeyboardPress(DIK_D) == false)
 	{//キーボードと同時に入力できないようにする
 		if (GetGamepad_Stick_Left(0).y > 0.0f)
 		{//左スティックの上入力
-			g_aPlayer[nCnt].NormarizeMove.z += cosf(Getrot().y);
-			g_aPlayer[nCnt].NormarizeMove.x += sinf(Getrot().y);
+			g_aPlayer[nCnt].NormarizeMove.z += cosf(Getrot(CurrentCamera).y);
+			g_aPlayer[nCnt].NormarizeMove.x += sinf(Getrot(CurrentCamera).y);
 		}
 		if (GetGamepad_Stick_Left(0).y < 0.0f)
 		{//左スティックの下入力
-			g_aPlayer[nCnt].NormarizeMove.z -= cosf(Getrot().y);
-			g_aPlayer[nCnt].NormarizeMove.x -= sinf(Getrot().y);
+			g_aPlayer[nCnt].NormarizeMove.z -= cosf(Getrot(CurrentCamera).y);
+			g_aPlayer[nCnt].NormarizeMove.x -= sinf(Getrot(CurrentCamera).y);
 		}
 		if (GetGamepad_Stick_Left(0).x > 0.0f)
 		{//左スティックの右入力
 			//左スティックによる左右移動
-			g_aPlayer[nCnt].NormarizeMove.x += cosf(Getrot().y);
-			g_aPlayer[nCnt].NormarizeMove.z -= sinf(Getrot().y);
+			g_aPlayer[nCnt].NormarizeMove.x += cosf(Getrot(CurrentCamera).y);
+			g_aPlayer[nCnt].NormarizeMove.z -= sinf(Getrot(CurrentCamera).y);
 		}
 		if (GetGamepad_Stick_Left(0).x < 0.0f)
 		{//左スティックの左入力
 			//左スティックによる左右移動
-			g_aPlayer[nCnt].NormarizeMove.x -= cosf(Getrot().y);
-			g_aPlayer[nCnt].NormarizeMove.z += sinf(Getrot().y);
+			g_aPlayer[nCnt].NormarizeMove.x -= cosf(Getrot(CurrentCamera).y);
+			g_aPlayer[nCnt].NormarizeMove.z += sinf(Getrot(CurrentCamera).y);
 		}
 	}
 
@@ -407,8 +412,10 @@ void PlayerRotUpdate(int nCnt)
 	//移動方向に向きを合わせる処理
 	float fRotMove, fRotDest, fRotDiff;
 
+	int CurrentCamera = GetCurrentCamera();
+
 	fRotMove = g_aPlayer[nCnt].rot.y;
-	fRotDest = Getrot().y;
+	fRotDest = Getrot(CurrentCamera).y;
 
 	if (GetKeyboardPress(DIK_C) == true)
 	{
@@ -424,17 +431,17 @@ void PlayerRotUpdate(int nCnt)
 		if (GetKeyboardPress(DIK_D) == true || GetGamepad_Stick_Left(0).x > 0.1f)
 		{
 			fRotMove = atan2f(sinf(g_aPlayer[nCnt].rot.y), cosf(g_aPlayer[nCnt].rot.y));
-			fRotDest = atan2f(sinf(Getrot().y), cosf(Getrot().y)) + D3DX_PI * 0.25f;
+			fRotDest = atan2f(sinf(Getrot(CurrentCamera).y), cosf(Getrot(CurrentCamera).y)) + D3DX_PI * 0.25f;
 		}
 		else if (GetKeyboardPress(DIK_A) == true || GetGamepad_Stick_Left(0).x < -0.1f)
 		{
 			fRotMove = atan2f(sinf(g_aPlayer[nCnt].rot.y), cosf(g_aPlayer[nCnt].rot.y));
-			fRotDest = atan2f(sinf(Getrot().y), cosf(Getrot().y)) + D3DX_PI * -0.25f;
+			fRotDest = atan2f(sinf(Getrot(CurrentCamera).y), cosf(Getrot(CurrentCamera).y)) + D3DX_PI * -0.25f;
 		}
 		else
 		{
 			fRotMove = atan2f(sinf(g_aPlayer[nCnt].rot.y), cosf(g_aPlayer[nCnt].rot.y));
-			fRotDest = atan2f(sinf(Getrot().y), cosf(Getrot().y));
+			fRotDest = atan2f(sinf(Getrot(CurrentCamera).y), cosf(Getrot(CurrentCamera).y));
 		}
 	}
 	else if (GetKeyboardPress(DIK_S) == true || GetGamepad_Stick_Left(0).y < -0.1f)
@@ -442,28 +449,28 @@ void PlayerRotUpdate(int nCnt)
 		if (GetKeyboardPress(DIK_D) == true || GetGamepad_Stick_Left(0).x > 0.1f)
 		{
 			fRotMove = atan2f(sinf(g_aPlayer[nCnt].rot.y), cosf(g_aPlayer[nCnt].rot.y));
-			fRotDest = atan2f(sinf(Getrot().y), cosf(Getrot().y)) + D3DX_PI * 0.75f;
+			fRotDest = atan2f(sinf(Getrot(CurrentCamera).y), cosf(Getrot(CurrentCamera).y)) + D3DX_PI * 0.75f;
 		}
 		else if (GetKeyboardPress(DIK_A) == true || GetGamepad_Stick_Left(0).x < -0.1f)
 		{
 			fRotMove = atan2f(sinf(g_aPlayer[nCnt].rot.y), cosf(g_aPlayer[nCnt].rot.y));
-			fRotDest = atan2f(sinf(Getrot().y), cosf(Getrot().y)) + D3DX_PI * -0.75f;
+			fRotDest = atan2f(sinf(Getrot(CurrentCamera).y), cosf(Getrot(CurrentCamera).y)) + D3DX_PI * -0.75f;
 		}
 		else
 		{
 			fRotMove = atan2f(sinf(g_aPlayer[nCnt].rot.y), cosf(g_aPlayer[nCnt].rot.y));
-			fRotDest = atan2f(sinf(Getrot().y), cosf(Getrot().y)) + D3DX_PI;
+			fRotDest = atan2f(sinf(Getrot(CurrentCamera).y), cosf(Getrot(CurrentCamera).y)) + D3DX_PI;
 		}
 	}
 	else if (GetKeyboardPress(DIK_D) == true || GetGamepad_Stick_Left(0).x > 0.1f)
 	{
 		fRotMove = atan2f(sinf(g_aPlayer[nCnt].rot.y), cosf(g_aPlayer[nCnt].rot.y));
-		fRotDest = atan2f(sinf(Getrot().y), cosf(Getrot().y)) + D3DX_PI * 0.5f;
+		fRotDest = atan2f(sinf(Getrot(CurrentCamera).y), cosf(Getrot(CurrentCamera).y)) + D3DX_PI * 0.5f;
 	}
 	else if (GetKeyboardPress(DIK_A) == true || GetGamepad_Stick_Left(0).x < -0.1f)
 	{
 		fRotMove = atan2f(sinf(g_aPlayer[nCnt].rot.y), cosf(g_aPlayer[nCnt].rot.y));
-		fRotDest = atan2f(sinf(Getrot().y), cosf(Getrot().y)) + D3DX_PI * -0.5f;
+		fRotDest = atan2f(sinf(Getrot(CurrentCamera).y), cosf(Getrot(CurrentCamera).y)) + D3DX_PI * -0.5f;
 	}
 
 	fRotDiff = fRotDest - fRotMove;

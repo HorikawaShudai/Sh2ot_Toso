@@ -9,6 +9,5 @@ void InitTitle();
 void UninitTitle();
 void UpdateTitle();
 void DrawTitle();
-int GetPlayerNumber();
 
 #endif // !_TITLE_H_

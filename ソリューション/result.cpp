@@ -2,10 +2,16 @@
 #include "Result.h"
 #include "input.h"
 #include "Fade.h"
-
+#include "camera.h"
 
 //マクロ定義
 #define NUM_Result (1) //背景の数
+
+//3D背景用
+void Init3DResult(void);
+void Uninit3DResult(void);
+void Update3Result(void);
+void Draw3DResult(void);
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureResult = NULL;
@@ -32,11 +38,6 @@ void InitResult(void)
 	g_rbChoiceA = true;
 	g_rfChoiceA = 0.0f;
 
-	//テクスチャ読み込み
-	/*D3DXCreateTextureFromFile(pDevice,
-	"Data\\TEXTURE\\skate.jpg",
-	&g_pTextureResult);*/
-
 	D3DXCreateTextureFromFile(pDevice, "Data\\TEXTURE\\Result_test.png", &g_apTextureResult[0]);
 	
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * NUM_Result,
@@ -58,9 +59,9 @@ void InitResult(void)
 		pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
 
 		//頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		pVtx[0].pos = D3DXVECTOR3(1000.0f, 0.0f, 0.0f);
 		pVtx[1].pos = D3DXVECTOR3(1280.0f, 0.0f, 0.0f);
-		pVtx[2].pos = D3DXVECTOR3(0.0f, 720.0f, 0.0f);
+		pVtx[2].pos = D3DXVECTOR3(1000.0f, 720.0f, 0.0f);
 		pVtx[3].pos = D3DXVECTOR3(1280.0f, 720.0f, 0.0f);
 
 		//rhwの設定
@@ -79,7 +80,8 @@ void InitResult(void)
 	}
 	g_pVtxBuffResult->Unlock();
 
-
+	//3D
+	Init3DResult();
 }
 
 //======================================
@@ -107,6 +109,9 @@ void UninitResult(void)
 			g_apTextureResult[nCntResult] = NULL;
 		}
 	}
+
+	//3D
+	Uninit3DResult();
 }
 
 //======================================
@@ -124,6 +129,9 @@ void UpdateResult(void)
 			SetFade(MODE_TITLE);
 		}
 	}
+
+	//3D
+	Update3Result();
 }
 
 //======================================
@@ -150,4 +158,33 @@ void DrawResult(void)
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCntResult * 4, 2);
 	}
 
+	//3D
+	Draw3DResult();
+}
+
+//===================================
+//3Dタイトル用
+//===================================
+//初期化
+void Init3DResult(void)
+{
+	InitCamera();
+}
+
+//終了
+void Uninit3DResult(void)
+{
+
+}
+
+//更新
+void Update3Result(void)
+{
+	UpdateCamera();
+}
+
+//描画
+void Draw3DResult(void)
+{
+	SetCamera(5);
 }

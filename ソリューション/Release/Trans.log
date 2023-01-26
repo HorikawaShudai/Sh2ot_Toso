@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+﻿  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作1\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作1\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+=======
+<<<<<<< HEAD
+﻿  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+=======
 ﻿  Fade.cpp
   PlayModeSelect.cpp
   PlayNumberSelect.cpp
@@ -32,3 +40,5 @@
   コード生成が終了しました。
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+>>>>>>> 799b71fffb1c7ccb859b0ac3934e530f088b6092
+>>>>>>> 911ffb236e6e625fb0b62c469df39867f08d4922

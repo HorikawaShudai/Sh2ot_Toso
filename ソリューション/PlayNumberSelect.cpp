@@ -10,20 +10,20 @@
 #include "fade.h"
 #include "game.h"
 #include "debugproc.h"
+#include "camera.h"
 
 //***********************************
 //マクロ定義
 //***********************************
-#define MAX_TEX			(5)				//テクスチャの最大数
+#define MAX_TEX			(4)				//テクスチャの最大数
 #define NUM_POLY		(NUM_PLAYNUMBER)	//ポリゴンの数
-#define MAX_BUFF		(2)				//バッファの最大数
+#define MAX_BUFF		(1)				//バッファの最大数
 
 //***********************************
 //テクスチャファイル名
 //***********************************
 const char *c_apFilenamePlayNumberSelect[MAX_TEX] =
 {
-	"Data\\TEXTURE\\PLAYMODE\\TitleBg.png",			//タイトル背景
 	"data\\TEXTURE\\PLAYMODE\\PlayMode00.png",		//選択アイコン(1人)
 	"data\\TEXTURE\\PLAYMODE\\PlayMode01.png",		//選択アイコン(2人)
 	"data\\TEXTURE\\PLAYMODE\\PlayMode02.png",		//選択アイコン(3人)
@@ -34,13 +34,19 @@ const char *c_apFilenamePlayNumberSelect[MAX_TEX] =
 //プロトタイプ宣言
 //***********************************
 //初期化
-void InitPlayNumberSelectBg(void);
 void InitPlaySelectIcon(void);
 //更新
 void PlayerSelect(void);
 //描画
 void DrawPlayNumberselectBg(void);
 void DrawPlayNumberSelectIcon(void);
+
+//3D背景用
+void Init3DSelect(void);
+void Uninit3DSelect(void);
+void Update3DSelect(void);
+void Draw3DSelect(void);
+
 
 //==================
 //グローバル定義
@@ -77,18 +83,15 @@ void InitPlayNumberSelect(void)
 	g_PaleColorPns = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 	g_NormalColorPns = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
-	//頂点バッファの生成[0]
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4,
-		D3DUSAGE_WRITEONLY, FVF_VERTEX_2D, D3DPOOL_MANAGED,
-		&g_pVtxBuffPlayNumberSelect[0], NULL);
 	//頂点バッファの生成[1]
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * NUM_PLAYNUMBER,
 		D3DUSAGE_WRITEONLY, FVF_VERTEX_2D, D3DPOOL_MANAGED,
-		&g_pVtxBuffPlayNumberSelect[1], NULL);
-
-	InitPlayNumberSelectBg();
+		&g_pVtxBuffPlayNumberSelect[0], NULL);
 
 	InitPlaySelectIcon();
+
+	//3D
+	Init3DSelect();
 }
 
 //========================================================================
@@ -117,6 +120,9 @@ void UninitPlayNumberSelect(void)
 			g_pVtxBuffPlayNumberSelect[nCntStage] = NULL;
 		}
 	}
+
+	//3D
+	Uninit3DSelect();
 }
 
 //========================================================================
@@ -126,6 +132,9 @@ void UpdatePlayNumberSelect(void)
 {
 	//ステージ選択の関数
 	PlayerSelect();
+
+	//3D
+	Update3DSelect();
 
 	//デバッグ表示
 	PrintDebugProc("選択 【←】【→】\n");
@@ -138,50 +147,13 @@ void UpdatePlayNumberSelect(void)
 //========================================================================
 void DrawPlayNumberSelect(void)
 {
-	//モードセレクトの背景
-	DrawPlayNumberselectBg();
-
 	//選択アイコン
 	DrawPlayNumberSelectIcon();
+
+	//3D
+	Draw3DSelect();
 }
 
-//========================================================================
-// モード選択背景の初期化処理
-//========================================================================
-void InitPlayNumberSelectBg(void)
-{
-	//頂点情報へのポインタ
-	VERTEX_2D *pVtx;
-
-	//頂点バッファをロックし、頂点情報へのポインタを取得
-	g_pVtxBuffPlayNumberSelect[0]->Lock(0, 0, (void**)&pVtx, 0);
-
-	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(1280.0f, 0.0f, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(0.0f, 720.0f, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(1280.0f, 720.0f, 0.0f);
-
-	//rhwの設定
-	for (int nCntrhw = 0; nCntrhw < 4; nCntrhw++)
-	{
-		pVtx[nCntrhw].rhw = 1.0f;
-	}
-	//頂点カラー(0.0f～1.0f内で設定)
-	for (int nCntcol = 0; nCntcol < 4; nCntcol++)
-	{
-		pVtx[nCntcol].col = g_NormalColorPns;
-	}
-
-	//テクスチャの座標設定
-	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
-	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
-	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
-
-	//頂点バッファをアンロックする
-	g_pVtxBuffPlayNumberSelect[0]->Unlock();
-}
 
 //========================================================================
 // モード選択アイコンの初期化処理
@@ -192,7 +164,7 @@ void InitPlaySelectIcon(void)
 	VERTEX_2D *pVtx;
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
-	g_pVtxBuffPlayNumberSelect[1]->Lock(0, 0, (void**)&pVtx, 0);
+	g_pVtxBuffPlayNumberSelect[0]->Lock(0, 0, (void**)&pVtx, 0);
 
 	for (int nCntStage = 0; nCntStage < NUM_PLAYNUMBER; nCntStage++)
 	{
@@ -253,7 +225,7 @@ void InitPlaySelectIcon(void)
 	}
 
 	//頂点バッファをアンロックする
-	g_pVtxBuffPlayNumberSelect[1]->Unlock();
+	g_pVtxBuffPlayNumberSelect[0]->Unlock();
 
 }
 
@@ -296,13 +268,13 @@ void DrawPlayNumberSelectIcon(void)
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
 	//頂点バッファをデータストリームに設定
-	pDevice->SetStreamSource(0, g_pVtxBuffPlayNumberSelect[1], 0,
+	pDevice->SetStreamSource(0, g_pVtxBuffPlayNumberSelect[0], 0,
 		sizeof(VERTEX_2D));			//頂点情報構造体のサイズ
 
 	for (int nCntStage = 0; nCntStage < NUM_POLY; nCntStage++)
 	{
 		//テクスチャの設定
-		pDevice->SetTexture(0, g_apTexPlayNumberSelect[nCntStage + 1]);
+		pDevice->SetTexture(0, g_apTexPlayNumberSelect[nCntStage]);
 
 		//ポリゴンの描画
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,				//プリミティブの種類
@@ -325,7 +297,7 @@ void PlayerSelect(void)
 	if (GetKeyboardTrigger(DIK_D) == true/* || GetGamePadTrigger(BUTTON_3, 0) == true*/ && pFade == FADE_NONE)
 	{
 		//頂点バッファをロック
-		g_pVtxBuffPlayNumberSelect[1]->Lock(0, 0, (void**)&pVtx, 0);
+		g_pVtxBuffPlayNumberSelect[0]->Lock(0, 0, (void**)&pVtx, 0);
 
 		pVtx += g_PlayNumberSelect.CurrentSelectNumber * 4;
 
@@ -336,13 +308,13 @@ void PlayerSelect(void)
 		pVtx[3].col = g_PaleColorPns;
 
 		//頂点バッファをアンロックする
-		g_pVtxBuffPlayNumberSelect[1]->Unlock();
+		g_pVtxBuffPlayNumberSelect[0]->Unlock();
 
 		//現在地を先に
 		g_PlayNumberSelect.CurrentSelectNumber = (g_PlayNumberSelect.CurrentSelectNumber + 1) % NUM_PLAYNUMBER;
 
 		//頂点バッファをロック
-		g_pVtxBuffPlayNumberSelect[1]->Lock(0, 0, (void**)&pVtx, 0);
+		g_pVtxBuffPlayNumberSelect[0]->Lock(0, 0, (void**)&pVtx, 0);
 
 		pVtx += g_PlayNumberSelect.CurrentSelectNumber * 4;
 
@@ -353,12 +325,12 @@ void PlayerSelect(void)
 		pVtx[3].col = g_NormalColorPns;
 
 		//頂点バッファをアンロックする
-		g_pVtxBuffPlayNumberSelect[1]->Unlock();
+		g_pVtxBuffPlayNumberSelect[0]->Unlock();
 	}
 	else if (GetKeyboardTrigger(DIK_A) == true/* || GetGamePadTrigger(BUTTON_2, 0) == true*/ && pFade == FADE_NONE)
 	{
 		//頂点バッファをロック
-		g_pVtxBuffPlayNumberSelect[1]->Lock(0, 0, (void**)&pVtx, 0);
+		g_pVtxBuffPlayNumberSelect[0]->Lock(0, 0, (void**)&pVtx, 0);
 
 		pVtx += g_PlayNumberSelect.CurrentSelectNumber * 4;
 
@@ -369,13 +341,13 @@ void PlayerSelect(void)
 		pVtx[3].col = g_PaleColorPns;
 
 		//頂点バッファをアンロックする
-		g_pVtxBuffPlayNumberSelect[1]->Unlock();
+		g_pVtxBuffPlayNumberSelect[0]->Unlock();
 
 		//現在地を前へ
 		g_PlayNumberSelect.CurrentSelectNumber = (g_PlayNumberSelect.CurrentSelectNumber - 1 + NUM_PLAYNUMBER) % NUM_PLAYNUMBER;
 
 		//頂点バッファをロック
-		g_pVtxBuffPlayNumberSelect[1]->Lock(0, 0, (void**)&pVtx, 0);
+		g_pVtxBuffPlayNumberSelect[0]->Lock(0, 0, (void**)&pVtx, 0);
 
 		pVtx += 4 * g_PlayNumberSelect.CurrentSelectNumber;
 
@@ -386,7 +358,7 @@ void PlayerSelect(void)
 		pVtx[3].col = g_NormalColorPns;
 
 		//頂点バッファをアンロックする
-		g_pVtxBuffPlayNumberSelect[1]->Unlock();
+		g_pVtxBuffPlayNumberSelect[0]->Unlock();
 	}
 
 	if (pFade == FADE_NONE)
@@ -409,6 +381,34 @@ void PlayerSelect(void)
 			SetFade(MODE_TITLE);				//モードの設定(タイトル画面に移行)
 		}
 	}
+}
+
+
+//========================================================================
+//3D用
+//========================================================================
+//初期化
+void Init3DSelect(void)
+{
+	InitCamera();
+}
+
+//終了
+void Uninit3DSelect(void)
+{
+
+}
+
+//更新
+void Update3DSelect(void)
+{
+	UpdateCamera();
+}
+
+//描画
+void Draw3DSelect(void)
+{
+	SetCamera(5);
 }
 
 //========================================================================

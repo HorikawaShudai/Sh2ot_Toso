@@ -9,12 +9,13 @@
 #include "input.h"
 #include "Fade.h"
 #include "debugproc.h"
+#include "camera.h"
 
 //**********************************************
 //マクロ定義
 //**********************************************
-#define NUM_TEX			(4)		// 背景の数
-#define NUM_TITLEPOS	(4)		//
+#define NUM_TEX			(3)		// テクスチャの数
+#define NUM_TITLEPOS	(3)		//
 #define NUM_SELECT		(2)		//選択欄の数
 
 //**********************************************
@@ -22,7 +23,6 @@
 //**********************************************
 const char *c_apTitleTexName[NUM_TEX] =
 {
-	"Data\\TEXTURE\\TITLE\\TitleBg.png",			//タイトル背景
 	"Data\\TEXTURE\\TITLE\\Tousou_logo.png",		//透走ロゴ
 	"Data\\TEXTURE\\TITLE\\TitleSelect00.png",		//スタート文字
 	"Data\\TEXTURE\\TITLE\\TitleSelect01.png",		//セレクト文字
@@ -35,6 +35,11 @@ void InitTitleBg(int nCntTitle);							//タイトル背景
 void InitTitleLogo(int nCntTitle);							//タイトルロゴ
 void InitTitleSelect0(int nCntTitle);						//タイトルセレクト(モード)
 void InitTitleSelect1(int nCntTitle);						//タイトルセレクト(ランキング)
+//3D背景用
+void Init3DTitle(void);
+void Uninit3DTitle(void);
+void Update3DTitle(void);
+void Draw3DTitle(void);
 
 void UpdateTitleSelect(void);									//タイトルセレクト(ランキング)
 
@@ -82,19 +87,19 @@ void InitTitle(void)
 		switch (nCntTitle)
 		{
 		case 0:
-			InitTitleBg(nCntTitle);			//タイトル背景
-			break;
-		case 1:
 			InitTitleLogo(nCntTitle);		//タイトルロゴ
 			break;
-		case 2:
+		case 1:
 			InitTitleSelect0(nCntTitle);	//選択欄(モード選択)
 			break;
-		case 3:
+		case 2:
 			InitTitleSelect1(nCntTitle);	//選択欄(ランキング)
 			break;
 		}
 	}
+
+	//3D
+	Init3DTitle();
 }
 
 //============================================================================
@@ -117,6 +122,9 @@ void UninitTitle(void)
 		g_pVtxBuffTitle->Release();
 		g_pVtxBuffTitle = NULL;
 	}
+
+	//3D
+	Uninit3DTitle();
 }
 
 //============================================================================
@@ -124,6 +132,9 @@ void UninitTitle(void)
 //============================================================================
 void UpdateTitle(void)
 {
+	//3D
+	Update3DTitle();
+
 	//選択処理
 	UpdateTitleSelect();
 
@@ -154,11 +165,14 @@ void DrawTitle(void)
 		//ポリゴンの描画
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCntTitle * 4, 2);
 	}
+
+	//3D
+	Draw3DTitle();
 }
 
-//************************************
+//===================================
 //初期化処理内
-//************************************
+//===================================
 void InitTitleBg(int nCntTitle)
 {
 	//頂点情報へのポインタ
@@ -323,9 +337,9 @@ void InitTitleSelect1(int nCntTitle)
 	g_pVtxBuffTitle->Unlock();
 }
 
-//************************************
+//===================================
 //更新処理内の処理
-//************************************
+//===================================
 //選択処理
 void UpdateTitleSelect(void)
 {
@@ -335,75 +349,75 @@ void UpdateTitleSelect(void)
 	//頂点情報へのポインタ
 	VERTEX_2D *pVtx;
 
-	if (GetKeyboardTrigger(DIK_S) == true/* || GetGamePadTrigger(BUTTON_0, 0) == true*/ && pFade == FADE_NONE)
-	{
-		//頂点バッファをロックし、頂点情報へのポインタを取得
-		g_pVtxBuffTitle->Lock(0, 0, (void**)&pVtx, 0);
-
-		pVtx += 8 + (g_CurrentNumberTitle * 4);
-
-		//頂点カラーの設定
-		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-
-		//頂点バッファをアンロックする
-		g_pVtxBuffTitle->Unlock();
-
-		//現在地を先に
-		g_CurrentNumberTitle = (g_CurrentNumberTitle + 1) % NUM_SELECT;
-
-		//頂点バッファをロックし、頂点情報へのポインタを取得
-		g_pVtxBuffTitle->Lock(0, 0, (void**)&pVtx, 0);
-
-		pVtx += 8 + (g_CurrentNumberTitle * 4);
-
-		//頂点カラーの設定
-		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-
-		//頂点バッファをアンロックする
-		g_pVtxBuffTitle->Unlock();
-	}
-	else if (GetKeyboardTrigger(DIK_W) == true/* || GetGamePadTrigger(BUTTON_1, 0) == true*/)
-	{
-		//頂点バッファをロックし、頂点情報へのポインタを取得
-		g_pVtxBuffTitle->Lock(0, 0, (void**)&pVtx, 0);
-
-		pVtx += 8 + (g_CurrentNumberTitle * 4);
-
-		//頂点カラーの設定
-		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
-
-		//頂点バッファをアンロックする
-		g_pVtxBuffTitle->Unlock();
-
-		//現在地を前へ
-		g_CurrentNumberTitle = (g_CurrentNumberTitle - 1 + NUM_SELECT) % NUM_SELECT;
-
-		//頂点バッファをロックし、頂点情報へのポインタを取得
-		g_pVtxBuffTitle->Lock(0, 0, (void**)&pVtx, 0);
-
-		pVtx += 8 + (g_CurrentNumberTitle * 4);
-
-		//頂点カラーの設定
-		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-
-		//頂点バッファをアンロックする
-		g_pVtxBuffTitle->Unlock();
-	}
-
 	if (pFade == FADE_NONE)
 	{
+		if (GetKeyboardTrigger(DIK_S) == true/* || GetGamePadTrigger(BUTTON_0, 0) == true*/)
+		{
+			//頂点バッファをロックし、頂点情報へのポインタを取得
+			g_pVtxBuffTitle->Lock(0, 0, (void**)&pVtx, 0);
+
+			pVtx += 4 + (g_CurrentNumberTitle * 4);
+
+			//頂点カラーの設定
+			pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+			pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+			pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+			pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+
+			//頂点バッファをアンロックする
+			g_pVtxBuffTitle->Unlock();
+
+			//現在地を先に
+			g_CurrentNumberTitle = (g_CurrentNumberTitle + 1) % NUM_SELECT;
+
+			//頂点バッファをロックし、頂点情報へのポインタを取得
+			g_pVtxBuffTitle->Lock(0, 0, (void**)&pVtx, 0);
+
+			pVtx += 4 + (g_CurrentNumberTitle * 4);
+
+			//頂点カラーの設定
+			pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+			pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+			pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+			pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+			//頂点バッファをアンロックする
+			g_pVtxBuffTitle->Unlock();
+		}
+		else if (GetKeyboardTrigger(DIK_W) == true/* || GetGamePadTrigger(BUTTON_1, 0) == true*/)
+		{
+			//頂点バッファをロックし、頂点情報へのポインタを取得
+			g_pVtxBuffTitle->Lock(0, 0, (void**)&pVtx, 0);
+
+			pVtx += 4 + (g_CurrentNumberTitle * 4);
+
+			//頂点カラーの設定
+			pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+			pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+			pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+			pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+
+			//頂点バッファをアンロックする
+			g_pVtxBuffTitle->Unlock();
+
+			//現在地を前へ
+			g_CurrentNumberTitle = (g_CurrentNumberTitle - 1 + NUM_SELECT) % NUM_SELECT;
+
+			//頂点バッファをロックし、頂点情報へのポインタを取得
+			g_pVtxBuffTitle->Lock(0, 0, (void**)&pVtx, 0);
+
+			pVtx += 4 + (g_CurrentNumberTitle * 4);
+
+			//頂点カラーの設定
+			pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+			pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+			pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+			pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+			//頂点バッファをアンロックする
+			g_pVtxBuffTitle->Unlock();
+		}
+	
 		if (GetKeyboardPress(DIK_RETURN) || GetGamepadPress(BUTTON_START, 0) || GetGamepadPress(BUTTON_A, 0))
 		{//決定キー(ENTERキー)が押された
 			//モードの設定(ゲーム画面に移行)
@@ -418,3 +432,32 @@ void UpdateTitleSelect(void)
 		}
 	}
 }
+
+//===================================
+//3D用
+//===================================
+//初期化
+void Init3DTitle(void)
+{
+	//カメラの初期化
+	InitCamera();
+}
+
+//終了
+void Uninit3DTitle(void)
+{
+	
+}
+
+//更新
+void Update3DTitle(void)
+{
+	UpdateCamera();
+}
+
+//描画
+void Draw3DTitle(void)
+{
+	SetCamera(5);
+}
+

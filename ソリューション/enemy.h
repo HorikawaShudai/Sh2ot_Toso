@@ -26,6 +26,16 @@ typedef enum
 	ENEMYSTATE_MAX
 }ENEMYSTATE;
 
+typedef enum
+{
+	ENEMYMOVE_NONE = 0,
+	ENEMYMOVE_N,
+	ENEMYMOVE_S,
+	ENEMYMOVE_W,
+	ENEMYMOVE_E,
+	ENEMYMOVE_MAX
+}ENEMYMOVE;
+
 //モデルの構造体
 typedef struct
 {
@@ -39,6 +49,7 @@ typedef struct
 	D3DXVECTOR3 vtxMax;							//モデルの最大
 	int nDamageCounter;							//ダメージ状態の長さ
 	ENEMYSTATE state;							//状態
+	ENEMYMOVE MoveState;						//移動方向の状態
 	int StateCount;
 	Object00 aModel[NUM_ENEMYMODEL]; //持ってるモデルの情報
 	int nType;						//モデルの種類
@@ -48,6 +59,9 @@ typedef struct
 	float fDistanceS;
 	float fDistanceW;
 	float fDistanceE;
+	float fDistanceFront;
+	float fDistanceLeft;
+	float fDistanceRight;
 }ENEMY;
 
 //探査用構造体
