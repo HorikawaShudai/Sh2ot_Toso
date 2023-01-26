@@ -18,6 +18,7 @@
 #include "PlayNumberSelect.h"
 #include "key.h"
 #include "keyUI.h"
+#include "exit.h"
 
 //グローバル変数宣言
 bool g_bPause = false;
@@ -75,6 +76,9 @@ void InitGame()
 	//鍵UIの初期化処理
 	InitKeyUI();
 
+	//出口の初期化処理
+	InitExit();
+
 	//スコアアイテムの初期化
 	InitItem();
 	SetItem(D3DXVECTOR3(0.0f,0.0f,-40.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), 0);
@@ -91,6 +95,7 @@ void InitGame()
 	SetKey(D3DXVECTOR3(150.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetKey(D3DXVECTOR3(-50.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetKey(D3DXVECTOR3(50.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetExit(D3DXVECTOR3(0.0f, 0.0f, -150.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
 	SetStage(0);
 }
@@ -138,6 +143,9 @@ void UninitGame()
 
 	//鍵UIの終了処理
 	UninitKeyUI();
+
+	//出口の終了処理
+	UninitExit();
 }
 
 //====================================================================
@@ -222,6 +230,9 @@ void UpdateGame()
 
 		//鍵UIの更新処理
 		UpdateKeyUI();
+
+		//出口の更新処理
+		UpdateExit();
 	}
 }
 
@@ -284,6 +295,9 @@ void DrawGame()
 
 		//鍵UIの描画処理
 		DrawKeyUI();
+
+		//出口の描画処理
+		DrawExit();
 	}
 
 	//ビューポートを元に戻す

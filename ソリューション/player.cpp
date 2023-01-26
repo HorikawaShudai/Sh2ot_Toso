@@ -13,6 +13,7 @@
 #include "stamina.h"
 #include "key.h"
 #include "keyUI.h"
+#include "exit.h"
 
 //マクロ定義
 #define PLAYER_STEALTHSPEED (0.5f)		//プレイヤーのステルススピード
@@ -234,6 +235,19 @@ void UpdatePlayer(void)
 			{//鍵を入手出来た場合
 				g_aPlayer[g_SelectPlayer].bGetKey = true;	//鍵を入手状態にする
 				SetKeyUI(g_SelectPlayer, true);				//鍵UIを表示する
+			}
+		}
+	}
+
+	//脱出処理
+	if (g_aPlayer[g_SelectPlayer].bGetKey == true)
+	{//プレイヤーが鍵を持っている場合
+		if (GetKeyboardTrigger(DIK_E) == true)
+		{//Eキー入力
+			if (CollisionExit(&g_aPlayer[g_SelectPlayer].pos, &g_aPlayer[g_SelectPlayer].posOld, &g_aPlayer[g_SelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, g_SelectPlayer) == true)
+			{//鍵を入手出来た場合
+				g_aPlayer[g_SelectPlayer].bGetKey = false;	//鍵を入手してない状態にする
+				SetKeyUI(g_SelectPlayer, false);			//鍵UIを非表示にする
 			}
 		}
 	}

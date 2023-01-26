@@ -155,6 +155,7 @@
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="edit.cpp" />
     <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="exit.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="field.cpp" />
     <ClCompile Include="game.cpp" />
@@ -174,6 +175,7 @@
     <ClCompile Include="score_item.cpp" />
     <ClCompile Include="stage.cpp" />
     <ClCompile Include="stamina.cpp" />
+    <ClCompile Include="time.cpp" />
     <ClCompile Include="title.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +183,7 @@
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="edit.h" />
     <ClInclude Include="enemy.h" />
+    <ClInclude Include="exit.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="game.h" />
@@ -200,6 +203,7 @@
     <ClInclude Include="score_item.h" />
     <ClInclude Include="stage.h" />
     <ClInclude Include="stamina.h" />
+    <ClInclude Include="time.h" />
     <ClInclude Include="title.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
