@@ -1,12 +1,13 @@
-﻿  stamina.cpp
-  player.cpp
-  main.cpp
-  game.cpp
-  camera.cpp
+﻿  edit.cpp
   コードを生成中...
   コンパイル中...
   stage.cpp
-  edit.cpp
+  score_item.cpp
+  player.cpp
+  object00.cpp
+  key.cpp
+  game.cpp
+  enemy.cpp
   コードを生成中...
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (3)\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (3)\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
