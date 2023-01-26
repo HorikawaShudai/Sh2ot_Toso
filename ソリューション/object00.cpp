@@ -17,6 +17,7 @@ int EditIndex;								//エディットモード用の番号
 D3DXVECTOR3 EditPos;						//エディットモードのオブジェクトの位置
 D3DXVECTOR3 EditRot;						//エディットモードのオブジェクトの向き
 int EditType;								//エディットモードのオブジェクトの種類
+int g_ObjectCount;							//オブジェクトの数
 
 const char *c_apModelObj[] =					//モデルデータ読み込み
 {
@@ -99,6 +100,7 @@ void InitObject00(void)
 	EditPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	EditRot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	EditType = 0;
+	g_ObjectCount = 0;
 
 	//Xファイルの読み込み
 	for (int nCntObj = 0; nCntObj < OBJECT00_NTYPE_MAX; nCntObj++)
@@ -179,6 +181,7 @@ void UpdateObject00(void)
 
 		}
 	}
+	PrintDebugProc("オブジェクトの数:%d\n", g_ObjectCount);
 }
 
 //====================================================================
@@ -425,55 +428,65 @@ void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 
 			g_Object00[nCntObject].bUse = true;
 			EditIndex++;
+			g_ObjectCount++;
 
-			int nNumVtx;		//頂点数
-			DWORD dwSizeFVF;	//頂点フォーマットのサイズ
-			BYTE *pVtxBuff;		//頂点バッファへのポインタ
-
-			//頂点数を所得
-			nNumVtx = g_pMeshObject00[nType]->GetNumVertices();
-
-			//頂点フォーマットのサイズを所得
-			dwSizeFVF = D3DXGetFVFVertexSize(g_pMeshObject00[nType]->GetFVF());
-
-			//頂点バッファをロック
-			g_pMeshObject00[nType]->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVtxBuff);
-
-			for (int nCntVtx = 0; nCntVtx < nNumVtx; nCntVtx++)
+			if (g_Object00[nCntObject].nType != 0)
 			{
-				D3DXVECTOR3 vtx = *(D3DXVECTOR3*)pVtxBuff;	//頂点座標の代入
+				int nNumVtx;		//頂点数
+				DWORD dwSizeFVF;	//頂点フォーマットのサイズ
+				BYTE *pVtxBuff;		//頂点バッファへのポインタ
 
-				if (g_Object00[nCntObject].vtxMin.x > vtx.x)
+				//頂点数を所得
+				nNumVtx = g_pMeshObject00[nType]->GetNumVertices();
+
+				//頂点フォーマットのサイズを所得
+				dwSizeFVF = D3DXGetFVFVertexSize(g_pMeshObject00[nType]->GetFVF());
+
+				//頂点バッファをロック
+				g_pMeshObject00[nType]->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVtxBuff);
+
+				for (int nCntVtx = 0; nCntVtx < nNumVtx; nCntVtx++)
 				{
-					g_Object00[nCntObject].vtxMin.x = vtx.x;
-				}
-				if (g_Object00[nCntObject].vtxMin.y > vtx.y)
-				{
-					g_Object00[nCntObject].vtxMin.y = vtx.y;
-				}
-				if (g_Object00[nCntObject].vtxMin.z > vtx.z)
-				{
-					g_Object00[nCntObject].vtxMin.z = vtx.z;
+					D3DXVECTOR3 vtx = *(D3DXVECTOR3*)pVtxBuff;	//頂点座標の代入
+
+					if (g_Object00[nCntObject].vtxMin.x > vtx.x)
+					{
+						g_Object00[nCntObject].vtxMin.x = vtx.x;
+					}
+					if (g_Object00[nCntObject].vtxMin.y > vtx.y)
+					{
+						g_Object00[nCntObject].vtxMin.y = vtx.y;
+					}
+					if (g_Object00[nCntObject].vtxMin.z > vtx.z)
+					{
+						g_Object00[nCntObject].vtxMin.z = vtx.z;
+					}
+
+					if (g_Object00[nCntObject].vtxMax.x < vtx.x)
+					{
+						g_Object00[nCntObject].vtxMax.x = vtx.x;
+					}
+					if (g_Object00[nCntObject].vtxMax.y < vtx.y)
+					{
+						g_Object00[nCntObject].vtxMax.y = vtx.y;
+					}
+					if (g_Object00[nCntObject].vtxMax.z < vtx.z)
+					{
+						g_Object00[nCntObject].vtxMax.z = vtx.z;
+					}
+
+					pVtxBuff += dwSizeFVF;	//頂点フォーマットのサイズ分ポインタを進める
 				}
 
-				if (g_Object00[nCntObject].vtxMax.x < vtx.x)
-				{
-					g_Object00[nCntObject].vtxMax.x = vtx.x;
-				}
-				if (g_Object00[nCntObject].vtxMax.y < vtx.y)
-				{
-					g_Object00[nCntObject].vtxMax.y = vtx.y;
-				}
-				if (g_Object00[nCntObject].vtxMax.z < vtx.z)
-				{
-					g_Object00[nCntObject].vtxMax.z = vtx.z;
-				}
-
-				pVtxBuff += dwSizeFVF;	//頂点フォーマットのサイズ分ポインタを進める
+				//頂点バッファをアンロック
+				g_pMeshObject00[nType]->UnlockVertexBuffer();
+			}
+			else
+			{
+				g_Object00[nCntObject].vtxMin = D3DXVECTOR3(0.0f, 0.0f, -5.0f);
+				g_Object00[nCntObject].vtxMax = D3DXVECTOR3(100.0f, 150.0f, 5.0f);
 			}
 
-			//頂点バッファをアンロック
-			g_pMeshObject00[nType]->UnlockVertexBuffer();
 
 			CollisionRotObject00(nCntObject);
 

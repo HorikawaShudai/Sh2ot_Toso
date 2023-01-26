@@ -1,15 +1,10 @@
-<<<<<<< HEAD
-﻿  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
-=======
-﻿  Fade.cpp
-  PlayModeSelect.cpp
-  PlayNumberSelect.cpp
-  camera.cpp
+﻿  camera.cpp
   debugproc.cpp
   edit.cpp
+  Effect.cpp
   enemy.cpp
   exit.cpp
+  Fade.cpp
   field.cpp
   game.cpp
   input.cpp
@@ -20,9 +15,12 @@
   main.cpp
   meshwall.cpp
   object00.cpp
+  particle.cpp
   player.cpp
-  result.cpp
+  PlayNumberSelect.cpp
   コンパイル中...
+  PlayModeSelect.cpp
+  result.cpp
   score.cpp
   score_item.cpp
   stage.cpp
@@ -30,10 +28,9 @@
   time.cpp
   title.cpp
   コード生成しています。
-  88 of 255 functions (34.5%) were compiled, the rest were copied from previous compilation.
-    6 functions were new in current compilation
-    30 functions had inline decision re-evaluated but remain unchanged
+  262 of 266 functions (98.5%) were compiled, the rest were copied from previous compilation.
+    48 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
->>>>>>> 799b71fffb1c7ccb859b0ac3934e530f088b6092
