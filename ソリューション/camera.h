@@ -26,5 +26,6 @@ void InitCamera(void);
 void UninitCamera(void);
 void UpdateCamera(void);
 void SetCamera(int nIdx);
-D3DXVECTOR3 Getrot(void);
+D3DXVECTOR3 Getrot(int nPlayer);
+int GetCurrentCamera(void);
 #endif

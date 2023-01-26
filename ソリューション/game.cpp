@@ -81,6 +81,7 @@ void InitGame()
 
 	//スコアアイテムの初期化
 	InitItem();
+
 	SetItem(D3DXVECTOR3(0.0f,0.0f,-40.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), 0);
 	SetItem(D3DXVECTOR3(40.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetItem(D3DXVECTOR3(100.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
@@ -217,7 +218,6 @@ void UpdateGame()
 
 		//ライフの更新処理
 		UpdateLife();
-
 
 		//スコアの更新処理
 		UpdateScore();
