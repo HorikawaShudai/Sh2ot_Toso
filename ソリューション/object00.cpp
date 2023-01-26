@@ -430,8 +430,8 @@ void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 			EditIndex++;
 			g_ObjectCount++;
 
-			if (g_Object00[nCntObject].nType != 0)
-			{
+			//if (g_Object00[nCntObject].nType != 0)
+			//{
 				int nNumVtx;		//頂点数
 				DWORD dwSizeFVF;	//頂点フォーマットのサイズ
 				BYTE *pVtxBuff;		//頂点バッファへのポインタ
@@ -480,12 +480,12 @@ void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 
 				//頂点バッファをアンロック
 				g_pMeshObject00[nType]->UnlockVertexBuffer();
-			}
-			else
-			{
-				g_Object00[nCntObject].vtxMin = D3DXVECTOR3(0.0f, 0.0f, -5.0f);
-				g_Object00[nCntObject].vtxMax = D3DXVECTOR3(100.0f, 150.0f, 5.0f);
-			}
+			//}
+			//else
+			//{
+			//	g_Object00[nCntObject].vtxMin = D3DXVECTOR3(0.0f, 0.0f, -5.0f);
+			//	g_Object00[nCntObject].vtxMax = D3DXVECTOR3(100.0f, 150.0f, 5.0f);
+			//}
 
 
 			CollisionRotObject00(nCntObject);
