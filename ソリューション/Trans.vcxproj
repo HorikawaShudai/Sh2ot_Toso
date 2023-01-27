@@ -170,6 +170,7 @@
     <ClCompile Include="meshdome.cpp" />
     <ClCompile Include="meshwall.cpp" />
     <ClCompile Include="object00.cpp" />
+    <ClCompile Include="objectBG.cpp" />
     <ClCompile Include="particle.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="PlayNumberSelect.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="meshdome.h" />
     <ClInclude Include="meshwall.h" />
     <ClInclude Include="object00.h" />
+    <ClInclude Include="objectBG.h" />
     <ClInclude Include="particle.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="PlayNumberSelect.h" />
