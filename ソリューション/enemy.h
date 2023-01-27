@@ -62,6 +62,8 @@ typedef struct
 	float fDistanceFront;
 	float fDistanceLeft;
 	float fDistanceRight;
+
+	int nCoolTurn;
 }ENEMY;
 
 //íTç∏ópç\ë¢ëÃ

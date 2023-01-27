@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+﻿  stage.cpp
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+<<<<<<< HEAD
+﻿  enemy.cpp
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
 ﻿  title.cpp
   time.cpp
   stamina.cpp
@@ -34,3 +44,5 @@
   LINK : 前回のインクリメンタル リンクで C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Debug\Trans.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+>>>>>>> f799b01e4f8898b7022bd8f7ad6b98c68ca2ab9f
+>>>>>>> 55f89f2ce125c87c9a98a5cde52d1d21f5c77450

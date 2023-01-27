@@ -6,6 +6,7 @@
 #include "light.h"
 #include "meshwall.h"
 #include "object00.h"
+#include "objectBG.h"
 #include "stage.h"
 #include "player.h"
 #include "debugproc.h"
@@ -24,6 +25,7 @@
 //グローバル変数宣言
 bool g_bPause = false;
 bool g_bEdit = false;
+bool g_bBG_Edit = false;
 GAMESTATE gGameState = GAMESTATE_NONE;
 int g_nCounterGameState = 0;
 
@@ -34,6 +36,7 @@ void InitGame()
 {
 	g_bPause = false;
 	g_bEdit = false;
+	g_bBG_Edit = false;
 
 	DWORD time = timeGetTime();
 	srand((unsigned int)time);
@@ -53,6 +56,7 @@ void InitGame()
 
 	//オブジェクトの初期化処理
 	InitObject00();
+	InitObjectBG();
 
 	//プレイヤーの初期化処理
 	InitPlayer();
@@ -103,6 +107,7 @@ void InitGame()
 	SetKey(D3DXVECTOR3(50.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetExit(D3DXVECTOR3(0.0f, 0.0f, -150.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
+	//ステージの読み込み
 	SetStage(0);
 }
 
@@ -125,6 +130,7 @@ void UninitGame()
 
 	//オブジェクトの終了処理
 	UninitObject00();
+	UninitObjectBG();
 
 	//プレイヤーの終了処理
 	UninitPlayer();
@@ -168,6 +174,11 @@ void UpdateGame()
 	{//f2が押されたとき
 		g_bEdit = g_bEdit ? false : true;
 	}
+
+	if (GetKeyboardTrigger(DIK_F8) == true)
+	{//f2が押されたとき
+		g_bBG_Edit = g_bBG_Edit ? false : true;
+	}
 #endif
 
 	if (g_bPause == false && g_bEdit == false)
@@ -198,8 +209,16 @@ void UpdateGame()
 		//エディットの更新処理
 		UpdateEdit();
 
-		//エディットモードのオブジェクトの更新処理
-		UpdateEditObject00();
+		if (g_bBG_Edit == false)
+		{
+			//エディットモードのオブジェクトの更新処理
+			UpdateEditObject00();
+		}
+		else
+		{
+			//エディットモードのオブジェクトBGの更新処理
+			UpdateEditObjectBG();
+		}
 
 		PrintDebugProc("カメラの視点移動【W】【A】【S】【D】\n");
 		PrintDebugProc("カメラの注視点移動 【I】【J】【K】【L】\n");
@@ -214,6 +233,7 @@ void UpdateGame()
 
 		//オブジェクトの更新処理
 		UpdateObject00();
+		UpdateObjectBG();
 
 		//プレイヤーの更新処理
 		UpdatePlayer();
@@ -273,8 +293,16 @@ void DrawGame()
 
 		if (g_bEdit == true)
 		{
-			//エディットモードのオブジェクト処理
-			DrawEditObject00();
+			if (g_bBG_Edit == false)
+			{
+				//エディットモードのオブジェクト処理
+				DrawEditObject00();
+			}
+			else
+			{
+				//エディットモードのオブジェクト処理
+				DrawEditObjectBG();
+			}
 		}
 
 		//床の描画処理
@@ -282,6 +310,7 @@ void DrawGame()
 
 		//オブジェクトの描画処理
 		DrawObject00();
+		DrawObjectBG();
 
 		//プレイヤーの描画処理
 		DrawPlayer();

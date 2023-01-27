@@ -6,6 +6,7 @@
 #include "light.h"
 #include "meshwall.h"
 #include "object00.h"
+#include "objectBG.h"
 #include <stdio.h>
 
 //====================================================================
@@ -14,6 +15,7 @@
 void InitEdit()
 {
 	InitObject00();
+	InitObjectBG();
 }
 
 //====================================================================
@@ -22,6 +24,7 @@ void InitEdit()
 void UninitEdit()
 {
 	UninitObject00();
+	UninitObjectBG();
 }
 
 //====================================================================
@@ -56,6 +59,7 @@ void DrawEdit()
 void SaveEdit()
 {
 	Object00 *pObject00 = GetObject00();
+	ObjectBG *pObjectBG = GetObjectBG();
 	FILE *pFile; //ファイルポインタを宣言
 
 	//ファイルを開く
@@ -83,6 +87,25 @@ void SaveEdit()
 
 				//オブジェクトをセーブした終了の合図
 				fprintf(pFile, "%s\n\n", "ENDOBJECT00");
+			}
+		}
+
+		for (int nCntObjectBG = 0; nCntObjectBG < MAX_OBJECTBG; nCntObjectBG++, pObjectBG++)
+		{
+			if (pObjectBG->bUse == true)
+			{//使用されている場合
+
+			 //オブジェクトをセーブする開始の合図
+				fprintf(pFile, "%s\n", "SETOBJECTBG");
+
+				//各種変数の情報セーブ
+				fprintf(pFile, "%s			%.3f %.3f %.3f\n", "POS", pObjectBG->pos.x, pObjectBG->pos.y, pObjectBG->pos.z);
+				fprintf(pFile, "%s		%.3f %.3f %.3f\n", "MOVE", pObjectBG->move.x, pObjectBG->move.y, pObjectBG->move.z);
+				fprintf(pFile, "%s			%.3f %.3f %.3f\n", "ROT", pObjectBG->rot.x, pObjectBG->rot.y, pObjectBG->rot.z);
+				fprintf(pFile, "%s		%d\n", "nType", pObjectBG->nType);
+
+				//オブジェクトをセーブした終了の合図
+				fprintf(pFile, "%s\n\n", "ENDOBJECTBG");
 			}
 		}
 
