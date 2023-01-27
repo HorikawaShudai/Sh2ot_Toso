@@ -53,6 +53,7 @@ void InitEnemy(void)
 		g_Enemy[nCntObject].posOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Enemy[nCntObject].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Enemy[nCntObject].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_Enemy[nCntObject].rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Enemy[nCntObject].vtxMin = D3DXVECTOR3(1000.0f, 1000.0f, 1000.0f);
 		g_Enemy[nCntObject].vtxMax = D3DXVECTOR3(-1000.0f, -1000.0f, -1000.0f);
 		g_Enemy[nCntObject].MoveState = ENEMYMOVE_NONE;
@@ -151,8 +152,9 @@ void UpdateEnemy(void)
 			g_Enemy[nCntObject].posOld = g_Enemy[nCntObject].pos;
 			g_Enemy[nCntObject].StateCount--;
 			g_Enemy[nCntObject].nCoolTurn--;
-			CollisionObject00(&g_Enemy[nCntObject].pos, &g_Enemy[nCntObject].posOld, &g_Enemy[nCntObject].move, g_Enemy[nCntObject].aModel[0].vtxMin, g_Enemy[nCntObject].aModel[0].vtxMax, 30);
-			
+			CollisionObject00(&g_Enemy[nCntObject].pos, &g_Enemy[nCntObject].posOld, &g_Enemy[nCntObject].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30);
+			g_Enemy[nCntObject].rot.y += (g_Enemy[nCntObject].rotDest.y - g_Enemy[nCntObject].rot.y) * 0.3f;
+
 			//方向転換のクールタイム
 			if (g_Enemy[nCntObject].nCoolTurn <= 0)
 			{
@@ -179,13 +181,16 @@ void UpdateEnemy(void)
 			{//追跡状態の時
 				//ベクトルを求める
 				D3DXVECTOR3 vecEnemy = g_Enemy[nCntObject].Tgpos - g_Enemy[nCntObject].pos ;
-				vecEnemy.y = atan2f(vecEnemy.x, vecEnemy.z) / D3DX_PI;
+				vecEnemy.y = atan2f(vecEnemy.x, vecEnemy.z);
+
+
+				
 				PrintDebugProc("座標：x%fz%f\n", g_Enemy[nCntObject].pos.x, g_Enemy[nCntObject].pos.z);
 				PrintDebugProc("目標座標：x%fz%f\n", g_Enemy[nCntObject].Tgpos.x, g_Enemy[nCntObject].Tgpos.z);
 				PrintDebugProc("移動角度：%f\n",vecEnemy.y);
-
+				g_Enemy[nCntObject].rotDest = vecEnemy;
 				//座標の更新
-				g_Enemy[nCntObject].rot.y += vecEnemy.y - g_Enemy[nCntObject].rot.y /3;
+			
 				g_Enemy[nCntObject].move = D3DXVECTOR3(sinf(g_Enemy[nCntObject].rot.y)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nCntObject].rot.y)*ENEMY_SPEED);
 				g_Enemy[nCntObject].pos += g_Enemy[nCntObject].move;
 		
@@ -210,6 +215,14 @@ void UpdateEnemy(void)
 			else if (g_Enemy[nCntObject].rot.y < -D3DX_PI)
 			{
 				g_Enemy[nCntObject].rot.y = D3DX_PI;
+			}
+			if (g_Enemy[nCntObject].rotDest.y > D3DX_PI)
+			{
+				g_Enemy[nCntObject].rotDest.y = -D3DX_PI;
+			}
+			else if (g_Enemy[nCntObject].rotDest.y < -D3DX_PI)
+			{
+				g_Enemy[nCntObject].rotDest.y = D3DX_PI;
 			}
 
 			if (g_Enemy[nCntObject].StateCount <= 0)
@@ -696,7 +709,7 @@ void EnemyPatrol(int nEnemy)
 			 g_Enemy[nEnemy].MoveState == ENEMYMOVE_NONE)
 		{
 			EnemyDirection(nEnemy);
-			g_Enemy[nEnemy].nCoolTurn += 60;
+			g_Enemy[nEnemy].nCoolTurn = 60;
 
 		}
 		
@@ -705,29 +718,29 @@ void EnemyPatrol(int nEnemy)
 		if (g_Enemy[nEnemy].fDistanceLeft >= 400.0f && 	g_Enemy[nEnemy].nCoolTurn <= 0)
 		{
 			EnemyDirection(nEnemy);
-			g_Enemy[nEnemy].nCoolTurn += 60;
+			g_Enemy[nEnemy].nCoolTurn = 180;
 		}
 		if (g_Enemy[nEnemy].fDistanceRight >= 400.0f&& 	g_Enemy[nEnemy].nCoolTurn <= 0)
 		{
 			EnemyDirection(nEnemy);
-			g_Enemy[nEnemy].nCoolTurn += 60;
+			g_Enemy[nEnemy].nCoolTurn = 180;
 		}
 
 		if (g_Enemy[nEnemy].MoveState == ENEMYMOVE_N)
 		{
-			g_Enemy[nEnemy].rot.y = 0.0f;
+			g_Enemy[nEnemy].rotDest.y = 0.0f;
 		}
 		else if (g_Enemy[nEnemy].MoveState == ENEMYMOVE_S)
 		{
-			g_Enemy[nEnemy].rot.y = D3DX_PI;
+			g_Enemy[nEnemy].rotDest.y = D3DX_PI;
 		}
 		else if (g_Enemy[nEnemy].MoveState == ENEMYMOVE_W)
 		{
-			g_Enemy[nEnemy].rot.y = D3DX_PI * -0.5f;
+			g_Enemy[nEnemy].rotDest.y = D3DX_PI * -0.5f;
 		}
 		else if (g_Enemy[nEnemy].MoveState == ENEMYMOVE_E)
 		{
-			g_Enemy[nEnemy].rot.y = D3DX_PI * 0.5f;
+			g_Enemy[nEnemy].rotDest.y = D3DX_PI * 0.5f;
 		}
 		
 		if (g_Enemy[nEnemy].MoveState != ENEMYMOVE_NONE)

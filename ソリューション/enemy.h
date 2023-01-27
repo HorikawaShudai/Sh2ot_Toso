@@ -44,6 +44,7 @@ typedef struct
 	D3DXVECTOR3 Tgpos;							//目標位置
 	D3DXVECTOR3 move;							//位置
 	D3DXVECTOR3 rot;							//向き
+	D3DXVECTOR3 rotDest;						//向き
 	D3DXMATRIX mtx;						//ワールドマトリックス
 	D3DXVECTOR3 vtxMin;							//モデルの最小
 	D3DXVECTOR3 vtxMax;							//モデルの最大
