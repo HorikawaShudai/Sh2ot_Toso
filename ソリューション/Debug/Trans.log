@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  enemy.cpp
   コードを生成中...
 cl : コマンド ライン warning D9028: 簡易リビルド時のエラーです、通常のビルドに戻します
@@ -6,3 +7,59 @@ cl : コマンド ライン warning D9028: 簡易リビルド時のエラーで�
   コードを生成中...
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+<<<<<<< HEAD
+﻿  player.cpp
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作1\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作1\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+<<<<<<< HEAD
+﻿  stage.cpp
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+<<<<<<< HEAD
+﻿  enemy.cpp
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+﻿  title.cpp
+  time.cpp
+  stamina.cpp
+  stage.cpp
+  score_item.cpp
+  score.cpp
+  result.cpp
+  PlayModeSelect.cpp
+  PlayNumberSelect.cpp
+  player.cpp
+  particle.cpp
+  object00.cpp
+  meshwall.cpp
+  meshdome.cpp
+  meshcylinder.cpp
+  main.cpp
+  light.cpp
+  life.cpp
+  keyUI.cpp
+  key.cpp
+  コードを生成中...
+  コンパイル中...
+  input.cpp
+  game.cpp
+  field.cpp
+  Fade.cpp
+  exit.cpp
+  enemy.cpp
+  Effect.cpp
+  edit.cpp
+  debugproc.cpp
+  camera.cpp
+  コードを生成中...
+  LINK : 前回のインクリメンタル リンクで C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Debug\Trans.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+>>>>>>> f799b01e4f8898b7022bd8f7ad6b98c68ca2ab9f
+>>>>>>> 55f89f2ce125c87c9a98a5cde52d1d21f5c77450
+>>>>>>> 8ed4e08b4ab1fa9074b9121723c02de2e3757d65
+>>>>>>> 78291baff070f6539c9e7f159aa30fdc0e30a955
