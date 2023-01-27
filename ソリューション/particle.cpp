@@ -5,7 +5,7 @@
 
 typedef struct
 {
-	D3DXVECTOR3 pos; //位置
+	D3DXVECTOR3 pos;	//位置
 	D3DXVECTOR3 move; //移動量
 	D3DXVECTOR3 movePos; //出現位置の移動量
 	D3DXVECTOR3 rot; //角度
@@ -81,7 +81,7 @@ void SetParticle(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXCOLOR col, D3DXVECTOR3 r
 	{
 		if (g_aParticle[nCntParticle].bUse == false)
 		{
-			g_aParticle[nCntParticle].pos = pos;
+			g_aParticle[nCntParticle].pos = pos; 
 			g_aParticle[nCntParticle].movePos = move;
 			g_aParticle[nCntParticle].rot = rot;
 			g_aParticle[nCntParticle].col = col;
