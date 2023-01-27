@@ -177,7 +177,7 @@ void InitStaminaGauge(void)
 
 				g_fStaminaSize = STAMINA_WIDTH * 0.65f;			//スタミナのサイズを設定
 			}
-			else if (PlayNumber.CurrentSelectNumber + 1 == 3 || PlayNumber.CurrentSelectNumber + 1 == 4)
+			else if (PlayNumber.CurrentSelectNumber == 3 || PlayNumber.CurrentSelectNumber == 4)
 			{//プレイ人数が3人(4人)の時
 				g_aStamina[nCntStamina].pos = D3DXVECTOR3((SCREEN_WIDTH * 0.5f) * 0.5, STAMINA_POS_Y1, 0.0f);
 
@@ -190,7 +190,7 @@ void InitStaminaGauge(void)
 			{//プレイ人数が2人の時
 				g_aStamina[nCntStamina].pos = D3DXVECTOR3((SCREEN_WIDTH * 0.5f) + (SCREEN_WIDTH * 0.25f), STAMINA_POS_Y0, 0.0f);
 			}
-			else if (PlayNumber.CurrentSelectNumber + 1 == 3 || PlayNumber.CurrentSelectNumber + 1 == 4)
+			else if (PlayNumber.CurrentSelectNumber == 3 || PlayNumber.CurrentSelectNumber == 4)
 			{//プレイ人数が3人の時
 				g_aStamina[nCntStamina].pos = D3DXVECTOR3((SCREEN_WIDTH * 0.5f) + (SCREEN_WIDTH * 0.25f), STAMINA_POS_Y1, 0.0f);
 			}
@@ -206,6 +206,8 @@ void InitStaminaGauge(void)
 				g_aStamina[nCntStamina].pos = D3DXVECTOR3((SCREEN_WIDTH * 0.5f) + (SCREEN_WIDTH * 0.25f), STAMINA_POS_Y0, 0.0f);
 			break;
 		}
+
+		g_aStamina[nCntStamina].bUse = true;
 
 		//スタミナゲージの大きさを代入
 		g_aStamina[nCntStamina].fGaugeSize = g_fStaminaSize;
@@ -252,6 +254,7 @@ void UpdateStaminaGauge(void)
 	
 	//プレイヤー情報の取得
 	Player *pPlayer = GetPlayer();
+
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 
@@ -353,7 +356,7 @@ void StaminaIAD(int nCntStamina)
 		g_aStamina[nCntStamina].bFatige = true;
 	}
 
-	//色のが0.0f以下、1.0f以上行かないように
+	//色が0.0f以下、1.0f以上行かないように
 	if (g_aStamina[nCntStamina].col.a <= 0.0f)
 	{//0.0f以下の場合
 		g_aStamina[nCntStamina].col.a = 0.0f;
