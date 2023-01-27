@@ -2,6 +2,7 @@
 #include "game.h"
 #include "stage.h"
 #include "object00.h"
+#include "objectBG.h"
 #include "edit.h"
 #include <stdio.h>
 
@@ -9,10 +10,10 @@
 #define START_OK ("STARTSETSTAGE")		//スタートメッセージがあるかどうかの確認
 #define SETENEMY_OK ("SETENEMY")		//セットメッセージがあるかどうかの確認
 #define SET_OBJECT00OK ("SETOBJECT00")	//セットメッセージがあるかどうかの確認
-#define SET_OBJECT01OK ("SETOBJECT01")	//セットメッセージがあるかどうかの確認
+#define SET_OBJECTBGOK ("SETOBJECTBG")	//セットメッセージがあるかどうかの確認
 #define ENDENEMY_OK ("ENDENEMY")		//エンドメッセージがあるかどうかの確認
 #define END_OBJECT00OK ("ENDOBJECT00")	//エンドメッセージがあるかどうかの確認
-#define END_OBJECT01OK ("ENDOBJECT01")	//エンドメッセージがあるかどうかの確認
+#define END_OBJECTBGOK ("ENDOBJECTBG")	//エンドメッセージがあるかどうかの確認
 #define END_SET_OK ("ENDSETSTAGE")		//エンドメッセージがあるかどうかの確認
 
 //ステージの構造体
@@ -36,23 +37,21 @@ typedef struct
 //ステージの構造体
 typedef struct
 {
-	int nType;				//種類
 	int nCount;
 	bool bUse;									//使用しているかどうか
 }Stage_Object00;
 
-////ステージの構造体
-//typedef struct
-//{
-//	OBJECT01_NTYPE nType;				//種類
-//	int nCount;
-//	bool bUse;									//使用しているかどうか
-//}Stage_Object01;
+//ステージの構造体
+typedef struct
+{
+	int nCount;
+	bool bUse;									//使用しているかどうか
+}Stage_ObjectBG;
 
 Stage g_Stage[MAX_STAGEOBJECT];
 //Stage_Enemy g_StageEnemy[MAX_STAGEOBJECT];
 Stage_Object00 g_StageObject00[MAX_STAGEOBJECT];
-//Stage_Object01 g_StageObject01[MAX_STAGEOBJECT];
+Stage_ObjectBG g_StageObjectBG[MAX_STAGEOBJECT];
 int g_SelectStage;
 
 //====================================================================
@@ -73,13 +72,11 @@ void SetStage(int nStageNumber)
 		//g_StageEnemy[nCntStage].nCount = -1;
 		//g_StageEnemy[nCntStage].bUse = false;
 
-		g_StageObject00[nCntStage].nType = OBJECT00_NTYPE00;
 		g_StageObject00[nCntStage].nCount = -1;
 		g_StageObject00[nCntStage].bUse = false;
 
-		//g_StageObject01[nCntStage].nType = OBJECT01_NTYPE00;
-		//g_StageObject01[nCntStage].nCount = -1;
-		//g_StageObject01[nCntStage].bUse = false;
+		g_StageObjectBG[nCntStage].nCount = -1;
+		g_StageObjectBG[nCntStage].bUse = false;
 	}
 
 	//ステージを読み込む
@@ -100,11 +97,11 @@ void SetStage(int nStageNumber)
 			SetObject00(g_Stage[nCntStage].pos, g_Stage[nCntStage].move, g_Stage[nCntStage].rot, g_Stage[nCntStage].nType);
 		}
 
-		////敵の配置
-		//if (g_StageObject01[nCntStage].bUse == true)
-		//{
-		//	SetObject01(g_Stage[nCntStage].pos, g_Stage[nCntStage].move, g_Stage[nCntStage].rot, g_StageObject01[nCntStage].nType);
-		//}
+		//敵の配置
+		if (g_StageObjectBG[nCntStage].bUse == true)
+		{
+			SetObjectBG(g_Stage[nCntStage].pos, g_Stage[nCntStage].move, g_Stage[nCntStage].rot, g_Stage[nCntStage].nType);
+		}
 	}
 
 	//当たり判定のあるオブジェクトの配置
@@ -115,7 +112,7 @@ void SetStage(int nStageNumber)
 	//SetObject00(D3DXVECTOR3(-250.0f, -50.0f, -200.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT00_NTYPE03);
 
 	//当たり判定のないオブジェクトの配置
-	//SetObject01(D3DXVECTOR3(-100.0f, 0.0f, -150.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECT01_NTYPE02);
+	//SetObjectBG(D3DXVECTOR3(-100.0f, 0.0f, -150.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), OBJECTBG_NTYPE02);
 
 	//敵の配置
 	//SetEnemy(D3DXVECTOR3(50.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), ENEMY_NTYPE00);
@@ -253,55 +250,43 @@ void LoadStage(int nStageNumber)
 						
 					}
 
-					////オブジェクト01の配置--------------------------
-					//if (g_StageObject01[nCntStage].bUse == false)
-					//{
+					//オブジェクト01の配置--------------------------
+					if (g_StageObjectBG[nCntStage].bUse == false)
+					{
 
-					//		if (strcmp(&aSetMessage[0], SET_OBJECT01OK) == 0)
-					//		{
-					//			fscanf(pFile, "%s", &aString[0]);					//ゴミ箱
-					//			fscanf(pFile, "%f", &g_Stage[nCntStage].pos.x);		//POSの設定
-					//			fscanf(pFile, "%f", &g_Stage[nCntStage].pos.y);		//POSの設定
-					//			fscanf(pFile, "%f", &g_Stage[nCntStage].pos.z);		//POSの設定
+							if (strcmp(&aSetMessage[0], SET_OBJECTBGOK) == 0)
+							{
+								fscanf(pFile, "%s", &aString[0]);					//ゴミ箱
+								fscanf(pFile, "%f", &g_Stage[nCntStage].pos.x);		//POSの設定
+								fscanf(pFile, "%f", &g_Stage[nCntStage].pos.y);		//POSの設定
+								fscanf(pFile, "%f", &g_Stage[nCntStage].pos.z);		//POSの設定
 
-					//			fscanf(pFile, "%s", &aString[0]);					//ゴミ箱
-					//			fscanf(pFile, "%f", &g_Stage[nCntStage].move.x);	//MOVEの設定
-					//			fscanf(pFile, "%f", &g_Stage[nCntStage].move.y);	//MOVEの設定
-					//			fscanf(pFile, "%f", &g_Stage[nCntStage].move.z);	//MOVEの設定
+								fscanf(pFile, "%s", &aString[0]);					//ゴミ箱
+								fscanf(pFile, "%f", &g_Stage[nCntStage].move.x);	//MOVEの設定
+								fscanf(pFile, "%f", &g_Stage[nCntStage].move.y);	//MOVEの設定
+								fscanf(pFile, "%f", &g_Stage[nCntStage].move.z);	//MOVEの設定
 
-					//			fscanf(pFile, "%s", &aString[0]);					//ゴミ箱
-					//			fscanf(pFile, "%f", &g_Stage[nCntStage].rot.x);		//ROTの設定
-					//			fscanf(pFile, "%f", &g_Stage[nCntStage].rot.y);		//ROTの設定
-					//			fscanf(pFile, "%f", &g_Stage[nCntStage].rot.z);		//ROTの設定
+								fscanf(pFile, "%s", &aString[0]);					//ゴミ箱
+								fscanf(pFile, "%f", &g_Stage[nCntStage].rot.x);		//ROTの設定
+								fscanf(pFile, "%f", &g_Stage[nCntStage].rot.y);		//ROTの設定
+								fscanf(pFile, "%f", &g_Stage[nCntStage].rot.z);		//ROTの設定
 
-					//			fscanf(pFile, "%s", &aString[0]);					//ゴミ箱
-					//			fscanf(pFile, "%s", &aType[0]);						//TYPEの設定
-					//			if (strcmp(&aType[0], "OBJECT01_NTYPE00") == 0)
-					//			{
-					//				g_StageObject01[nCntStage].nType = OBJECT01_NTYPE00;
-					//			}
-					//			else if (strcmp(&aType[0], "OBJECT01_NTYPE01") == 0)
-					//			{
-					//				g_StageObject01[nCntStage].nType = OBJECT01_NTYPE01;
-					//			}
-					//			else if (strcmp(&aType[0], "OBJECT01_NTYPE02") == 0)
-					//			{
-					//				g_StageObject01[nCntStage].nType = OBJECT01_NTYPE02;
-					//			}
+								fscanf(pFile, "%s", &aString[0]);					//ゴミ箱
+								fscanf(pFile, "%d", &g_Stage[nCntStage].nType);		//TYPEの設定
 
-					//			//終了の合図
-					//			fscanf(pFile, "%s", &aEndMessage[0]);
-					//			if (strcmp(&aEndMessage[0], END_OBJECT01OK) != 0)
-					//			{
-					//				break;
-					//			}
+								//終了の合図
+								fscanf(pFile, "%s", &aEndMessage[0]);
+								if (strcmp(&aEndMessage[0], END_OBJECTBGOK) != 0)
+								{
+									break;
+								}
 
-					//			g_StageObject01[nCntStage].nCount++;
-					//			g_StageObject01[nCntStage].bUse = true;
+								g_StageObjectBG[nCntStage].nCount++;
+								g_StageObjectBG[nCntStage].bUse = true;
 
-					//		}
+							}
 
-					//}
+					}
 
 				if (strcmp(&aSetMessage[0], END_SET_OK) == 0)
 				{
