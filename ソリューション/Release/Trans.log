@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  camera.cpp
   debugproc.cpp
   edit.cpp
@@ -36,3 +37,7 @@
   コード生成が終了しました。
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+=======
+﻿  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+>>>>>>> f799b01e4f8898b7022bd8f7ad6b98c68ca2ab9f

@@ -5,6 +5,7 @@
 #include "debugproc.h"
 
 #define OBJECT00_LIFE (7)		//オブジェクトの体力
+#define FALSE_SIZE (10.0f)		//エディットモードのバックスペースの判定の大きさ
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureObject00[64][OBJECT00_NTYPE_MAX] = {};		//テクスチャのポインタ
@@ -344,7 +345,7 @@ void UpdateEditObject00(void)
 	//オブジェクトの削除処理(重なっているもの)----------
 	if (GetKeyboardTrigger(DIK_BACKSPACE))
 	{
-		EditCollisionObject00(g_Object00[EditIndex].pos, g_Object00[EditIndex].vtxMin, g_Object00[EditIndex].vtxMax, 20.0f);
+		EditCollisionObject00(g_Object00[EditIndex].pos, g_Object00[EditIndex].vtxMin, g_Object00[EditIndex].vtxMax, FALSE_SIZE);
 	}
 
 	//オブジェクトの削除処理(CTRL+Z)----------
@@ -508,6 +509,7 @@ void FalseObject00(void)
 		{
 			g_Object00[nCntObject].bUse = false;
 			EditIndex--;
+			g_ObjectCount--;
 			break;
 		}
 	}
@@ -531,7 +533,8 @@ bool EditCollisionObject00(D3DXVECTOR3 pPos, D3DXVECTOR3 min, D3DXVECTOR3 max, f
 				)
 			{//オブジェクト同士が重なっている
 				g_Object00[nCntObject].bUse = false;
-				
+				g_ObjectCount--;
+				EditIndex--;
 				bON = true;
 			}
 		}
