@@ -1,12 +1,22 @@
 <<<<<<< HEAD
+﻿  player.cpp
+  コード生成しています。
+  40 of 290 functions (13.8%) were compiled, the rest were copied from previous compilation.
+=======
+<<<<<<< HEAD
 ﻿  edit.cpp
   game.cpp
   stage.cpp
   コード生成しています。
   2 of 304 functions ( 0.7%) were compiled, the rest were copied from previous compilation.
+>>>>>>> 8ed4e08b4ab1fa9074b9121723c02de2e3757d65
     0 functions were new in current compilation
-    2 functions had inline decision re-evaluated but remain unchanged
+    19 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
+<<<<<<< HEAD
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作1\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作1\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+=======
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
 =======
@@ -54,3 +64,4 @@
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
 >>>>>>> f799b01e4f8898b7022bd8f7ad6b98c68ca2ab9f
 >>>>>>> 55f89f2ce125c87c9a98a5cde52d1d21f5c77450
+>>>>>>> 8ed4e08b4ab1fa9074b9121723c02de2e3757d65
