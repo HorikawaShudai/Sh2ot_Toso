@@ -17,13 +17,13 @@
 #include "camera.h"
 
 //マクロ定義
-#define PLAYER_STEALTHSPEED (0.3f)		//プレイヤーのステルススピード
-#define PLAYER_SPEED (1.2f)				//プレイヤーのスピード
-#define PLAYER_DASHSPEED (1.7f)				//プレイヤーのダッシュスピード
-#define PLAYER_ROT_SPEED (0.2f)			//プレイヤーの回転スピード
-#define PLAYER_JUMP (12.0f)				//プレイヤーのジャンプ力
-#define PLAYER_LIFE (3)					//プレイヤーの初期ライフ
-#define PLAYER_COLLISIONSIZE (15.0f)	//プレイヤーの当たり判定の大きさ
+#define PLAYER_STEALTHSPEED		(0.3f)			//プレイヤーのステルススピード
+#define PLAYER_SPEED			(1.5f)			//プレイヤーのスピード
+#define PLAYER_DASHSPEED		(2.0f)			//プレイヤーのダッシュスピード
+#define PLAYER_ROT_SPEED		(0.2f)			//プレイヤーの回転スピード
+#define PLAYER_JUMP				(12.0f)			//プレイヤーのジャンプ力
+#define PLAYER_LIFE				(3)				//プレイヤーの初期ライフ
+#define PLAYER_COLLISIONSIZE	(15.0f)			//プレイヤーの当たり判定の大きさ
 
 //プロトタイプ
 void UpdatePlayer0(void);
@@ -39,7 +39,6 @@ LPD3DXBUFFER g_pBuffMatPlayer[32] = {};			//マテリアルへのポインタ
 DWORD g_dwNumMatPlayer = 0;						//マテリアルの数
 Player g_aPlayer[NUM_PLAYER];					//プレイヤーの情報
 int g_nIndexPlayerShadow = -1;					//影のインデックス(番号)
-int g_SelectPlayer;								//操作するプレイヤー
 bool g_bPlayerOps;
 
 //====================================================================
@@ -66,7 +65,6 @@ void InitPlayer(void)
 		g_aPlayer[nCntPlayer].bUse = true;
 		g_aPlayer[nCntPlayer].bGetKey = false;
 
-		g_SelectPlayer = 0;
 		g_bPlayerOps = false;
 		g_aPlayer[nCntPlayer].nNumModel = 1;
 
@@ -150,11 +148,11 @@ void UpdatePlayer0(void)
 {
 	//ポインタ情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
-	int CurrentCamera = GetCurrentCamera();
 
 	//カメラ番号をプレイヤーに代入
-	g_SelectPlayer = CurrentCamera;
+	int nSelectPlayer = GetCurrentCamera();
 
+	//バイブレーション
 	if (GetKeyboardTrigger(DIK_F6) == true)
 	{
 		GetGamepad_Left_Vibrtion(0);
@@ -165,54 +163,54 @@ void UpdatePlayer0(void)
 	}
 
 	//プレイヤーの状態
-	switch (g_aPlayer[g_SelectPlayer].State)
+	switch (g_aPlayer[nSelectPlayer].State)
 	{
 	case PLAYER_NORMAL:
 		break;
 
 	case PLAYER_WAIT:
-		g_aPlayer[g_SelectPlayer].nWaitCounter--;
-		if (g_aPlayer[g_SelectPlayer].nWaitCounter < 0)
+		g_aPlayer[nSelectPlayer].nWaitCounter--;
+		if (g_aPlayer[nSelectPlayer].nWaitCounter < 0)
 		{
-			g_aPlayer[g_SelectPlayer].State = PLAYER_NORMAL;
+			g_aPlayer[nSelectPlayer].State = PLAYER_NORMAL;
 		}
 		break;
 
 	case PLAYER_DAMAGE:
-		g_aPlayer[g_SelectPlayer].nDamageCounter--;
-		if (g_aPlayer[g_SelectPlayer].nDamageCounter < 0)
+		g_aPlayer[nSelectPlayer].nDamageCounter--;
+		if (g_aPlayer[nSelectPlayer].nDamageCounter < 0)
 		{
-			g_aPlayer[g_SelectPlayer].State = PLAYER_WAIT;
+			g_aPlayer[nSelectPlayer].State = PLAYER_WAIT;
 		}
 		break;
 
 	case PLAYER_HIT:
-		g_aPlayer[g_SelectPlayer].nHitCounter--;
-		if (g_aPlayer[g_SelectPlayer].nHitCounter < 0)
+		g_aPlayer[nSelectPlayer].nHitCounter--;
+		if (g_aPlayer[nSelectPlayer].nHitCounter < 0)
 		{
-			g_aPlayer[g_SelectPlayer].State = PLAYER_DAMAGE;
+			g_aPlayer[nSelectPlayer].State = PLAYER_DAMAGE;
 		}
 		break;
 	}
 
-	g_aPlayer[g_SelectPlayer].posOld = g_aPlayer[g_SelectPlayer].pos;
+	g_aPlayer[nSelectPlayer].posOld = g_aPlayer[nSelectPlayer].pos;
 
 	//減衰係数
-	g_aPlayer[g_SelectPlayer].move.x = g_aPlayer[g_SelectPlayer].move.x * 0.5f;
-	g_aPlayer[g_SelectPlayer].move.z = g_aPlayer[g_SelectPlayer].move.z * 0.5f;
+	g_aPlayer[nSelectPlayer].move.x = g_aPlayer[nSelectPlayer].move.x * 0.5f;
+	g_aPlayer[nSelectPlayer].move.z = g_aPlayer[nSelectPlayer].move.z * 0.5f;
 
 	//値の切り捨て
-	if (g_aPlayer[g_SelectPlayer].move.x <= 0.005f && g_aPlayer[g_SelectPlayer].move.x >= -0.005f)
+	if (g_aPlayer[nSelectPlayer].move.x <= 0.005f && g_aPlayer[nSelectPlayer].move.x >= -0.005f)
 	{
-		g_aPlayer[g_SelectPlayer].move.x = 0.0f;
+		g_aPlayer[nSelectPlayer].move.x = 0.0f;
 	}
-	if (g_aPlayer[g_SelectPlayer].move.z <= 0.005f && g_aPlayer[g_SelectPlayer].move.z >= -0.005f)
+	if (g_aPlayer[nSelectPlayer].move.z <= 0.005f && g_aPlayer[nSelectPlayer].move.z >= -0.005f)
 	{
-		g_aPlayer[g_SelectPlayer].move.z = 0.0f;
+		g_aPlayer[nSelectPlayer].move.z = 0.0f;
 	}
 
 	//重力の追加
-	g_aPlayer[g_SelectPlayer].move.y -= 10.0f;
+	g_aPlayer[nSelectPlayer].move.y -= 10.0f;
 
 #ifdef _DEBUG
 	if (GetKeyboardTrigger(DIK_F5) == true)
@@ -224,70 +222,71 @@ void UpdatePlayer0(void)
 	if (g_bPlayerOps == false)
 	{
 		//プレイヤーの移動入力処理----------
-		PlayerMoveInput(g_SelectPlayer);
+		PlayerMoveInput(nSelectPlayer);
 	}
 
 	//位置更新(入力による動き)
-	g_aPlayer[g_SelectPlayer].pos += g_aPlayer[g_SelectPlayer].move;
+	g_aPlayer[nSelectPlayer].pos += g_aPlayer[nSelectPlayer].move;
 
 	//床の追加
-	if (g_aPlayer[g_SelectPlayer].pos.y < 0.0f)
+	if (g_aPlayer[nSelectPlayer].pos.y < 0.0f)
 	{//床にふれたとき
-		g_aPlayer[g_SelectPlayer].pos.y = 0.0f;	//床の上に戻す
-		g_aPlayer[g_SelectPlayer].move.y = 0.0f;	//
+		g_aPlayer[nSelectPlayer].pos.y = 0.0f;	//床の上に戻す
+		g_aPlayer[nSelectPlayer].move.y = 0.0f;	//
 	}
 
 	//移動時にプレイヤーの向きを補正する----------
-	PlayerRotUpdate(g_SelectPlayer);
+	PlayerRotUpdate(nSelectPlayer);
 
 	//オブジェクトとの当たり判定
-	CollisionObject00(&g_aPlayer[g_SelectPlayer].pos, &g_aPlayer[g_SelectPlayer].posOld, &g_aPlayer[g_SelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
+	CollisionObject00(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
 
-	CollisionItem(&g_aPlayer[g_SelectPlayer].pos, &g_aPlayer[g_SelectPlayer].posOld, &g_aPlayer[g_SelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f, g_SelectPlayer);
+	CollisionItem(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f, nSelectPlayer);
 
 	//鍵の入手処理
-	if (g_aPlayer[g_SelectPlayer].bGetKey == false)
+	if (g_aPlayer[nSelectPlayer].bGetKey == false)
 	{//プレイヤーが鍵を持っていない場合
-		if (GetKeyboardTrigger(DIK_E) == true || GetGamepadPress(BUTTON_A, g_SelectPlayer) || GetGamepadPress(BUTTON_B, g_SelectPlayer))
+		if (GetKeyboardTrigger(DIK_E) == true || GetGamepadPress(BUTTON_A, nSelectPlayer) || GetGamepadPress(BUTTON_B, nSelectPlayer))
 		{//Eキー入力
-			if (CollisionKey(&g_aPlayer[g_SelectPlayer].pos, &g_aPlayer[g_SelectPlayer].posOld, &g_aPlayer[g_SelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, g_SelectPlayer) == true)
+			if (CollisionKey(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nSelectPlayer) == true)
 			{//鍵を入手出来た場合
-				g_aPlayer[g_SelectPlayer].bGetKey = true;	//鍵を入手状態にする
-				SetKeyUI(g_SelectPlayer, true);				//鍵UIを表示する
+				g_aPlayer[nSelectPlayer].bGetKey = true;	//鍵を入手状態にする
+				SetKeyUI(nSelectPlayer, true);				//鍵UIを表示する
 			}
 		}
 	}
 
 	//脱出処理
-	if (g_aPlayer[g_SelectPlayer].bGetKey == true)
+	if (g_aPlayer[nSelectPlayer].bGetKey == true)
 	{//プレイヤーが鍵を持っている場合
 		if (GetKeyboardTrigger(DIK_E) == true)
 		{//Eキー入力
-			if (CollisionExit(&g_aPlayer[g_SelectPlayer].pos, &g_aPlayer[g_SelectPlayer].posOld, &g_aPlayer[g_SelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, g_SelectPlayer) == true)
+			if (CollisionExit(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nSelectPlayer) == true)
 			{//鍵を入手出来た場合
-				g_aPlayer[g_SelectPlayer].bGetKey = false;	//鍵を入手してない状態にする
-				SetKeyUI(g_SelectPlayer, false);			//鍵UIを非表示にする
+				g_aPlayer[nSelectPlayer].bGetKey = false;	//鍵を入手してない状態にする
+				SetKeyUI(nSelectPlayer, false);			//鍵UIを非表示にする
 			}
 		}
 	}
 
 	//一周した時の向きの補正
-	if (g_aPlayer[g_SelectPlayer].rot.y > D3DX_PI * 1.0f)
+	if (g_aPlayer[nSelectPlayer].rot.y > D3DX_PI * 1.0f)
 	{
-		g_aPlayer[g_SelectPlayer].rot.y -= D3DX_PI * 2.0f;
+		g_aPlayer[nSelectPlayer].rot.y -= D3DX_PI * 2.0f;
 	}
-	else if (g_aPlayer[g_SelectPlayer].rot.y < -D3DX_PI * 1.0f)
+	else if (g_aPlayer[nSelectPlayer].rot.y < -D3DX_PI * 1.0f)
 	{
-		g_aPlayer[g_SelectPlayer].rot.y += D3DX_PI * 2.0f;
+		g_aPlayer[nSelectPlayer].rot.y += D3DX_PI * 2.0f;
 	}
 
 	//体力が減るかどうかテスト用
 	if (GetKeyboardTrigger(DIK_M) == true)
 	{
-		PlayerHit(g_SelectPlayer, 1);
+		PlayerHit(nSelectPlayer, 1);
 	}
 
-	PrintDebugProc("【F3】でプレイヤー切り替え：【プレイヤー%d】\n", g_SelectPlayer + 1);
+	PrintDebugProc("【F3】でプレイヤー切り替え：【プレイヤー%d】\n", nSelectPlayer + 1);
+
 	for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
 	{
 		PrintDebugProc("プレイヤー%d人目の座標【X : %f | Y : %f | Z : %f】\n", nCntPlayer, g_aPlayer[nCntPlayer].pos.x, g_aPlayer[nCntPlayer].pos.y, g_aPlayer[nCntPlayer].pos.z);
@@ -306,6 +305,7 @@ void PlayerMoveInput(int nCnt)
 {
 	//情報の取得
 	Stamina *pStamina = GetStamina();
+	Camera *pCamera = GetCamera();
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 	int CurrentCamera = GetCurrentCamera();
 
@@ -397,6 +397,9 @@ void PlayerMoveInput(int nCnt)
 
 		//プレイヤーをステルス状態にする
 		g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;
+
+		//カメラ状態を無へ
+		pCamera[nCnt].State = CAMERASTATE_NONE;
 	}
 	else if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) != 0)
 	{//入力している状態のとき
@@ -406,12 +409,18 @@ void PlayerMoveInput(int nCnt)
 
 		//プレイヤーを通常状態にする
 		g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_NORMAL;
+
+		//カメラ状態を無へ
+		pCamera[nCnt].State = CAMERASTATE_NONE;
 	}
 	else
 	{//入力していない場合
 
-	 //プレイヤーをステルス状態にする
+		//プレイヤーをステルス状態にする
 		g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;
+
+		//カメラ状態を無へ
+		pCamera[nCnt].State = CAMERASTATE_NONE;
 	}
 
 	g_aPlayer[nCnt].move += g_aPlayer[nCnt].NormarizeMove;
@@ -667,8 +676,6 @@ void UpdatePlayer1(void)
 			}
 		}
 	}
-
-	PrintDebugProc("【F3】でプレイヤー切り替え：【プレイヤー%d】\n", g_SelectPlayer + 1);
 
 	for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
 	{

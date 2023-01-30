@@ -186,5 +186,5 @@ void Update3Result(void)
 //•`‰æ
 void Draw3DResult(void)
 {
-	SetCamera(5);
+	SetCamera(4);
 }

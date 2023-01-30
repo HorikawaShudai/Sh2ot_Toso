@@ -472,7 +472,7 @@ void Update3DTitle(void)
 //•`‰æ
 void Draw3DTitle(void)
 {
-	SetCamera(5);
+	SetCamera(4);
 
 	DrawMeshDome();
 }
