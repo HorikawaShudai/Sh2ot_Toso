@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 ﻿  player.cpp
   camera.cpp
   コードを生成中...
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作5\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作5\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+﻿  stage.cpp
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+>>>>>>> fe586d25d7ee3d8ce2ca4a237e447428dc94a75e

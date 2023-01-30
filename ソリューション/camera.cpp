@@ -8,6 +8,7 @@
 #include "input.h"
 #include "player.h"
 #include "PlayNumberSelect.h"
+#include "debugproc.h"
 
 //マクロ定義
 #define MAX_CAMERA				(5)		//カメラの最大数
@@ -812,12 +813,13 @@ void ResPlayerCamera(void)
 //タイトル画面
 void Titlecamera(void)
 {
-	g_aCamera[4].posV = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	g_aCamera[4].posR = D3DXVECTOR3(0.0f, 0.0f, 50.0f);
+	g_aCamera[4].posV = D3DXVECTOR3(-60.0f,12.0f,150.0f);
+	g_aCamera[4].posR = D3DXVECTOR3(490.0f, 300.0f, 1000.0);
 	g_aCamera[4].vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	g_aCamera[4].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	g_aCamera[4].rot2 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	g_aCamera[4].rot2Old = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	PrintDebugProc("%f , %f , %f", g_aCamera[4].posV.x, g_aCamera[4].posV.y, g_aCamera[4].posV.z);
 }
 
 //人数選択画面

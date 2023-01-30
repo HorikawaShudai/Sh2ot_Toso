@@ -23,7 +23,8 @@ const char *c_apModelObj01[] =					//モデルデータ読み込み
 {
 	"Data\\MODEL\\wood.x",
 	"Data\\MODEL\\rock.x",
-
+	"Data\\MODEL\\Labo.x",
+	"Data\\MODEL\\title_field.x",
 };
 
 //====================================================================
@@ -355,7 +356,7 @@ void SetObjectBG(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 			DWORD dwSizeFVF;	//頂点フォーマットのサイズ
 			BYTE *pVtxBuff;		//頂点バッファへのポインタ
 
-								//頂点数を所得
+			//頂点数を所得
 			nNumVtx = g_pMeshObjectBG[nType]->GetNumVertices();
 
 			//頂点フォーマットのサイズを所得
