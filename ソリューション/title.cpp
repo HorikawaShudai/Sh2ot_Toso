@@ -16,6 +16,7 @@
 #include "objectBG.h"
 #include "meshcylinder.h"
 #include "object00.h"
+#include "Billboard.h"
 
 //**********************************************
 //マクロ定義
@@ -462,6 +463,8 @@ void Init3DTitle(void)
 
 	InitObject00();
 
+	InitBillboard();		//ビルボードの初期化処理
+
 	//タイトル用マップの初期化
 	InitObjectBG();
 
@@ -481,6 +484,9 @@ void Uninit3DTitle(void)
 	UninitMeshCylinder();
 
 	UninitObject00();
+
+	UninitBillboard();		//ビルボードの終了処理
+
 
 	//タイトル用マップの終了
 	UninitObjectBG();
@@ -513,6 +519,8 @@ void Draw3DTitle(void)
 	DrawMeshCylinder();
 
 	DrawObject00();
+
+	DrawBillboard();	//月の描画処理（ビルボード）
 
 	//タイトル用マップの描画
 	DrawObjectBG();
