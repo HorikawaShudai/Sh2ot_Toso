@@ -6,7 +6,7 @@
 #define WAIGHT_CENTER (0.5f)		//横の原点(0.0f～1.0f)
 #define HEIGHT_CENTER (1.0f)		//縦の原点(0.0f～1.0f)
 #define CYLINDER_HEIGHT (150.0f)	//壁一枚の高さ
-#define CYLINDER_RADIUS (1500.0f)	//円の半径
+#define CYLINDER_RADIUS (2500.0f)	//円の半径
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureMeshDome;				//テクスチャのポインタ
@@ -26,7 +26,7 @@ void InitMeshDome(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\sky01.jpg",
+		"data\\TEXTURE\\title_bg.jpg",
 		&g_pTextureMeshDome);
 
 	g_posMeshDome = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -70,7 +70,7 @@ void InitMeshDome(void)
 		pVtx[nCnt].nor = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
 
 		//頂点カラーの設定
-		pVtx[nCnt].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[nCnt].col = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.0f);
 
 		////テクスチャ座標の設定
 		//if (nCenterW % 2 == 0)

@@ -408,7 +408,7 @@ void Update3DSelect(void)
 //•`‰æ
 void Draw3DSelect(void)
 {
-	SetCamera(5);
+	SetCamera(4);
 }
 
 //========================================================================

@@ -2,7 +2,7 @@
 #define _EDIT_H_
 
 //マクロ定義
-#define SET_STAGE_TEXT ("data\\TEXT\\Title.txt")		//スタートメッセージがあるかどうかの確認
+#define SET_STAGE_TEXT ("Data\\TEXT\\Map.txt")		//スタートメッセージがあるかどうかの確認
 
 //プロトタイプ宣言
 void InitEdit(void);

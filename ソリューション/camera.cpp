@@ -2,6 +2,7 @@
 #include "input.h"
 #include "player.h"
 #include "PlayNumberSelect.h"
+#include "debugproc.h"
 
 #define CAMERA_DISTANCE			(5.0f)		//視点と注視点の距離
 #define MODEL_DISTANCE			(10.0f)		//モデルと注視点の距離
@@ -145,12 +146,12 @@ void InitCamera(void)
 	}
 	
 	//その他用(3D画面タイトルなど)
-	g_aCamera[5].viewport.X = 0;				// 描画する画面の左上X座標
-	g_aCamera[5].viewport.Y = 0;				// 描画する画面の左上Y座標
-	g_aCamera[5].viewport.Width = 1280;			// 画面の幅
-	g_aCamera[5].viewport.Height = 720;			// 画面の高さ
-	g_aCamera[5].viewport.MinZ = 0.0f;			// 
-	g_aCamera[5].viewport.MaxZ = 1.0f;			// 
+	g_aCamera[4].viewport.X = 0;				// 描画する画面の左上X座標
+	g_aCamera[4].viewport.Y = 0;				// 描画する画面の左上Y座標
+	g_aCamera[4].viewport.Width = 1280;			// 画面の幅
+	g_aCamera[4].viewport.Height = 720;			// 画面の高さ
+	g_aCamera[4].viewport.MinZ = 0.0f;			// 
+	g_aCamera[4].viewport.MaxZ = 1.0f;			// 
 }
 
 //====================================================================
@@ -753,12 +754,13 @@ void ResPlayerCamera(void)
 //タイトル画面
 void Titlecamera(void)
 {
-	g_aCamera[5].posV = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	g_aCamera[5].posR = D3DXVECTOR3(0.0f, 0.0f, 50.0f);
-	g_aCamera[5].vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	g_aCamera[5].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	g_aCamera[5].rot2 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	g_aCamera[5].rot2Old = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	g_aCamera[4].posV = D3DXVECTOR3(-60.0f,12.0f,150.0f);
+	g_aCamera[4].posR = D3DXVECTOR3(490.0f, 300.0f, 1000.0);
+	g_aCamera[4].vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	g_aCamera[4].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	g_aCamera[4].rot2 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	g_aCamera[4].rot2Old = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	PrintDebugProc("%f , %f , %f", g_aCamera[4].posV.x, g_aCamera[4].posV.y, g_aCamera[4].posV.z);
 }
 
 //人数選択画面

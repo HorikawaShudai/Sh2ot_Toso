@@ -12,6 +12,10 @@
 #include "camera.h"
 #include "light.h"
 #include "meshdome.h"
+#include "stage.h"
+#include "objectBG.h"
+#include "meshcylinder.h"
+#include "object00.h"
 
 //**********************************************
 //マクロ定義
@@ -99,6 +103,7 @@ void InitTitle(void)
 			break;
 		}
 	}
+
 
 	//3D
 	Init3DTitle();
@@ -447,6 +452,16 @@ void Init3DTitle(void)
 	InitLight();
 
 	InitMeshDome();
+
+	InitMeshCylinder();
+
+	InitObject00();
+
+	//タイトル用マップの初期化
+	InitObjectBG();
+
+	//ステージの読み込み
+	SetStage(1);
 }
 
 //終了
@@ -457,6 +472,13 @@ void Uninit3DTitle(void)
 	UpdateLight();
 
 	UninitMeshDome();
+
+	UninitMeshCylinder();
+
+	UninitObject00();
+
+	//タイトル用マップの終了
+	UninitObjectBG();
 }
 
 //更新
@@ -467,13 +489,27 @@ void Update3DTitle(void)
 	UpdateLight();
 
 	UpdateMeshDome();
+
+	UpdateMeshCylinder();
+
+	UpdateObject00();
+
+	//タイトル用マップの更新
+	UpdateObjectBG();
 }
 
 //描画
 void Draw3DTitle(void)
 {
-	SetCamera(5);
+	SetCamera(4);
 
 	DrawMeshDome();
+
+	DrawMeshCylinder();
+
+	DrawObject00();
+
+	//タイトル用マップの描画
+	DrawObjectBG();
 }
 

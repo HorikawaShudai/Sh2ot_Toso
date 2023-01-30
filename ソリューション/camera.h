@@ -17,7 +17,7 @@ typedef struct
 	D3DXVECTOR3 posVDest;		//目的の視点
 	D3DXVECTOR3 posRDest;		//目的の注視点
 	D3DVIEWPORT9 viewport;		//ビューポート
-
+	
 	bool bUse;					//使われているか
 }Camera;
 
