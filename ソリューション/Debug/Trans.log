@@ -1,58 +1,8 @@
-<<<<<<< HEAD
-﻿  enemy.cpp
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-<<<<<<< HEAD
 ﻿  edit.cpp
-=======
-<<<<<<< HEAD
-﻿  player.cpp
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作1\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作1\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-<<<<<<< HEAD
-﻿  stage.cpp
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-<<<<<<< HEAD
-﻿  enemy.cpp
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-﻿  title.cpp
-  time.cpp
-  stamina.cpp
-  stage.cpp
-  score_item.cpp
-  score.cpp
-  result.cpp
-  PlayModeSelect.cpp
-  PlayNumberSelect.cpp
-  player.cpp
-  particle.cpp
-  object00.cpp
-  meshwall.cpp
-  meshdome.cpp
-  meshcylinder.cpp
-  main.cpp
-  light.cpp
-  life.cpp
-  keyUI.cpp
-  key.cpp
->>>>>>> bd7a1d5c07d43d29d4604ebbcd6450a5fb007097
   コードを生成中...
   コンパイル中...
   stage.cpp
   game.cpp
   コードを生成中...
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-<<<<<<< HEAD
-=======
->>>>>>> f799b01e4f8898b7022bd8f7ad6b98c68ca2ab9f
->>>>>>> 55f89f2ce125c87c9a98a5cde52d1d21f5c77450
->>>>>>> 8ed4e08b4ab1fa9074b9121723c02de2e3757d65
->>>>>>> bd7a1d5c07d43d29d4604ebbcd6450a5fb007097
->>>>>>> 9e09574c06053bec21723a13dcd130ae05dce025
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
