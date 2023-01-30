@@ -41,6 +41,7 @@ typedef struct
 	int nDamageCounter;							//ダメージ状態の長さ
 	int nHitCounter;							//ヒット状態の長さ
 	int nNumModel;								//モデル(パーツ)の総数
+
 	bool bUse;									//プレイヤーが使用できるかどうか
 	bool bGetKey;								//プレイヤーが鍵を持っているかどうか
 }Player;
