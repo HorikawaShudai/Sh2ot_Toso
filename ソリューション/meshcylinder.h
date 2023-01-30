@@ -6,4 +6,6 @@ void InitMeshCylinder(void);
 void UninitMeshCylinder(void);
 void UpdateMeshCylinder(void);
 void DrawMeshCylinder(void);
+void ChangeMeshCylinder(void);
+
 #endif

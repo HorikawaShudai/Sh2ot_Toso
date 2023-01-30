@@ -6,4 +6,5 @@ void InitMeshDome(void);
 void UninitMeshDome(void);
 void UpdateMeshDome(void);
 void DrawMeshDome(void);
+void ChangeMeshDome(void);
 #endif

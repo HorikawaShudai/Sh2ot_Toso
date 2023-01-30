@@ -428,6 +428,11 @@ void UpdateTitleSelect(void)
 		if (GetKeyboardPress(DIK_RETURN) || GetGamepadPress(BUTTON_START, 0) || GetGamepadPress(BUTTON_A, 0))
 		{//決定キー(ENTERキー)が押された
 			//モードの設定(ゲーム画面に移行)
+
+			//テクスチャを変える処理
+			ChangeMeshDome();
+			ChangeMeshCylinder();
+
 			if (g_CurrentNumberTitle == 0)
 			{//現在の選択番号が0の場合
 				SetFade(MODE_NUMBERSELECT);			//モードの設定(モード選択画面に移行)
