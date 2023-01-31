@@ -1,3 +1,10 @@
+//========================================================================================
+//
+// プレイヤーの処理[player.cpp]
+// Author: 小笠原　彪
+// Author: 坂本　翔唯
+//
+//========================================================================================
 #include "main.h"
 #include "game.h"
 #include "result.h"
@@ -132,11 +139,11 @@ void UpdatePlayer(void)
 {
 //#ifdef _DEBUG
 	//個別
-	UpdatePlayer0();
+	//UpdatePlayer0();
 //#endif
 
 	//複数
-	//UpdatePlayer1();
+	UpdatePlayer1();
 
 
 }

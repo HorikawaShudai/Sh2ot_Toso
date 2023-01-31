@@ -1,7 +1,8 @@
 //========================================================================================
 //
 // カメラ処理[camera.cpp]
-// Author: 
+// Author: 坂本　翔唯
+// Author: 小笠原　彪
 //
 //========================================================================================
 #include "camera.h"
@@ -26,6 +27,7 @@
 #define POS_MOVE_MAX			(5.0f)		//視点位置の最大値
 #define UP_DOWN_SPPED			(0.4f)		//視点の上下移動の速さ
 #define YUAN_TO_CORRE			(0.2f)		//視点の元の位置への補正
+#define CAM_MOVE_SPEED			(1)			//タイトル用カメラの移動スピード
 
 //プロトタイプ宣言
 void TpsCamera(void);										//観察用カメラ
@@ -46,6 +48,7 @@ Camera g_aCamera[MAX_CAMERA];	//カメラの情報
 int g_nCurrentCamera;			//選択されているカメラの番号
 int g_nSaveCamera;				//カメラ番号保存用
 bool g_bTpsCamera;				//観察用のカメラを使うかどうか
+bool bEnter;					//エンターが押されたかどうか
 
 //====================================================================
 //カメラの初期化処理
@@ -71,6 +74,7 @@ void InitCamera(void)
 
 	g_nCurrentCamera = 0;			//選択されているカメラの番号を最初のカメラへ
 	g_bTpsCamera = false;			//観察用カメラを使っていない状態へ
+	bEnter = false;					//エンターを押していない状態に
 
 
 	switch (PlayNumber.CurrentSelectNumber)
@@ -185,7 +189,17 @@ void UpdateCamera(void)
 	switch (mode)
 	{
 	case MODE_TITLE:
-		Titlecamera();
+		
+		if (bEnter == false)
+		{
+			Titlecamera();
+		}
+
+		if (bEnter == true)
+		{
+			MoveTitleCamera(CAM_MOVE_SPEED);
+		}
+
 		break;
 	case MODE_NUMBERSELECT:
 		SelectNumberCamera();
@@ -201,8 +215,8 @@ void UpdateCamera(void)
 		if (g_bTpsCamera == false)
 		{//使っていない場合
 			//プレイヤー視点カメラ
-			PlayerFpsCamera();
-			//ResPlayerCamera();
+			//PlayerFpsCamera();
+			ResPlayerCamera();
 		}
 		else
 		{//使われている場合
@@ -813,13 +827,13 @@ void ResPlayerCamera(void)
 //タイトル画面
 void Titlecamera(void)
 {
-	g_aCamera[4].posV = D3DXVECTOR3(-60.0f,12.0f,150.0f);
-	g_aCamera[4].posR = D3DXVECTOR3(490.0f, 300.0f, 1000.0);
-	g_aCamera[4].vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	g_aCamera[4].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	g_aCamera[4].rot2 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	g_aCamera[4].rot2Old = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	PrintDebugProc("%f , %f , %f", g_aCamera[4].posV.x, g_aCamera[4].posV.y, g_aCamera[4].posV.z);
+		g_aCamera[4].posV = D3DXVECTOR3(-60.0f, 12.0f, 150.0f);
+		g_aCamera[4].posR = D3DXVECTOR3(490.0f, 300.0f, 1000.0);
+		g_aCamera[4].vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+		g_aCamera[4].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_aCamera[4].rot2 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_aCamera[4].rot2Old = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		PrintDebugProc("%f , %f , %f", g_aCamera[4].posV.x, g_aCamera[4].posV.y, g_aCamera[4].posV.z);
 }
 
 //人数選択画面
@@ -839,7 +853,7 @@ void ResultCamera(void)
 //==========================================
 Camera *GetCamera(void)
 {
-	return &g_aCamera[0];
+		return &g_aCamera[4];
 }
 
 //==========================================
@@ -856,4 +870,23 @@ D3DXVECTOR3 Getrot(int nPlayer)
 int GetCurrentCamera(void)
 {
 	return g_nCurrentCamera;
+}
+
+//=========================================
+//タイトルカメラ移動処理
+//=========================================
+void MoveTitleCamera(int nCnt)
+{
+	if (nCnt <= 0)
+	{//カメラの位置を移動用に変える処理
+		g_aCamera[4].posV = D3DXVECTOR3(0.0f, 50.0f, 150.0f);
+		g_aCamera[4].posR = D3DXVECTOR3(0.0f, 10.0f, 10000.0);
+
+		//エンターを押したことにする
+		bEnter = true;
+	}
+
+	g_aCamera[4].posV.z += nCnt;
+	
+	PrintDebugProc("%f , %f , %f", g_aCamera[4].posV.x, g_aCamera[4].posV.y, g_aCamera[4].posV.z);
 }

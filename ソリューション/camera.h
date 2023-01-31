@@ -1,7 +1,8 @@
 //========================================================================================
 //
 // ƒJƒƒ‰ˆ—[camera.h]
-// Author: 
+// Author: â–{@ãÄ—B
+// Author: ¬Š}Œ´@•V
 //
 //========================================================================================
 #ifndef _CAMERA_H_
@@ -47,5 +48,6 @@ void SetCamera(int nIdx);
 D3DXVECTOR3 Getrot(int nPlayer);
 Camera *GetCamera(void);
 int GetCurrentCamera(void);
+void MoveTitleCamera(int nCnt);
 
 #endif
