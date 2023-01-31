@@ -134,11 +134,11 @@ void UpdatePlayer(void)
 {
 //#ifdef _DEBUG
 	//ŒÂ•Ê
-	UpdatePlayer0();
+	//UpdatePlayer0();
 //#endif
 
 	//•¡”
-	//UpdatePlayer1();
+	UpdatePlayer1();
 
 
 }
