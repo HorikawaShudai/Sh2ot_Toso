@@ -505,6 +505,8 @@ void Update3DTitle(void)
 
 	UpdateObject00();
 
+	UpdateBillboard();
+
 	//タイトル用マップの更新
 	UpdateObjectBG();
 }
