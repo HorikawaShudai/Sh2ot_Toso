@@ -426,7 +426,7 @@ void UpdateTitleSelect(void)
 			g_pVtxBuffTitle->Unlock();
 		}
 	
-		if (GetKeyboardPress(DIK_RETURN) || GetGamepadPress(BUTTON_START, 0) || GetGamepadPress(BUTTON_A, 0))
+		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadPress(BUTTON_START, 0) || GetGamepadPress(BUTTON_A, 0))
 		{//決定キー(ENTERキー)が押された
 			//モードの設定(ゲーム画面に移行)
 
@@ -434,14 +434,17 @@ void UpdateTitleSelect(void)
 			ChangeMeshDome();
 			ChangeMeshCylinder();
 
-			if (g_CurrentNumberTitle == 0)
-			{//現在の選択番号が0の場合
-				SetFade(MODE_NUMBERSELECT);			//モードの設定(モード選択画面に移行)
-			}
-			else if (g_CurrentNumberTitle == 1)
-			{//現在の選択番号が1の場合
-				SetFade(MODE_TITLE);		//モードの設定(ランキング画面に移行)
-			}
+			//カメラの移動処理
+			MoveTitleCamera(0);
+
+			//if (g_CurrentNumberTitle == 0)
+			//{//現在の選択番号が0の場合
+			//	SetFade(MODE_NUMBERSELECT);			//モードの設定(モード選択画面に移行)
+			//}
+			//else if (g_CurrentNumberTitle == 1)
+			//{//現在の選択番号が1の場合
+			//	SetFade(MODE_TITLE);		//モードの設定(ランキング画面に移行)
+			//}
 		}
 	}
 }
