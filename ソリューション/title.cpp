@@ -58,6 +58,7 @@ LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffTitle = NULL;			//頂点バッファへのポインタ
 
 D3DXVECTOR3 g_aTitlePos[NUM_TITLEPOS];			//タイトル画面に配置される場所
 int g_CurrentNumberTitle;						//現在選択されている番号(モード選択用)
+bool bPress;
 
 //============================================================================
 //初期化処理
@@ -140,11 +141,22 @@ void UninitTitle(void)
 //============================================================================
 void UpdateTitle(void)
 {
+	Camera *pCamera = GetCamera();
+
 	//3D
 	Update3DTitle();
 
 	//選択処理
 	UpdateTitleSelect();
+
+	if (g_CurrentNumberTitle == 0 && pCamera->posV.z == 550.0f)
+	{//現在の選択番号が0の場合
+		SetFade(MODE_NUMBERSELECT);			//モードの設定(モード選択画面に移行)
+	}
+	else if (g_CurrentNumberTitle == 1)
+	{//現在の選択番号が1の場合
+		SetFade(MODE_TITLE);		//モードの設定(ランキング画面に移行)
+	}
 
 	//デバッグ表示
 	PrintDebugProc("選択 【↑】【↓】\n");
@@ -429,22 +441,17 @@ void UpdateTitleSelect(void)
 		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadPress(BUTTON_START, 0) || GetGamepadPress(BUTTON_A, 0))
 		{//決定キー(ENTERキー)が押された
 			//モードの設定(ゲーム画面に移行)
+			if (bPress == false)
+			{
+				//テクスチャを変える処理
+				ChangeMeshDome();
+				ChangeMeshCylinder();
 
-			//テクスチャを変える処理
-			ChangeMeshDome();
-			ChangeMeshCylinder();
+				//カメラの移動処理
+				MoveTitleCamera(0);
 
-			//カメラの移動処理
-			MoveTitleCamera(0);
-
-			//if (g_CurrentNumberTitle == 0)
-			//{//現在の選択番号が0の場合
-			//	SetFade(MODE_NUMBERSELECT);			//モードの設定(モード選択画面に移行)
-			//}
-			//else if (g_CurrentNumberTitle == 1)
-			//{//現在の選択番号が1の場合
-			//	SetFade(MODE_TITLE);		//モードの設定(ランキング画面に移行)
-			//}
+				bPress = true;
+			}
 		}
 	}
 }

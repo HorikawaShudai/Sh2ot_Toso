@@ -853,7 +853,7 @@ void ResultCamera(void)
 //==========================================
 Camera *GetCamera(void)
 {
-	return &g_aCamera[0];
+		return &g_aCamera[4];
 }
 
 //==========================================
@@ -877,13 +877,13 @@ int GetCurrentCamera(void)
 //=========================================
 void MoveTitleCamera(int nCnt)
 {
-	//エンターを押したことにする
-	bEnter = true;
-
 	if (nCnt <= 0)
 	{//カメラの位置を移動用に変える処理
 		g_aCamera[4].posV = D3DXVECTOR3(0.0f, 50.0f, 150.0f);
 		g_aCamera[4].posR = D3DXVECTOR3(0.0f, 10.0f, 10000.0);
+
+		//エンターを押したことにする
+		bEnter = true;
 	}
 
 	g_aCamera[4].posV.z += nCnt;
