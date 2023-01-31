@@ -5,6 +5,7 @@
 //
 //====================================================================
 #include "Billboard.h"
+#include "Input.h"
 
 //マクロ定義
 #define MAX_RAIN	(2000)	//雨の最大数
@@ -18,8 +19,9 @@ LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffRain = NULL;			//雨の頂点バッファのポインタ
 D3DXMATRIX g_mtxWorldBillboard;							//ビルボードのワールドマトリックス
 MOON g_Moon;											//月の構造体
 RAIN g_Rain[MAX_RAIN];									//雨の構造体
+bool g_bRain;
 
-														//プロトタイプ宣言
+//プロトタイプ宣言
 void InitMoon(void);
 void InitRain(void);
 void UpdateMoon(void);
@@ -137,7 +139,10 @@ void InitMoon(void)
 //====================================================
 void UpdateMoon(void)
 {
-
+	if (GetKeyboardTrigger(DIK_RETURN) == true)
+	{
+		g_Moon.bUse = true;
+	}
 }
 
 //====================================================
@@ -198,6 +203,9 @@ void DrawMoon(void)
 //====================================================
 void InitRain(void)
 {
+
+	g_bRain = true;
+
 	//構造体の初期化
 	for (int nCnt = 0; nCnt < MAX_RAIN; nCnt++)
 	{
@@ -250,17 +258,25 @@ void InitRain(void)
 //================================================================
 void UpdateRain(void)
 {
-	SetRain();
 
-	for (int nRain = 0; nRain < MAX_RAIN; nRain++)
+	if (GetKeyboardTrigger(DIK_RETURN) == true)
 	{
-		if (g_Rain[nRain].bUse == true)
-		{
-			g_Rain[nRain].pos += g_Rain[nRain].move;
+		g_bRain = false;
+	}
+	if (g_bRain == true)
+	{
+		SetRain();
 
-			if (g_Rain[nRain].pos.y < 0.0f)
+		for (int nRain = 0; nRain < MAX_RAIN; nRain++)
+		{
+			if (g_Rain[nRain].bUse == true)
 			{
-				g_Rain[nRain].bUse = false;
+				g_Rain[nRain].pos += g_Rain[nRain].move;
+
+				if (g_Rain[nRain].pos.y < 0.0f)
+				{
+					g_Rain[nRain].bUse = false;
+				}
 			}
 		}
 	}
@@ -271,48 +287,51 @@ void UpdateRain(void)
 //====================================================
 void DrawRain(void)
 {
-	for (int nCnt = 0; nCnt < MAX_RAIN; nCnt++)
+	if (g_bRain == true)
 	{
-		if (g_Rain[nCnt].bUse == true)
+		for (int nCnt = 0; nCnt < MAX_RAIN; nCnt++)
 		{
-			//デバイスの取得
-			LPDIRECT3DDEVICE9 pDevice = GetDevice();
+			if (g_Rain[nCnt].bUse == true)
+			{
+				//デバイスの取得
+				LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-			D3DXMATRIX mtxTrans;	//計算用マトリックス
-			D3DXMATRIX mtxView;		//ビューマトリックスの取得用
+				D3DXMATRIX mtxTrans;	//計算用マトリックス
+				D3DXMATRIX mtxView;		//ビューマトリックスの取得用
 
-			pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+				pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
-			//ワールドマトリックスの初期化
-			D3DXMatrixIdentity(&g_mtxWorldBillboard);
+				//ワールドマトリックスの初期化
+				D3DXMatrixIdentity(&g_mtxWorldBillboard);
 
-			//ビューマトリックスを取得
-			pDevice->GetTransform(D3DTS_VIEW, &mtxView);
+				//ビューマトリックスを取得
+				pDevice->GetTransform(D3DTS_VIEW, &mtxView);
 
-			//ポリゴンをカメラに対して正面に向ける
-			D3DXMatrixInverse(&g_mtxWorldBillboard, NULL, &mtxView);
-			g_mtxWorldBillboard._41 = 0.0f;
-			g_mtxWorldBillboard._42 = 0.0f;
-			g_mtxWorldBillboard._43 = 0.0f;
+				//ポリゴンをカメラに対して正面に向ける
+				D3DXMatrixInverse(&g_mtxWorldBillboard, NULL, &mtxView);
+				g_mtxWorldBillboard._41 = 0.0f;
+				g_mtxWorldBillboard._42 = 0.0f;
+				g_mtxWorldBillboard._43 = 0.0f;
 
-			//位置を反映
-			D3DXMatrixTranslation(&mtxTrans, g_Rain[nCnt].pos.x, g_Rain[nCnt].pos.y, g_Rain[nCnt].pos.z);
-			D3DXMatrixMultiply(&g_mtxWorldBillboard, &g_mtxWorldBillboard, &mtxTrans);
+				//位置を反映
+				D3DXMatrixTranslation(&mtxTrans, g_Rain[nCnt].pos.x, g_Rain[nCnt].pos.y, g_Rain[nCnt].pos.z);
+				D3DXMatrixMultiply(&g_mtxWorldBillboard, &g_mtxWorldBillboard, &mtxTrans);
 
-			//ワールドマトリックスの設定
-			pDevice->SetTransform(D3DTS_WORLD, &g_mtxWorldBillboard);
+				//ワールドマトリックスの設定
+				pDevice->SetTransform(D3DTS_WORLD, &g_mtxWorldBillboard);
 
-			//頂点バッファをデータストリームに設定
-			pDevice->SetStreamSource(0, g_pVtxBuffRain, 0, sizeof(VERTEX_3D));
+				//頂点バッファをデータストリームに設定
+				pDevice->SetStreamSource(0, g_pVtxBuffRain, 0, sizeof(VERTEX_3D));
 
-			pDevice->SetFVF(FVF_VERTEX_3D);
+				pDevice->SetFVF(FVF_VERTEX_3D);
 
 
-			pDevice->SetTexture(0, NULL);
+				pDevice->SetTexture(0, NULL);
 
-			//ビルボード
-			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCnt * 4, 2);
-			pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+				//ビルボード
+				pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCnt * 4, 2);
+				pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+			}
 		}
 	}
 }
