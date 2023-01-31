@@ -1,3 +1,9 @@
+//========================================================================================
+//
+// 外部ファイルからオブジェクトを読み込む処理[stage.cpp]
+// Author: 坂本　翔唯
+//
+//========================================================================================
 #include "main.h"
 #include "game.h"
 #include "stage.h"
@@ -128,9 +134,21 @@ void SetStage(int nStageNumber)
 void LoadStage(int nStageNumber)
 {
 	FILE *pFile; //ファイルポインタを宣言
-
+	
 	//ファイルを開く
-	pFile = fopen(SET_STAGE_TEXT, "r");
+	pFile = fopen("", "r");
+
+	if (nStageNumber == 0)
+	{
+		//ファイルを開く
+		pFile = fopen(SET_STAGE_TEXT, "r");
+	}
+
+	else if (nStageNumber == 1)
+	{
+		//ファイルを開く
+		pFile = fopen("Data\\TEXT\\Title.txt", "r");
+	}
 
 	if (pFile != NULL)
 	{//ファイルが開けた場合

@@ -1,3 +1,9 @@
+//========================================================================================
+//
+// 背景用オブジェクトの処理[ObjectBG.h]
+// Author: 坂本　翔唯
+//
+//========================================================================================
 #ifndef _OBJECTBG_H_
 #define _OBJECTBG_H_
 
@@ -8,6 +14,8 @@ typedef enum
 {
 	OBJECTBG_NTYPE00 = 0,
 	OBJECTBG_NTYPE01,
+	OBJECTBG_NTYPE02,
+	OBJECTBG_NTYPE03,
 	OBJECTBG_NTYPE_MAX,
 
 }OBJECTBG_NTYPE;

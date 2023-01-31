@@ -1,3 +1,9 @@
+//========================================================================================
+//
+// 筒状のポリゴンの描画[meshcylinder.cpp]
+// Author: 坂本　翔唯
+//
+//========================================================================================
 #include "main.h"
 #include "meshcylinder.h"
 
@@ -6,10 +12,11 @@
 #define WAIGHT_CENTER (0.5f)		//横の原点(0.0f～1.0f)
 #define HEIGHT_CENTER (1.0f)		//縦の原点(0.0f～1.0f)
 #define CYLINDER_HEIGHT (500.0f)		//壁一枚の高さ
-#define CYLINDER_RADIUS (900.0f)	//円の半径
+#define CYLINDER_RADIUS (400.0f)	//円の半径
+#define MAX_TEXTURE (2)		//テクスチャの最大数
 
 //グローバル変数
-LPDIRECT3DTEXTURE9 g_pTextureMeshCylinder;				//テクスチャのポインタ
+LPDIRECT3DTEXTURE9 g_pTextureMeshCylinder[MAX_TEXTURE];				//テクスチャのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffMeshCylinder;		//頂点バッファのポインタ
 LPDIRECT3DINDEXBUFFER9 g_pIndxBuffMeshCylinder;		//インデックスバッファへのポインタ
 D3DXVECTOR3 g_posMeshCylinder;							//位置
@@ -26,10 +33,10 @@ void InitMeshCylinder(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\sky00.jpg",
-		&g_pTextureMeshCylinder);
+		"data\\TEXTURE\\rain_cloud2.jpeg",
+		&g_pTextureMeshCylinder[0]);
 
-	g_posMeshCylinder = D3DXVECTOR3(0.0f, 200.0f, 0.0f);
+	g_posMeshCylinder = D3DXVECTOR3(0.0f, 0.0f, 250.0f);
 	g_rotMeshCylinder = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	//頂点バッファの生成
@@ -65,7 +72,7 @@ void InitMeshCylinder(void)
 		pVtx[nCnt].nor = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
 
 		//頂点カラーの設定
-		pVtx[nCnt].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[nCnt].col = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.0f);
 
 		//テクスチャの設定
 		if (nCenterW % 2 == 0)
@@ -132,11 +139,14 @@ void InitMeshCylinder(void)
 //====================================================================
 void UninitMeshCylinder(void)
 {
-	//テクスチャの破棄
-	if (g_pTextureMeshCylinder != NULL)
+	for (int nCnt = 0; nCnt < MAX_TEXTURE; nCnt++)
 	{
-		g_pTextureMeshCylinder->Release();
-		g_pTextureMeshCylinder = NULL;
+		//テクスチャの破棄
+		if (g_pTextureMeshCylinder[nCnt] != NULL)
+		{
+			g_pTextureMeshCylinder[nCnt]->Release();
+			g_pTextureMeshCylinder[nCnt] = NULL;
+		}
 	}
 
 	//頂点バッファの破棄
@@ -196,8 +206,11 @@ void DrawMeshCylinder(void)
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_3D);
 
-	//テクスチャの設定
-	pDevice->SetTexture(0, g_pTextureMeshCylinder);
+	for (int nCnt = 0; nCnt < MAX_TEXTURE; nCnt++)
+	{
+		//テクスチャの設定
+		pDevice->SetTexture(0, g_pTextureMeshCylinder[nCnt]);
+	}
 
 	//ポリゴンの描画
 	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP,
@@ -206,4 +219,18 @@ void DrawMeshCylinder(void)
 		0,//用意した頂点の数
 		0,
 		(WAIGHT_SIZE * HEIGHT_SIZE + WAIGHT_SIZE * (HEIGHT_SIZE - 2) + 2 * (HEIGHT_SIZE - 2)) - 2);//描画するプリミティブの数
+}
+
+//=============================================
+//メッシュシリンダーのテクスチャを変える処理
+//=============================================
+void ChangeMeshCylinder(void)
+{
+	//デバイスの所得
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+
+	//テクスチャの読み込み
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\title_bg.jpg",
+		&g_pTextureMeshCylinder[1]);
 }

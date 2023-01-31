@@ -1,7 +1,23 @@
+//========================================================================================
+//
+// カメラ処理[camera.h]
+// Author: 坂本　翔唯
+// Author: 小笠原　彪
+//
+//========================================================================================
 #ifndef _CAMERA_H_
 #define _CAMERA_H_
 
 #include "main.h"
+
+//カメラ状態の列挙型の定義
+typedef enum
+{
+	CAMERASTATE_NONE = 0,
+	CAMERASTATE_UP,
+	CAMERASTATE_DOWN,
+	CAMERASTATE_MAX
+} CAMERASTATE;
 
 //カメラの構造体を定義
 typedef struct
@@ -17,7 +33,9 @@ typedef struct
 	D3DXVECTOR3 posVDest;		//目的の視点
 	D3DXVECTOR3 posRDest;		//目的の注視点
 	D3DVIEWPORT9 viewport;		//ビューポート
+	CAMERASTATE State;
 
+	float fposYmove;
 	bool bUse;					//使われているか
 }Camera;
 
@@ -26,7 +44,9 @@ void InitCamera(void);
 void UninitCamera(void);
 void UpdateCamera(void);
 void SetCamera(int nIdx);
+
 D3DXVECTOR3 Getrot(int nPlayer);
-int GetCurrentCamera(void);
 Camera *GetCamera(void);
+int GetCurrentCamera(void);
+
 #endif
