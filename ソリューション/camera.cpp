@@ -1,7 +1,8 @@
 //========================================================================================
 //
 // カメラ処理[camera.cpp]
-// Author: 
+// Author: 坂本　翔唯
+// Author: 小笠原　彪
 //
 //========================================================================================
 #include "camera.h"
@@ -214,8 +215,8 @@ void UpdateCamera(void)
 		if (g_bTpsCamera == false)
 		{//使っていない場合
 			//プレイヤー視点カメラ
-			PlayerFpsCamera();
-			//ResPlayerCamera();
+			//PlayerFpsCamera();
+			ResPlayerCamera();
 		}
 		else
 		{//使われている場合
