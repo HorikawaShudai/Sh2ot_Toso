@@ -59,7 +59,7 @@ void InitField(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"Data\\TEXTURE\\iron.jpg", 
+		"Data\\TEXTURE\\tetu.jpg", 
 		&g_pTextureField[1]);
 
 	//テクスチャの読み込み
