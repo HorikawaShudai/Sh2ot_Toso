@@ -10,6 +10,7 @@
 #include "input.h"
 #include "debugproc.h"
 #include "exit.h"
+#include "PlayNumberSelect.h"
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureExit[64][EXIT_TYPE_MAX] = {};		//テクスチャのポインタ
@@ -125,6 +126,8 @@ void UpdateExit(void)
 	{
 		if (g_Exit[nCntExit].bUse == true)
 		{
+
+
 		}
 	}
 }
@@ -281,6 +284,8 @@ void SetExit(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 //====================================================================
 bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size, int nPlayer)
 {
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+
 	bool bHit = false;
 
 	for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
@@ -293,11 +298,12 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 				&& pPos->y <= g_Exit[nCntExit].pos.y + Size
 				&& pPos->z >= g_Exit[nCntExit].pos.z - Size
 				&& pPos->z <= g_Exit[nCntExit].pos.z + Size)
+
 			{//アイテムとプレイヤーが当たった(X軸)
 				bHit = true;
 				g_KeyCount++;
 
-				if (g_KeyCount > 4)
+				if (g_KeyCount > PlayNumber.CurrentSelectNumber)
 				{//鍵が４つ以上使われた場合
 					g_Exit[nCntExit].bExitOK = true;
 				}

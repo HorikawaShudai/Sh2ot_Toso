@@ -177,7 +177,7 @@ void DrawKeyUI(void)
 	//テクスチャの設定
 	pDevice->SetTexture(0, g_pTextureKeyUI);
 
-	for (int nCnt = 0; nCnt < PlayNumber.CurrentSelectNumber + 1; nCnt++)
+	for (int nCnt = 0; nCnt < PlayNumber.CurrentSelectNumber; nCnt++)
 	{
 		if (g_anKeyUI[nCnt].bUse == true)
 		{

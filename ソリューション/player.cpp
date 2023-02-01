@@ -139,11 +139,11 @@ void UpdatePlayer(void)
 {
 //#ifdef _DEBUG
 	//個別
-	//UpdatePlayer0();
+	UpdatePlayer0();
 //#endif
 
 	//複数
-	UpdatePlayer1();
+	//UpdatePlayer1();
 
 
 }
@@ -266,7 +266,7 @@ void UpdatePlayer0(void)
 	//脱出処理
 	if (g_aPlayer[nSelectPlayer].bGetKey == true)
 	{//プレイヤーが鍵を持っている場合
-		if (GetKeyboardTrigger(DIK_E) == true)
+		if (GetKeyboardTrigger(DIK_E) == true || GetGamepadPress(BUTTON_A, nSelectPlayer) || GetGamepadPress(BUTTON_B, nSelectPlayer))
 		{//Eキー入力
 			if (CollisionExit(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nSelectPlayer) == true)
 			{//鍵を入手出来た場合
