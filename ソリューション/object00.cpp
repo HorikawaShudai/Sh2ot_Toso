@@ -19,12 +19,12 @@ LPD3DXMESH g_pMeshObject00[OBJECT00_NTYPE_MAX] = {};					//ƒƒbƒVƒ…(’¸“_î•ñ)‚Ö‚
 LPD3DXBUFFER g_pBuffMatObject00[OBJECT00_NTYPE_MAX] = {};				//ƒ}ƒeƒŠƒAƒ‹‚Ö‚Ìƒ|ƒCƒ“ƒ^
 DWORD g_dwNumMatObject00[OBJECT00_NTYPE_MAX] = {};						//ƒ}ƒeƒŠƒAƒ‹‚Ì”
 
-Object00 g_Object00[MAX_OBJECT00];					//ƒIƒuƒWƒFƒNƒg00‚Ìî•ñ
-int EditIndex;								//ƒGƒfƒBƒbƒgƒ‚[ƒh—p‚Ì”Ô†
-D3DXVECTOR3 EditPos;						//ƒGƒfƒBƒbƒgƒ‚[ƒh‚ÌƒIƒuƒWƒFƒNƒg‚ÌˆÊ’u
-D3DXVECTOR3 EditRot;						//ƒGƒfƒBƒbƒgƒ‚[ƒh‚ÌƒIƒuƒWƒFƒNƒg‚ÌŒü‚«
-int EditType;								//ƒGƒfƒBƒbƒgƒ‚[ƒh‚ÌƒIƒuƒWƒFƒNƒg‚ÌŽí—Þ
-int g_ObjectCount;							//ƒIƒuƒWƒFƒNƒg‚Ì”
+Object00 g_Object00[MAX_OBJECT00];				//ƒIƒuƒWƒFƒNƒg00‚Ìî•ñ
+int EditIndex;									//ƒGƒfƒBƒbƒgƒ‚[ƒh—p‚Ì”Ô†
+D3DXVECTOR3 EditPos;							//ƒGƒfƒBƒbƒgƒ‚[ƒh‚ÌƒIƒuƒWƒFƒNƒg‚ÌˆÊ’u
+D3DXVECTOR3 EditRot;							//ƒGƒfƒBƒbƒgƒ‚[ƒh‚ÌƒIƒuƒWƒFƒNƒg‚ÌŒü‚«
+int EditType;									//ƒGƒfƒBƒbƒgƒ‚[ƒh‚ÌƒIƒuƒWƒFƒNƒg‚ÌŽí—Þ
+int g_ObjectCount;								//ƒIƒuƒWƒFƒNƒg‚Ì”
 
 const char *c_apModelObj[] =					//ƒ‚ƒfƒ‹ƒf[ƒ^“Ç‚Ýž‚Ý
 {
@@ -103,7 +103,7 @@ void InitObject00(void)
 		g_Object00[nCntObject].nType = OBJECT00_NTYPE00;
 		g_Object00[nCntObject].pMatE.MatD3D.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
 	}
-	EditIndex = 0;
+	EditIndex = MAX_OBJECT00 - 1;
 	EditPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	EditRot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	EditType = 0;
@@ -351,7 +351,7 @@ void UpdateEditObject00(void)
 	//ƒIƒuƒWƒFƒNƒg‚Ìíœˆ—(d‚È‚Á‚Ä‚¢‚é‚à‚Ì)----------
 	if (GetKeyboardTrigger(DIK_BACKSPACE))
 	{
-		EditCollisionObject00(g_Object00[EditIndex].pos, g_Object00[EditIndex].vtxMin, g_Object00[EditIndex].vtxMax, FALSE_SIZE);
+		EditCollisionObject00(EditPos, g_Object00[EditIndex].vtxMin, g_Object00[EditIndex].vtxMax, FALSE_SIZE);
 	}
 
 	//ƒIƒuƒWƒFƒNƒg‚Ìíœˆ—(CTRL+Z)----------
@@ -434,7 +434,6 @@ void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 			g_Object00[nCntObject].nType = nType;
 
 			g_Object00[nCntObject].bUse = true;
-			EditIndex++;
 			g_ObjectCount++;
 
 			//if (g_Object00[nCntObject].nType != 0)
@@ -514,7 +513,6 @@ void FalseObject00(void)
 		if (g_Object00[nCntObject].bUse == true)
 		{
 			g_Object00[nCntObject].bUse = false;
-			EditIndex--;
 			g_ObjectCount--;
 			break;
 		}
@@ -533,14 +531,16 @@ bool EditCollisionObject00(D3DXVECTOR3 pPos, D3DXVECTOR3 min, D3DXVECTOR3 max, f
 		if (g_Object00[nCntObject].bUse == true)
 		{
 			if (
-				pPos.y + Size >= g_Object00[nCntObject].pos.y + g_Object00[nCntObject].vtxMin.y && pPos.y - Size <= g_Object00[nCntObject].pos.y + g_Object00[nCntObject].vtxMax.y &&
-				pPos.x + Size >= g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMin.x && pPos.x - Size <= g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMax.x &&
-				pPos.z + Size >= g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMin.z && pPos.z - Size <= g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMax.z
+				pPos.y + Size >= g_Object00[nCntObject].pos.y + g_Object00[nCntObject].vtxMin.y
+				&& pPos.y - Size <= g_Object00[nCntObject].pos.y + g_Object00[nCntObject].vtxMax.y
+				&& pPos.x + Size >= g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMin.x
+				&& pPos.x - Size <= g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMax.x
+				&& pPos.z + Size >= g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMin.z
+				&& pPos.z - Size <= g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMax.z
 				)
 			{//ƒIƒuƒWƒFƒNƒg“¯Žm‚ªd‚È‚Á‚Ä‚¢‚é
 				g_Object00[nCntObject].bUse = false;
 				g_ObjectCount--;
-				EditIndex--;
 				bON = true;
 			}
 		}
