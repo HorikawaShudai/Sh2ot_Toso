@@ -11,17 +11,17 @@
 //**********************************************
 //マクロ定義
 //**********************************************
-#define NUM_TEX			(1)			// テクスチャの数
+#define NUM_TEX			(1)						// テクスチャの数
 
-#define STAMINA_WIDTH	(400.0f)	// スタミナの幅(スタミナの最大値)
-#define STAMINA_HEIGHT	(10.0f)		// スタミナの高さ
+#define STAMINA_WIDTH	(400.0f)				// スタミナの幅(スタミナの最大値)
+#define STAMINA_HEIGHT	(10.0f)					// スタミナの高さ
 
-#define DEC_SPEED		(2.0f)		// スタミナの減るスピード
-#define RECOVERY_SPEED	(0.7f)		// スタミナの回復スピード
+#define DEC_SPEED		(1.0f)					// スタミナの減るスピード
+#define RECOVERY_SPEED	(1.7f)					// スタミナの回復スピード
 #define TIRED_VALUE		(STAMINA_WIDTH / 3)		// 疲労ゲージの数値
 
-#define STAMINA_POS_Y0		(700.0f)	// スタミナの位置Y	(プレイ人数が2人以下) 下配置
-#define STAMINA_POS_Y1		(340.0f)	// スタミナの位置Y	(プレイ人数が3人以上) 上配置
+#define STAMINA_POS_Y0		(700.0f)			// スタミナの位置Y	(プレイ人数が2人以下) 下配置
+#define STAMINA_POS_Y1		(340.0f)			// スタミナの位置Y	(プレイ人数が3人以上) 上配置
 
 //**********************************************
 // テクスチャ名

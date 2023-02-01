@@ -1,3 +1,9 @@
+//========================================================================================
+//
+// “›ó‚Ìƒ|ƒŠƒSƒ“‚Ì•`‰æ[meshcylinder.h]
+// Author: â–{@ãÄ—B
+//
+//========================================================================================
 #ifndef _MESHCYLINDER_H_
 #define _MESHCYLINDER_H_
 
@@ -6,4 +12,6 @@ void InitMeshCylinder(void);
 void UninitMeshCylinder(void);
 void UpdateMeshCylinder(void);
 void DrawMeshCylinder(void);
+void ChangeMeshCylinder(void);
+
 #endif

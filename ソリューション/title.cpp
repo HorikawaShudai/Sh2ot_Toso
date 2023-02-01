@@ -12,6 +12,11 @@
 #include "camera.h"
 #include "light.h"
 #include "meshdome.h"
+#include "stage.h"
+#include "objectBG.h"
+#include "meshcylinder.h"
+#include "object00.h"
+#include "Billboard.h"
 
 //**********************************************
 //マクロ定義
@@ -53,6 +58,7 @@ LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffTitle = NULL;			//頂点バッファへのポインタ
 
 D3DXVECTOR3 g_aTitlePos[NUM_TITLEPOS];			//タイトル画面に配置される場所
 int g_CurrentNumberTitle;						//現在選択されている番号(モード選択用)
+bool bPress;
 
 //============================================================================
 //初期化処理
@@ -100,6 +106,7 @@ void InitTitle(void)
 		}
 	}
 
+
 	//3D
 	Init3DTitle();
 }
@@ -134,11 +141,22 @@ void UninitTitle(void)
 //============================================================================
 void UpdateTitle(void)
 {
+	Camera *pCamera = GetCamera();
+
 	//3D
 	Update3DTitle();
 
 	//選択処理
 	UpdateTitleSelect();
+
+	if (g_CurrentNumberTitle == 0 && pCamera->posV.z == 550.0f)
+	{//現在の選択番号が0の場合
+		SetFade(MODE_NUMBERSELECT);			//モードの設定(モード選択画面に移行)
+	}
+	else if (g_CurrentNumberTitle == 1)
+	{//現在の選択番号が1の場合
+		SetFade(MODE_TITLE);		//モードの設定(ランキング画面に移行)
+	}
 
 	//デバッグ表示
 	PrintDebugProc("選択 【↑】【↓】\n");
@@ -420,16 +438,19 @@ void UpdateTitleSelect(void)
 			g_pVtxBuffTitle->Unlock();
 		}
 	
-		if (GetKeyboardPress(DIK_RETURN) || GetGamepadPress(BUTTON_START, 0) || GetGamepadPress(BUTTON_A, 0))
+		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadPress(BUTTON_START, 0) || GetGamepadPress(BUTTON_A, 0))
 		{//決定キー(ENTERキー)が押された
 			//モードの設定(ゲーム画面に移行)
-			if (g_CurrentNumberTitle == 0)
-			{//現在の選択番号が0の場合
-				SetFade(MODE_NUMBERSELECT);			//モードの設定(モード選択画面に移行)
-			}
-			else if (g_CurrentNumberTitle == 1)
-			{//現在の選択番号が1の場合
-				SetFade(MODE_TITLE);		//モードの設定(ランキング画面に移行)
+			if (bPress == false)
+			{
+				//テクスチャを変える処理
+				ChangeMeshDome();
+				ChangeMeshCylinder();
+
+				//カメラの移動処理
+				MoveTitleCamera(0);
+
+				bPress = true;
 			}
 		}
 	}
@@ -447,6 +468,18 @@ void Init3DTitle(void)
 	InitLight();
 
 	InitMeshDome();
+
+	InitMeshCylinder();
+
+	InitObject00();
+
+	InitBillboard();		//ビルボードの初期化処理
+
+	//タイトル用マップの初期化
+	InitObjectBG();
+
+	//ステージの読み込み
+	SetStage(1);
 }
 
 //終了
@@ -457,6 +490,16 @@ void Uninit3DTitle(void)
 	UpdateLight();
 
 	UninitMeshDome();
+
+	UninitMeshCylinder();
+
+	UninitObject00();
+
+	UninitBillboard();		//ビルボードの終了処理
+
+
+	//タイトル用マップの終了
+	UninitObjectBG();
 }
 
 //更新
@@ -467,13 +510,31 @@ void Update3DTitle(void)
 	UpdateLight();
 
 	UpdateMeshDome();
+
+	UpdateMeshCylinder();
+
+	UpdateObject00();
+
+	UpdateBillboard();
+
+	//タイトル用マップの更新
+	UpdateObjectBG();
 }
 
 //描画
 void Draw3DTitle(void)
 {
-	SetCamera(5);
+	SetCamera(4);
 
 	DrawMeshDome();
+
+	DrawMeshCylinder();
+
+	DrawObject00();
+
+	DrawBillboard();	//月の描画処理（ビルボード）
+
+	//タイトル用マップの描画
+	DrawObjectBG();
 }
 

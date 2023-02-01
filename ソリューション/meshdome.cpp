@@ -1,3 +1,9 @@
+//========================================================================================
+//
+// ドーム状のポリゴンの描画[meshcydome.cpp]
+// Author: 坂本　翔唯
+//
+//========================================================================================
 #include "main.h"
 #include "meshdome.h"
 
@@ -6,10 +12,11 @@
 #define WAIGHT_CENTER (0.5f)		//横の原点(0.0f～1.0f)
 #define HEIGHT_CENTER (1.0f)		//縦の原点(0.0f～1.0f)
 #define CYLINDER_HEIGHT (150.0f)	//壁一枚の高さ
-#define CYLINDER_RADIUS (1500.0f)	//円の半径
+#define CYLINDER_RADIUS (2500.0f)	//円の半径
+#define MAX_TEX  (2)				//テクスチャの最大数
 
 //グローバル変数
-LPDIRECT3DTEXTURE9 g_pTextureMeshDome;				//テクスチャのポインタ
+LPDIRECT3DTEXTURE9 g_pTextureMeshDome[MAX_TEX];				//テクスチャのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffMeshDome;			//頂点バッファのポインタ
 LPDIRECT3DINDEXBUFFER9 g_pIndxBuffMeshDome;			//インデックスバッファへのポインタ
 D3DXVECTOR3 g_posMeshDome;							//位置
@@ -26,8 +33,8 @@ void InitMeshDome(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\sky01.jpg",
-		&g_pTextureMeshDome);
+		"data\\TEXTURE\\rain_cloud2.jpeg",
+		&g_pTextureMeshDome[0]);
 
 	g_posMeshDome = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	g_rotMeshDome = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -70,7 +77,7 @@ void InitMeshDome(void)
 		pVtx[nCnt].nor = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
 
 		//頂点カラーの設定
-		pVtx[nCnt].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[nCnt].col = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.0f);
 
 		////テクスチャ座標の設定
 		//if (nCenterW % 2 == 0)
@@ -142,11 +149,14 @@ void InitMeshDome(void)
 //====================================================================
 void UninitMeshDome(void)
 {
-	//テクスチャの破棄
-	if (g_pTextureMeshDome != NULL)
+	for (int nCnt = 0; nCnt < MAX_TEX; nCnt++)
 	{
-		g_pTextureMeshDome->Release();
-		g_pTextureMeshDome = NULL;
+		//テクスチャの破棄
+		if (g_pTextureMeshDome[nCnt] != NULL)
+		{
+			g_pTextureMeshDome[nCnt]->Release();
+			g_pTextureMeshDome[nCnt] = NULL;
+		}
 	}
 
 	//頂点バッファの破棄
@@ -206,8 +216,11 @@ void DrawMeshDome(void)
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_3D);
 
-	//テクスチャの設定
-	pDevice->SetTexture(0, g_pTextureMeshDome);
+	for (int nCnt = 0; nCnt < MAX_TEX; nCnt++)
+	{
+		//テクスチャの設定
+		pDevice->SetTexture(0, g_pTextureMeshDome[nCnt]);
+	}
 
 	//ポリゴンの描画
 	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP,
@@ -216,4 +229,18 @@ void DrawMeshDome(void)
 		0,//用意した頂点の数
 		0,
 		(WAIGHT_SIZE * HEIGHT_SIZE + WAIGHT_SIZE * (HEIGHT_SIZE - 2) + 2 * (HEIGHT_SIZE - 2)) - 2);//描画するプリミティブの数
+}
+
+//==============================
+//テクスチャを変える処理
+//==============================
+void ChangeMeshDome(void)
+{
+	//デバイスの所得
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+
+	//テクスチャの読み込み
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\title_bg.jpg",
+		&g_pTextureMeshDome[1]);
 }
