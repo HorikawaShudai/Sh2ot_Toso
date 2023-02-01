@@ -15,17 +15,17 @@
 #define POS_INSTITUTE_Y (0)		//生物収容所のY位置
 #define POS_INSTITUTE_Z (800.0f) //生物収容所のZ位置
 
-#define POS_COLLAPSE_X	(-1000.0f) //崩壊X位置
-#define POS_COLLAPSE_Y	(0) //崩壊Y位置
-#define POS_COLLAPSE_Z	(-1500.0f) //崩壊Z位置
+#define POS_COLLAPSE_X	(-1300.0f) //崩壊X位置
+#define POS_COLLAPSE_Y	(0.0f) //崩壊Y位置
+#define POS_COLLAPSE_Z	(300.0f) //崩壊Z位置
 
 #define POS_CAMP_X		(1200.0f)   //研究所のX座標
 #define POS_CAMP_Y		(-0)   //研究所のY座標
 #define POS_CAMP_Z		(-1000.0f)   //研究所のZ座標
 
-#define POS_OFFICE_X (-1400.0f)	 //オフィスののX座標
-#define POS_OFFICE_Y (0)	 //オフィスのエリアのY座標
-#define POS_OFFICE_Z (100.0f) //オフィスのエリアのZ座標
+#define POS_OFFICE_X (-1300.0f)	 //オフィスののX座標
+#define POS_OFFICE_Y (1.0f)	 //オフィスのエリアのY座標
+#define POS_OFFICE_Z (-800.0f) //オフィスのエリアのZ座標
 
 #define FIELD_WIDTH		(1300.0f) //床の幅
 #define FIELD_DEPTH		(1000.0f) //床の奥行
@@ -59,7 +59,7 @@ void InitField(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"Data\\TEXTURE\\collapse_field.jpeg", 
+		"Data\\TEXTURE\\iron.jpg", 
 		&g_pTextureField[1]);
 
 	//テクスチャの読み込み
@@ -85,7 +85,7 @@ void InitField(void)
 
 		if (nCnt == 1)
 		{//オフィスエリア
-			g_Field[nCnt].pos = D3DXVECTOR3(POS_OFFICE_X, POS_OFFICE_Y, POS_OFFICE_Z); //位置を初期化
+			g_Field[nCnt].pos = D3DXVECTOR3(POS_COLLAPSE_X, POS_COLLAPSE_Y, POS_COLLAPSE_Z); //位置を初期化
 
 			g_Field[nCnt].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //向きを初期化
 		}
@@ -99,7 +99,7 @@ void InitField(void)
 
 		if (nCnt == 3)
 		{//崩壊エリア
-			g_Field[nCnt].pos = D3DXVECTOR3(POS_COLLAPSE_X, POS_COLLAPSE_Y, POS_COLLAPSE_Z); //位置を初期化
+			g_Field[nCnt].pos = D3DXVECTOR3(POS_OFFICE_X, POS_OFFICE_Y, POS_OFFICE_Z); //位置を初期化
 
 			g_Field[nCnt].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //向きを初期化
 		}
