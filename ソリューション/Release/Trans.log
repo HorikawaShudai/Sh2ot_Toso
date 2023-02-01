@@ -1,2 +1,30 @@
-﻿  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー\Sh2ot_Toso\ソリューション\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+﻿  Billboard.cpp
+  camera.cpp
+  enemy.cpp
+  exit.cpp
+  Fade.cpp
+  field.cpp
+  game.cpp
+  keyUI.cpp
+  life.cpp
+  main.cpp
+  meshcylinder.cpp
+  meshdome.cpp
+  object00.cpp
+  player.cpp
+  playerBG.cpp
+playerBG.cpp(437): warning C4477: 'fscanf' : 書式文字列 '%d' には、型 'int *' の引数が必要ですが、可変個引数 1 は型 'bool *' です
+  PlayNumberSelect.cpp
+  score.cpp
+  stamina.cpp
+  Thunder.cpp
+  time.cpp
+  コンパイル中...
+  title.cpp
+  コード生成しています。
+  141 of 342 functions (41.2%) were compiled, the rest were copied from previous compilation.
+    11 functions were new in current compilation
+    82 functions had inline decision re-evaluated but remain unchanged
+  コード生成が終了しました。
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)

@@ -498,7 +498,7 @@ void Uninit3DTitle(void)
 {
 	UninitCamera();
 
-	UpdateLight();
+	UninitLight();
 
 	UninitMeshDome();
 
