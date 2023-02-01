@@ -77,6 +77,7 @@ void InitTitle(void)
 		g_aTitlePos[nCntTitle] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	}
 	g_CurrentNumberTitle = 0;
+	bPress = false;
 
 	for (nCntTitle = 0; nCntTitle < NUM_TEX; nCntTitle++)
 	{//テクスチャ読み込み
@@ -153,7 +154,7 @@ void UpdateTitle(void)
 	{//現在の選択番号が0の場合
 		SetFade(MODE_NUMBERSELECT);			//モードの設定(モード選択画面に移行)
 	}
-	else if (g_CurrentNumberTitle == 1)
+	else if (g_CurrentNumberTitle == 1 && pCamera->posV.z == 550.0f)
 	{//現在の選択番号が1の場合
 		SetFade(MODE_TITLE);		//モードの設定(ランキング画面に移行)
 	}

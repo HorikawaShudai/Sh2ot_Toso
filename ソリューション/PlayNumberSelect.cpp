@@ -398,7 +398,7 @@ void Init3DSelect(void)
 
 	InitLight();
 
-	InitPlayerBG();
+	//InitPlayerBG();
 
 	//タイトル用マップの初期化
 	InitObjectBG();
@@ -414,7 +414,7 @@ void Uninit3DSelect(void)
 
 	UninitLight();
 
-	UninitPlayerBG();
+	//UninitPlayerBG();
 
 	//タイトル用マップの終了
 	UninitObjectBG();
@@ -427,7 +427,7 @@ void Update3DSelect(void)
 
 	UpdateLight();
 
-	UpdatePlayerBG();
+	//UpdatePlayerBG();
 
 	//タイトル用マップの更新
 	UpdateObjectBG();
@@ -438,7 +438,7 @@ void Draw3DSelect(void)
 {
 	SetCamera(4);
 
-	DrawPlayerBG();
+	//DrawPlayerBG();
 
 	//タイトル用マップの描画
 	DrawObjectBG();
