@@ -11,6 +11,10 @@
 #include "game.h"
 #include "debugproc.h"
 #include "camera.h"
+#include "playerBG.h"
+#include "light.h"
+#include "objectBG.h"
+#include "stage.h"
 
 //***********************************
 //マクロ定義
@@ -391,24 +395,53 @@ void PlayerSelect(void)
 void Init3DSelect(void)
 {
 	InitCamera();
+
+	InitLight();
+
+	InitPlayerBG();
+
+	//タイトル用マップの初期化
+	InitObjectBG();
+
+	//ステージの読み込み
+	SetStage(1);
 }
 
 //終了
 void Uninit3DSelect(void)
 {
 	UninitCamera();
+
+	UninitLight();
+
+	UninitPlayerBG();
+
+	//タイトル用マップの終了
+	UninitObjectBG();
 }
 
 //更新
 void Update3DSelect(void)
 {
 	UpdateCamera();
+
+	UpdateLight();
+
+	UpdatePlayerBG();
+
+	//タイトル用マップの更新
+	UpdateObjectBG();
 }
 
 //描画
 void Draw3DSelect(void)
 {
 	SetCamera(4);
+
+	DrawPlayerBG();
+
+	//タイトル用マップの描画
+	DrawObjectBG();
 }
 
 //========================================================================
@@ -417,12 +450,4 @@ void Draw3DSelect(void)
 PlayNumberSelect GetPlayNumberSelect(void)
 {
 	return g_PlayNumberSelect;
-}
-
-//========================================================================
-// プレイ人数の取得
-//========================================================================
-int GetPlayNumber(void)
-{
-	return g_PlayNumberSelect.CurrentSelectNumber + 1;
 }

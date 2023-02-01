@@ -1,3 +1,4 @@
-﻿  title.cpp
+﻿  playerBG.cpp
+c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\playerbg.cpp(437): warning C4477: 'fscanf' : 書式文字列 '%d' には、型 'int *' の引数が必要ですが、可変個引数 1 は型 'bool *' です
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
