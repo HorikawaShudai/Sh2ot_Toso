@@ -11,20 +11,24 @@
 //マクロ変数
 #define MAX_FIELD (4)  //床の最大数
 
-#define POS_INSTITUTE_X (-100.0f) //研究所のX位置
-#define POS_INSTITUTE_Z (100.0f) //研究所のZ位置
+#define POS_INSTITUTE_X (1200.0f) //生物収容所のX位置
+#define POS_INSTITUTE_Y (0)		//生物収容所のY位置
+#define POS_INSTITUTE_Z (800.0f) //生物収容所のZ位置
 
-#define POS_OFFICE_X	(100.0f) //オフィスのX位置
-#define POS_OFFICE_Z	(100.0f) //オフィスのZ位置
+#define POS_COLLAPSE_X	(-1000.0f) //崩壊X位置
+#define POS_COLLAPSE_Y	(0) //崩壊Y位置
+#define POS_COLLAPSE_Z	(-1500.0f) //崩壊Z位置
 
-#define POS_CAMP_X		(-100.0f)   //生物収容所のX座標
-#define POS_CAMP_Z		(-100.0f)   //生物収容所のZ座標
+#define POS_CAMP_X		(1200.0f)   //研究所のX座標
+#define POS_CAMP_Y		(-0)   //研究所のY座標
+#define POS_CAMP_Z		(-1000.0f)   //研究所のZ座標
 
-#define POS_COLLAPSE_X  (100.0f)	 //崩壊エリアのX座標
-#define POS_COLLAPSE_Z	(-100.0f) //崩壊エリアのZ座標
+#define POS_OFFICE_X (-1400.0f)	 //オフィスののX座標
+#define POS_OFFICE_Y (0)	 //オフィスのエリアのY座標
+#define POS_OFFICE_Z (100.0f) //オフィスのエリアのZ座標
 
-#define FIELD_WIDTH		(100.0f) //床の幅
-#define FIELD_DEPTH		(100.0f) //床の奥行
+#define FIELD_WIDTH		(1300.0f) //床の幅
+#define FIELD_DEPTH		(1000.0f) //床の奥行
 
 //床の構造体
 typedef struct
@@ -50,22 +54,22 @@ void InitField(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"Data\\TEXTURE\\carpet.jpg",
+		"Data\\TEXTURE\\thumb_concrete.jpg", 
 		&g_pTextureField[0]);
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"Data\\TEXTURE\\tile.jpg",
+		"Data\\TEXTURE\\collapse_field.jpeg", 
 		&g_pTextureField[1]);
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"Data\\TEXTURE\\thumb_concrete.jpg",
+		"Data\\TEXTURE\\tile.jpg", 
 		&g_pTextureField[2]);
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"Data\\TEXTURE\\art_002.jpg",
+		"Data\\TEXTURE\\field_office.jpg", 
 		&g_pTextureField[3]);
 
 	//各種変数の初期化
@@ -74,28 +78,28 @@ void InitField(void)
 		//床の位置
 		if (nCnt == 0)
 		{//研究エリア
-			g_Field[nCnt].pos = D3DXVECTOR3(POS_INSTITUTE_X, 0.0f, POS_INSTITUTE_Z); //位置を初期化
+			g_Field[nCnt].pos = D3DXVECTOR3(POS_INSTITUTE_X, POS_INSTITUTE_Y, POS_INSTITUTE_Z); //位置を初期化
 
 			g_Field[nCnt].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //向きを初期化
 		}
 
 		if (nCnt == 1)
 		{//オフィスエリア
-			g_Field[nCnt].pos = D3DXVECTOR3(POS_OFFICE_X, 0.0f, POS_OFFICE_Z); //位置を初期化
+			g_Field[nCnt].pos = D3DXVECTOR3(POS_OFFICE_X, POS_OFFICE_Y, POS_OFFICE_Z); //位置を初期化
 
 			g_Field[nCnt].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //向きを初期化
 		}
 
 		if (nCnt == 2)
 		{//生物収容所エリア
-			g_Field[nCnt].pos = D3DXVECTOR3(POS_CAMP_X, 0.0f, POS_CAMP_Z); //位置を初期化
+			g_Field[nCnt].pos = D3DXVECTOR3(POS_CAMP_X, POS_CAMP_Y, POS_CAMP_Z); //位置を初期化
 
 			g_Field[nCnt].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //向きを初期化
 		}
 
 		if (nCnt == 3)
 		{//崩壊エリア
-			g_Field[nCnt].pos = D3DXVECTOR3(POS_COLLAPSE_X, 0.0f, POS_COLLAPSE_Z); //位置を初期化
+			g_Field[nCnt].pos = D3DXVECTOR3(POS_COLLAPSE_X, POS_COLLAPSE_Y, POS_COLLAPSE_Z); //位置を初期化
 
 			g_Field[nCnt].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //向きを初期化
 		}

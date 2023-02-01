@@ -15,6 +15,13 @@
 #define CYLINDER_RADIUS (2500.0f)	//円の半径
 #define MAX_TEX  (2)				//テクスチャの最大数
 
+typedef enum
+{
+	TEX_CLOUD = 0,
+	TEX_BLACK,
+	TEX_MAX,
+}MODE_TEX;
+
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureMeshDome[MAX_TEX];				//テクスチャのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffMeshDome;			//頂点バッファのポインタ
@@ -22,6 +29,7 @@ LPDIRECT3DINDEXBUFFER9 g_pIndxBuffMeshDome;			//インデックスバッファへのポインタ
 D3DXVECTOR3 g_posMeshDome;							//位置
 D3DXVECTOR3 g_rotMeshDome;							//向き
 D3DXMATRIX g_mtxWorldMeshDome;						//ワールドマトリックス
+MODE_TEX g_TexMode;  //テクスチャの情報
 
 //====================================================================
 //メッシュドームの初期化処理
@@ -36,8 +44,14 @@ void InitMeshDome(void)
 		"data\\TEXTURE\\rain_cloud2.jpeg",
 		&g_pTextureMeshDome[0]);
 
+	//テクスチャの読み込み
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\title_bg.jpg",
+		&g_pTextureMeshDome[1]);
+
 	g_posMeshDome = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	g_rotMeshDome = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	g_TexMode = TEX_CLOUD; //テクスチャの情報を初期化
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * HEIGHT_SIZE * WAIGHT_SIZE,
@@ -216,12 +230,23 @@ void DrawMeshDome(void)
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_3D);
 
-	for (int nCnt = 0; nCnt < MAX_TEX; nCnt++)
+	switch (g_TexMode)
 	{
-		//テクスチャの設定
-		pDevice->SetTexture(0, g_pTextureMeshDome[nCnt]);
-	}
+	case TEX_CLOUD:
 
+		//テクスチャの設定
+		pDevice->SetTexture(0, g_pTextureMeshDome[0]);
+
+		break;
+
+	case TEX_BLACK:
+
+		//テクスチャの設定
+		pDevice->SetTexture(0, g_pTextureMeshDome[1]);
+
+		break;
+	}
+	
 	//ポリゴンの描画
 	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP,
 		0,
@@ -236,11 +261,5 @@ void DrawMeshDome(void)
 //==============================
 void ChangeMeshDome(void)
 {
-	//デバイスの所得
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
-	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\title_bg.jpg",
-		&g_pTextureMeshDome[1]);
+	g_TexMode = TEX_BLACK;
 }
