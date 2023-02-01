@@ -882,16 +882,33 @@ int GetCurrentCamera(void)
 //=========================================
 void MoveTitleCamera(int nCnt)
 {
+	D3DXVECTOR3 PosVDiff;
+	D3DXVECTOR3 PosRDiff;
+
+	if (g_aCamera[4].posV.x <= -15.0f)
+	{
+		PosVDiff = D3DXVECTOR3(0.0f, 50.0f, 150.0f) - g_aCamera[4].posV;
+
+		PosRDiff = D3DXVECTOR3(0.0f, 10.0f, 10000.0) - g_aCamera[4].posR;
+
+		g_aCamera[4].posV += PosVDiff * 0.01f;
+
+		g_aCamera[4].posR += PosRDiff * 0.01f;
+	}
+
 	if (nCnt <= 0)
 	{//カメラの位置を移動用に変える処理
-		g_aCamera[4].posV = D3DXVECTOR3(0.0f, 50.0f, 150.0f);
-		g_aCamera[4].posR = D3DXVECTOR3(0.0f, 10.0f, 10000.0);
+		/*g_aCamera[4].posV = D3DXVECTOR3(0.0f, 50.0f, 150.0f);
+		g_aCamera[4].posR = D3DXVECTOR3(0.0f, 10.0f, 10000.0);*/
 
 		//エンターを押したことにする
 		bEnter = true;
 	}
 
-	g_aCamera[4].posV.z += nCnt;
+	else
+	{//0以外の数値が入ってきた場合
+		g_aCamera[4].posV.z += nCnt;
+	}
 	
 	PrintDebugProc("%f , %f , %f", g_aCamera[4].posV.x, g_aCamera[4].posV.y, g_aCamera[4].posV.z);
 }
