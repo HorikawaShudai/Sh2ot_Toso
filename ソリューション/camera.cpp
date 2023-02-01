@@ -215,8 +215,8 @@ void UpdateCamera(void)
 		if (g_bTpsCamera == false)
 		{//使っていない場合
 			//プレイヤー視点カメラ
-			//PlayerFpsCamera();
-			ResPlayerCamera();
+			PlayerFpsCamera();
+			//ResPlayerCamera();
 		}
 		else
 		{//使われている場合
@@ -839,7 +839,12 @@ void Titlecamera(void)
 //人数選択画面
 void SelectNumberCamera(void)
 {
-
+	g_aCamera[4].posV = D3DXVECTOR3(0.0f, 200.0f, -500.0f);
+	g_aCamera[4].posR = D3DXVECTOR3(0.0f, 150.0f, 0.0);
+	g_aCamera[4].vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	g_aCamera[4].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	g_aCamera[4].rot2 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	g_aCamera[4].rot2Old = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 }
 
 //リザルト画面

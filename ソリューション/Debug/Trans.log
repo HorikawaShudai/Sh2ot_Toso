@@ -1,3 +1,17 @@
+<<<<<<< HEAD
 ﻿  meshcylinder.cpp
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+<<<<<<< HEAD
+﻿  playerBG.cpp
+c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\playerbg.cpp(437): warning C4477: 'fscanf' : 書式文字列 '%d' には、型 'int *' の引数が必要ですが、可変個引数 1 は型 'bool *' です
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+﻿  enemy.cpp
+cl : コマンド ライン warning D9028: 簡易リビルド時のエラーです、通常のビルドに戻します
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+>>>>>>> 7f0712c83a9160d7f92ac73a7b73a4f8a4ed42a5
+>>>>>>> 9feef3fe0587a2c30ddaaefdc4772701e984c318

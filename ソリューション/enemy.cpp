@@ -10,6 +10,7 @@
 #define ENEMY_SPEED (3.0f) //“G‚ÌˆÚ“®‘¬“x
 
 #define	DETECT_SPEED (5.0f) //’T¸”g‚Ì‘¬“x
+#define	PLAYERDETECT_SPEED (15.0f) //’T¸”g‚Ì‘¬“x
 
 //ƒOƒ[ƒoƒ‹•Ï”
 LPDIRECT3DTEXTURE9 g_pTextureENEMY[64][ENEMY_NTYPE_MAX] = {};	//ƒeƒNƒXƒ`ƒƒ‚Ìƒ|ƒCƒ“ƒ^
@@ -153,7 +154,17 @@ void UpdateEnemy(void)
 			g_Enemy[nCntObject].StateCount--;
 			g_Enemy[nCntObject].nCoolTurn--;
 			CollisionObject00(&g_Enemy[nCntObject].pos, &g_Enemy[nCntObject].posOld, &g_Enemy[nCntObject].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30);
-			g_Enemy[nCntObject].rot.y += (g_Enemy[nCntObject].rotDest.y - g_Enemy[nCntObject].rot.y) * 0.3f;
+
+			//Šp“x‚ÌC³i‰üj
+			if (g_Enemy[nCntObject].rotDest.y - g_Enemy[nCntObject].rot.y > D3DX_PI || g_Enemy[nCntObject].rotDest.y - g_Enemy[nCntObject].rot.y < -D3DX_PI)
+			{
+				g_Enemy[nCntObject].rot.y -= (g_Enemy[nCntObject].rotDest.y - g_Enemy[nCntObject].rot.y) * 0.03f;
+			}
+			else
+			{
+				g_Enemy[nCntObject].rot.y += (g_Enemy[nCntObject].rotDest.y - g_Enemy[nCntObject].rot.y) * 0.3f;
+			}
+		
 
 			//•ûŒü“]Š·‚ÌƒN[ƒ‹ƒ^ƒCƒ€
 			if (g_Enemy[nCntObject].nCoolTurn <= 0)
@@ -204,25 +215,25 @@ void UpdateEnemy(void)
 
 			if (g_Enemy[nCntObject].state == ENEMYSTATE_SEEK)
 			{//’Tõó‘Ô‚ÌŽž
-				g_Enemy[nCntObject].rot.y += D3DX_PI / 20;
+				g_Enemy[nCntObject].rot.y += D3DX_PI / 10;
 			}
 
 			//Šp“x‚Ì³í‰»
-			if (g_Enemy[nCntObject].rot.y > D3DX_PI)
+			if (g_Enemy[nCntObject].rot.y >= D3DX_PI)
 			{
-				g_Enemy[nCntObject].rot.y = -D3DX_PI;
+				g_Enemy[nCntObject].rot.y += -D3DX_PI*2;
 			}
-			else if (g_Enemy[nCntObject].rot.y < -D3DX_PI)
+			else if (g_Enemy[nCntObject].rot.y <= -D3DX_PI)
 			{
-				g_Enemy[nCntObject].rot.y = D3DX_PI;
+				g_Enemy[nCntObject].rot.y += D3DX_PI*2;
 			}
 			if (g_Enemy[nCntObject].rotDest.y > D3DX_PI)
 			{
-				g_Enemy[nCntObject].rotDest.y = -D3DX_PI;
+				g_Enemy[nCntObject].rotDest.y += -D3DX_PI*2;
 			}
 			else if (g_Enemy[nCntObject].rotDest.y < -D3DX_PI)
 			{
-				g_Enemy[nCntObject].rotDest.y = D3DX_PI;
+				g_Enemy[nCntObject].rotDest.y += D3DX_PI*2;
 			}
 
 			if (g_Enemy[nCntObject].StateCount <= 0)
@@ -645,7 +656,7 @@ bool DetectPlayer(D3DXVECTOR3*postg, D3DXVECTOR3 pos, float fmoveRot, int nLife)
 	while (1)
 	{
 		Detect.posOld = Detect.pos;
-		Detect.move = D3DXVECTOR3(sinf(Detect.fmoveRot)*DETECT_SPEED, 0.0f, cosf(Detect.fmoveRot)*DETECT_SPEED);
+		Detect.move = D3DXVECTOR3(sinf(Detect.fmoveRot)*PLAYERDETECT_SPEED, 0.0f, cosf(Detect.fmoveRot)*PLAYERDETECT_SPEED);
 		Detect.pos += Detect.move;
 		Detect.nLife--;
 
