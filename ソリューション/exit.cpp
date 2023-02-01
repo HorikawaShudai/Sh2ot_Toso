@@ -13,6 +13,11 @@
 #include "PlayNumberSelect.h"
 #include "Fade.h"
 
+const char *c_apExit[] =					//モデルデータ読み込み
+{
+	"Data\\MODEL\\Sample_exit.x",
+};
+
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureExit[64][EXIT_TYPE_MAX] = {};		//テクスチャのポインタ
 LPD3DXMESH g_pMeshExit[EXIT_TYPE_MAX] = {};					//メッシュ(頂点情報)へのポインタ
@@ -21,11 +26,7 @@ DWORD g_dwNumMatExit[EXIT_TYPE_MAX] = {};						//マテリアルの数
 
 EXIT g_Exit[MAX_EXIT];					//オブジェクト00の情報
 int g_KeyCount;							//必要になる鍵のカウント
-
-const char *c_apExit[] =					//モデルデータ読み込み
-{
-	"Data\\MODEL\\Sample_exit.x",
-};
+bool g_bExitFade;
 
 //====================================================================
 //オブジェクト00の初期化処理
@@ -49,6 +50,7 @@ void InitExit(void)
 		g_Exit[nCntExit].bExitOK = false;
 		g_Exit[nCntExit].nType = EXIT_TYPE_ITEM;
 	}
+	g_bExitFade = false;
 
 	g_KeyCount = 0;
 
@@ -123,13 +125,18 @@ void UninitExit(void)
 //====================================================================
 void UpdateExit(void)
 {
-	/*for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
+	for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
 	{
 		if (g_Exit[nCntExit].bUse == true && g_Exit[nCntExit].bExitOK == true)
 		{
-			SetFade(MODE_RESULT);
+			if (g_bExitFade == false)
+			{
+				SetFade(MODE_RESULT);
+
+				g_bExitFade = true;
+			}
 		}
-	}*/
+	}
 }
 
 //====================================================================

@@ -69,40 +69,44 @@ void UninitFade(void)
 //======================================
 void UpdateFade(void)
 {
+	//バッファをロック
 	VERTEX_2D * pVtx;
-		g_pVtxBuffFade->Lock(0, 0, (void**)&pVtx, 0);
+	g_pVtxBuffFade->Lock(0, 0, (void**)&pVtx, 0);
+
 	if (g_fade != FADE_NONE)
 	{
 		if (g_fade == FADE_IN)
 		{
-			g_colorFade.a -= 0.01f;
+			g_colorFade.a -= 0.02f;
+
 			if (g_colorFade.a <= 0.0f)
 			{
 				g_colorFade.a = 0.0f;
 				g_fade = FADE_NONE;
 			}
 		}
-		if (g_fade == FADE_OUT)
+		else if (g_fade == FADE_OUT)
 		{
-			g_colorFade.a += 0.01f;
+			g_colorFade.a += 0.02f;
+
 			if (g_colorFade.a >= 1.0f)
 			{
 				g_colorFade.a = 1.0f;
 				g_fade = FADE_NONE;
-				SetMode(g_ModeNext);
 				g_fade = FADE_IN;
+				SetMode(g_ModeNext);
 			}
 		}
 		
-
 		pVtx[0].col = g_colorFade;
 		pVtx[1].col = g_colorFade;
 		pVtx[2].col = g_colorFade;
 		pVtx[3].col = g_colorFade;
-
 		
 	}
-g_pVtxBuffFade->Unlock();
+
+	//バッファをアンロック
+	g_pVtxBuffFade->Unlock();
 }
 
 //======================================
