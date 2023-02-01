@@ -11,6 +11,7 @@
 #include "debugproc.h"
 #include "exit.h"
 #include "PlayNumberSelect.h"
+#include "Fade.h"
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureExit[64][EXIT_TYPE_MAX] = {};		//テクスチャのポインタ
@@ -122,14 +123,13 @@ void UninitExit(void)
 //====================================================================
 void UpdateExit(void)
 {
-	for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
+	/*for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
 	{
-		if (g_Exit[nCntExit].bUse == true)
+		if (g_Exit[nCntExit].bUse == true && g_Exit[nCntExit].bExitOK == true)
 		{
-
-
+			SetFade(MODE_RESULT);
 		}
-	}
+	}*/
 }
 
 //====================================================================
@@ -147,45 +147,48 @@ void DrawExit(void)
 
 	for (nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
 	{
-		//ワールドマトリックスの初期化
-		D3DXMatrixIdentity(&g_Exit[nCntExit].mtxWorld);
-
-		//向きを反映
-		D3DXMatrixRotationYawPitchRoll(&mtxRot, g_Exit[nCntExit].rot.y, g_Exit[nCntExit].rot.x, g_Exit[nCntExit].rot.z);
-
-		D3DXMatrixMultiply(&g_Exit[nCntExit].mtxWorld, &g_Exit[nCntExit].mtxWorld, &mtxRot);
-
-		//位置を反映
-		D3DXMatrixTranslation(&mtxTrans, g_Exit[nCntExit].pos.x, g_Exit[nCntExit].pos.y, g_Exit[nCntExit].pos.z);
-
-		D3DXMatrixMultiply(&g_Exit[nCntExit].mtxWorld, &g_Exit[nCntExit].mtxWorld, &mtxTrans);
-
-		//ワールドマトリックスの設定
-		pDevice->SetTransform(D3DTS_WORLD, &g_Exit[nCntExit].mtxWorld);
-
-		//現在のマテリアルを所得
-		pDevice->GetMaterial(&matDef);
-
-		//マテリアルデータへのポインタを所得する
-		pMat = (D3DXMATERIAL*)g_pBuffMatExit[g_Exit[nCntExit].nType]->GetBufferPointer();
-
-		for (int nCntMat = 0; nCntMat < (int)g_dwNumMatExit[g_Exit[nCntExit].nType]; nCntMat++)
+		if (g_Exit[nCntExit].bExitOK == false)
 		{
+			//ワールドマトリックスの初期化
+			D3DXMatrixIdentity(&g_Exit[nCntExit].mtxWorld);
 
-			//マテリアルの設定
-			pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
+			//向きを反映
+			D3DXMatrixRotationYawPitchRoll(&mtxRot, g_Exit[nCntExit].rot.y, g_Exit[nCntExit].rot.x, g_Exit[nCntExit].rot.z);
 
-			if (g_Exit[nCntExit].bUse == true)
+			D3DXMatrixMultiply(&g_Exit[nCntExit].mtxWorld, &g_Exit[nCntExit].mtxWorld, &mtxRot);
+
+			//位置を反映
+			D3DXMatrixTranslation(&mtxTrans, g_Exit[nCntExit].pos.x, g_Exit[nCntExit].pos.y, g_Exit[nCntExit].pos.z);
+
+			D3DXMatrixMultiply(&g_Exit[nCntExit].mtxWorld, &g_Exit[nCntExit].mtxWorld, &mtxTrans);
+
+			//ワールドマトリックスの設定
+			pDevice->SetTransform(D3DTS_WORLD, &g_Exit[nCntExit].mtxWorld);
+
+			//現在のマテリアルを所得
+			pDevice->GetMaterial(&matDef);
+
+			//マテリアルデータへのポインタを所得する
+			pMat = (D3DXMATERIAL*)g_pBuffMatExit[g_Exit[nCntExit].nType]->GetBufferPointer();
+
+			for (int nCntMat = 0; nCntMat < (int)g_dwNumMatExit[g_Exit[nCntExit].nType]; nCntMat++)
 			{
-				//テクスチャの設定
-				pDevice->SetTexture(0, g_pTextureExit[nCntMat][g_Exit[nCntExit].nType]);
 
-				//オブジェクト00(パーツ)の描画
-				g_pMeshExit[g_Exit[nCntExit].nType]->DrawSubset(nCntMat);
+				//マテリアルの設定
+				pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
+
+				if (g_Exit[nCntExit].bUse == true)
+				{
+					//テクスチャの設定
+					pDevice->SetTexture(0, g_pTextureExit[nCntMat][g_Exit[nCntExit].nType]);
+
+					//オブジェクト00(パーツ)の描画
+					g_pMeshExit[g_Exit[nCntExit].nType]->DrawSubset(nCntMat);
+				}
 			}
+			//保存していたマテリアルを戻す
+			pDevice->SetMaterial(&matDef);
 		}
-		//保存していたマテリアルを戻す
-		pDevice->SetMaterial(&matDef);
 	}
 }
 
@@ -194,6 +197,7 @@ void DrawExit(void)
 //====================================================================
 void UpdateEditExit(void)
 {
+	
 }
 
 //====================================================================
@@ -227,7 +231,7 @@ void SetExit(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 			DWORD dwSizeFVF;	//頂点フォーマットのサイズ
 			BYTE *pVtxBuff;		//頂点バッファへのポインタ
 
-								//頂点数を所得
+			//頂点数を所得
 			nNumVtx = g_pMeshExit[nType]->GetNumVertices();
 
 			//頂点フォーマットのサイズを所得
@@ -290,7 +294,7 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 
 	for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
 	{
-		if (g_Exit[nCntExit].bUse == true)
+		if (g_Exit[nCntExit].bUse == true && g_Exit[nCntExit].bExitOK == false)
 		{
 			if (pPos->x >= g_Exit[nCntExit].pos.x - Size
 				&& pPos->x <= g_Exit[nCntExit].pos.x + Size
@@ -303,7 +307,7 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 				bHit = true;
 				g_KeyCount++;
 
-				if (g_KeyCount > PlayNumber.CurrentSelectNumber)
+				if (g_KeyCount > PlayNumber.CurrentSelectNumber - 1)
 				{//鍵が４つ以上使われた場合
 					g_Exit[nCntExit].bExitOK = true;
 				}

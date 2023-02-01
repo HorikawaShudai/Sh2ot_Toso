@@ -270,6 +270,7 @@ void UpdatePlayer0(void)
 		{//Eキー入力
 			if (CollisionExit(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nSelectPlayer) == true)
 			{//鍵を入手出来た場合
+
 				g_aPlayer[nSelectPlayer].bGetKey = false;	//鍵を入手してない状態にする
 				SetKeyUI(nSelectPlayer, false);			//鍵UIを非表示にする
 			}
