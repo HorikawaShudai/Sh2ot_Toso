@@ -1,42 +1,18 @@
 ﻿  Billboard.cpp
-  Effect.cpp
-  Fade.cpp
-  PlayModeSelect.cpp
-  PlayNumberSelect.cpp
   camera.cpp
-  debugproc.cpp
-  edit.cpp
-  enemy.cpp
-  exit.cpp
   field.cpp
-  game.cpp
-  input.cpp
-  key.cpp
-  keyUI.cpp
-  life.cpp
-  light.cpp
   main.cpp
   meshcylinder.cpp
   meshdome.cpp
-  コンパイル中...
-  meshwall.cpp
-  object00.cpp
-  objectBG.cpp
-  particle.cpp
-  player.cpp
   playerBG.cpp
-playerBG.cpp(437): warning C4477: 'fscanf' : 書式文字列 '%d' には、型 'int *' の引数が必要ですが、可変個引数 1 は型 'bool *' です
-  result.cpp
-  score.cpp
-  score_item.cpp
-  stage.cpp
-  stamina.cpp
-  time.cpp
+playerBG.cpp(460): warning C4477: 'fscanf' : 書式文字列 '%d' には、型 'int *' の引数が必要ですが、可変個引数 1 は型 'bool *' です
+  PlayNumberSelect.cpp
+  Thunder.cpp
   title.cpp
   コード生成しています。
-  141 of 345 functions (40.9%) were compiled, the rest were copied from previous compilation.
-    15 functions were new in current compilation
-    68 functions had inline decision re-evaluated but remain unchanged
+  92 of 353 functions (26.1%) were compiled, the rest were copied from previous compilation.
+    8 functions were new in current compilation
+    99 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)

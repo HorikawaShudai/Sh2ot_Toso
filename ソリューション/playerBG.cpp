@@ -15,6 +15,7 @@
 #include "input.h"
 #include "debugproc.h"
 #include "fade.h"
+#include "PlayNumberSelect.h"
 #include <stdio.h>
 
 #define PLAYERBG_SPEED (3.25f)			//プレイヤーのスピード
@@ -137,8 +138,7 @@ void UninitPlayerBG(void)
 {
 	for (int nCntPlayerBG = 0; nCntPlayerBG < MAX_PLAYREBG; nCntPlayerBG++)
 	{
-
-		for (int nCntTex = 0; nCntTex < 64; nCntTex++)
+		for (int nCntTex = 0; nCntTex < 100; nCntTex++)
 		{
 			//テクスチャの破棄
 			if (g_pTexturePlayerBG[nCntTex][nCntPlayerBG] != NULL)
@@ -172,6 +172,18 @@ void UninitPlayerBG(void)
 //====================================================================
 void UpdatePlayerBG(void)
 {
+	PlayNumberSelect nPlayerNumber = GetPlayNumberSelect();
+
+	for (int nCntPlayerBG = 0; nCntPlayerBG < MAX_PLAYREBG; nCntPlayerBG++)
+	{
+		g_PlayerBG[nCntPlayerBG].bUse = false;
+	}
+	for (int nCntPlayerBG = 0; nCntPlayerBG <= nPlayerNumber.CurrentSelectNumber; nCntPlayerBG++)
+	{
+		g_PlayerBG[nCntPlayerBG].bUse = true;
+	}
+
+
 	for (int nCntPlayerBG = 0; nCntPlayerBG < MAX_PLAYREBG; nCntPlayerBG++)
 	{
 		g_PlayerBG[nCntPlayerBG].posOld = g_PlayerBG[nCntPlayerBG].pos;
