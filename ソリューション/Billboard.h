@@ -24,4 +24,5 @@ void InitBillboard(void);
 void UninitBillboard(void);
 void UpdateBillboard(void);
 void DrawBillboard(void);
+bool GetbRain(void);
 #endif

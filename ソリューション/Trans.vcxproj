@@ -182,6 +182,7 @@
     <ClCompile Include="score_item.cpp" />
     <ClCompile Include="stage.cpp" />
     <ClCompile Include="stamina.cpp" />
+    <ClCompile Include="Thunder.cpp" />
     <ClCompile Include="time.cpp" />
     <ClCompile Include="title.cpp" />
   </ItemGroup>
@@ -217,6 +218,7 @@
     <ClInclude Include="score_item.h" />
     <ClInclude Include="stage.h" />
     <ClInclude Include="stamina.h" />
+    <ClInclude Include="Thunder.h" />
     <ClInclude Include="time.h" />
     <ClInclude Include="title.h" />
   </ItemGroup>

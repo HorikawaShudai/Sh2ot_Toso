@@ -9,8 +9,8 @@
 
 //マクロ定義
 #define MAX_RAIN	(2000)	//雨の最大数
-#define RAIN_HEIGHT	(15.0f)	//雨の高さ
-#define RAIN_WIDTH	(0.5f)	//雨の幅
+#define RAIN_HEIGHT	(10.0f)	//雨の高さ
+#define RAIN_WIDTH	(0.2f)	//雨の幅
 
 //グローバル変数宣言
 LPDIRECT3DTEXTURE9 g_pTextureBillboard = NULL;			//テクスチャのポインタ
@@ -244,10 +244,10 @@ void InitRain(void)
 		pVtx[3].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
 		//頂点カラー
-		pVtx[0].col = D3DXCOLOR(0.5f, 0.5f, 1.0f, 0.3f);
-		pVtx[1].col = D3DXCOLOR(0.5f, 0.5f, 1.0f, 0.3f);
-		pVtx[2].col = D3DXCOLOR(0.5f, 0.5f, 1.0f, 0.3f);
-		pVtx[3].col = D3DXCOLOR(0.5f, 0.5f, 1.0f, 0.3f);
+		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
+		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
+		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
+		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
 		pVtx += 4;
 	}
 	//頂点バッファをアンロックする
@@ -359,4 +359,9 @@ void SetRain(void)
 			break;
 		}
 	}
+}
+
+bool GetbRain(void)
+{
+	return g_bRain;
 }
