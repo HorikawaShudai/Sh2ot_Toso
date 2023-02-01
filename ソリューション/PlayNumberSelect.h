@@ -36,6 +36,5 @@ void UninitPlayNumberSelect(void);
 void UpdatePlayNumberSelect(void);
 void DrawPlayNumberSelect(void);
 PlayNumberSelect GetPlayNumberSelect(void);
-int GetPlayNumber(void);
 
 #endif
