@@ -244,8 +244,10 @@ void UpdatePlayer0(void)
 	//アイテムとの当たり判定
 	CollisionItem(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f, nSelectPlayer);
 
-//出口との当たり判定
+	//出口との当たり判定
 	CollisionExi(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
+
+	//プレイヤーと敵との距離
 	PlayerDistance(nSelectPlayer);
 
 	//鍵の入手処理
@@ -631,7 +633,7 @@ void UpdatePlayer1(void)
 			CollisionItem(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f, nCntPlayer);
 
 			//出口との当たり判定
-			CollisionExi(&g_aPlayer[nCnt].pos, &g_aPlayer[nCnt].posOld, &g_aPlayer[nCnt].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
+			CollisionExi(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
 
 			//鍵の入手処理
 			if (g_aPlayer[nCntPlayer].bGetKey == false)
