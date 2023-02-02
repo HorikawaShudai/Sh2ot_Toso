@@ -50,6 +50,7 @@ typedef struct
 
 	bool bUse;									//プレイヤーが使用できるかどうか
 	bool bGetKey;								//プレイヤーが鍵を持っているかどうか
+	bool bAppear;								//敵を視認できるかどうか
 }Player;
 
 //プロトタイプ宣言
@@ -58,8 +59,10 @@ void UninitPlayer(void);
 void UpdatePlayer(void);
 void PlayerMoveInput(int nCnt);
 void PlayerRotUpdate(int nCnt);
+void PlayerDistance(int nCnt);
 void PlayerHit(int nCnt,int nDamage);
 int CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY, float MinY);
+bool CollisionCircle(D3DXVECTOR3 pos1, D3DXVECTOR3 pos2, float nRadiusOut, float nRadiusIn, float MinY, float MaxY);
 void DrawPlayer(void);
 Player * GetPlayer(void);
 #endif

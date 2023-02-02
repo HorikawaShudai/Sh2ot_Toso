@@ -25,4 +25,5 @@ void UninitBillboard(void);
 void UpdateBillboard(void);
 void DrawBillboard(void);
 bool GetbRain(void);
+void SetBoolBillboard(bool bRain, bool bMoon);
 #endif
