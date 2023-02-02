@@ -139,10 +139,6 @@ void InitMoon(void)
 //====================================================
 void UpdateMoon(void)
 {
-	if (GetKeyboardTrigger(DIK_RETURN) == true)
-	{
-		g_Moon.bUse = true;
-	}
 }
 
 //====================================================
@@ -158,7 +154,7 @@ void DrawMoon(void)
 		D3DXMATRIX mtxTrans;	//計算用マトリックス
 		D3DXMATRIX mtxView;		//ビューマトリックスの取得用
 
-								//Zテストを有効にする
+		//Zテストを有効にする
 		pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
 		pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
@@ -258,11 +254,6 @@ void InitRain(void)
 //================================================================
 void UpdateRain(void)
 {
-
-	if (GetKeyboardTrigger(DIK_RETURN) == true)
-	{
-		g_bRain = false;
-	}
 	if (g_bRain == true)
 	{
 		SetRain();
@@ -361,7 +352,19 @@ void SetRain(void)
 	}
 }
 
+//=========================================================================
+//雨の表示取得処理
+//=========================================================================
 bool GetbRain(void)
 {
 	return g_bRain;
+}
+
+//=========================================================================
+//ビルボードの表示設定
+//=========================================================================
+void SetBoolBillboard(bool bRain, bool bMoon)
+{
+	g_bRain = bRain;
+	g_Moon.bUse = bMoon;
 }

@@ -1,8 +1,22 @@
-<<<<<<< HEAD
-﻿  player.cpp
+﻿  EscapeRanking.cpp
+stage.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+score_item.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+result.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+PlayModeSelect.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+PlayNumberSelect.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+playerBG.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+particle.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+objectBG.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+meshwall.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+light.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+key.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+input.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+field.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+Fade.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+exit.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+Effect.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+edit.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+debugproc.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+Billboard.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-﻿  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
->>>>>>> 80e993ba22fdc91b68a8dd6489e1cf91e0400d0e
