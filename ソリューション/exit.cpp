@@ -15,7 +15,9 @@
 
 const char *c_apExit[] =					//モデルデータ読み込み
 {
-	"Data\\MODEL\\Sample_exit.x",
+	"Data\\MODEL\\Exit\\BigDoorFrame.x",
+	"Data\\MODEL\\Exit\\BigDoor_L.x",
+	"Data\\MODEL\\Exit\\BigDoor_R.x",
 };
 
 //グローバル変数
@@ -26,7 +28,7 @@ DWORD g_dwNumMatExit[EXIT_TYPE_MAX] = {};						//マテリアルの数
 
 EXIT g_Exit[MAX_EXIT];					//オブジェクト00の情報
 int g_KeyCount;							//必要になる鍵のカウント
-bool g_bExitFade;
+bool g_bExitFade[MAX_EXIT];
 
 //====================================================================
 //オブジェクト00の初期化処理
@@ -48,9 +50,10 @@ void InitExit(void)
 		g_Exit[nCntExit].vtxMax = D3DXVECTOR3(-1000.0f, -1000.0f, -1000.0f);
 		g_Exit[nCntExit].bUse = false;
 		g_Exit[nCntExit].bExitOK = false;
-		g_Exit[nCntExit].nType = EXIT_TYPE_ITEM;
+		g_Exit[nCntExit].nType = EXIT_TYPE_BIGFRAME;
+
+		g_bExitFade[nCntExit] = false;
 	}
-	g_bExitFade = false;
 
 	g_KeyCount = 0;
 
@@ -127,13 +130,20 @@ void UpdateExit(void)
 {
 	for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
 	{
-		if (g_Exit[nCntExit].bUse == true && g_Exit[nCntExit].bExitOK == true)
+		/*if (g_Exit[nCntExit].bUse == true && g_Exit[nCntExit].bExitOK == true)
 		{
-			if (g_bExitFade == false)
+			if (g_bExitFade[nCntExit] == false)
 			{
 				SetFade(MODE_RESULT);
 
-				g_bExitFade = true;
+				g_bExitFade[nCntExit] = true;
+			}
+		}*/
+		if (g_Exit[nCntExit].bUse == true && g_Exit[nCntExit].nType == 1)
+		{
+			if (g_Exit[nCntExit].bExitOK == true)
+			{
+				g_Exit[nCntExit].rot.y += 0.01f;
 			}
 		}
 	}
@@ -318,6 +328,7 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 				{//鍵が４つ以上使われた場合
 					g_Exit[nCntExit].bExitOK = true;
 				}
+
 				break;
 			}
 		}

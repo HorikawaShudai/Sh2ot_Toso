@@ -11,8 +11,10 @@
 
 typedef enum
 {
-	EXIT_TYPE_ITEM = 0,
-	EXIT_TYPE_MAX,
+	EXIT_TYPE_BIGFRAME = 0,			//СеВЂВҐФаВћШg
+	EXIT_TYPE_BIGDOOR_R,			//СеВЂВҐФа ЙEС§
+	EXIT_TYPE_BIGDOOR_L,			//СеВЂВҐФа НґС§
+	EXIT_TYPE_MAX,					//ЧсЛУВћН≈Се
 }EXIT_TYPE;
 
 //МЃВћН\СҐСћ
