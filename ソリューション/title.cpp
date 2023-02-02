@@ -17,6 +17,7 @@
 #include "meshcylinder.h"
 #include "object00.h"
 #include "Billboard.h"
+#include "Thunder.h"
 
 //**********************************************
 //マクロ定義
@@ -59,6 +60,8 @@ LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffTitle = NULL;			//頂点バッファへのポインタ
 D3DXVECTOR3 g_aTitlePos[NUM_TITLEPOS];			//タイトル画面に配置される場所
 int g_CurrentNumberTitle;						//現在選択されている番号(モード選択用)
 bool bPress;
+int g_nFadeCnt;
+bool bTitle;
 
 //============================================================================
 //初期化処理
@@ -79,6 +82,8 @@ void InitTitle(void)
 	g_CurrentNumberTitle = 0;
 
 	bPress = false;
+	g_nFadeCnt = 0;
+	bTitle = false;
 
 	for (nCntTitle = 0; nCntTitle < NUM_TEX; nCntTitle++)
 	{//テクスチャ読み込み
@@ -144,7 +149,12 @@ void UninitTitle(void)
 void UpdateTitle(void)
 {
 	Camera *pCamera = GetCamera();
-
+	g_nFadeCnt++;
+	if (g_nFadeCnt == 220)
+	{
+		SetThunder();
+		bTitle = true;
+	}
 	//3D
 	Update3DTitle();
 
@@ -178,23 +188,25 @@ void DrawTitle(void)
 {
 	//3D
 	Draw3DTitle();
-
-	//デバイスへのポインタを取得
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
-	//頂点フォーマットの設定
-	pDevice->SetFVF(FVF_VERTEX_2D);
-
-	//頂点バッファをデータストリームに設定
-	pDevice->SetStreamSource(0, g_pVtxBuffTitle, 0, sizeof(VERTEX_2D));
-
-	for (int nCntTitle = 0; nCntTitle < NUM_TEX; nCntTitle++)
+	if (bTitle == true)
 	{
-		//テクスチャの設定
-		pDevice->SetTexture(0, g_apTextureTitle[nCntTitle]);
+		//デバイスへのポインタを取得
+		LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-		//ポリゴンの描画
-		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCntTitle * 4, 2);
+		//頂点フォーマットの設定
+		pDevice->SetFVF(FVF_VERTEX_2D);
+
+		//頂点バッファをデータストリームに設定
+		pDevice->SetStreamSource(0, g_pVtxBuffTitle, 0, sizeof(VERTEX_2D));
+
+		for (int nCntTitle = 0; nCntTitle < NUM_TEX; nCntTitle++)
+		{
+			//テクスチャの設定
+			pDevice->SetTexture(0, g_apTextureTitle[nCntTitle]);
+
+			//ポリゴンの描画
+			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCntTitle * 4, 2);
+		}
 	}
 }
 
@@ -454,7 +466,8 @@ void UpdateTitleSelect(void)
 				//テクスチャを変える処理
 				ChangeMeshDome();
 				ChangeMeshCylinder();
-
+				SetThunder();
+				bTitle = false;
 				//カメラの移動処理
 				MoveTitleCamera(0);
 
@@ -483,6 +496,8 @@ void Init3DTitle(void)
 
 	InitBillboard();		//ビルボードの初期化処理
 
+	InitThunder();
+
 	//タイトル用マップの初期化
 	InitObjectBG();
 
@@ -495,7 +510,7 @@ void Uninit3DTitle(void)
 {
 	UninitCamera();
 
-	UpdateLight();
+	UninitLight();
 
 	UninitMeshDome();
 
@@ -505,6 +520,7 @@ void Uninit3DTitle(void)
 
 	UninitBillboard();		//ビルボードの終了処理
 
+	UninitThunder();
 
 	//タイトル用マップの終了
 	UninitObjectBG();
@@ -525,6 +541,8 @@ void Update3DTitle(void)
 
 	UpdateBillboard();
 
+	UpdateThunder();
+
 	//タイトル用マップの更新
 	UpdateObjectBG();
 }
@@ -542,7 +560,11 @@ void Draw3DTitle(void)
 
 	DrawBillboard();	//月の描画処理（ビルボード）
 
+
 	//タイトル用マップの描画
 	DrawObjectBG();
+
+	DrawThunder();
+
 }
 
