@@ -11,6 +11,7 @@
 #include "debugproc.h"
 #include "exit.h"
 #include "PlayNumberSelect.h"
+#include "PlayModeSelect.h"
 #include "Fade.h"
 
 const char *c_apExit[] =					//モデルデータ読み込み
@@ -31,6 +32,8 @@ DWORD g_dwNumMatExit[EXIT_TYPE_MAX] = {};						//マテリアルの数
 
 EXIT g_Exit[MAX_EXIT];					//オブジェクト00の情報
 int g_KeyCount;							//必要になる鍵のカウント
+int g_AwayCnt;							//脱出可能になるまでのカウント
+
 bool g_bExitFade[MAX_EXIT];
 
 //====================================================================
@@ -40,6 +43,8 @@ void InitExit(void)
 {
 	//デバイスの所得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+
+	PlayerModeSelect PlayMode = GetPlayModeSelect();
 
 	for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
 	{
@@ -52,11 +57,10 @@ void InitExit(void)
 		g_Exit[nCntExit].bUse = false;
 		g_Exit[nCntExit].bExitOK = false;
 		g_Exit[nCntExit].nType = EXIT_TYPE_BIGFRAME;
-
-	/*	g_bExitFade[nCntExit]. = false;*/
 	}
 
 	g_KeyCount = 0;
+	g_AwayCnt = 0;
 
 	//Xファイルの読み込み
 	for (int nCntObj = 0; nCntObj < EXIT_TYPE_MAX; nCntObj++)
@@ -91,10 +95,12 @@ void InitExit(void)
 		}
 	}
 
-	
-	SetExit(D3DXVECTOR3(-1000.0f, 0.0f, -700.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), EXIT_TYPE_BIGFRAME);
-	SetExit(D3DXVECTOR3(-930.0f, 0.0f, -700.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f), EXIT_TYPE_BIGDOOR_R);
-	SetExit(D3DXVECTOR3(-1070.0f, 0.0f, -700.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f), EXIT_TYPE_BIGDOOR_L);
+	if (PlayMode.CurrentModeNumber == 0)
+	{
+		SetExit(D3DXVECTOR3(-1000.0f, 0.0f, -700.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), EXIT_TYPE_BIGFRAME);
+		SetExit(D3DXVECTOR3(-935.0f, 0.0f, -700.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f), EXIT_TYPE_BIGDOOR_R);
+		SetExit(D3DXVECTOR3(-1065.0f, 0.0f, -700.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f), EXIT_TYPE_BIGDOOR_L);
+	}
 	
 }
 
@@ -217,13 +223,12 @@ void DoorOpen(void)
 		{
 			for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
 			{
-				if (g_Exit[nCntExit].nType == 1)
+				if (g_Exit[nCntExit].nType == 1 && g_Exit[nCntExit].rot.y >= 1.5f)
 				{
 					g_Exit[1].rot.y -= 0.01f;
 
 					g_Exit[2].rot.y += 0.01f;
 				}
-
 			}
 		}
 	}
@@ -347,6 +352,8 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 				if (g_KeyCount > PlayNumber.CurrentSelectNumber - 1)
 				{//鍵がプレイヤー人数分使われた場合
 					g_Exit[nCntExit].bExitOK = true;
+
+					g_AwayCnt++;
 				}
 
 				break;
@@ -354,6 +361,66 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 		}
 	}
 
+	return bHit;
+}
+
+//====================================================================
+//プレイヤーとの当たり判定処理
+//====================================================================
+bool CollisionExi(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size)
+{
+	bool bHit = false;
+
+	for (int nCntExit = 0; nCntExit < MAX_OBJECT00; nCntExit++)
+	{
+		if (g_Exit[nCntExit].bUse == true && g_Exit[nCntExit].bExitOK == false)
+		{
+			if (
+				(
+					pPos->y + max.y >= g_Exit[nCntExit].pos.y + g_Exit[nCntExit].vtxMin.y && pPosOld->y + max.y< g_Exit[nCntExit].pos.y + g_Exit[nCntExit].vtxMin.y ||
+					pPos->y + min.y <= g_Exit[nCntExit].pos.y + g_Exit[nCntExit].vtxMax.y && pPosOld->y + min.y > g_Exit[nCntExit].pos.y + g_Exit[nCntExit].vtxMax.y) &&
+				pPos->x + Size >= g_Exit[nCntExit].pos.x + g_Exit[nCntExit].vtxMin.x &&
+				pPos->x - Size <= g_Exit[nCntExit].pos.x + g_Exit[nCntExit].vtxMax.x &&
+				pPos->z + Size >= g_Exit[nCntExit].pos.z + g_Exit[nCntExit].vtxMin.z &&
+				pPos->z - Size <= g_Exit[nCntExit].pos.z + g_Exit[nCntExit].vtxMax.z
+				)
+			{//壁とプレイヤーが当たった(X軸)
+				pPos->y = pPosOld->y;
+				pMove->y = 0.0f;
+				bHit = true;
+			}
+
+			if (
+				(
+					pPos->z + Size >= g_Exit[nCntExit].pos.z + g_Exit[nCntExit].vtxMin.z && pPosOld->z + Size < g_Exit[nCntExit].pos.z + g_Exit[nCntExit].vtxMin.z ||
+					pPos->z - Size <= g_Exit[nCntExit].pos.z + g_Exit[nCntExit].vtxMax.z && pPosOld->z - Size > g_Exit[nCntExit].pos.z + g_Exit[nCntExit].vtxMax.z) &&
+				pPos->x + Size >= g_Exit[nCntExit].pos.x + g_Exit[nCntExit].vtxMin.x &&
+				pPos->x - Size <= g_Exit[nCntExit].pos.x + g_Exit[nCntExit].vtxMax.x &&
+				pPos->y + max.y >= g_Exit[nCntExit].pos.y + g_Exit[nCntExit].vtxMin.y&&
+				pPos->y + min.y <= g_Exit[nCntExit].pos.y + g_Exit[nCntExit].vtxMax.y
+				)
+			{//壁とプレイヤーが当たった(Z軸)
+				pPos->z = pPosOld->z;
+				pMove->z = 0.0f;
+				bHit = true;
+			}
+
+			if (
+				(
+					pPos->x + Size >= g_Exit[nCntExit].pos.x + g_Exit[nCntExit].vtxMin.x && pPosOld->x + Size < g_Exit[nCntExit].pos.x + g_Exit[nCntExit].vtxMin.x ||
+					pPos->x - Size <= g_Exit[nCntExit].pos.x + g_Exit[nCntExit].vtxMax.x && pPosOld->x - Size > g_Exit[nCntExit].pos.x + g_Exit[nCntExit].vtxMax.x) &&
+				pPos->z + Size >= g_Exit[nCntExit].pos.z + g_Exit[nCntExit].vtxMin.z &&
+				pPos->z - Size <= g_Exit[nCntExit].pos.z + g_Exit[nCntExit].vtxMax.z &&
+				pPos->y + max.y >= g_Exit[nCntExit].pos.y + g_Exit[nCntExit].vtxMin.y &&
+				pPos->y + min.y <= g_Exit[nCntExit].pos.y + g_Exit[nCntExit].vtxMax.y
+				)
+			{//壁とプレイヤーが当たった(X軸)
+				pPos->x = pPosOld->x;
+				pMove->x = 0.0f;
+				bHit = true;
+			}
+		}
+	}
 	return bHit;
 }
 

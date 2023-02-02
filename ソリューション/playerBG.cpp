@@ -62,7 +62,7 @@ void InitPlayerBG(void)
 
 	for (int nCntPlayerBG = 0; nCntPlayerBG < MAX_PLAYREBG; nCntPlayerBG++)
 	{
-		g_PlayerBG[nCntPlayerBG].pos = D3DXVECTOR3(nCntPlayerBG * 100.0f, 200.0f, 100.0f);
+		g_PlayerBG[nCntPlayerBG].pos = D3DXVECTOR3(-200.0f + nCntPlayerBG * 100.0f, 0.0f, 0.0f);
 		g_PlayerBG[nCntPlayerBG].posOld = g_PlayerBG[nCntPlayerBG].pos;
 		g_PlayerBG[nCntPlayerBG].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_PlayerBG[nCntPlayerBG].NormarizeMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -380,6 +380,7 @@ void LoadMotion(int nPlayerBG)
 		char aCharaEndMessage[128] = {};	//キャラエンドメッセージ
 		char aEndMessage[128] = {};			//終了メッセージ
 		char aType[128] = {};				//終了メッセージ
+		char aBool[128] = {};				//bool変換用メッセージ
 
 											// 読み込み開始-----------------------------------------------------
 		while (1)
@@ -457,7 +458,8 @@ void LoadMotion(int nPlayerBG)
 							if (strcmp(&aNameMessage[0], "LOOP") == 0)
 							{
 								fscanf(pFile, "%s", &aString[0]);
-								fscanf(pFile, "%d", &g_PlayerBG[nPlayerBG].aMotionInfo[nCntMotion].bLoop);	//ループするかどうかを設定
+								fscanf(pFile, "%s", &aBool[0]);	//ループするかどうかを設定
+								g_PlayerBG[nPlayerBG].aMotionInfo[nCntMotion].bLoop = (strcmp(&aBool[0], "1") == 0 ? true : false);			//bool型の書き方
 							}
 							if (strcmp(&aNameMessage[0], "NUM_KEY") == 0)
 							{
@@ -552,7 +554,6 @@ void LoadMotion(int nPlayerBG)
 	{//ファイルが開けなかった場合
 		printf("***ファイルを開けませんでした***\n");
 	}
-	//bool = (strcmp(&bool[0], "true") == 0 ? true : false);			//bool型の書き方
 }
 
 //====================================================================

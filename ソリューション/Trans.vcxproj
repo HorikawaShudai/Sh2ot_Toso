@@ -173,6 +173,7 @@
     <ClCompile Include="meshcylinder.cpp" />
     <ClCompile Include="meshdome.cpp" />
     <ClCompile Include="meshwall.cpp" />
+    <ClCompile Include="NumberUI.cpp" />
     <ClCompile Include="object00.cpp" />
     <ClCompile Include="objectBG.cpp" />
     <ClCompile Include="particle.cpp" />
@@ -180,6 +181,8 @@
     <ClCompile Include="playerBG.cpp" />
     <ClCompile Include="PlayNumberSelect.cpp" />
     <ClCompile Include="PlayModeSelect.cpp" />
+    <ClCompile Include="RankingNumber.cpp" />
+    <ClCompile Include="RankingUI.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="score_item.cpp" />
@@ -188,6 +191,7 @@
     <ClCompile Include="Thunder.cpp" />
     <ClCompile Include="time.cpp" />
     <ClCompile Include="title.cpp" />
+    <ClCompile Include="VillainRanking.cpp" />
     <ClCompile Include="VillainResult.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -213,6 +217,7 @@
     <ClInclude Include="meshcylinder.h" />
     <ClInclude Include="meshdome.h" />
     <ClInclude Include="meshwall.h" />
+    <ClInclude Include="NumberUI.h" />
     <ClInclude Include="object00.h" />
     <ClInclude Include="objectBG.h" />
     <ClInclude Include="particle.h" />
@@ -220,6 +225,8 @@
     <ClInclude Include="playerBG.h" />
     <ClInclude Include="PlayNumberSelect.h" />
     <ClInclude Include="PlayModeSelect.h" />
+    <ClInclude Include="RankingNumber.h" />
+    <ClInclude Include="RankingUI.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="score_item.h" />
@@ -228,6 +235,7 @@
     <ClInclude Include="Thunder.h" />
     <ClInclude Include="time.h" />
     <ClInclude Include="title.h" />
+    <ClInclude Include="VillainRanking.h" />
     <ClInclude Include="VillainResult.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

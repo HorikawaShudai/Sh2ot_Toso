@@ -3,8 +3,8 @@
 
 //マクロ定義
 #define MAX_MODEL (32)	//モデルの最大数
-#define MAX_PARTS (13)	//パーツの総数
-#define MAX_KEY (6)	//キーの総数
+#define MAX_PARTS (32)	//パーツの総数
+#define MAX_KEY (10)	//キーの総数
 
 //プレイヤーのモーション
 typedef enum
