@@ -160,7 +160,7 @@ void UpdateEnemy(void)
 			g_Enemy[nCntObject].posOld = g_Enemy[nCntObject].pos;
 			g_Enemy[nCntObject].StateCount--;
 			g_Enemy[nCntObject].nCoolTurn--;
-			CollisionObject00(&g_Enemy[nCntObject].pos, &g_Enemy[nCntObject].posOld, &g_Enemy[nCntObject].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30);
+		
 
 			//角度の修正（改）
 			if (g_Enemy[nCntObject].rotDest.y - g_Enemy[nCntObject].rot.y > D3DX_PI || g_Enemy[nCntObject].rotDest.y - g_Enemy[nCntObject].rot.y < -D3DX_PI)
@@ -196,6 +196,9 @@ void UpdateEnemy(void)
 			if (g_Enemy[nCntObject].state == ENEMYSTATE_PATROL)
 			{
 				EnemyPatrol(nCntObject);
+
+				CollisionObject00(&g_Enemy[nCntObject].pos, &g_Enemy[nCntObject].posOld, &g_Enemy[nCntObject].move, D3DXVECTOR3(-1.0f, -1.0f, -1.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f), 1.0f);
+
 			}
 
 			if (g_Enemy[nCntObject].state == ENEMYSTATE_CHASE)
@@ -599,7 +602,7 @@ float DetectWall(D3DXVECTOR3 pos, float fmoveRot, int nLife)
 		Detect.pos += Detect.move;
 		Detect.nLife--;
 		
-		if (CollisionObject00(&Detect.pos, &Detect.posOld, &Detect.move, D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f) == true)
+		if (CollisionObject00(&Detect.pos, &Detect.posOld, &Detect.move, D3DXVECTOR3(-1.0f, -1.0f, -1.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f), 1.0f) == true)
 		{//壁に当たったとき
 		 //距離を割り出す
 			float fDis = ((powf(Detect.Startpos.x, 2.0f) + powf(Detect.Startpos.z, 2.0f)) - (powf(Detect.pos.x, 2.0f) + powf(Detect.pos.z, 2.0f)));
@@ -691,28 +694,28 @@ void EnemyPatrol(int nEnemy)
 		PrintDebugProc("Enemy%d前:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceFront);
 
 		//自身の進む方向に壁があった場合
-		if ((g_Enemy[nEnemy].MoveState == ENEMYMOVE_N && g_Enemy[nEnemy].fDistanceN <= 150.0f) ||
+		if (((g_Enemy[nEnemy].MoveState == ENEMYMOVE_N && g_Enemy[nEnemy].fDistanceN <= 150.0f) ||
 			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_S && g_Enemy[nEnemy].fDistanceS <= 150.0f) ||
 			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_E && g_Enemy[nEnemy].fDistanceE <= 150.0f) ||
 			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_W && g_Enemy[nEnemy].fDistanceW <= 150.0f) ||
-			 g_Enemy[nEnemy].MoveState == ENEMYMOVE_NONE)
+			 g_Enemy[nEnemy].MoveState == ENEMYMOVE_NONE))
 		{
 			EnemyDirection(nEnemy);
-			g_Enemy[nEnemy].nCoolTurn = 60;
+			g_Enemy[nEnemy].nCoolTurn = 30;
 
 		}
 		
 
 
-		if (g_Enemy[nEnemy].fDistanceLeft >= 400.0f && 	g_Enemy[nEnemy].nCoolTurn <= 0)
+		if (g_Enemy[nEnemy].fDistanceLeft >= 500.0f && 	g_Enemy[nEnemy].nCoolTurn <= 0)
 		{
 			EnemyDirection(nEnemy);
-			g_Enemy[nEnemy].nCoolTurn = 180;
+			g_Enemy[nEnemy].nCoolTurn = 120;
 		}
-		if (g_Enemy[nEnemy].fDistanceRight >= 400.0f&& 	g_Enemy[nEnemy].nCoolTurn <= 0)
+		if (g_Enemy[nEnemy].fDistanceRight >= 500.0f&& 	g_Enemy[nEnemy].nCoolTurn <= 0)
 		{
 			EnemyDirection(nEnemy);
-			g_Enemy[nEnemy].nCoolTurn = 180;
+			g_Enemy[nEnemy].nCoolTurn = 120;
 		}
 
 		if (g_Enemy[nEnemy].MoveState == ENEMYMOVE_N)
@@ -734,11 +737,11 @@ void EnemyPatrol(int nEnemy)
 		
 		if (g_Enemy[nEnemy].MoveState != ENEMYMOVE_NONE)
 		{//移動処理
-			if (g_Enemy[nEnemy].fDistanceLeft <= 150.0f)
+			if (g_Enemy[nEnemy].fDistanceLeft <= 300.0f && g_Enemy[nEnemy].fDistanceLeft <= g_Enemy[nEnemy].fDistanceRight)
 			{
 				g_Enemy[nEnemy].pos += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED);
 			}
-			else if (g_Enemy[nEnemy].fDistanceRight <= 150.0f)
+			else if (g_Enemy[nEnemy].fDistanceRight <= 300.0f && g_Enemy[nEnemy].fDistanceRight <= g_Enemy[nEnemy].fDistanceLeft)
 			{
 				g_Enemy[nEnemy].pos += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED);
 			}
@@ -783,10 +786,11 @@ void EnemyDirection(int nEnemy)
 			g_Enemy[nEnemy].MoveState = ENEMYMOVE_NONE;
 			break;
 		}
-		else
+		else if (nCount >= 200)
 		{
 			g_Enemy[nEnemy].MoveState = ENEMYMOVE_NONE;
 			break;		//テスト中の無限ループ回避用に追加しました。
 		}
+		
 	}
 }
