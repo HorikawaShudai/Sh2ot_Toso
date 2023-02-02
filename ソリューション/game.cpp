@@ -311,6 +311,9 @@ void DrawGame()
 		DrawObject00();
 		DrawObjectBG();
 
+		//出口の描画処理
+		DrawExit();
+
 		//プレイヤーの描画処理
 		DrawPlayer();
 
@@ -337,9 +340,6 @@ void DrawGame()
 
 		//エフェクトの描画処理
 		DrawEffect();
-
-		//出口の描画処理
-		DrawExit();
 	}
 
 	//ビューポートを元に戻す

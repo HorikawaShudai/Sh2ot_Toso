@@ -248,14 +248,18 @@ void UpdatePlayer0(void)
 	//オブジェクトとの当たり判定
 	CollisionObject00(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
 
+	//アイテムとの当たり判定
 	CollisionItem(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f, nSelectPlayer);
+
+	//出口との当たり判定
+	CollisionExi(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
 
 	//鍵の入手処理
 	if (g_aPlayer[nSelectPlayer].bGetKey == false)
 	{//プレイヤーが鍵を持っていない場合
 		if (GetKeyboardTrigger(DIK_E) == true || GetGamepadPress(BUTTON_A, nSelectPlayer) || GetGamepadPress(BUTTON_B, nSelectPlayer))
 		{//Eキー入力
-			if (CollisionKey(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nSelectPlayer) == true)
+			if (CollisionKey(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 40.0f, nSelectPlayer) == true)
 			{//鍵を入手出来た場合
 				g_aPlayer[nSelectPlayer].bGetKey = true;	//鍵を入手状態にする
 				SetKeyUI(nSelectPlayer, true);				//鍵UIを表示する
@@ -639,7 +643,11 @@ void UpdatePlayer1(void)
 			//オブジェクトとの当たり判定
 			CollisionObject00(&g_aPlayer[nCnt].pos, &g_aPlayer[nCnt].posOld, &g_aPlayer[nCnt].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
 
+			//アイテムとの当たり判定
 			CollisionItem(&g_aPlayer[nCnt].pos, &g_aPlayer[nCnt].posOld, &g_aPlayer[nCnt].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f, nCnt);
+
+			//出口との当たり判定
+			CollisionExi(&g_aPlayer[nCnt].pos, &g_aPlayer[nCnt].posOld, &g_aPlayer[nCnt].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
 
 			//鍵の入手処理
 			if (g_aPlayer[nCnt].bGetKey == false)
