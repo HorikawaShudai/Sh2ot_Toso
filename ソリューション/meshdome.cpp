@@ -12,7 +12,7 @@
 #define WAIGHT_CENTER (0.5f)		//横の原点(0.0f～1.0f)
 #define HEIGHT_CENTER (1.0f)		//縦の原点(0.0f～1.0f)
 #define CYLINDER_HEIGHT (150.0f)	//壁一枚の高さ
-#define CYLINDER_RADIUS (2500.0f)	//円の半径
+#define CYLINDER_RADIUS (2800.0f)	//円の半径
 #define MAX_TEX  (2)				//テクスチャの最大数
 
 typedef enum

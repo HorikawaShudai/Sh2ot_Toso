@@ -1,59 +1,33 @@
 <<<<<<< HEAD
-﻿  edit.cpp
-  exit.cpp
-  game.cpp
-  main.cpp
-  player.cpp
-  stage.cpp
-  コード生成しています。
-  13 of 342 functions ( 3.8%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    10 functions had inline decision re-evaluated but remain unchanged
-  コード生成が終了しました。
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
-=======
-<<<<<<< HEAD
-﻿  enemy.cpp
-=======
-<<<<<<< HEAD
-﻿  edit.cpp
-  game.cpp
-  stage.cpp
-  コード生成しています。
-  2 of 342 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    2 functions had inline decision re-evaluated but remain unchanged
-  コード生成が終了しました。
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Trans.exe
+﻿  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
 =======
-﻿  camera.cpp
-  EscapeClearResult.cpp
-  EscapeOverResult.cpp
-  EscapeRanking.cpp
-  exit.cpp
-  Fade.cpp
-  field.cpp
-  keyUI.cpp
-  main.cpp
-  player.cpp
-  PlayNumberSelect.cpp
-  Thunder.cpp
-  title.cpp
+﻿  EscapeRanking.cpp
   VillainResult.cpp
->>>>>>> 149ae587096fff23b00b717d51ea548c4e64a8be
   コード生成しています。
-  2 of 342 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
+  0 of 347 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+    16 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
-<<<<<<< HEAD
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
-=======
+Billboard.obj : warning LNK4099: PDB 'vc140.pdb' が 'Billboard.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+debugproc.obj : warning LNK4099: PDB 'vc140.pdb' が 'debugproc.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+edit.obj : warning LNK4099: PDB 'vc140.pdb' が 'edit.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+Effect.obj : warning LNK4099: PDB 'vc140.pdb' が 'Effect.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+exit.obj : warning LNK4099: PDB 'vc140.pdb' が 'exit.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+Fade.obj : warning LNK4099: PDB 'vc140.pdb' が 'Fade.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+field.obj : warning LNK4099: PDB 'vc140.pdb' が 'field.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+input.obj : warning LNK4099: PDB 'vc140.pdb' が 'input.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+key.obj : warning LNK4099: PDB 'vc140.pdb' が 'key.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+light.obj : warning LNK4099: PDB 'vc140.pdb' が 'light.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+meshwall.obj : warning LNK4099: PDB 'vc140.pdb' が 'meshwall.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+objectBG.obj : warning LNK4099: PDB 'vc140.pdb' が 'objectBG.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+particle.obj : warning LNK4099: PDB 'vc140.pdb' が 'particle.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+playerBG.obj : warning LNK4099: PDB 'vc140.pdb' が 'playerBG.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PlayNumberSelect.obj : warning LNK4099: PDB 'vc140.pdb' が 'PlayNumberSelect.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PlayModeSelect.obj : warning LNK4099: PDB 'vc140.pdb' が 'PlayModeSelect.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+result.obj : warning LNK4099: PDB 'vc140.pdb' が 'result.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+score_item.obj : warning LNK4099: PDB 'vc140.pdb' が 'score_item.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+stage.obj : warning LNK4099: PDB 'vc140.pdb' が 'stage.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
->>>>>>> cacd6dc65991cfc63e107833c4282aa162c8905f
->>>>>>> 149ae587096fff23b00b717d51ea548c4e64a8be
->>>>>>> bae24875478634923e216667521db3466755037d
+>>>>>>> 362fda7c50d0d3d33124b528d0a7f50a4d282865

@@ -78,7 +78,11 @@ const char *c_apModelObj[] =					//モデルデータ読み込み
 	"Data\\MODEL\\fence.x",
 	"Data\\MODEL\\rock2.x",
 	"Data\\MODEL\\BlackDesk.x",
-	"Data\\MODEL\\prison.x"
+	"Data\\MODEL\\prison.x",
+	"Data\\MODEL\\door_1.x",
+	"Data\\MODEL\\door_2.x",
+	"Data\\MODEL\\door_huti.x",
+
 };
 
 //====================================================================
@@ -492,7 +496,6 @@ void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 			//	g_Exit[nCntObject].vtxMin = D3DXVECTOR3(0.0f, 0.0f, -5.0f);
 			//	g_Exit[nCntObject].vtxMax = D3DXVECTOR3(100.0f, 150.0f, 5.0f);
 			//}
-
 
 			CollisionRotObject00(nCntObject);
 
