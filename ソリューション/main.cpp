@@ -11,6 +11,8 @@
 #include "Fade.h"
 #include "PlayNumberSelect.h"
 #include "PlayModeSelect.h"
+#include "VillainRanking.h"
+#include "EscapeRanking.h"
 
 //マクロ定義
 #define CLASS_NAME "WindowClass"     //ウィンドウクラスの名前
@@ -352,6 +354,10 @@ void Update(void)
 	case MODE_RESULT:
 		UpdateResult();
 		break;
+	case MODE_RANKING:
+		//UpdateVillainRanking();
+		UpdateEscapeRanking();
+		break;
 	}
 
 	UpdateFade();
@@ -383,6 +389,10 @@ void Draw(void)
 			break;
 		case MODE_RESULT:
 			DrawResult();
+			break;
+		case MODE_RANKING:
+			//DrawVillainRanking();
+			DrawEscapeRanking();
 			break;
 		}
 
@@ -435,6 +445,10 @@ void SetMode(MODE mode)
 	case MODE_RESULT:
 		UninitResult();
 		break;
+	case MODE_RANKING:
+		//UninitVillainRanking();
+		UninitEscapeRanking();
+		break;
 	}
 	switch (mode)
 	{
@@ -452,6 +466,10 @@ void SetMode(MODE mode)
 		break;
 	case MODE_RESULT:
 		InitResult();
+		break;
+	case MODE_RANKING:
+		//InitVillainRanking();
+		InitEscapeRanking();
 		break;
 	}
 	g_mode = mode;

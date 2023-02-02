@@ -2,6 +2,9 @@
 #include "camera.h"
 #include "light.h"
 #include "stage.h"
+#include "numberUI.h"
+#include "RankingUI.h"
+#include "RankingNumber.h"
 
 //グローバル変数宣言
 
@@ -17,7 +20,13 @@ void InitVillainRanking()
 	InitLight();
 
 	//ステージの読み込み
-	SetStage(2);
+	SetStage(3);
+
+	InitNumberUI();
+
+	InitRankingUI();
+
+	InitRanKingNumber();
 }
 
 //====================================================================
@@ -30,6 +39,12 @@ void UninitVillainRanking()
 
 	//ライトの終了処理
 	UninitLight();
+
+	UninitNumberUI();
+
+	UninitRankingUI();
+
+	UninitRanKingNumber();
 }
 
 //====================================================================
@@ -42,6 +57,12 @@ void UpdateVillainRanking()
 
 	//ライトの更新処理
 	UpdateLight();
+
+	UpdateNumberUI();
+
+	UpdateRankingUI();
+
+	UpdateRanKingNumber();
 }
 
 //====================================================================
@@ -59,6 +80,12 @@ void DrawVillainRanking()
 
 	//カメラのセット処理
 	SetCamera(4);
+
+	DrawNumberUI();
+
+	DrawRankingUI();
+
+	DrawRanKingNumber();
 
 	//ビューポートを元に戻す
 	pDevice->SetViewport(&viewportDef);
