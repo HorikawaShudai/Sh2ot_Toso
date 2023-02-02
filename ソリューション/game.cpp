@@ -70,8 +70,8 @@ void InitGame()
 	//ライフの初期化処理
 	InitLife();
 
-	//注意：敵の座標はn100+50を原則とする
-	SetEnemy(D3DXVECTOR3(50.0f, 0.0f, 50.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+
+	SetEnemy(D3DXVECTOR3(300.0f, 0.0f, 500.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
 	//スコアの初期化
 	InitScore();
@@ -105,7 +105,6 @@ void InitGame()
 	SetKey(D3DXVECTOR3(150.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetKey(D3DXVECTOR3(-50.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetKey(D3DXVECTOR3(50.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	SetExit(D3DXVECTOR3(0.0f, 0.0f, -150.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
 	//ステージの読み込み
 	SetStage(0);

@@ -15,6 +15,7 @@
 #include "light.h"
 #include "objectBG.h"
 #include "stage.h"
+#include "object00.h"
 
 //***********************************
 //マクロ定義
@@ -174,7 +175,7 @@ void InitPlaySelectIcon(void)
 	{
 		if (nCntStage == 0)
 		{
-			g_PlayNumberSelect.pos = D3DXVECTOR3(300.0f, 400.0f, 0.0f);
+			g_PlayNumberSelect.pos = D3DXVECTOR3(400.0f, 200.0f, 0.0f);
 
 			//頂点座標の設定
 			pVtx[0].pos = D3DXVECTOR3(g_PlayNumberSelect.pos.x - 50.0f, g_PlayNumberSelect.pos.y, 0.0f);
@@ -201,7 +202,7 @@ void InitPlaySelectIcon(void)
 		}
 		else if (nCntStage < 5)
 		{
-			g_PlayNumberSelect.pos = D3DXVECTOR3(300.0f + 170.0f * nCntStage, 400.0f, 0.0f);
+			g_PlayNumberSelect.pos = D3DXVECTOR3(400.0f + 170.0f * nCntStage, 200.0f, 0.0f);
 
 			//頂点座標の設定
 			pVtx[0].pos = D3DXVECTOR3(g_PlayNumberSelect.pos.x - 50.0f, g_PlayNumberSelect.pos.y, 0.0f);
@@ -400,11 +401,14 @@ void Init3DSelect(void)
 
 	//InitPlayerBG();
 
+	//オブジェクトの初期化
+	InitObject00();
+
 	//タイトル用マップの初期化
 	InitObjectBG();
 
 	//ステージの読み込み
-	SetStage(1);
+	SetStage(2);
 }
 
 //終了
@@ -416,7 +420,10 @@ void Uninit3DSelect(void)
 
 	//UninitPlayerBG();
 
-	//タイトル用マップの終了
+	//オブジェクトの終了
+	UninitObject00();
+
+	//タイトル用オブジェクトの終了
 	UninitObjectBG();
 }
 
@@ -429,7 +436,10 @@ void Update3DSelect(void)
 
 	//UpdatePlayerBG();
 
-	//タイトル用マップの更新
+	//オブジェクトの更新
+	UpdateObject00();
+
+	//タイトル用オブジェクトの更新
 	UpdateObjectBG();
 }
 
@@ -440,7 +450,10 @@ void Draw3DSelect(void)
 
 	//DrawPlayerBG();
 
-	//タイトル用マップの描画
+	//オブジェクトの描画
+	DrawObject00();
+
+	//タイトル用オブジェクトの描画
 	DrawObjectBG();
 }
 

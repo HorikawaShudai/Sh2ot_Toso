@@ -15,8 +15,13 @@
 
 const char *c_apExit[] =					//モデルデータ読み込み
 {
-	"Data\\MODEL\\Sample_exit.x",
+	"Data\\MODEL\\Exit\\BigDoorFrame.x",
+	"Data\\MODEL\\Exit\\BigDoor_L.x",
+	"Data\\MODEL\\Exit\\BigDoor_R.x",
 };
+
+//プロトタイプ宣言
+void DoorOpen(void);
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureExit[64][EXIT_TYPE_MAX] = {};		//テクスチャのポインタ
@@ -26,19 +31,17 @@ DWORD g_dwNumMatExit[EXIT_TYPE_MAX] = {};						//マテリアルの数
 
 EXIT g_Exit[MAX_EXIT];					//オブジェクト00の情報
 int g_KeyCount;							//必要になる鍵のカウント
-bool g_bExitFade;
+bool g_bExitFade[MAX_EXIT];
 
 //====================================================================
 //オブジェクト00の初期化処理
 //====================================================================
 void InitExit(void)
 {
-	int nCntExit;
-
 	//デバイスの所得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	for (nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
+	for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
 	{
 		g_Exit[nCntExit].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Exit[nCntExit].posOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -48,9 +51,10 @@ void InitExit(void)
 		g_Exit[nCntExit].vtxMax = D3DXVECTOR3(-1000.0f, -1000.0f, -1000.0f);
 		g_Exit[nCntExit].bUse = false;
 		g_Exit[nCntExit].bExitOK = false;
-		g_Exit[nCntExit].nType = EXIT_TYPE_ITEM;
+		g_Exit[nCntExit].nType = EXIT_TYPE_BIGFRAME;
+
+	/*	g_bExitFade[nCntExit]. = false;*/
 	}
-	g_bExitFade = false;
 
 	g_KeyCount = 0;
 
@@ -86,6 +90,12 @@ void InitExit(void)
 			}
 		}
 	}
+
+	
+	SetExit(D3DXVECTOR3(-1000.0f, 0.0f, -700.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), EXIT_TYPE_BIGFRAME);
+	SetExit(D3DXVECTOR3(-930.0f, 0.0f, -700.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f), EXIT_TYPE_BIGDOOR_R);
+	SetExit(D3DXVECTOR3(-1070.0f, 0.0f, -700.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f), EXIT_TYPE_BIGDOOR_L);
+	
 }
 
 //====================================================================
@@ -125,18 +135,8 @@ void UninitExit(void)
 //====================================================================
 void UpdateExit(void)
 {
-	for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
-	{
-		if (g_Exit[nCntExit].bUse == true && g_Exit[nCntExit].bExitOK == true)
-		{
-			if (g_bExitFade == false)
-			{
-				SetFade(MODE_RESULT);
-
-				g_bExitFade = true;
-			}
-		}
-	}
+	//扉が開く処理
+	DoorOpen();
 }
 
 //====================================================================
@@ -154,7 +154,7 @@ void DrawExit(void)
 
 	for (nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
 	{
-		if (g_Exit[nCntExit].bExitOK == false)
+		if (g_Exit[nCntExit].bUse == true)
 		{
 			//ワールドマトリックスの初期化
 			D3DXMatrixIdentity(&g_Exit[nCntExit].mtxWorld);
@@ -195,6 +195,36 @@ void DrawExit(void)
 			}
 			//保存していたマテリアルを戻す
 			pDevice->SetMaterial(&matDef);
+		}
+	}
+}
+
+void DoorOpen(void)
+{
+	for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
+	{
+		/*if (g_Exit[nCntExit].bUse == true && g_Exit[nCntExit].bExitOK == true)
+		{
+		if (g_bExitFade[nCntExit] == false)
+		{
+		SetFade(MODE_RESULT);
+
+		g_bExitFade[nCntExit] = true;
+		}
+		}*/
+
+		if (g_Exit[nCntExit].bUse == true && g_Exit[nCntExit].bExitOK == true)
+		{
+			for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
+			{
+				if (g_Exit[nCntExit].nType == 1)
+				{
+					g_Exit[1].rot.y -= 0.01f;
+
+					g_Exit[2].rot.y += 0.01f;
+				}
+
+			}
 		}
 	}
 }
@@ -315,9 +345,10 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 				g_KeyCount++;
 
 				if (g_KeyCount > PlayNumber.CurrentSelectNumber - 1)
-				{//鍵が４つ以上使われた場合
+				{//鍵がプレイヤー人数分使われた場合
 					g_Exit[nCntExit].bExitOK = true;
 				}
+
 				break;
 			}
 		}
