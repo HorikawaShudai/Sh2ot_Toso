@@ -15,6 +15,13 @@
 #define CYLINDER_RADIUS (400.0f)	//‰~‚Ì”¼Œa
 #define MAX_TEXTURE (2)		//ƒeƒNƒXƒ`ƒƒ‚ÌÅ‘å”
 
+typedef enum
+{
+	TEX_CLOUD = 0,
+	TEX_BLACK,
+	TEX_MAX,
+}TEX_MODE;
+
 //ƒOƒ[ƒoƒ‹•Ï”
 LPDIRECT3DTEXTURE9 g_pTextureMeshCylinder[MAX_TEXTURE];				//ƒeƒNƒXƒ`ƒƒ‚Ìƒ|ƒCƒ“ƒ^
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffMeshCylinder;		//’¸“_ƒoƒbƒtƒ@‚Ìƒ|ƒCƒ“ƒ^
@@ -22,6 +29,7 @@ LPDIRECT3DINDEXBUFFER9 g_pIndxBuffMeshCylinder;		//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ
 D3DXVECTOR3 g_posMeshCylinder;							//ˆÊ’u
 D3DXVECTOR3 g_rotMeshCylinder;							//Œü‚«
 D3DXMATRIX g_mtxWorldMeshCylinder;						//ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX
+TEX_MODE g_Tex;  //ƒeƒNƒXƒ`ƒƒ‚Ìî•ñ
 
 //====================================================================
 //ƒƒbƒVƒ…ƒVƒŠƒ“ƒ_[‚Ì‰Šú‰»ˆ—
@@ -36,8 +44,14 @@ void InitMeshCylinder(void)
 		"data\\TEXTURE\\rain_cloud2.jpeg",
 		&g_pTextureMeshCylinder[0]);
 
+	//ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\title_bg.jpg",
+		&g_pTextureMeshCylinder[1]);
+
 	g_posMeshCylinder = D3DXVECTOR3(0.0f, 0.0f, 250.0f);
 	g_rotMeshCylinder = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	g_Tex = TEX_CLOUD;
 
 	//’¸“_ƒoƒbƒtƒ@‚Ì¶¬
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * HEIGHT_SIZE * WAIGHT_SIZE,
@@ -206,11 +220,23 @@ void DrawMeshCylinder(void)
 	//’¸“_ƒtƒH[ƒ}ƒbƒg‚Ìİ’è
 	pDevice->SetFVF(FVF_VERTEX_3D);
 
-	for (int nCnt = 0; nCnt < MAX_TEXTURE; nCnt++)
-	{
+	switch (g_Tex)
+	{//ƒeƒNƒXƒ`ƒƒƒ‚[ƒh‚É‚æ‚Á‚Ä•Ï‚¦‚éˆ—
+	case TEX_CLOUD:
+
 		//ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
-		pDevice->SetTexture(0, g_pTextureMeshCylinder[nCnt]);
+		pDevice->SetTexture(0, g_pTextureMeshCylinder[0]);
+
+		break;
+
+	case TEX_BLACK:
+
+		//ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
+		pDevice->SetTexture(0, g_pTextureMeshCylinder[1]);
+
+		break;
 	}
+	
 
 	//ƒ|ƒŠƒSƒ“‚Ì•`‰æ
 	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP,
@@ -226,11 +252,5 @@ void DrawMeshCylinder(void)
 //=============================================
 void ChangeMeshCylinder(void)
 {
-	//ƒfƒoƒCƒX‚ÌŠ“¾
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
-	//ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\title_bg.jpg",
-		&g_pTextureMeshCylinder[1]);
+	g_Tex = TEX_BLACK;
 }

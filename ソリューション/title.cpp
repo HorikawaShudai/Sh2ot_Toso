@@ -78,6 +78,8 @@ void InitTitle(void)
 	}
 	g_CurrentNumberTitle = 0;
 
+	bPress = false;
+
 	for (nCntTitle = 0; nCntTitle < NUM_TEX; nCntTitle++)
 	{//テクスチャ読み込み
 		D3DXCreateTextureFromFile(pDevice, c_apTitleTexName[nCntTitle], &g_apTextureTitle[nCntTitle]);
@@ -149,16 +151,22 @@ void UpdateTitle(void)
 	//選択処理
 	UpdateTitleSelect();
 
-	if (g_CurrentNumberTitle == 0 && pCamera->posV.z == 550.0f)
-	{//現在の選択番号が0の場合
-		SetFade(MODE_NUMBERSELECT);			//モードの設定(モード選択画面に移行)
-	}
-	else if (g_CurrentNumberTitle == 1)
-	{//現在の選択番号が1の場合
-		SetFade(MODE_TITLE);		//モードの設定(ランキング画面に移行)
+	FADE pFade = GetFade();
+
+	if (pFade == FADE_NONE)
+	{
+		if (g_CurrentNumberTitle == 0 && pCamera->posV.z >= 550.0f)
+		{//現在の選択番号が0の場合
+			SetFade(MODE_NUMBERSELECT);			//モードの設定(モード選択画面に移行)
+		}
+		else if (g_CurrentNumberTitle == 1 && pCamera->posV.z >= 550.0f)
+		{//現在の選択番号が1の場合
+			SetFade(MODE_TITLE);		//モードの設定(ランキング画面に移行)
+		}
 	}
 
 	//デバッグ表示
+	PrintDebugProc("%f\n", pCamera->posV.z);
 	PrintDebugProc("選択 【↑】【↓】\n");
 	PrintDebugProc("決定 【ENTER】\n");
 }
