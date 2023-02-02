@@ -858,7 +858,7 @@ void ResultCamera(void)
 //==========================================
 Camera *GetCamera(void)
 {
-		return &g_aCamera[4];
+	return &g_aCamera[4];
 }
 
 //==========================================

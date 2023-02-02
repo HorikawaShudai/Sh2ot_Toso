@@ -157,6 +157,9 @@
     <ClCompile Include="edit.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="EscapeClearResult.cpp" />
+    <ClCompile Include="EscapeOverResult.cpp" />
+    <ClCompile Include="EscapeRanking.cpp" />
     <ClCompile Include="exit.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="field.cpp" />
@@ -185,6 +188,7 @@
     <ClCompile Include="Thunder.cpp" />
     <ClCompile Include="time.cpp" />
     <ClCompile Include="title.cpp" />
+    <ClCompile Include="VillainResult.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Billboard.h" />
@@ -193,6 +197,9 @@
     <ClInclude Include="edit.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="enemy.h" />
+    <ClInclude Include="EscapeClearResult.h" />
+    <ClInclude Include="EscapeOverResult.h" />
+    <ClInclude Include="EscapeRanking.h" />
     <ClInclude Include="exit.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="field.h" />
@@ -221,6 +228,7 @@
     <ClInclude Include="Thunder.h" />
     <ClInclude Include="time.h" />
     <ClInclude Include="title.h" />
+    <ClInclude Include="VillainResult.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

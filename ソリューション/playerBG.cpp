@@ -15,6 +15,7 @@
 #include "input.h"
 #include "debugproc.h"
 #include "fade.h"
+#include "PlayNumberSelect.h"
 #include <stdio.h>
 
 #define PLAYERBG_SPEED (3.25f)			//プレイヤーのスピード
@@ -25,7 +26,7 @@
 #define MAX_PLAYREBG (4)			//背景に使うプレイヤーの最大数
 
 //グローバル変数
-LPDIRECT3DTEXTURE9 g_pTexturePlayerBG[100] = {};	//テクスチャのポインタ
+LPDIRECT3DTEXTURE9 g_pTexturePlayerBG[100][MAX_PLAYREBG] = {};	//テクスチャのポインタ
 LPD3DXMESH g_pMeshPlayerBG[32] = {};				//メッシュ(頂点情報)へのポインタ
 LPD3DXBUFFER g_pBuffMatPlayerBG[32] = {};			//マテリアルへのポインタ
 DWORD g_dwNumMatPlayerBG = 0;						//マテリアルの数
@@ -123,7 +124,7 @@ void InitPlayerBG(void)
 					//テクスチャの読み込み
 					D3DXCreateTextureFromFile(pDevice,
 						pMat[nCntMat].pTextureFilename,
-						&g_pTexturePlayerBG[nCntMat]);
+						&g_pTexturePlayerBG[nCntMat][nCntPlayerBG]);
 				}
 			}
 		}
@@ -137,6 +138,16 @@ void UninitPlayerBG(void)
 {
 	for (int nCntPlayerBG = 0; nCntPlayerBG < MAX_PLAYREBG; nCntPlayerBG++)
 	{
+		for (int nCntTex = 0; nCntTex < 100; nCntTex++)
+		{
+			//テクスチャの破棄
+			if (g_pTexturePlayerBG[nCntTex][nCntPlayerBG] != NULL)
+			{
+				g_pTexturePlayerBG[nCntTex][nCntPlayerBG]->Release();
+				g_pTexturePlayerBG[nCntTex][nCntPlayerBG] = NULL;
+			}
+		}
+
 		for (int nCntModel = 0; nCntModel < g_PlayerBG[nCntPlayerBG].nNumModel; nCntModel++)
 		{
 			//メッシュの破棄
@@ -161,6 +172,18 @@ void UninitPlayerBG(void)
 //====================================================================
 void UpdatePlayerBG(void)
 {
+	PlayNumberSelect nPlayerNumber = GetPlayNumberSelect();
+
+	for (int nCntPlayerBG = 0; nCntPlayerBG < MAX_PLAYREBG; nCntPlayerBG++)
+	{
+		g_PlayerBG[nCntPlayerBG].bUse = false;
+	}
+	for (int nCntPlayerBG = 0; nCntPlayerBG <= nPlayerNumber.CurrentSelectNumber; nCntPlayerBG++)
+	{
+		g_PlayerBG[nCntPlayerBG].bUse = true;
+	}
+
+
 	for (int nCntPlayerBG = 0; nCntPlayerBG < MAX_PLAYREBG; nCntPlayerBG++)
 	{
 		g_PlayerBG[nCntPlayerBG].posOld = g_PlayerBG[nCntPlayerBG].pos;
@@ -771,7 +794,7 @@ void DrawPlayerBG(void)
 				pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
 
 				//テクスチャの設定
-				pDevice->SetTexture(0, g_pTexturePlayerBG[nCntMat]);
+				pDevice->SetTexture(0, g_pTexturePlayerBG[nCntMat][nCntPlayerBG]);
 
 				if (g_PlayerBG[nCntPlayerBG].bUse == true)
 				{
