@@ -493,7 +493,6 @@ void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 			//	g_Object00[nCntObject].vtxMax = D3DXVECTOR3(100.0f, 150.0f, 5.0f);
 			//}
 
-
 			CollisionRotObject00(nCntObject);
 
 			break;

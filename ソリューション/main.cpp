@@ -5,7 +5,6 @@
 #include"main.h"
 #include "input.h"
 #include "debugproc.h"
-
 #include "game.h"
 #include "title.h"
 #include "result.h"
@@ -38,7 +37,7 @@ LPDIRECT3DDEVICE9 g_pD3DDevice = NULL;
 
 int g_nCountFPS = 0;
 
-MODE g_mode = MODE_TITLE;	//開始時点のモード
+MODE g_mode = MODE_NUMBERSELECT;	//開始時点のモード
 
  //=============================================
  //メイン関数

@@ -280,10 +280,12 @@ void DrawGame()
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 
+	Player *pPlayer = GetPlayer();
+
 	//現在のビューポートを取得
 	pDevice->GetViewport(&viewportDef);
 	 
-	for (int nCnt = 0; nCnt < PlayNumber.CurrentSelectNumber; nCnt++)
+	for (int nCnt = 0; nCnt < PlayNumber.CurrentSelectNumber; nCnt++,pPlayer++)
 	{
 		//カメラのセット処理
 		SetCamera(nCnt);
@@ -315,8 +317,11 @@ void DrawGame()
 		//プレイヤーの描画処理
 		DrawPlayer();
 
-		//敵の描画処理
-		DrawEnemy();
+		if (pPlayer->bAppear == true)
+		{
+			//敵の描画処理
+			DrawEnemy();
+		}
 
 		//スタミナの描画処理
 		DrawStamina();
