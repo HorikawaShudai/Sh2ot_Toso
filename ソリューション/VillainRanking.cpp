@@ -1,4 +1,4 @@
-#include "EscapeClearResult.h"
+#include "VillainRanking.h"
 #include "camera.h"
 #include "light.h"
 #include "stage.h"
@@ -6,9 +6,9 @@
 //グローバル変数宣言
 
 //====================================================================
-//透走モードのクリアリザルト画面の初期化処理
+//悪透モードのランキング画面の初期化処理
 //====================================================================
-void InitEscapeClearResult()
+void InitVillainRanking()
 {
 	//カメラの初期化処理
 	InitCamera();
@@ -21,9 +21,9 @@ void InitEscapeClearResult()
 }
 
 //====================================================================
-//透走モードのクリアリザルト画面の終了処理
+//悪透モードのランキング画面の終了処理
 //====================================================================
-void UninitEscapeClearResult()
+void UninitVillainRanking()
 {
 	//カメラの終了処理
 	UninitCamera();
@@ -33,9 +33,9 @@ void UninitEscapeClearResult()
 }
 
 //====================================================================
-//透走モードのクリアリザルト画面の更新処理
+//悪透モードのランキング画面の更新処理
 //====================================================================
-void UpdateEscapeClearResult()
+void UpdateVillainRanking()
 {
 	//カメラの更新処理
 	UpdateCamera();
@@ -45,9 +45,9 @@ void UpdateEscapeClearResult()
 }
 
 //====================================================================
-//透走モードのクリアリザルト画面の描画処理
+//悪透モードのランキング画面の描画処理
 //====================================================================
-void DrawEscapeClearResult()
+void DrawVillainRanking()
 {
 	D3DVIEWPORT9 viewportDef;
 
