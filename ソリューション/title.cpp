@@ -25,6 +25,7 @@
 #define NUM_TEX			(3)		// テクスチャの数
 #define NUM_TITLEPOS	(3)		//
 #define NUM_SELECT		(2)		//選択欄の数
+#define CAMERA_FADEPOS	(370.0f)//画面遷移するカメラ位置(Z軸)
 
 //**********************************************
 // テクスチャ名
@@ -149,27 +150,39 @@ void UninitTitle(void)
 void UpdateTitle(void)
 {
 	Camera *pCamera = GetCamera();
-	g_nFadeCnt++;
-	if (g_nFadeCnt == 220)
+	THUNDER aThunder = GetThunder();
+
+		if (bTitle == false && bPress ==false)
 	{
-		SetThunder();
-		bTitle = true;
+		g_nFadeCnt++;
+		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadPress(BUTTON_START, 0) || GetGamepadPress(BUTTON_A, 0))
+		{//決定キー(ENTERキー)が押された
+			g_nFadeCnt = 219;
+		}
+		else if (g_nFadeCnt == 220)
+		{
+			SetThunder();
+			bTitle = true;
+		}
 	}
 	//3D
 	Update3DTitle();
 
-	//選択処理
-	UpdateTitleSelect();
+	if (aThunder.nType == THUNDER_NONE && bTitle == true)
+	{
+		//選択処理
+		UpdateTitleSelect();
+	}
 
 	FADE pFade = GetFade();
 
 	if (pFade == FADE_NONE)
 	{
-		if (g_CurrentNumberTitle == 0 && pCamera->posV.z >= 550.0f)
+		if (g_CurrentNumberTitle == 0 && pCamera->posV.z >= CAMERA_FADEPOS)
 		{//現在の選択番号が0の場合
 			SetFade(MODE_NUMBERSELECT);			//モードの設定(モード選択画面に移行)
 		}
-		else if (g_CurrentNumberTitle == 1 && pCamera->posV.z >= 550.0f)
+		else if (g_CurrentNumberTitle == 1 && pCamera->posV.z >= CAMERA_FADEPOS)
 		{//現在の選択番号が1の場合
 			SetFade(MODE_TITLE);		//モードの設定(ランキング画面に移行)
 		}
@@ -468,6 +481,7 @@ void UpdateTitleSelect(void)
 				ChangeMeshCylinder();
 				SetThunder();
 				bTitle = false;
+				SetBoolBillboard(false, true);
 				//カメラの移動処理
 				MoveTitleCamera(0);
 

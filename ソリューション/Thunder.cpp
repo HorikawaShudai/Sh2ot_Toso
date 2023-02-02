@@ -6,6 +6,8 @@
 //====================================================================
 #include "Thunder.h"
 #include "Billboard.h"
+//マクロ定義
+#define THUNDER_HEIGHT (2000.0f)
 
 //グローバル変数宣言
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffThunder = NULL;		//雷の頂点バッファのポインタ
@@ -18,10 +20,9 @@ D3DXMATRIX g_mtxWorldThunder;							//雷のワールドマトリックス
 void InitThunder(void)
 {
 	g_Thunder.bUse = false;
-	g_Thunder.nCnt = 0;
 	g_Thunder.col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	g_Thunder.pos = D3DXVECTOR3(100.0f, +0.0f, 500.0f);
-
+	g_Thunder.nType = THUNDER_NONE;
 
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
@@ -39,10 +40,10 @@ void InitThunder(void)
 	g_pVtxBuffThunder->Lock(0, 0, (void**)&pVtx, 0);
 
 	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(-1280.0f, +720.0f, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(+1280.0f, +720.0f, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(-1280.0f, -720.0f, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(+1280.0f, -720.0f, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(-THUNDER_HEIGHT, +720.0f, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(+THUNDER_HEIGHT, +720.0f, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(-THUNDER_HEIGHT, -720.0f, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(+THUNDER_HEIGHT, -720.0f, 0.0f);
 
 	//rhwの設定
 	pVtx[0].nor = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
@@ -82,6 +83,7 @@ void UpdateThunder(void)
 		if (g_Thunder.col.a < -0.0f)
 		{
 			g_Thunder.bUse = false;
+			g_Thunder.nType = THUNDER_NONE;
 		}
 	}
 
@@ -152,8 +154,20 @@ void DrawThunder(void)
 	}
 }
 
+//===========================================================
+//雷の発生処理
+//===========================================================
 void SetThunder(void)
 {
 	g_Thunder.col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	g_Thunder.bUse = true;
+	g_Thunder.nType = THUNDER_MOVE;
+}
+
+//===========================================================
+//雷の取得処理
+//===========================================================
+THUNDER GetThunder(void)
+{
+	return g_Thunder;
 }
