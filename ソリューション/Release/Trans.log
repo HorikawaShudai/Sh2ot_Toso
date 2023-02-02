@@ -1,8 +1,43 @@
+<<<<<<< HEAD
 ﻿  enemy.cpp
+=======
+<<<<<<< HEAD
+﻿  edit.cpp
+  game.cpp
+  stage.cpp
+  コード生成しています。
+  2 of 342 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    2 functions had inline decision re-evaluated but remain unchanged
+  コード生成が終了しました。
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+=======
+﻿  camera.cpp
+  EscapeClearResult.cpp
+  EscapeOverResult.cpp
+  EscapeRanking.cpp
+  exit.cpp
+  Fade.cpp
+  field.cpp
+  keyUI.cpp
+  main.cpp
+  player.cpp
+  PlayNumberSelect.cpp
+  Thunder.cpp
+  title.cpp
+  VillainResult.cpp
+>>>>>>> 149ae587096fff23b00b717d51ea548c4e64a8be
   コード生成しています。
   2 of 342 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     1 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
+<<<<<<< HEAD
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+=======
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+>>>>>>> cacd6dc65991cfc63e107833c4282aa162c8905f
+>>>>>>> 149ae587096fff23b00b717d51ea548c4e64a8be
