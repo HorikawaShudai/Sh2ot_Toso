@@ -1,9 +1,20 @@
+<<<<<<< HEAD
 ﻿  VillainResult.cpp
   VillainRanking.cpp
   EscapeRanking.cpp
   EscapeOverResult.cpp
   EscapeClearResult.cpp
   コードを生成中...
+=======
+<<<<<<< HEAD
+﻿  objectBG.cpp
+  object00.cpp
+  コードを生成中...
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+﻿  EscapeRanking.cpp
+>>>>>>> a0f7fa2ae84d4dc7f9b3acaf121c0b17d7d7e40f
 stage.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
 score_item.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
 result.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
@@ -25,3 +36,4 @@ debugproc.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカル
 Billboard.obj : warning LNK4205: 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+>>>>>>> 362fda7c50d0d3d33124b528d0a7f50a4d282865

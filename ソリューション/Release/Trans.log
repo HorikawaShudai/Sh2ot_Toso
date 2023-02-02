@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+﻿  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+=======
 ﻿  EscapeRanking.cpp
   VillainResult.cpp
   コード生成しています。
@@ -26,3 +30,4 @@ score_item.obj : warning LNK4099: PDB 'vc140.pdb' が 'score_item.obj' で、ま
 stage.obj : warning LNK4099: PDB 'vc140.pdb' が 'stage.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+>>>>>>> 362fda7c50d0d3d33124b528d0a7f50a4d282865
