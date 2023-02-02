@@ -150,6 +150,12 @@ void LoadStage(int nStageNumber)
 		pFile = fopen("Data\\TEXT\\Title.txt", "r");
 	}
 
+	else if (nStageNumber == 2)
+	{
+		//ファイルを開く
+		pFile = fopen("Data\\TEXT\\playnumber.txt","r");
+	}
+
 	if (pFile != NULL)
 	{//ファイルが開けた場合
 
