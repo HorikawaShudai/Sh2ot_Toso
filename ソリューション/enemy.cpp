@@ -1,3 +1,10 @@
+//========================================================================================
+//
+// 敵の処理[enemy.cpp]
+// Author: 丹野 竜之介
+//
+//========================================================================================
+
 #include "main.h"
 #include "ENEMY.h"
 #include "camera.h"
@@ -153,7 +160,7 @@ void UpdateEnemy(void)
 			g_Enemy[nCntObject].posOld = g_Enemy[nCntObject].pos;
 			g_Enemy[nCntObject].StateCount--;
 			g_Enemy[nCntObject].nCoolTurn--;
-			CollisionObject00(&g_Enemy[nCntObject].pos, &g_Enemy[nCntObject].posOld, &g_Enemy[nCntObject].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30);
+		
 
 			//角度の修正（改）
 			if (g_Enemy[nCntObject].rotDest.y - g_Enemy[nCntObject].rot.y > D3DX_PI || g_Enemy[nCntObject].rotDest.y - g_Enemy[nCntObject].rot.y < -D3DX_PI)
@@ -173,28 +180,34 @@ void UpdateEnemy(void)
 			}
 
 			//プレイヤー探知
-			for (int nDetect = 0; nDetect < 6; nDetect++)
+			if (g_Enemy[nCntObject].state != ENEMYSTATE_ATTACK)
 			{
-				float DetectRot = g_Enemy[nCntObject].rot.y - D3DXToRadian(45.0f) + D3DXToRadian(15.0f * nDetect);
-				if (DetectPlayer(&g_Enemy[nCntObject].Tgpos, g_Enemy[nCntObject].pos, DetectRot, 400) == true)
+				for (int nDetect = 0; nDetect < 6; nDetect++)
 				{
-					g_Enemy[nCntObject].state = ENEMYSTATE_CHASE;
-					break;
+					float DetectRot = g_Enemy[nCntObject].rot.y - D3DXToRadian(45.0f) + D3DXToRadian(15.0f * nDetect);
+					if (DetectPlayer(&g_Enemy[nCntObject].Tgpos, g_Enemy[nCntObject].pos, DetectRot, 400) == true)
+					{
+						g_Enemy[nCntObject].state = ENEMYSTATE_CHASE;
+						break;
+					}
 				}
 			}
 			
 			if (g_Enemy[nCntObject].state == ENEMYSTATE_PATROL)
 			{
 				EnemyPatrol(nCntObject);
+
+				CollisionObject00(&g_Enemy[nCntObject].pos, &g_Enemy[nCntObject].posOld, &g_Enemy[nCntObject].move, D3DXVECTOR3(-1.0f, -1.0f, -1.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f), 1.0f);
+
 			}
 
 			if (g_Enemy[nCntObject].state == ENEMYSTATE_CHASE)
 			{//追跡状態の時
+				//プレイヤーのポインタを取得
+				Player*pPlayer = GetPlayer();
 				//ベクトルを求める
 				D3DXVECTOR3 vecEnemy = g_Enemy[nCntObject].Tgpos - g_Enemy[nCntObject].pos ;
 				vecEnemy.y = atan2f(vecEnemy.x, vecEnemy.z);
-
-
 				
 				PrintDebugProc("座標：x%fz%f\n", g_Enemy[nCntObject].pos.x, g_Enemy[nCntObject].pos.z);
 				PrintDebugProc("目標座標：x%fz%f\n", g_Enemy[nCntObject].Tgpos.x, g_Enemy[nCntObject].Tgpos.z);
@@ -210,12 +223,28 @@ void UpdateEnemy(void)
 				{//探索状態に切り替える
 					g_Enemy[nCntObject].state = ENEMYSTATE_SEEK;
 					g_Enemy[nCntObject].StateCount = 30;
+				
+				}
+				D3DXVECTOR3	vecPlayer;
+				for (int nCnt = 0; nCnt < 4; nCnt++,pPlayer++)
+				{
+					if (pPlayer->bUse == true)
+					{
+						vecPlayer = pPlayer->pos - g_Enemy[nCntObject].pos;
+						//目標地点に到達したとき
+						if (vecPlayer.x < 10.0f && vecPlayer.x > -10.0f && vecPlayer.z < 10.0f && vecPlayer.z > -10.0f)
+						{
+							g_Enemy[nCntObject].state = ENEMYSTATE_ATTACK;
+							g_Enemy[nCntObject].StateCount = 30;
+							PlayerHit(nCnt, 1);
+						}
+					}
 				}
 			}
 
 			if (g_Enemy[nCntObject].state == ENEMYSTATE_SEEK)
 			{//探索状態の時
-				g_Enemy[nCntObject].rot.y += D3DX_PI / 10;
+				g_Enemy[nCntObject].rotDest.y += D3DX_PI / 20;
 			}
 
 			//角度の正常化
@@ -242,6 +271,9 @@ void UpdateEnemy(void)
 				switch (g_Enemy[nCntObject].state)
 				{
 				case ENEMYSTATE_SEEK:
+					g_Enemy[nCntObject].state = ENEMYSTATE_PATROL;
+					break;
+				case ENEMYSTATE_ATTACK:
 					g_Enemy[nCntObject].state = ENEMYSTATE_PATROL;
 					break;
 				default:
@@ -570,7 +602,7 @@ float DetectWall(D3DXVECTOR3 pos, float fmoveRot, int nLife)
 		Detect.pos += Detect.move;
 		Detect.nLife--;
 		
-		if (CollisionObject00(&Detect.pos, &Detect.posOld, &Detect.move, D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f) == true)
+		if (CollisionObject00(&Detect.pos, &Detect.posOld, &Detect.move, D3DXVECTOR3(-1.0f, -1.0f, -1.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f), 1.0f) == true)
 		{//壁に当たったとき
 		 //距離を割り出す
 			float fDis = ((powf(Detect.Startpos.x, 2.0f) + powf(Detect.Startpos.z, 2.0f)) - (powf(Detect.pos.x, 2.0f) + powf(Detect.pos.z, 2.0f)));
@@ -589,57 +621,6 @@ float DetectWall(D3DXVECTOR3 pos, float fmoveRot, int nLife)
 		}
 	}
 }
-
-//====================================================================
-//壁の探索(坂本実験用)
-//====================================================================
-//float DetectWall(D3DXVECTOR3 pos, float fmoveRot, int nLife)
-//{
-//	float fDisSP, fDisP, fDis = 0.0f;
-//	DETECT Detect;
-//	Detect.Startpos = pos;
-//	Detect.pos = pos;
-//	Detect.fmoveRot = fmoveRot;
-//	Detect.nLife = nLife;
-//
-//	while (1)
-//	{
-//		Detect.posOld = Detect.pos;
-//		Detect.move = D3DXVECTOR3(sinf(Detect.fmoveRot)*DETECT_SPEED, 0.0f, cosf(Detect.fmoveRot)*DETECT_SPEED);
-//		Detect.pos += Detect.move;
-//		Detect.nLife--;
-//		
-//		if (CollisionObject00(&Detect.pos, &Detect.posOld, &Detect.move, D3DXVECTOR3(1.0f, 1.0f, 1.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f), 1.0f) == true)
-//		{//壁に当たったとき
-//		 //距離を割り出す
-//			fDisSP = powf(Detect.Startpos.x, 2.0f) + powf(Detect.Startpos.z, 2.0f);
-//			if (fDisSP <= 0)
-//			{
-//				fDisSP *= -1.0f;
-//			}
-//			fDisP = powf(Detect.pos.x, 2.0f) + powf(Detect.pos.z, 2.0f);
-//			if (fDisP <= 0)
-//			{
-//				fDisP *= -1.0f;
-//			}
-//			fDis = fDisSP - fDisP;
-//			if (fDis <= 0)
-//			{
-//				fDis *= -1.0f;
-//			}
-//
-//			Detect.fDistance = sqrtf(fDis);
-//			SetEffect(Detect.Startpos, D3DXCOLOR(0.2f, 0.2f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 120.0f, 60, 0);
-//			SetEffect(Detect.pos, D3DXCOLOR(1.0f, 0.2f, 0.2f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 120.0f, 60, 0);
-//			return Detect.fDistance;
-//		}
-//
-//		if (Detect.nLife <= 0)
-//		{
-//			return NULL;
-//		}
-//	}
-//}
 
 //====================================================================
 //プレイヤーの探索
@@ -713,28 +694,28 @@ void EnemyPatrol(int nEnemy)
 		PrintDebugProc("Enemy%d前:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceFront);
 
 		//自身の進む方向に壁があった場合
-		if ((g_Enemy[nEnemy].MoveState == ENEMYMOVE_N && g_Enemy[nEnemy].fDistanceN <= 150.0f) ||
+		if (((g_Enemy[nEnemy].MoveState == ENEMYMOVE_N && g_Enemy[nEnemy].fDistanceN <= 150.0f) ||
 			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_S && g_Enemy[nEnemy].fDistanceS <= 150.0f) ||
 			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_E && g_Enemy[nEnemy].fDistanceE <= 150.0f) ||
 			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_W && g_Enemy[nEnemy].fDistanceW <= 150.0f) ||
-			 g_Enemy[nEnemy].MoveState == ENEMYMOVE_NONE)
+			 g_Enemy[nEnemy].MoveState == ENEMYMOVE_NONE))
 		{
 			EnemyDirection(nEnemy);
-			g_Enemy[nEnemy].nCoolTurn = 60;
+			g_Enemy[nEnemy].nCoolTurn = 30;
 
 		}
 		
 
 
-		if (g_Enemy[nEnemy].fDistanceLeft >= 400.0f && 	g_Enemy[nEnemy].nCoolTurn <= 0)
+		if (g_Enemy[nEnemy].fDistanceLeft >= 500.0f && 	g_Enemy[nEnemy].nCoolTurn <= 0)
 		{
 			EnemyDirection(nEnemy);
-			g_Enemy[nEnemy].nCoolTurn = 180;
+			g_Enemy[nEnemy].nCoolTurn = 120;
 		}
-		if (g_Enemy[nEnemy].fDistanceRight >= 400.0f&& 	g_Enemy[nEnemy].nCoolTurn <= 0)
+		if (g_Enemy[nEnemy].fDistanceRight >= 500.0f&& 	g_Enemy[nEnemy].nCoolTurn <= 0)
 		{
 			EnemyDirection(nEnemy);
-			g_Enemy[nEnemy].nCoolTurn = 180;
+			g_Enemy[nEnemy].nCoolTurn = 120;
 		}
 
 		if (g_Enemy[nEnemy].MoveState == ENEMYMOVE_N)
@@ -756,11 +737,11 @@ void EnemyPatrol(int nEnemy)
 		
 		if (g_Enemy[nEnemy].MoveState != ENEMYMOVE_NONE)
 		{//移動処理
-			if (g_Enemy[nEnemy].fDistanceLeft <= 150.0f)
+			if (g_Enemy[nEnemy].fDistanceLeft <= 300.0f && g_Enemy[nEnemy].fDistanceLeft <= g_Enemy[nEnemy].fDistanceRight)
 			{
 				g_Enemy[nEnemy].pos += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED);
 			}
-			else if (g_Enemy[nEnemy].fDistanceRight <= 150.0f)
+			else if (g_Enemy[nEnemy].fDistanceRight <= 300.0f && g_Enemy[nEnemy].fDistanceRight <= g_Enemy[nEnemy].fDistanceLeft)
 			{
 				g_Enemy[nEnemy].pos += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED);
 			}
@@ -805,10 +786,11 @@ void EnemyDirection(int nEnemy)
 			g_Enemy[nEnemy].MoveState = ENEMYMOVE_NONE;
 			break;
 		}
-		else
+		else if (nCount >= 200)
 		{
 			g_Enemy[nEnemy].MoveState = ENEMYMOVE_NONE;
 			break;		//テスト中の無限ループ回避用に追加しました。
 		}
+		
 	}
 }
