@@ -16,4 +16,5 @@ void InitThunder(void);
 void UninitThunder(void);
 void UpdateThunder(void);
 void DrawThunder(void);
+void SetThunder(void);
 #endif
