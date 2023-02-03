@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  EscapeRanking.cpp
   game.cpp
   NumberUI.cpp
@@ -12,3 +13,35 @@
   コード生成が終了しました。
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+=======
+﻿  camera.cpp
+  edit.cpp
+  enemy.cpp
+  EscapeRanking.cpp
+  exit.cpp
+  Fog.cpp
+  game.cpp
+  keyUI.cpp
+  life.cpp
+  light.cpp
+  main.cpp
+  meshwall.cpp
+  object00.cpp
+  player.cpp
+  RankingNumber.cpp
+  score.cpp
+  score_item.cpp
+  SpotLight.cpp
+  stamina.cpp
+  time.cpp
+  コンパイル中...
+  title.cpp
+  VillainRanking.cpp
+  コード生成しています。
+  105 of 396 functions (26.5%) were compiled, the rest were copied from previous compilation.
+    11 functions were new in current compilation
+    89 functions had inline decision re-evaluated but remain unchanged
+  コード生成が終了しました。
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github6\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github6\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+>>>>>>> 4d947304246c1cfce4688970512f86f183683084

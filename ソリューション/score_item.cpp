@@ -281,12 +281,12 @@ bool CollisionItem(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 	{
 		if (g_Item[nCntObject].bUse == true)
 		{
-			if (pPos->x >= g_Item[nCntObject].pos.x - 15
-				&& pPos->x <= g_Item[nCntObject].pos.x + 15
-				&& pPos->y >= g_Item[nCntObject].pos.y - 45
-				&& pPos->y <= g_Item[nCntObject].pos.y + 45
-				&& pPos->z >= g_Item[nCntObject].pos.z - 10
-				&& pPos->z <= g_Item[nCntObject].pos.z + 10)
+			if (pPos->x >= g_Item[nCntObject].pos.x + min.x
+				&& pPos->x <= g_Item[nCntObject].pos.x + max.x
+				&& pPos->y >= g_Item[nCntObject].pos.y + min.y
+				&& pPos->y <= g_Item[nCntObject].pos.y + max.y
+				&& pPos->z >= g_Item[nCntObject].pos.z + min.z
+				&& pPos->z <= g_Item[nCntObject].pos.z + max.z)
 			{//アイテムとプレイヤーが当たった(X軸)
 				AddScore(g_Item[nCntObject].nType, nPlayer);
 				g_Item[nCntObject].bUse = false;

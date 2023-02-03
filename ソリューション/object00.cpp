@@ -9,6 +9,7 @@
 #include "camera.h"
 #include "input.h"
 #include "debugproc.h"
+#include "score.h"
 
 #define OBJECT00_LIFE (7)		//オブジェクトの体力
 #define FALSE_SIZE (10.0f)		//エディットモードのバックスペースの判定の大きさ
