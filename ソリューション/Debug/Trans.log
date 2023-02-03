@@ -1,9 +1,1 @@
-<<<<<<< HEAD
-﻿  PolygonBG.cpp
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-﻿  player.cpp
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github6\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github6\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
->>>>>>> 4d947304246c1cfce4688970512f86f183683084
+﻿VillainResult.obj : fatal error LNK1318: 予期しない PDB エラー。OK (0) ''

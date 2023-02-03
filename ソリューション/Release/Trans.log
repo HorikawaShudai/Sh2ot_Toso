@@ -1,47 +1,18 @@
-<<<<<<< HEAD
-﻿  EscapeRanking.cpp
+﻿  camera.cpp
+  Fog.cpp
   game.cpp
-  NumberUI.cpp
+  object00.cpp
   player.cpp
-  PolygonBG.cpp
-  RankingUI.cpp
-  VillainRanking.cpp
+  result.cpp
+result.cpp(37): warning C4101: 'nCntResult': ローカル変数は 1 度も使われていません。
+  resultUI.cpp
+  score_item.cpp
+  title.cpp
+  tutorialUI.cpp
   コード生成しています。
-  73 of 394 functions (18.5%) were compiled, the rest were copied from previous compilation.
-    6 functions were new in current compilation
-    78 functions had inline decision re-evaluated but remain unchanged
+  24 of 398 functions ( 6.0%) were compiled, the rest were copied from previous compilation.
+    4 functions were new in current compilation
+    108 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
-=======
-﻿  camera.cpp
-  edit.cpp
-  enemy.cpp
-  EscapeRanking.cpp
-  exit.cpp
-  Fog.cpp
-  game.cpp
-  keyUI.cpp
-  life.cpp
-  light.cpp
-  main.cpp
-  meshwall.cpp
-  object00.cpp
-  player.cpp
-  RankingNumber.cpp
-  score.cpp
-  score_item.cpp
-  SpotLight.cpp
-  stamina.cpp
-  time.cpp
-  コンパイル中...
-  title.cpp
-  VillainRanking.cpp
-  コード生成しています。
-  105 of 396 functions (26.5%) were compiled, the rest were copied from previous compilation.
-    11 functions were new in current compilation
-    89 functions had inline decision re-evaluated but remain unchanged
-  コード生成が終了しました。
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github6\Sh2ot_Toso\ソリューション\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github6\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
->>>>>>> 4d947304246c1cfce4688970512f86f183683084
