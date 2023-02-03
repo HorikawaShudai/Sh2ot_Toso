@@ -3,6 +3,9 @@
 #include "input.h"
 #include "Fade.h"
 #include "camera.h"
+#include "object00.h"
+#include "objectBG.h"
+#include "stage.h"
 
 //マクロ定義
 #define NUM_Result (1) //背景の数
@@ -169,22 +172,33 @@ void DrawResult(void)
 void Init3DResult(void)
 {
 	InitCamera();
+
+	InitObjectBG();
+
+	//ステージの読み込み
+	SetStage(3);
 }
 
 //終了
 void Uninit3DResult(void)
 {
 	UninitCamera();
+
+	UninitObjectBG();
 }
 
 //更新
 void Update3Result(void)
 {
 	UpdateCamera();
+
+	UpdateObjectBG();
 }
 
 //描画
 void Draw3DResult(void)
 {
 	SetCamera(4);
+
+	DrawObjectBG();
 }

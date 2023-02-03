@@ -5,13 +5,14 @@
 #include"main.h"
 #include "input.h"
 #include "debugproc.h"
-
 #include "game.h"
 #include "title.h"
 #include "result.h"
 #include "Fade.h"
 #include "PlayNumberSelect.h"
 #include "PlayModeSelect.h"
+#include "VillainRanking.h"
+#include "EscapeRanking.h"
 
 //マクロ定義
 #define CLASS_NAME "WindowClass"     //ウィンドウクラスの名前
@@ -38,7 +39,7 @@ LPDIRECT3DDEVICE9 g_pD3DDevice = NULL;
 
 int g_nCountFPS = 0;
 
-MODE g_mode = MODE_TITLE;	//開始時点のモード
+MODE g_mode = MODE_NUMBERSELECT;	//開始時点のモード
 
  //=============================================
  //メイン関数
@@ -353,6 +354,10 @@ void Update(void)
 	case MODE_RESULT:
 		UpdateResult();
 		break;
+	case MODE_RANKING:
+		//UpdateVillainRanking();
+		UpdateEscapeRanking();
+		break;
 	}
 
 	UpdateFade();
@@ -384,6 +389,10 @@ void Draw(void)
 			break;
 		case MODE_RESULT:
 			DrawResult();
+			break;
+		case MODE_RANKING:
+			//DrawVillainRanking();
+			DrawEscapeRanking();
 			break;
 		}
 
@@ -436,6 +445,10 @@ void SetMode(MODE mode)
 	case MODE_RESULT:
 		UninitResult();
 		break;
+	case MODE_RANKING:
+		//UninitVillainRanking();
+		UninitEscapeRanking();
+		break;
 	}
 	switch (mode)
 	{
@@ -453,6 +466,10 @@ void SetMode(MODE mode)
 		break;
 	case MODE_RESULT:
 		InitResult();
+		break;
+	case MODE_RANKING:
+		//InitVillainRanking();
+		InitEscapeRanking();
 		break;
 	}
 	g_mode = mode;

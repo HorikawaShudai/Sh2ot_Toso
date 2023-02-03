@@ -14,7 +14,7 @@
 #include "Effect.h"
 
 #define ENEMY_LIFE (7)		//オブジェクトの体力
-#define ENEMY_SPEED (3.0f) //敵の移動速度
+#define ENEMY_SPEED (2.0f) //敵の移動速度
 
 #define	DETECT_SPEED (5.0f) //探査波の速度
 #define	PLAYERDETECT_SPEED (15.0f) //探査波の速度

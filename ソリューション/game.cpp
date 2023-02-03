@@ -105,7 +105,6 @@ void InitGame()
 	SetKey(D3DXVECTOR3(150.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetKey(D3DXVECTOR3(-50.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetKey(D3DXVECTOR3(50.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	SetExit(D3DXVECTOR3(0.0f, 0.0f, -150.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
 	//ステージの読み込み
 	SetStage(0);
@@ -280,10 +279,12 @@ void DrawGame()
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 
+	Player *pPlayer = GetPlayer();
+
 	//現在のビューポートを取得
 	pDevice->GetViewport(&viewportDef);
 	 
-	for (int nCnt = 0; nCnt < PlayNumber.CurrentSelectNumber; nCnt++)
+	for (int nCnt = 0; nCnt < PlayNumber.CurrentSelectNumber; nCnt++,pPlayer++)
 	{
 		//カメラのセット処理
 		SetCamera(nCnt);
@@ -312,11 +313,17 @@ void DrawGame()
 		DrawObject00();
 		DrawObjectBG();
 
+		//出口の描画処理
+		DrawExit();
+
 		//プレイヤーの描画処理
 		DrawPlayer();
 
-		//敵の描画処理
-		DrawEnemy();
+		if (pPlayer->bAppear == true)
+		{
+			//敵の描画処理
+			DrawEnemy();
+		}
 
 		//スタミナの描画処理
 		DrawStamina();
@@ -338,9 +345,6 @@ void DrawGame()
 
 		//エフェクトの描画処理
 		DrawEffect();
-
-		//出口の描画処理
-		DrawExit();
 	}
 
 	//ビューポートを元に戻す
