@@ -620,34 +620,69 @@ bool CollisionObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMo
 				bHit = true;
 			}
 
-			if (
-				(
-				pPos->z + Size >= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMin.z && pPosOld->z + Size < g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMin.z ||
-				pPos->z - Size <= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMax.z && pPosOld->z - Size > g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMax.z) &&
-				pPos->x + Size >= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMin.x &&
-				pPos->x - Size <= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMax.x &&
-				pPos->y + max.y >= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMin.y&&
-				pPos->y + min.y <= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMax.y
-				)
-			{//壁とプレイヤーが当たった(Z軸)
-				pPos->z = pPosOld->z;
-				pMove->z = 0.0f;
-				bHit = true;
-			}
+			if (fabsf(pMove->x) >= fabsf(pMove->z))
+			{
+				if (
+					(
+						pPos->z + Size >= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMin.z && pPosOld->z + Size < g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMin.z ||
+						pPos->z - Size <= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMax.z && pPosOld->z - Size > g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMax.z) &&
+					pPos->x + Size >= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMin.x &&
+					pPos->x - Size <= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMax.x &&
+					pPos->y + max.y >= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMin.y&&
+					pPos->y + min.y <= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMax.y
+					)
+				{//壁とプレイヤーが当たった(Z軸)
+					pPos->z = pPosOld->z;
+					pMove->z = 0.0f;
+					bHit = true;
+				}
 
-			if (
-				(
-				pPos->x + Size >= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMin.x && pPosOld->x + Size < g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMin.x ||
-				pPos->x - Size <= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMax.x && pPosOld->x - Size > g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMax.x) &&
-				pPos->z + Size >= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMin.z &&
-				pPos->z - Size <= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMax.z &&
-				pPos->y + max.y >= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMin.y &&
-				pPos->y + min.y <= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMax.y
-				)
-			{//壁とプレイヤーが当たった(X軸)
-				pPos->x = pPosOld->x;
-				pMove->x = 0.0f;
-				bHit = true;
+				if (
+					(
+						pPos->x + Size >= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMin.x && pPosOld->x + Size < g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMin.x ||
+						pPos->x - Size <= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMax.x && pPosOld->x - Size > g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMax.x) &&
+					pPos->z + Size >= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMin.z &&
+					pPos->z - Size <= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMax.z &&
+					pPos->y + max.y >= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMin.y &&
+					pPos->y + min.y <= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMax.y
+					)
+				{//壁とプレイヤーが当たった(X軸)
+					pPos->x = pPosOld->x;
+					pMove->x = 0.0f;
+					bHit = true;
+				}
+			}
+			else
+			{
+				if (
+					(
+						pPos->x + Size >= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMin.x && pPosOld->x + Size < g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMin.x ||
+						pPos->x - Size <= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMax.x && pPosOld->x - Size > g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMax.x) &&
+					pPos->z + Size >= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMin.z &&
+					pPos->z - Size <= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMax.z &&
+					pPos->y + max.y >= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMin.y &&
+					pPos->y + min.y <= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMax.y
+					)
+				{//壁とプレイヤーが当たった(X軸)
+					pPos->x = pPosOld->x;
+					pMove->x = 0.0f;
+					bHit = true;
+				}
+
+				if (
+					(
+						pPos->z + Size >= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMin.z && pPosOld->z + Size < g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMin.z ||
+						pPos->z - Size <= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMax.z && pPosOld->z - Size > g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMax.z) &&
+					pPos->x + Size >= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMin.x &&
+					pPos->x - Size <= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMax.x &&
+					pPos->y + max.y >= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMin.y&&
+					pPos->y + min.y <= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMax.y
+					)
+				{//壁とプレイヤーが当たった(Z軸)
+					pPos->z = pPosOld->z;
+					pMove->z = 0.0f;
+					bHit = true;
+				}
 			}
 		}
 	}
