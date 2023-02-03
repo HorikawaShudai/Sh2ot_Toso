@@ -13,6 +13,7 @@
 #include "PlayModeSelect.h"
 #include "VillainRanking.h"
 #include "EscapeRanking.h"
+#include "RankingNumber.h"
 
 //マクロ定義
 #define CLASS_NAME "WindowClass"     //ウィンドウクラスの名前
@@ -286,6 +287,9 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	{
 		return E_FAIL;
 	}
+
+	//データをロードする
+	LoadData();
 
 	InitFade(g_mode);
 

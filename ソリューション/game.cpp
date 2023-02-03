@@ -21,6 +21,7 @@
 #include "keyUI.h"
 #include "Effect.h"
 #include "exit.h"
+#include "SpotLight.h"
 
 //グローバル変数宣言
 bool g_bPause = false;
@@ -47,6 +48,8 @@ void InitGame()
 
 	//ライトの初期化処理
 	InitLight();
+
+	//InitSpotLight();
 
 	//床の初期化処理
 	InitField();
@@ -120,6 +123,8 @@ void UninitGame()
 
 	//ライトの終了処理
 	UninitLight();
+
+	//UninitSpotLight();
 
 	//床の終了処理
 	UninitField();
@@ -198,6 +203,8 @@ void UpdateGame()
 
 	//ライトの更新処理
 	UpdateLight();
+
+	//UpdateSpotLight();
 
 	//メッシュの壁の更新処理
 	UpdateMeshWall();
