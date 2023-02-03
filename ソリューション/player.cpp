@@ -320,118 +320,125 @@ void PlayerMoveInput(int nCnt)
 	//斜め移動の速度修正用の関数を初期化する
 	g_aPlayer[nCnt].NormarizeMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
-	//キーボードの移動処理
-	if (GetKeyboardPress(DIK_W) == true)
-	{
-		g_aPlayer[nCnt].NormarizeMove.z += 1.0f * cosf(Getrot(CurrentCamera).y);
-		g_aPlayer[nCnt].NormarizeMove.x += 1.0f * sinf(Getrot(CurrentCamera).y);
+	if (g_aPlayer[nCnt].State != PLAYER_EXSIT)
+	{//プレイヤーの状態が脱出状態以外の場合
+		//キーボードの移動処理
+		if (GetKeyboardPress(DIK_W) == true)
+		{
+			g_aPlayer[nCnt].NormarizeMove.z += 1.0f * cosf(Getrot(CurrentCamera).y);
+			g_aPlayer[nCnt].NormarizeMove.x += 1.0f * sinf(Getrot(CurrentCamera).y);
 
-	}
-	if (GetKeyboardPress(DIK_S) == true)
-	{
-		g_aPlayer[nCnt].NormarizeMove.z += -1.0f * cosf(Getrot(CurrentCamera).y);
-		g_aPlayer[nCnt].NormarizeMove.x += -1.0f * sinf(Getrot(CurrentCamera).y);
-	}
-	if (GetKeyboardPress(DIK_A) == true)
-	{
-		g_aPlayer[nCnt].NormarizeMove.x += -1.0f * cosf(Getrot(CurrentCamera).y);
-		g_aPlayer[nCnt].NormarizeMove.z -= -1.0f * sinf(Getrot(CurrentCamera).y);
-
-	}
-	if (GetKeyboardPress(DIK_D) == true)
-	{
-		g_aPlayer[nCnt].NormarizeMove.x += 1.0f * cosf(Getrot(CurrentCamera).y);
-		g_aPlayer[nCnt].NormarizeMove.z -= 1.0f * sinf(Getrot(CurrentCamera).y);
-	}
-
-	if (GetKeyboardPress(DIK_W) == false && GetKeyboardPress(DIK_S) == false && GetKeyboardPress(DIK_A) == false && GetKeyboardPress(DIK_D) == false)
-	{//キーボードと同時に入力できないようにする
-		if (GetGamepad_Stick_Left(0).y > 0.0f)
-		{//左スティックの上入力
-			g_aPlayer[nCnt].NormarizeMove.z += cosf(Getrot(CurrentCamera).y);
-			g_aPlayer[nCnt].NormarizeMove.x += sinf(Getrot(CurrentCamera).y);
 		}
-		if (GetGamepad_Stick_Left(0).y < 0.0f)
-		{//左スティックの下入力
-			g_aPlayer[nCnt].NormarizeMove.z -= cosf(Getrot(CurrentCamera).y);
-			g_aPlayer[nCnt].NormarizeMove.x -= sinf(Getrot(CurrentCamera).y);
+		if (GetKeyboardPress(DIK_S) == true)
+		{
+			g_aPlayer[nCnt].NormarizeMove.z += -1.0f * cosf(Getrot(CurrentCamera).y);
+			g_aPlayer[nCnt].NormarizeMove.x += -1.0f * sinf(Getrot(CurrentCamera).y);
 		}
-		if (GetGamepad_Stick_Left(0).x > 0.0f)
-		{//左スティックの右入力
-		 //左スティックによる左右移動
-			g_aPlayer[nCnt].NormarizeMove.x += cosf(Getrot(CurrentCamera).y);
-			g_aPlayer[nCnt].NormarizeMove.z -= sinf(Getrot(CurrentCamera).y);
+		if (GetKeyboardPress(DIK_A) == true)
+		{
+			g_aPlayer[nCnt].NormarizeMove.x += -1.0f * cosf(Getrot(CurrentCamera).y);
+			g_aPlayer[nCnt].NormarizeMove.z -= -1.0f * sinf(Getrot(CurrentCamera).y);
+
 		}
-		if (GetGamepad_Stick_Left(0).x < 0.0f)
-		{//左スティックの左入力
-		 //左スティックによる左右移動
-			g_aPlayer[nCnt].NormarizeMove.x -= cosf(Getrot(CurrentCamera).y);
-			g_aPlayer[nCnt].NormarizeMove.z += sinf(Getrot(CurrentCamera).y);
+		if (GetKeyboardPress(DIK_D) == true)
+		{
+			g_aPlayer[nCnt].NormarizeMove.x += 1.0f * cosf(Getrot(CurrentCamera).y);
+			g_aPlayer[nCnt].NormarizeMove.z -= 1.0f * sinf(Getrot(CurrentCamera).y);
 		}
-	}
 
-	//ノーマライズによって斜め移動の速度を修正する
-	g_aPlayer[nCnt].NormarizeMove.y = 0.0f;
-
-	D3DXVec3Normalize(&g_aPlayer[nCnt].NormarizeMove, &g_aPlayer[nCnt].NormarizeMove);
-
-	//キーボードの時の速度設定
-	if (GetKeyboardPress(DIK_W) == true || GetKeyboardPress(DIK_S) == true || GetKeyboardPress(DIK_A) == true || GetKeyboardPress(DIK_D) == true)
-	{
-		g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_SPEED;
-		g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_SPEED;
-	}
-
-	//左スティックの速度処理と移動の三段階の使い分け処理
-	if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) != 0 && GetGamepadPress(BUTTON_R, 0))
-	{//入力してる状態かつAボタンを押しているとき
-		if (pStamina[nCnt].bFatige == false)			//プレイヤーが走れる状態かどうか
-		{//疲労状態ではなかった場合
-
-			g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_DASHSPEED;
-			g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_DASHSPEED;
-
-			//プレイヤーをダッシュ状態にする
-			g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_DASH;
+		if (GetKeyboardPress(DIK_W) == false && GetKeyboardPress(DIK_S) == false && GetKeyboardPress(DIK_A) == false && GetKeyboardPress(DIK_D) == false)
+		{//キーボードと同時に入力できないようにする
+			if (GetGamepad_Stick_Left(0).y > 0.0f)
+			{//左スティックの上入力
+				g_aPlayer[nCnt].NormarizeMove.z += cosf(Getrot(CurrentCamera).y);
+				g_aPlayer[nCnt].NormarizeMove.x += sinf(Getrot(CurrentCamera).y);
+			}
+			if (GetGamepad_Stick_Left(0).y < 0.0f)
+			{//左スティックの下入力
+				g_aPlayer[nCnt].NormarizeMove.z -= cosf(Getrot(CurrentCamera).y);
+				g_aPlayer[nCnt].NormarizeMove.x -= sinf(Getrot(CurrentCamera).y);
+			}
+			if (GetGamepad_Stick_Left(0).x > 0.0f)
+			{//左スティックの右入力
+			 //左スティックによる左右移動
+				g_aPlayer[nCnt].NormarizeMove.x += cosf(Getrot(CurrentCamera).y);
+				g_aPlayer[nCnt].NormarizeMove.z -= sinf(Getrot(CurrentCamera).y);
+			}
+			if (GetGamepad_Stick_Left(0).x < 0.0f)
+			{//左スティックの左入力
+			 //左スティックによる左右移動
+				g_aPlayer[nCnt].NormarizeMove.x -= cosf(Getrot(CurrentCamera).y);
+				g_aPlayer[nCnt].NormarizeMove.z += sinf(Getrot(CurrentCamera).y);
+			}
 		}
-	}
-	else if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) < 0.95f)
-	{//左スティックを倒し切っていない状態のとき
 
-		g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_STEALTHSPEED;
-		g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_STEALTHSPEED;
+		//ノーマライズによって斜め移動の速度を修正する
+		g_aPlayer[nCnt].NormarizeMove.y = 0.0f;
+
+		D3DXVec3Normalize(&g_aPlayer[nCnt].NormarizeMove, &g_aPlayer[nCnt].NormarizeMove);
+
+		//キーボードの時の速度設定
+		if (GetKeyboardPress(DIK_W) == true || GetKeyboardPress(DIK_S) == true || GetKeyboardPress(DIK_A) == true || GetKeyboardPress(DIK_D) == true)
+		{
+			g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_SPEED;
+			g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_SPEED;
+		}
+
+		//左スティックの速度処理と移動の三段階の使い分け処理
+		if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) != 0 && GetGamepadPress(BUTTON_R, 0))
+		{//入力してる状態かつAボタンを押しているとき
+			if (pStamina[nCnt].bFatige == false)			//プレイヤーが走れる状態かどうか
+			{//疲労状態ではなかった場合
+
+				g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_DASHSPEED;
+				g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_DASHSPEED;
+
+				//プレイヤーをダッシュ状態にする
+				g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_DASH;
+			}
+		}
+		else if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) < 0.95f)
+		{//左スティックを倒し切っていない状態のとき
+
+			g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_STEALTHSPEED;
+			g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_STEALTHSPEED;
+
+			g_aPlayer[nCnt].move += g_aPlayer[nCnt].NormarizeMove;
+
+			//プレイヤーをステルス状態にする
+			g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;
+
+			//カメラ状態を無へ
+			pCamera[nCnt].State = CAMERASTATE_NONE;
+		}
+		else if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) != 0)
+		{//入力している状態のとき
+
+			g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_SPEED;
+			g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_SPEED;
+
+			//プレイヤーを通常状態にする
+			g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_NORMAL;
+
+			//カメラ状態を無へ
+			pCamera[nCnt].State = CAMERASTATE_NONE;
+		}
+		else
+		{//入力していない場合
+
+			//プレイヤーをステルス状態にする
+			g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;
+
+			//カメラ状態を無へ
+			pCamera[nCnt].State = CAMERASTATE_NONE;
+		}
 
 		g_aPlayer[nCnt].move += g_aPlayer[nCnt].NormarizeMove;
-
-		//プレイヤーをステルス状態にする
-		g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;
-
-		//カメラ状態を無へ
-		pCamera[nCnt].State = CAMERASTATE_NONE;
 	}
-	else if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) != 0)
-	{//入力している状態のとき
-
-		g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_SPEED;
-		g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_SPEED;
-
-		//プレイヤーを通常状態にする
-		g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_NORMAL;
-
-		//カメラ状態を無へ
-		pCamera[nCnt].State = CAMERASTATE_NONE;
+	else if (g_aPlayer[nCnt].State == PLAYER_EXSIT)
+	{
+		g_aPlayer[nCnt].move.z -= 1.5f;
 	}
-	else
-	{//入力していない場合
-
-		//プレイヤーをステルス状態にする
-		g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;
-
-		//カメラ状態を無へ
-		pCamera[nCnt].State = CAMERASTATE_NONE;
-	}
-
-	g_aPlayer[nCnt].move += g_aPlayer[nCnt].NormarizeMove;
 }
 
 //====================================================================
@@ -530,8 +537,6 @@ void PlayerRotUpdate(int nCnt)
 		g_aPlayer[nCnt].rot.y = fRotMove;
 	}
 }
-
-
 
 //====================================================================
 //プレイヤーの更新処理(複数のコントローラ対応)
@@ -1040,7 +1045,7 @@ void DrawPlayer(void)
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	D3DXMATRIX mtxRot, mtxTrans;		//計算用マトリックス
 	D3DMATERIAL9 matDef;				//現在のマテリアル保存用
-	//D3DXMATERIAL *pMat;				//マテリアルデータへのポインタ9
+	//D3DXMATERIAL *pMat;				//マテリアルデータへのポインタ
 
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();

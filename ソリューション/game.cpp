@@ -22,6 +22,7 @@
 #include "Effect.h"
 #include "exit.h"
 #include "fog.h"
+#include "SpotLight.h"
 
 //グローバル変数宣言
 bool g_bPause = false;
@@ -48,6 +49,8 @@ void InitGame()
 
 	//ライトの初期化処理
 	InitLight();
+
+	//InitSpotLight();
 
 	//床の初期化処理
 	InitField();
@@ -107,7 +110,8 @@ void InitGame()
 	SetItem(D3DXVECTOR3(-200.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetItem(D3DXVECTOR3(200.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetItem(D3DXVECTOR3(250.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	SetKey(D3DXVECTOR3(250.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+
+	SetKey(D3DXVECTOR3(-1000.0f, 0.0f, -600.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetKey(D3DXVECTOR3(150.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetKey(D3DXVECTOR3(-50.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetKey(D3DXVECTOR3(50.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
@@ -126,6 +130,8 @@ void UninitGame()
 
 	//ライトの終了処理
 	UninitLight();
+
+	//UninitSpotLight();
 
 	//床の終了処理
 	UninitField();
@@ -168,6 +174,7 @@ void UninitGame()
 	UninitExit();
 
 	//フォグの終了処理
+	UninitFog();
 }
 
 //====================================================================
@@ -206,6 +213,8 @@ void UpdateGame()
 
 	//ライトの更新処理
 	UpdateLight();
+
+	//UpdateSpotLight();
 
 	//メッシュの壁の更新処理
 	UpdateMeshWall();
