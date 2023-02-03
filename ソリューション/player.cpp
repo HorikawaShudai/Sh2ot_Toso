@@ -130,6 +130,9 @@ void UninitPlayer(void)
 			g_pBuffMatPlayer[nCntModel]->Release();
 			g_pBuffMatPlayer[nCntModel] = NULL;
 		}
+
+		//バイブレーションをオフにする
+		GetGamepad_Left_Vibrtion_false(0);
 	}
 }
 
@@ -931,7 +934,7 @@ void PlayerDistance(int nCnt)
 		{
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, 300.0f, 0.0f, -10.0f, 50.0f) == true)
 			{//敵の表示処理
-				g_aPlayer[nCnt].bAppear = true;
+				//g_aPlayer[nCnt].bAppear = true;
 			}
 			else
 			{
@@ -940,7 +943,7 @@ void PlayerDistance(int nCnt)
 
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, 600.0f, 0.0f, -10.0f, 50.0f) == true)
 			{//バイブレーション処理
-				//GetGamepad_Left_Vibrtion(0);
+				GetGamepad_Left_Vibrtion(0);
 			}
 			else
 			{

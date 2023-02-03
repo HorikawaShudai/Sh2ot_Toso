@@ -22,6 +22,7 @@
 #include "Effect.h"
 #include "exit.h"
 #include "SpotLight.h"
+#include "polygonBG.h"
 
 //グローバル変数宣言
 bool g_bPause = false;
@@ -93,6 +94,8 @@ void InitGame()
 
 	//スコアアイテムの初期化
 	InitItem();
+
+	InitPolygonBG();
 
 	SetItem(D3DXVECTOR3(0.0f,0.0f,-40.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), 0);
 	SetItem(D3DXVECTOR3(40.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
@@ -166,6 +169,8 @@ void UninitGame()
 
 	//出口の終了処理
 	UninitExit();
+
+	UninitPolygonBG();
 }
 
 //====================================================================
@@ -271,6 +276,8 @@ void UpdateGame()
 
 		//出口の更新処理
 		UpdateExit();
+
+		UpdatePolygonBG();
 	}
 }
 
@@ -353,6 +360,8 @@ void DrawGame()
 
 		//エフェクトの描画処理
 		DrawEffect();
+
+		DrawPolygonBG();
 	}
 
 	//ビューポートを元に戻す
