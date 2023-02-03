@@ -737,16 +737,19 @@ void EnemyPatrol(int nEnemy)
 		
 		if (g_Enemy[nEnemy].MoveState != ENEMYMOVE_NONE)
 		{//移動処理
+			
+			//座標の更新
+			g_Enemy[nEnemy].move = D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y)*ENEMY_SPEED);
+
 			if (g_Enemy[nEnemy].fDistanceLeft <= 300.0f && g_Enemy[nEnemy].fDistanceLeft <= g_Enemy[nEnemy].fDistanceRight)
 			{
-				g_Enemy[nEnemy].pos += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED);
+				g_Enemy[nEnemy].move += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED);
 			}
 			else if (g_Enemy[nEnemy].fDistanceRight <= 300.0f && g_Enemy[nEnemy].fDistanceRight <= g_Enemy[nEnemy].fDistanceLeft)
 			{
-				g_Enemy[nEnemy].pos += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED);
+				g_Enemy[nEnemy].move += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED);
 			}
-			//座標の更新
-			g_Enemy[nEnemy].move = D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y)*ENEMY_SPEED);
+
 			g_Enemy[nEnemy].pos += g_Enemy[nEnemy].move;
 		}
 }
