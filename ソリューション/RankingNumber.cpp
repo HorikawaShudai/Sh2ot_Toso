@@ -27,6 +27,7 @@ LPDIRECT3DTEXTURE9 g_pTextureRanKingNumber = NULL;			//テクスチャのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffRanKingNumber = NULL;		//頂点バッファのポインタ
 RanKingNumber g_RanKingNumber[MAX_RANK];					//ランキングの位置
 
+RANKING_TYPE RankingType;
 int g_HighScore = -1;
 int g_RankingCounter;
 float g_RankingColorR = 1.0f;
@@ -43,9 +44,11 @@ void InitRanKingNumber(void)
 	int nCntNum;
 	g_RankingCounter = 1200;
 
+	RankingType = RANKING_TYPE_ESCAPE;
+
 	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
 
-							   //デバイスの所得
+	//デバイスの所得
 	pDevice = GetDevice();
 
 	//テクスチャの読み込み
@@ -73,9 +76,10 @@ void InitRanKingNumber(void)
 
 	for (nCntMax = 0; nCntMax < MAX_RANK; nCntMax++)
 	{
-		aTexU[0] = g_RanKingNumber[nCntMax].nScore % 1000 / 100;
-		aTexU[1] = g_RanKingNumber[nCntMax].nScore % 100 / 10;
-		aTexU[2] = g_RanKingNumber[nCntMax].nScore % 10 / 1;
+		aTexU[0] = g_RanKingNumber[nCntMax].nScore % 10000 / 1000;
+		aTexU[1] = g_RanKingNumber[nCntMax].nScore % 1000 / 100;
+		aTexU[2] = g_RanKingNumber[nCntMax].nScore % 100 / 10;
+		aTexU[3] = g_RanKingNumber[nCntMax].nScore % 10 / 1;
 
 		for (nCntNum = 0; nCntNum < NUM_PLACE; nCntNum++)
 		{
@@ -265,23 +269,48 @@ void SetRanking(int nRanKing)
 	int nCount2;
 	int nData;
 
-	if (nRanKing > g_RanKingNumber[MAX_RANK - 1].nScore)
+	switch (RankingType)
 	{
-		g_RanKingNumber[MAX_RANK - 1].nScore = nRanKing;
-		g_HighScore = nRanKing;
-
-		for (nCount1 = 0; nCount1 < MAX_RANK; nCount1++)
+	case RANKING_TYPE_VILLAIN:
+		if (nRanKing > g_RanKingNumber[MAX_RANK - 1].nScore)
 		{
-			for (nCount2 = nCount1; nCount2 < MAX_RANK; nCount2++)
+			g_RanKingNumber[MAX_RANK - 1].nScore = nRanKing;
+			g_HighScore = nRanKing;
+
+			for (nCount1 = 0; nCount1 < MAX_RANK; nCount1++)
 			{
-				if (g_RanKingNumber[nCount1].nScore < g_RanKingNumber[nCount2].nScore)
+				for (nCount2 = nCount1; nCount2 < MAX_RANK; nCount2++)
 				{
-					nData = g_RanKingNumber[nCount1].nScore;
-					g_RanKingNumber[nCount1].nScore = g_RanKingNumber[nCount2].nScore;
-					g_RanKingNumber[nCount2].nScore = nData;
+					if (g_RanKingNumber[nCount1].nScore < g_RanKingNumber[nCount2].nScore)
+					{
+						nData = g_RanKingNumber[nCount1].nScore;
+						g_RanKingNumber[nCount1].nScore = g_RanKingNumber[nCount2].nScore;
+						g_RanKingNumber[nCount2].nScore = nData;
+					}
 				}
 			}
 		}
+		break;
+	case RANKING_TYPE_ESCAPE:
+		if (nRanKing < g_RanKingNumber[MAX_RANK - 1].nScore)
+		{
+			g_RanKingNumber[MAX_RANK - 1].nScore = nRanKing;
+			g_HighScore = nRanKing;
+
+			for (nCount1 = 0; nCount1 < MAX_RANK; nCount1++)
+			{
+				for (nCount2 = nCount1; nCount2 < MAX_RANK; nCount2++)
+				{
+					if (g_RanKingNumber[nCount1].nScore > g_RanKingNumber[nCount2].nScore)
+					{
+						nData = g_RanKingNumber[nCount1].nScore;
+						g_RanKingNumber[nCount1].nScore = g_RanKingNumber[nCount2].nScore;
+						g_RanKingNumber[nCount2].nScore = nData;
+					}
+				}
+			}
+		}
+		break;
 	}
 }
 
@@ -306,8 +335,20 @@ void SaveData(void)
 	int nCount;
 	FILE *pFile; //ファイルポインタを宣言
 
-				 //ファイルを開く
-	pFile = fopen("data\\TEXT\\ranking.txt", "w");
+	//ファイルを開く
+	pFile = fopen("", "w");
+
+	switch (RankingType)
+	{
+	case RANKING_TYPE_VILLAIN:
+		//ファイルを開く
+		pFile = fopen("data\\TEXT\\Scoreranking.txt", "w");
+		break;
+	case RANKING_TYPE_ESCAPE:
+		//ファイルを開く
+		pFile = fopen("data\\TEXT\\Timeranking.txt", "w");
+		break;
+	}
 
 	if (pFile != NULL)
 	{//ファイルを開けた場合
@@ -329,13 +370,25 @@ void SaveData(void)
 //==================================================
 //ロード処理
 //==================================================
-void LordData(void)
+void LoadData(void)
 {
 	int nCount;
 	FILE *pFile; //ファイルポインタを宣言
 
-				 //ファイルを開く
-	pFile = fopen("data\\TEXT\\ranking.txt", "r");
+	//ファイルを開く
+	pFile = fopen("", "r");
+
+	switch (RankingType)
+	{
+	case RANKING_TYPE_VILLAIN:
+		//ファイルを開く
+		pFile = fopen("data\\TEXT\\Scoreranking.txt", "r");
+		break;
+	case RANKING_TYPE_ESCAPE:
+		//ファイルを開く
+		pFile = fopen("data\\TEXT\\Timeranking.txt", "r");
+		break;
+	}
 
 	if (pFile != NULL)
 	{//ファイルを開けた場合

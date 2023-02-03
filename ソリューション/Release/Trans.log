@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+﻿  Trans.vcxproj -> C:\Users\Student\Desktop\5\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\Student\Desktop\5\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+=======
+<<<<<<< HEAD
+﻿  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+=======
 ﻿  Billboard.cpp
   camera.cpp
   debugproc.cpp
@@ -51,5 +59,12 @@ result.cpp(37): warning C4101: 'nCntResult': ローカル変数は 1 度も使�
     56 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
+<<<<<<< HEAD
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github6\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github6\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+=======
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github5\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+>>>>>>> 7fe57f542a89b83134d5a041bb312688fab8e0f2
+>>>>>>> caa87dba4164e4518abd66882a812b61b00ba5a5
+>>>>>>> ea3a10d7c51d057bd882160b9dd9198eb062efcb

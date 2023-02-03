@@ -20,6 +20,7 @@
 LPDIRECT3DTEXTURE9 g_pTextureTime = NULL;			//テクスチャのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffTime = NULL;		//頂点バッファのポインタ
 D3DXVECTOR3 g_posTime[NUM_PLACE];					//タイムの位置
+int g_nCountTime;									//タイムのカウント
 int g_nTime;										//タイムの値
 int g_nMaxTime;										//タイムの最大値
 int g_aTexU[NUM_PLACE];								//テクスチャの読み込み位置
@@ -48,7 +49,7 @@ void InitTime(void)
 	g_posTime[2] = D3DXVECTOR3(680.0f, 680.0f, 0.0f);	//10秒の桁の位置設定
 	g_posTime[3] = D3DXVECTOR3(730.0f, 680.0f, 0.0f);	//１秒の桁の位置設定
 
-	g_nTime = 0;
+	g_nCountTime = 0;
 
 	g_bTimeCount = true;
 	g_TimeWait = 0.0f;									//時間が終わった時の余韻
@@ -97,12 +98,13 @@ void InitTime(void)
 		pVtx += 4;	//頂点データのポインタを４つ分進める
 	}
 
-	g_aTexU[0] = 0;
-	g_aTexU[1] = 0;
-	g_aTexU[2] = 1;
+	g_aTexU[0] = 5;
+	g_aTexU[1] = 4;
+	g_aTexU[2] = 2;
 	g_aTexU[3] = 5;
 
-	g_nMaxTime = (g_aTexU[3] + g_aTexU[2] * 10) * 60;
+	g_nMaxTime = (g_aTexU[3] + g_aTexU[2] * 10 + g_aTexU[1] * 60 + g_aTexU[0] * 600) * 60;
+	g_nTime = (g_aTexU[3] + g_aTexU[2] * 10 + g_aTexU[1] * 60 + g_aTexU[0] * 600);
 
 	//頂点バッファをアンロックする
 	g_pVtxBuffTime->Unlock();
@@ -136,12 +138,12 @@ void UninitTime(void)
 //	MODE g_Mode = GetMode();	//ゲームモードを所得
 //	int nCntTime;
 //
-//	g_nTime++;
+//	g_nCountTime++;
 //	if (g_Mode == MODE_GAME)
 //	{
-//		if (g_nTime >= 60)
+//		if (g_nCountTime >= 60)
 //		{
-//			g_nTime = 0;
+//			g_nCountTime = 0;
 //			if (g_aTexU[3] >= 9)
 //			{
 //				g_aTexU[3] = 0;
@@ -239,11 +241,11 @@ void UpdateTime(void)
 	if (g_bTimeCount == true)
 	{//タイムのカウントダウンが可能な時
 		int nCntTime;
-		g_nTime++;	//カウントを増やす
+		g_nCountTime++;	//カウントを増やす
 
-		if (g_nTime >= 60)
+		if (g_nCountTime >= 60)
 		{//60フレームが経過した時
-			g_nTime = 0;	//フレームをリセットする
+			g_nCountTime = 0;	//フレームをリセットする
 
 			if (g_aTexU[3] <= 0)
 			{//１秒の桁が０の時
@@ -281,9 +283,12 @@ void UpdateTime(void)
 				g_aTexU[3]--;	//１秒の桁を減少させる
 			}
 		}
+
+		g_nTime = (g_aTexU[3] + g_aTexU[2] * 10 + g_aTexU[1] * 100 + g_aTexU[0] * 1000);
+
 		VERTEX_2D*pVtx;	//頂点ポインタを所得
 
-						//頂点バッファをロックし、両店情報へのポインタを所得
+		//頂点バッファをロックし、両店情報へのポインタを所得
 		g_pVtxBuffTime->Lock(0, 0, (void**)&pVtx, 0);
 
 		for (nCntTime = 0; nCntTime < NUM_PLACE; nCntTime++)

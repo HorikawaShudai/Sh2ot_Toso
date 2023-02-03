@@ -21,6 +21,8 @@
 #include "keyUI.h"
 #include "Effect.h"
 #include "exit.h"
+#include "fog.h"
+#include "SpotLight.h"
 
 //グローバル変数宣言
 bool g_bPause = false;
@@ -47,6 +49,8 @@ void InitGame()
 
 	//ライトの初期化処理
 	InitLight();
+
+	//InitSpotLight();
 
 	//床の初期化処理
 	InitField();
@@ -91,6 +95,11 @@ void InitGame()
 	//スコアアイテムの初期化
 	InitItem();
 
+	//フォグの初期化
+	InitFog();
+	//フォグの設定
+	SetFog(D3DFOG_LINEAR, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.5f), 10.0f, 1000.0f, 1.0f);
+
 	SetItem(D3DXVECTOR3(0.0f,0.0f,-40.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), 0);
 	SetItem(D3DXVECTOR3(40.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetItem(D3DXVECTOR3(100.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
@@ -101,7 +110,8 @@ void InitGame()
 	SetItem(D3DXVECTOR3(-200.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetItem(D3DXVECTOR3(200.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetItem(D3DXVECTOR3(250.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	SetKey(D3DXVECTOR3(250.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+
+	SetKey(D3DXVECTOR3(-1000.0f, 0.0f, -600.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetKey(D3DXVECTOR3(150.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetKey(D3DXVECTOR3(-50.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetKey(D3DXVECTOR3(50.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
@@ -120,6 +130,8 @@ void UninitGame()
 
 	//ライトの終了処理
 	UninitLight();
+
+	//UninitSpotLight();
 
 	//床の終了処理
 	UninitField();
@@ -160,6 +172,9 @@ void UninitGame()
 
 	//出口の終了処理
 	UninitExit();
+
+	//フォグの終了処理
+	UninitFog();
 }
 
 //====================================================================
@@ -198,6 +213,8 @@ void UpdateGame()
 
 	//ライトの更新処理
 	UpdateLight();
+
+	//UpdateSpotLight();
 
 	//メッシュの壁の更新処理
 	UpdateMeshWall();
@@ -263,6 +280,9 @@ void UpdateGame()
 
 		//出口の更新処理
 		UpdateExit();
+
+		//フォグの更新処理
+		UpdateFog();
 	}
 }
 
@@ -343,8 +363,14 @@ void DrawGame()
 		//鍵UIの描画処理
 		DrawKeyUI();
 
+		pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);								//フォグの無効化
 		//エフェクトの描画処理
 		DrawEffect();
+		pDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);								//フォグの有効化
+		
+																					
+		//フォグの描画
+		DrawFog();
 	}
 
 	//ビューポートを元に戻す
