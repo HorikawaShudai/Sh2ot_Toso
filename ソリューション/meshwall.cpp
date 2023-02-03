@@ -17,6 +17,8 @@
 LPDIRECT3DTEXTURE9 g_pTextureMeshWall;			//テクスチャのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffMeshWall;		//頂点バッファのポインタ
 LPDIRECT3DINDEXBUFFER9 g_pIndxBuffMeshWall;		//インデックスバッファへのポインタ
+
+MeshWall g_aMeshWall[MAX_MESHWALL];
 D3DXVECTOR3 g_posMeshWall;						//位置
 D3DXVECTOR3 g_rotMeshWall;						//向き
 D3DXMATRIX g_mtxWorldMeshWall;					//ワールドマトリックス
@@ -34,8 +36,13 @@ void InitMeshWall(void)
 		"data\\TEXTURE\\ENEMY00.png",
 		&g_pTextureMeshWall);
 
-	g_posMeshWall = D3DXVECTOR3(0.0f, 0.0f, 600.0f);
-	g_rotMeshWall = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	for (int nCntMeshWall = 0; nCntMeshWall < MAX_MESHWALL; nCntMeshWall++)
+	{
+		g_aMeshWall[nCntMeshWall].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_aMeshWall[nCntMeshWall].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_aMeshWall[nCntMeshWall].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_aMeshWall[nCntMeshWall].bUse = false;
+	}
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * HEIGHT_SIZE * WAIGHT_SIZE,
@@ -124,6 +131,9 @@ void InitMeshWall(void)
 
 	//インデックスバッファをアンロックする
 	g_pIndxBuffMeshWall->Unlock();
+
+
+	SetMeshWall(D3DXVECTOR3(-1000.0f, 0.0f, -720.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f));
 }
 
 //====================================================================
@@ -170,39 +180,69 @@ void DrawMeshWall(void)
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	D3DXMATRIX mtxRot, mtxTrans;	//計算用マトリックス
 
-									//ワールドマトリックスの初期化
-	D3DXMatrixIdentity(&g_mtxWorldMeshWall);
+	for (int nCntMeshWall = 0; nCntMeshWall < MAX_MESHWALL; nCntMeshWall++)
+	{
+		if (g_aMeshWall[nCntMeshWall].bUse == true)
+		{
+			//ワールドマトリックスの初期化
+			D3DXMatrixIdentity(&g_aMeshWall[nCntMeshWall].mtxWorld);
 
-	//向きを反映
-	D3DXMatrixRotationYawPitchRoll(&mtxRot, g_rotMeshWall.y, g_rotMeshWall.x, g_rotMeshWall.z);
+			//向きを反映
+			D3DXMatrixRotationYawPitchRoll(&mtxRot, g_aMeshWall[nCntMeshWall].rot.y, g_aMeshWall[nCntMeshWall].rot.x, g_aMeshWall[nCntMeshWall].rot.z);
 
-	D3DXMatrixMultiply(&g_mtxWorldMeshWall, &g_mtxWorldMeshWall, &mtxRot);
+			D3DXMatrixMultiply(&g_aMeshWall[nCntMeshWall].mtxWorld, &g_aMeshWall[nCntMeshWall].mtxWorld, &mtxRot);
 
-	//位置を反映
-	D3DXMatrixTranslation(&mtxTrans, g_posMeshWall.x, g_posMeshWall.y, g_posMeshWall.z);
+			//位置を反映
+			D3DXMatrixTranslation(&mtxTrans, g_aMeshWall[nCntMeshWall].pos.x, g_aMeshWall[nCntMeshWall].pos.y, g_aMeshWall[nCntMeshWall].pos.z);
 
-	D3DXMatrixMultiply(&g_mtxWorldMeshWall, &g_mtxWorldMeshWall, &mtxTrans);
+			D3DXMatrixMultiply(&g_aMeshWall[nCntMeshWall].mtxWorld, &g_aMeshWall[nCntMeshWall].mtxWorld, &mtxTrans);
 
-	//ワールドマトリックスの設定
-	pDevice->SetTransform(D3DTS_WORLD, &g_mtxWorldMeshWall);
+			//ワールドマトリックスの設定
+			pDevice->SetTransform(D3DTS_WORLD, &g_aMeshWall[nCntMeshWall].mtxWorld);
 
-	//頂点バッファをデータストリームに設定
-	pDevice->SetStreamSource(0, g_pVtxBuffMeshWall, 0, sizeof(VERTEX_3D));
+			//頂点バッファをデータストリームに設定
+			pDevice->SetStreamSource(0, g_pVtxBuffMeshWall, 0, sizeof(VERTEX_3D));
 
-	//インデックスバッファをデータストリームに設定
-	pDevice->SetIndices(g_pIndxBuffMeshWall);
+			//インデックスバッファをデータストリームに設定
+			pDevice->SetIndices(g_pIndxBuffMeshWall);
 
-	//頂点フォーマットの設定
-	pDevice->SetFVF(FVF_VERTEX_3D);
+			//頂点フォーマットの設定
+			pDevice->SetFVF(FVF_VERTEX_3D);
 
-	//テクスチャの設定
-	pDevice->SetTexture(0, g_pTextureMeshWall);
+			//テクスチャの設定
+			pDevice->SetTexture(0, g_pTextureMeshWall);
 
-	//ポリゴンの描画
-	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP,
-		0,
-		0,
-		0,//用意した頂点の数
-		0,
-		(WAIGHT_SIZE * HEIGHT_SIZE + WAIGHT_SIZE * (HEIGHT_SIZE - 2) + 2 * (HEIGHT_SIZE - 2)) - 2);//描画するプリミティブの数
+			//ポリゴンの描画
+			pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP,
+				0,
+				0,
+				0,//用意した頂点の数
+				0,
+				(WAIGHT_SIZE * HEIGHT_SIZE + WAIGHT_SIZE * (HEIGHT_SIZE - 2) + 2 * (HEIGHT_SIZE - 2)) - 2);//描画するプリミティブの数
+		}
+	}
+}
+
+//====================================================================
+//メッシュウォールの設定処理
+//====================================================================
+void SetMeshWall(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
+{
+	for (int nCntMeshWall = 0; nCntMeshWall < MAX_MESHWALL; nCntMeshWall++)
+	{
+		if (g_aMeshWall[nCntMeshWall].bUse == false)
+		{
+			g_aMeshWall[nCntMeshWall].pos = pos;
+			g_aMeshWall[nCntMeshWall].rot = rot;
+			g_aMeshWall[nCntMeshWall].bUse = true;
+		}
+	}
+}
+
+//====================================================================
+//メッシュウォール情報の取得
+//====================================================================
+MeshWall GetMeshWall(void)
+{
+	return g_aMeshWall[0];
 }
