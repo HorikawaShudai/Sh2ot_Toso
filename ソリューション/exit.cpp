@@ -13,6 +13,8 @@
 #include "PlayNumberSelect.h"
 #include "PlayModeSelect.h"
 #include "Fade.h"
+#include "player.h"
+#include "meshwall.h"
 
 const char *c_apExit[] =					//モデルデータ読み込み
 {
@@ -23,6 +25,7 @@ const char *c_apExit[] =					//モデルデータ読み込み
 
 //プロトタイプ宣言
 void DoorOpen(void);
+void ExsitClossLine(int nCntExit);
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureExit[64][EXIT_TYPE_MAX] = {};		//テクスチャのポインタ
@@ -32,9 +35,15 @@ DWORD g_dwNumMatExit[EXIT_TYPE_MAX] = {};						//マテリアルの数
 
 EXIT g_Exit[MAX_EXIT];					//オブジェクト00の情報
 int g_KeyCount;							//必要になる鍵のカウント
-int g_AwayCnt;							//脱出可能になるまでのカウント
+int g_ExitCnt;							//脱出可能になるまでのカウント
 
 bool g_bExitFade[MAX_EXIT];
+bool g_bExitOK;
+
+D3DXVECTOR3 g_vecToPos;
+D3DXVECTOR3 g_vecLine;
+D3DXVECTOR3 g_vecNor;
+D3DXVECTOR3 g_vecMoveRef;
 
 //====================================================================
 //オブジェクト00の初期化処理
@@ -59,8 +68,14 @@ void InitExit(void)
 		g_Exit[nCntExit].nType = EXIT_TYPE_BIGFRAME;
 	}
 
+	g_vecToPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	g_vecLine = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	g_vecNor = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	g_vecMoveRef = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
 	g_KeyCount = 0;
-	g_AwayCnt = 0;
+	g_ExitCnt = 120;
+	g_bExitOK = false;
 
 	//Xファイルの読み込み
 	for (int nCntObj = 0; nCntObj < EXIT_TYPE_MAX; nCntObj++)
@@ -205,6 +220,9 @@ void DrawExit(void)
 	}
 }
 
+//========================================
+//扉が開く処理
+//========================================
 void DoorOpen(void)
 {
 	for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
@@ -219,15 +237,101 @@ void DoorOpen(void)
 		}
 		}*/
 
+		ExsitClossLine(nCntExit);
+
 		if (g_Exit[nCntExit].bUse == true && g_Exit[nCntExit].bExitOK == true)
 		{
-			for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
-			{
-				if (g_Exit[nCntExit].nType == 1 && g_Exit[nCntExit].rot.y >= 1.5f)
-				{
-					g_Exit[1].rot.y -= 0.01f;
+			
 
-					g_Exit[2].rot.y += 0.01f;
+			for (int nCntExit1 = 0; nCntExit1 < MAX_EXIT; nCntExit1++)
+			{
+				if (g_Exit[nCntExit1].nType == 1)
+				{
+					if (g_Exit[1].rot.y >= 1.5f)
+					{
+						g_Exit[1].rot.y -= 0.01f;
+
+						g_Exit[2].rot.y += 0.01f;
+					}
+				}
+				if (g_Exit[nCntExit1].nType == 2)
+				{
+					if (g_Exit[2].rot.y >= 1.5f)
+					{
+						g_Exit[2].rot.y += 0.01f;
+					}
+				}
+			}
+			g_ExitCnt--;
+
+			if (g_ExitCnt <= 0)
+			{
+				g_ExitCnt = 0;
+			}
+		}
+
+		if (g_Exit[nCntExit].rot.y > D3DX_PI)
+		{
+			g_Exit[nCntExit].rot.y = -D3DX_PI;
+		}
+		if (g_Exit[nCntExit].rot.y < -D3DX_PI)
+		{
+			g_Exit[nCntExit].rot.y = D3DX_PI;
+		}
+	}
+}
+
+//================================
+// 外積の当たり判定
+//================================
+void ExsitClossLine(int nCntExit)
+{
+	//変数宣言
+	float vec;
+
+	Player *pPlayer = GetPlayer();
+	MeshWall MeshWall = GetMeshWall();
+
+	for (int nCntWall = 0; nCntWall < MAX_EXIT; nCntWall++, pPlayer++)
+	{
+		if (pPlayer->bUse == true)
+		{
+			float fRate;					//ベクトルの割合
+			float fMaxArea, fNowArea;		//今の面積／最大面積
+			D3DXVECTOR3 pos0, pos1;			//場所
+			D3DXVECTOR3 Cross;				//交点の場所
+
+			//場所の計算
+			pos0 = (MeshWall.pos + D3DXVECTOR3(cosf(MeshWall.rot.y) * -1.0f, 0.0f, sinf(MeshWall.rot.y) * -1.0f));
+			pos1 = (MeshWall.pos + D3DXVECTOR3(cosf(MeshWall.rot.y) * 1.0f, 0.0f, sinf(MeshWall.rot.y) * 1.0f));
+
+			//pos0とpos1との距離間
+			g_vecLine = pos1 - pos0;
+
+			//壁から弾までの位置
+			g_vecToPos = pPlayer->pos - MeshWall.pos;
+
+			//最大面積
+			fMaxArea = (g_vecLine.z * pPlayer->move.x) - (g_vecLine.x * MeshWall.move.z);
+
+			//今の面積
+			fNowArea = (g_vecToPos.z * pPlayer->move.x) - (g_vecToPos.x * MeshWall.move.z);
+
+			//ベクトルの割合
+			fRate = fNowArea / fMaxArea;
+
+			//交点
+			Cross = D3DXVECTOR3(pos0.x + g_vecLine.x * fRate, pPlayer->pos.y, pos0.z + g_vecLine.z * fRate);
+
+			vec = (g_vecLine.z * g_vecToPos.x) - (g_vecLine.x * g_vecToPos.z);
+
+			if (pPlayer->pos.x >= pos0.x && pPlayer->pos.x >= pos0.x,
+				pPlayer->pos.x <= pos1.x && pPlayer->pos.x <= pos1.x)
+			{
+				if (vec < 0)
+				{
+					//脱出状態へ
+					pPlayer->State = PLAYER_EXSIT;
 				}
 			}
 		}
@@ -351,9 +455,10 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 
 				if (g_KeyCount > PlayNumber.CurrentSelectNumber - 1)
 				{//鍵がプレイヤー人数分使われた場合
-					g_Exit[nCntExit].bExitOK = true;
+					g_bExitOK = true;
 
-					g_AwayCnt++;
+					g_Exit[1].bExitOK = true;
+					g_Exit[2].bExitOK = true;
 				}
 
 				break;
@@ -373,7 +478,7 @@ bool CollisionExi(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D
 
 	for (int nCntExit = 0; nCntExit < MAX_OBJECT00; nCntExit++)
 	{
-		if (g_Exit[nCntExit].bUse == true && g_Exit[nCntExit].bExitOK == false)
+		if (g_Exit[nCntExit].bUse == true && /*g_Exit[nCntExit].bExitOK == false*/ g_ExitCnt >= 1)
 		{
 			if (
 				(
