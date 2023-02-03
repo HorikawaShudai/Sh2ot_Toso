@@ -159,7 +159,7 @@ void LoadStage(int nStageNumber)
 	else if (nStageNumber == 3)
 	{
 		//ファイルを開く
-		pFile = fopen("Data\\TEXT\\result.txt", "r");
+		pFile = fopen("Data\\TEXT\\result_tousou.txt", "r");
 	}
 
 	if (pFile != NULL)
