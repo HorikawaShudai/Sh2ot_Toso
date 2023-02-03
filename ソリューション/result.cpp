@@ -6,6 +6,7 @@
 #include "object00.h"
 #include "objectBG.h"
 #include "stage.h"
+#include "resultUI.h"
 
 //マクロ定義
 #define NUM_Result (1) //背景の数
@@ -49,39 +50,39 @@ void InitResult(void)
 		D3DPOOL_MANAGED,
 		&g_pVtxBuffResult,
 		NULL);
-	VERTEX_2D * pVtx;
-	g_pVtxBuffResult->Lock(0, 0, (void**)&pVtx, 0);
-	for (nCntResult = 0; nCntResult < NUM_Result; nCntResult++)
-	{
-		g_aTexUR[nCntResult] = 0.0f;
+	//VERTEX_2D * pVtx;
+	//g_pVtxBuffResult->Lock(0, 0, (void**)&pVtx, 0);
+	//for (nCntResult = 0; nCntResult < NUM_Result; nCntResult++)
+	//{
+	//	g_aTexUR[nCntResult] = 0.0f;
 
-		//テクスチャ座標
-		pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-		pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
-		pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
-		pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+	//	//テクスチャ座標
+	//	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+	//	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+	//	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+	//	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
 
-		//頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(1000.0f, 0.0f, 0.0f);
-		pVtx[1].pos = D3DXVECTOR3(1280.0f, 0.0f, 0.0f);
-		pVtx[2].pos = D3DXVECTOR3(1000.0f, 720.0f, 0.0f);
-		pVtx[3].pos = D3DXVECTOR3(1280.0f, 720.0f, 0.0f);
+	//	//頂点座標の設定
+	//	pVtx[0].pos = D3DXVECTOR3(1000.0f, 0.0f, 0.0f);
+	//	pVtx[1].pos = D3DXVECTOR3(1280.0f, 0.0f, 0.0f);
+	//	pVtx[2].pos = D3DXVECTOR3(1000.0f, 720.0f, 0.0f);
+	//	pVtx[3].pos = D3DXVECTOR3(1280.0f, 720.0f, 0.0f);
 
-		//rhwの設定
-		pVtx[0].rhw = 1.0f;
-		pVtx[1].rhw = 1.0f;
-		pVtx[2].rhw = 1.0f;
-		pVtx[3].rhw = 1.0f;
+	//	//rhwの設定
+	//	pVtx[0].rhw = 1.0f;
+	//	pVtx[1].rhw = 1.0f;
+	//	pVtx[2].rhw = 1.0f;
+	//	pVtx[3].rhw = 1.0f;
 
-		//頂点カラーの設定
-		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	//	//頂点カラーの設定
+	//	pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	//	pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	//	pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	//	pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
-		pVtx += 4;
-	}
-	g_pVtxBuffResult->Unlock();
+	//	pVtx += 4;
+	//}
+	//g_pVtxBuffResult->Unlock();
 
 	//3D
 	Init3DResult();
@@ -177,6 +178,8 @@ void Init3DResult(void)
 
 	//ステージの読み込み
 	SetStage(3);
+
+	InitResultUI();
 }
 
 //終了
@@ -185,6 +188,8 @@ void Uninit3DResult(void)
 	UninitCamera();
 
 	UninitObjectBG();
+
+	UninitResultUI();
 }
 
 //更新
@@ -193,6 +198,8 @@ void Update3Result(void)
 	UpdateCamera();
 
 	UpdateObjectBG();
+
+	UpdateResultUI();
 }
 
 //描画
@@ -201,4 +208,6 @@ void Draw3DResult(void)
 	SetCamera(4);
 
 	DrawObjectBG();
+
+	DrawResultUI();
 }

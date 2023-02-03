@@ -579,6 +579,5 @@ void Draw3DTitle(void)
 	DrawObjectBG();
 
 	DrawThunder();
-
 }
 
