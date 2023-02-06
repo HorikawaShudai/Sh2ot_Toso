@@ -71,7 +71,10 @@ void InitPlayer(void)
 		g_aPlayer[nCntPlayer].nLife = PLAYER_LIFE;
 		g_aPlayer[nCntPlayer].bUse = true;
 		g_aPlayer[nCntPlayer].bGetKey = false;
-		g_aPlayer[nCntPlayer].bAppear =false;
+		g_aPlayer[nCntPlayer].VibrtionTrueCount = 0;
+		g_aPlayer[nCntPlayer].VibrtionFalseCount = 0;
+		g_aPlayer[nCntPlayer].bVibrtion = false;
+		g_aPlayer[nCntPlayer].bAppear = false;
 #if _DEBUG
 		g_aPlayer[nCntPlayer].bAppear = true;
 #endif
@@ -135,7 +138,7 @@ void UninitPlayer(void)
 		}
 
 		//バイブレーションをオフにする
-		GetGamepad_Left_Vibrtion_false(0);
+		GetGamepad_Vibrtion_false(0);
 	}
 }
 
@@ -170,13 +173,16 @@ void UpdatePlayer0(void)
 	//バイブレーション
 	if (GetKeyboardTrigger(DIK_F6) == true)
 	{
-		GetGamepad_Left_Vibrtion(0);
+		PlayerSetVibrtion(0,10,10,60000,0);
 	}
 	if (GetKeyboardTrigger(DIK_F7) == true)
 	{
-		GetGamepad_Left_Vibrtion_false(0);
+		GetGamepad_Vibrtion_false(0);
 	}
 #endif
+
+	//バイブレーションの更新処理
+	PlayerVibrtionUpdate(0);
 
 	//プレイヤーの状態
 	switch (g_aPlayer[nSelectPlayer].State)
@@ -262,8 +268,9 @@ void UpdatePlayer0(void)
 	//鍵の入手処理
 	if (g_aPlayer[nSelectPlayer].bGetKey == false)
 	{//プレイヤーが鍵を持っていない場合
-		if (GetKeyboardTrigger(DIK_E) == true || GetGamepadPress(BUTTON_A, nSelectPlayer) || GetGamepadPress(BUTTON_B, nSelectPlayer))
+		if (GetKeyboardTrigger(DIK_E) == true || GetGamepadTrigger(BUTTON_A, nSelectPlayer) || GetGamepadTrigger(BUTTON_B, nSelectPlayer))
 		{//Eキー入力
+			if(CollisionKey(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nSelectPlayer) == true)
 			{//鍵を入手出来た場合
 				g_aPlayer[nSelectPlayer].bGetKey = true;	//鍵を入手状態にする
 				SetKeyUI(nSelectPlayer, true);				//鍵UIを表示する
@@ -274,7 +281,7 @@ void UpdatePlayer0(void)
 	//脱出処理
 	if (g_aPlayer[nSelectPlayer].bGetKey == true)
 	{//プレイヤーが鍵を持っている場合
-		if (GetKeyboardTrigger(DIK_E) == true || GetGamepadPress(BUTTON_A, nSelectPlayer) || GetGamepadPress(BUTTON_B, nSelectPlayer))
+		if (GetKeyboardTrigger(DIK_E) == true || GetGamepadTrigger(BUTTON_A, nSelectPlayer) || GetGamepadTrigger(BUTTON_B, nSelectPlayer))
 		{//Eキー入力
 			if (CollisionExit(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nSelectPlayer) == true)
 			{//鍵を入手出来た場合
@@ -553,6 +560,42 @@ void PlayerRotUpdate(int nCnt)
 }
 
 //====================================================================
+//プレイヤーのバイブレーションの更新処理
+//====================================================================
+void PlayerVibrtionUpdate(int nCnt)
+{
+	if (g_aPlayer[nCnt].bVibrtion == true)
+	{
+		g_aPlayer[nCnt].VibrtionTrueCount++;
+
+		if (g_aPlayer[nCnt].VibrtionTrueCount >= g_aPlayer[nCnt].VibrtionTime)
+		{
+			g_aPlayer[nCnt].bVibrtion = false;
+			g_aPlayer[nCnt].VibrtionTrueCount = 0;
+			GetGamepad_Vibrtion_false(nCnt);
+		}
+	}
+	else if (g_aPlayer[nCnt].VibrtionFalseCount > 0)
+	{
+		g_aPlayer[nCnt].VibrtionFalseCount--;
+	}
+}
+
+//====================================================================
+//プレイヤーのバイブレーションの設定処理
+//====================================================================
+void PlayerSetVibrtion(int nCnt, int nTrueCounter, int nFalseCounter, int nLeftPower, int RightPoewr)
+{
+	if (g_aPlayer[nCnt].bVibrtion == false)
+	{
+		g_aPlayer[nCnt].bVibrtion = true;
+		g_aPlayer[nCnt].VibrtionTime = nTrueCounter;
+		g_aPlayer[nCnt].VibrtionFalseCount = nFalseCounter;
+		GetGamepad_Vibrtion(nCnt, nLeftPower, RightPoewr);
+	}
+}
+
+//====================================================================
 //プレイヤーの更新処理(複数のコントローラ対応)
 //====================================================================
 void UpdatePlayer1(void)
@@ -567,11 +610,11 @@ void UpdatePlayer1(void)
 #ifdef _DEBUG
 	if (GetKeyboardTrigger(DIK_F6) == true)
 	{//バイブレーションをオンにする
-		GetGamepad_Left_Vibrtion(0);
+		PlayerSetVibrtion(0, 10, 10, 60000, 0);
 	}
 	if (GetKeyboardTrigger(DIK_F7) == true)
 	{//バイブレーションをオフにする
-		GetGamepad_Left_Vibrtion_false(0);
+		GetGamepad_Vibrtion_false(0);
 	}
 #endif
 
@@ -960,11 +1003,14 @@ void PlayerDistance(int nCnt)
 
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, 600.0f, 0.0f, -10.0f, 50.0f) == true)
 			{//バイブレーション処理
-				GetGamepad_Left_Vibrtion(0);
+				if (g_aPlayer[nCnt].VibrtionFalseCount <= 0)
+				{
+					PlayerSetVibrtion(0, 10, 10, 60000, 0);
+				}
 			}
 			else
 			{
-				GetGamepad_Left_Vibrtion_false(0);
+				GetGamepad_Vibrtion_false(0);
 			}
 
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, 800.0f, 0.0f, -10.0f, 50.0f) == true)

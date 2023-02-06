@@ -54,6 +54,8 @@ typedef struct
 	D3DXVECTOR3 Setrot;							//モーション時の向き
 	D3DXMATRIX mtxWorld;						//ワールドマトリックス
 	int nIndexModelParent;						//親モデルのインデックス
+	LPDIRECT3DTEXTURE9 g_pTexturePlayerBG[100];	//テクスチャのポインタ
+	DWORD g_dwNumMatPlayerBG;				//マテリアルの数
 }Model;
 
 //モデルの構造体

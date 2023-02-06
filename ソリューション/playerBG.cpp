@@ -26,10 +26,8 @@
 #define MAX_PLAYREBG (4)			//背景に使うプレイヤーの最大数
 
 //グローバル変数
-LPDIRECT3DTEXTURE9 g_pTexturePlayerBG[100][MAX_PLAYREBG] = {};	//テクスチャのポインタ
 LPD3DXMESH g_pMeshPlayerBG[32] = {};				//メッシュ(頂点情報)へのポインタ
 LPD3DXBUFFER g_pBuffMatPlayerBG[32] = {};			//マテリアルへのポインタ
-DWORD g_dwNumMatPlayerBG = 0;						//マテリアルの数
 PlayerBG g_PlayerBG[MAX_PLAYREBG];					//プレイヤーの情報
 int g_nIndexPlayerBGShadow = -1;					//影のインデックス(番号)
 
@@ -62,13 +60,14 @@ void InitPlayerBG(void)
 
 	for (int nCntPlayerBG = 0; nCntPlayerBG < MAX_PLAYREBG; nCntPlayerBG++)
 	{
-		g_PlayerBG[nCntPlayerBG].pos = D3DXVECTOR3(-200.0f + nCntPlayerBG * 100.0f, 0.0f, 0.0f);
+		g_PlayerBG[nCntPlayerBG].pos = D3DXVECTOR3(-60.0f + nCntPlayerBG * 40.0f, 0.0f, 100.0f);
 		g_PlayerBG[nCntPlayerBG].posOld = g_PlayerBG[nCntPlayerBG].pos;
 		g_PlayerBG[nCntPlayerBG].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_PlayerBG[nCntPlayerBG].NormarizeMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_PlayerBG[nCntPlayerBG].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_PlayerBG[nCntPlayerBG].vtxMin = D3DXVECTOR3(1000.0f, 1000.0f, 1000.0f);
 		g_PlayerBG[nCntPlayerBG].vtxMax = D3DXVECTOR3(-1000.0f, -1000.0f, -1000.0f);
+		g_PlayerBG[nCntPlayerBG].g_bMotion = true;
 
 		switch (nCntPlayerBG)
 		{
@@ -89,42 +88,40 @@ void InitPlayerBG(void)
 			SetMotion(g_PlayerBG[nCntPlayerBG].MotionType, nCntPlayerBG);
 			break;
 		}
+
 		g_PlayerBG[nCntPlayerBG].nLife = PLAYERBG_LIFE;
 		g_PlayerBG[nCntPlayerBG].bJump = false;
 		g_PlayerBG[nCntPlayerBG].bUse = true;
 
 		g_PlayerBG[nCntPlayerBG].g_nNextKey = 1;
-		g_PlayerBG[nCntPlayerBG].g_bMotion = false;
 
 		//外部ファイルからキャラクター情報を読み込む処理
 		LoadMotion(nCntPlayerBG);
 
-		//Xファイルの読み込み
 		for (int nCntModel = 0; nCntModel < g_PlayerBG[nCntPlayerBG].nNumModel; nCntModel++)
 		{
+			//Xファイルの読み込み
 			D3DXLoadMeshFromX(c_apPlayerBG[nCntModel],
 				D3DXMESH_SYSTEMMEM,
 				pDevice,
 				NULL,
 				&g_pBuffMatPlayerBG[nCntModel],
 				NULL,
-				&g_dwNumMatPlayerBG,
+				&g_PlayerBG[nCntPlayerBG].aModel[nCntModel].g_dwNumMatPlayerBG,
 				&g_pMeshPlayerBG[nCntModel]);
-		}
 
-		for (int nCntModel = 0; nCntModel < g_PlayerBG[nCntPlayerBG].nNumModel; nCntModel++)
-		{
+
 			//マテリアル情報に対するポインタを所得
 			pMat = (D3DXMATERIAL*)g_pBuffMatPlayerBG[nCntModel]->GetBufferPointer();
 
-			for (int nCntMat = 0; nCntMat < (int)g_dwNumMatPlayerBG; nCntMat++)
+			for (int nCntMat = 0; nCntMat < (int)g_PlayerBG[nCntPlayerBG].aModel[nCntModel].g_dwNumMatPlayerBG; nCntMat++)
 			{
 				if (pMat[nCntMat].pTextureFilename != NULL)
 				{
 					//テクスチャの読み込み
 					D3DXCreateTextureFromFile(pDevice,
 						pMat[nCntMat].pTextureFilename,
-						&g_pTexturePlayerBG[nCntMat][nCntPlayerBG]);
+						&g_PlayerBG[nCntPlayerBG].aModel[nCntModel].g_pTexturePlayerBG[nCntMat]);
 				}
 			}
 		}
@@ -138,13 +135,16 @@ void UninitPlayerBG(void)
 {
 	for (int nCntPlayerBG = 0; nCntPlayerBG < MAX_PLAYREBG; nCntPlayerBG++)
 	{
-		for (int nCntTex = 0; nCntTex < 100; nCntTex++)
+		for (int nCntModel = 0; nCntModel < g_PlayerBG[nCntPlayerBG].nNumModel; nCntModel++)
 		{
-			//テクスチャの破棄
-			if (g_pTexturePlayerBG[nCntTex][nCntPlayerBG] != NULL)
+			for (int nCntMat = 0; nCntMat < (int)g_PlayerBG[nCntPlayerBG].aModel[nCntModel].g_dwNumMatPlayerBG; nCntMat++)
 			{
-				g_pTexturePlayerBG[nCntTex][nCntPlayerBG]->Release();
-				g_pTexturePlayerBG[nCntTex][nCntPlayerBG] = NULL;
+				//テクスチャの破棄
+				if (g_PlayerBG[nCntPlayerBG].aModel[nCntModel].g_pTexturePlayerBG[nCntMat] != NULL)
+				{
+					g_PlayerBG[nCntPlayerBG].aModel[nCntModel].g_pTexturePlayerBG[nCntMat]->Release();
+					g_PlayerBG[nCntPlayerBG].aModel[nCntModel].g_pTexturePlayerBG[nCntMat] = NULL;
+				}
 			}
 		}
 
@@ -202,8 +202,8 @@ void UpdatePlayerBG(void)
 			g_PlayerBG[nCntPlayerBG].move.z = 0.0f;
 		}
 
-		//プレイヤーの移動入力処理
-		PlayerBGMoveInput(nCntPlayerBG);
+		////プレイヤーの移動入力処理
+		//PlayerBGMoveInput(nCntPlayerBG);
 
 		//ジャンプ処理
 		if (g_PlayerBG[nCntPlayerBG].bJump == false)
@@ -242,27 +242,27 @@ void UpdatePlayerBG(void)
 			}
 		}
 
-		//移動時にプレイヤーの向きを補正する
-		PlayerBGRotUpdate(nCntPlayerBG);
+		////移動時にプレイヤーの向きを補正する
+		//PlayerBGRotUpdate(nCntPlayerBG);
 
-		//オブジェクトとの当たり判定
-		if (CollisionObject00(&g_PlayerBG[nCntPlayerBG].pos, &g_PlayerBG[nCntPlayerBG].posOld, &g_PlayerBG[nCntPlayerBG].move, g_PlayerBG[nCntPlayerBG].vtxMin, g_PlayerBG[nCntPlayerBG].vtxMax, 20.0f) == false)
-		{
-			if (g_PlayerBG[nCntPlayerBG].bJump == true)
-			{
-				g_PlayerBG[nCntPlayerBG].bJump = false;	//ジャンプを使用していない状態にする
-			}
-		}
+		////オブジェクトとの当たり判定
+		//if (CollisionObject00(&g_PlayerBG[nCntPlayerBG].pos, &g_PlayerBG[nCntPlayerBG].posOld, &g_PlayerBG[nCntPlayerBG].move, g_PlayerBG[nCntPlayerBG].vtxMin, g_PlayerBG[nCntPlayerBG].vtxMax, 20.0f) == false)
+		//{
+		//	if (g_PlayerBG[nCntPlayerBG].bJump == true)
+		//	{
+		//		g_PlayerBG[nCntPlayerBG].bJump = false;	//ジャンプを使用していない状態にする
+		//	}
+		//}
 
-		//一周した時の向きの補正
-		if (g_PlayerBG[nCntPlayerBG].rot.y > D3DX_PI * 1.0f)
-		{
-			g_PlayerBG[nCntPlayerBG].rot.y -= D3DX_PI * 2.0f;
-		}
-		else if (g_PlayerBG[nCntPlayerBG].rot.y < -D3DX_PI * 1.0f)
-		{
-			g_PlayerBG[nCntPlayerBG].rot.y += D3DX_PI * 2.0f;
-		}
+		////一周した時の向きの補正
+		//if (g_PlayerBG[nCntPlayerBG].rot.y > D3DX_PI * 1.0f)
+		//{
+		//	g_PlayerBG[nCntPlayerBG].rot.y -= D3DX_PI * 2.0f;
+		//}
+		//else if (g_PlayerBG[nCntPlayerBG].rot.y < -D3DX_PI * 1.0f)
+		//{
+		//	g_PlayerBG[nCntPlayerBG].rot.y += D3DX_PI * 2.0f;
+		//}
 
 		UpdateMotion(nCntPlayerBG);
 
@@ -789,13 +789,13 @@ void DrawPlayerBG(void)
 			//マテリアルデータへのポインタを所得する
 			pMat = (D3DXMATERIAL*)g_pBuffMatPlayerBG[nCntModel]->GetBufferPointer();
 
-			for (int nCntMat = 0; nCntMat < (int)g_dwNumMatPlayerBG; nCntMat++)
+			for (int nCntMat = 0; nCntMat < (int)g_PlayerBG[nCntPlayerBG].aModel[nCntModel].g_dwNumMatPlayerBG; nCntMat++)
 			{
 				//マテリアルの設定
 				pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
 
 				//テクスチャの設定
-				pDevice->SetTexture(0, g_pTexturePlayerBG[nCntMat][nCntPlayerBG]);
+				pDevice->SetTexture(0, g_PlayerBG[nCntPlayerBG].aModel[nCntModel].g_pTexturePlayerBG[nCntMat]);
 
 				if (g_PlayerBG[nCntPlayerBG].bUse == true)
 				{

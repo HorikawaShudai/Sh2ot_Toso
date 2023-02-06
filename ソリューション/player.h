@@ -32,7 +32,7 @@ typedef enum
 	PLAYER_MOVESTATE_MAX,
 }PLAYER_MOVESTATE;
 
-//モデルの構造体
+//プレイヤーの構造体
 typedef struct
 {
 	D3DXVECTOR3 pos;							//現在の位置
@@ -48,22 +48,28 @@ typedef struct
 	int nDamageCounter;							//ダメージ状態の長さ
 	int nHitCounter;							//ヒット状態の長さ
 	int nNumModel;								//モデル(パーツ)の総数
+	int VibrtionTrueCount;						//バイブレーション中のカウント
+	int VibrtionFalseCount;						//バイブレーションをしていない間のカウント
+	int VibrtionTime;							//バイブレーションの長さ
 
 	bool bUse;									//プレイヤーが使用できるかどうか
 	bool bGetKey;								//プレイヤーが鍵を持っているかどうか
 	bool bAppear;								//敵を視認できるかどうか
+	bool bVibrtion;								//バイブレーションをしているかどうか
 }Player;
 
 //プロトタイプ宣言
 void InitPlayer(void);
 void UninitPlayer(void);
 void UpdatePlayer(void);
+void DrawPlayer(void);
 void PlayerMoveInput(int nCnt);
 void PlayerRotUpdate(int nCnt);
 void PlayerDistance(int nCnt);
+void PlayerVibrtionUpdate(int nCnt);
+void PlayerSetVibrtion(int nCnt, int nTrueCounter, int nFalseCounter, int nLeftPower, int RightPoewr);
 void PlayerHit(int nCnt,int nDamage);
 int CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY, float MinY);
 bool CollisionCircle(D3DXVECTOR3 pos1, D3DXVECTOR3 pos2, float nRadiusOut, float nRadiusIn, float MinY, float MaxY);
-void DrawPlayer(void);
 Player * GetPlayer(void);
 #endif
