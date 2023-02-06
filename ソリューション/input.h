@@ -81,8 +81,8 @@ float GetGamepad_Trigger_Left(int nPlayer);
 float GetGamepad_Trigger_Right(int nPlayer);
 
 bool GetGamepad_LStick_Trigger(int nPlayer, JOYPAD_LSTICK Type);
-void GetGamepad_Left_Vibrtion(int nPlayer);
-void GetGamepad_Left_Vibrtion_false(int nPlayer);
+void GetGamepad_Vibrtion(int nPlayer, int nLeftPower,int RightPoewr);
+void GetGamepad_Vibrtion_false(int nPlayer);
 
 //マウス用
 HRESULT InitMouse(HWND hWnd);
