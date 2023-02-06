@@ -158,7 +158,7 @@ void DrawScore(void)
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 	//プレイモード情報の取得
-	PlayerModeSelect PlayMode = GetPlayModeSelect();
+	PlayModeSelect PlayMode = GetPlayModeSelect();
 
 	int nCntScore;
 
