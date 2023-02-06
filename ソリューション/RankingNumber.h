@@ -3,6 +3,13 @@
 
 #include "main.h"
 
+typedef enum
+{
+	RANKING_TYPE_ESCAPE = 0,
+	RANKING_TYPE_VILLAIN,
+	PLAYER_STATE_MAX,
+}RANKING_TYPE;
+
 //プロトタイプ宣言
 void InitRanKingNumber(void);
 void UninitRanKingNumber(void);
@@ -10,7 +17,7 @@ void UpdateRanKingNumber(void);
 void DrawRanKingNumber(void);
 void ResetRanKing(void);
 void SaveData(void);
-void LordData(void);
+void LoadData(void);
 void SetRanking(int nRanKing);
 void StartRanKing(void);
 #endif

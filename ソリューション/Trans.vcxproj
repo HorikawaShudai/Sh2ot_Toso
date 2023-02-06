@@ -182,16 +182,20 @@
     <ClCompile Include="playerBG.cpp" />
     <ClCompile Include="PlayNumberSelect.cpp" />
     <ClCompile Include="PlayModeSelect.cpp" />
+    <ClCompile Include="PolygonBG.cpp" />
     <ClCompile Include="RankingNumber.cpp" />
     <ClCompile Include="RankingUI.cpp" />
     <ClCompile Include="result.cpp" />
+    <ClCompile Include="resultUI.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="score_item.cpp" />
+    <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="stage.cpp" />
     <ClCompile Include="stamina.cpp" />
     <ClCompile Include="Thunder.cpp" />
     <ClCompile Include="time.cpp" />
     <ClCompile Include="title.cpp" />
+    <ClCompile Include="tutorialUI.cpp" />
     <ClCompile Include="VillainRanking.cpp" />
     <ClCompile Include="VillainResult.cpp" />
   </ItemGroup>
@@ -227,16 +231,20 @@
     <ClInclude Include="playerBG.h" />
     <ClInclude Include="PlayNumberSelect.h" />
     <ClInclude Include="PlayModeSelect.h" />
+    <ClInclude Include="PolygonBG.h" />
     <ClInclude Include="RankingNumber.h" />
     <ClInclude Include="RankingUI.h" />
     <ClInclude Include="result.h" />
+    <ClInclude Include="resultUI.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="score_item.h" />
+    <ClInclude Include="SpotLight.h" />
     <ClInclude Include="stage.h" />
     <ClInclude Include="stamina.h" />
     <ClInclude Include="Thunder.h" />
     <ClInclude Include="time.h" />
     <ClInclude Include="title.h" />
+    <ClInclude Include="tutorialUI.h" />
     <ClInclude Include="VillainRanking.h" />
     <ClInclude Include="VillainResult.h" />
   </ItemGroup>

@@ -13,6 +13,7 @@
 #include "PlayModeSelect.h"
 #include "VillainRanking.h"
 #include "EscapeRanking.h"
+#include "RankingNumber.h"
 
 //マクロ定義
 #define CLASS_NAME "WindowClass"     //ウィンドウクラスの名前
@@ -39,7 +40,7 @@ LPDIRECT3DDEVICE9 g_pD3DDevice = NULL;
 
 int g_nCountFPS = 0;
 
-MODE g_mode = MODE_NUMBERSELECT;	//開始時点のモード
+MODE g_mode = MODE_TITLE;	//開始時点のモード
 
  //=============================================
  //メイン関数
@@ -286,6 +287,9 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	{
 		return E_FAIL;
 	}
+
+	//データをロードする
+	LoadData();
 
 	InitFade(g_mode);
 

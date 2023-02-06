@@ -3,7 +3,7 @@
 
 #include "main.h"
 
-//“G‚Ì\‘¢‘Ì
+//”šUI‚Ì\‘¢‘Ì
 typedef struct
 {
 	D3DXVECTOR3 pos;	//ˆÊ’u

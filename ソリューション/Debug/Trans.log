@@ -1,3 +1,7 @@
+<<<<<<< HEAD
 ﻿  PlayNumberSelect.cpp
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+﻿VillainResult.obj : fatal error LNK1318: 予期しない PDB エラー。OK (0) ''
+>>>>>>> 6632b792fda9f82cac0e719012408c843e57defc

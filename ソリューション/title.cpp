@@ -11,6 +11,7 @@
 #include "debugproc.h"
 #include "camera.h"
 #include "light.h"
+#include "SpotLight.h"
 #include "meshdome.h"
 #include "stage.h"
 #include "objectBG.h"
@@ -501,6 +502,7 @@ void Init3DTitle(void)
 	InitCamera();
 
 	InitLight();
+	//InitSpotLight();
 
 	InitMeshDome();
 
@@ -525,6 +527,7 @@ void Uninit3DTitle(void)
 	UninitCamera();
 
 	UninitLight();
+	//UninitSpotLight();
 
 	UninitMeshDome();
 
@@ -546,6 +549,7 @@ void Update3DTitle(void)
 	UpdateCamera();
 
 	UpdateLight();
+	//UpdateSpotLight();
 
 	UpdateMeshDome();
 
@@ -579,6 +583,5 @@ void Draw3DTitle(void)
 	DrawObjectBG();
 
 	DrawThunder();
-
 }
 

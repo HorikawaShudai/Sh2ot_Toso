@@ -21,6 +21,8 @@
 #include "keyUI.h"
 #include "Effect.h"
 #include "exit.h"
+#include "SpotLight.h"
+#include "polygonBG.h"
 
 //グローバル変数宣言
 bool g_bPause = false;
@@ -47,6 +49,8 @@ void InitGame()
 
 	//ライトの初期化処理
 	InitLight();
+
+	//InitSpotLight();
 
 	//床の初期化処理
 	InitField();
@@ -91,6 +95,8 @@ void InitGame()
 	//スコアアイテムの初期化
 	InitItem();
 
+	InitPolygonBG();
+
 	SetItem(D3DXVECTOR3(0.0f,0.0f,-40.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), 0);
 	SetItem(D3DXVECTOR3(40.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetItem(D3DXVECTOR3(100.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
@@ -121,6 +127,8 @@ void UninitGame()
 
 	//ライトの終了処理
 	UninitLight();
+
+	//UninitSpotLight();
 
 	//床の終了処理
 	UninitField();
@@ -161,6 +169,8 @@ void UninitGame()
 
 	//出口の終了処理
 	UninitExit();
+
+	UninitPolygonBG();
 }
 
 //====================================================================
@@ -199,6 +209,8 @@ void UpdateGame()
 
 	//ライトの更新処理
 	UpdateLight();
+
+	//UpdateSpotLight();
 
 	//メッシュの壁の更新処理
 	UpdateMeshWall();
@@ -264,6 +276,8 @@ void UpdateGame()
 
 		//出口の更新処理
 		UpdateExit();
+
+		UpdatePolygonBG();
 	}
 }
 
@@ -346,6 +360,8 @@ void DrawGame()
 
 		//エフェクトの描画処理
 		DrawEffect();
+
+		DrawPolygonBG();
 	}
 
 	//ビューポートを元に戻す

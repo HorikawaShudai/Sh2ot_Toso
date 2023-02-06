@@ -130,6 +130,9 @@ void UninitPlayer(void)
 			g_pBuffMatPlayer[nCntModel]->Release();
 			g_pBuffMatPlayer[nCntModel] = NULL;
 		}
+
+		//バイブレーションをオフにする
+		GetGamepad_Left_Vibrtion_false(0);
 	}
 }
 
@@ -242,7 +245,7 @@ void UpdatePlayer0(void)
 	CollisionObject00(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
 
 	//アイテムとの当たり判定
-	CollisionItem(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f, nSelectPlayer);
+	CollisionItem(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-20.0f, -20.0f, -20.0f), D3DXVECTOR3(20.0f, 20.0f, 20.0f), 20.0f, nSelectPlayer);
 
 	//出口との当たり判定
 	CollisionExi(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
@@ -931,7 +934,7 @@ void PlayerDistance(int nCnt)
 		{
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, 300.0f, 0.0f, -10.0f, 50.0f) == true)
 			{//敵の表示処理
-				g_aPlayer[nCnt].bAppear = true;
+				//g_aPlayer[nCnt].bAppear = true;
 			}
 			else
 			{
@@ -940,7 +943,7 @@ void PlayerDistance(int nCnt)
 
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, 600.0f, 0.0f, -10.0f, 50.0f) == true)
 			{//バイブレーション処理
-				//GetGamepad_Left_Vibrtion(0);
+				GetGamepad_Left_Vibrtion(0);
 			}
 			else
 			{

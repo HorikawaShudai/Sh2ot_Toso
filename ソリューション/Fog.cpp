@@ -5,6 +5,7 @@
 //
 //==========================================================
 #include "fog.h"
+#include "debugproc.h"
 
 //グローバル変数
 FOG g_Fog;
@@ -37,7 +38,41 @@ void UninitFog()
 //======================================
 void UpdateFog()
 {
+	if (g_Fog.FogMode != D3DFOG_NONE)
+	{//フォグがNONEではない時
+		//デバッグ表示
+		switch (g_Fog.FogMode)
+		{
+		case  D3DFOG_EXP:
+			PrintDebugProc("現在のフォグモード：EXP\n");
+			break;
+		case  D3DFOG_EXP2:
+			PrintDebugProc("現在のフォグモード：EXP2\n");
+			break;
+		case  D3DFOG_LINEAR:
+			PrintDebugProc("現在のフォグモード：LINEAR\n");
+			break;
 
+		default:
+			break;
+		}
+
+		PrintDebugProc("フォグの色：R:%f G:%f B:%f A:%f\n", g_Fog.FogColor.r, g_Fog.FogColor.g, g_Fog.FogColor.b, g_Fog.FogColor.a);
+
+		if (g_Fog.FogMode == D3DFOG_LINEAR)
+		{
+			PrintDebugProc("フォグの開始地点：%f\n",g_Fog.FogStart);
+			PrintDebugProc("フォグの終了地点：%f\n", g_Fog.FogEnd);
+		}
+		else
+		{
+			PrintDebugProc("フォグの密度：%f\n", g_Fog.FogDensity);
+		}
+	}
+	else
+	{
+		PrintDebugProc("現在のフォグモード：NONE");
+	}
 }
 
 //======================================
@@ -65,7 +100,7 @@ void SetFog(D3DFOGMODE FogMode, D3DXCOLOR FogColor, float FogStart, float FogEnd
 {
 	g_Fog.FogMode = FogMode;        //モードの設定
 	g_Fog.FogColor = FogColor;		//色の設定
-	g_Fog.FogStart = FogStart;		//開始地点の設定
-	g_Fog.FogEnd = FogEnd;			//終了地点の設定
-	g_Fog.FogDensity = FogDensity;	//フォグ密度の設定
+	g_Fog.FogStart = FogStart;		//開始地点の設定		*フォグモードがD3DFOG_LINEARの時に参照される*
+	g_Fog.FogEnd = FogEnd;			//終了地点の設定		*フォグモードがD3DFOG_LINEARの時に参照される*
+	g_Fog.FogDensity = FogDensity;	//フォグ密度の設定		0.0f～1.0fの間の数値を入力	*フォグモードがD3DFOG_LINEARでは無い時に参照される*
 }

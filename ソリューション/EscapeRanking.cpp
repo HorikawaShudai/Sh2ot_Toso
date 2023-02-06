@@ -5,6 +5,7 @@
 #include "numberUI.h"
 #include "RankingUI.h"
 #include "RankingNumber.h"
+#include "time.h"
 
 //グローバル変数宣言
 
@@ -27,6 +28,8 @@ void InitEscapeRanking()
 	InitRankingUI();
 
 	InitRanKingNumber();
+
+	InitTime();
 }
 
 //====================================================================
@@ -45,6 +48,8 @@ void UninitEscapeRanking()
 	UninitRankingUI();
 
 	UninitRanKingNumber();
+
+	UninitTime();
 }
 
 //====================================================================
@@ -63,6 +68,8 @@ void UpdateEscapeRanking()
 	UpdateRankingUI();
 
 	UpdateRanKingNumber();
+
+	UpdateTime();
 }
 
 //====================================================================
@@ -86,6 +93,8 @@ void DrawEscapeRanking()
 	DrawRankingUI();
 
 	DrawRanKingNumber();
+
+	DrawTime();
 
 	//ビューポートを元に戻す
 	pDevice->SetViewport(&viewportDef);
