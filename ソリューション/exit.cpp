@@ -237,15 +237,14 @@ void DoorOpen(void)
 		}
 		}*/
 
+		//外積の脱出判定処理
 		ExsitClossLine(nCntExit);
 
 		if (g_Exit[nCntExit].bUse == true && g_Exit[nCntExit].bExitOK == true)
-		{
-			
-
+		{//出口が使われていて脱出可能の場合
 			for (int nCntExit1 = 0; nCntExit1 < MAX_EXIT; nCntExit1++)
 			{
-				if (g_Exit[nCntExit1].nType == 1)
+				if (g_Exit[nCntExit1].nType != EXIT_TYPE_BIGFRAME)
 				{
 					if (g_Exit[1].rot.y >= 1.5f)
 					{
@@ -253,14 +252,18 @@ void DoorOpen(void)
 
 						g_Exit[2].rot.y += 0.01f;
 					}
-				}
-				if (g_Exit[nCntExit1].nType == 2)
-				{
 					if (g_Exit[2].rot.y >= 1.5f)
 					{
 						g_Exit[2].rot.y += 0.01f;
 					}
 				}
+				/*if (g_Exit[nCntExit1].nType == 2)
+				{
+					if (g_Exit[2].rot.y >= 1.5f)
+					{
+						g_Exit[2].rot.y += 0.01f;
+					}
+				}*/
 			}
 			g_ExitCnt--;
 
