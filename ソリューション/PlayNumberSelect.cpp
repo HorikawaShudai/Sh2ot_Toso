@@ -6,6 +6,7 @@
 //======================================================================================
 #include <stdio.h>
 #include "PlayNumberSelect.h"
+#include "PlayModeSelect.h"
 #include "input.h"
 #include "fade.h"
 #include "game.h"
@@ -82,7 +83,7 @@ void InitPlayNumberSelect(void)
 	//構造体の初期化
 	g_PlayNumberSelect.pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	g_PlayNumberSelect.CurrentSelectNumber = 0;
-	g_PlayNumberSelect.bUse = false;
+	g_PlayNumberSelect.bUse = true;
 
 	//グローバル宣言の初期化
 	g_PaleColorPns = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
@@ -97,6 +98,9 @@ void InitPlayNumberSelect(void)
 
 	//3D
 	Init3DSelect();
+
+	//モード選択の初期化
+	InitPlayModeSelect();
 }
 
 //========================================================================
@@ -128,6 +132,9 @@ void UninitPlayNumberSelect(void)
 
 	//3D
 	Uninit3DSelect();
+
+	//モード選択
+	UninitPlayModeSelect();
 }
 
 //========================================================================
@@ -135,8 +142,23 @@ void UninitPlayNumberSelect(void)
 //========================================================================
 void UpdatePlayNumberSelect(void)
 {
-	//ステージ選択の関数
-	PlayerSelect();
+	PlayModeSelect PlayMode = GetPlayModeSelect();
+
+	if (g_PlayNumberSelect.bUse == true)
+	{
+		//ステージ選択の関数
+		PlayerSelect();
+	}
+	else if (g_PlayNumberSelect.bUse == false)
+	{ 
+		//モード選択の更新処理
+ 		UpdatePlayModeSelect();
+	}
+
+	//if (GetKeyboardTrigger(DIK_B) == true && g_PlayNumberSelect.bUse == false)
+	//{//キー(B)が押された
+	//	g_PlayNumberSelect.bUse = true;
+	//}
 
 	//3D
 	Update3DSelect();
@@ -152,13 +174,23 @@ void UpdatePlayNumberSelect(void)
 //========================================================================
 void DrawPlayNumberSelect(void)
 {
-	//選択アイコン
-	DrawPlayNumberSelectIcon();
+	//プレイモード情報の取得
+	PlayModeSelect PlayMode = GetPlayModeSelect();
+
+	if (g_PlayNumberSelect.bUse == true)
+	{
+		//選択アイコン
+		DrawPlayNumberSelectIcon();
+	}
+	else if (g_PlayNumberSelect.bUse == false)
+	{
+		//モード選択の描画処理
+		DrawPlayModeSelect();
+	}
 
 	//3D
 	Draw3DSelect();
 }
-
 
 //========================================================================
 // モード選択アイコンの初期化処理
@@ -296,79 +328,82 @@ void PlayerSelect(void)
 	//フェード情報の取得
 	FADE pFade = GetFade();
 
+	//プレイモード情報の取得
+	PlayModeSelect PlayMode = GetPlayModeSelect();
+
 	//頂点情報のポインタ
 	VERTEX_2D *pVtx;
 
-	if (GetKeyboardTrigger(DIK_D) == true/* || GetGamePadTrigger(BUTTON_3, 0) == true*/ && pFade == FADE_NONE)
-	{
-		//頂点バッファをロック
-		g_pVtxBuffPlayNumberSelect[0]->Lock(0, 0, (void**)&pVtx, 0);
-
-		pVtx += g_PlayNumberSelect.CurrentSelectNumber * 4;
-
-		//頂点カラーの設定
-		pVtx[0].col = g_PaleColorPns;
-		pVtx[1].col = g_PaleColorPns;
-		pVtx[2].col = g_PaleColorPns;
-		pVtx[3].col = g_PaleColorPns;
-
-		//頂点バッファをアンロックする
-		g_pVtxBuffPlayNumberSelect[0]->Unlock();
-
-		//現在地を先に
-		g_PlayNumberSelect.CurrentSelectNumber = (g_PlayNumberSelect.CurrentSelectNumber + 1) % NUM_PLAYNUMBER;
-
-		//頂点バッファをロック
-		g_pVtxBuffPlayNumberSelect[0]->Lock(0, 0, (void**)&pVtx, 0);
-
-		pVtx += g_PlayNumberSelect.CurrentSelectNumber * 4;
-
-		//頂点カラーの設定
-		pVtx[0].col = g_NormalColorPns;
-		pVtx[1].col = g_NormalColorPns;
-		pVtx[2].col = g_NormalColorPns;
-		pVtx[3].col = g_NormalColorPns;
-
-		//頂点バッファをアンロックする
-		g_pVtxBuffPlayNumberSelect[0]->Unlock();
-	}
-	else if (GetKeyboardTrigger(DIK_A) == true/* || GetGamePadTrigger(BUTTON_2, 0) == true*/ && pFade == FADE_NONE)
-	{
-		//頂点バッファをロック
-		g_pVtxBuffPlayNumberSelect[0]->Lock(0, 0, (void**)&pVtx, 0);
-
-		pVtx += g_PlayNumberSelect.CurrentSelectNumber * 4;
-
-		//頂点カラーの設定
-		pVtx[0].col = g_PaleColorPns;
-		pVtx[1].col = g_PaleColorPns;
-		pVtx[2].col = g_PaleColorPns;
-		pVtx[3].col = g_PaleColorPns;
-
-		//頂点バッファをアンロックする
-		g_pVtxBuffPlayNumberSelect[0]->Unlock();
-
-		//現在地を前へ
-		g_PlayNumberSelect.CurrentSelectNumber = (g_PlayNumberSelect.CurrentSelectNumber - 1 + NUM_PLAYNUMBER) % NUM_PLAYNUMBER;
-
-		//頂点バッファをロック
-		g_pVtxBuffPlayNumberSelect[0]->Lock(0, 0, (void**)&pVtx, 0);
-
-		pVtx += 4 * g_PlayNumberSelect.CurrentSelectNumber;
-
-		//頂点カラーの設定
-		pVtx[0].col = g_NormalColorPns;
-		pVtx[1].col = g_NormalColorPns;
-		pVtx[2].col = g_NormalColorPns;
-		pVtx[3].col = g_NormalColorPns;
-
-		//頂点バッファをアンロックする
-		g_pVtxBuffPlayNumberSelect[0]->Unlock();
-	}
-
 	if (pFade == FADE_NONE)
 	{
-		if (GetKeyboardPress(DIK_RETURN) || GetGamepadPress(BUTTON_START, 0) || GetGamepadPress(BUTTON_A, 0))
+		if (GetKeyboardTrigger(DIK_D) == true/* || GetGamePadTrigger(BUTTON_3, 0) == true*/)
+		{
+			//頂点バッファをロック
+			g_pVtxBuffPlayNumberSelect[0]->Lock(0, 0, (void**)&pVtx, 0);
+
+			pVtx += g_PlayNumberSelect.CurrentSelectNumber * 4;
+
+			//頂点カラーの設定
+			pVtx[0].col = g_PaleColorPns;
+			pVtx[1].col = g_PaleColorPns;
+			pVtx[2].col = g_PaleColorPns;
+			pVtx[3].col = g_PaleColorPns;
+
+			//頂点バッファをアンロックする
+			g_pVtxBuffPlayNumberSelect[0]->Unlock();
+
+			//現在地を先に
+			g_PlayNumberSelect.CurrentSelectNumber = (g_PlayNumberSelect.CurrentSelectNumber + 1) % NUM_PLAYNUMBER;
+
+			//頂点バッファをロック
+			g_pVtxBuffPlayNumberSelect[0]->Lock(0, 0, (void**)&pVtx, 0);
+
+			pVtx += g_PlayNumberSelect.CurrentSelectNumber * 4;
+
+			//頂点カラーの設定
+			pVtx[0].col = g_NormalColorPns;
+			pVtx[1].col = g_NormalColorPns;
+			pVtx[2].col = g_NormalColorPns;
+			pVtx[3].col = g_NormalColorPns;
+
+			//頂点バッファをアンロックする
+			g_pVtxBuffPlayNumberSelect[0]->Unlock();
+		}
+		else if (GetKeyboardTrigger(DIK_A) == true/* || GetGamePadTrigger(BUTTON_2, 0) == true*/ && pFade == FADE_NONE)
+		{
+			//頂点バッファをロック
+			g_pVtxBuffPlayNumberSelect[0]->Lock(0, 0, (void**)&pVtx, 0);
+
+			pVtx += g_PlayNumberSelect.CurrentSelectNumber * 4;
+
+			//頂点カラーの設定
+			pVtx[0].col = g_PaleColorPns;
+			pVtx[1].col = g_PaleColorPns;
+			pVtx[2].col = g_PaleColorPns;
+			pVtx[3].col = g_PaleColorPns;
+
+			//頂点バッファをアンロックする
+			g_pVtxBuffPlayNumberSelect[0]->Unlock();
+
+			//現在地を前へ
+			g_PlayNumberSelect.CurrentSelectNumber = (g_PlayNumberSelect.CurrentSelectNumber - 1 + NUM_PLAYNUMBER) % NUM_PLAYNUMBER;
+
+			//頂点バッファをロック
+			g_pVtxBuffPlayNumberSelect[0]->Lock(0, 0, (void**)&pVtx, 0);
+
+			pVtx += 4 * g_PlayNumberSelect.CurrentSelectNumber;
+
+			//頂点カラーの設定
+			pVtx[0].col = g_NormalColorPns;
+			pVtx[1].col = g_NormalColorPns;
+			pVtx[2].col = g_NormalColorPns;
+			pVtx[3].col = g_NormalColorPns;
+
+			//頂点バッファをアンロックする
+			g_pVtxBuffPlayNumberSelect[0]->Unlock();
+		}
+
+		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadPress(BUTTON_START, 0) || GetGamepadPress(BUTTON_A, 0))
 		{//決定キー(ENTERキー)が押された
 			if (g_PlayNumberSelect.CurrentSelectNumber >= 0 && g_PlayNumberSelect.CurrentSelectNumber < PLAYNUMBER_FOUR)
 			{
@@ -376,14 +411,14 @@ void PlayerSelect(void)
 			}
 			else if (g_PlayNumberSelect.CurrentSelectNumber == PLAYNUMBER_FOUR)
 			{
-				SetFade(MODE_PLAYMODE);			//モードの設定(ゲーム画面に移行)
+				g_PlayNumberSelect.bUse = false;
 			}
 
 			g_PlayNumberSelect.CurrentSelectNumber += 1;			//プレイ人数に合わせるため
 		}
 		else if (GetKeyboardTrigger(DIK_B) == true)
 		{//キー(B)が押された
-			SetFade(MODE_TITLE);				//モードの設定(タイトル画面に移行)
+			//SetFade(MODE_TITLE);				//モードの設定(タイトル画面に移行)
 		}
 	}
 }

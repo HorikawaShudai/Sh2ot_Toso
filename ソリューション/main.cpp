@@ -349,9 +349,6 @@ void Update(void)
 	case MODE_NUMBERSELECT:
 		UpdatePlayNumberSelect();
 		break;
-	case MODE_PLAYMODE:
-		UpdatePlayModeSelect();
-		break;
 	case MODE_GAME:
 		UpdateGame();
 		break;
@@ -384,9 +381,6 @@ void Draw(void)
 			break;
 		case MODE_NUMBERSELECT:
 			DrawPlayNumberSelect();
-			break;
-		case MODE_PLAYMODE:
-			DrawPlayModeSelect();
 			break;
 		case MODE_GAME:
 			DrawGame();
@@ -440,9 +434,6 @@ void SetMode(MODE mode)
 	case MODE_NUMBERSELECT:
 		UninitPlayNumberSelect();
 		break;
-	case MODE_PLAYMODE:
-		UninitPlayModeSelect();
-		break;
 	case MODE_GAME:
 		UninitGame();
 		break;
@@ -461,9 +452,6 @@ void SetMode(MODE mode)
 		break;
 	case MODE_NUMBERSELECT:
 		InitPlayNumberSelect();
-		break;
-	case MODE_PLAYMODE:
-		InitPlayModeSelect();
 		break;
 	case MODE_GAME:
 		InitGame();

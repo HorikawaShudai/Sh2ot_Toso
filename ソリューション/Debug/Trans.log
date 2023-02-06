@@ -1,3 +1,19 @@
+<<<<<<< HEAD
 ﻿  enemy.cpp
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+<<<<<<< HEAD
+﻿  camera.cpp
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github6\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github6\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+<<<<<<< HEAD
+﻿  PlayNumberSelect.cpp
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+﻿VillainResult.obj : fatal error LNK1318: 予期しない PDB エラー。OK (0) ''
+>>>>>>> 6632b792fda9f82cac0e719012408c843e57defc
+>>>>>>> 2a20de8441229d2073cb68f2d2e3b2f879a3d5fe
+>>>>>>> 773ae3d4ecdc4064376b968b4c43e95ec743f8b1
