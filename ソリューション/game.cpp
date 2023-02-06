@@ -14,6 +14,7 @@
 #include "stamina.h"
 #include "life.h"
 #include "field.h"
+#include "meshfield.h"
 #include "score_item.h"
 #include "score.h"
 #include "PlayNumberSelect.h"
@@ -54,6 +55,8 @@ void InitGame()
 
 	//床の初期化処理
 	InitField();
+
+	InitMeshField();
 
 	//メッシュ壁の初期化処理
 	InitMeshWall();
@@ -132,6 +135,8 @@ void UninitGame()
 
 	//床の終了処理
 	UninitField();
+
+	UninitMeshField();
 
 	//メッシュ壁の終了処理
 	UninitMeshWall();
@@ -243,6 +248,8 @@ void UpdateGame()
 		//床の更新処理
 		UpdateField();
 
+		UpdateMeshField();
+
 		//オブジェクトの更新処理
 		UpdateObject00();
 		UpdateObjectBG();
@@ -323,6 +330,8 @@ void DrawGame()
 
 		//床の描画処理
 		DrawField();
+
+		DrawMeshField();
 
 		//オブジェクトの描画処理
 		DrawObject00();
