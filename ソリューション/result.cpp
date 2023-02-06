@@ -34,7 +34,6 @@ bool g_rbChoiceA;
 void InitResult(void)
 {
 	LPDIRECT3DDEVICE9 pDevice; //デバイスのポインタ
-	int nCntResult;
 	pDevice = GetDevice();
 
 	g_nResult = 0;
