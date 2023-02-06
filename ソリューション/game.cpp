@@ -13,7 +13,7 @@
 #include "enemy.h"
 #include "stamina.h"
 #include "life.h"
-#include "field.h"
+#include "meshfield.h"
 #include "meshfield.h"
 #include "score_item.h"
 #include "score.h"
@@ -55,8 +55,6 @@ void InitGame()
 	//InitSpotLight();
 
 	//床の初期化処理
-	InitField();
-
 	InitMeshField();
 
 	//メッシュ壁の初期化処理
@@ -141,8 +139,6 @@ void UninitGame()
 	//UninitSpotLight();
 
 	//床の終了処理
-	UninitField();
-
 	UninitMeshField();
 
 	//メッシュ壁の終了処理
@@ -256,8 +252,6 @@ void UpdateGame()
 	{//通常モードの時
 
 		//床の更新処理
-		UpdateField();
-
 		UpdateMeshField();
 
 		//オブジェクトの更新処理
@@ -339,8 +333,6 @@ void DrawGame()
 		}
 
 		//床の描画処理
-		DrawField();
-
 		DrawMeshField();
 
 		//オブジェクトの描画処理
