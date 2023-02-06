@@ -210,15 +210,15 @@ void DrawMeshWall(void)
 			pDevice->SetFVF(FVF_VERTEX_3D);
 
 			//テクスチャの設定
-			pDevice->SetTexture(0, g_pTextureMeshWall);
+			//pDevice->SetTexture(0, g_pTextureMeshWall);
 
-			//ポリゴンの描画
-			pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP,
-				0,
-				0,
-				0,//用意した頂点の数
-				0,
-				(WAIGHT_SIZE * HEIGHT_SIZE + WAIGHT_SIZE * (HEIGHT_SIZE - 2) + 2 * (HEIGHT_SIZE - 2)) - 2);//描画するプリミティブの数
+			////ポリゴンの描画
+			//pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP,
+			//	0,
+			//	0,
+			//	0,//用意した頂点の数
+			//	0,
+			//	(WAIGHT_SIZE * HEIGHT_SIZE + WAIGHT_SIZE * (HEIGHT_SIZE - 2) + 2 * (HEIGHT_SIZE - 2)) - 2);//描画するプリミティブの数
 		}
 	}
 }
