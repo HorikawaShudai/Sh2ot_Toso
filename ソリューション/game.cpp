@@ -23,6 +23,7 @@
 #include "exit.h"
 #include "SpotLight.h"
 #include "polygonBG.h"
+#include "fog.h"
 
 //グローバル変数宣言
 bool g_bPause = false;
@@ -96,6 +97,12 @@ void InitGame()
 	InitItem();
 
 	InitPolygonBG();
+
+	//フォグの初期化
+	InitFog();
+
+	//フォグの設定
+	SetFog(D3DFOG_LINEAR, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.5f), 10.0f, 1000.0f, 0.1f);
 
 	SetItem(D3DXVECTOR3(0.0f,0.0f,-40.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), 0);
 	SetItem(D3DXVECTOR3(40.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
@@ -171,6 +178,9 @@ void UninitGame()
 	UninitExit();
 
 	UninitPolygonBG();
+
+	//フォグの終了処理
+	UninitFog();
 }
 
 //====================================================================
@@ -362,6 +372,9 @@ void DrawGame()
 		DrawEffect();
 
 		DrawPolygonBG();
+
+		//フォグの描画
+		DrawFog();
 	}
 
 	//ビューポートを元に戻す
