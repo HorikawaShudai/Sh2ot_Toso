@@ -237,7 +237,7 @@ void DoorOpen(void)
 		}
 		}*/
 
-		//ExsitClossLine(nCntExit);
+		ExsitClossLine(nCntExit);
 
 		if (g_Exit[nCntExit].bUse == true && g_Exit[nCntExit].bExitOK == true)
 		{
@@ -294,7 +294,7 @@ void ExsitClossLine(int nCntExit)
 
 	for (int nCntWall = 0; nCntWall < MAX_EXIT; nCntWall++, pPlayer++)
 	{
-		if (pPlayer->bUse == true)
+		if (pPlayer->bUse == true && MeshWall.bUse == true)
 		{
 			float fRate;					//ベクトルの割合
 			float fMaxArea, fNowArea;		//今の面積／最大面積
@@ -302,13 +302,14 @@ void ExsitClossLine(int nCntExit)
 			D3DXVECTOR3 Cross;				//交点の場所
 
 			//場所の計算
-			pos0 = (MeshWall.pos + D3DXVECTOR3(cosf(MeshWall.rot.y) * -1.0f, 0.0f, sinf(MeshWall.rot.y) * -1.0f));
-			pos1 = (MeshWall.pos + D3DXVECTOR3(cosf(MeshWall.rot.y) * 1.0f, 0.0f, sinf(MeshWall.rot.y) * 1.0f));
+			pos0 = (MeshWall.pos + D3DXVECTOR3(-cosf(MeshWall.rot.y)/* * -1.0f*/, 0.0f, -sinf(MeshWall.rot.y)/* * -1.0f*/));
+
+			pos1 = (MeshWall.pos + D3DXVECTOR3(cosf(MeshWall.rot.y)/* * 1.0f*/, 0.0f, sinf(MeshWall.rot.y)/* * 1.0f*/));
 
 			//pos0とpos1との距離間
 			g_vecLine = pos1 - pos0;
 
-			//壁から弾までの位置
+			//出口からプレイヤーまでの位置
 			g_vecToPos = pPlayer->pos - MeshWall.pos;
 
 			//最大面積

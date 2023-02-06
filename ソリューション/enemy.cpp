@@ -26,7 +26,7 @@ LPD3DXBUFFER g_pBuffMatENEMY[ENEMY_NTYPE_MAX] = {};				//マテリアルへのポインタ
 DWORD g_dwNumMatENEMY[ENEMY_NTYPE_MAX] = {};						//マテリアルの数
 
 ENEMY g_Enemy[MAX_ENEMY];					//敵の情報
-int EditIndexEnemy;								//エディットモード用の番号
+int EditIndexEnemy;							//エディットモード用の番号
 
 //プロトタイプ宣言
 void EnemyPatrol(int nEnemy);
