@@ -14,6 +14,7 @@
 #include "VillainRanking.h"
 #include "EscapeRanking.h"
 #include "RankingNumber.h"
+#include "input.h"
 
 //マクロ定義
 #define CLASS_NAME "WindowClass"     //ウィンドウクラスの名前
@@ -37,7 +38,7 @@ void DrawFPS(void);
 //グローバル変数
 LPDIRECT3D9 g_pD3D = NULL;
 LPDIRECT3DDEVICE9 g_pD3DDevice = NULL;
-
+bool bWire;   //  //ワイヤーフレームを使っているかどうか
 int g_nCountFPS = 0;
 
 MODE g_mode = MODE_TITLE;	//開始時点のモード
@@ -288,6 +289,8 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 		return E_FAIL;
 	}
 
+	bWire = false;  //ワイヤーフレームを使っていない状態に
+
 	//データをロードする
 	LoadData();
 
@@ -297,6 +300,8 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	//デバッグプロックの初期化
 	InitDebugProc();
+
+	
 
 	//各種オブジェクト初期化処理はここ
 	return S_OK;
@@ -340,6 +345,25 @@ void Update(void)
 
 	//デバッグプロックの更新処理
 	UpdateDebugProc();
+
+#ifdef _DEBUG
+
+	//F10が押されたときの処理
+	if (GetKeyboardTrigger(DIK_F10) == true)
+	{//ワイヤーフレームを有効にするかどうか
+		bWire = (bWire == false) ? true : false;
+	}
+	if (bWire == true)
+	{
+		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);//カリングの設定
+	}
+
+	else
+	{
+		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);//カリングの設定
+	}
+
+#endif
 
 	switch (g_mode)
 	{

@@ -237,7 +237,7 @@ void DoorOpen(void)
 		}
 		}*/
 
-		ExsitClossLine(nCntExit);
+		//ExsitClossLine(nCntExit);
 
 		if (g_Exit[nCntExit].bUse == true && g_Exit[nCntExit].bExitOK == true)
 		{

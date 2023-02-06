@@ -2,11 +2,11 @@
 #include "meshfield.h"
 
 #define MAX_MESHFIELD (4)			//メッシュフィールドの最大数
-#define WAIGHT_SIZE (5)			//横の頂点数
-#define HEIGHT_SIZE (5)			//縦の頂点数
+#define WAIGHT_SIZE (25)			//横の頂点数
+#define HEIGHT_SIZE (25)			//縦の頂点数
 #define WAIGHT_CENTER (0.5f)	//横の原点(0.0f～1.0f)
 #define HEIGHT_CENTER (0.5f)	//縦の原点(0.0f～1.0f)
-#define FIELD_SIZE (10.0f)		//床一枚の大きさ
+#define FIELD_SIZE (120.0f)		//床一枚の大きさ
 #define MESHFIELD_SIZE (50.0f)	//
 
 //グローバル変数
@@ -25,30 +25,30 @@ void InitMeshField(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\Number03.png",
+		"Data\\TEXTURE\\tetu.jpg",
 		&g_pTextureMeshField[0]);
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\Number03.png",
+		"Data\\TEXTURE\\thumb_concrete.jpg", 
 		&g_pTextureMeshField[1]);
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\Number03.png",
+		"Data\\TEXTURE\\tile.jpg",
 		&g_pTextureMeshField[2]);
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\Number03.png",
+		"Data\\TEXTURE\\field_office.jpg",
 		&g_pTextureMeshField[3]);
 
 	for (int nCntField = 0; nCntField < MAX_MESHFIELD; nCntField++)
 	{
-		g_MeshField[0].pos = D3DXVECTOR3(-100.0f, 100.0f, 0.0f);
-		g_MeshField[1].pos = D3DXVECTOR3(-50.0f, 100.0f, 0.0f);
-		g_MeshField[2].pos = D3DXVECTOR3(0.0f, 100.0f, 0.0f);
-		g_MeshField[3].pos = D3DXVECTOR3(50.0f, 100.0f, 0.0f);
+		g_MeshField[0].pos = D3DXVECTOR3(-1000.0f, 0.0f, 1900.0f);
+		g_MeshField[1].pos = D3DXVECTOR3(1550.0f, 0.0f, 1500.0f);
+		g_MeshField[2].pos = D3DXVECTOR3(1200.0f, 0.0f, -1350.0f);
+		g_MeshField[3].pos = D3DXVECTOR3(-1250.0f, 0.0f, -950.0f);
 		g_MeshField[nCntField].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_MeshField[nCntField].bUse = true;
 	}
