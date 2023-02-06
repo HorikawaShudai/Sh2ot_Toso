@@ -14,6 +14,7 @@
 #include "stamina.h"
 #include "life.h"
 #include "field.h"
+#include "meshfield.h"
 #include "score_item.h"
 #include "score.h"
 #include "PlayNumberSelect.h"
@@ -23,6 +24,7 @@
 #include "exit.h"
 #include "SpotLight.h"
 #include "polygonBG.h"
+#include "fog.h"
 
 //グローバル変数宣言
 bool g_bPause = false;
@@ -54,6 +56,8 @@ void InitGame()
 
 	//床の初期化処理
 	InitField();
+
+	InitMeshField();
 
 	//メッシュ壁の初期化処理
 	InitMeshWall();
@@ -97,6 +101,12 @@ void InitGame()
 
 	InitPolygonBG();
 
+	//フォグの初期化
+	InitFog();
+
+	//フォグの設定
+	SetFog(D3DFOG_LINEAR, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.5f), 10.0f, 1000.0f, 0.1f);
+
 	SetItem(D3DXVECTOR3(0.0f,0.0f,-40.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), 0);
 	SetItem(D3DXVECTOR3(40.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetItem(D3DXVECTOR3(100.0f, 0.0f, -40.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
@@ -132,6 +142,8 @@ void UninitGame()
 
 	//床の終了処理
 	UninitField();
+
+	UninitMeshField();
 
 	//メッシュ壁の終了処理
 	UninitMeshWall();
@@ -171,6 +183,9 @@ void UninitGame()
 	UninitExit();
 
 	UninitPolygonBG();
+
+	//フォグの終了処理
+	UninitFog();
 }
 
 //====================================================================
@@ -242,6 +257,8 @@ void UpdateGame()
 
 		//床の更新処理
 		UpdateField();
+
+		UpdateMeshField();
 
 		//オブジェクトの更新処理
 		UpdateObject00();
@@ -324,6 +341,8 @@ void DrawGame()
 		//床の描画処理
 		DrawField();
 
+		DrawMeshField();
+
 		//オブジェクトの描画処理
 		DrawObject00();
 		DrawObjectBG();
@@ -362,6 +381,9 @@ void DrawGame()
 		DrawEffect();
 
 		DrawPolygonBG();
+
+		//フォグの描画
+		DrawFog();
 	}
 
 	//ビューポートを元に戻す
