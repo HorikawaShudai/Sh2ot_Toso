@@ -53,7 +53,6 @@ void Uninit3DSelect(void);
 void Update3DSelect(void);
 void Draw3DSelect(void);
 
-
 //==================
 //グローバル定義
 //==================
@@ -142,23 +141,29 @@ void UninitPlayNumberSelect(void)
 //========================================================================
 void UpdatePlayNumberSelect(void)
 {
+	//プレイ人数の情報取得
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 	PlayModeSelect PlayMode = GetPlayModeSelect();
 
-	if (g_PlayNumberSelect.bUse == true)
+	if (PlayNumber.bUse == true)
 	{
 		//ステージ選択の関数
 		PlayerSelect();
+
+		//PlayMode.CurrentModeNumber = 0;
 	}
-	else if (g_PlayNumberSelect.bUse == false)
-	{ 
+	else if (PlayNumber.bUse == false)
+	{
 		//モード選択の更新処理
  		UpdatePlayModeSelect();
+
+		//PlayNumber.CurrentSelectNumber = 3;
 	}
 
-	//if (GetKeyboardTrigger(DIK_B) == true && g_PlayNumberSelect.bUse == false)
-	//{//キー(B)が押された
-	//	g_PlayNumberSelect.bUse = true;
-	//}
+	if (GetKeyboardTrigger(DIK_B) == true && g_PlayNumberSelect.bUse == false)
+	{//キー(B)が押された
+		g_PlayNumberSelect.bUse = true;
+	}
 
 	//3D
 	Update3DSelect();
@@ -174,8 +179,8 @@ void UpdatePlayNumberSelect(void)
 //========================================================================
 void DrawPlayNumberSelect(void)
 {
-	//プレイモード情報の取得
-	PlayModeSelect PlayMode = GetPlayModeSelect();
+	//プレイ人数の情報取得
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 
 	if (g_PlayNumberSelect.bUse == true)
 	{
@@ -263,7 +268,6 @@ void InitPlaySelectIcon(void)
 
 	//頂点バッファをアンロックする
 	g_pVtxBuffPlayNumberSelect[0]->Unlock();
-
 }
 
 //========================================================================
@@ -328,8 +332,8 @@ void PlayerSelect(void)
 	//フェード情報の取得
 	FADE pFade = GetFade();
 
-	//プレイモード情報の取得
-	PlayModeSelect PlayMode = GetPlayModeSelect();
+	//プレイ人数の情報取得
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 
 	//頂点情報のポインタ
 	VERTEX_2D *pVtx;
@@ -408,13 +412,13 @@ void PlayerSelect(void)
 			if (g_PlayNumberSelect.CurrentSelectNumber >= 0 && g_PlayNumberSelect.CurrentSelectNumber < PLAYNUMBER_FOUR)
 			{
 				SetFade(MODE_GAME);			//モードの設定(ゲーム画面に移行)
+
+				g_PlayNumberSelect.CurrentSelectNumber += 1;			//プレイ人数に合わせるため
 			}
 			else if (g_PlayNumberSelect.CurrentSelectNumber == PLAYNUMBER_FOUR)
 			{
 				g_PlayNumberSelect.bUse = false;
 			}
-
-			g_PlayNumberSelect.CurrentSelectNumber += 1;			//プレイ人数に合わせるため
 		}
 		else if (GetKeyboardTrigger(DIK_B) == true)
 		{//キー(B)が押された

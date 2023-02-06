@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+﻿  meshfield.cpp
+  コード生成しています。
+  2 of 404 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
+=======
 ﻿  Billboard.cpp
   camera.cpp
   debugproc.cpp
@@ -52,6 +59,7 @@ result.cpp(37): warning C4101: 'nCntResult': ローカル変数は 1 度も使�
   394 of 398 functions (99.0%) were compiled, the rest were copied from previous compilation.
     57 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
+>>>>>>> 2a668d3441cef7bac841362a03a8c0eb5c7214ff
   コード生成が終了しました。
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github6\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github6\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)

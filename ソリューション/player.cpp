@@ -71,7 +71,10 @@ void InitPlayer(void)
 		g_aPlayer[nCntPlayer].nLife = PLAYER_LIFE;
 		g_aPlayer[nCntPlayer].bUse = true;
 		g_aPlayer[nCntPlayer].bGetKey = false;
-		g_aPlayer[nCntPlayer].bAppear = false;
+		g_aPlayer[nCntPlayer].bAppear =false;
+#if _DEBUG
+		g_aPlayer[nCntPlayer].bAppear = true;
+#endif
 
 		g_bPlayerOps = false;
 		g_aPlayer[nCntPlayer].nNumModel = 1;
@@ -939,11 +942,15 @@ void PlayerDistance(int nCnt)
 		{
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, 300.0f, 0.0f, -10.0f, 50.0f) == true)
 			{//“G‚Ì•\Ž¦ˆ—
-				//g_aPlayer[nCnt].bAppear = true;
+				g_aPlayer[nCnt].bAppear = true;
 			}
 			else
 			{
 				g_aPlayer[nCnt].bAppear = false;
+#if _DEBUG
+				g_aPlayer[nCnt].bAppear = true;
+#endif // _DEBUG
+
 			}
 
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, 600.0f, 0.0f, -10.0f, 50.0f) == true)
