@@ -388,7 +388,7 @@ void PlayerMoveInput(int nCnt)
 		}
 
 		//左スティックの速度処理と移動の三段階の使い分け処理
-		if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) != 0 && GetGamepadPress(BUTTON_R, 0))
+		if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) != 0 && GetGamepadPress(BUTTON_R, 0) && GetKeyboardPress(DIK_SPACE) == true)
 		{//入力してる状態かつAボタンを押しているとき
 			if (pStamina[nCnt].bFatige == false)			//プレイヤーが走れる状態かどうか
 			{//疲労状態ではなかった場合

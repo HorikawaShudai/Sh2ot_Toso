@@ -53,7 +53,7 @@ void InitExit(void)
 	//デバイスの所得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	PlayerModeSelect PlayMode = GetPlayModeSelect();
+	PlayModeSelect PlayMode = GetPlayModeSelect();
 
 	for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
 	{
