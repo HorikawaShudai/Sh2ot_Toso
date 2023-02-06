@@ -1,1 +1,3 @@
-﻿VillainResult.obj : fatal error LNK1318: 予期しない PDB エラー。OK (0) ''
+﻿  camera.cpp
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github6\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github6\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)

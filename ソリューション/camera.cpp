@@ -27,7 +27,7 @@
 #define POS_MOVE_MAX			(5.0f)		//視点位置の最大値
 #define UP_DOWN_SPPED			(0.4f)		//視点の上下移動の速さ
 #define YUAN_TO_CORRE			(0.2f)		//視点の元の位置への補正
-#define CAM_MOVE_SPEED			(1)			//タイトル用カメラの移動スピード
+#define CAM_MOVE_SPEED			(0.0005f)			//タイトル用カメラの移動スピード
 
 //プロトタイプ宣言
 void TpsCamera(void);										//観察用カメラ
@@ -197,7 +197,7 @@ void UpdateCamera(void)
 
 		if (bEnter == true)
 		{
-			MoveTitleCamera(CAM_MOVE_SPEED);
+			MoveTitleCamera(1);
 		}
 
 		break;
@@ -886,15 +886,15 @@ void MoveTitleCamera(int nCnt)
 	D3DXVECTOR3 PosVDiff;
 	D3DXVECTOR3 PosRDiff;
 
-	if (g_aCamera[4].posV.x <= -15.0f)
+	if (g_aCamera[4].posV.x <= 200.0f)
 	{
-		PosVDiff = D3DXVECTOR3(250.0f, 200.0f, 150.0f) - g_aCamera[4].posV;
+		PosVDiff = D3DXVECTOR3(200.0f, 200.0f, 150.0f) - g_aCamera[4].posV;
 
-		PosRDiff = D3DXVECTOR3(0.0f, 100.0f, 10000.0) - g_aCamera[4].posR;
+		PosRDiff = D3DXVECTOR3(-500.0f, 0.0f, 10000.0) - g_aCamera[4].posR;
 
-		g_aCamera[4].posV += PosVDiff * 0.0005f;
+		g_aCamera[4].posV += PosVDiff * CAM_MOVE_SPEED;
 
-		g_aCamera[4].posR += PosRDiff * 0.0005f;
+		g_aCamera[4].posR += PosRDiff * CAM_MOVE_SPEED;
 	}
 
 	if (nCnt <= 0)
