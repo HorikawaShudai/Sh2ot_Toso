@@ -20,7 +20,7 @@ LPD3DXMESH g_pMeshObject00[OBJECT00_NTYPE_MAX] = {};					//ÉÅÉbÉVÉÖ(í∏ì_èÓïÒ)Ç÷Ç
 LPD3DXBUFFER g_pBuffMatObject00[OBJECT00_NTYPE_MAX] = {};				//É}ÉeÉäÉAÉãÇ÷ÇÃÉ|ÉCÉìÉ^
 DWORD g_dwNumMatObject00[OBJECT00_NTYPE_MAX] = {};						//É}ÉeÉäÉAÉãÇÃêî
 
-Object00 g_Exit[MAX_OBJECT00];				//ÉIÉuÉWÉFÉNÉg00ÇÃèÓïÒ
+Object00 g_Object00[MAX_OBJECT00];				//ÉIÉuÉWÉFÉNÉg00ÇÃèÓïÒ
 int EditIndex;									//ÉGÉfÉBÉbÉgÉÇÅ[ÉhópÇÃî‘çÜ
 D3DXVECTOR3 EditPos;							//ÉGÉfÉBÉbÉgÉÇÅ[ÉhÇÃÉIÉuÉWÉFÉNÉgÇÃà íu
 D3DXVECTOR3 EditRot;							//ÉGÉfÉBÉbÉgÉÇÅ[ÉhÇÃÉIÉuÉWÉFÉNÉgÇÃå¸Ç´
@@ -98,15 +98,15 @@ void InitObject00(void)
 
 	for (nCntObject = 0; nCntObject < MAX_OBJECT00; nCntObject++)
 	{
-		g_Exit[nCntObject].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		g_Exit[nCntObject].posOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		g_Exit[nCntObject].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		g_Exit[nCntObject].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		g_Exit[nCntObject].vtxMin = D3DXVECTOR3(1000.0f, 1000.0f, 1000.0f);
-		g_Exit[nCntObject].vtxMax = D3DXVECTOR3(-1000.0f, -1000.0f, -1000.0f);
-		g_Exit[nCntObject].bUse = false;
-		g_Exit[nCntObject].nType = OBJECT00_NTYPE00;
-		g_Exit[nCntObject].pMatE.MatD3D.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
+		g_Object00[nCntObject].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_Object00[nCntObject].posOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_Object00[nCntObject].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_Object00[nCntObject].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_Object00[nCntObject].vtxMin = D3DXVECTOR3(1000.0f, 1000.0f, 1000.0f);
+		g_Object00[nCntObject].vtxMax = D3DXVECTOR3(-1000.0f, -1000.0f, -1000.0f);
+		g_Object00[nCntObject].bUse = false;
+		g_Object00[nCntObject].nType = OBJECT00_NTYPE00;
+		g_Object00[nCntObject].pMatE.MatD3D.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
 	}
 	EditIndex = MAX_OBJECT00 - 1;
 	EditPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -188,7 +188,7 @@ void UpdateObject00(void)
 {
 	for (int nCntObject = 0; nCntObject < MAX_OBJECT00; nCntObject++)
 	{
-		if (g_Exit[nCntObject].bUse == true)
+		if (g_Object00[nCntObject].bUse == true)
 		{
 
 		}
@@ -212,40 +212,40 @@ void DrawObject00(void)
 	for (nCntObject = 0; nCntObject < MAX_OBJECT00; nCntObject++)
 	{
 		//ÉèÅ[ÉãÉhÉ}ÉgÉäÉbÉNÉXÇÃèâä˙âª
-		D3DXMatrixIdentity(&g_Exit[nCntObject].mtxWorld);
+		D3DXMatrixIdentity(&g_Object00[nCntObject].mtxWorld);
 
 		//å¸Ç´ÇîΩâf
-		D3DXMatrixRotationYawPitchRoll(&mtxRot, g_Exit[nCntObject].rot.y, g_Exit[nCntObject].rot.x, g_Exit[nCntObject].rot.z);
+		D3DXMatrixRotationYawPitchRoll(&mtxRot, g_Object00[nCntObject].rot.y, g_Object00[nCntObject].rot.x, g_Object00[nCntObject].rot.z);
 
-		D3DXMatrixMultiply(&g_Exit[nCntObject].mtxWorld, &g_Exit[nCntObject].mtxWorld, &mtxRot);
+		D3DXMatrixMultiply(&g_Object00[nCntObject].mtxWorld, &g_Object00[nCntObject].mtxWorld, &mtxRot);
 
 		//à íuÇîΩâf
-		D3DXMatrixTranslation(&mtxTrans, g_Exit[nCntObject].pos.x, g_Exit[nCntObject].pos.y, g_Exit[nCntObject].pos.z);
+		D3DXMatrixTranslation(&mtxTrans, g_Object00[nCntObject].pos.x, g_Object00[nCntObject].pos.y, g_Object00[nCntObject].pos.z);
 
-		D3DXMatrixMultiply(&g_Exit[nCntObject].mtxWorld, &g_Exit[nCntObject].mtxWorld, &mtxTrans);
+		D3DXMatrixMultiply(&g_Object00[nCntObject].mtxWorld, &g_Object00[nCntObject].mtxWorld, &mtxTrans);
 
 		//ÉèÅ[ÉãÉhÉ}ÉgÉäÉbÉNÉXÇÃê›íË
-		pDevice->SetTransform(D3DTS_WORLD, &g_Exit[nCntObject].mtxWorld);
+		pDevice->SetTransform(D3DTS_WORLD, &g_Object00[nCntObject].mtxWorld);
 
 		//åªç›ÇÃÉ}ÉeÉäÉAÉãÇèäìæ
 		pDevice->GetMaterial(&matDef);
 
 			//É}ÉeÉäÉAÉãÉfÅ[É^Ç÷ÇÃÉ|ÉCÉìÉ^ÇèäìæÇ∑ÇÈ
-			pMat = (D3DXMATERIAL*)g_pBuffMatObject00[g_Exit[nCntObject].nType]->GetBufferPointer();
+			pMat = (D3DXMATERIAL*)g_pBuffMatObject00[g_Object00[nCntObject].nType]->GetBufferPointer();
 
-			for (int nCntMat = 0; nCntMat < (int)g_dwNumMatObject00[g_Exit[nCntObject].nType]; nCntMat++)
+			for (int nCntMat = 0; nCntMat < (int)g_dwNumMatObject00[g_Object00[nCntObject].nType]; nCntMat++)
 			{
 
 				//É}ÉeÉäÉAÉãÇÃê›íË
 				pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
 
-				if (g_Exit[nCntObject].bUse == true)
+				if (g_Object00[nCntObject].bUse == true)
 				{
 					//ÉeÉNÉXÉ`ÉÉÇÃê›íË
-					pDevice->SetTexture(0, g_pTextureObject00[nCntMat][g_Exit[nCntObject].nType]);
+					pDevice->SetTexture(0, g_pTextureObject00[nCntMat][g_Object00[nCntObject].nType]);
 
 					//ÉIÉuÉWÉFÉNÉg00(ÉpÅ[Éc)ÇÃï`âÊ
-					g_pMeshObject00[g_Exit[nCntObject].nType]->DrawSubset(nCntMat);
+					g_pMeshObject00[g_Object00[nCntObject].nType]->DrawSubset(nCntMat);
 				}
 			}
 		//ï€ë∂ÇµÇƒÇ¢ÇΩÉ}ÉeÉäÉAÉãÇñﬂÇ∑
@@ -259,7 +259,7 @@ void DrawObject00(void)
 void UpdateEditObject00(void)
 {
 	//ÉLÅ[É{Å[ÉhÇÃà⁄ìÆèàóù----------
-	if (g_Exit[EditIndex].nType == 0)
+	if (g_Object00[EditIndex].nType == 0)
 	{//ëIëÇ≥ÇÍÇƒÇ¢ÇÈÉIÉuÉWÉFÉNÉgÇ™ï«ÇÃéû
 		if (GetKeyboardTrigger(DIK_UP) == true)
 		{//ëOà⁄ìÆ
@@ -279,7 +279,7 @@ void UpdateEditObject00(void)
 		}
 	}
 
-	if(g_Exit[EditIndex].nType != 0)
+	if(g_Object00[EditIndex].nType != 0)
 	{//ëIëÇ≥ÇÍÇƒÇ¢ÇÈÉIÉuÉWÉFÉNÉgÇ™ï«à»äOÇÃéû
 		if (GetKeyboardPress(DIK_UP) == true)
 		{//ëOà⁄ìÆ
@@ -349,14 +349,14 @@ void UpdateEditObject00(void)
 	}
 
 	//ÉGÉfÉBÉbÉgÉÇÅ[ÉhÇÃïœçXÇÉIÉuÉWÉFÉNÉgÇ…îΩâfÇ≥ÇπÇÈ
-	g_Exit[EditIndex].pos = EditPos;
-	g_Exit[EditIndex].rot = EditRot;
-	g_Exit[EditIndex].nType = EditType;
+	g_Object00[EditIndex].pos = EditPos;
+	g_Object00[EditIndex].rot = EditRot;
+	g_Object00[EditIndex].nType = EditType;
 
 	//ÉIÉuÉWÉFÉNÉgÇÃçÌèúèàóù(èdÇ»Ç¡ÇƒÇ¢ÇÈÇ‡ÇÃ)----------
 	if (GetKeyboardTrigger(DIK_BACKSPACE))
 	{
-		EditCollisionObject00(EditPos, g_Exit[EditIndex].vtxMin, g_Exit[EditIndex].vtxMax, FALSE_SIZE);
+		EditCollisionObject00(EditPos, g_Object00[EditIndex].vtxMin, g_Object00[EditIndex].vtxMax, FALSE_SIZE);
 	}
 
 	//ÉIÉuÉWÉFÉNÉgÇÃçÌèúèàóù(CTRL+Z)----------
@@ -368,7 +368,7 @@ void UpdateEditObject00(void)
 	//ÉIÉuÉWÉFÉNÉgÇÃê›íuèàóù----------
 	if (GetKeyboardTrigger(DIK_RETURN) == true)
 	{
-		SetObject00(g_Exit[EditIndex].pos, g_Exit[EditIndex].move, g_Exit[EditIndex].rot, g_Exit[EditIndex].nType);
+		SetObject00(g_Object00[EditIndex].pos, g_Object00[EditIndex].move, g_Object00[EditIndex].rot, g_Object00[EditIndex].nType);
 	}
 }
 
@@ -385,37 +385,37 @@ void DrawEditObject00(void)
 
 
 		//ÉèÅ[ÉãÉhÉ}ÉgÉäÉbÉNÉXÇÃèâä˙âª
-	D3DXMatrixIdentity(&g_Exit[EditIndex].mtxWorld);
+	D3DXMatrixIdentity(&g_Object00[EditIndex].mtxWorld);
 
 	//å¸Ç´ÇîΩâf
-	D3DXMatrixRotationYawPitchRoll(&mtxRot, g_Exit[EditIndex].rot.y, g_Exit[EditIndex].rot.x, g_Exit[EditIndex].rot.z);
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, g_Object00[EditIndex].rot.y, g_Object00[EditIndex].rot.x, g_Object00[EditIndex].rot.z);
 
-	D3DXMatrixMultiply(&g_Exit[EditIndex].mtxWorld, &g_Exit[EditIndex].mtxWorld, &mtxRot);
+	D3DXMatrixMultiply(&g_Object00[EditIndex].mtxWorld, &g_Object00[EditIndex].mtxWorld, &mtxRot);
 
 	//à íuÇîΩâf
-	D3DXMatrixTranslation(&mtxTrans, g_Exit[EditIndex].pos.x, g_Exit[EditIndex].pos.y, g_Exit[EditIndex].pos.z);
+	D3DXMatrixTranslation(&mtxTrans, g_Object00[EditIndex].pos.x, g_Object00[EditIndex].pos.y, g_Object00[EditIndex].pos.z);
 
-	D3DXMatrixMultiply(&g_Exit[EditIndex].mtxWorld, &g_Exit[EditIndex].mtxWorld, &mtxTrans);
+	D3DXMatrixMultiply(&g_Object00[EditIndex].mtxWorld, &g_Object00[EditIndex].mtxWorld, &mtxTrans);
 
 	//ÉèÅ[ÉãÉhÉ}ÉgÉäÉbÉNÉXÇÃê›íË
-	pDevice->SetTransform(D3DTS_WORLD, &g_Exit[EditIndex].mtxWorld);
+	pDevice->SetTransform(D3DTS_WORLD, &g_Object00[EditIndex].mtxWorld);
 
 	//åªç›ÇÃÉ}ÉeÉäÉAÉãÇèäìæ
 	pDevice->GetMaterial(&matDef);
 
 	//É}ÉeÉäÉAÉãÉfÅ[É^Ç÷ÇÃÉ|ÉCÉìÉ^ÇèäìæÇ∑ÇÈ
-	pMat = (D3DXMATERIAL*)g_pBuffMatObject00[g_Exit[EditIndex].nType]->GetBufferPointer();
+	pMat = (D3DXMATERIAL*)g_pBuffMatObject00[g_Object00[EditIndex].nType]->GetBufferPointer();
 
-	for (int nCntMat = 0; nCntMat < (int)g_dwNumMatObject00[g_Exit[EditIndex].nType]; nCntMat++)
+	for (int nCntMat = 0; nCntMat < (int)g_dwNumMatObject00[g_Object00[EditIndex].nType]; nCntMat++)
 	{
 		//É}ÉeÉäÉAÉãÇÃê›íË
-		pDevice->SetMaterial(&g_Exit[EditIndex].pMatE.MatD3D);
+		pDevice->SetMaterial(&g_Object00[EditIndex].pMatE.MatD3D);
 
 		//ÉeÉNÉXÉ`ÉÉÇÃê›íË
-		pDevice->SetTexture(0, g_pTextureObject00[nCntMat][g_Exit[EditIndex].nType]);
+		pDevice->SetTexture(0, g_pTextureObject00[nCntMat][g_Object00[EditIndex].nType]);
 
 		//ÉIÉuÉWÉFÉNÉg00(ÉpÅ[Éc)ÇÃï`âÊ
-		g_pMeshObject00[g_Exit[EditIndex].nType]->DrawSubset(nCntMat);
+		g_pMeshObject00[g_Object00[EditIndex].nType]->DrawSubset(nCntMat);
 	}
 	//ï€ë∂ÇµÇƒÇ¢ÇΩÉ}ÉeÉäÉAÉãÇñﬂÇ∑
 	pDevice->SetMaterial(&matDef);
@@ -430,15 +430,15 @@ void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 
 	for (nCntObject = 0; nCntObject < MAX_OBJECT00; nCntObject++)
 	{
-		if (g_Exit[nCntObject].bUse == false)
+		if (g_Object00[nCntObject].bUse == false)
 		{
-			g_Exit[nCntObject].pos = pos;
-			g_Exit[nCntObject].posOld = pos;
-			g_Exit[nCntObject].move = move;
-			g_Exit[nCntObject].rot = rot;
-			g_Exit[nCntObject].nType = nType;
+			g_Object00[nCntObject].pos = pos;
+			g_Object00[nCntObject].posOld = pos;
+			g_Object00[nCntObject].move = move;
+			g_Object00[nCntObject].rot = rot;
+			g_Object00[nCntObject].nType = nType;
 
-			g_Exit[nCntObject].bUse = true;
+			g_Object00[nCntObject].bUse = true;
 			g_ObjectCount++;
 
 			//if (g_Exit[nCntObject].nType != 0)
@@ -460,30 +460,30 @@ void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 				{
 					D3DXVECTOR3 vtx = *(D3DXVECTOR3*)pVtxBuff;	//í∏ì_ç¿ïWÇÃë„ì¸
 
-					if (g_Exit[nCntObject].vtxMin.x > vtx.x)
+					if (g_Object00[nCntObject].vtxMin.x > vtx.x)
 					{
-						g_Exit[nCntObject].vtxMin.x = vtx.x;
+						g_Object00[nCntObject].vtxMin.x = vtx.x;
 					}
-					if (g_Exit[nCntObject].vtxMin.y > vtx.y)
+					if (g_Object00[nCntObject].vtxMin.y > vtx.y)
 					{
-						g_Exit[nCntObject].vtxMin.y = vtx.y;
+						g_Object00[nCntObject].vtxMin.y = vtx.y;
 					}
-					if (g_Exit[nCntObject].vtxMin.z > vtx.z)
+					if (g_Object00[nCntObject].vtxMin.z > vtx.z)
 					{
-						g_Exit[nCntObject].vtxMin.z = vtx.z;
+						g_Object00[nCntObject].vtxMin.z = vtx.z;
 					}
 
-					if (g_Exit[nCntObject].vtxMax.x < vtx.x)
+					if (g_Object00[nCntObject].vtxMax.x < vtx.x)
 					{
-						g_Exit[nCntObject].vtxMax.x = vtx.x;
+						g_Object00[nCntObject].vtxMax.x = vtx.x;
 					}
-					if (g_Exit[nCntObject].vtxMax.y < vtx.y)
+					if (g_Object00[nCntObject].vtxMax.y < vtx.y)
 					{
-						g_Exit[nCntObject].vtxMax.y = vtx.y;
+						g_Object00[nCntObject].vtxMax.y = vtx.y;
 					}
-					if (g_Exit[nCntObject].vtxMax.z < vtx.z)
+					if (g_Object00[nCntObject].vtxMax.z < vtx.z)
 					{
-						g_Exit[nCntObject].vtxMax.z = vtx.z;
+						g_Object00[nCntObject].vtxMax.z = vtx.z;
 					}
 
 					pVtxBuff += dwSizeFVF;	//í∏ì_ÉtÉHÅ[É}ÉbÉgÇÃÉTÉCÉYï™É|ÉCÉìÉ^ÇêiÇﬂÇÈ
@@ -514,9 +514,9 @@ void FalseObject00(void)
 
 	for (nCntObject = MAX_OBJECT00; nCntObject >= 0; nCntObject--)
 	{
-		if (g_Exit[nCntObject].bUse == true)
+		if (g_Object00[nCntObject].bUse == true)
 		{
-			g_Exit[nCntObject].bUse = false;
+			g_Object00[nCntObject].bUse = false;
 			g_ObjectCount--;
 			break;
 		}
@@ -532,18 +532,18 @@ bool EditCollisionObject00(D3DXVECTOR3 pPos, D3DXVECTOR3 min, D3DXVECTOR3 max, f
 
 	for (int nCntObject = 0; nCntObject < MAX_OBJECT00; nCntObject++)
 	{
-		if (g_Exit[nCntObject].bUse == true)
+		if (g_Object00[nCntObject].bUse == true)
 		{
 			if (
-				pPos.y + Size >= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMin.y
-				&& pPos.y - Size <= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMax.y
-				&& pPos.x + Size >= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMin.x
-				&& pPos.x - Size <= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMax.x
-				&& pPos.z + Size >= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMin.z
-				&& pPos.z - Size <= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMax.z
+				pPos.y + Size >= g_Object00[nCntObject].pos.y + g_Object00[nCntObject].vtxMin.y
+				&& pPos.y - Size <= g_Object00[nCntObject].pos.y + g_Object00[nCntObject].vtxMax.y
+				&& pPos.x + Size >= g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMin.x
+				&& pPos.x - Size <= g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMax.x
+				&& pPos.z + Size >= g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMin.z
+				&& pPos.z - Size <= g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMax.z
 				)
 			{//ÉIÉuÉWÉFÉNÉgìØémÇ™èdÇ»Ç¡ÇƒÇ¢ÇÈ
-				g_Exit[nCntObject].bUse = false;
+				g_Object00[nCntObject].bUse = false;
 				g_ObjectCount--;
 				bON = true;
 			}
@@ -559,42 +559,120 @@ void CollisionRotObject00(int nCnt)
 {
 	float MaxZ, MaxX, MinZ, MinX;
 
-	MaxZ = g_Exit[nCnt].vtxMax.z;
-	MaxX = g_Exit[nCnt].vtxMax.x;
-	MinZ = g_Exit[nCnt].vtxMin.z;
-	MinX = g_Exit[nCnt].vtxMin.x;
+	MaxZ = g_Object00[nCnt].vtxMax.z;
+	MaxX = g_Object00[nCnt].vtxMax.x;
+	MinZ = g_Object00[nCnt].vtxMin.z;
+	MinX = g_Object00[nCnt].vtxMin.x;
 
 
-	if (g_Exit[nCnt].rot.y <= 0.0f)
+	if (g_Object00[nCnt].rot.y <= 0.0f)
 	{
-		g_Exit[nCnt].vtxMax.z = MaxZ;
-		g_Exit[nCnt].vtxMax.x = MaxX;
-		g_Exit[nCnt].vtxMin.z = MinZ;
-		g_Exit[nCnt].vtxMin.x = MinX;
+		g_Object00[nCnt].vtxMax.z = MaxZ;
+		g_Object00[nCnt].vtxMax.x = MaxX;
+		g_Object00[nCnt].vtxMin.z = MinZ;
+		g_Object00[nCnt].vtxMin.x = MinX;
 	}
-	else if (g_Exit[nCnt].rot.y <= 1.57f)
+	else if (g_Object00[nCnt].rot.y <= 1.57f)
 	{
-		g_Exit[nCnt].vtxMax.z = -MinX;
-		g_Exit[nCnt].vtxMax.x = MaxZ;
-		g_Exit[nCnt].vtxMin.z = -MaxX;
-		g_Exit[nCnt].vtxMin.x = MinZ;
+		g_Object00[nCnt].vtxMax.z = -MinX;
+		g_Object00[nCnt].vtxMax.x = MaxZ;
+		g_Object00[nCnt].vtxMin.z = -MaxX;
+		g_Object00[nCnt].vtxMin.x = MinZ;
 	}
-	else if (g_Exit[nCnt].rot.y <= 3.14f)
+	else if (g_Object00[nCnt].rot.y <= 3.14f)
 	{
-		g_Exit[nCnt].vtxMax.z = -MinZ;
-		g_Exit[nCnt].vtxMax.x = -MinX;
-		g_Exit[nCnt].vtxMin.z = -MaxZ;
-		g_Exit[nCnt].vtxMin.x = -MaxX;
+		g_Object00[nCnt].vtxMax.z = -MinZ;
+		g_Object00[nCnt].vtxMax.x = -MinX;
+		g_Object00[nCnt].vtxMin.z = -MaxZ;
+		g_Object00[nCnt].vtxMin.x = -MaxX;
 	}
-	else if (g_Exit[nCnt].rot.y <= 4.71f)
+	else if (g_Object00[nCnt].rot.y <= 4.71f)
 	{
-		g_Exit[nCnt].vtxMax.z = MaxX;
-		g_Exit[nCnt].vtxMax.x = -MinZ;
-		g_Exit[nCnt].vtxMin.z = MinX;
-		g_Exit[nCnt].vtxMin.x =- MaxZ;
+		g_Object00[nCnt].vtxMax.z = MaxX;
+		g_Object00[nCnt].vtxMax.x = -MinZ;
+		g_Object00[nCnt].vtxMin.z = MinX;
+		g_Object00[nCnt].vtxMin.x =- MaxZ;
 	}
 }
 
+//====================================================================
+//äOêœÇégÇ¡ÇΩÉIÉuÉWÉFÉNÉgÇÃìñÇΩÇËîªíË
+//====================================================================
+void CollisionOuterProductObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove)
+{
+	D3DXVECTOR3 vecMove = *pPos - *pPosOld;
+	
+	for (int nCnt = 0; nCnt < MAX_OBJECT00; nCnt++)
+	{
+		if (g_Object00[nCnt].bUse == true)
+		{
+			bool bHit = false;
+			bool bHit1 = false;
+			bool bHit2 = false;
+
+			//ÉxÉNÉgÉãÇÃñ⁄ïWínì_
+			D3DXVECTOR3 pos1 = D3DXVECTOR3(g_Object00[nCnt].pos.x + g_Object00[nCnt].vtxMax.x, g_Object00[nCnt].pos.y, g_Object00[nCnt].pos.z);
+			D3DXVECTOR3 vecLine = pos1  -  g_Object00[nCnt].pos;
+
+			D3DXVECTOR3 vecToPos =  *pPos - g_Object00[nCnt].pos;
+
+			D3DXVECTOR3 vecToPos2 = *pPosOld - g_Object00[nCnt].pos;
+
+			float A, B,fRate;
+			A = (vecToPos.z * vecMove.x) - (vecToPos.x * vecMove.z);
+			B = (vecLine.z * vecMove.x) - (vecLine.x * vecMove.z);
+			if (B != 0)
+			{
+				fRate = A / B;
+			}
+			else
+			{
+				fRate = 10.0f;
+			}
+
+			if (fRate >= 0.0f &&fRate <= 1.0f)
+			{
+				if ((vecLine.z * vecToPos.x) - (vecLine.x * vecToPos.z) < 0)
+				{
+					bHit1 = true;
+				}
+
+				if ((vecLine.z * vecToPos2.x) - (vecLine.x * vecToPos2.z) < 0)
+				{
+					bHit2 = true;
+				}
+
+				if (bHit1 != bHit2)
+				{
+					bHit = true;
+				}
+
+				bHit1 = false;
+				bHit2 = false;
+
+				if ((vecLine.z * vecToPos.x) + (vecLine.x * vecToPos.z) > 0)
+				{
+					bHit1 = true;
+				}
+
+				if ((vecLine.z * vecToPos2.x) + (vecLine.x * vecToPos2.z) > 0)
+				{
+					bHit2 = true;
+				}
+
+				if (bHit1 != bHit2)
+				{
+					bHit = true;
+				}
+			}
+			if (bHit == true)
+			{
+				*pPos = vecLine *fRate;
+			}
+		}
+		
+	}
+}
 //====================================================================
 //ÉvÉåÉCÉÑÅ[Ç∆ÇÃìñÇΩÇËîªíËèàóù
 //====================================================================
@@ -604,16 +682,16 @@ bool CollisionObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMo
 
 	for (int nCntObject = 0; nCntObject < MAX_OBJECT00; nCntObject++)
 	{
-		if (g_Exit[nCntObject].bUse == true)
+		if (g_Object00[nCntObject].bUse == true)
 		{
 			if (
 				(
-				pPos->y + max.y >= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMin.y && pPosOld->y + max.y< g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMin.y ||
-				pPos->y + min.y <= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMax.y && pPosOld->y + min.y > g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMax.y) &&
-				pPos->x + Size >= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMin.x &&
-				pPos->x - Size <= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMax.x &&
-				pPos->z + Size >= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMin.z &&
-				pPos->z - Size <= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMax.z
+				pPos->y + max.y >= g_Object00[nCntObject].pos.y + g_Object00[nCntObject].vtxMin.y && pPosOld->y + max.y< g_Object00[nCntObject].pos.y + g_Object00[nCntObject].vtxMin.y ||
+				pPos->y + min.y <= g_Object00[nCntObject].pos.y + g_Object00[nCntObject].vtxMax.y && pPosOld->y + min.y > g_Object00[nCntObject].pos.y + g_Object00[nCntObject].vtxMax.y) &&
+				pPos->x + Size >= g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMin.x &&
+				pPos->x - Size <= g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMax.x &&
+				pPos->z + Size >= g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMin.z &&
+				pPos->z - Size <= g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMax.z
 				)
 			{//ï«Ç∆ÉvÉåÉCÉÑÅ[Ç™ìñÇΩÇ¡ÇΩ(Xé≤)
 				pPos->y = pPosOld->y;
@@ -625,12 +703,12 @@ bool CollisionObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMo
 			{
 				if (
 					(
-						pPos->z + Size >= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMin.z && pPosOld->z + Size < g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMin.z ||
-						pPos->z - Size <= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMax.z && pPosOld->z - Size > g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMax.z) &&
-					pPos->x + Size >= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMin.x &&
-					pPos->x - Size <= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMax.x &&
-					pPos->y + max.y >= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMin.y&&
-					pPos->y + min.y <= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMax.y
+						pPos->z + Size >= g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMin.z && pPosOld->z + Size < g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMin.z ||
+						pPos->z - Size <= g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMax.z && pPosOld->z - Size > g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMax.z) &&
+					pPos->x + Size >= g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMin.x &&
+					pPos->x - Size <= g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMax.x &&
+					pPos->y + max.y >= g_Object00[nCntObject].pos.y + g_Object00[nCntObject].vtxMin.y&&
+					pPos->y + min.y <= g_Object00[nCntObject].pos.y + g_Object00[nCntObject].vtxMax.y
 					)
 				{//ï«Ç∆ÉvÉåÉCÉÑÅ[Ç™ìñÇΩÇ¡ÇΩ(Zé≤)
 					pPos->z = pPosOld->z;
@@ -640,12 +718,12 @@ bool CollisionObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMo
 
 				if (
 					(
-						pPos->x + Size >= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMin.x && pPosOld->x + Size < g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMin.x ||
-						pPos->x - Size <= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMax.x && pPosOld->x - Size > g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMax.x) &&
-					pPos->z + Size >= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMin.z &&
-					pPos->z - Size <= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMax.z &&
-					pPos->y + max.y >= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMin.y &&
-					pPos->y + min.y <= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMax.y
+						pPos->x + Size >= g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMin.x && pPosOld->x + Size < g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMin.x ||
+						pPos->x - Size <= g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMax.x && pPosOld->x - Size > g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMax.x) &&
+					pPos->z + Size >= g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMin.z &&
+					pPos->z - Size <= g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMax.z &&
+					pPos->y + max.y >= g_Object00[nCntObject].pos.y + g_Object00[nCntObject].vtxMin.y &&
+					pPos->y + min.y <= g_Object00[nCntObject].pos.y + g_Object00[nCntObject].vtxMax.y
 					)
 				{//ï«Ç∆ÉvÉåÉCÉÑÅ[Ç™ìñÇΩÇ¡ÇΩ(Xé≤)
 					pPos->x = pPosOld->x;
@@ -657,12 +735,12 @@ bool CollisionObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMo
 			{
 				if (
 					(
-						pPos->x + Size >= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMin.x && pPosOld->x + Size < g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMin.x ||
-						pPos->x - Size <= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMax.x && pPosOld->x - Size > g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMax.x) &&
-					pPos->z + Size >= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMin.z &&
-					pPos->z - Size <= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMax.z &&
-					pPos->y + max.y >= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMin.y &&
-					pPos->y + min.y <= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMax.y
+						pPos->x + Size >= g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMin.x && pPosOld->x + Size < g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMin.x ||
+						pPos->x - Size <= g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMax.x && pPosOld->x - Size > g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMax.x) &&
+					pPos->z + Size >= g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMin.z &&
+					pPos->z - Size <= g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMax.z &&
+					pPos->y + max.y >= g_Object00[nCntObject].pos.y + g_Object00[nCntObject].vtxMin.y &&
+					pPos->y + min.y <= g_Object00[nCntObject].pos.y + g_Object00[nCntObject].vtxMax.y
 					)
 				{//ï«Ç∆ÉvÉåÉCÉÑÅ[Ç™ìñÇΩÇ¡ÇΩ(Xé≤)
 					pPos->x = pPosOld->x;
@@ -672,12 +750,12 @@ bool CollisionObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMo
 
 				if (
 					(
-						pPos->z + Size >= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMin.z && pPosOld->z + Size < g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMin.z ||
-						pPos->z - Size <= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMax.z && pPosOld->z - Size > g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMax.z) &&
-					pPos->x + Size >= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMin.x &&
-					pPos->x - Size <= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMax.x &&
-					pPos->y + max.y >= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMin.y&&
-					pPos->y + min.y <= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMax.y
+						pPos->z + Size >= g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMin.z && pPosOld->z + Size < g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMin.z ||
+						pPos->z - Size <= g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMax.z && pPosOld->z - Size > g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMax.z) &&
+					pPos->x + Size >= g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMin.x &&
+					pPos->x - Size <= g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMax.x &&
+					pPos->y + max.y >= g_Object00[nCntObject].pos.y + g_Object00[nCntObject].vtxMin.y&&
+					pPos->y + min.y <= g_Object00[nCntObject].pos.y + g_Object00[nCntObject].vtxMax.y
 					)
 				{//ï«Ç∆ÉvÉåÉCÉÑÅ[Ç™ìñÇΩÇ¡ÇΩ(Zé≤)
 					pPos->z = pPosOld->z;
@@ -697,18 +775,18 @@ void CollisionObject00Shadow(D3DXVECTOR3 *pPos)
 {
 	for (int nCntObject = 0; nCntObject < MAX_OBJECT00; nCntObject++)
 	{
-		if (g_Exit[nCntObject].bUse == true)
+		if (g_Object00[nCntObject].bUse == true)
 		{
 			if (
-				pPos->y >= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMin.y &&
-				pPos->y <= g_Exit[nCntObject].pos.y + g_Exit[nCntObject].vtxMax.y &&
-				pPos->x >= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMin.x &&
-				pPos->x <= g_Exit[nCntObject].pos.x + g_Exit[nCntObject].vtxMax.x &&
-				pPos->z >= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMin.z &&
-				pPos->z <= g_Exit[nCntObject].pos.z + g_Exit[nCntObject].vtxMax.z
+				pPos->y >= g_Object00[nCntObject].pos.y + g_Object00[nCntObject].vtxMin.y &&
+				pPos->y <= g_Object00[nCntObject].pos.y + g_Object00[nCntObject].vtxMax.y &&
+				pPos->x >= g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMin.x &&
+				pPos->x <= g_Object00[nCntObject].pos.x + g_Object00[nCntObject].vtxMax.x &&
+				pPos->z >= g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMin.z &&
+				pPos->z <= g_Object00[nCntObject].pos.z + g_Object00[nCntObject].vtxMax.z
 				)
 			{//ï«Ç∆ÉvÉåÉCÉÑÅ[Ç™ìñÇΩÇ¡ÇΩ(Xé≤)
-				pPos->y = g_Exit[nCntObject].vtxMax.y;
+				pPos->y = g_Object00[nCntObject].vtxMax.y;
 			}
 		}
 	}
@@ -719,5 +797,5 @@ void CollisionObject00Shadow(D3DXVECTOR3 *pPos)
 //====================================================================
 Object00 * GetObject00(void)
 {
-	return &g_Exit[0];
+	return &g_Object00[0];
 }
