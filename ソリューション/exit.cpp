@@ -257,13 +257,6 @@ void DoorOpen(void)
 						g_Exit[2].rot.y += 0.01f;
 					}
 				}
-				/*if (g_Exit[nCntExit1].nType == 2)
-				{
-					if (g_Exit[2].rot.y >= 1.5f)
-					{
-						g_Exit[2].rot.y += 0.01f;
-					}
-				}*/
 			}
 			g_ExitCnt--;
 
@@ -305,9 +298,9 @@ void ExsitClossLine(int nCntExit)
 			D3DXVECTOR3 Cross;				//åì_ÇÃèÍèä
 
 			//èÍèäÇÃåvéZ
-			pos0 = (MeshWall.pos + D3DXVECTOR3(-cosf(MeshWall.rot.y)/* * -1.0f*/, 0.0f, -sinf(MeshWall.rot.y)/* * -1.0f*/));
+			pos0 = MeshWall.pos/* + D3DXVECTOR3(-cosf(MeshWall.rot.y), 0.0f, -sinf(MeshWall.rot.y))*/;
 
-			pos1 = (MeshWall.pos + D3DXVECTOR3(cosf(MeshWall.rot.y)/* * 1.0f*/, 0.0f, sinf(MeshWall.rot.y)/* * 1.0f*/));
+			pos1 = MeshWall.pos + D3DXVECTOR3(cosf(MeshWall.rot.y)/* * 1.0f*/, 0.0f, sinf(MeshWall.rot.y)/* * 1.0f*/);
 
 			//pos0Ç∆pos1Ç∆ÇÃãóó£ä‘
 			g_vecLine = pos1 - pos0;

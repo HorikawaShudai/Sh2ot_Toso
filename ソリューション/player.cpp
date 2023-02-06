@@ -446,7 +446,12 @@ void PlayerMoveInput(int nCnt)
 	}
 	else if (g_aPlayer[nCnt].State == PLAYER_EXSIT)
 	{
-		g_aPlayer[nCnt].move.z -= 1.5f;
+		D3DXVECTOR3 posDest;			//–Ú“I‚ÌˆÊ’u
+		D3DXVECTOR3 posDiff = D3DXVECTOR3(1000.0f, 0.0f, -1200.0f);
+
+		posDest = posDiff - g_aPlayer[nCnt].pos;
+
+		g_aPlayer[nCnt].pos += posDest * 0.03f;
 	}
 }
 

@@ -11,7 +11,7 @@
 #define HEIGHT_SIZE (5)			//縦の頂点数
 #define WAIGHT_CENTER (0.5f)	//横の原点(0.0f～1.0f)
 #define HEIGHT_CENTER (1.0f)	//縦の原点(0.0f～1.0f)
-#define FIELD_SIZE (40.0f)		//壁一枚の大きさ
+#define FIELD_SIZE (10.0f)		//壁一枚の大きさ
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureMeshWall;			//テクスチャのポインタ
@@ -133,7 +133,7 @@ void InitMeshWall(void)
 	g_pIndxBuffMeshWall->Unlock();
 
 
-	SetMeshWall(D3DXVECTOR3(-1000.0f, 0.0f, -720.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f));
+	SetMeshWall(D3DXVECTOR3(-930.0f, 0.0f, -720.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f));
 }
 
 //====================================================================
