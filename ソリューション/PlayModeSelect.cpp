@@ -20,13 +20,19 @@
 #define NUM_POLY		(NUM_PLAYMODE)				//ポリゴンの数
 #define MAX_BUFF		(1)				//バッファの最大数
 
+#define ICON_POS_X		(400.0f)		//選択アイコンの位置(X軸)
+#define ICON_POS_Y		(400.0f)		//選択アイコンの位置(Y軸)
+#define ICON_SIZE_X		(100.0f)		//選択アイコンの大きさ(X軸)
+#define ICON_SIZE_Y		(200.0f)		//選択アイコンの大きさ(Y軸)
+#define BRANK_LENGTH	(400.0f)		//選択アイコン同士の間の距離
+
 //***********************************
 //テクスチャファイル名
 //***********************************
 const char *c_apFilenameStage[MAX_TEX] =
 {
-	"Data\\TEXTURE\\PLAYMODE\\TitleBg.png",		//タイトル背景
-	"data\\TEXTURE\\PLAYMODE\\PlayMode03.png",		//選択アイコン(4人)
+	"Data\\TEXTURE\\PLAYMODE\\Tousou_logo.png",		//タイトル背景
+	"data\\TEXTURE\\PLAYMODE\\Akutou_logo.png",		//選択アイコン(4人)
 };
 
 //***********************************
@@ -140,11 +146,17 @@ void UpdatePlayModeSelect(void)
 //========================================================================
 void DrawPlayModeSelect(void)
 {
-	//モードセレクトの背景
-	DrawPlayModeSelectBg();
+	//プレイ人数の情報取得
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 
-	//選択アイコン
-	DrawPlayModeSelectIcon();
+	if (PlayNumber.bUse == false)
+	{
+		//モードセレクトの背景
+		//DrawPlayModeSelectBg();
+
+		//選択アイコン
+		DrawPlayModeSelectIcon();
+	}
 }
 
 //========================================================================
@@ -200,13 +212,13 @@ void InitPlayModeSelectIcon(void)
 	{
 		if (nCntStage == 0)
 		{
-			g_PlayModeSelect.pos = D3DXVECTOR3(400.0f, 400.0f, 0.0f);
+			g_PlayModeSelect.pos = D3DXVECTOR3(ICON_POS_X, ICON_POS_Y, 0.0f);
 
 			//頂点座標の設定
-			pVtx[0].pos = D3DXVECTOR3(g_PlayModeSelect.pos.x - 50.0f, g_PlayModeSelect.pos.y, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(g_PlayModeSelect.pos.x + 50.0f, g_PlayModeSelect.pos.y, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(g_PlayModeSelect.pos.x - 50.0f, g_PlayModeSelect.pos.y + 100.0f, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(g_PlayModeSelect.pos.x + 50.0f, g_PlayModeSelect.pos.y + 100.0f, 0.0f);
+			pVtx[0].pos = D3DXVECTOR3(g_PlayModeSelect.pos.x - ICON_SIZE_X, g_PlayModeSelect.pos.y, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(g_PlayModeSelect.pos.x + ICON_SIZE_X, g_PlayModeSelect.pos.y, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(g_PlayModeSelect.pos.x - ICON_SIZE_X, g_PlayModeSelect.pos.y + ICON_SIZE_Y, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(g_PlayModeSelect.pos.x + ICON_SIZE_X, g_PlayModeSelect.pos.y + ICON_SIZE_Y, 0.0f);
 			//rhwの設定
 			for (int nCntrhw = 0; nCntrhw < 4; nCntrhw++)
 			{
@@ -227,13 +239,13 @@ void InitPlayModeSelectIcon(void)
 		}
 		else if (nCntStage < 5)
 		{
-			g_PlayModeSelect.pos = D3DXVECTOR3(400.0f + 170.0f * nCntStage, 400.0f, 0.0f);
+			g_PlayModeSelect.pos = D3DXVECTOR3(ICON_POS_X + BRANK_LENGTH * nCntStage, ICON_POS_Y, 0.0f);
 
 			//頂点座標の設定
-			pVtx[0].pos = D3DXVECTOR3(g_PlayModeSelect.pos.x - 50.0f, g_PlayModeSelect.pos.y, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(g_PlayModeSelect.pos.x + 50.0f, g_PlayModeSelect.pos.y, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(g_PlayModeSelect.pos.x - 50.0f, g_PlayModeSelect.pos.y + 100.0f, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(g_PlayModeSelect.pos.x + 50.0f, g_PlayModeSelect.pos.y + 100.0f, 0.0f);
+			pVtx[0].pos = D3DXVECTOR3(g_PlayModeSelect.pos.x - ICON_SIZE_X, g_PlayModeSelect.pos.y, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(g_PlayModeSelect.pos.x + ICON_SIZE_X, g_PlayModeSelect.pos.y, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(g_PlayModeSelect.pos.x - ICON_SIZE_X, g_PlayModeSelect.pos.y + ICON_SIZE_Y, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(g_PlayModeSelect.pos.x + ICON_SIZE_X, g_PlayModeSelect.pos.y + ICON_SIZE_Y, 0.0f);
 			//rhwの設定
 			for (int nCntrhw = 0; nCntrhw < 4; nCntrhw++)
 			{
@@ -326,7 +338,7 @@ void ModeSelect(void)
 	//頂点情報のポインタ
 	VERTEX_2D *pVtx;
 
-	if (pFade == FADE_NONE)
+	if (pFade == FADE_NONE  && PlayNumber.bUse == false)
 	{
 		if (GetKeyboardTrigger(DIK_D) == true/* || GetGamePadTrigger(BUTTON_3, 0) == true*/)
 		{
@@ -397,14 +409,10 @@ void ModeSelect(void)
 
 		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadPress(BUTTON_START, 0) || GetGamepadPress(BUTTON_A, 0))
 		{//決定キー(ENTERキー)が押された
-			if (g_PlayModeSelect.CurrentModeNumber >= 0 && g_PlayModeSelect.CurrentModeNumber < NUM_PLAYMODE && PlayNumber.bUse == false)
+			if (g_PlayModeSelect.CurrentModeNumber >= 0 && g_PlayModeSelect.CurrentModeNumber < NUM_PLAYMODE)
 			{
 				SetFade(MODE_GAME);			//モードの設定(ゲーム画面に移行)
 			}
-		}
-		else if (GetKeyboardTrigger(DIK_B) == true)
-		{//キー(B)が押された
-			PlayNumber.bUse = true;
 		}
 	}
 }
