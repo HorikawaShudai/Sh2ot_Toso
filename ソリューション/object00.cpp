@@ -596,6 +596,84 @@ void CollisionRotObject00(int nCnt)
 }
 
 //====================================================================
+//外積を使ったオブジェクトの当たり判定
+//====================================================================
+void CollisionOuterProductObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove)
+{
+	D3DXVECTOR3 vecMove = *pPos - *pPosOld;
+	
+	for (int nCnt = 0; nCnt < MAX_OBJECT00; nCnt++)
+	{
+		if (g_Object00[nCnt].bUse == true)
+		{
+			bool bHit = false;
+			bool bHit1 = false;
+			bool bHit2 = false;
+
+			//ベクトルの目標地点
+			D3DXVECTOR3 pos1 = D3DXVECTOR3(g_Object00[nCnt].pos.x + g_Object00[nCnt].vtxMax.x, g_Object00[nCnt].pos.y, g_Object00[nCnt].pos.z);
+			D3DXVECTOR3 vecLine = pos1  -  g_Object00[nCnt].pos;
+
+			D3DXVECTOR3 vecToPos =  *pPos - g_Object00[nCnt].pos;
+
+			D3DXVECTOR3 vecToPos2 = *pPosOld - g_Object00[nCnt].pos;
+
+			float A, B,fRate;
+			A = (vecToPos.z * vecMove.x) - (vecToPos.x * vecMove.z);
+			B = (vecLine.z * vecMove.x) - (vecLine.x * vecMove.z);
+			if (B != 0)
+			{
+				fRate = A / B;
+			}
+			else
+			{
+				fRate = 10.0f;
+			}
+
+			if (fRate >= 0.0f &&fRate <= 1.0f)
+			{
+				if ((vecLine.z * vecToPos.x) - (vecLine.x * vecToPos.z) < 0)
+				{
+					bHit1 = true;
+				}
+
+				if ((vecLine.z * vecToPos2.x) - (vecLine.x * vecToPos2.z) < 0)
+				{
+					bHit2 = true;
+				}
+
+				if (bHit1 != bHit2)
+				{
+					bHit = true;
+				}
+
+				bHit1 = false;
+				bHit2 = false;
+
+				if ((vecLine.z * vecToPos.x) + (vecLine.x * vecToPos.z) > 0)
+				{
+					bHit1 = true;
+				}
+
+				if ((vecLine.z * vecToPos2.x) + (vecLine.x * vecToPos2.z) > 0)
+				{
+					bHit2 = true;
+				}
+
+				if (bHit1 != bHit2)
+				{
+					bHit = true;
+				}
+			}
+			if (bHit == true)
+			{
+				*pPos = vecLine *fRate;
+			}
+		}
+		
+	}
+}
+//====================================================================
 //プレイヤーとの当たり判定処理
 //====================================================================
 bool CollisionObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size)
