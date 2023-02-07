@@ -11,7 +11,7 @@
 #define HEIGHT_SIZE (5)			//縦の頂点数
 #define WAIGHT_CENTER (0.5f)	//横の原点(0.0f～1.0f)
 #define HEIGHT_CENTER (1.0f)	//縦の原点(0.0f～1.0f)
-#define FIELD_SIZE (40.0f)		//壁一枚の大きさ
+#define FIELD_SIZE (10.0f)		//壁一枚の大きさ
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureMeshWall;			//テクスチャのポインタ
@@ -133,7 +133,7 @@ void InitMeshWall(void)
 	g_pIndxBuffMeshWall->Unlock();
 
 
-	//SetMeshWall(D3DXVECTOR3(-1000.0f, 0.0f, -720.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f));
+	SetMeshWall(D3DXVECTOR3(-1000.0f, 0.0f, -700.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f));
 }
 
 //====================================================================
@@ -210,15 +210,15 @@ void DrawMeshWall(void)
 			pDevice->SetFVF(FVF_VERTEX_3D);
 
 			//テクスチャの設定
-			//pDevice->SetTexture(0, g_pTextureMeshWall);
+			pDevice->SetTexture(0, g_pTextureMeshWall);
 
-			////ポリゴンの描画
-			//pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP,
-			//	0,
-			//	0,
-			//	0,//用意した頂点の数
-			//	0,
-			//	(WAIGHT_SIZE * HEIGHT_SIZE + WAIGHT_SIZE * (HEIGHT_SIZE - 2) + 2 * (HEIGHT_SIZE - 2)) - 2);//描画するプリミティブの数
+			//ポリゴンの描画
+			pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP,
+				0,
+				0,
+				0,//用意した頂点の数
+				0,
+				(WAIGHT_SIZE * HEIGHT_SIZE + WAIGHT_SIZE * (HEIGHT_SIZE - 2) + 2 * (HEIGHT_SIZE - 2)) - 2);//描画するプリミティブの数
 		}
 	}
 }
@@ -235,6 +235,8 @@ void SetMeshWall(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 			g_aMeshWall[nCntMeshWall].pos = pos;
 			g_aMeshWall[nCntMeshWall].rot = rot;
 			g_aMeshWall[nCntMeshWall].bUse = true;
+
+			break;
 		}
 	}
 }
