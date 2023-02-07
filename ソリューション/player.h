@@ -51,6 +51,7 @@ typedef struct
 	int VibrtionTrueCount;						//バイブレーション中のカウント
 	int VibrtionFalseCount;						//バイブレーションをしていない間のカウント
 	int VibrtionTime;							//バイブレーションの長さ
+	int LightIdx;								//ライトの使用番号
 
 	bool bUse;									//プレイヤーが使用できるかどうか
 	bool bGetKey;								//プレイヤーが鍵を持っているかどうか

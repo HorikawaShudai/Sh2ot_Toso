@@ -7,6 +7,7 @@
 #include "objectBG.h"
 #include "stage.h"
 #include "resultUI.h"
+#include "light.h"
 
 //マクロ定義
 #define NUM_Result (1) //背景の数
@@ -173,6 +174,8 @@ void Init3DResult(void)
 {
 	InitCamera();
 
+	InitLight();
+
 	InitObjectBG();
 
 	//ステージの読み込み
@@ -186,6 +189,8 @@ void Uninit3DResult(void)
 {
 	UninitCamera();
 
+	UninitLight();
+
 	UninitObjectBG();
 
 	UninitResultUI();
@@ -195,6 +200,8 @@ void Uninit3DResult(void)
 void Update3Result(void)
 {
 	UpdateCamera();
+
+	UpdateLight();
 
 	UpdateObjectBG();
 

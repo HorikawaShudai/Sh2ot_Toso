@@ -438,7 +438,7 @@ void Init3DSelect(void)
 
 	InitLight();
 
-	InitPlayerBG();
+	//InitPlayerBG();
 
 	//オブジェクトの初期化
 	InitObject00();
@@ -457,7 +457,7 @@ void Uninit3DSelect(void)
 
 	UninitLight();
 
-	UninitPlayerBG();
+	//UninitPlayerBG();
 
 	//オブジェクトの終了
 	UninitObject00();
@@ -473,7 +473,7 @@ void Update3DSelect(void)
 
 	UpdateLight();
 
-	UpdatePlayerBG();
+	//UpdatePlayerBG();
 
 	//オブジェクトの更新
 	UpdateObject00();
@@ -487,7 +487,7 @@ void Draw3DSelect(void)
 {
 	SetCamera(4);
 
-	DrawPlayerBG();
+	//DrawPlayerBG();
 
 	//オブジェクトの描画
 	DrawObject00();
