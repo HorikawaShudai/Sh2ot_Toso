@@ -133,7 +133,7 @@ void InitMeshWall(void)
 	g_pIndxBuffMeshWall->Unlock();
 
 
-	SetMeshWall(D3DXVECTOR3(-930.0f, 0.0f, -720.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f));
+	SetMeshWall(D3DXVECTOR3(-1000.0f, 0.0f, -700.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f));
 }
 
 //====================================================================
@@ -235,6 +235,8 @@ void SetMeshWall(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 			g_aMeshWall[nCntMeshWall].pos = pos;
 			g_aMeshWall[nCntMeshWall].rot = rot;
 			g_aMeshWall[nCntMeshWall].bUse = true;
+
+			break;
 		}
 	}
 }

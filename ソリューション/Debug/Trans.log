@@ -1,60 +1,21 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-﻿  main.cpp
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-<<<<<<< HEAD
-﻿  main.cpp
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github6\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github6\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-<<<<<<< HEAD
->>>>>>> e5fc115433cc16fa62c22adae03a762514b2b256
-﻿  player.cpp
+﻿  meshwall.cpp
+VillainResult.obj : warning LNK4205: 'C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+VillainRanking.obj : warning LNK4205: 'C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+tutorialUI.obj : warning LNK4205: 'C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+Thunder.obj : warning LNK4205: 'C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+SpotLight.obj : warning LNK4205: 'C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+resultUI.obj : warning LNK4205: 'C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+RankingUI.obj : warning LNK4205: 'C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+PolygonBG.obj : warning LNK4205: 'C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+particle.obj : warning LNK4205: 'C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+meshdome.obj : warning LNK4205: 'C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+meshcylinder.obj : warning LNK4205: 'C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+light.obj : warning LNK4205: 'C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+Fog.obj : warning LNK4205: 'C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+Fade.obj : warning LNK4205: 'C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+EscapeRanking.obj : warning LNK4205: 'C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+EscapeOverResult.obj : warning LNK4205: 'C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+EscapeClearResult.obj : warning LNK4205: 'C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+Effect.obj : warning LNK4205: 'C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-<<<<<<< HEAD
-=======
-=======
-<<<<<<< HEAD
-﻿  PlayNumberSelect.cpp
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-<<<<<<< HEAD
-﻿  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github6\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github6\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-<<<<<<< HEAD
-﻿  meshfield.cpp
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-<<<<<<< HEAD
-﻿  enemy.cpp
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-<<<<<<< HEAD
-﻿  camera.cpp
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github6\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github6\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-<<<<<<< HEAD
-﻿  PlayNumberSelect.cpp
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-﻿VillainResult.obj : fatal error LNK1318: 予期しない PDB エラー。OK (0) ''
->>>>>>> 6632b792fda9f82cac0e719012408c843e57defc
->>>>>>> 2a20de8441229d2073cb68f2d2e3b2f879a3d5fe
->>>>>>> 773ae3d4ecdc4064376b968b4c43e95ec743f8b1
->>>>>>> 2a668d3441cef7bac841362a03a8c0eb5c7214ff
->>>>>>> 595e526452e9aa6b79e44c8d6923ee5d3590fb8b
->>>>>>> 4de03f5d9113c0d5294f132a9b44a6552bc40d4b
->>>>>>> e7c77b3a2a0cbe3b3c24d03ef305749481228f7a
->>>>>>> 0d30f24e758b38850b0ebd3c3354ec2e8b4139fc
->>>>>>> c62072c55b6775465417f267a054f9a070fa214c
->>>>>>> e5fc115433cc16fa62c22adae03a762514b2b256
