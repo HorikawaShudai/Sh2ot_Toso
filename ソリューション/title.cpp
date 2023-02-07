@@ -19,6 +19,7 @@
 #include "object00.h"
 #include "Billboard.h"
 #include "Thunder.h"
+#include "effect.h"
 
 //**********************************************
 //マクロ定義
@@ -514,6 +515,8 @@ void Init3DTitle(void)
 
 	InitThunder();
 
+	InitEffect();
+
 	//タイトル用マップの初期化
 	InitObjectBG();
 
@@ -539,6 +542,8 @@ void Uninit3DTitle(void)
 
 	UninitThunder();
 
+	UninitEffect();
+
 	//タイトル用マップの終了
 	UninitObjectBG();
 }
@@ -561,6 +566,8 @@ void Update3DTitle(void)
 
 	UpdateThunder();
 
+	UpdateEffect();
+
 	//タイトル用マップの更新
 	UpdateObjectBG();
 }
@@ -578,9 +585,10 @@ void Draw3DTitle(void)
 
 	DrawBillboard();	//月の描画処理（ビルボード）
 
-
 	//タイトル用マップの描画
 	DrawObjectBG();
+
+	DrawEffect();
 
 	DrawThunder();
 }
