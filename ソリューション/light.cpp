@@ -166,6 +166,64 @@ void UpdateLight(void)
 	//デバイスの所得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
+#ifdef _DEBUG
+	//ビジョンがオンの時、デフォルトのライトを明るくする
+	for (int nCntlight = 0; nCntlight < 3; nCntlight++)
+	{
+		if (GetNightVersion() == false)
+		{
+			if (GetMode() == MODE_GAME)
+			{
+				//ライトの方向を設定
+				switch (nCntlight)
+				{
+				case 0:
+					SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.2f, -0.8f, -0.5f), 100.0f);
+					break;
+				case 1:
+					SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(-0.5f, -0.8f, -0.5f), 100.0f);
+					break;
+				case 2:
+					SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, -0.8f, 0.6f), 100.0f);
+					break;
+				}
+			}
+			else
+			{
+				//ライトの方向を設定
+				switch (nCntlight)
+				{
+				case 0:
+					SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.2f, -0.8f, -0.5f), 100.0f);
+					break;
+				case 1:
+					SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(-0.5f, -0.8f, -0.5f), 100.0f);
+					break;
+				case 2:
+					SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, -0.8f, 0.6f), 100.0f);
+					break;
+				}
+			}
+		}
+		else
+		{
+			//ライトの方向を設定
+			switch (nCntlight)
+			{
+			case 0:
+				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.2f, -0.8f, -0.5f), 100.0f);
+				break;
+			case 1:
+				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(-0.5f, -0.8f, -0.5f), 100.0f);
+				break;
+			case 2:
+				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, -0.8f, 0.6f), 100.0f);
+				break;
+			}
+		}
+	}
+#endif
+
 	for (int nCntlight = 0; nCntlight < MAX_LIGHT; nCntlight++)
 	{
 		if (g_bUse[nCntlight] == true)

@@ -82,14 +82,22 @@ void DrawFog()
 {
 	LPDIRECT3DDEVICE9 pDevice; //デバイスのポインタ
 	pDevice = GetDevice();
-	if (g_Fog.FogMode != D3DFOG_NONE)
-	{//フォグモードが有効な時
-		pDevice->SetRenderState(D3DRS_FOGCOLOR, g_Fog.FogColor);					//色の設定
-		pDevice->SetRenderState(D3DRS_FOGTABLEMODE, g_Fog.FogMode);					//モードの設定
-		pDevice->SetRenderState(D3DRS_FOGSTART, *((LPDWORD)(&g_Fog.FogStart)));		//開始地点の設定
-		pDevice->SetRenderState(D3DRS_FOGEND, *((LPDWORD)(&g_Fog.FogEnd)));			//終了地点の設定
-		pDevice->SetRenderState(D3DRS_FOGDENSITY, *((LPDWORD)(&g_Fog.FogDensity)));	//フォグ密度の設定
-		pDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);								//フォグの有効化
+
+	if (GetNightVersion() == false)
+	{//フォグを有効化する
+		if (g_Fog.FogMode != D3DFOG_NONE)
+		{//フォグモードが有効な時
+			pDevice->SetRenderState(D3DRS_FOGCOLOR, g_Fog.FogColor);					//色の設定
+			pDevice->SetRenderState(D3DRS_FOGTABLEMODE, g_Fog.FogMode);					//モードの設定
+			pDevice->SetRenderState(D3DRS_FOGSTART, *((LPDWORD)(&g_Fog.FogStart)));		//開始地点の設定
+			pDevice->SetRenderState(D3DRS_FOGEND, *((LPDWORD)(&g_Fog.FogEnd)));			//終了地点の設定
+			pDevice->SetRenderState(D3DRS_FOGDENSITY, *((LPDWORD)(&g_Fog.FogDensity)));	//フォグ密度の設定
+			pDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);								//フォグの有効化
+		}
+	}
+	else
+	{//フォグを無効化する
+		pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE); //フォグの無効化
 	}
 }
 
