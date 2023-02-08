@@ -14,7 +14,7 @@ typedef struct
 {
 	D3DXVECTOR3 pos;
 	int nType;
-	int CurrentModeNumber;
+	int CurrentModeNumber = 0;
 	bool bUse;
 } PlayModeSelect;
 

@@ -57,7 +57,7 @@ void Draw3DSelect(void);
 //グローバル定義
 //==================
 LPDIRECT3DTEXTURE9 g_apTexPlayNumberSelect[MAX_TEX] = {};				//テクスチャへの
-LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffPlayNumberSelect[MAX_BUFF] = {};			//頂点バッファへの
+LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffPlayNumberSelect = {};			//頂点バッファへの
 D3DXCOLOR g_PaleColorPns;
 D3DXCOLOR g_NormalColorPns;
 PlayNumberSelect g_PlayNumberSelect;
@@ -91,7 +91,7 @@ void InitPlayNumberSelect(void)
 	//頂点バッファの生成[1]
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * NUM_PLAYNUMBER,
 		D3DUSAGE_WRITEONLY, FVF_VERTEX_2D, D3DPOOL_MANAGED,
-		&g_pVtxBuffPlayNumberSelect[0], NULL);
+		&g_pVtxBuffPlayNumberSelect, NULL);
 
 	InitPlaySelectIcon();
 
@@ -119,15 +119,14 @@ void UninitPlayNumberSelect(void)
 			g_apTexPlayNumberSelect[nCntStage] = NULL;
 		}
 	}
-	for (nCntStage = 0; nCntStage < MAX_BUFF; nCntStage++)
+	
+	//頂点バッファの破棄
+	if (g_pVtxBuffPlayNumberSelect != NULL)
 	{
-		//頂点バッファの破棄
-		if (g_pVtxBuffPlayNumberSelect[nCntStage] != NULL)
-		{
-			g_pVtxBuffPlayNumberSelect[nCntStage]->Release();
-			g_pVtxBuffPlayNumberSelect[nCntStage] = NULL;
-		}
+		g_pVtxBuffPlayNumberSelect->Release();
+		g_pVtxBuffPlayNumberSelect = NULL;
 	}
+	
 
 	//3D
 	Uninit3DSelect();
@@ -206,7 +205,7 @@ void InitPlaySelectIcon(void)
 	VERTEX_2D *pVtx;
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
-	g_pVtxBuffPlayNumberSelect[0]->Lock(0, 0, (void**)&pVtx, 0);
+	g_pVtxBuffPlayNumberSelect->Lock(0, 0, (void**)&pVtx, 0);
 
 	for (int nCntStage = 0; nCntStage < NUM_PLAYNUMBER; nCntStage++)
 	{
@@ -267,31 +266,7 @@ void InitPlaySelectIcon(void)
 	}
 
 	//頂点バッファをアンロックする
-	g_pVtxBuffPlayNumberSelect[0]->Unlock();
-}
-
-//========================================================================
-// モード選択背景の描画処理
-//========================================================================
-void DrawPlayNumberselectBg(void)
-{
-	//デバイスへのポインタを取得
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
-	//頂点フォーマットの設定
-	pDevice->SetFVF(FVF_VERTEX_2D);
-
-	//頂点バッファをデータストリームに設定
-	pDevice->SetStreamSource(0, g_pVtxBuffPlayNumberSelect[0], 0,
-		sizeof(VERTEX_2D));			//頂点情報構造体のサイズ
-
-									//テクスチャの設定
-	pDevice->SetTexture(0, g_apTexPlayNumberSelect[0]);
-
-	//ポリゴンの描画
-	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,				//プリミティブの種類
-		0,						//描画する最初のインデックス
-		2);						//プリミティブ(ポリゴン)数
+	g_pVtxBuffPlayNumberSelect->Unlock();
 }
 
 //========================================================================
@@ -309,7 +284,7 @@ void DrawPlayNumberSelectIcon(void)
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
 	//頂点バッファをデータストリームに設定
-	pDevice->SetStreamSource(0, g_pVtxBuffPlayNumberSelect[0], 0,
+	pDevice->SetStreamSource(0, g_pVtxBuffPlayNumberSelect, 0,
 		sizeof(VERTEX_2D));			//頂点情報構造体のサイズ
 
 	for (int nCntStage = 0; nCntStage < NUM_POLY; nCntStage++)
@@ -340,10 +315,10 @@ void PlayerSelect(void)
 
 	if (pFade == FADE_NONE)
 	{
-		if (GetKeyboardTrigger(DIK_D) == true/* || GetGamePadTrigger(BUTTON_3, 0) == true*/)
+		if (GetKeyboardTrigger(DIK_D) == true || GetGamepadTrigger(BUTTON_RIGHT, 0) == true || GetGamepad_LStick_Trigger(0, LSTICK_RIGHT) == true)
 		{
 			//頂点バッファをロック
-			g_pVtxBuffPlayNumberSelect[0]->Lock(0, 0, (void**)&pVtx, 0);
+			g_pVtxBuffPlayNumberSelect->Lock(0, 0, (void**)&pVtx, 0);
 
 			pVtx += g_PlayNumberSelect.CurrentSelectNumber * 4;
 
@@ -354,13 +329,13 @@ void PlayerSelect(void)
 			pVtx[3].col = g_PaleColorPns;
 
 			//頂点バッファをアンロックする
-			g_pVtxBuffPlayNumberSelect[0]->Unlock();
+			g_pVtxBuffPlayNumberSelect->Unlock();
 
 			//現在地を先に
 			g_PlayNumberSelect.CurrentSelectNumber = (g_PlayNumberSelect.CurrentSelectNumber + 1) % NUM_PLAYNUMBER;
 
 			//頂点バッファをロック
-			g_pVtxBuffPlayNumberSelect[0]->Lock(0, 0, (void**)&pVtx, 0);
+			g_pVtxBuffPlayNumberSelect->Lock(0, 0, (void**)&pVtx, 0);
 
 			pVtx += g_PlayNumberSelect.CurrentSelectNumber * 4;
 
@@ -371,12 +346,12 @@ void PlayerSelect(void)
 			pVtx[3].col = g_NormalColorPns;
 
 			//頂点バッファをアンロックする
-			g_pVtxBuffPlayNumberSelect[0]->Unlock();
+			g_pVtxBuffPlayNumberSelect->Unlock();
 		}
-		else if (GetKeyboardTrigger(DIK_A) == true/* || GetGamePadTrigger(BUTTON_2, 0) == true*/ && pFade == FADE_NONE)
+		else if (GetKeyboardTrigger(DIK_A) == true || GetGamepadTrigger(BUTTON_LEFT, 0) == true || GetGamepad_LStick_Trigger(0, LSTICK_LEFT) == true)
 		{
 			//頂点バッファをロック
-			g_pVtxBuffPlayNumberSelect[0]->Lock(0, 0, (void**)&pVtx, 0);
+			g_pVtxBuffPlayNumberSelect->Lock(0, 0, (void**)&pVtx, 0);
 
 			pVtx += g_PlayNumberSelect.CurrentSelectNumber * 4;
 
@@ -387,13 +362,13 @@ void PlayerSelect(void)
 			pVtx[3].col = g_PaleColorPns;
 
 			//頂点バッファをアンロックする
-			g_pVtxBuffPlayNumberSelect[0]->Unlock();
+			g_pVtxBuffPlayNumberSelect->Unlock();
 
 			//現在地を前へ
 			g_PlayNumberSelect.CurrentSelectNumber = (g_PlayNumberSelect.CurrentSelectNumber - 1 + NUM_PLAYNUMBER) % NUM_PLAYNUMBER;
 
 			//頂点バッファをロック
-			g_pVtxBuffPlayNumberSelect[0]->Lock(0, 0, (void**)&pVtx, 0);
+			g_pVtxBuffPlayNumberSelect->Lock(0, 0, (void**)&pVtx, 0);
 
 			pVtx += 4 * g_PlayNumberSelect.CurrentSelectNumber;
 
@@ -404,25 +379,23 @@ void PlayerSelect(void)
 			pVtx[3].col = g_NormalColorPns;
 
 			//頂点バッファをアンロックする
-			g_pVtxBuffPlayNumberSelect[0]->Unlock();
+			g_pVtxBuffPlayNumberSelect->Unlock();
 		}
 
-		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadPress(BUTTON_START, 0) || GetGamepadPress(BUTTON_A, 0))
+		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadTrigger(BUTTON_START, 0) || GetGamepadTrigger(BUTTON_A, 0))
 		{//決定キー(ENTERキー)が押された
 			if (g_PlayNumberSelect.CurrentSelectNumber >= 0 && g_PlayNumberSelect.CurrentSelectNumber < PLAYNUMBER_FOUR)
 			{
-				SetFade(MODE_GAME);			//モードの設定(ゲーム画面に移行)
+				g_PlayNumberSelect.CurrentSelectNumber = g_PlayNumberSelect.CurrentSelectNumber + 1;			//プレイ人数に合わせるため
 
-				g_PlayNumberSelect.CurrentSelectNumber += 1;			//プレイ人数に合わせるため
+				SetFade(MODE_GAME);			//モードの設定(ゲーム画面に移行)
 			}
 			else if (g_PlayNumberSelect.CurrentSelectNumber == PLAYNUMBER_FOUR)
 			{
+				g_PlayNumberSelect.CurrentSelectNumber = 4;			//プレイ人数に合わせるため
+
 				g_PlayNumberSelect.bUse = false;
 			}
-		}
-		else if (GetKeyboardTrigger(DIK_B) == true)
-		{//キー(B)が押された
-			//SetFade(MODE_TITLE);				//モードの設定(タイトル画面に移行)
 		}
 	}
 }

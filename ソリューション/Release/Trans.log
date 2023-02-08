@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  game.cpp
   keyUI.cpp
   player.cpp
@@ -6,6 +7,100 @@
   11 of 404 functions ( 2.7%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     7 functions had inline decision re-evaluated but remain unchanged
+=======
+<<<<<<< HEAD
+﻿  camera.cpp
+  player.cpp
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+﻿  PlayNumberSelect.cpp
+  camera.cpp
+=======
+<<<<<<< HEAD
+﻿  Trans.vcxproj -> C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+=======
+<<<<<<< HEAD
+﻿  exit.cpp
+>>>>>>> 96c04bf6715129d9204c7b9c6457917c8a8e058b
+>>>>>>> e94a08201ffe0df4018baef2e60c4d283accd1c8
+  コード生成しています。
+  6 of 395 functions ( 1.5%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    6 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作1\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作1\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+<<<<<<< HEAD
+﻿  meshfield.cpp
+  コード生成しています。
+  3 of 413 functions ( 0.7%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    2 functions had inline decision re-evaluated but remain unchanged
+  コード生成が終了しました。
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+=======
+<<<<<<< HEAD
+﻿  object00.cpp
+  コード生成しています。
+  4 of 404 functions ( 1.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    4 functions had inline decision re-evaluated but remain unchanged
+=======
+>>>>>>> bff9b37709b91216e70e4c580c2824e540e79bda
+﻿  EscapeClearResult.cpp
+  EscapeOverResult.cpp
+  EscapeRanking.cpp
+  NumberUI.cpp
+  PlayModeSelect.cpp
+  PlayNumberSelect.cpp
+  PolygonBG.cpp
+  RankingUI.cpp
+  VillainRanking.cpp
+  camera.cpp
+  enemy.cpp
+  exit.cpp
+  game.cpp
+  keyUI.cpp
+  life.cpp
+  main.cpp
+  meshwall.cpp
+  player.cpp
+  playerBG.cpp
+  resultUI.cpp
+  コンパイル中...
+  score.cpp
+  stage.cpp
+  stamina.cpp
+  time.cpp
+  title.cpp
+  tutorialUI.cpp
+  コード生成しています。
+  121 of 421 functions (28.7%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    14 functions had inline decision re-evaluated but remain unchanged
+>>>>>>> 6d1e1e7a62d7b8dc387eb5021b6161d15362c552
+  コード生成が終了しました。
+<<<<<<< HEAD
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+=======
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github6\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github6\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+<<<<<<< HEAD
+=======
+>>>>>>> feebdf4bfd4baeaf9cfd1012152e5decc2fbdd84
+>>>>>>> a3e5b1962cad114936e5e2faec3d253b82220469
+>>>>>>> 6de4d9487e718dfa38a58029fabeccc88af713be
+>>>>>>> 96c04bf6715129d9204c7b9c6457917c8a8e058b
+>>>>>>> bff9b37709b91216e70e4c580c2824e540e79bda
+>>>>>>> e94a08201ffe0df4018baef2e60c4d283accd1c8
+>>>>>>> 6d1e1e7a62d7b8dc387eb5021b6161d15362c552

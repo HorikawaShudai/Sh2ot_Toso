@@ -406,7 +406,7 @@ void UpdateTitleSelect(void)
 
 	if (pFade == FADE_NONE)
 	{
-		if (GetKeyboardTrigger(DIK_S) == true/* || GetGamePadTrigger(BUTTON_0, 0) == true*/)
+		if (GetKeyboardTrigger(DIK_S) == true || GetGamepadTrigger(BUTTON_DOWN, 0) == true || GetGamepad_LStick_Trigger(0, LSTICK_DOWN) == true)
 		{
 			//頂点バッファをロックし、頂点情報へのポインタを取得
 			g_pVtxBuffTitle->Lock(0, 0, (void**)&pVtx, 0);
@@ -439,7 +439,7 @@ void UpdateTitleSelect(void)
 			//頂点バッファをアンロックする
 			g_pVtxBuffTitle->Unlock();
 		}
-		else if (GetKeyboardTrigger(DIK_W) == true/* || GetGamePadTrigger(BUTTON_1, 0) == true*/)
+		else if (GetKeyboardTrigger(DIK_W) == true || GetGamepadTrigger(BUTTON_UP, 0) == true || GetGamepad_LStick_Trigger(0, LSTICK_UP) == true)
 		{
 			//頂点バッファをロックし、頂点情報へのポインタを取得
 			g_pVtxBuffTitle->Lock(0, 0, (void**)&pVtx, 0);
