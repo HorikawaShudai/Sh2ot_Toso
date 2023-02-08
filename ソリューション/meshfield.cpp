@@ -46,9 +46,9 @@ void InitMeshField(void)
 	for (int nCntField = 0; nCntField < MAX_MESHFIELD; nCntField++)
 	{
 		g_MeshField[0].pos = D3DXVECTOR3(-1000.0f, 0.0f, 1900.0f);
-		g_MeshField[1].pos = D3DXVECTOR3(1550.0f, 0.0f, 1500.0f);
+		g_MeshField[1].pos = D3DXVECTOR3(1550.0f, 1.0f, 1500.0f);
 		g_MeshField[2].pos = D3DXVECTOR3(1200.0f, 0.0f, -1350.0f);
-		g_MeshField[3].pos = D3DXVECTOR3(-1250.0f, 0.0f, -950.0f);
+		g_MeshField[3].pos = D3DXVECTOR3(-1250.0f, 1.0f, -950.0f);
 		g_MeshField[nCntField].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_MeshField[nCntField].bUse = true;
 	}
