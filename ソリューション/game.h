@@ -9,7 +9,8 @@ typedef enum
 	GAMESTATE_NONE = 0,
 	GAMESTATE_READY,
 	GAMESTATE_NORMAL,
-	GAMESTATE_END,
+	GAMESTATE_CLEAR_END,
+	GAMESTATE_GAMEOVER_END,
 	GAMESTATE_MAX,
 }GAMESTATE;
 
@@ -21,6 +22,7 @@ void UpdateGame();
 void DrawGame();
 void SetGameState(GAMESTATE state, int nCounter);
 GAMESTATE GetGameState();
+bool GetClear(void);
 void SetPause(bool bPause);
 
 #endif

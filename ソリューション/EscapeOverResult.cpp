@@ -2,6 +2,11 @@
 #include "camera.h"
 #include "light.h"
 #include "stage.h"
+#include "Object00.h"
+#include "ObjectBG.h"
+#include "ResultUI.h"
+#include "fade.h"
+#include "input.h"
 
 //グローバル変数宣言
 
@@ -16,8 +21,12 @@ void InitEscapeOverResult()
 	//ライトの初期化処理
 	InitLight();
 
+	InitObjectBG();
+
 	//ステージの読み込み
-	SetStage(2);
+	SetStage(4);
+
+	InitResultUI();
 }
 
 //====================================================================
@@ -30,6 +39,10 @@ void UninitEscapeOverResult()
 
 	//ライトの終了処理
 	UninitLight();
+
+	UninitObjectBG();
+
+	UninitResultUI();
 }
 
 //====================================================================
@@ -37,11 +50,25 @@ void UninitEscapeOverResult()
 //====================================================================
 void UpdateEscapeOverResult()
 {
+	FADE Fade = GetFade();
+
 	//カメラの更新処理
 	UpdateCamera();
 
 	//ライトの更新処理
 	UpdateLight();
+
+	UpdateObjectBG();
+
+	UpdateResultUI();
+
+	if (Fade == FADE_NONE)
+	{
+		if (GetKeyboardPress(DIK_RETURN) || GetGamepadPress(BUTTON_A, 0))
+		{
+			SetFade(MODE_RANKING);
+		}
+	}
 }
 
 //====================================================================
@@ -59,6 +86,10 @@ void DrawEscapeOverResult()
 
 	//カメラのセット処理
 	SetCamera(4);
+
+	DrawObjectBG();
+
+	DrawResultUI();
 
 	//ビューポートを元に戻す
 	pDevice->SetViewport(&viewportDef);

@@ -48,6 +48,7 @@ DWORD g_dwNumMatPlayer = 0;						//マテリアルの数
 Player g_aPlayer[NUM_PLAYER];					//プレイヤーの情報
 int g_nIndexPlayerShadow = -1;					//影のインデックス(番号)
 bool g_bPlayerOps;
+bool g_GameEnd;
 
 //====================================================================
 //プレイヤーの初期化処理
@@ -59,6 +60,11 @@ void InitPlayer(void)
 
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+
+	for (int nCntPlayer = 0; nCntPlayer < NUM_PLAYER; nCntPlayer++)
+	{
+		g_aPlayer[nCntPlayer].bExit = true;
+	}
 
 	for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
 	{
@@ -77,6 +83,7 @@ void InitPlayer(void)
 		g_aPlayer[nCntPlayer].LightIdx00 = SetIndexLight();		//ライトのセット処理
 		g_aPlayer[nCntPlayer].LightIdx01 = SetIndexLight();		//ライトのセット処理
 
+		g_aPlayer[nCntPlayer].bExit = false;
 		g_aPlayer[nCntPlayer].bVibrtion = false;
 		g_aPlayer[nCntPlayer].bAppear = false;
 #if _DEBUG
@@ -84,6 +91,7 @@ void InitPlayer(void)
 #endif
 
 		g_bPlayerOps = false;
+		g_GameEnd = false;
 		g_aPlayer[nCntPlayer].nNumModel = 1;
 
 		//Xファイルの読み込み
@@ -256,9 +264,9 @@ void UpdatePlayer0(void)
 	g_aPlayer[nSelectPlayer].pos += g_aPlayer[nSelectPlayer].move;
 
 	//オブジェクトとの当たり判定
-	//CollisionObject00(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
+	CollisionObject00(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
 	//外積の当たり判定
-	CollisionOuterProductObject00(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move);
+	//CollisionOuterProductObject00(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move);
 
 
 	//アイテムとの当たり判定
@@ -316,6 +324,23 @@ void UpdatePlayer0(void)
 	{
 		PlayerHit(nSelectPlayer, 1);
 	}
+
+	//ゲーム終了処理
+	if (g_GameEnd == false)
+	{
+		if (g_aPlayer[0].bExit == true && g_aPlayer[1].bExit == true && g_aPlayer[2].bExit == true && g_aPlayer[3].bExit == true)
+		{
+			g_GameEnd = true;
+			SetGameState(GAMESTATE_CLEAR_END, 60);
+		}
+
+		if (g_aPlayer[0].bUse == false && g_aPlayer[1].bUse == false && g_aPlayer[2].bUse == false && g_aPlayer[3].bUse == false)
+		{
+			g_GameEnd = true;
+			SetGameState(GAMESTATE_GAMEOVER_END, 60);
+		}
+	}
+
 #ifdef _DEBUG
 	PrintDebugProc("【F3】でプレイヤー切り替え：【プレイヤー%d】\n", nSelectPlayer + 1);
 
@@ -1004,6 +1029,7 @@ void PlayerDistance(int nCnt)
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, 300.0f, 0.0f, -10.0f, 50.0f) == true)
 			{//敵の表示処理
 				g_aPlayer[nCnt].bAppear = true;
+				break;
 			}
 			else
 			{
@@ -1013,7 +1039,15 @@ void PlayerDistance(int nCnt)
 #endif // _DEBUG
 
 			}
+		}
+	}
 
+	pEnemy = GetEnemy();
+
+	for (int nCntEnemy = 0; nCntEnemy < MAX_ENEMY; nCntEnemy++, pEnemy++)
+	{
+		if (pEnemy->bUse == true)
+		{
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, 600.0f, 0.0f, -10.0f, 50.0f) == true)
 			{//バイブレーション処理
 				if (g_aPlayer[nCnt].VibrtionFalseCount <= 0)
@@ -1105,7 +1139,6 @@ void PlayerHit(int nCnt,int nDamage)
 		if (g_aPlayer[nCnt].nLife <= 0)
 		{
 			g_aPlayer[nCnt].bUse = false;
-
 		}
 
 		else
