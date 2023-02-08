@@ -163,7 +163,6 @@ void InitCamera(void)
 		break;
 	}
 	
-	
 	//その他用(3D画面タイトルなど)
 	g_aCamera[4].viewport.X = 0;				// 描画する画面の左上X座標
 	g_aCamera[4].viewport.Y = 0;				// 描画する画面の左上Y座標
@@ -217,8 +216,8 @@ void UpdateCamera(void)
 		if (g_bTpsCamera == false)
 		{//使っていない場合
 			//プレイヤー視点カメラ
-			PlayerFpsCamera();
-			//ResPlayerCamera();
+			//PlayerFpsCamera();
+			ResPlayerCamera();
 		}
 		else
 		{//使われている場合

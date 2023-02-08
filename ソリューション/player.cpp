@@ -153,13 +153,11 @@ void UpdatePlayer(void)
 {
 //#ifdef _DEBUG
 	//個別
-	UpdatePlayer0();
+	//UpdatePlayer0();
 //#endif
 
 	//複数
-	//UpdatePlayer1();
-
-
+	UpdatePlayer1();
 }
 
 //====================================================================
@@ -704,8 +702,6 @@ void UpdatePlayer1(void)
 
 			//オブジェクトとの当たり判定
 			CollisionObject00(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
-
-		
 
 			CollisionItem(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f, nCntPlayer);
 
