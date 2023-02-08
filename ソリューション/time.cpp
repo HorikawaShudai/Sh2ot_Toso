@@ -41,7 +41,7 @@ void InitTime(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\Number03.png",
+		"data\\TEXTURE\\time.png",
 		&g_pTextureTime);
 
 	g_posTime[0] = D3DXVECTOR3(555.0f, 680.0f, 0.0f);	//10分の桁の位置設定

@@ -11,6 +11,8 @@
 #include "PlayNumberSelect.h"
 
 //マクロ定義
+#define MAX_KEY_TEX		(2)				//鍵のテクスチャ最大数
+
 #define KEYUIPOS_X_1	(30.0f)			//鍵UIのX位置1
 #define KEYUIPOS_Y_1	(350.0f)		//鍵UIのY位置1
 
@@ -30,7 +32,7 @@ typedef struct
 }KEYUI;
 
 //グローバル変数宣言
-LPDIRECT3DTEXTURE9 g_pTextureKeyUI = NULL;  //テクスチャのポインタ
+LPDIRECT3DTEXTURE9 g_pTextureKeyUI[MAX_KEY_TEX] = {};  //テクスチャのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffKeyUI = NULL; //頂点バッファへのポインタ
 KEYUI g_anKeyUI[NUM_PLAYER];			//鍵UIの情報
 int g_NumPlayerKeyUI;
@@ -54,8 +56,13 @@ void InitKeyUI(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"Data\\TEXTURE\\KEYUI.png",
-		&g_pTextureKeyUI);
+		"Data\\TEXTURE\\nokey.png",
+		&g_pTextureKeyUI[0]);
+
+	//テクスチャの読み込み
+	D3DXCreateTextureFromFile(pDevice,
+		"Data\\TEXTURE\\getkey.png",
+		&g_pTextureKeyUI[1]);
 
 	//鍵UIの情報を初期化
 	for (nCntKeyUI = 0; nCntKeyUI < PlayNumber.CurrentSelectNumber; nCntKeyUI++)
@@ -134,11 +141,14 @@ void InitKeyUI(void)
 //=====================
 void UninitKeyUI(void)
 {
-	//テクスチャの破棄
-	if (g_pTextureKeyUI != NULL)
+	for (int nCnt = 0; nCnt < MAX_KEY_TEX; nCnt++)
 	{
-		g_pTextureKeyUI->Release();
-		g_pTextureKeyUI = NULL;
+		//テクスチャの破棄
+		if (g_pTextureKeyUI[nCnt] != NULL)
+		{
+			g_pTextureKeyUI[nCnt]->Release();
+			g_pTextureKeyUI[nCnt] = NULL;
+		}
 	}
 
 	//頂点バッファの破棄
@@ -174,15 +184,21 @@ void DrawKeyUI(void)
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
-	//テクスチャの設定
-	pDevice->SetTexture(0, g_pTextureKeyUI);
-
 	for (int nCnt = 0; nCnt < PlayNumber.CurrentSelectNumber; nCnt++)
 	{
-		if (g_anKeyUI[nCnt].bUse == true)
-		{
-			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCnt * 4, 2);
+		if (g_anKeyUI[nCnt].bUse == false)
+		{//鍵を取得していないとき
+			//テクスチャの設定
+			pDevice->SetTexture(0, g_pTextureKeyUI[0]);
 		}
+
+		else
+		{//鍵を取得しているとき
+			//テクスチャの設定
+			pDevice->SetTexture(0, g_pTextureKeyUI[1]);
+		}
+
+		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCnt * 4, 2);
 	}
 }
 

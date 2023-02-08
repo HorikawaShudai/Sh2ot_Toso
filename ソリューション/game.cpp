@@ -25,6 +25,7 @@
 #include "SpotLight.h"
 #include "polygonBG.h"
 #include "fog.h"
+#include "time.h"
 
 //グローバル変数宣言
 bool g_bPause = false;
@@ -99,6 +100,8 @@ void InitGame()
 	InitItem();
 
 	InitPolygonBG();
+
+	InitTime();
 
 	//フォグの初期化
 	InitFog();
@@ -178,6 +181,8 @@ void UninitGame()
 
 	//出口の終了処理
 	UninitExit();
+
+	UninitTime();
 
 	UninitPolygonBG();
 
@@ -299,6 +304,8 @@ void UpdateGame()
 		//出口の更新処理
 		UpdateExit();
 
+		UpdateTime();
+
 		UpdatePolygonBG();
 	}
 }
@@ -367,6 +374,8 @@ void DrawGame()
 
 		//ライフの描画処理
 		DrawLife();
+
+		DrawTime();
 
 		//スコアの描画処理
 		DrawScore();
