@@ -59,5 +59,6 @@ typedef struct
 LPDIRECT3DDEVICE9 GetDevice(void);
 void SetMode(MODE mode);
 MODE GetMode(void);
+bool GetNightVersion(void);
 
 #endif // ! _MAIN_H_

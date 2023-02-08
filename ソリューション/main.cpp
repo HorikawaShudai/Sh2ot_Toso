@@ -38,7 +38,8 @@ void DrawFPS(void);
 //グローバル変数
 LPDIRECT3D9 g_pD3D = NULL;
 LPDIRECT3DDEVICE9 g_pD3DDevice = NULL;
-bool bWire;   //  //ワイヤーフレームを使っているかどうか
+bool bWire;				//ワイヤーフレームを使っているかどうか
+bool g_bNightVision;			//視野の確保を使っているかどうか
 int g_nCountFPS = 0;
 
 MODE g_mode = MODE_NUMBERSELECT;	//開始時点のモード
@@ -290,6 +291,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	}
 
 	bWire = false;  //ワイヤーフレームを使っていない状態に
+	g_bNightVision = false;  //視野の確保を使っていない状態に
 
 	//データをロードする
 	LoadData();
@@ -348,7 +350,7 @@ void Update(void)
 
 #ifdef _DEBUG
 
-	//F10が押されたときの処理
+	//F11が押されたときの処理
 	if (GetKeyboardTrigger(DIK_F11) == true)
 	{//ワイヤーフレームを有効にするかどうか
 		bWire = (bWire == false) ? true : false;
@@ -361,6 +363,12 @@ void Update(void)
 	else
 	{
 		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);//カリングの設定
+	}
+
+	//F8が押されたときの処理
+	if (GetKeyboardTrigger(DIK_F8) == true)
+	{//ワイヤーフレームを有効にするかどうか
+		g_bNightVision = (g_bNightVision == false) ? true : false;
 	}
 
 #endif
@@ -499,4 +507,12 @@ void SetMode(MODE mode)
 MODE GetMode(void)
 {
 	return g_mode;
+}
+
+//====================================================================
+//視野の確保情報を所得
+//====================================================================
+bool GetNightVersion(void)
+{
+	return g_bNightVision;
 }

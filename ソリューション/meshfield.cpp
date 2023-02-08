@@ -2,12 +2,11 @@
 #include "meshfield.h"
 
 #define MAX_MESHFIELD (4)			//メッシュフィールドの最大数
-#define WAIGHT_SIZE (25)			//横の頂点数
-#define HEIGHT_SIZE (25)			//縦の頂点数
+#define WAIGHT_SIZE (151)			//横の頂点数
+#define HEIGHT_SIZE (151)			//縦の頂点数
 #define WAIGHT_CENTER (0.5f)	//横の原点(0.0f～1.0f)
 #define HEIGHT_CENTER (0.5f)	//縦の原点(0.0f～1.0f)
-#define FIELD_SIZE (120.0f)		//床一枚の大きさ
-#define MESHFIELD_SIZE (50.0f)	//
+#define FIELD_SIZE (20.0f)		//床一枚の大きさ
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureMeshField[MAX_MESHFIELD] = {};				//テクスチャのポインタ
@@ -45,10 +44,10 @@ void InitMeshField(void)
 
 	for (int nCntField = 0; nCntField < MAX_MESHFIELD; nCntField++)
 	{
-		g_MeshField[0].pos = D3DXVECTOR3(-1000.0f, 0.0f, 1900.0f);
-		g_MeshField[1].pos = D3DXVECTOR3(1550.0f, 1.0f, 1500.0f);
-		g_MeshField[2].pos = D3DXVECTOR3(1200.0f, 0.0f, -1350.0f);
-		g_MeshField[3].pos = D3DXVECTOR3(-1250.0f, 1.0f, -950.0f);
+		g_MeshField[0].pos = D3DXVECTOR3(-1500.0, 0.0f, 1500.0);
+		g_MeshField[1].pos = D3DXVECTOR3(1500.0, 1.0f, 1500.0);
+		g_MeshField[2].pos = D3DXVECTOR3(1500.0, 0.0f, -1500.0);
+		g_MeshField[3].pos = D3DXVECTOR3(-1500.0, 1.0f, -1500.0);
 		g_MeshField[nCntField].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_MeshField[nCntField].bUse = true;
 	}
