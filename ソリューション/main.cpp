@@ -294,9 +294,9 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	//データをロードする
 	LoadData();
 
-	InitFade(g_mode);
-
 	SetMode(g_mode);
+
+	InitFade(g_mode);
 
 	//デバッグプロックの初期化
 	InitDebugProc();
@@ -469,6 +469,9 @@ void SetMode(MODE mode)
 		UninitEscapeRanking();
 		break;
 	}
+
+	g_mode = mode;
+
 	switch (mode)
 	{
 	case MODE_TITLE:
@@ -488,7 +491,6 @@ void SetMode(MODE mode)
 		InitEscapeRanking();
 		break;
 	}
-	g_mode = mode;
 }
 
 //====================================================================

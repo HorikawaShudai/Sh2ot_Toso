@@ -22,6 +22,7 @@
 #include "key.h"
 #include "keyUI.h"
 #include "exit.h"
+#include "light.h"
 
 //マクロ定義
 #define PLAYER_STEALTHSPEED		(0.3f)			//プレイヤーのステルススピード
@@ -73,6 +74,7 @@ void InitPlayer(void)
 		g_aPlayer[nCntPlayer].bGetKey = false;
 		g_aPlayer[nCntPlayer].VibrtionTrueCount = 0;
 		g_aPlayer[nCntPlayer].VibrtionFalseCount = 0;
+		g_aPlayer[nCntPlayer].LightIdx = SetIndexLight();
 		g_aPlayer[nCntPlayer].bVibrtion = false;
 		g_aPlayer[nCntPlayer].bAppear = false;
 #if _DEBUG
@@ -165,6 +167,7 @@ void UpdatePlayer0(void)
 {
 	//ポインタ情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+	int CurrentCamera = GetCurrentCamera();
 
 	//カメラ番号をプレイヤーに代入
 	int nSelectPlayer = GetCurrentCamera();
@@ -264,6 +267,9 @@ void UpdatePlayer0(void)
 
 	//プレイヤーと敵との距離
 	PlayerDistance(nSelectPlayer);
+
+	//プレイヤーが保持するライトの更新処理
+	SetLight(g_aPlayer[nSelectPlayer].LightIdx, D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(g_aPlayer[nSelectPlayer].pos.x, g_aPlayer[nSelectPlayer].pos.y + 50.0f, g_aPlayer[nSelectPlayer].pos.z), D3DXVECTOR3(sinf(Getrot(CurrentCamera).y), sinf(Getrot(CurrentCamera).x), cosf(Getrot(CurrentCamera).y)), 1000.0f);
 
 	//鍵の入手処理
 	if (g_aPlayer[nSelectPlayer].bGetKey == false)

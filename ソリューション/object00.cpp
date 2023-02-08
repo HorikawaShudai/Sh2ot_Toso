@@ -29,7 +29,7 @@ int g_ObjectCount;								//オブジェクトの数
 
 const char *c_apModelObj[] =					//モデルデータ読み込み
 {
-	"Data\\MODEL\\wall.x",
+	"Data\\MODEL\\HighPolyWall.x",
 	"Data\\MODEL\\pc.x",
 	"Data\\MODEL\\desk.x",
 	"Data\\MODEL\\fan.x",
