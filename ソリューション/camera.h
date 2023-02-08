@@ -29,7 +29,7 @@ typedef struct
 	D3DXMATRIX mtxView;			//ビューマトリックス
 	D3DXVECTOR3 rot;
 	D3DXVECTOR3 rot2;
-	D3DXVECTOR3 rot2Old;
+	D3DXVECTOR3 rotOld;
 	D3DXVECTOR3 posVDest;		//目的の視点
 	D3DXVECTOR3 posRDest;		//目的の注視点
 	D3DVIEWPORT9 viewport;		//ビューポート
