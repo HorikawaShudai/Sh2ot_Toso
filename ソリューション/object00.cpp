@@ -13,6 +13,7 @@
 
 #define OBJECT00_LIFE (7)		//オブジェクトの体力
 #define FALSE_SIZE (10.0f)		//エディットモードのバックスペースの判定の大きさ
+#define WALL_LENGTH (100.0f)	//壁の長さ
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureObject00[64][OBJECT00_NTYPE_MAX] = {};		//テクスチャのポインタ
@@ -602,7 +603,7 @@ void CollisionRotObject00(int nCnt)
 void CollisionOuterProductObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove)
 {
 	D3DXVECTOR3 vecMove = *pPos - *pPosOld;
-	
+
 	for (int nCnt = 0; nCnt < MAX_OBJECT00; nCnt++)
 	{
 		if (g_Object00[nCnt].bUse == true)
@@ -611,17 +612,17 @@ void CollisionOuterProductObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DX
 			bool bHit1 = false;
 			bool bHit2 = false;
 
-		
+
 
 			//ベクトルの目標地点
-			D3DXVECTOR3 pos1 = D3DXVECTOR3(g_Object00[nCnt].pos.x + g_Object00[nCnt].vtxMax.x, g_Object00[nCnt].pos.y, g_Object00[nCnt].pos.z);
-			D3DXVECTOR3 vecLine = pos1  -  g_Object00[nCnt].pos;
+			D3DXVECTOR3 pos1 = D3DXVECTOR3(g_Object00[nCnt].pos.x + cosf(g_Object00[nCnt].rot.y) * WALL_LENGTH, g_Object00[nCnt].pos.y, g_Object00[nCnt].pos.z + sinf(g_Object00[nCnt].rot.y) * WALL_LENGTH);
+			D3DXVECTOR3 vecLine = pos1 - g_Object00[nCnt].pos;
 
-			D3DXVECTOR3 vecToPos =  *pPos - g_Object00[nCnt].pos;
+			D3DXVECTOR3 vecToPos = *pPos - g_Object00[nCnt].pos;
 
 			D3DXVECTOR3 vecToPos2 = *pPosOld - g_Object00[nCnt].pos;
 
-			float A, B,fRate;
+			float A, B, fRate;
 			A = (vecToPos.z * vecMove.x) - (vecToPos.x * vecMove.z);
 			B = (vecLine.z * vecMove.x) - (vecLine.x * vecMove.z);
 			if (B != 0)
@@ -670,10 +671,10 @@ void CollisionOuterProductObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DX
 			}
 			if (bHit == true)
 			{
-				*pPos = vecLine *fRate + g_Object00[nCnt].pos;
+				*pPos = *pPosOld;
 			}
 		}
-		
+
 	}
 }
 //====================================================================

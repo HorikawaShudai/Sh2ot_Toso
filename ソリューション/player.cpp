@@ -74,7 +74,9 @@ void InitPlayer(void)
 		g_aPlayer[nCntPlayer].bGetKey = false;
 		g_aPlayer[nCntPlayer].VibrtionTrueCount = 0;
 		g_aPlayer[nCntPlayer].VibrtionFalseCount = 0;
-		g_aPlayer[nCntPlayer].LightIdx = SetIndexLight();
+		g_aPlayer[nCntPlayer].LightIdx00 = SetIndexLight();		//ライトのセット処理
+		g_aPlayer[nCntPlayer].LightIdx01 = SetIndexLight();		//ライトのセット処理
+
 		g_aPlayer[nCntPlayer].bVibrtion = false;
 		g_aPlayer[nCntPlayer].bAppear = false;
 #if _DEBUG
@@ -176,7 +178,7 @@ void UpdatePlayer0(void)
 	//バイブレーション
 	if (GetKeyboardTrigger(DIK_F6) == true)
 	{
-		PlayerSetVibrtion(0,10,10,60000,0);
+		PlayerSetVibrtion(0,60,0,60000,0);
 	}
 	if (GetKeyboardTrigger(DIK_F7) == true)
 	{
@@ -254,9 +256,9 @@ void UpdatePlayer0(void)
 	g_aPlayer[nSelectPlayer].pos += g_aPlayer[nSelectPlayer].move;
 
 	//オブジェクトとの当たり判定
-	CollisionObject00(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
+	//CollisionObject00(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
 	//外積の当たり判定
-	//CollisionOuterProductObject00(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move);
+	CollisionOuterProductObject00(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move);
 
 
 	//アイテムとの当たり判定
@@ -269,7 +271,8 @@ void UpdatePlayer0(void)
 	PlayerDistance(nSelectPlayer);
 
 	//プレイヤーが保持するライトの更新処理
-	SetLight(g_aPlayer[nSelectPlayer].LightIdx, D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(g_aPlayer[nSelectPlayer].pos.x, g_aPlayer[nSelectPlayer].pos.y + 50.0f, g_aPlayer[nSelectPlayer].pos.z), D3DXVECTOR3(sinf(Getrot(CurrentCamera).y), sinf(Getrot(CurrentCamera).x), cosf(Getrot(CurrentCamera).y)), 1000.0f);
+	SetLight(g_aPlayer[nSelectPlayer].LightIdx00, D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(g_aPlayer[nSelectPlayer].pos.x, g_aPlayer[nSelectPlayer].pos.y + 50.0f, g_aPlayer[nSelectPlayer].pos.z), D3DXVECTOR3(sinf(Getrot(CurrentCamera).y), sinf(Getrot(CurrentCamera).x), cosf(Getrot(CurrentCamera).y)), 1000.0f);
+	SetLight(g_aPlayer[nSelectPlayer].LightIdx01, D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(g_aPlayer[nSelectPlayer].pos.x, g_aPlayer[nSelectPlayer].pos.y + 50.0f, g_aPlayer[nSelectPlayer].pos.z), D3DXVECTOR3(sinf(Getrot(CurrentCamera).y), sinf(Getrot(CurrentCamera).x), cosf(Getrot(CurrentCamera).y)), 1000.0f);
 
 	//鍵の入手処理
 	if (g_aPlayer[nSelectPlayer].bGetKey == false)
@@ -616,21 +619,22 @@ void UpdatePlayer1(void)
 
 	//カメラ番号をプレイヤーに代入
 	//nCntPlayer = CurrentCamera;
-#ifdef _DEBUG
-	if (GetKeyboardTrigger(DIK_F6) == true)
-	{//バイブレーションをオンにする
-		PlayerSetVibrtion(0, 10, 10, 60000, 0);
-	}
-	if (GetKeyboardTrigger(DIK_F7) == true)
-	{//バイブレーションをオフにする
-		GetGamepad_Vibrtion_false(0);
-	}
-#endif
 
 	for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
 	{
 		if (g_aPlayer[nCntPlayer].bUse == true && pCamera[nCntPlayer].bUse == true)
 		{
+
+#ifdef _DEBUG
+			if (GetKeyboardTrigger(DIK_F6) == true)
+			{//バイブレーションをオンにする
+				PlayerSetVibrtion(0, 10, 10, 60000, 0);
+			}
+			if (GetKeyboardTrigger(DIK_F7) == true)
+			{//バイブレーションをオフにする
+				GetGamepad_Vibrtion_false(0);
+			}
+#endif
 
 			//プレイヤーの状態
 			switch (g_aPlayer[nCntPlayer].State)
@@ -1019,7 +1023,7 @@ void PlayerDistance(int nCnt)
 			}
 			else
 			{
-				GetGamepad_Vibrtion_false(0);
+				//GetGamepad_Vibrtion_false(0);
 			}
 
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, 800.0f, 0.0f, -10.0f, 50.0f) == true)

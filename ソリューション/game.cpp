@@ -78,6 +78,7 @@ void InitGame()
 
 
 	SetEnemy(D3DXVECTOR3(300.0f, 0.0f, 500.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetEnemy(D3DXVECTOR3(-2500.0f, 0.0f, -500.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
 	//スコアの初期化
 	InitScore();
@@ -196,7 +197,7 @@ void UpdateGame()
 		g_bEdit = g_bEdit ? false : true;
 	}
 
-	if (GetKeyboardTrigger(DIK_F8) == true)
+	if (GetKeyboardTrigger(DIK_F3) == true)
 	{//f2が押されたとき
 		g_bBG_Edit = g_bBG_Edit ? false : true;
 	}
@@ -242,14 +243,24 @@ void UpdateGame()
 			//エディットモードのオブジェクトBGの更新処理
 			UpdateEditObjectBG();
 		}
+	}
+	else
+	{//通常モードの時
 
 		PrintDebugProc("カメラの視点移動【W】【A】【S】【D】\n");
 		PrintDebugProc("カメラの注視点移動 【I】【J】【K】【L】\n");
 		PrintDebugProc("カメラの上下移動 【左SHIFT】【左CTRL】\n");
 		PrintDebugProc("プレイヤーの移動移動 【T】【F】【G】【H】\n");
-	}
-	else
-	{//通常モードの時
+		PrintDebugProc("デバッグ表示のオン/オフ 【F1】\n");
+		PrintDebugProc("エディットモードのオン/オフ 【F2】\n");
+		PrintDebugProc("ゲーム用と背景用オブジェクトの切り替え 【F3】\n");
+		PrintDebugProc("プレイヤーの視点切り替え 【F4】\n");
+		PrintDebugProc("プレイヤーカメラと観察用カメラの切り替え 【F5】\n");
+		PrintDebugProc("バイブレーションをオンにする 【F6】\n");
+		PrintDebugProc("バイブレーションをオフにする 【F7】\n");
+		PrintDebugProc("ナイトビジョンのオン/オフ 【F8】\n");
+		PrintDebugProc("エディットモード時のセーブ 【F9】\n");
+		PrintDebugProc("ワイヤーフレームのオン/オフ【F11】\n");
 
 		//床の更新処理
 		UpdateMeshField();
@@ -262,7 +273,7 @@ void UpdateGame()
 		UpdatePlayer();
 
 		//敵の更新処理
-		UpdateEnemy();
+		//UpdateEnemy();
 
 		//スタミナの更新処理
 		UpdateStamina();
