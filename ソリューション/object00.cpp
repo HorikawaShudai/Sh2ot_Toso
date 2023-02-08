@@ -610,6 +610,8 @@ void CollisionOuterProductObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DX
 			bool bHit1 = false;
 			bool bHit2 = false;
 
+		
+
 			//ベクトルの目標地点
 			D3DXVECTOR3 pos1 = D3DXVECTOR3(g_Object00[nCnt].pos.x + g_Object00[nCnt].vtxMax.x, g_Object00[nCnt].pos.y, g_Object00[nCnt].pos.z);
 			D3DXVECTOR3 vecLine = pos1  -  g_Object00[nCnt].pos;
@@ -667,7 +669,7 @@ void CollisionOuterProductObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DX
 			}
 			if (bHit == true)
 			{
-				*pPos = vecLine *fRate;
+				*pPos = vecLine *fRate + g_Object00[nCnt].pos;
 			}
 		}
 		
