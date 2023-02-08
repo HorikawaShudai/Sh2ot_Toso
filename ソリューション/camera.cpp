@@ -57,6 +57,7 @@ void InitCamera(void)
 {
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+	MODE mode = GetMode();
 
 	for (int nCntCamera = 0; nCntCamera < MAX_CAMERA; nCntCamera++)
 	{
@@ -76,7 +77,7 @@ void InitCamera(void)
 	g_bTpsCamera = false;			//観察用カメラを使っていない状態へ
 	bEnter = false;					//エンターを押していない状態に
 
-
+	
 	switch (PlayNumber.CurrentSelectNumber)
 	{
 	case 1:
@@ -161,6 +162,7 @@ void InitCamera(void)
 		g_aCamera[3].viewport.MaxZ = 1.0f;
 		break;
 	}
+	
 	
 	//その他用(3D画面タイトルなど)
 	g_aCamera[4].viewport.X = 0;				// 描画する画面の左上X座標
