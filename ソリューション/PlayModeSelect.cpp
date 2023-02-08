@@ -246,7 +246,7 @@ void ModeSelect(void)
 
 	if (pFade == FADE_NONE  && PlayNumber.bUse == false)
 	{
-		if (GetKeyboardTrigger(DIK_D) == true/* || GetGamePadTrigger(BUTTON_3, 0) == true*/)
+		if (GetKeyboardTrigger(DIK_D) == true || GetGamepadTrigger(BUTTON_RIGHT, 0) == true || GetGamepad_LStick_Trigger(0,LSTICK_RIGHT) == true)
 		{
 			//頂点バッファをロック
 			g_pVtxBuffStage->Lock(0, 0, (void**)&pVtx, 0);
@@ -279,7 +279,7 @@ void ModeSelect(void)
 			//頂点バッファをアンロックする
 			g_pVtxBuffStage->Unlock();
 		}
-		else if (GetKeyboardTrigger(DIK_A) == true/* || GetGamePadTrigger(BUTTON_2, 0) == true*/ && pFade == FADE_NONE)
+		else if (GetKeyboardTrigger(DIK_A) == true || GetGamepadTrigger(BUTTON_LEFT, 0) == true || GetGamepad_LStick_Trigger(0, LSTICK_LEFT) == true)
 		{
 			//頂点バッファをロック
 			g_pVtxBuffStage->Lock(0, 0, (void**)&pVtx, 0);

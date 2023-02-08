@@ -26,7 +26,7 @@ typedef enum
 typedef struct
 {
 	D3DXVECTOR3 pos;					//位置
-	int CurrentSelectNumber = 0;		//現在選択されている番号
+	int CurrentSelectNumber = 1;		//現在選択されている番号
 	bool bUse;							//使われているか
 } PlayNumberSelect;
 

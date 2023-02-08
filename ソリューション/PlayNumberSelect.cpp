@@ -315,7 +315,7 @@ void PlayerSelect(void)
 
 	if (pFade == FADE_NONE)
 	{
-		if (GetKeyboardTrigger(DIK_D) == true/* || GetGamePadTrigger(BUTTON_3, 0) == true*/)
+		if (GetKeyboardTrigger(DIK_D) == true || GetGamepadTrigger(BUTTON_RIGHT, 0) == true || GetGamepad_LStick_Trigger(0, LSTICK_RIGHT) == true)
 		{
 			//頂点バッファをロック
 			g_pVtxBuffPlayNumberSelect->Lock(0, 0, (void**)&pVtx, 0);
@@ -348,7 +348,7 @@ void PlayerSelect(void)
 			//頂点バッファをアンロックする
 			g_pVtxBuffPlayNumberSelect->Unlock();
 		}
-		else if (GetKeyboardTrigger(DIK_A) == true/* || GetGamePadTrigger(BUTTON_2, 0) == true*/ && pFade == FADE_NONE)
+		else if (GetKeyboardTrigger(DIK_A) == true || GetGamepadTrigger(BUTTON_LEFT, 0) == true || GetGamepad_LStick_Trigger(0, LSTICK_LEFT) == true)
 		{
 			//頂点バッファをロック
 			g_pVtxBuffPlayNumberSelect->Lock(0, 0, (void**)&pVtx, 0);
