@@ -24,6 +24,7 @@ typedef struct
 	D3DXVECTOR3 posOld;							//位置
 	D3DXVECTOR3 move;							//位置
 	D3DXVECTOR3 rot;							//向き
+	D3DXVECTOR3 rotSave;						//向きの保存
 	D3DXMATRIX mtxWorld;						//ワールドマトリックス
 	LPDIRECT3DTEXTURE9 pTexture[30];			//テクスチャへのポインタ
 

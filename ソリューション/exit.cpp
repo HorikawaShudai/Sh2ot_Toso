@@ -61,6 +61,7 @@ void InitExit(void)
 		g_Exit[nCntExit].posOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Exit[nCntExit].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Exit[nCntExit].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_Exit[nCntExit].rotSave = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Exit[nCntExit].vtxMin = D3DXVECTOR3(1000.0f, 1000.0f, 1000.0f);
 		g_Exit[nCntExit].vtxMax = D3DXVECTOR3(-1000.0f, -1000.0f, -1000.0f);
 		g_Exit[nCntExit].bUse = false;
@@ -116,7 +117,6 @@ void InitExit(void)
 		SetExit(D3DXVECTOR3(-935.0f, 0.0f, -700.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f), EXIT_TYPE_BIGDOOR_R);
 		SetExit(D3DXVECTOR3(-1065.0f, 0.0f, -700.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f), EXIT_TYPE_BIGDOOR_L);
 	}
-	
 }
 
 //====================================================================
@@ -240,21 +240,21 @@ void DoorOpen(void)
 		//外積の脱出判定処理
 		ExsitClossLine(nCntExit);
 
+		//g_Exit[1].rot.y = /*g_Exit[1].rotSave.y + */(sinf(g_Exit[1].rotSave.y) + cosf(g_Exit[1].rotSave.y) - 0.5f);
+
 		if (g_Exit[nCntExit].bUse == true && g_Exit[nCntExit].bExitOK == true)
 		{//出口が使われていて脱出可能の場合
 			for (int nCntExit1 = 0; nCntExit1 < MAX_EXIT; nCntExit1++)
 			{
 				if (g_Exit[nCntExit1].nType != EXIT_TYPE_BIGFRAME)
 				{
-					if (g_Exit[1].rot.y >= 1.5f)
+					if (g_Exit[1].rot.y >= g_Exit[1].rotSave.y + (sinf(g_Exit[1].rotSave.y) + cosf(g_Exit[1].rotSave.y) - 0.5f))
 					{
-						g_Exit[1].rot.y -= 0.01f;
+						g_Exit[1].rot.y += cosf(g_Exit[1].rot.y) * 0.003f;
+						g_Exit[1].rot.y -= sinf(g_Exit[1].rot.y) * 0.003f;
 
-						g_Exit[2].rot.y += 0.01f;
-					}
-					if (g_Exit[2].rot.y >= 1.5f)
-					{
-						g_Exit[2].rot.y += 0.01f;
+						g_Exit[2].rot.y -= sinf(g_Exit[2].rot.y) * 0.003f;
+						g_Exit[2].rot.y += -cosf(g_Exit[2].rot.y) * 0.003f;
 					}
 				}
 			}
@@ -298,9 +298,9 @@ void ExsitClossLine(int nCntExit)
 			D3DXVECTOR3 Cross;				//交点の場所
 
 			//場所の計算
-			pos0 = MeshWall.pos + D3DXVECTOR3(cosf(MeshWall.rot.y) + 100.0f, 0.0f, sinf(MeshWall.rot.y));
+			pos0 = MeshWall.pos + D3DXVECTOR3(cosf(MeshWall.rot.y) + 50.0f, 0.0f, sinf(MeshWall.rot.y));
 
-			pos1 = MeshWall.pos + D3DXVECTOR3(cosf(MeshWall.rot.y) - 100.0f, 0.0f, sinf(MeshWall.rot.y));
+			pos1 = MeshWall.pos + D3DXVECTOR3(cosf(MeshWall.rot.y) - 50.0f, 0.0f, sinf(MeshWall.rot.y));
 
 			//pos0とpos1との距離間
 			g_vecLine = pos1 - pos0;
@@ -365,6 +365,7 @@ void SetExit(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 			g_Exit[nCntExit].posOld = pos;
 			g_Exit[nCntExit].move = move;
 			g_Exit[nCntExit].rot = rot;
+			g_Exit[nCntExit].rotSave = rot;
 			g_Exit[nCntExit].nType = nType;
 
 			g_Exit[nCntExit].bUse = true;
