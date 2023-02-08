@@ -65,7 +65,7 @@ void InitCamera(void)
 		g_aCamera[nCntCamera].vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 		g_aCamera[nCntCamera].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_aCamera[nCntCamera].rot2 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		g_aCamera[nCntCamera].rot2Old = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_aCamera[nCntCamera].rotOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_aCamera[nCntCamera].State = CAMERASTATE_NONE;
 
 		g_aCamera[nCntCamera].fposYmove = CAMERA_HOMING_POSY;
@@ -293,7 +293,7 @@ void PlayerFpsCamera(void)
 		if (g_aCamera[g_nCurrentCamera].rot.x <= D3DX_PI * 0.5f && g_aCamera[g_nCurrentCamera].rot.x >= -(D3DX_PI * 0.5f))
 		{//入力
 
-			g_aCamera[g_nCurrentCamera].rot2Old = g_aCamera[g_nCurrentCamera].rot2;
+			g_aCamera[g_nCurrentCamera].rotOld = g_aCamera[g_nCurrentCamera].rot;
 
 			//キーボード
 			if (GetKeyboardPress(DIK_I) == true)
@@ -307,13 +307,9 @@ void PlayerFpsCamera(void)
 
 			//右スティックの上下視点移動入力
 			g_aCamera[g_nCurrentCamera].rot.x += GetGamepad_Stick_Right(0).y * CAMERA_VR_SPEED;
-			g_aCamera[g_nCurrentCamera].rot.x += GetGamepad_Stick_Right(0).y * CAMERA_VR_SPEED;
-			g_aCamera[g_nCurrentCamera].rot.x += GetGamepad_Stick_Right(0).y * CAMERA_VR_SPEED;
 
 			if (GetMousePress(PUSH_LEFT) == true || GetMousePress(PUSH_RIGHT) == true)
 			{
-				g_aCamera[g_nCurrentCamera].rot.x -= GetMouseMove().y * CAMERA_VR_SPEED;
-				g_aCamera[g_nCurrentCamera].rot.x -= GetMouseMove().y * CAMERA_VR_SPEED;
 				g_aCamera[g_nCurrentCamera].rot.x -= GetMouseMove().y * CAMERA_VR_SPEED;
 			}
 		}
@@ -321,7 +317,7 @@ void PlayerFpsCamera(void)
 		//右スティックの上下視点移動入力
 		if (fabsf(g_aCamera[g_nCurrentCamera].rot.x) > fabsf(D3DX_PI * 0.5f))
 		{//上限に達した時１フレーム前のrotにもどる
-			g_aCamera[g_nCurrentCamera].rot2 = g_aCamera[g_nCurrentCamera].rot2Old;
+			g_aCamera[g_nCurrentCamera].rot = g_aCamera[g_nCurrentCamera].rotOld;
 		}
 
 		//キーボード
@@ -486,7 +482,7 @@ void TpsCamera(void)
 			if (g_aCamera[g_nCurrentCamera].rot.x <= D3DX_PI * 0.5f && g_aCamera[g_nCurrentCamera].rot.x >= -(D3DX_PI * 0.5f))
 			{//入力
 
-				g_aCamera[g_nCurrentCamera].rot2Old = g_aCamera[g_nCurrentCamera].rot2;
+				g_aCamera[g_nCurrentCamera].rotOld = g_aCamera[g_nCurrentCamera].rot;
 
 				//キーボード
 				if (GetKeyboardPress(DIK_I) == true)
@@ -500,13 +496,9 @@ void TpsCamera(void)
 
 				//右スティックの上下視点移動入力
 				g_aCamera[g_nCurrentCamera].rot.x += GetGamepad_Stick_Right(0).y * CAMERA_VR_SPEED;
-				g_aCamera[g_nCurrentCamera].rot.x += GetGamepad_Stick_Right(0).y * CAMERA_VR_SPEED;
-				g_aCamera[g_nCurrentCamera].rot.x += GetGamepad_Stick_Right(0).y * CAMERA_VR_SPEED;
 
 				if (GetMousePress(PUSH_LEFT) == true || GetMousePress(PUSH_RIGHT) == true)
 				{
-					g_aCamera[g_nCurrentCamera].rot.x -= GetMouseMove().y * CAMERA_VR_SPEED;
-					g_aCamera[g_nCurrentCamera].rot.x -= GetMouseMove().y * CAMERA_VR_SPEED;
 					g_aCamera[g_nCurrentCamera].rot.x -= GetMouseMove().y * CAMERA_VR_SPEED;
 				}
 			}
@@ -514,7 +506,7 @@ void TpsCamera(void)
 			//右スティックの上下視点移動入力
 			if (fabsf(g_aCamera[g_nCurrentCamera].rot.x) > fabsf(D3DX_PI * 0.5f))
 			{//上限に達した時１フレーム前のrotにもどる
-				g_aCamera[g_nCurrentCamera].rot2 = g_aCamera[g_nCurrentCamera].rot2Old;
+				g_aCamera[g_nCurrentCamera].rot = g_aCamera[g_nCurrentCamera].rotOld;
 			}
 
 			//キーボード
@@ -710,7 +702,7 @@ void ResPlayerCamera(void)
 			if (g_aCamera[nCntCamera].rot.x <= D3DX_PI * 0.5f && g_aCamera[nCntCamera].rot.x >= -(D3DX_PI * 0.5f))
 			{//入力
 
-				g_aCamera[nCntCamera].rot2Old = g_aCamera[nCntCamera].rot2;
+				g_aCamera[nCntCamera].rotOld = g_aCamera[nCntCamera].rot;
 
 				//キーボード
 				if (GetKeyboardPress(DIK_I) == true)
@@ -724,13 +716,9 @@ void ResPlayerCamera(void)
 
 				//右スティックの上下視点移動入力
 				g_aCamera[nCntCamera].rot.x += GetGamepad_Stick_Right(nCntCamera).y * CAMERA_VR_SPEED;
-				g_aCamera[nCntCamera].rot.x += GetGamepad_Stick_Right(nCntCamera).y * CAMERA_VR_SPEED;
-				g_aCamera[nCntCamera].rot.x += GetGamepad_Stick_Right(nCntCamera).y * CAMERA_VR_SPEED;
 
 				if (GetMousePress(PUSH_LEFT) == true || GetMousePress(PUSH_RIGHT) == true)
 				{
-					g_aCamera[nCntCamera].rot.x -= GetMouseMove().y * CAMERA_VR_SPEED;
-					g_aCamera[nCntCamera].rot.x -= GetMouseMove().y * CAMERA_VR_SPEED;
 					g_aCamera[nCntCamera].rot.x -= GetMouseMove().y * CAMERA_VR_SPEED;
 				}
 			}
@@ -738,7 +726,7 @@ void ResPlayerCamera(void)
 			//右スティックの上下視点移動入力
 			if (fabsf(g_aCamera[nCntCamera].rot.x) > fabsf(D3DX_PI * 0.5f))
 			{//上限に達した時１フレーム前のrotにもどる
-				g_aCamera[nCntCamera].rot2 = g_aCamera[nCntCamera].rot2Old;
+				g_aCamera[nCntCamera].rot = g_aCamera[nCntCamera].rotOld;
 			}
 
 			//キーボード
@@ -820,7 +808,7 @@ void Titlecamera(void)
 		g_aCamera[4].vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 		g_aCamera[4].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_aCamera[4].rot2 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		g_aCamera[4].rot2Old = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_aCamera[4].rotOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		PrintDebugProc("%f , %f , %f", g_aCamera[4].posV.x, g_aCamera[4].posV.y, g_aCamera[4].posV.z);
 }
 
@@ -832,7 +820,7 @@ void SelectNumberCamera(void)
 	g_aCamera[4].vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	g_aCamera[4].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	g_aCamera[4].rot2 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	g_aCamera[4].rot2Old = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	g_aCamera[4].rotOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 }
 
 //リザルト画面

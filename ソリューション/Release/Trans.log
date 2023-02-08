@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  PlayNumberSelect.cpp
   edit.cpp
   enemy.cpp
@@ -7,6 +8,14 @@
   main.cpp
   meshfield.cpp
   object00.cpp
+=======
+<<<<<<< HEAD
+﻿  camera.cpp
+  コード生成しています。
+  3 of 412 functions ( 0.7%) were compiled, the rest were copied from previous compilation.
+=======
+﻿  enemy.cpp
+>>>>>>> 53c7ff5b96fba18583f2cee7208f3bfa18dbd698
   player.cpp
   playerBG.cpp
   result.cpp
@@ -14,7 +23,12 @@
   stage.cpp
   title.cpp
   コード生成しています。
+<<<<<<< HEAD
   8 of 412 functions ( 1.9%) were compiled, the rest were copied from previous compilation.
+=======
+  9 of 412 functions ( 2.2%) were compiled, the rest were copied from previous compilation.
+>>>>>>> 688a7d80732fcfc52c9ee119c6de180459412f97
+>>>>>>> 53c7ff5b96fba18583f2cee7208f3bfa18dbd698
     0 functions were new in current compilation
     11 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
