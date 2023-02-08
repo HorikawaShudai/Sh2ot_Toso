@@ -349,7 +349,7 @@ void Update(void)
 #ifdef _DEBUG
 
 	//F10が押されたときの処理
-	if (GetKeyboardTrigger(DIK_F10) == true)
+	if (GetKeyboardTrigger(DIK_F11) == true)
 	{//ワイヤーフレームを有効にするかどうか
 		bWire = (bWire == false) ? true : false;
 	}

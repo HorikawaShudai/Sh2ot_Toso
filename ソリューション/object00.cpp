@@ -83,6 +83,7 @@ const char *c_apModelObj[] =					//モデルデータ読み込み
 	"Data\\MODEL\\door_1.x",
 	"Data\\MODEL\\door_2.x",
 	"Data\\MODEL\\door_huti.x",
+	"Data\\MODEL\\gareki.x",
 
 };
 
