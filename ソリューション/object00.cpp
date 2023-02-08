@@ -13,7 +13,6 @@
 
 #define OBJECT00_LIFE (7)		//オブジェクトの体力
 #define FALSE_SIZE (10.0f)		//エディットモードのバックスペースの判定の大きさ
-#define WALL_LENGTH (100.0f)	//壁の長さ
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureObject00[64][OBJECT00_NTYPE_MAX] = {};		//テクスチャのポインタ
@@ -608,70 +607,94 @@ void CollisionOuterProductObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DX
 	{
 		if (g_Object00[nCnt].bUse == true)
 		{
-			bool bHit = false;
-			bool bHit1 = false;
-			bool bHit2 = false;
-
-
-
-			//ベクトルの目標地点
-			D3DXVECTOR3 pos1 = D3DXVECTOR3(g_Object00[nCnt].pos.x + cosf(g_Object00[nCnt].rot.y) * WALL_LENGTH, g_Object00[nCnt].pos.y, g_Object00[nCnt].pos.z + sinf(g_Object00[nCnt].rot.y) * WALL_LENGTH);
-			D3DXVECTOR3 vecLine = pos1 - g_Object00[nCnt].pos;
-
-			D3DXVECTOR3 vecToPos = *pPos - g_Object00[nCnt].pos;
-
-			D3DXVECTOR3 vecToPos2 = *pPosOld - g_Object00[nCnt].pos;
-
-			float A, B, fRate;
-			A = (vecToPos.z * vecMove.x) - (vecToPos.x * vecMove.z);
-			B = (vecLine.z * vecMove.x) - (vecLine.x * vecMove.z);
-			if (B != 0)
+			for (int nLine = 0; nLine < 4; nLine++)
 			{
-				fRate = A / B;
-			}
-			else
-			{
-				fRate = 10.0f;
-			}
+				bool bHit = false;
+				bool bHit1 = false;
+				bool bHit2 = false;
 
-			if (fRate >= 0.0f &&fRate <= 1.0f)
-			{
-				if ((vecLine.z * vecToPos.x) - (vecLine.x * vecToPos.z) < 0)
+				D3DXVECTOR3 pos0, pos1;
+				switch (nLine)
 				{
-					bHit1 = true;
+				case 0:
+					 pos0 = D3DXVECTOR3(g_Object00[nCnt].pos.x + g_Object00[nCnt].vtxMin.x, g_Object00[nCnt].pos.y, g_Object00[nCnt].pos.z + g_Object00[nCnt].vtxMax.z);
+					 pos1 = D3DXVECTOR3(g_Object00[nCnt].pos.x + g_Object00[nCnt].vtxMax.x, g_Object00[nCnt].pos.y, g_Object00[nCnt].pos.z + g_Object00[nCnt].vtxMax.z);
+					break;
+				case 1:
+					pos0 = D3DXVECTOR3(g_Object00[nCnt].pos.x + g_Object00[nCnt].vtxMax.x, g_Object00[nCnt].pos.y, g_Object00[nCnt].pos.z + g_Object00[nCnt].vtxMax.z);
+					pos1 = D3DXVECTOR3(g_Object00[nCnt].pos.x + g_Object00[nCnt].vtxMax.x, g_Object00[nCnt].pos.y, g_Object00[nCnt].pos.z + g_Object00[nCnt].vtxMin.z);
+					break;
+				case 2:
+					pos0 = D3DXVECTOR3(g_Object00[nCnt].pos.x + g_Object00[nCnt].vtxMax.x, g_Object00[nCnt].pos.y, g_Object00[nCnt].pos.z + g_Object00[nCnt].vtxMin.z);
+					pos1 = D3DXVECTOR3(g_Object00[nCnt].pos.x + g_Object00[nCnt].vtxMin.x, g_Object00[nCnt].pos.y, g_Object00[nCnt].pos.z + g_Object00[nCnt].vtxMin.z);
+					break;
+				case 3:
+					pos0 = D3DXVECTOR3(g_Object00[nCnt].pos.x + g_Object00[nCnt].vtxMin.x, g_Object00[nCnt].pos.y, g_Object00[nCnt].pos.z + g_Object00[nCnt].vtxMin.z);
+					pos1 = D3DXVECTOR3(g_Object00[nCnt].pos.x + g_Object00[nCnt].vtxMin.x, g_Object00[nCnt].pos.y, g_Object00[nCnt].pos.z + g_Object00[nCnt].vtxMax.z);
+					break;
+				default:
+					break;
+				}
+				
+				//ベクトルの目標地点
+			
+				D3DXVECTOR3 vecLine = pos1 - pos0;
+
+				D3DXVECTOR3 vecToPos = *pPos - g_Object00[nCnt].pos;
+
+				D3DXVECTOR3 vecToPos2 = *pPosOld - g_Object00[nCnt].pos;
+
+				float A, B, fRate;
+				A = (vecToPos.z * vecMove.x) - (vecToPos.x * vecMove.z);
+				B = (vecLine.z * vecMove.x) - (vecLine.x * vecMove.z);
+				if (B != 0)
+				{
+					fRate = A / B;
+				}
+				else
+				{
+					fRate = 10.0f;
 				}
 
-				if ((vecLine.z * vecToPos2.x) - (vecLine.x * vecToPos2.z) < 0)
+				if (fRate >= 0.0f &&fRate <= 1.0f)
 				{
-					bHit2 = true;
-				}
+					if ((vecLine.z * vecToPos.x) - (vecLine.x * vecToPos.z) < 0)
+					{
+						bHit1 = true;
+					}
 
-				if (bHit1 != bHit2)
+					if ((vecLine.z * vecToPos2.x) - (vecLine.x * vecToPos2.z) < 0)
+					{
+						bHit2 = true;
+					}
+
+					if (bHit1 != bHit2)
+					{
+						bHit = true;
+					}
+
+					bHit1 = false;
+					bHit2 = false;
+
+					if ((vecLine.z * vecToPos.x) + (vecLine.x * vecToPos.z) > 0)
+					{
+						bHit1 = true;
+					}
+
+					if ((vecLine.z * vecToPos2.x) + (vecLine.x * vecToPos2.z) > 0)
+					{
+						bHit2 = true;
+					}
+
+					if (bHit1 != bHit2)
+					{
+						bHit = true;
+					}
+				}
+				if (bHit == true)
 				{
-					bHit = true;
+					*pPos = *pPosOld;
 				}
-
-				bHit1 = false;
-				bHit2 = false;
-
-				if ((vecLine.z * vecToPos.x) + (vecLine.x * vecToPos.z) > 0)
-				{
-					bHit1 = true;
-				}
-
-				if ((vecLine.z * vecToPos2.x) + (vecLine.x * vecToPos2.z) > 0)
-				{
-					bHit2 = true;
-				}
-
-				if (bHit1 != bHit2)
-				{
-					bHit = true;
-				}
-			}
-			if (bHit == true)
-			{
-				*pPos = *pPosOld;
 			}
 		}
 
