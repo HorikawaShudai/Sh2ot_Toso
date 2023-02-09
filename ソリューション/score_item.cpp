@@ -6,6 +6,8 @@
 #include "score_item.h"
 #include "score.h"
 
+//マクロ定義
+#define NUM_SCOREITEM (90)	//配置するスコアの数
 #define OBJECT00_LIFE (7)		//オブジェクトの体力
 
 //グローバル変数
@@ -76,6 +78,32 @@ void InitItem(void)
 			}
 		}
 	}
+
+	//スコア用アイテムの配置
+	SetNumItems(72, D3DXVECTOR3(-2400.0f, 0.0f, -500.0f), 50.0f, 0.0f);
+
+	SetNumItems(48, D3DXVECTOR3(-2200.0f, 0.0f, 97.0f), 50.0f, 0.0f);
+
+	SetNumItems(36, D3DXVECTOR3(-1650.0f, 0.0f, 350.0f), 50.0f, 0.0f);
+
+	SetNumItems(35, D3DXVECTOR3(-1650.0f, 0.0f, 861.0f), 50.0f, 0.0f);
+
+	SetNumItems(34, D3DXVECTOR3(-756.0f, 0.0f, 1200.0f), 50.0f, 0.0f);
+
+	SetNumItems(17, D3DXVECTOR3(300.0f, 0.0f, -1195.0f), 50.0f, 0.0f);
+
+	SetNumItems(12, D3DXVECTOR3(833.0f, 0.0f, -1800.0f), 50.0f, 0.0f);
+
+	SetNumItems(14, D3DXVECTOR3(1264.0f, 0.0f, -204.0f), 50.0f, 0.0f);
+
+	SetNumItems(14, D3DXVECTOR3(1264.0f, 0.0f, -410.0f), 50.0f, 0.0f);
+
+	SetNumItems(14, D3DXVECTOR3(1264.0f, 0.0f, -620.0f), 50.0f, 0.0f);
+
+	SetNumItems(14, D3DXVECTOR3(1264.0f, 0.0f, -920.0f), 50.0f, 0.0f);
+
+	SetNumItems(14, D3DXVECTOR3(1264.0f, 0.0f, -1110.0f), 50.0f, 0.0f);
+
 }
 
 //====================================================================
@@ -271,6 +299,18 @@ void SetItem(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 }
 
 //====================================================================
+//使うスコアアイテムの設定
+//====================================================================
+void SetNumItems(int nNumItem,D3DXVECTOR3 pos,float fWidth_x, float fWidth_z)
+{
+	//スコアアイテムの配置
+	for (int nCnt = 0; nCnt < nNumItem; nCnt++)
+	{
+		SetItem(D3DXVECTOR3(pos.x + (nCnt * fWidth_x), pos.y, pos.z + (nCnt * fWidth_z)), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	}
+}
+
+//====================================================================
 //プレイヤーとの当たり判定処理
 //====================================================================
 bool CollisionItem(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size,int nPlayer)
@@ -321,3 +361,6 @@ void CollisionItemShadow(D3DXVECTOR3 *pPos)
 		}
 	}
 }
+
+
+
