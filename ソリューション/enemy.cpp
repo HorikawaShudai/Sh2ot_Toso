@@ -16,7 +16,7 @@
 #define ENEMY_LIFE (7)		//オブジェクトの体力
 #define ENEMY_SPEED (2.0f) //敵の移動速度
 
-#define	DETECT_SPEED (5.0f) //探査波の速度
+#define	DETECT_SPEED (5000.0f) //探査波の速度
 #define	PLAYERDETECT_SPEED (15.0f) //探査波の速度
 
 //グローバル変数
@@ -593,33 +593,32 @@ float DetectWall(D3DXVECTOR3 pos, float fmoveRot, int nLife)
 	Detect.Startpos = pos;
 	Detect.pos = pos;
 	Detect.fmoveRot = fmoveRot;
-	Detect.nLife = nLife;
+	
 
-	while (1)
-	{
+
 		Detect.posOld = Detect.pos;
 		Detect.move = D3DXVECTOR3(sinf(Detect.fmoveRot)*DETECT_SPEED, 0.0f, cosf(Detect.fmoveRot)*DETECT_SPEED);
 		Detect.pos += Detect.move;
-		Detect.nLife--;
 		
-		if (CollisionObject00(&Detect.pos, &Detect.posOld, &Detect.move, D3DXVECTOR3(-1.0f, -1.0f, -1.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f), 1.0f) == true)
+		
+		D3DXVECTOR3 posPoint = CollisionOuterProductObject00(&Detect.pos, &Detect.posOld, &Detect.move);
+		if (pos != NULL)
 		{//壁に当たったとき
 		 //距離を割り出す
-			float fDis = ((powf(Detect.Startpos.x, 2.0f) + powf(Detect.Startpos.z, 2.0f)) - (powf(Detect.pos.x, 2.0f) + powf(Detect.pos.z, 2.0f)));
+			float fDis = ((powf(Detect.Startpos.x, 2.0f) + powf(Detect.Startpos.z, 2.0f)) - (powf(posPoint.x, 2.0f) + powf(posPoint.z, 2.0f)));
 			if (fDis <= 0)
 			{
 				fDis *= -1.0f;
 			}
 			Detect.fDistance = sqrtf(fDis);
-			SetEffect(Detect.pos, D3DXCOLOR(1.0f, 0.2f, 0.2f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 120.0f, 60, 0);
+			SetEffect(posPoint, D3DXCOLOR(1.0f, 0.2f, 0.2f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 120.0f, 60, 0);
 			return Detect.fDistance;
 		}
-
-		if (Detect.nLife <= 0)
+		else
 		{
 			return 10000;
 		}
-	}
+	
 }
 
 //====================================================================
@@ -741,11 +740,11 @@ void EnemyPatrol(int nEnemy)
 			//座標の更新
 			g_Enemy[nEnemy].move = D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y)*ENEMY_SPEED);
 
-			if (g_Enemy[nEnemy].fDistanceLeft <= 300.0f && g_Enemy[nEnemy].fDistanceLeft <= g_Enemy[nEnemy].fDistanceRight)
+			if (g_Enemy[nEnemy].fDistanceLeft <= 300.0f )
 			{
 				g_Enemy[nEnemy].move += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED);
 			}
-			else if (g_Enemy[nEnemy].fDistanceRight <= 300.0f && g_Enemy[nEnemy].fDistanceRight <= g_Enemy[nEnemy].fDistanceLeft)
+			else if (g_Enemy[nEnemy].fDistanceRight <= 300.0f)
 			{
 				g_Enemy[nEnemy].move += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED);
 			}
