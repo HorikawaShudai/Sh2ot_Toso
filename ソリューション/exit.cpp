@@ -474,7 +474,7 @@ bool CollisionExi(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D
 {
 	bool bHit = false;
 
-	for (int nCntExit = 0; nCntExit < MAX_OBJECT00; nCntExit++)
+	for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
 	{
 		if (g_Exit[nCntExit].bUse == true && /*g_Exit[nCntExit].bExitOK == false*/ g_ExitCnt >= 1)
 		{
