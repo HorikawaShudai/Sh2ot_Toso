@@ -599,10 +599,13 @@ void CollisionRotObject00(int nCnt)
 //====================================================================
 //外積を使ったオブジェクトの当たり判定
 //====================================================================
-void CollisionOuterProductObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove)
+D3DXVECTOR3 CollisionOuterProductObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove)
 {
+	//移動ベクトルを割り出す
 	D3DXVECTOR3 vecMove = *pPos - *pPosOld;
-
+	//座標保管用
+	int nPosCount = 0;
+	D3DXVECTOR3 pos[MAX_OBJECT00 * 4] = {};
 	for (int nCnt = 0; nCnt < MAX_OBJECT00; nCnt++)
 	{
 		if (g_Object00[nCnt].bUse == true)
@@ -615,7 +618,7 @@ void CollisionOuterProductObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DX
 
 				D3DXVECTOR3 pos0, pos1;
 				switch (nLine)
-				{
+				{//紙片の当たり判定
 				case 0:
 					 pos0 = D3DXVECTOR3(g_Object00[nCnt].pos.x + g_Object00[nCnt].vtxMin.x, g_Object00[nCnt].pos.y, g_Object00[nCnt].pos.z + g_Object00[nCnt].vtxMax.z);
 					 pos1 = D3DXVECTOR3(g_Object00[nCnt].pos.x + g_Object00[nCnt].vtxMax.x, g_Object00[nCnt].pos.y, g_Object00[nCnt].pos.z + g_Object00[nCnt].vtxMax.z);
@@ -640,9 +643,9 @@ void CollisionOuterProductObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DX
 			
 				D3DXVECTOR3 vecLine = pos1 - pos0;
 
-				D3DXVECTOR3 vecToPos = *pPos - g_Object00[nCnt].pos;
+				D3DXVECTOR3 vecToPos = *pPos - pos0;
 
-				D3DXVECTOR3 vecToPos2 = *pPosOld - g_Object00[nCnt].pos;
+				D3DXVECTOR3 vecToPos2 = *pPosOld - pos0;
 
 				float A, B, fRate;
 				A = (vecToPos.z * vecMove.x) - (vecToPos.x * vecMove.z);
@@ -657,7 +660,7 @@ void CollisionOuterProductObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DX
 				}
 
 				if (fRate >= 0.0f &&fRate <= 1.0f)
-				{
+				{//vecLineを横切ったとき
 					if ((vecLine.z * vecToPos.x) - (vecLine.x * vecToPos.z) < 0)
 					{
 						bHit1 = true;
@@ -693,12 +696,30 @@ void CollisionOuterProductObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DX
 				}
 				if (bHit == true)
 				{
-					*pPos = *pPosOld;
+					pos[nPosCount] = pos0 + vecLine*fRate;
+					nPosCount++;
 				}
 			}
 		}
 
 	}
+	for (int nCheck = 0; nCheck < nPosCount -1; nCheck++)
+	{//ソート
+		int nData = nCheck;
+		for (int nCnt = (nCheck+1); nCnt < nPosCount; nCnt++)
+		{
+			if ((powf(pos[nData].x,2.0f) + powf(pos[nData].z, 2.0f)) - (powf(pPosOld->x, 2.0f) + powf(pPosOld->z, 2.0f)) > (powf(pos[nCnt].x, 2.0f) + powf(pos[nCnt].z, 2.0f)) - (powf(pPosOld->x, 2.0f) + powf(pPosOld->z, 2.0f)))
+			{
+				nData = nCnt;
+			}
+		
+		}
+		D3DXVECTOR3 Temp = pos[nCheck];
+		pos[nCheck] = pos[nData];
+		pos[nData] = Temp;
+	}
+
+	return pos[0];
 }
 //====================================================================
 //プレイヤーとの当たり判定処理
