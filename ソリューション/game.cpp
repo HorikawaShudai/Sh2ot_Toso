@@ -25,11 +25,13 @@
 #include "SpotLight.h"
 #include "polygonBG.h"
 #include "fog.h"
+#include "time.h"
 
 //グローバル変数宣言
 bool g_bPause = false;
 bool g_bEdit = false;
 bool g_bBG_Edit = false;
+bool g_bGameClear = false;
 GAMESTATE gGameState = GAMESTATE_NONE;
 int g_nCounterGameState = 0;
 
@@ -41,6 +43,7 @@ void InitGame()
 	g_bPause = false;
 	g_bEdit = false;
 	g_bBG_Edit = false;
+	g_bGameClear = false;
 
 	DWORD time = timeGetTime();
 	srand((unsigned int)time);
@@ -77,8 +80,9 @@ void InitGame()
 	InitLife();
 
 
-	SetEnemy(D3DXVECTOR3(300.0f, 0.0f, 500.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	SetEnemy(D3DXVECTOR3(-2500.0f, 0.0f, -500.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	//SetEnemy(D3DXVECTOR3(300.0f, 0.0f, 500.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	//SetEnemy(D3DXVECTOR3(-2500.0f, 0.0f, -500.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetEnemy(D3DXVECTOR3(-1000.0f, 0.0f, -500.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
 	//スコアの初期化
 	InitScore();
@@ -99,6 +103,8 @@ void InitGame()
 	InitItem();
 
 	InitPolygonBG();
+
+	InitTime();
 
 	//フォグの初期化
 	InitFog();
@@ -178,6 +184,8 @@ void UninitGame()
 
 	//出口の終了処理
 	UninitExit();
+
+	UninitTime();
 
 	UninitPolygonBG();
 
@@ -273,7 +281,7 @@ void UpdateGame()
 		UpdatePlayer();
 
 		//敵の更新処理
-		//UpdateEnemy();
+		UpdateEnemy();
 
 		//スタミナの更新処理
 		UpdateStamina();
@@ -299,7 +307,39 @@ void UpdateGame()
 		//出口の更新処理
 		UpdateExit();
 
+		UpdateTime();
+
 		UpdatePolygonBG();
+	}
+
+	switch (gGameState)
+	{
+	case GAMESTATE_NORMAL:
+		break;
+
+	case GAMESTATE_CLEAR_END:		//ゲームクリア時
+		g_nCounterGameState--;
+		if (g_nCounterGameState <= 0)
+		{
+			gGameState = GAMESTATE_NORMAL;
+
+			//フェードの状態を変える
+			SetFade(MODE_RESULT);
+			g_bGameClear = true;
+		}
+		break;
+
+	case GAMESTATE_GAMEOVER_END:	//ゲームオーバー時
+		g_nCounterGameState--;
+		if (g_nCounterGameState <= 0)
+		{
+			gGameState = GAMESTATE_NORMAL;
+
+			//フェードの状態を変える
+			SetFade(MODE_RESULT);
+			g_bGameClear = false;
+		}
+		break;
 	}
 }
 
@@ -368,6 +408,8 @@ void DrawGame()
 		//ライフの描画処理
 		DrawLife();
 
+		DrawTime();
+
 		//スコアの描画処理
 		DrawScore();
 
@@ -408,6 +450,14 @@ void SetGameState(GAMESTATE state, int nCounter)
 GAMESTATE GetGameState()
 {
 	return gGameState;
+}
+
+//====================================================================
+//クリア情報の所得
+//====================================================================
+bool GetClear(void)
+{
+	return g_bGameClear;
 }
 
 //====================================================================

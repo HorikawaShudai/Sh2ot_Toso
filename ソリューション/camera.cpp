@@ -57,6 +57,7 @@ void InitCamera(void)
 {
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+	MODE mode = GetMode();
 
 	for (int nCntCamera = 0; nCntCamera < MAX_CAMERA; nCntCamera++)
 	{
@@ -76,7 +77,7 @@ void InitCamera(void)
 	g_bTpsCamera = false;			//観察用カメラを使っていない状態へ
 	bEnter = false;					//エンターを押していない状態に
 
-
+	
 	switch (PlayNumber.CurrentSelectNumber)
 	{
 	case 1:

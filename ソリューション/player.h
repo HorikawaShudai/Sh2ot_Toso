@@ -58,6 +58,7 @@ typedef struct
 	bool bGetKey;								//プレイヤーが鍵を持っているかどうか
 	bool bAppear;								//敵を視認できるかどうか
 	bool bVibrtion;								//バイブレーションをしているかどうか
+	bool bExit;									//脱出しているかどうか
 }Player;
 
 //プロトタイプ宣言

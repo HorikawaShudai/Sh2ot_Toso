@@ -13,6 +13,8 @@
 #include "PlayModeSelect.h"
 #include "VillainRanking.h"
 #include "EscapeRanking.h"
+#include "EscapeClearResult.h"
+#include "EscapeOverResult.h"
 #include "RankingNumber.h"
 #include "input.h"
 
@@ -42,7 +44,7 @@ bool bWire;				//ワイヤーフレームを使っているかどうか
 bool g_bNightVision;			//視野の確保を使っているかどうか
 int g_nCountFPS = 0;
 
-MODE g_mode = MODE_NUMBERSELECT;	//開始時点のモード
+MODE g_mode = MODE_TITLE;	//開始時点のモード
 
  //=============================================
  //メイン関数
@@ -385,11 +387,25 @@ void Update(void)
 		UpdateGame();
 		break;
 	case MODE_RESULT:
-		UpdateResult();
+		if (GetClear() == true)
+		{
+			//UpdateResult();
+			UpdateEscapeClearResult();
+		}
+		else
+		{
+			UpdateEscapeOverResult();
+		}
 		break;
 	case MODE_RANKING:
-		//UpdateVillainRanking();
-		UpdateEscapeRanking();
+		if (GetPlayModeSelect().CurrentModeNumber == 0)
+		{
+			UpdateEscapeRanking();
+		}
+		else
+		{
+			UpdateVillainRanking();
+		}
 		break;
 	}
 
@@ -418,11 +434,25 @@ void Draw(void)
 			DrawGame();
 			break;
 		case MODE_RESULT:
-			DrawResult();
+			if (GetClear() == true)
+			{
+				DrawResult();
+				DrawEscapeClearResult();
+			}
+			else
+			{
+				DrawEscapeOverResult();
+			}
 			break;
 		case MODE_RANKING:
-			//DrawVillainRanking();
-			DrawEscapeRanking();
+			if (GetPlayModeSelect().CurrentModeNumber == 0)
+			{
+				DrawEscapeRanking();
+			}
+			else
+			{
+				DrawVillainRanking();
+			}
 			break;
 		}
 
@@ -470,11 +500,25 @@ void SetMode(MODE mode)
 		UninitGame();
 		break;
 	case MODE_RESULT:
-		UninitResult();
+		if (GetClear() == true)
+		{
+			//UninitResult();
+			UninitEscapeClearResult();
+		}
+		else
+		{
+			UninitEscapeOverResult();
+		}
 		break;
 	case MODE_RANKING:
-		//UninitVillainRanking();
-		UninitEscapeRanking();
+		if (GetPlayModeSelect().CurrentModeNumber == 0)
+		{
+			UninitEscapeRanking();
+		}
+		else
+		{
+			UninitVillainRanking();
+		}
 		break;
 	}
 
@@ -492,11 +536,25 @@ void SetMode(MODE mode)
 		InitGame();
 		break;
 	case MODE_RESULT:
-		InitResult();
+		if (GetClear() == true)
+		{
+			//InitResult();
+			InitEscapeClearResult();
+		}
+		else
+		{
+			InitEscapeOverResult();
+		}
 		break;
 	case MODE_RANKING:
-		//InitVillainRanking();
-		InitEscapeRanking();
+		if (GetPlayModeSelect().CurrentModeNumber == 0)
+		{
+			InitEscapeRanking();
+		}
+		else
+		{
+			InitVillainRanking();
+		}
 		break;
 	}
 }

@@ -328,6 +328,7 @@ void ExsitClossLine(int nCntExit)
 				{
 					//’Eoó‘Ô‚Ö
 					pPlayer->State = PLAYER_EXSIT;
+					pPlayer->bExit = true;
 				}
 			}
 		}
