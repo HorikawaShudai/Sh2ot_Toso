@@ -11,13 +11,14 @@
 
 typedef enum
 {
-	EXIT_TYPE_BIGFRAME = 0,			//大きい扉の枠
+	EXIT_TYPE_BIGFRAME = 0,			//大きい扉の枠(左右)
+	EXIT_TYPE_BIGFRAMEUP,		//大きい扉の枠(上)
 	EXIT_TYPE_BIGDOOR_R,			//大きい扉 右側
 	EXIT_TYPE_BIGDOOR_L,			//大きい扉 左側
 	EXIT_TYPE_MAX,					//列挙の最大
 }EXIT_TYPE;
 
-//鍵の構造体
+//出口の構造体
 typedef struct
 {
 	D3DXVECTOR3 pos;							//位置
@@ -33,7 +34,14 @@ typedef struct
 	int nType;									//モデルの種類
 	bool bUse;									//モデルが使用されているかどうか
 	bool bExitOK;								//脱出可能であるかどうか
-	int nIdxModelParent; //親子設定
+	int nIdxModelParent;						//親子設定
+} ExitParts;
+
+
+typedef struct
+{
+	ExitParts parts[MAX_EXIT];
+
 }EXIT;
 
 //プロトタイプ宣言
@@ -41,8 +49,10 @@ void InitExit(void);
 void UninitExit(void);
 void UpdateExit(void);
 void DrawExit(void);
-void SetExit(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType);
+void SetExit(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nType, int nNumExit);
 bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size, int nPlayer);
 bool CollisionExi(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size);
+
+void LoadExit(void);
 
 #endif
