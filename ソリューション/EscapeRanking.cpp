@@ -28,8 +28,6 @@ void InitEscapeRanking()
 	InitRankingUI();
 
 	InitRanKingNumber();
-
-	InitTime();
 }
 
 //====================================================================
@@ -48,8 +46,6 @@ void UninitEscapeRanking()
 	UninitRankingUI();
 
 	UninitRanKingNumber();
-
-	UninitTime();
 }
 
 //====================================================================
@@ -68,8 +64,6 @@ void UpdateEscapeRanking()
 	UpdateRankingUI();
 
 	UpdateRanKingNumber();
-
-	UpdateTime();
 }
 
 //====================================================================
@@ -93,8 +87,6 @@ void DrawEscapeRanking()
 	DrawRankingUI();
 
 	DrawRanKingNumber();
-
-	DrawTime();
 
 	//ビューポートを元に戻す
 	pDevice->SetViewport(&viewportDef);
