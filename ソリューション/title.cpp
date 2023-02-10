@@ -503,7 +503,6 @@ void Init3DTitle(void)
 	InitCamera();
 
 	InitLight();
-	InitSpotLight();
 
 	InitMeshDome();
 
@@ -530,7 +529,6 @@ void Uninit3DTitle(void)
 	UninitCamera();
 
 	UninitLight();
-	UninitSpotLight();
 
 	UninitMeshDome();
 
@@ -554,7 +552,6 @@ void Update3DTitle(void)
 	UpdateCamera();
 
 	UpdateLight();
-	UpdateSpotLight();
 
 	UpdateMeshDome();
 

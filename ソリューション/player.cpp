@@ -349,10 +349,10 @@ void UpdatePlayer0(void)
 			PrintDebugProc("プレイヤー%d人目の座標【X : %f | Y : %f | Z : %f】\n", nCntPlayer, g_aPlayer[nCntPlayer].pos.x, g_aPlayer[nCntPlayer].pos.y, g_aPlayer[nCntPlayer].pos.z);
 			PrintDebugProc("プレイヤー%d人目の移動量【X : %f | Y : %f | Z : %f】\n", nCntPlayer, g_aPlayer[nCntPlayer].move.x, g_aPlayer[nCntPlayer].move.y, g_aPlayer[nCntPlayer].move.z);
 		}
-		PrintDebugProc("左スティックの出力【%f】", GetGamepad_Stick_Left(0).y);
-		PrintDebugProc("左スティックの出力【%f】", GetGamepad_Stick_Left(0).x);
-		PrintDebugProc("右スティックの出力【%f】", GetGamepad_Stick_Right(0).y);
-		PrintDebugProc("右スティックの出力【%f】", GetGamepad_Stick_Right(0).x);
+		PrintDebugProc("左スティックの出力【%f】\n", GetGamepad_Stick_Left(0).y);
+		PrintDebugProc("左スティックの出力【%f】\n", GetGamepad_Stick_Left(0).x);
+		PrintDebugProc("右スティックの出力【%f】\n", GetGamepad_Stick_Right(0).y);
+		PrintDebugProc("右スティックの出力【%f】\n", GetGamepad_Stick_Right(0).x);
 #endif
 	}
 }
@@ -786,14 +786,14 @@ void UpdatePlayer1(void)
 		PrintDebugProc("プレイヤー%d人目の座標【X : %f | Y : %f | Z : %f】\n", nCntPlayerPlayer + 1, g_aPlayer[nCntPlayerPlayer].pos.x, g_aPlayer[nCntPlayerPlayer].pos.y, g_aPlayer[nCntPlayerPlayer].pos.z);
 		PrintDebugProc("プレイヤー%d人目の移動量【X : %f | Y : %f | Z : %f】\n", nCntPlayerPlayer + 1, g_aPlayer[nCntPlayerPlayer].move.x, g_aPlayer[nCntPlayerPlayer].move.y, g_aPlayer[nCntPlayerPlayer].move.z);
 	}
-	PrintDebugProc("左スティックの出力【%f】", GetGamepad_Stick_Left(0).y);
-	PrintDebugProc("左スティックの出力【%f】", GetGamepad_Stick_Left(0).x);
-	PrintDebugProc("右スティックの出力【%f】", GetGamepad_Stick_Right(0).y);
+	PrintDebugProc("左スティックの出力【%f】\n", GetGamepad_Stick_Left(0).y);
+	PrintDebugProc("左スティックの出力【%f】\n", GetGamepad_Stick_Left(0).x);
+	PrintDebugProc("右スティックの出力【%f】\n", GetGamepad_Stick_Right(0).y);
 	PrintDebugProc("右スティックの出力【%f】\n", GetGamepad_Stick_Right(0).x);
-	PrintDebugProc("左スティックの出力【%f】", GetGamepad_Stick_Left(1).y);
-	PrintDebugProc("左スティックの出力【%f】", GetGamepad_Stick_Left(1).x);
-	PrintDebugProc("右スティックの出力【%f】", GetGamepad_Stick_Right(1).y);
-	PrintDebugProc("右スティックの出力【%f】", GetGamepad_Stick_Right(1).x);
+	PrintDebugProc("左スティックの出力【%f】\n", GetGamepad_Stick_Left(1).y);
+	PrintDebugProc("左スティックの出力【%f】\n", GetGamepad_Stick_Left(1).x);
+	PrintDebugProc("右スティックの出力【%f】\n", GetGamepad_Stick_Right(1).y);
+	PrintDebugProc("右スティックの出力【%f】\n", GetGamepad_Stick_Right(1).x);
 #endif
 }
 
@@ -1051,12 +1051,12 @@ void PlayerDistance(int nCnt)
 			{//バイブレーション処理
 				if (g_aPlayer[nCnt].VibrtionFalseCount <= 0)
 				{
-					PlayerSetVibrtion(0, 10, 10, 60000, 0);
+					PlayerSetVibrtion(nCnt, 10, 10, 60000, 0);
 				}
 			}
 			else
 			{
-				//GetGamepad_Vibrtion_false(0);
+				//GetGamepad_Vibrtion_false(nCnt);
 			}
 
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, 800.0f, 0.0f, -10.0f, 50.0f) == true)
