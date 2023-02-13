@@ -180,6 +180,7 @@
     <ClCompile Include="NumberUI.cpp" />
     <ClCompile Include="object00.cpp" />
     <ClCompile Include="objectBG.cpp" />
+    <ClCompile Include="objectLight.cpp" />
     <ClCompile Include="paperBG00.cpp" />
     <ClCompile Include="paperBG01.cpp" />
     <ClCompile Include="particle.cpp" />
@@ -236,6 +237,7 @@
     <ClInclude Include="NumberUI.h" />
     <ClInclude Include="object00.h" />
     <ClInclude Include="objectBG.h" />
+    <ClInclude Include="objectLight.h" />
     <ClInclude Include="paperBG00.h" />
     <ClInclude Include="paperBG01.h" />
     <ClInclude Include="particle.h" />

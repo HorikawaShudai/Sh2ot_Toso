@@ -12,5 +12,5 @@ void InitLight(void);
 void UninitLight(void);
 void UpdateLight(void);
 int SetIndexLight(void);
-void SetLight(int nIdxLight, D3DLIGHTTYPE nType, D3DXCOLOR Diffuse, D3DXVECTOR3 pos, D3DXVECTOR3 nVecDir, float nRange);
+void SetLight(int nIdxLight, D3DLIGHTTYPE nType, D3DXCOLOR Diffuse, D3DXVECTOR3 pos, D3DXVECTOR3 nVecDir, float nRange, float nPhi);
 #endif

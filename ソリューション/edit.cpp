@@ -13,6 +13,7 @@
 #include "meshwall.h"
 #include "object00.h"
 #include "objectBG.h"
+#include "objectLight.h"
 #include <stdio.h>
 
 //====================================================================
@@ -22,6 +23,7 @@ void InitEdit()
 {
 	InitObject00();
 	InitObjectBG();
+	InitObjectLight();
 }
 
 //====================================================================
@@ -31,6 +33,7 @@ void UninitEdit()
 {
 	UninitObject00();
 	UninitObjectBG();
+	UninitObjectLight();
 }
 
 //====================================================================
@@ -45,6 +48,9 @@ void UpdateEdit()
 
 	PrintDebugProc("【エディットモード中】オブジェクト移動 【↑】【←】【↓】【→】\n");
 	PrintDebugProc("オブジェクト上下移動 【右SHIFT】【右CTRL】\n");
+	PrintDebugProc("ゲームモードとの切り替え 【F2】\n");
+	PrintDebugProc("オブジェクトの種類切り替え 【F3】\n");
+	PrintDebugProc("ナイトビジョンのオン/オフ 【F8】\n");
 	PrintDebugProc("オブジェクト切り替え 【9】\n");
 	PrintDebugProc("オブジェクト角度切り替え 【0】\n");
 	PrintDebugProc("オブジェクト設置 【ENTER】\n");
@@ -66,6 +72,7 @@ void SaveEdit()
 {
 	Object00 *pObject00 = GetObject00();
 	ObjectBG *pObjectBG = GetObjectBG();
+	ObjectLight *pObjectLight = GetObjectLight();
 	FILE *pFile; //ファイルポインタを宣言
 
 	//ファイルを開く
@@ -112,6 +119,25 @@ void SaveEdit()
 
 				//オブジェクトをセーブした終了の合図
 				fprintf(pFile, "%s\n\n", "ENDOBJECTBG");
+			}
+		}
+
+		for (int nCntObjectLight = 0; nCntObjectLight < MAX_OBJECTLIGHT; nCntObjectLight++, pObjectLight++)
+		{
+			if (pObjectLight->bUse == true)
+			{//使用されている場合
+
+			 //オブジェクトをセーブする開始の合図
+				fprintf(pFile, "%s\n", "SETOBJECTLIGHT");
+
+				//各種変数の情報セーブ
+				fprintf(pFile, "%s			%.3f %.3f %.3f\n", "POS", pObjectLight->pos.x, pObjectLight->pos.y, pObjectLight->pos.z);
+				fprintf(pFile, "%s		%.3f %.3f %.3f\n", "MOVE", pObjectLight->move.x, pObjectLight->move.y, pObjectLight->move.z);
+				fprintf(pFile, "%s			%.3f %.3f %.3f\n", "ROT", pObjectLight->rot.x, pObjectLight->rot.y, pObjectLight->rot.z);
+				fprintf(pFile, "%s		%d\n", "nType", pObjectLight->nType);
+
+				//オブジェクトをセーブした終了の合図
+				fprintf(pFile, "%s\n\n", "ENDOBJECTLIGHT");
 			}
 		}
 

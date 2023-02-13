@@ -18,7 +18,7 @@ LPD3DXMESH g_pMeshObjectBG[OBJECTBG_NTYPE_MAX] = {};					//ƒƒbƒVƒ…(’¸“_î•ñ)‚Ö‚
 LPD3DXBUFFER g_pBuffMatObjectBG[OBJECTBG_NTYPE_MAX] = {};				//ƒ}ƒeƒŠƒAƒ‹‚Ö‚Ìƒ|ƒCƒ“ƒ^
 DWORD g_dwNumMatObjectBG[OBJECTBG_NTYPE_MAX] = {};						//ƒ}ƒeƒŠƒAƒ‹‚Ì”
 
-ObjectBG g_ObjectBG[MAX_OBJECTBG];					//ƒIƒuƒWƒFƒNƒg00‚Ìî•ñ
+ObjectBG g_ObjectBG[MAX_OBJECTBG];					//ƒIƒuƒWƒFƒNƒgBG‚Ìî•ñ
 int EditIndex01;								//ƒGƒfƒBƒbƒgƒ‚[ƒh—p‚Ì”Ô†
 D3DXVECTOR3 EditPos01;						//ƒGƒfƒBƒbƒgƒ‚[ƒh‚ÌƒIƒuƒWƒFƒNƒg‚ÌˆÊ’u
 D3DXVECTOR3 EditRot01;						//ƒGƒfƒBƒbƒgƒ‚[ƒh‚ÌƒIƒuƒWƒFƒNƒg‚ÌŒü‚«
@@ -37,7 +37,7 @@ const char *c_apModelObj01[] =					//ƒ‚ƒfƒ‹ƒf[ƒ^“Ç‚İ‚İ
 };
 
 //====================================================================
-//ƒIƒuƒWƒFƒNƒg00‚Ì‰Šú‰»ˆ—
+//ƒIƒuƒWƒFƒNƒgBG‚Ì‰Šú‰»ˆ—
 //====================================================================
 void InitObjectBG(void)
 {
@@ -58,7 +58,7 @@ void InitObjectBG(void)
 		g_ObjectBG[nCntObject].nType = OBJECTBG_NTYPE00;
 		g_ObjectBG[nCntObject].pMatE.MatD3D.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f);
 	}
-	EditIndex01 = 0;
+	EditIndex01 = MAX_OBJECTBG - 1;
 	EditPos01 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	EditRot01 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	EditType01 = 0;
@@ -99,7 +99,7 @@ void InitObjectBG(void)
 }
 
 //====================================================================
-//ƒIƒuƒWƒFƒNƒg00‚ÌI—¹ˆ—
+//ƒIƒuƒWƒFƒNƒgBG‚ÌI—¹ˆ—
 //====================================================================
 void UninitObjectBG(void)
 {
@@ -132,7 +132,7 @@ void UninitObjectBG(void)
 }
 
 //====================================================================
-//ƒIƒuƒWƒFƒNƒg00‚ÌXVˆ—
+//ƒIƒuƒWƒFƒNƒgBG‚ÌXVˆ—
 //====================================================================
 void UpdateObjectBG(void)
 {
@@ -147,7 +147,7 @@ void UpdateObjectBG(void)
 }
 
 //====================================================================
-//ƒIƒuƒWƒFƒNƒg00‚Ì•`‰æˆ—
+//ƒIƒuƒWƒFƒNƒgBG‚Ì•`‰æˆ—
 //====================================================================
 void DrawObjectBG(void)
 {
@@ -194,7 +194,7 @@ void DrawObjectBG(void)
 				//ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
 				pDevice->SetTexture(0, g_pTextureObjectBG[nCntMat][g_ObjectBG[nCntObject].nType]);
 
-				//ƒIƒuƒWƒFƒNƒg00(ƒp[ƒc)‚Ì•`‰æ
+				//ƒIƒuƒWƒFƒNƒgBG(ƒp[ƒc)‚Ì•`‰æ
 				g_pMeshObjectBG[g_ObjectBG[nCntObject].nType]->DrawSubset(nCntMat);
 			}
 		}
@@ -204,7 +204,7 @@ void DrawObjectBG(void)
 }
 
 //====================================================================
-//ƒGƒfƒBƒbƒgƒ‚[ƒh‚ÌƒIƒuƒWƒFƒNƒg00‚ÌXVˆ—
+//ƒGƒfƒBƒbƒgƒ‚[ƒh‚ÌƒIƒuƒWƒFƒNƒgBG‚ÌXVˆ—
 //====================================================================
 void UpdateEditObjectBG(void)
 {
@@ -290,7 +290,7 @@ void UpdateEditObjectBG(void)
 }
 
 //====================================================================
-//ƒGƒfƒBƒbƒgƒ‚[ƒh‚ÌƒIƒuƒWƒFƒNƒg00‚Ì•`‰æˆ—
+//ƒGƒfƒBƒbƒgƒ‚[ƒh‚ÌƒIƒuƒWƒFƒNƒgBG‚Ì•`‰æˆ—
 //====================================================================
 void DrawEditObjectBG(void)
 {
@@ -331,7 +331,7 @@ void DrawEditObjectBG(void)
 		//ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
 		pDevice->SetTexture(0, g_pTextureObjectBG[nCntMat][g_ObjectBG[EditIndex01].nType]);
 
-		//ƒIƒuƒWƒFƒNƒg00(ƒp[ƒc)‚Ì•`‰æ
+		//ƒIƒuƒWƒFƒNƒgBG(ƒp[ƒc)‚Ì•`‰æ
 		g_pMeshObjectBG[g_ObjectBG[EditIndex01].nType]->DrawSubset(nCntMat);
 	}
 	//•Û‘¶‚µ‚Ä‚¢‚½ƒ}ƒeƒŠƒAƒ‹‚ğ–ß‚·
@@ -339,7 +339,7 @@ void DrawEditObjectBG(void)
 }
 
 //====================================================================
-//ƒIƒuƒWƒFƒNƒg00‚Ìİ’èˆ—
+//ƒIƒuƒWƒFƒNƒgBG‚Ìİ’èˆ—
 //====================================================================
 void SetObjectBG(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 {
@@ -356,7 +356,6 @@ void SetObjectBG(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 			g_ObjectBG[nCntObject].nType = nType;
 
 			g_ObjectBG[nCntObject].bUse = true;
-			EditIndex01++;
 			g_ObjectCount01++;
 
 			//if (g_ObjectBG[nCntObject].nType != 0)
@@ -425,7 +424,7 @@ void SetObjectBG(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 }
 
 //====================================================================
-//ƒIƒuƒWƒFƒNƒg00‚Ìíœˆ—
+//ƒIƒuƒWƒFƒNƒgBG‚Ìíœˆ—
 //====================================================================
 void FalseObjectBG(void)
 {
@@ -436,7 +435,6 @@ void FalseObjectBG(void)
 		if (g_ObjectBG[nCntObject].bUse == true)
 		{
 			g_ObjectBG[nCntObject].bUse = false;
-			EditIndex01--;
 			break;
 		}
 	}
@@ -536,7 +534,7 @@ void CollisionObjectBGShadow(D3DXVECTOR3 *pPos)
 }
 
 //====================================================================
-//ƒIƒuƒWƒFƒNƒg00‚ÌŠ“¾
+//ƒIƒuƒWƒFƒNƒgBG‚ÌŠ“¾
 //====================================================================
 ObjectBG * GetObjectBG(void)
 {
