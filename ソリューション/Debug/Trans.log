@@ -1,26 +1,7 @@
-<<<<<<< HEAD
-﻿  object00.cpp
-  Trans.vcxproj -> C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-<<<<<<< HEAD
-﻿  EscapeRanking.cpp
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-<<<<<<< HEAD
-﻿  edit.cpp
-=======
-<<<<<<< HEAD
-﻿  edit.cpp
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作2\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作2\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-﻿cl : コマンド ライン warning D9028: 簡易リビルド時のエラーです、通常のビルドに戻します
-  meshcylinder.cpp
->>>>>>> eec731581c5726400d15fa9ce01e92b159e543a7
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
->>>>>>> b99704cfcb21aafcf104279dac174cd16c681699
->>>>>>> 5494496a3a580ca312521412bce17055d5bfebfc
->>>>>>> 77386571b853d87b9e00fa32898a65015f06f39b
+﻿  EscapeTutorial.cpp
+c:\users\student\desktop\チーム制作\sh2ot_toso\ソリューション\escapetutorial.cpp(92): error C2664: 'void SetExit(D3DXVECTOR3,D3DXVECTOR3,int,int)': 引数 3 を 'D3DXVECTOR3' から 'int' へ変換できません。
+  c:\users\student\desktop\チーム制作\sh2ot_toso\ソリューション\escapetutorial.cpp(92): note: この変換を実行可能なユーザー定義変換演算子がないか、または演算子を呼び出せません。
+c:\users\student\desktop\チーム制作\sh2ot_toso\ソリューション\escapetutorial.cpp(93): error C2664: 'void SetExit(D3DXVECTOR3,D3DXVECTOR3,int,int)': 引数 3 を 'D3DXVECTOR3' から 'int' へ変換できません。
+  c:\users\student\desktop\チーム制作\sh2ot_toso\ソリューション\escapetutorial.cpp(93): note: この変換を実行可能なユーザー定義変換演算子がないか、または演算子を呼び出せません。
+c:\users\student\desktop\チーム制作\sh2ot_toso\ソリューション\escapetutorial.cpp(94): error C2664: 'void SetExit(D3DXVECTOR3,D3DXVECTOR3,int,int)': 引数 3 を 'D3DXVECTOR3' から 'int' へ変換できません。
+  c:\users\student\desktop\チーム制作\sh2ot_toso\ソリューション\escapetutorial.cpp(94): note: この変換を実行可能なユーザー定義変換演算子がないか、または演算子を呼び出せません。
