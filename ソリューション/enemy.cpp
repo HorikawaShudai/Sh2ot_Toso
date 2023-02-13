@@ -16,7 +16,7 @@
 #define ENEMY_LIFE (7)		//オブジェクトの体力
 #define ENEMY_SPEED (2.0f) //敵の移動速度
 
-#define	DETECT_SPEED (5000.0f) //探査波の速度
+#define	DETECT_SPEED (1500.0f) //探査波の速度
 #define	PLAYERDETECT_SPEED (15.0f) //探査波の速度
 
 //グローバル変数
