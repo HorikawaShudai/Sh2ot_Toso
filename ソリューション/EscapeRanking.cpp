@@ -5,6 +5,9 @@
 #include "numberUI.h"
 #include "RankingUI.h"
 #include "RankingNumber.h"
+#include "object00.h"
+#include "objectBG.h"
+#include "objectLight.h"
 #include "time.h"
 
 //グローバル変数宣言
@@ -20,8 +23,13 @@ void InitEscapeRanking()
 	//ライトの初期化処理
 	InitLight();
 
+	//オブジェクトの初期化処理
+	InitObject00();
+	InitObjectBG();
+	InitObjectLight();
+
 	//ステージの読み込み
-	SetStage(4);
+	SetStage(0);
 
 	InitNumberUI();
 
@@ -41,6 +49,11 @@ void UninitEscapeRanking()
 	//ライトの終了処理
 	UninitLight();
 
+	//オブジェクトの終了処理
+	UninitObject00();
+	UninitObjectBG();
+	UninitObjectLight();
+
 	UninitNumberUI();
 
 	UninitRankingUI();
@@ -58,6 +71,11 @@ void UpdateEscapeRanking()
 
 	//ライトの更新処理
 	UpdateLight();
+
+	//オブジェクトの更新処理
+	UpdateObject00();
+	UpdateObjectBG();
+	UpdateObjectLight();
 
 	UpdateNumberUI();
 
@@ -81,6 +99,11 @@ void DrawEscapeRanking()
 
 	//カメラのセット処理
 	SetCamera(4);
+
+	//オブジェクトの描画処理
+	DrawObject00();
+	DrawObjectBG();
+	DrawObjectLight();
 
 	DrawNumberUI();
 
