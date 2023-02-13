@@ -4,8 +4,8 @@
 #include "main.h"
 
 //プロトタイプ宣言
-void InitCheckbocUI(void);
-void UninitCheckbocUI(void);
-void UpdateCheckbocUI(void);
-void DrawCheckbocUI(void);
+void InitCheckboxUI(void);
+void UninitCheckboxUI(void);
+void UpdateCheckboxUI(void);
+void DrawCheckboxUI(void);
 #endif

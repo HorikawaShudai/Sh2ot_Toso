@@ -97,7 +97,7 @@ void InitEscapeTutorial()
 	InitpaperBG00();
 	InitpaperBG01();
 
-	InitCheckbocUI();
+	InitCheckboxUI();
 
 	InitTutorialUI();
 
@@ -171,7 +171,7 @@ void UninitEscapeTutorial()
 
 	UninitTutorialUI();
 
-	UninitCheckbocUI();
+	UninitCheckboxUI();
 
 	UninitPolygonBG();
 
@@ -244,7 +244,7 @@ void UpdateEscapeTutorial()
 
 	UpdateTutorialUI();
 
-	UpdateCheckbocUI();
+	UpdateCheckboxUI();
 
 	UpdatePolygonBG();
 }
@@ -319,7 +319,7 @@ void DrawEscapeTutorial()
 
 		DrawTutorialUI();
 
-		DrawCheckbocUI();
+		DrawCheckboxUI();
 
 		//エフェクトの描画処理
 		DrawEffect();
