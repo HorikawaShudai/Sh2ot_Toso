@@ -89,13 +89,13 @@ void InitSpotLight(void)
 		switch (nCntlight)
 		{
 		case 0:
-			SetLight(g_SpotLight_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), g_aSpotLightpos[nCntlight], D3DXVECTOR3(0.2f, -0.8f, -0.5f), 100.0f);
+			SetLight(g_SpotLight_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), g_aSpotLightpos[nCntlight], D3DXVECTOR3(0.2f, -0.8f, -0.5f), 100.0f, 1.0f);
 			break;
 		case 1:
-			SetLight(g_SpotLight_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), g_aSpotLightpos[nCntlight], D3DXVECTOR3(-0.5f, -0.8f, -0.5f), 100.0f);
+			SetLight(g_SpotLight_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), g_aSpotLightpos[nCntlight], D3DXVECTOR3(-0.5f, -0.8f, -0.5f), 100.0f, 1.0f);
 			break;
 		case 2:
-			SetLight(g_SpotLight_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), g_aSpotLightpos[nCntlight], D3DXVECTOR3(0.0f, -0.8f, 0.6f), 100.0f);
+			SetLight(g_SpotLight_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), g_aSpotLightpos[nCntlight], D3DXVECTOR3(0.0f, -0.8f, 0.6f), 100.0f, 1.0f);
 			break;
 		}
 	}
@@ -192,13 +192,13 @@ void UpdateSpotLight(void)
 		switch (nCntlight)
 		{
 		case 0:
-			SetLight(g_SpotLight_LightIdx[nCntlight], D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), g_aSpotLightpos[nCntlight], D3DXVECTOR3(0.2f, -0.8f, -0.5f), 500.0f);
+			SetLight(g_SpotLight_LightIdx[nCntlight], D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), g_aSpotLightpos[nCntlight], D3DXVECTOR3(0.2f, -0.8f, -0.5f), 500.0f, 1.0f);
 			break;
 		case 1:
-			SetLight(g_SpotLight_LightIdx[nCntlight], D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), g_aSpotLightpos[nCntlight], D3DXVECTOR3(-0.5f, -0.8f, -0.5f), 500.0f);
+			SetLight(g_SpotLight_LightIdx[nCntlight], D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), g_aSpotLightpos[nCntlight], D3DXVECTOR3(-0.5f, -0.8f, -0.5f), 500.0f, 1.0f);
 			break;
 		case 2:
-			SetLight(g_SpotLight_LightIdx[nCntlight], D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), g_aSpotLightpos[nCntlight], D3DXVECTOR3(0.0f, -0.8f, 0.6f), 500.0f);
+			SetLight(g_SpotLight_LightIdx[nCntlight], D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), g_aSpotLightpos[nCntlight], D3DXVECTOR3(0.0f, -0.8f, 0.6f), 500.0f, 1.0f);
 			break;
 		}
 
