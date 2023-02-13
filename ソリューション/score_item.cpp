@@ -120,13 +120,13 @@ void InitItem(void)
 
 	SetNumItems(11, D3DXVECTOR3(1200.0f, 0.0f, 382.0f), 0.0f, 50.0f);
 
-	SetNumItems(48, D3DXVECTOR3(293.0f, 0.0f, -1189.0f), 0.0f, 50.0f);
+	SetNumItems(46, D3DXVECTOR3(293.0f, 0.0f, -1119.0f), 0.0f, 50.0f);
 
-	SetNumItems(12, D3DXVECTOR3(-996.0f, 0.0f, -503.0f), 0.0f, 50.0f);
+	SetNumItems(11, D3DXVECTOR3(-996.0f, 0.0f, -453.0f), 0.0f, 50.0f);
 
 	SetNumItems(10, D3DXVECTOR3(-2381.0f, 0.0f, -49.0f), 0.0f, -50.0f);
 
-	SetNumItems(15, D3DXVECTOR3(-1606.0f, 0.0f, 96.0f), 0.0f, 50.0f);
+	SetNumItems(14, D3DXVECTOR3(-1606.0f, 0.0f,146.0f), 0.0f, 50.0f);
 
 	SetNumItems(8, D3DXVECTOR3(-649.0f, 0.0f,859.0f), 0.0f, 50.0f);
 
