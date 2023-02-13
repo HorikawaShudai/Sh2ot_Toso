@@ -20,7 +20,7 @@
 const char *c_apExit[] =					//モデルデータ読み込み
 {
 	"Data\\MODEL\\Exit\\BigDoorFrame00.x",
-	"Data\\MODEL\\Exit\\BigDoorFrame.x",
+	"Data\\MODEL\\Exit\\BigDoor_UP.x",
 	"Data\\MODEL\\Exit\\BigDoor_L.x",
 	"Data\\MODEL\\Exit\\BigDoor_R.x",
 };
@@ -72,6 +72,8 @@ void InitExit(void)
 			g_aExit[nCntExit].parts[nCntExit1].bUse = false;
 			g_aExit[nCntExit].parts[nCntExit1].bExitOK = false;
 			g_aExit[nCntExit].parts[nCntExit1].nType = EXIT_TYPE_BIGFRAME;
+
+			g_aExit[nCntExit].bUse = false;
 		}
 	}
 
@@ -119,15 +121,15 @@ void InitExit(void)
 
 	//if (PlayMode.CurrentModeNumber == 0)
 	//{
-		SetExit(D3DXVECTOR3(-925.0f, 0.0f, -700.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0, 0);
+		/*SetExit(D3DXVECTOR3(-925.0f, 0.0f, -700.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0, 0);
 		SetExit(D3DXVECTOR3(-1075.0f, 0.0f, -700.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0, 0);
-		/*SetExit(D3DXVECTOR3(-935.0f, 0.0f, -700.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f), EXIT_TYPE_BIGDOOR_R, 0);
+		SetExit(D3DXVECTOR3(-935.0f, 0.0f, -700.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f), EXIT_TYPE_BIGDOOR_R, 0);
 		SetExit(D3DXVECTOR3(-1065.0f, 0.0f, -700.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f), EXIT_TYPE_BIGDOOR_L, 0);*/
 	//}
 	//else
 	//{
 		//出口の読み込み
-		//LoadExit();
+		LoadExit();
 	//}
 }
 
@@ -169,7 +171,7 @@ void UninitExit(void)
 void UpdateExit(void)
 {
 	//扉が開く処理
-	//DoorOpen();
+	DoorOpen();
 }
 
 //====================================================================
@@ -242,37 +244,28 @@ void DoorOpen(void)
 	{
 		for (int nCntExit1 = 0; nCntExit1 < MAX_EXIT; nCntExit1++)
 		{
-			/*if (g_aExit[nCntExit].bUse == true && g_aExit[nCntExit].bExitOK == true)
-			{
-			if (g_bExitFade[nCntExit] == false)
-			{
-			SetFade(MODE_RESULT);
-
-			g_bExitFade[nCntExit] = true;
-			}
-			}*/
-
 			//外積の脱出判定処理
 			ExsitClossLine(nCntExit);
 
-			//g_aExit[1].rot.y = /*g_aExit[1].rotSave.y + */(sinf(g_aExit[1].rotSave.y) + cosf(g_aExit[1].rotSave.y) - 0.5f);
-
 			if (g_aExit[nCntExit].parts[nCntExit1].bUse == true && g_aExit[nCntExit].parts[nCntExit1].bExitOK == true)
 			{//出口が使われていて脱出可能の場合
-				for (int nCntExit1 = 0; nCntExit1 < MAX_EXIT; nCntExit1++)
-				{
-					if (g_aExit[nCntExit].parts[nCntExit1].nType != EXIT_TYPE_BIGFRAME)
-					{
-						if (g_aExit[1].parts[nCntExit1].rot.y >= g_aExit[1].parts[nCntExit1].rotSave.y + (sinf(g_aExit[1].parts[nCntExit1].rotSave.y) + cosf(g_aExit[1].parts[nCntExit1].rotSave.y) - 0.5f))
-						{
-							g_aExit[1].parts[nCntExit1].rot.y += cosf(g_aExit[1].parts[nCntExit1].rot.y) * 0.003f;
-							g_aExit[1].parts[nCntExit1].rot.y -= sinf(g_aExit[1].parts[nCntExit1].rot.y) * 0.003f;
+				if (g_aExit[nCntExit].parts[nCntExit1].nType != EXIT_TYPE_BIGFRAME)
+				{//出口の種類がフレーム以外の場合
 
-							g_aExit[2].parts[nCntExit1].rot.y -= sinf(g_aExit[2].parts[nCntExit1].rot.y) * 0.003f;
-							g_aExit[2].parts[nCntExit1].rot.y += -cosf(g_aExit[2].parts[nCntExit1].rot.y) * 0.003f;
-						}
-					}
+					float frotRDiff;			//
+					float frotLDiff;			//
+
+					//目的の角度との差を求める
+					frotLDiff = (g_aExit[nCntExit].parts[3].rotSave.y - 1.5f) - g_aExit[nCntExit].parts[3].rot.y;
+					frotRDiff = (g_aExit[nCntExit].parts[4].rotSave.y + 1.5f) - g_aExit[nCntExit].parts[4].rot.y;
+
+					//目的の角度との差を縮める
+					g_aExit[nCntExit].parts[3].rot.y += frotLDiff * 0.007f;
+
+					g_aExit[nCntExit].parts[4].rot.y += frotRDiff * 0.007f;
 				}
+
+				//出口から出れるまでのカウント
 				g_ExitCnt--;
 
 				if (g_ExitCnt <= 0)
@@ -352,71 +345,64 @@ void ExsitClossLine(int nCntExit)
 }
 
 //====================================================================
-//エディットモードのオブジェクト00の更新処理
-//====================================================================
-void UpdateEditExit(void)
-{
-
-}
-
-//====================================================================
 //出口の読み込み(.txt)
 //====================================================================
 void LoadExit(void)
 {
 	//変数宣言
 	char not[128];			//使用しない文字列のゴミ箱
-	int number[10];		//使用する出口の配列番号
+	int number;				//使用する出口の配列番号
+	int nSetCnt = 0;
 	FILE *pFile;			//ファイルポインタを宣言
 
-							//ファイルを開く
-	pFile = fopen("Data\\TEXT\\Exit_akutou.txt", "r");
+	//ファイルを開く
+	pFile = fopen("Data\\TEXT\\Exit_tousou.txt", "r");
 
 	if (pFile != NULL)
 	{//ファイルが開けた場合
-		while (1)
+		while (strcmp("END_SCRIPT", &not[0]) != 0)			//END_SCRIPTが読み込めたら0を返し処理を抜ける 0以外の時は繰り返す
 		{
-			fscanf(pFile, "%s", &not[0]);			//文字列を読み込む
+			fscanf(pFile, "%s", &not[0]);					//文字列を読み込む
 
-			if (strcmp("SCRIPT", &not[0]) == 0)
-			{//SCRIPTが読み込めたら
-				bLoadExitObj = true;			//読み込みを開始
+			if (strcmp("SCRIPT", &not[0]) == 0)			//SCRIPTが読み込めたら0を返し処理を開始する 0以外の時は開始しない
+			{
+				bLoadExitObj = true;			//読み込みを開始する
 			}
 
 			if (bLoadExitObj == true)
-			{
-				while (1)
-				{
-					fscanf(pFile, "%s", &not[0]);			//文字列を読み込む
+			{//読み込みが開始された場合
+				if (strcmp("EXITSET", &not[0]) == 0)
+				{//指定の文字列が読み込めた場合
+					fscanf(pFile, "%s", &not[0]);										//文字を読み込む
+					fscanf(pFile, "%s", &not[0]);										//=を読み込む
+					fscanf(pFile, "%d", &number);										//配列番号を読み込む
 
-					if (strcmp("EXITSET", &not[0]) == 0)
-					{
-						fscanf(pFile, "%d", &number[0]);							//配列番号を読み込む
-						fscanf(pFile, "%s", &not[0]);								//文字を読み込む
-						fscanf(pFile, "%s", &not[0]);								//=を読み込む
-						fscanf(pFile, "%f", &g_aExit[number[0]].parts[0].pos.x);
-						fscanf(pFile, "%f", &g_aExit[number[0]].parts[0].pos.y);
-						fscanf(pFile, "%f", &g_aExit[number[0]].parts[0].pos.z);
+					fscanf(pFile, "%s", &not[0]);										//文字を読み込む
+					fscanf(pFile, "%s", &not[0]);										//=を読み込む
+					fscanf(pFile, "%f", &g_aExit[number].parts[nSetCnt].pos.x);
+					fscanf(pFile, "%f", &g_aExit[number].parts[nSetCnt].pos.y);
+					fscanf(pFile, "%f", &g_aExit[number].parts[nSetCnt].pos.z);
 
-						fscanf(pFile, "%s", &not[0]);			//文字を読み込む
-						fscanf(pFile, "%s", &not[0]);			//=を読み込む
-						fscanf(pFile, "%f", &g_aExit[number[0]].parts[0].rot.x);
-						fscanf(pFile, "%f", &g_aExit[number[0]].parts[0].rot.y);
-						fscanf(pFile, "%f", &g_aExit[number[0]].parts[0].rot.z);
+					fscanf(pFile, "%s", &not[0]);										//文字を読み込む
+					fscanf(pFile, "%s", &not[0]);										//=を読み込む
+					fscanf(pFile, "%f", &g_aExit[number].parts[nSetCnt].rot.x);
+					fscanf(pFile, "%f", &g_aExit[number].parts[nSetCnt].rot.y);
+					fscanf(pFile, "%f", &g_aExit[number].parts[nSetCnt].rot.z);
 
-						fscanf(pFile, "%s", &not[0]);			//文字を読み込む
-						fscanf(pFile, "%s", &not[0]);			//=を読み込む
-						fscanf(pFile, "%d", &g_aExit[number[0]].parts[0].nType);
+					fscanf(pFile, "%s", &not[0]);										//文字を読み込む
+					fscanf(pFile, "%s", &not[0]);										//=を読み込む
+					fscanf(pFile, "%d", &g_aExit[number].parts[nSetCnt].nType);
+				}
+				if (strcmp("END_EXSITSET", &not[0]) == 0)
+				{//指定の文字列が読み込めた場合
+					//出口の設置
+					SetExit(g_aExit[number].parts[nSetCnt].pos, g_aExit[number].parts[nSetCnt].rot, g_aExit[number].parts[nSetCnt].nType, number);
 
-						//出口の設置
-						SetExit(g_aExit[number[0]].parts[0].pos, g_aExit[number[0]].parts[0].rot, g_aExit[number[0]].parts[0].nType, number[0]);
-					}
-
-					if (strcmp("END_SCRIPT", &not[0]) == 0)
-					{//SCRIPTが読み込めなかった場合
-						bLoadExitObj = false;			//読み込みを終了
-						break;			//処理を抜ける
-					}
+					nSetCnt++;
+				}
+				if (strcmp("SETEND_PARTS", &not[0]) == 0)
+				{//指定の文字列が読み込めた場合
+					nSetCnt = 0;			//カウントを0にする
 				}
 			}
 
@@ -427,11 +413,6 @@ void LoadExit(void)
 			}
 		}
 	}
-}
-
-void SaveExit(void)
-{
-
 }
 
 //====================================================================
@@ -537,8 +518,8 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 					{//鍵がプレイヤー人数分使われた場合
 						g_bExitOK = true;
 
-						g_aExit[1].parts[nCntExit1].bExitOK = true;
-						g_aExit[2].parts[nCntExit1].bExitOK = true;
+						g_aExit[nCntExit].parts[3].bExitOK = true;
+						g_aExit[nCntExit].parts[4].bExitOK = true;
 					}
 
 					break;

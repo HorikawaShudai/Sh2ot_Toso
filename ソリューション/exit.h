@@ -42,6 +42,8 @@ typedef struct
 {
 	ExitParts parts[MAX_EXIT];
 
+	bool bUse;
+
 }EXIT;
 
 //プロトタイプ宣言
