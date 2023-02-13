@@ -356,7 +356,7 @@ void LoadExit(void)
 	FILE *pFile;			//ファイルポインタを宣言
 
 	//ファイルを開く
-	pFile = fopen("Data\\TEXT\\Exit_tousou.txt", "r");
+	pFile = fopen("Data\\TEXT\\Exit_akiutou.txt", "r");
 
 	if (pFile != NULL)
 	{//ファイルが開けた場合

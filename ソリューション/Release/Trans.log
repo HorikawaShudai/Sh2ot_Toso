@@ -1,19 +1,11 @@
-<<<<<<< HEAD
-﻿  meshwall.cpp
+﻿  edit.cpp
+  exit.cpp
+  game.cpp
+  stage.cpp
   コード生成しています。
-  3 of 415 functions ( 0.7%) were compiled, the rest were copied from previous compilation.
+  3 of 439 functions ( 0.7%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+    3 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作2\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作2\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
-=======
-﻿  meshcylinder.cpp
-  コード生成しています。
-  0 of 448 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
-  コード生成が終了しました。
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
->>>>>>> b99704cfcb21aafcf104279dac174cd16c681699
