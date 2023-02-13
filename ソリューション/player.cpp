@@ -23,6 +23,7 @@
 #include "keyUI.h"
 #include "exit.h"
 #include "light.h"
+#include "CheckboxUI.h"
 #include "PolygonBG.h"
 
 //マクロ定義
@@ -88,6 +89,7 @@ void InitPlayer(void)
 		g_aPlayer[nCntPlayer].LightIdx00 = SetIndexLight();		//ライトのセット処理
 		g_aPlayer[nCntPlayer].LightIdx01 = SetIndexLight();		//ライトのセット処理
 
+		g_aPlayer[nCntPlayer].bCheck = false;  //チェックボックスがついていない状態に
 		g_aPlayer[nCntPlayer].bExit = false;
 		g_aPlayer[nCntPlayer].bVibrtion = false;
 		g_aPlayer[nCntPlayer].bAppear = false;
@@ -314,6 +316,9 @@ void UpdatePlayer0(void)
 				{//鍵を入手出来た場合
 					g_aPlayer[nSelectPlayer].bGetKey = true;	//鍵を入手状態にする
 					SetKeyUI(nSelectPlayer, true);				//鍵UIを表示する
+
+					g_aPlayer[nSelectPlayer].bCheck = true;
+					SetCheckUI(nSelectPlayer, true);
 				}
 			}
 		}
@@ -328,6 +333,10 @@ void UpdatePlayer0(void)
 
 					g_aPlayer[nSelectPlayer].bGetKey = false;	//鍵を入手してない状態にする
 					SetKeyUI(nSelectPlayer, false);			//鍵UIを非表示にする
+
+					g_aPlayer[nSelectPlayer].bCheck = false;
+					SetCheckUI(nSelectPlayer, false);
+
 				}
 			}
 		}

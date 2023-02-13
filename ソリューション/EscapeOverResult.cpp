@@ -21,6 +21,7 @@ void InitEscapeOverResult()
 	//ライトの初期化処理
 	InitLight();
 
+	InitObject00();
 	InitObjectBG();
 
 	//ステージの読み込み
@@ -40,6 +41,7 @@ void UninitEscapeOverResult()
 	//ライトの終了処理
 	UninitLight();
 
+	UninitObject00();
 	UninitObjectBG();
 
 	UninitResultUI();
@@ -58,6 +60,7 @@ void UpdateEscapeOverResult()
 	//ライトの更新処理
 	UpdateLight();
 
+	UpdateObject00();
 	UpdateObjectBG();
 
 	UpdateResultUI();
@@ -87,6 +90,7 @@ void DrawEscapeOverResult()
 	//カメラのセット処理
 	SetCamera(4);
 
+	DrawObject00();
 	DrawObjectBG();
 
 	DrawResultUI();

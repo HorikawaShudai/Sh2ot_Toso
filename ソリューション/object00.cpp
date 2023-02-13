@@ -704,35 +704,46 @@ D3DXVECTOR3 CollisionOuterProductObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOl
 		}
 
 	}
-	for (int nCheck = 0; nCheck < nPosCount -1; nCheck++)
-	{//ソート
-		int nData = nCheck;
-		for (int nCnt = (nCheck+1); nCnt < nPosCount; nCnt++)
-		{
-			float fSq1, fSq2;
-			fSq1 = (powf(pos[nData].x, 2.0f) + powf(pos[nData].z, 2.0f)) - (powf(pPosOld->x, 2.0f) + powf(pPosOld->z, 2.0f));
-			if (fSq1 < 0)
-			{
-				fSq1 *= -1.0f;
-			}
-			fSq1 = sqrtf(fSq1);
+	if (nPosCount > 1)
+	{
+		for (int nCheck = 0; nCheck < nPosCount - 1; nCheck++)
+		{//距離の差を割り出して昇順にソート
 
-			fSq2 = (powf(pos[nCnt].x, 2.0f) + powf(pos[nCnt].z, 2.0f)) - (powf(pPosOld->x, 2.0f) + powf(pPosOld->z, 2.0f));
-			if (fSq2 < 0)
+			for (int nCnt = (nCheck + 1); nCnt < nPosCount; nCnt++)
 			{
-				fSq2 *= -1.0f;
+				D3DXVECTOR3 Temp = pos[nCnt];
+				float fDis1, fDis2;
+				fDis1 = (pos[nCheck].x - pPosOld->x) + (pos[nCheck].z - pPosOld->z);
+				fDis2 = (pos[nCnt].x - pPosOld->x) + (pos[nCnt].z - pPosOld->z);
+				if (fDis1 < 0)
+				{
+					fDis1 *= -1.0f;
+				}
+				if (fDis2 < 0)
+				{
+					fDis2 *= -1.0f;
+				}
+				if (fDis1 > fDis2)
+				{
+					pos[nCnt] = pos[nCheck];
+					pos[nCheck] = Temp;
+				}
 			}
-			fSq2 = sqrtf(fSq2);
-			if (fSq1 >  fSq2)
-			{
-				nData = nCnt;
-			}
-		
 		}
-		D3DXVECTOR3 Temp = pos[nCheck];
-		pos[nCheck] = pos[nData];
-		pos[nData] = Temp;
 	}
+	/*	for ( nCount = 0; nCount < MAX_NUMBER - 1; nCount++)
+	{
+		for ( nCheck = (nCount + 1); nCheck < MAX_NUMBER; nCheck++)
+		{
+			nTemp = nNumber[nCheck];
+			if (nNumber[nCount] < nNumber[nCheck])
+			{
+				nNumber[nCheck] = nNumber[nCount];
+				nNumber[nCount] = nTemp;
+
+			}
+		}
+	}*/
 
 	return pos[0];
 }
