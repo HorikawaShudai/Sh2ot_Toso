@@ -292,7 +292,7 @@ void UpdateGame()
 		UpdatePlayer();
 
 		//敵の更新処理
-		//UpdateEnemy();
+		UpdateEnemy();
 
 		//スタミナの更新処理
 		UpdateStamina();
