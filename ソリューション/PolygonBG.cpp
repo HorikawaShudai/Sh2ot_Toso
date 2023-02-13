@@ -43,21 +43,21 @@ void InitPolygonBG(void)
 							   //デバイスの所得
 	pDevice = GetDevice();
 
-	////テクスチャの読み込み
+	//テクスチャの読み込み
 	//D3DXCreateTextureFromFile(pDevice,
-	//	"data\\TEXTURE\\PolygonBG.png",
+	//	"data\\TEXTURE\\Damage00.jpg",
 	//	&g_apTexturePolygonBG[0]);
 
-	//D3DXCreateTextureFromFile(pDevice,
-	//	"data\\TEXTURE\\Polygon_Score.png",
-	//	&g_apTexturePolygonBG[1]);
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\Damage00.jpg",
+		&g_apTexturePolygonBG[1]);
 
 	//D3DXCreateTextureFromFile(pDevice,
-	//	"data\\TEXTURE\\PolygonPerfect.png",
+	//	"data\\TEXTURE\\Damage00.jpg",
 	//	&g_apTexturePolygonBG[2]);
 
 	//D3DXCreateTextureFromFile(pDevice,
-	//	"data\\TEXTURE\\PolygonAllPerfect.png",
+	//	"data\\TEXTURE\\Damage00.jpg",
 	//	&g_apTexturePolygonBG[3]);
 
 	//UIの表示設定
@@ -254,6 +254,7 @@ void SetPolygonBG(D3DXCOLOR Col, int nLife)
 			g_PolygonBG[nCntBG].bUse = true;
 			g_PolygonBG[nCntBG].col = Col;
 			g_PolygonBG[nCntBG].nLife = nLife;
+			break;
 		}
 	}
 }

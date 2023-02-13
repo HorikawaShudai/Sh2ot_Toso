@@ -41,6 +41,7 @@ void ResPlayerCamera(void);									//コントローラーそれぞれに対応
 void Titlecamera(void);
 void SelectNumberCamera(void);
 void ResultCamera(void);
+void RankingCamera(void);
 
 //グローバル変数
 Camera g_aCamera[MAX_CAMERA];	//カメラの情報
@@ -49,6 +50,7 @@ int g_nCurrentCamera;			//選択されているカメラの番号
 int g_nSaveCamera;				//カメラ番号保存用
 bool g_bTpsCamera;				//観察用のカメラを使うかどうか
 bool bEnter;					//エンターが押されたかどうか
+int g_Rand_RankingCameraBG;		//ランキング画面の背景を決めるための変数
 
 //====================================================================
 //カメラの初期化処理
@@ -76,7 +78,7 @@ void InitCamera(void)
 	g_nCurrentCamera = 0;			//選択されているカメラの番号を最初のカメラへ
 	g_bTpsCamera = false;			//観察用カメラを使っていない状態へ
 	bEnter = false;					//エンターを押していない状態に
-
+	g_Rand_RankingCameraBG = rand() % 2;
 	
 	switch (PlayNumber.CurrentSelectNumber)
 	{
@@ -247,6 +249,9 @@ void UpdateCamera(void)
 		break;
 	case MODE_RESULT:
 		ResultCamera();
+		break;
+	case MODE_RANKING:
+		RankingCamera();
 		break;
 	}
 }
@@ -849,6 +854,22 @@ void ResultCamera(void)
 {
 	g_aCamera[4].posV = D3DXVECTOR3(975.0f, 20.0f, -430.0f);
 	g_aCamera[4].posR = D3DXVECTOR3(420.0f, 100.0f, 500.0);
+}
+
+//ランキング画面
+void RankingCamera(void)
+{
+	switch (g_Rand_RankingCameraBG)
+	{
+	case 0:
+		g_aCamera[4].posV = D3DXVECTOR3(975.0f, 200.0f, -430.0f);
+		g_aCamera[4].posR = D3DXVECTOR3(420.0f, 100.0f, 500.0);
+		break;
+	case 1:
+		g_aCamera[4].posV = D3DXVECTOR3(475.0f, 200.0f, -430.0f);
+		g_aCamera[4].posR = D3DXVECTOR3(-120.0f, 100.0f, 500.0);
+		break;
+	}
 }
 
 //==========================================
