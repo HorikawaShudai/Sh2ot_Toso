@@ -7,6 +7,7 @@
 #include "meshwall.h"
 #include "object00.h"
 #include "objectBG.h"
+#include "objectLight.h"
 #include "stage.h"
 #include "player.h"
 #include "debugproc.h"
@@ -27,10 +28,19 @@
 #include "fog.h"
 #include "time.h"
 
+//エディットに使うオブジェクトの種類の構造体
+typedef enum
+{
+	EDIT_TYPE_NORMAL = 0,
+	EDIT_TYPE_BG,
+	EDIT_TYPE_LIGHT,
+	EDIT_TYPE_MAX,
+}EDIT_TYPE;
+
 //グローバル変数宣言
 bool g_bPause = false;
 bool g_bEdit = false;
-bool g_bBG_Edit = false;
+int g_bBG_Edit = 0;
 bool g_bGameClear = false;
 GAMESTATE gGameState = GAMESTATE_NONE;
 int g_nCounterGameState = 0;
@@ -42,7 +52,7 @@ void InitGame()
 {
 	g_bPause = false;
 	g_bEdit = false;
-	g_bBG_Edit = false;
+	g_bBG_Edit = 0;
 	g_bGameClear = false;
 
 	DWORD time = timeGetTime();
@@ -66,6 +76,7 @@ void InitGame()
 	//オブジェクトの初期化処理
 	InitObject00();
 	InitObjectBG();
+	InitObjectLight();
 
 	//プレイヤーの初期化処理
 	InitPlayer();
@@ -143,6 +154,7 @@ void UninitGame()
 	//オブジェクトの終了処理
 	UninitObject00();
 	UninitObjectBG();
+	UninitObjectLight();
 
 	//プレイヤーの終了処理
 	UninitPlayer();
@@ -195,8 +207,12 @@ void UpdateGame()
 	}
 
 	if (GetKeyboardTrigger(DIK_F3) == true)
-	{//f2が押されたとき
-		g_bBG_Edit = g_bBG_Edit ? false : true;
+	{//f3が押されたとき
+		g_bBG_Edit++;
+		if (g_bBG_Edit >= EDIT_TYPE_MAX)
+		{
+			g_bBG_Edit = 0;
+		}
 	}
 #endif
 
@@ -230,15 +246,20 @@ void UpdateGame()
 		//エディットの更新処理
 		UpdateEdit();
 
-		if (g_bBG_Edit == false)
+		switch (g_bBG_Edit)
 		{
+		case EDIT_TYPE_NORMAL:
 			//エディットモードのオブジェクトの更新処理
 			UpdateEditObject00();
-		}
-		else
-		{
+			break;
+		case EDIT_TYPE_BG:
 			//エディットモードのオブジェクトBGの更新処理
 			UpdateEditObjectBG();
+			break;
+		case EDIT_TYPE_LIGHT:
+			//エディットモードのオブジェクトLightの更新処理
+			UpdateEditObjectLight();
+			break;
 		}
 	}
 	else
@@ -265,6 +286,7 @@ void UpdateGame()
 		//オブジェクトの更新処理
 		UpdateObject00();
 		UpdateObjectBG();
+		UpdateObjectLight();
 
 		//プレイヤーの更新処理
 		UpdatePlayer();
@@ -360,15 +382,20 @@ void DrawGame()
 
 		if (g_bEdit == true)
 		{
-			if (g_bBG_Edit == false)
+			switch (g_bBG_Edit)
 			{
-				//エディットモードのオブジェクト処理
+			case EDIT_TYPE_NORMAL:
+				//エディットモードのオブジェクトの描画処理
 				DrawEditObject00();
-			}
-			else
-			{
-				//エディットモードのオブジェクト処理
+				break;
+			case EDIT_TYPE_BG:
+				//エディットモードのオブジェクトBGの描画処理
 				DrawEditObjectBG();
+				break;
+			case EDIT_TYPE_LIGHT:
+				//エディットモードのオブジェクトLightの描画処理
+				DrawEditObjectLight();
+				break;
 			}
 		}
 
@@ -378,6 +405,7 @@ void DrawGame()
 		//オブジェクトの描画処理
 		DrawObject00();
 		DrawObjectBG();
+		DrawObjectLight();
 
 		//出口の描画処理
 		DrawExit();

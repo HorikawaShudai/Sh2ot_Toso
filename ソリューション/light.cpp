@@ -110,13 +110,13 @@ void InitLight(void)
 			switch (nCntlight)
 			{
 			case 0:
-				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.2f, -0.8f, -0.5f), 100.0f);
+				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.2f, -0.8f, -0.5f), 100.0f,1.0f);
 				break;
 			case 1:
-				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(-0.5f, -0.8f, -0.5f), 100.0f);
+				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(-0.5f, -0.8f, -0.5f), 100.0f, 1.0f);
 				break;
 			case 2:
-				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, -0.8f, 0.6f), 100.0f);
+				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, -0.8f, 0.6f), 100.0f, 1.0f);
 				break;
 			}
 		}
@@ -126,13 +126,13 @@ void InitLight(void)
 			switch (nCntlight)
 			{
 			case 0:
-				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.2f, -0.8f, -0.5f), 100.0f);
+				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.2f, -0.8f, -0.5f), 100.0f, 1.0f);
 				break;
 			case 1:
-				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(-0.5f, -0.8f, -0.5f), 100.0f);
+				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(-0.5f, -0.8f, -0.5f), 100.0f, 1.0f);
 				break;
 			case 2:
-				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, -0.8f, 0.6f), 100.0f);
+				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, -0.8f, 0.6f), 100.0f, 1.0f);
 				break;
 			}
 		}
@@ -178,13 +178,13 @@ void UpdateLight(void)
 				switch (nCntlight)
 				{
 				case 0:
-					SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.2f, -0.8f, -0.5f), 100.0f);
+					SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.2f, -0.8f, -0.5f), 100.0f,1.0f);
 					break;
 				case 1:
-					SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(-0.5f, -0.8f, -0.5f), 100.0f);
+					SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(-0.5f, -0.8f, -0.5f), 100.0f, 1.0f);
 					break;
 				case 2:
-					SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, -0.8f, 0.6f), 100.0f);
+					SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, -0.8f, 0.6f), 100.0f, 1.0f);
 					break;
 				}
 			}
@@ -194,13 +194,13 @@ void UpdateLight(void)
 				switch (nCntlight)
 				{
 				case 0:
-					SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.2f, -0.8f, -0.5f), 100.0f);
+					SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.2f, -0.8f, -0.5f), 100.0f, 1.0f);
 					break;
 				case 1:
-					SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(-0.5f, -0.8f, -0.5f), 100.0f);
+					SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(-0.5f, -0.8f, -0.5f), 100.0f, 1.0f);
 					break;
 				case 2:
-					SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, -0.8f, 0.6f), 100.0f);
+					SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, -0.8f, 0.6f), 100.0f, 1.0f);
 					break;
 				}
 			}
@@ -211,13 +211,13 @@ void UpdateLight(void)
 			switch (nCntlight)
 			{
 			case 0:
-				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.2f, -0.8f, -0.5f), 100.0f);
+				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.2f, -0.8f, -0.5f), 100.0f, 1.0f);
 				break;
 			case 1:
-				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(-0.5f, -0.8f, -0.5f), 100.0f);
+				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(-0.5f, -0.8f, -0.5f), 100.0f, 1.0f);
 				break;
 			case 2:
-				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, -0.8f, 0.6f), 100.0f);
+				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, -0.8f, 0.6f), 100.0f, 1.0f);
 				break;
 			}
 		}
@@ -264,7 +264,7 @@ int SetIndexLight(void)
 //====================================================================
 //ライトの情報設定処理
 //====================================================================
-void SetLight(int nIdxLight, D3DLIGHTTYPE nType, D3DXCOLOR Diffuse, D3DXVECTOR3 pos, D3DXVECTOR3 nVecDir, float nRange)
+void SetLight(int nIdxLight, D3DLIGHTTYPE nType, D3DXCOLOR Diffuse, D3DXVECTOR3 pos, D3DXVECTOR3 nVecDir, float nRange,float nPhi)
 {
 	D3DXVECTOR3 vecDir;	//設定用方向ベクトル
 
@@ -273,6 +273,7 @@ void SetLight(int nIdxLight, D3DLIGHTTYPE nType, D3DXCOLOR Diffuse, D3DXVECTOR3 
 	g_light[nIdxLight].Position = pos;			//ライトの位置を設定
 	vecDir = nVecDir;							//ライトの方向を設定
 	g_light[nIdxLight].Range = nRange;			//ライトの範囲を設定
+	g_light[nIdxLight].Phi = nPhi;				//ライトの外側の円を設定
 
 	D3DXVec3Normalize(&vecDir, &vecDir);	//ベクトルを正規化する
 	g_light[nIdxLight].Direction = vecDir;
