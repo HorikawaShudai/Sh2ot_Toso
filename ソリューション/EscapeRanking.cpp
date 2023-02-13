@@ -21,7 +21,7 @@ void InitEscapeRanking()
 	InitLight();
 
 	//ステージの読み込み
-	SetStage(4);
+	SetStage(5);
 
 	InitNumberUI();
 
