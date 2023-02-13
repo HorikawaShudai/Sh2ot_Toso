@@ -8,4 +8,5 @@ void InitCheckboxUI(void);
 void UninitCheckboxUI(void);
 void UpdateCheckboxUI(void);
 void DrawCheckboxUI(void);
+void SetCheckUI(int nPlayer, bool SetCheck);
 #endif

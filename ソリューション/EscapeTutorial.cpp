@@ -78,6 +78,8 @@ void InitEscapeTutorial()
 	//鍵の初期化処理
 	InitKey();
 
+	SetKey(D3DXVECTOR3(-1000.0f, 0.0f, -50.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), KEY_TYPE_ITEM);
+
 	//鍵UIの初期化処理
 	InitKeyUI();
 
@@ -86,6 +88,10 @@ void InitEscapeTutorial()
 
 	//出口の初期化処理
 	InitExit();
+
+	SetExit(D3DXVECTOR3(-1000.0f,0.0f,0.8f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), EXIT_TYPE_BIGFRAME);
+	SetExit(D3DXVECTOR3(-1070.0f, 0.0f, 0.8f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), EXIT_TYPE_BIGDOOR_R);
+	SetExit(D3DXVECTOR3(-935.0f, 0.0f, 0.8f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), EXIT_TYPE_BIGDOOR_L);
 
 	//スコアアイテムの初期化
 	InitItem();
@@ -97,9 +103,10 @@ void InitEscapeTutorial()
 	InitpaperBG00();
 	InitpaperBG01();
 
-	InitCheckboxUI();
-
 	InitTutorialUI();
+
+	//チェックボックスの初期化
+	InitCheckboxUI();
 
 	//フォグの初期化
 	InitFog();
@@ -108,7 +115,7 @@ void InitEscapeTutorial()
 	SetFog(D3DFOG_LINEAR, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.5f), 10.0f, 1000.0f, 0.1f);
 
 	//ステージの読み込み
-	SetStage(1);
+	SetStage(4);
 }
 
 //====================================================================
@@ -317,7 +324,7 @@ void DrawEscapeTutorial()
 		DrawpaperBG00();
 		DrawpaperBG01();
 
-		DrawTutorialUI();
+		/*DrawTutorialUI();*/
 
 		DrawCheckboxUI();
 

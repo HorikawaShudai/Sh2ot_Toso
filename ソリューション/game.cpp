@@ -79,7 +79,6 @@ void InitGame()
 	//ライフの初期化処理
 	InitLife();
 
-
 	//SetEnemy(D3DXVECTOR3(300.0f, 0.0f, 500.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetEnemy(D3DXVECTOR3(-1400.0f, 0.0f, -500.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	//SetEnemy(D3DXVECTOR3(-1000.0f, 0.0f, -500.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
@@ -269,8 +268,8 @@ void UpdateGame()
 		//プレイヤーの更新処理
 		UpdatePlayer();
 
-		//敵の更新処理
-		UpdateEnemy();
+		////敵の更新処理
+		//UpdateEnemy();
 
 		//スタミナの更新処理
 		UpdateStamina();

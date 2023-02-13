@@ -6,7 +6,7 @@
 //マクロ定義
 #define MAX_CHECK_TEX		(2)				//チェックボックスのテクスチャ最大数
 
-#define CHECKUIPOS_X_1	(30.0f)			//チェックボックスのUIのX位置1
+#define CHECKUIPOS_X_1	(-10.0f)			//チェックボックスのUIのX位置1
 #define CHECKUIPOS_Y_1	(350.0f)		//チェックボックスのUIのY位置1
 
 #define CHECKUIPOS_X_2	(670.0f)		//チェックボックスのUIのX位置2
@@ -49,12 +49,12 @@ void InitCheckboxUI(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"Data\\TEXTURE\\nokey.png",
+		"Data\\TEXTURE\\no_check.png",
 		&g_pTextureCheckUI[0]);
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"Data\\TEXTURE\\getkey.png",
+		"Data\\TEXTURE\\use_check.png",
 		&g_pTextureCheckUI[1]);
 
 	//鍵UIの情報を初期化
@@ -193,4 +193,12 @@ void DrawCheckboxUI(void)
 
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCnt * 4, 2);
 	}
+}
+
+//============================
+//チェックボックスの設定
+//============================
+void SetCheckUI(int nPlayer, bool SetCheck)
+{
+	g_anCheckUI[nPlayer].bUse = SetCheck;
 }

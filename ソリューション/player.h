@@ -59,6 +59,7 @@ typedef struct
 	bool bAppear;								//敵を視認できるかどうか
 	bool bVibrtion;								//バイブレーションをしているかどうか
 	bool bExit;									//脱出しているかどうか
+	bool bCheck;								//チェックがついているかどうか
 }Player;
 
 //プロトタイプ宣言
