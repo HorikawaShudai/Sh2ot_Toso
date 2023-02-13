@@ -45,22 +45,22 @@ void InitTutorialUI(void)
 							   //デバイスの所得
 	pDevice = GetDevice();
 
-	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\RankingBG.png",
-		&g_apTextureTutorialUI[0]);
+	////テクスチャの読み込み
+	//D3DXCreateTextureFromFile(pDevice,
+	//	"data\\TEXTURE\\RankingBG.png",
+	//	&g_apTextureTutorialUI[0]);
 
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\Ranking_Score.png",
-		&g_apTextureTutorialUI[1]);
+	//D3DXCreateTextureFromFile(pDevice,
+	//	"data\\TEXTURE\\Ranking_Score.png",
+	//	&g_apTextureTutorialUI[1]);
 
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\TUTORIAL\\clear_tousou.png",
-		&g_apTextureTutorialUI[2]);
+	//D3DXCreateTextureFromFile(pDevice,
+	//	"data\\TEXTURE\\TUTORIAL\\clear_tousou.png",
+	//	&g_apTextureTutorialUI[2]);
 
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\RankingAllPerfect.png",
-		&g_apTextureTutorialUI[3]);
+	//D3DXCreateTextureFromFile(pDevice,
+	//	"data\\TEXTURE\\RankingAllPerfect.png",
+	//	&g_apTextureTutorialUI[3]);
 
 	//UIの表示設定
 	bUseTutorialUI[0] = true;

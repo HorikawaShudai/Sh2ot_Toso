@@ -15,6 +15,8 @@
 #include "EscapeRanking.h"
 #include "EscapeClearResult.h"
 #include "EscapeOverResult.h"
+#include "EscapeTutorial.h"
+#include "VillainTutorial.h"
 #include "RankingNumber.h"
 #include "input.h"
 
@@ -44,7 +46,7 @@ bool bWire;				//ワイヤーフレームを使っているかどうか
 bool g_bNightVision;			//視野の確保を使っているかどうか
 int g_nCountFPS = 0;
 
-MODE g_mode = MODE_GAME;	//開始時点のモード
+MODE g_mode = MODE_TITLE;	//開始時点のモード
 
  //=============================================
  //メイン関数
@@ -383,6 +385,9 @@ void Update(void)
 	case MODE_NUMBERSELECT:
 		UpdatePlayNumberSelect();
 		break;
+	case MODE_TUTORIAL:
+		UpdateEscapeTutorial();
+		break;
 	case MODE_GAME:
 		UpdateGame();
 		break;
@@ -429,6 +434,9 @@ void Draw(void)
 			break;
 		case MODE_NUMBERSELECT:
 			DrawPlayNumberSelect();
+			break;
+		case MODE_TUTORIAL:
+			DrawEscapeTutorial();
 			break;
 		case MODE_GAME:
 			DrawGame();
@@ -496,6 +504,9 @@ void SetMode(MODE mode)
 	case MODE_NUMBERSELECT:
 		UninitPlayNumberSelect();
 		break;
+	case MODE_TUTORIAL:
+		UninitEscapeTutorial();
+		break;
 	case MODE_GAME:
 		UninitGame();
 		break;
@@ -531,6 +542,9 @@ void SetMode(MODE mode)
 		break;
 	case MODE_NUMBERSELECT:
 		InitPlayNumberSelect();
+		break;
+	case MODE_TUTORIAL:
+		InitEscapeTutorial();
 		break;
 	case MODE_GAME:
 		InitGame();

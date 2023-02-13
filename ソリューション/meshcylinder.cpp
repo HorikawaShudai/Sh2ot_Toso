@@ -23,12 +23,12 @@ typedef enum
 }TEX_MODE;
 
 //グローバル変数
-LPDIRECT3DTEXTURE9 g_pTextureMeshCylinder[MAX_TEXTURE];				//テクスチャのポインタ
-LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffMeshCylinder;		//頂点バッファのポインタ
-LPDIRECT3DINDEXBUFFER9 g_pIndxBuffMeshCylinder;		//インデックスバッファへのポインタ
-D3DXVECTOR3 g_posMeshCylinder;							//位置
-D3DXVECTOR3 g_rotMeshCylinder;							//向き
-D3DXMATRIX g_mtxWorldMeshCylinder;						//ワールドマトリックス
+LPDIRECT3DTEXTURE9 g_pTextureMeshCylinder[MAX_TEXTURE];		//テクスチャのポインタ
+LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffMeshCylinder;				//頂点バッファのポインタ
+LPDIRECT3DINDEXBUFFER9 g_pIndxBuffMeshCylinder;				//インデックスバッファへのポインタ
+D3DXVECTOR3 g_posMeshCylinder;								//位置
+D3DXVECTOR3 g_rotMeshCylinder;								//向き
+D3DXMATRIX g_mtxWorldMeshCylinder;							//ワールドマトリックス
 TEX_MODE g_Tex;  //テクスチャの情報
 
 //====================================================================

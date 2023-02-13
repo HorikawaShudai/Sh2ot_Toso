@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="Billboard.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="CheckboxUI.cpp" />
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="edit.cpp" />
     <ClCompile Include="Effect.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="EscapeClearResult.cpp" />
     <ClCompile Include="EscapeOverResult.cpp" />
     <ClCompile Include="EscapeRanking.cpp" />
+    <ClCompile Include="EscapeTutorial.cpp" />
     <ClCompile Include="exit.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="field.cpp" />
@@ -178,6 +180,8 @@
     <ClCompile Include="NumberUI.cpp" />
     <ClCompile Include="object00.cpp" />
     <ClCompile Include="objectBG.cpp" />
+    <ClCompile Include="paperBG00.cpp" />
+    <ClCompile Include="paperBG01.cpp" />
     <ClCompile Include="particle.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="playerBG.cpp" />
@@ -196,13 +200,16 @@
     <ClCompile Include="Thunder.cpp" />
     <ClCompile Include="time.cpp" />
     <ClCompile Include="title.cpp" />
+    <ClCompile Include="tutorial.cpp" />
     <ClCompile Include="tutorialUI.cpp" />
     <ClCompile Include="VillainRanking.cpp" />
     <ClCompile Include="VillainResult.cpp" />
+    <ClCompile Include="VillainTutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Billboard.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="CheckboxUI.h" />
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="edit.h" />
     <ClInclude Include="Effect.h" />
@@ -210,6 +217,7 @@
     <ClInclude Include="EscapeClearResult.h" />
     <ClInclude Include="EscapeOverResult.h" />
     <ClInclude Include="EscapeRanking.h" />
+    <ClInclude Include="EscapeTutorial.h" />
     <ClInclude Include="exit.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="field.h" />
@@ -228,6 +236,8 @@
     <ClInclude Include="NumberUI.h" />
     <ClInclude Include="object00.h" />
     <ClInclude Include="objectBG.h" />
+    <ClInclude Include="paperBG00.h" />
+    <ClInclude Include="paperBG01.h" />
     <ClInclude Include="particle.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="playerBG.h" />
@@ -246,9 +256,11 @@
     <ClInclude Include="Thunder.h" />
     <ClInclude Include="time.h" />
     <ClInclude Include="title.h" />
+    <ClInclude Include="tutorial.h" />
     <ClInclude Include="tutorialUI.h" />
     <ClInclude Include="VillainRanking.h" />
     <ClInclude Include="VillainResult.h" />
+    <ClInclude Include="VillainTutorial.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

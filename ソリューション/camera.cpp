@@ -205,6 +205,26 @@ void UpdateCamera(void)
 	case MODE_NUMBERSELECT:
 		SelectNumberCamera();
 		break;
+	case MODE_TUTORIAL:
+#ifdef _DEBUG
+		if (GetKeyboardTrigger(DIK_F5) == true)
+		{//キーが押された場合
+			g_bTpsCamera = g_bTpsCamera ? false : true;			//観察用モードに変更
+		}
+#endif
+		//三人称カメラを使うかどうか
+		if (g_bTpsCamera == false)
+		{//使っていない場合
+		 //プレイヤー視点カメラ
+			PlayerFpsCamera();
+			//ResPlayerCamera();
+		}
+		else
+		{//使われている場合
+		 //観察用モード
+			TpsCamera();
+		}
+		break;
 	case MODE_GAME:
 #ifdef _DEBUG
 		if (GetKeyboardTrigger(DIK_F5) == true)

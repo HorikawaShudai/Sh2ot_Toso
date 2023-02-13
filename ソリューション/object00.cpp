@@ -708,7 +708,21 @@ D3DXVECTOR3 CollisionOuterProductObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOl
 		int nData = nCheck;
 		for (int nCnt = (nCheck+1); nCnt < nPosCount; nCnt++)
 		{
-			if ((powf(pos[nData].x,2.0f) + powf(pos[nData].z, 2.0f)) - (powf(pPosOld->x, 2.0f) + powf(pPosOld->z, 2.0f)) > (powf(pos[nCnt].x, 2.0f) + powf(pos[nCnt].z, 2.0f)) - (powf(pPosOld->x, 2.0f) + powf(pPosOld->z, 2.0f)))
+			float fSq1, fSq2;
+			fSq1 = (powf(pos[nData].x, 2.0f) + powf(pos[nData].z, 2.0f)) - (powf(pPosOld->x, 2.0f) + powf(pPosOld->z, 2.0f));
+			if (fSq1 < 0)
+			{
+				fSq1 *= -1.0f;
+			}
+			fSq1 = sqrtf(fSq1);
+
+			fSq2 = (powf(pos[nCnt].x, 2.0f) + powf(pos[nCnt].z, 2.0f)) - (powf(pPosOld->x, 2.0f) + powf(pPosOld->z, 2.0f));
+			if (fSq2 < 0)
+			{
+				fSq2 *= -1.0f;
+			}
+			fSq2 = sqrtf(fSq2);
+			if (fSq1 >  fSq2)
 			{
 				nData = nCnt;
 			}
