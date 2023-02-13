@@ -24,6 +24,7 @@
 #include "exit.h"
 #include "light.h"
 #include "CheckboxUI.h"
+#include "PolygonBG.h"
 
 //マクロ定義
 #define PLAYER_STEALTHSPEED		(0.3f)			//プレイヤーのステルススピード
@@ -50,6 +51,10 @@ Player g_aPlayer[NUM_PLAYER];					//プレイヤーの情報
 int g_nIndexPlayerShadow = -1;					//影のインデックス(番号)
 bool g_bPlayerOps;
 bool g_GameEnd;
+int g_Rand_PolygonColor_R;
+int g_Rand_PolygonColor_G;
+int g_Rand_PolygonColor_B;
+int g_Rand_PolygonColor_A;
 
 //====================================================================
 //プレイヤーの初期化処理
@@ -94,6 +99,12 @@ void InitPlayer(void)
 
 		g_bPlayerOps = false;
 		g_GameEnd = false;
+
+		g_Rand_PolygonColor_R = 0;
+		g_Rand_PolygonColor_G = 0;
+		g_Rand_PolygonColor_B = 0;
+		g_Rand_PolygonColor_A = 0;
+
 		g_aPlayer[nCntPlayer].nNumModel = 1;
 
 		//Xファイルの読み込み
@@ -223,6 +234,18 @@ void UpdatePlayer0(void)
 
 		case PLAYER_HIT:
 			g_aPlayer[nSelectPlayer].nHitCounter--;
+			g_Rand_PolygonColor_R = rand() % 11;
+			g_Rand_PolygonColor_G = rand() % 4;
+			g_Rand_PolygonColor_B = rand() % 11;
+			g_Rand_PolygonColor_A = rand() % 11;
+			if (g_aPlayer[nSelectPlayer].nHitCounter == 59)
+			{
+				SetPolygonBG(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f), 40);
+			}
+			if (g_aPlayer[nSelectPlayer].nHitCounter % 10 == 0)
+			{
+				SetPolygonBG(D3DXCOLOR((float)g_Rand_PolygonColor_R * 0.1f, (float)g_Rand_PolygonColor_G * 0.1f, (float)g_Rand_PolygonColor_B * 0.1f, (float)g_Rand_PolygonColor_A * 0.1f), 30);
+			}
 			if (g_aPlayer[nSelectPlayer].nHitCounter < 0)
 			{
 				g_aPlayer[nSelectPlayer].State = PLAYER_DAMAGE;
@@ -1132,7 +1155,7 @@ bool CollisionCircle(D3DXVECTOR3 pos1, D3DXVECTOR3 pos2, float nRadiusOut, float
 //====================================================================
 void PlayerHit(int nCnt,int nDamage)
 {
-	if (g_aPlayer[nCnt].bUse == true)
+	if (g_aPlayer[nCnt].bUse == true && g_aPlayer[nCnt].State == PLAYER_NORMAL)
 	{
 		g_aPlayer[nCnt].nLife -= nDamage;
 
@@ -1152,6 +1175,7 @@ void PlayerHit(int nCnt,int nDamage)
 		else
 		{
 			g_aPlayer[nCnt].State = PLAYER_HIT;
+			g_aPlayer[nCnt].nHitCounter = 60;
 		}
 	}
 }
