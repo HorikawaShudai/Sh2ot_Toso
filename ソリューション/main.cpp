@@ -101,12 +101,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePlev, LPSTR lpCmdline
 		hInstance,//インスタンスハンドル
 		NULL);
 
-	//初期化設定
-	if (FAILED(Init(hInstance, hWnd, TRUE)))
-	{
-		return -1;
-	};
-
 	//分解能を設定
 	timeBeginPeriod(1);
 	dwCurrentTime = 0;
@@ -115,6 +109,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePlev, LPSTR lpCmdline
 	dwFPSLastTime = timeGetTime();
 	ShowWindow(hWnd, nCmdShow);//ウィンドウの表示状態を設定
 	DispatchMessage(&msg);
+
+	srand(dwExecLastTime);
+
+	//初期化設定
+	if (FAILED(Init(hInstance, hWnd, TRUE)))
+	{
+		return -1;
+	};
+
 	//メッセージループ
 	while (1)
 	{

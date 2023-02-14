@@ -176,6 +176,7 @@ void Init3DResult(void)
 
 	InitLight();
 
+	InitObject00();
 	InitObjectBG();
 
 	//ステージの読み込み

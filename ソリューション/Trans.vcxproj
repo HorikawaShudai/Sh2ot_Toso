@@ -195,6 +195,7 @@
     <ClCompile Include="resultUI.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="score_item.cpp" />
+    <ClCompile Include="sound.cpp" />
     <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="stage.cpp" />
     <ClCompile Include="stamina.cpp" />
@@ -252,6 +253,7 @@
     <ClInclude Include="resultUI.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="score_item.h" />
+    <ClInclude Include="sound.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="stage.h" />
     <ClInclude Include="stamina.h" />
