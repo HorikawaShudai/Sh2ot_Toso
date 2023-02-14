@@ -29,14 +29,17 @@
 #include "paperBG01.h"
 #include "tutorialUI.h"
 #include "CheckboxUI.h"
+#include "EscapeTutorial.h"
 
 //グローバル変数宣言
+TUTORIAL_MODE g_Tutorial;
 
 //====================================================================
 //ゲーム画面の初期化処理
 //====================================================================
 void InitEscapeTutorial()
 {
+	g_Tutorial = MODE_MOVE;
 	DWORD time = timeGetTime();
 	srand((unsigned int)time);
 
@@ -255,6 +258,37 @@ void UpdateEscapeTutorial()
 	UpdateCheckboxUI();
 
 	UpdatePolygonBG();
+
+	switch (g_Tutorial)
+	{
+	case MODE_MOVE:
+
+		break;
+
+	case MODE_CAM_MOVE:
+
+		break;
+
+	case MODE_DASH:
+
+		break;
+
+	case MODE_STELTH:
+
+		break;
+
+	case MODE_VIBE:
+
+		break;
+
+	case MODE_GET_KEY:
+
+		break;
+
+	case MODE_ESCAPE:
+
+		break;
+	}
 }
 
 //====================================================================

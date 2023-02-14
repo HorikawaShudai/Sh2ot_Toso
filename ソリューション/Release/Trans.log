@@ -1,4 +1,15 @@
 <<<<<<< HEAD
+﻿  CheckboxUI.cpp
+  EscapeTutorial.cpp
+  main.cpp
+  コード生成しています。
+  0 of 470 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  コード生成が終了しました。
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Trans.exe
+=======
+<<<<<<< HEAD
 ﻿  EscapeTutorial.cpp
   edit.cpp
   exit.cpp
@@ -20,5 +31,6 @@ time.obj : warning LNK4099: PDB 'vc140.pdb' が 'time.obj' で、または 'C:\U
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作2\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
 =======
 ﻿  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Trans.exe
+>>>>>>> 0c2c95c417d188780a9f1b90e7fe42addfefd5eb
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
 >>>>>>> e2c5ab4fecee6aa792e76a864e8c0646f7991e9a
