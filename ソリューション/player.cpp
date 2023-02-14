@@ -39,8 +39,8 @@
 void UpdatePlayer0(void);
 void UpdatePlayer1(void);
 
-void ResPlayerMove(int nCnt);				//プレイヤーそれぞれに対応
-void ResPlayerrot(int nCnt);				//プレイヤーそれぞれに対応
+void ResPlayerMove(int nCnt);					//プレイヤーそれぞれに対応
+void ResPlayerrot(int nCnt);					//プレイヤーそれぞれに対応
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTexturePlayer[100] = {};	//テクスチャのポインタ
