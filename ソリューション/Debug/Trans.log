@@ -1,3 +1,37 @@
+<<<<<<< HEAD
 ﻿  CheckboxUI.cpp
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+﻿  main.cpp
+  EscapeTutorial.cpp
+  CheckboxUI.cpp
+  コードを生成中...
+cl : コマンド ライン warning D9028: 簡易リビルド時のエラーです、通常のビルドに戻します
+VillainResult.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+tutorialUI.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+Thunder.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+SpotLight.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+resultUI.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+RankingUI.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+RankingNumber.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+PlayModeSelect.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+playerBG.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+particle.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+objectBG.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+NumberUI.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+meshwall.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+meshfield.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+meshdome.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+meshcylinder.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+light.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+input.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+Fog.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+field.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+Fade.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+Effect.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+debugproc.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+Billboard.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+  Trans.vcxproj -> C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+>>>>>>> 871c64fda667e1fea6b3b06e068317ea4251e17e
