@@ -4,8 +4,8 @@
 #include "main.h"
 
 //プロトタイプ宣言
-void InitpaperBG01(void);
-void UninitpaperBG01(void);
-void UpdatepaperBG01(void);
-void DrawpaperBG01(void);
+void InitPaperBG01(void);
+void UninitPaperBG01(void);
+void UpdatePaperBG01(void);
+void DrawPaperBG01(void);
 #endif

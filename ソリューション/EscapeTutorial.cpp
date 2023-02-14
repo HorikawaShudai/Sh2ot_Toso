@@ -13,7 +13,6 @@
 #include "stamina.h"
 #include "life.h"
 #include "meshfield.h"
-#include "meshfield.h"
 #include "score_item.h"
 #include "score.h"
 #include "PlayNumberSelect.h"
@@ -29,14 +28,19 @@
 #include "paperBG01.h"
 #include "tutorialUI.h"
 #include "CheckboxUI.h"
+#include "EscapeTutorial.h"
 
 //グローバル変数宣言
+TUTORIAL_STATE g_TutorialState;
+int g_Counter;
 
 //====================================================================
-//ゲーム画面の初期化処理
+//チュートリアル画面の初期化処理
 //====================================================================
 void InitEscapeTutorial()
 {
+	g_TutorialState = TUTORIAL_STATE_STANDBY;
+	g_Counter = 0;
 	DWORD time = timeGetTime();
 	srand((unsigned int)time);
 
@@ -89,9 +93,9 @@ void InitEscapeTutorial()
 	//出口の初期化処理
 	InitExit();
 
-	SetExit(D3DXVECTOR3(-1000.0f,0.0f,0.8f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), EXIT_TYPE_BIGFRAME);
-	SetExit(D3DXVECTOR3(-1070.0f, 0.0f, 0.8f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), EXIT_TYPE_BIGDOOR_R);
-	SetExit(D3DXVECTOR3(-935.0f, 0.0f, 0.8f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), EXIT_TYPE_BIGDOOR_L);
+	SetExit(D3DXVECTOR3(-1000.0f,0.0f,0.8f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), EXIT_TYPE_BIGFRAME,0);
+	SetExit(D3DXVECTOR3(-1070.0f, 0.0f, 0.8f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), EXIT_TYPE_BIGDOOR_R,0);
+	SetExit(D3DXVECTOR3(-935.0f, 0.0f, 0.8f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), EXIT_TYPE_BIGDOOR_L,0);
 
 	//スコアアイテムの初期化
 	InitItem();
@@ -100,8 +104,8 @@ void InitEscapeTutorial()
 
 	InitTime();
 
-	InitpaperBG00();
-	InitpaperBG01();
+	InitPaperBG00();
+	InitPaperBG01();
 
 	InitTutorialUI();
 
@@ -119,7 +123,7 @@ void InitEscapeTutorial()
 }
 
 //====================================================================
-//ゲーム画面の終了処理
+//チュートリアル画面の終了処理
 //====================================================================
 void UninitEscapeTutorial()
 {
@@ -173,8 +177,8 @@ void UninitEscapeTutorial()
 
 	UninitTime();
 
-	UninitpaperBG00();
-	UninitpaperBG01();
+	UninitPaperBG00();
+	UninitPaperBG01();
 
 	UninitTutorialUI();
 
@@ -187,15 +191,31 @@ void UninitEscapeTutorial()
 }
 
 //====================================================================
-//ゲーム画面の更新処理
+//チュートリアル画面の更新処理
 //====================================================================
 void UpdateEscapeTutorial()
 {
-
+	//プレイ人数情報の取得
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 #ifdef _DEBUG
 	if (GetKeyboardPress(DIK_RETURN))
 	{//ENTERキーを押したときリザルトにフェード
 		SetFade(MODE_GAME);
+	}
+	if (GetKeyboardTrigger(DIK_V))
+	{
+		switch (g_TutorialState)
+		{
+		case TUTORIAL_STATE_STANDBY:
+			g_TutorialState = TUTORIAL_STATE_WAIT;
+			break;
+		case TUTORIAL_STATE_WAIT:
+			g_TutorialState = TUTORIAL_STATE_PLAY;
+			break;
+		case TUTORIAL_STATE_PLAY:
+			g_TutorialState = TUTORIAL_STATE_STANDBY;
+			break;
+		}
 	}
 #endif
 
@@ -206,6 +226,36 @@ void UpdateEscapeTutorial()
 	UpdateLight();
 
 	//UpdateSpotLight();
+
+	switch (g_TutorialState)
+	{
+	case TUTORIAL_STATE_STANDBY:
+		SetPaperBG00(true);
+		SetTutorialUI(true,0);
+		for (int nCntTutorial = 1; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber + 1; nCntTutorial++)
+		{
+			SetTutorialUI(false, nCntTutorial);
+		}
+		g_Counter = 0;
+		break;
+	case TUTORIAL_STATE_WAIT:
+		SetPaperBG00(true);
+		SetTutorialUI(true,0);
+		g_Counter++;
+		if (g_Counter > 100)
+		{
+			g_TutorialState = TUTORIAL_STATE_PLAY;
+		}
+		break;
+	case TUTORIAL_STATE_PLAY:
+		SetPaperBG00(false);
+		SetTutorialUI(false,0);
+		for (int nCntTutorial = 1; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber + 1; nCntTutorial++)
+		{
+			SetTutorialUI(true, nCntTutorial);
+		}
+		break;
+	}
 
 	//メッシュの壁の更新処理
 	UpdateMeshWall();
@@ -246,8 +296,8 @@ void UpdateEscapeTutorial()
 
 	UpdateTime();
 
-	UpdatepaperBG00();
-	UpdatepaperBG01();
+	UpdatePaperBG00();
+	UpdatePaperBG01();
 
 	UpdateTutorialUI();
 
@@ -257,7 +307,7 @@ void UpdateEscapeTutorial()
 }
 
 //====================================================================
-//ゲーム画面の描画処理
+//チュートリアル画面の描画処理
 //====================================================================
 void DrawEscapeTutorial()
 {
@@ -321,11 +371,6 @@ void DrawEscapeTutorial()
 		//鍵UIの描画処理
 		DrawKeyUI();
 
-		DrawpaperBG00();
-		DrawpaperBG01();
-
-		/*DrawTutorialUI();*/
-
 		DrawCheckboxUI();
 
 		//エフェクトの描画処理
@@ -339,4 +384,25 @@ void DrawEscapeTutorial()
 
 	//ビューポートを元に戻す
 	pDevice->SetViewport(&viewportDef);
+
+	DrawPaperBG00();
+	DrawPaperBG01();
+
+	DrawTutorialUI();
+}
+
+//====================================================================
+//チュートリアル画面の状態管理
+//====================================================================
+TUTORIAL_STATE GetEscapeTutorial()
+{
+	return g_TutorialState;
+}
+
+//====================================================================
+//チュートリアル画面の状態管理
+//====================================================================
+void SetEscapeTutorial(TUTORIAL_STATE nSet)
+{
+	g_TutorialState = nSet;
 }
