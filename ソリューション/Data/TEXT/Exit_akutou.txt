@@ -208,4 +208,235 @@ END_EXSITSET
 	
 SETEND_PARTS
 
+//================
+//7つ目の出口
+//================
+EXITSET
+	STRACT	= 6
+	POS		= 2000.0 0.0 -310.0
+	ROT		= 0.0 0.0 0.0
+	TYPE	= 0
+END_EXSITSET
+
+EXITSET
+	STRACT	= 6
+	POS		= 2000.0 0.0 -390.0
+	ROT		= 0.0 0.0 0.0
+	TYPE	= 0
+END_EXSITSET
+
+EXITSET
+	STRACT	= 6
+	POS		= 2000.0 100.0 -310.0
+	ROT		= 0.0 0.0 0.0
+	TYPE	= 1
+END_EXSITSET
+
+EXITSET
+	STRACT	= 6
+	POS		= 2000.0 0.0 -400.0
+	ROT		= 0.0 -1.57 0.0
+	TYPE	= 3
+END_EXSITSET
+	
+SETEND_PARTS
+
+//================
+//8つ目の出口
+//================
+EXITSET
+	STRACT	= 7
+	POS		= 2000.0 0.0 -1520.0
+	ROT		= 0.0 0.0 0.0
+	TYPE	= 0
+END_EXSITSET
+
+EXITSET
+	STRACT	= 7
+	POS		= 2000.0 0.0 -1590.0
+	ROT		= 0.0 0.0 0.0
+	TYPE	= 0
+END_EXSITSET
+
+EXITSET
+	STRACT	= 7
+	POS		= 2000.0 100.0 -1590.0
+	ROT		= 0.0 0.0 0.0
+	TYPE	= 1
+END_EXSITSET
+
+EXITSET
+	STRACT	= 7
+	POS		= 2000.0 0.0 -1600.0
+	ROT		= 0.0 -1.57 0.0
+	TYPE	= 3
+END_EXSITSET
+	
+SETEND_PARTS
+
+//================
+//9つ目の出口
+//================
+EXITSET
+	STRACT	= 8
+	POS		= 990.0 0.0 -1900.0
+	ROT		= 0.0 0.0 0.0
+	TYPE	= 0
+END_EXSITSET
+
+EXITSET
+	STRACT	= 8
+	POS		= 910.0 0.0 -1900.0
+	ROT		= 0.0 0.0 0.0
+	TYPE	= 0
+END_EXSITSET
+
+EXITSET
+	STRACT	= 8
+	POS		= 990.0 100.0 -1900.0
+	ROT		= 0.0 0.0 0.0
+	TYPE	= 1
+END_EXSITSET
+
+EXITSET
+	STRACT	= 8
+	POS		= 920.0 0.0 -1900.0
+	ROT		= 0.0 -1.57 0.0
+	TYPE	= 3
+END_EXSITSET
+	
+SETEND_PARTS
+
+//================
+//10つ目の出口
+//================
+EXITSET
+	STRACT	= 9
+	POS		= 800.0 0.0 -1490.0
+	ROT		= 0.0 0.0 0.0
+	TYPE	= 0
+END_EXSITSET
+
+EXITSET
+	STRACT	= 9
+	POS		= 800.0 0.0 -1410.0
+	ROT		= 0.0 0.0 0.0
+	TYPE	= 0
+END_EXSITSET
+
+EXITSET
+	STRACT	= 9
+	POS		= 800.0 100.0 -1590.0
+	ROT		= 0.0 0.0 0.0
+	TYPE	= 1
+END_EXSITSET
+
+EXITSET
+	STRACT	= 9
+	POS		= 800.0 0.0 -1420.0
+	ROT		= 0.0 -1.57 0.0
+	TYPE	= 3
+END_EXSITSET
+	
+SETEND_PARTS
+
+//================
+//11つ目の出口
+//================
+EXITSET
+	STRACT	= 10
+	POS		= 490.0 0.0 -1300.0
+	ROT		= 0.0 0.0 0.0
+	TYPE	= 0
+END_EXSITSET
+
+EXITSET
+	STRACT	= 10
+	POS		= 410.0 0.0 -1300.0
+	ROT		= 0.0 0.0 0.0
+	TYPE	= 0
+END_EXSITSET
+
+EXITSET
+	STRACT	= 10
+	POS		= 410.0 100.0 -1300.0
+	ROT		= 0.0 0.0 0.0
+	TYPE	= 1
+END_EXSITSET
+
+EXITSET
+	STRACT	= 10
+	POS		= 420.0 0.0 -1300.0
+	ROT		= 0.0 -1.57 0.0
+	TYPE	= 3
+END_EXSITSET
+	
+SETEND_PARTS
+
+//================w
+//12つ目の出口
+//================
+EXITSET
+	STRACT	= 11
+	POS		= -210.0 0.0 -600.0
+	ROT		= 0.0 0.0 0.0
+	TYPE	= 0
+END_EXSITSET
+
+EXITSET
+	STRACT	= 11
+	POS		= -290.0 0.0 -600.0
+	ROT		= 0.0 0.0 0.0
+	TYPE	= 0
+END_EXSITSET
+
+EXITSET
+	STRACT	= 11
+	POS		= -210.0 100.0 -600.0
+	ROT		= 0.0 0.0 0.0
+	TYPE	= 1
+END_EXSITSET
+
+EXITSET
+	STRACT	= 11
+	POS		= -280.0 0.0 -600.0
+	ROT		= 0.0 -1.57 0.0
+	TYPE	= 3
+END_EXSITSET
+	
+SETEND_PARTS
+
+//================w
+//13つ目の出口
+//================
+EXITSET
+	STRACT	= 12
+	POS		= -1110.0 0.0 -680.0
+	ROT		= 0.0 0.0 0.0
+	TYPE	= 0
+END_EXSITSET
+
+EXITSET
+	STRACT	= 12
+	POS		= -1110.0 0.0 -620.0
+	ROT		= 0.0 0.0 0.0
+	TYPE	= 0
+END_EXSITSET
+
+EXITSET
+	STRACT	= 12
+	POS		= -1110.0 100.0 -680.0
+	ROT		= 0.0 0.0 0.0
+	TYPE	= 1
+END_EXSITSET
+
+EXITSET
+	STRACT	= 12
+	POS		= -1110.0 0.0 -630.0
+	ROT		= 0.0 -1.57 0.0
+	TYPE	= 3
+END_EXSITSET
+	
+SETEND_PARTS
+
 END_SCRIPT		# この行は絶対消さないこと！
