@@ -252,8 +252,8 @@ void DoorOpen(void)
 				if (g_aExit[nCntExit].parts[nCntExit1].nType != EXIT_TYPE_BIGFRAME)
 				{//出口の種類がフレーム以外の場合
 
-					float frotRDiff;			//
-					float frotLDiff;			//
+					float frotRDiff;
+					float frotLDiff;
 
 					//目的の角度との差を求める
 					frotLDiff = (g_aExit[nCntExit].parts[3].rotSave.y - 1.5f) - g_aExit[nCntExit].parts[3].rot.y;
