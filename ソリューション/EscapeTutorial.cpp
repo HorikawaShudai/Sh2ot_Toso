@@ -31,16 +31,24 @@
 #include "EscapeTutorial.h"
 
 //グローバル変数宣言
+<<<<<<< HEAD
 TUTORIAL_STATE g_TutorialState;
 int g_Counter;
+=======
+TUTORIAL_MODE g_Tutorial;
+>>>>>>> 3c1ab6ec40d2986d361626d60a22a57874703004
 
 //====================================================================
 //チュートリアル画面の初期化処理
 //====================================================================
 void InitEscapeTutorial()
 {
+<<<<<<< HEAD
 	g_TutorialState = TUTORIAL_STATE_STANDBY;
 	g_Counter = 0;
+=======
+	g_Tutorial = MODE_MOVE;
+>>>>>>> 3c1ab6ec40d2986d361626d60a22a57874703004
 	DWORD time = timeGetTime();
 	srand((unsigned int)time);
 
@@ -93,9 +101,16 @@ void InitEscapeTutorial()
 	//出口の初期化処理
 	InitExit();
 
+<<<<<<< HEAD
 	SetExit(D3DXVECTOR3(-1000.0f,0.0f,0.8f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), EXIT_TYPE_BIGFRAME,0);
 	SetExit(D3DXVECTOR3(-1070.0f, 0.0f, 0.8f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), EXIT_TYPE_BIGDOOR_R,0);
 	SetExit(D3DXVECTOR3(-935.0f, 0.0f, 0.8f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), EXIT_TYPE_BIGDOOR_L,0);
+=======
+	SetExit(D3DXVECTOR3(-1000.0f,0.0f,0.8f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), EXIT_TYPE_BIGFRAME, 0);
+	SetExit(D3DXVECTOR3(-1070.0f, 0.0f, 0.8f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), EXIT_TYPE_BIGDOOR_R, 0);
+	SetExit(D3DXVECTOR3(-935.0f, 0.0f, 0.8f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), EXIT_TYPE_BIGDOOR_L, 0);
+
+>>>>>>> 3c1ab6ec40d2986d361626d60a22a57874703004
 
 	//スコアアイテムの初期化
 	InitItem();
@@ -304,6 +319,37 @@ void UpdateEscapeTutorial()
 	UpdateCheckboxUI();
 
 	UpdatePolygonBG();
+
+	switch (g_Tutorial)
+	{
+	case MODE_MOVE:
+
+		break;
+
+	case MODE_CAM_MOVE:
+
+		break;
+
+	case MODE_DASH:
+
+		break;
+
+	case MODE_STELTH:
+
+		break;
+
+	case MODE_VIBE:
+
+		break;
+
+	case MODE_GET_KEY:
+
+		break;
+
+	case MODE_ESCAPE:
+
+		break;
+	}
 }
 
 //====================================================================

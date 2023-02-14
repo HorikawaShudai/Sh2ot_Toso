@@ -6,11 +6,28 @@
 //ƒ}ƒNƒ’è‹`
 #define MAX_CHECK_TEX		(2)				//ƒ`ƒFƒbƒNƒ{ƒbƒNƒX‚ÌƒeƒNƒXƒ`ƒƒÅ‘å”
 
+<<<<<<< HEAD
 #define CHECKUIPOS_X_1		(-10.0f)		//ƒ`ƒFƒbƒNƒ{ƒbƒNƒX‚ÌUI‚ÌXˆÊ’u1
 #define CHECKUIPOS_Y_1		(350.0f)		//ƒ`ƒFƒbƒNƒ{ƒbƒNƒX‚ÌUI‚ÌYˆÊ’u1
+=======
+#define CHECKUIPOS_X_1	(25.0f)			//ƒ`ƒFƒbƒNƒ{ƒbƒNƒX‚ÌUI‚ÌXˆÊ’u1
+#define CHECKUIPOS_Y_1	(350.0f)		//ƒ`ƒFƒbƒNƒ{ƒbƒNƒX‚ÌUI‚ÌYˆÊ’u1
+>>>>>>> 3c1ab6ec40d2986d361626d60a22a57874703004
 
 #define CHECKUIPOS_X_2		(670.0f)		//ƒ`ƒFƒbƒNƒ{ƒbƒNƒX‚ÌUI‚ÌXˆÊ’u2
 #define CHECKUIPOS_Y_2		(700.0f)		//ƒ`ƒFƒbƒNƒ{ƒbƒNƒX‚ÌUI‚ÌYˆÊ’u2
+
+#define CHECKUIPOS_X_3_0  (200.0)			//ƒ`ƒ…[ƒgƒŠƒAƒ‹—pŽ†‚ªo‚Ä‚¢‚é‚Æ‚«‚ÌXˆÊ’u(1l–Ú)
+#define CHECKUIPOS_Y_3_0  (700.0)			//ƒ`ƒ…[ƒgƒŠƒAƒ‹—pŽ†‚ªo‚Ä‚¢‚é‚Æ‚«‚ÌYˆÊ’u(1l–Ú)
+
+#define CHECKUIPOS_X_3_1  (400.0)			//ƒ`ƒ…[ƒgƒŠƒAƒ‹—pŽ†‚ªo‚Ä‚¢‚é‚Æ‚«‚ÌXˆÊ’u(2l–Ú)
+#define CHECKUIPOS_Y_3_1  (700.0)			//ƒ`ƒ…[ƒgƒŠƒAƒ‹—pŽ†‚ªo‚Ä‚¢‚é‚Æ‚«‚ÌYˆÊ’u(2l–Ú)
+
+#define CHECKUIPOS_X_3_2  (600.0)			//ƒ`ƒ…[ƒgƒŠƒAƒ‹—pŽ†‚ªo‚Ä‚¢‚é‚Æ‚«‚ÌXˆÊ’u(3l–Ú)
+#define CHECKUIPOS_Y_3_2  (700.0)			//ƒ`ƒ…[ƒgƒŠƒAƒ‹—pŽ†‚ªo‚Ä‚¢‚é‚Æ‚«‚ÌYˆÊ’u(3l–Ú)
+
+#define CHECKUIPOS_X_3_3  (800.0)			//ƒ`ƒ…[ƒgƒŠƒAƒ‹—pŽ†‚ªo‚Ä‚¢‚é‚Æ‚«‚ÌXˆÊ’u(4l–Ú)
+#define CHECKUIPOS_Y_3_3  (700.0)			//ƒ`ƒ…[ƒgƒŠƒAƒ‹—pŽ†‚ªo‚Ä‚¢‚é‚Æ‚«‚ÌYˆÊ’u(4l–Ú)
 
 #define CHECKUI_WIDTH		(20.0f)			//ƒ`ƒFƒbƒNƒ{ƒbƒNƒX‚ÌUI‚Ì•
 #define CHECKUI_HEIGHT		(20.0f)			//ƒ`ƒFƒbƒNƒ{ƒbƒNƒX‚ÌUI‚Ì‚‚³
@@ -29,10 +46,11 @@ LPDIRECT3DTEXTURE9 g_pTextureCheckUI[MAX_CHECK_TEX] = {};  //ƒeƒNƒXƒ`ƒƒ‚Ìƒ|ƒCƒ“ƒ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffCheckUI = NULL;			//’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
 CHECKUI g_anCheckUI[NUM_PLAYER];							//ƒ`ƒFƒbƒNƒ{ƒbƒNƒX‚ÌUI‚Ìî•ñ
 int g_NumPlayerCheckUI;
+bool btutorial;  //ƒ`ƒ…[ƒgƒŠƒAƒ‹—pŽ†‚ª•\Ž¦‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©
 
-//====================================================================
-//ƒ`ƒFƒbƒNƒ{ƒbƒNƒX‚Ì‰Šú‰»ˆ—
-//====================================================================
+				 //====================================================================
+				 //ƒ`ƒFƒbƒNƒ{ƒbƒNƒX‚Ì‰Šú‰»ˆ—
+				 //====================================================================
 void InitCheckboxUI(void)
 {
 	//ƒfƒoƒCƒX‚ÌŽæ“¾
@@ -62,25 +80,30 @@ void InitCheckboxUI(void)
 	{
 		if (nCntCheckUI == 0)
 		{
-			g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_1, CHECKUIPOS_Y_1, 0.0f);  //1l–Ú‚ÌˆÊ’u‚ð‰Šú‰»
+			g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_3_0, CHECKUIPOS_Y_3_0, 0.0f);  //1l–Ú‚ÌˆÊ’u‚ð‰Šú‰»
 		}
 
 		if (nCntCheckUI == 1)
 		{
-			g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_2, CHECKUIPOS_Y_1, 0.0f);  //2l–Ú‚ÌˆÊ’u‚ð‰Šú‰»
+			g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_3_1, CHECKUIPOS_Y_3_1, 0.0f);  //2l–Ú‚ÌˆÊ’u‚ð‰Šú‰»
 		}
 
 		if (nCntCheckUI == 2)
 		{
-			g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_1, CHECKUIPOS_Y_2, 0.0f);  //3l–Ú‚ÌˆÊ’u‚ð‰Šú‰»
+			g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_3_2, CHECKUIPOS_Y_3_2, 0.0f);  //3l–Ú‚ÌˆÊ’u‚ð‰Šú‰»
 		}
 
 		if (nCntCheckUI == 3)
 		{
-			g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_2, CHECKUIPOS_Y_2, 0.0f);  //4l–Ú‚ÌˆÊ’u‚ð‰Šú‰»
+			g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_3_3, CHECKUIPOS_Y_3_3, 0.0f);  //4l–Ú‚ÌˆÊ’u‚ð‰Šú‰»
 		}
 		g_anCheckUI[nCntCheckUI].nCheckUI = 3;		//Œ®UI‚Ì’l‚ð‰Šú‰»
+<<<<<<< HEAD
 		g_anCheckUI[nCntCheckUI].bUse = false;		//Žg‚Á‚Ä‚¢‚È‚¢‚±‚Æ‚É
+=======
+		g_anCheckUI[nCntCheckUI].bUse = false;  //Žg‚Á‚Ä‚¢‚È‚¢‚±‚Æ‚É
+		btutorial = true;  //ƒ`ƒ…[ƒgƒŠƒAƒ‹—pŽ†‚ðŽg‚Á‚Ä‚¢‚é‚±‚Æ‚É‚·‚é
+>>>>>>> 3c1ab6ec40d2986d361626d60a22a57874703004
 	}
 
 	//’¸“_ƒoƒbƒtƒ@‚Ì¶¬
@@ -157,7 +180,97 @@ void UninitCheckboxUI(void)
 //====================================================================
 void UpdateCheckboxUI(void)
 {
+	//ƒfƒoƒCƒX‚ÌŽæ“¾
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
+	//ƒvƒŒƒCl”î•ñ‚ÌŽæ“¾
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+
+	//•Ï”éŒ¾
+	int nCntCheckUI;
+
+	VERTEX_2D *pVtx;    //’¸“_î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
+
+						//’¸“_ƒoƒbƒtƒ@‚ðƒƒbƒN‚µA’¸“_î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	g_pVtxBuffCheckUI->Lock(0, 0, (void**)&pVtx, 0);
+
+	//ƒ`ƒ…[ƒgƒŠƒAƒ‹—pŽ†‚ªŽg‚í‚ê‚Ä‚¢‚È‚©‚Á‚½‚ç
+	if (btutorial == false)
+	{
+		//Œ®UI‚Ìî•ñ‚ð‰Šú‰»
+		for (nCntCheckUI = 0; nCntCheckUI < PlayNumber.CurrentSelectNumber; nCntCheckUI++)
+		{
+			if (nCntCheckUI == 0)
+			{
+				g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_1, CHECKUIPOS_Y_1, 0.0f);  //1l–Ú‚ÌˆÊ’u‚ð‰Šú‰»
+			}
+
+			if (nCntCheckUI == 1)
+			{
+				g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_2, CHECKUIPOS_Y_1, 0.0f);  //2l–Ú‚ÌˆÊ’u‚ð‰Šú‰»
+			}
+
+			if (nCntCheckUI == 2)
+			{
+				g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_1, CHECKUIPOS_Y_2, 0.0f);  //3l–Ú‚ÌˆÊ’u‚ð‰Šú‰»
+			}
+
+			if (nCntCheckUI == 3)
+			{
+				g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_2, CHECKUIPOS_Y_2, 0.0f);  //4l–Ú‚ÌˆÊ’u‚ð‰Šú‰»
+			}
+
+			//’¸“_À•W‚ÌÝ’è
+			pVtx[0].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x - CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y - CHECKUI_HEIGHT, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x + CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y - CHECKUI_HEIGHT, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x - CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y + CHECKUI_HEIGHT, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x + CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y + CHECKUI_HEIGHT, 0.0f);
+
+			pVtx += 4;
+
+		}
+	}
+
+	//ƒ`ƒ…[ƒgƒŠƒAƒ‹—pŽ†‚ªŽg‚í‚ê‚Ä‚¢‚½‚ç
+	else
+	{
+		//Œ®UI‚Ìî•ñ‚ð‰Šú‰»
+		for (nCntCheckUI = 0; nCntCheckUI < PlayNumber.CurrentSelectNumber; nCntCheckUI++)
+		{
+			if (nCntCheckUI == 0)
+			{
+				g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_3_0, CHECKUIPOS_Y_3_0, 0.0f);  //1l–Ú‚ÌˆÊ’u‚ð‰Šú‰»
+			}
+
+			if (nCntCheckUI == 1)
+			{
+				g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_3_1, CHECKUIPOS_Y_3_1, 0.0f);  //2l–Ú‚ÌˆÊ’u‚ð‰Šú‰»
+			}
+
+			if (nCntCheckUI == 2)
+			{
+				g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_3_2, CHECKUIPOS_Y_3_2, 0.0f);  //3l–Ú‚ÌˆÊ’u‚ð‰Šú‰»
+			}
+
+			if (nCntCheckUI == 3)
+			{
+				g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_3_3, CHECKUIPOS_Y_3_3, 0.0f);  //4l–Ú‚ÌˆÊ’u‚ð‰Šú‰»
+			}
+
+			g_anCheckUI[nCntCheckUI].bUse = false;
+
+			//’¸“_À•W‚ÌÝ’è
+			pVtx[0].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x - CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y - CHECKUI_HEIGHT, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x + CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y - CHECKUI_HEIGHT, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x - CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y + CHECKUI_HEIGHT, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x + CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y + CHECKUI_HEIGHT, 0.0f);
+
+			pVtx += 4;
+		}
+	}
+
+	//’¸“_ƒoƒbƒtƒ@‚ðƒAƒ“ƒƒbƒN‚·‚é
+	g_pVtxBuffCheckUI->Unlock();
 }
 
 //====================================================================
@@ -166,7 +279,7 @@ void UpdateCheckboxUI(void)
 void DrawCheckboxUI(void)
 {
 	//ƒfƒoƒCƒX‚ÌŽæ“¾
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();;
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	//ƒvƒŒƒCl”î•ñ‚ÌŽæ“¾
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
@@ -201,4 +314,22 @@ void DrawCheckboxUI(void)
 void SetCheckUI(int nPlayer, bool SetCheck)
 {
 	g_anCheckUI[nPlayer].bUse = SetCheck;
+
 }
+
+//============================
+//ƒ`ƒFƒbƒNƒ{ƒbƒNƒX‚ÌÝ’è
+//============================
+void MovePosCheckUI(int nPlayer, bool SetCheck)
+{
+	btutorial = SetCheck;
+}
+//============================
+//ƒ`ƒFƒbƒNƒ{ƒbƒNƒX‚ÌƒŠƒZƒbƒg
+//============================
+void ResetCheckUI(int nPlayer)
+{
+	g_anCheckUI[nPlayer].bUse = false;
+}
+
+

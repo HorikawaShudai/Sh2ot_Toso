@@ -39,8 +39,8 @@
 void UpdatePlayer0(void);
 void UpdatePlayer1(void);
 
-void ResPlayerMove(int nCnt);				//プレイヤーそれぞれに対応
-void ResPlayerrot(int nCnt);				//プレイヤーそれぞれに対応
+void ResPlayerMove(int nCnt);					//プレイヤーそれぞれに対応
+void ResPlayerrot(int nCnt);					//プレイヤーそれぞれに対応
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTexturePlayer[100] = {};	//テクスチャのポインタ
@@ -323,6 +323,16 @@ void UpdatePlayer0(void)
 			}
 		}
 
+		if (GetGamepadTrigger(BUTTON_A, nSelectPlayer) == true)
+		{
+			MovePosCheckUI(nSelectPlayer, false);
+		}
+
+		if (GetGamepadTrigger(BUTTON_B, nSelectPlayer) == true)
+		{
+			MovePosCheckUI(nSelectPlayer, true);
+		}
+
 		//脱出処理
 		if (g_aPlayer[nSelectPlayer].bGetKey == true)
 		{//プレイヤーが鍵を持っている場合
@@ -336,7 +346,7 @@ void UpdatePlayer0(void)
 
 					g_aPlayer[nSelectPlayer].bCheck = false;
 					SetCheckUI(nSelectPlayer, false);
-
+					MovePosCheckUI(nSelectPlayer, true);
 				}
 			}
 		}
@@ -435,23 +445,35 @@ void PlayerMoveInput(int nCnt)
 			{//左スティックの上入力
 				g_aPlayer[nCnt].NormarizeMove.z += cosf(Getrot(CurrentCamera).y);
 				g_aPlayer[nCnt].NormarizeMove.x += sinf(Getrot(CurrentCamera).y);
+
+				g_aPlayer[CurrentCamera].bCheck = true;
+				SetCheckUI(CurrentCamera, true);
 			}
 			if (GetGamepad_Stick_Left(0).y < 0.0f)
 			{//左スティックの下入力
 				g_aPlayer[nCnt].NormarizeMove.z -= cosf(Getrot(CurrentCamera).y);
 				g_aPlayer[nCnt].NormarizeMove.x -= sinf(Getrot(CurrentCamera).y);
+
+				g_aPlayer[CurrentCamera].bCheck = true;
+				SetCheckUI(CurrentCamera, true);
 			}
 			if (GetGamepad_Stick_Left(0).x > 0.0f)
 			{//左スティックの右入力
 			 //左スティックによる左右移動
 				g_aPlayer[nCnt].NormarizeMove.x += cosf(Getrot(CurrentCamera).y);
 				g_aPlayer[nCnt].NormarizeMove.z -= sinf(Getrot(CurrentCamera).y);
+
+				g_aPlayer[CurrentCamera].bCheck = true;
+				SetCheckUI(CurrentCamera, true);
 			}
 			if (GetGamepad_Stick_Left(0).x < 0.0f)
 			{//左スティックの左入力
 			 //左スティックによる左右移動
 				g_aPlayer[nCnt].NormarizeMove.x -= cosf(Getrot(CurrentCamera).y);
 				g_aPlayer[nCnt].NormarizeMove.z += sinf(Getrot(CurrentCamera).y);
+
+				g_aPlayer[CurrentCamera].bCheck = true;
+				SetCheckUI(CurrentCamera, true);
 			}
 		}
 
