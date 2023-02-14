@@ -15,14 +15,14 @@ SCRIPT			# Ç±ÇÃçsÇÕê‚ëŒè¡Ç≥Ç»Ç¢Ç±Ç∆ÅI
 //================
 EXITSET
 	STRACT	= 0
-	POS		= -925.0 0.0 -700.0
+	POS		= -920.0 0.0 -700.0
 	ROT		= 0.0 0.0 0.0
 	TYPE	= 0
 END_EXSITSET
 
 EXITSET
 	STRACT	= 0
-	POS		= -1075.0 0.0 -700.0
+	POS		= -1080.0 0.0 -700.0
 	ROT		= 0.0 0.0 0.0
 	TYPE	= 0
 END_EXSITSET
@@ -36,16 +36,16 @@ END_EXSITSET
 
 EXITSET
 	STRACT	= 0
-	POS		= -935.0 0.0 -700.0
+	POS		= -1070.0 0.0 -700.0
 	ROT		= 0.0 0.0 0.0
-	TYPE	= 2
+	TYPE	= 3
 END_EXSITSET
 
 EXITSET
 	STRACT	= 0
-	POS		= -1065.0 0.0 -700.0
+	POS		= -930.0 0.0 -700.0
 	ROT		= 0.0 0.0 0.0
-	TYPE	= 3
+	TYPE	= 2
 END_EXSITSET
 	
 SETEND_PARTS
