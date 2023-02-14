@@ -1,7 +1,6 @@
 #ifndef _ESCAPETUTORIAL_H_
 #define _ESCAPETUTORIAL_H_
 
-<<<<<<< HEAD
 //フェードの状態
 typedef enum
 {
@@ -10,7 +9,7 @@ typedef enum
 	TUTORIAL_STATE_PLAY,
 	TUTORIAL_STATE_MAX,
 }TUTORIAL_STATE;
-=======
+
 //チュートリアル内容の構造体(列挙)
 typedef enum
 {
@@ -23,7 +22,6 @@ typedef enum
 	MODE_ESCAPE,		//脱出
 	MODE__TUTORIAL_MAX,
 }TUTORIAL_MODE;
->>>>>>> 3c1ab6ec40d2986d361626d60a22a57874703004
 
 //プロトタイプ宣言
 void InitEscapeTutorial();
