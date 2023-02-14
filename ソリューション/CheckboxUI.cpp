@@ -6,11 +6,16 @@
 //マクロ定義
 #define MAX_CHECK_TEX		(2)				//チェックボックスのテクスチャ最大数
 
+<<<<<<< HEAD
+#define CHECKUIPOS_X_1		(-10.0f)		//チェックボックスのUIのX位置1
+#define CHECKUIPOS_Y_1		(350.0f)		//チェックボックスのUIのY位置1
+=======
 #define CHECKUIPOS_X_1	(25.0f)			//チェックボックスのUIのX位置1
 #define CHECKUIPOS_Y_1	(350.0f)		//チェックボックスのUIのY位置1
+>>>>>>> 3c1ab6ec40d2986d361626d60a22a57874703004
 
-#define CHECKUIPOS_X_2	(670.0f)		//チェックボックスのUIのX位置2
-#define CHECKUIPOS_Y_2	(700.0f)		//チェックボックスのUIのY位置2
+#define CHECKUIPOS_X_2		(670.0f)		//チェックボックスのUIのX位置2
+#define CHECKUIPOS_Y_2		(700.0f)		//チェックボックスのUIのY位置2
 
 #define CHECKUIPOS_X_3_0  (200.0)			//チュートリアル用紙が出ているときのX位置(1人目)
 #define CHECKUIPOS_Y_3_0  (700.0)			//チュートリアル用紙が出ているときのY位置(1人目)
@@ -25,21 +30,21 @@
 #define CHECKUIPOS_Y_3_3  (700.0)			//チュートリアル用紙が出ているときのY位置(4人目)
 
 #define CHECKUI_WIDTH		(20.0f)			//チェックボックスのUIの幅
-#define CHECKUI_HEIGHT	(20.0f)			//チェックボックスのUIの高さ
+#define CHECKUI_HEIGHT		(20.0f)			//チェックボックスのUIの高さ
 #define CHECKUI_INTERVAL	(50.0f)			//チェックボックスのUI同士の間隔
 
 //チェックボックスUIの構造体
 typedef struct
 {
-	D3DXVECTOR3 pos;  //鍵UIの位置
-	int nCheckUI;  //鍵UIの数
-	bool bUse;  //使われているかどうか
+	D3DXVECTOR3 pos;	 //鍵UIの位置
+	int nCheckUI;		 //鍵UIの数
+	bool bUse;			 //使われているかどうか
 }CHECKUI;
 
 //グローバル変数宣言
 LPDIRECT3DTEXTURE9 g_pTextureCheckUI[MAX_CHECK_TEX] = {};  //テクスチャのポインタ
-LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffCheckUI = NULL; //頂点バッファへのポインタ
-CHECKUI g_anCheckUI[NUM_PLAYER];			//チェックボックスのUIの情報
+LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffCheckUI = NULL;			//頂点バッファへのポインタ
+CHECKUI g_anCheckUI[NUM_PLAYER];							//チェックボックスのUIの情報
 int g_NumPlayerCheckUI;
 bool btutorial;  //チュートリアル用紙が表示されているかどうか
 
@@ -93,8 +98,12 @@ void InitCheckboxUI(void)
 			g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_3_3, CHECKUIPOS_Y_3_3, 0.0f);  //4人目の位置を初期化
 		}
 		g_anCheckUI[nCntCheckUI].nCheckUI = 3;		//鍵UIの値を初期化
+<<<<<<< HEAD
+		g_anCheckUI[nCntCheckUI].bUse = false;		//使っていないことに
+=======
 		g_anCheckUI[nCntCheckUI].bUse = false;  //使っていないことに
 		btutorial = true;  //チュートリアル用紙を使っていることにする
+>>>>>>> 3c1ab6ec40d2986d361626d60a22a57874703004
 	}
 
 	//頂点バッファの生成
@@ -107,7 +116,7 @@ void InitCheckboxUI(void)
 
 	VERTEX_2D *pVtx;    //頂点情報へのポインタ
 
-						//頂点バッファをロックし、頂点情報へのポインタを取得
+	//頂点バッファをロックし、頂点情報へのポインタを取得
 	g_pVtxBuffCheckUI->Lock(0, 0, (void**)&pVtx, 0);
 
 	for (int nCnt = 0; nCnt < PlayNumber.CurrentSelectNumber; nCnt++)
@@ -247,6 +256,8 @@ void UpdateCheckboxUI(void)
 			{
 				g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_3_3, CHECKUIPOS_Y_3_3, 0.0f);  //4人目の位置を初期化
 			}
+
+			g_anCheckUI[nCntCheckUI].bUse = false;
 
 			//頂点座標の設定
 			pVtx[0].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x - CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y - CHECKUI_HEIGHT, 0.0f);

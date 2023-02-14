@@ -32,6 +32,7 @@ typedef struct
 	D3DXVECTOR3 vtxMin;							//モデルの最小
 	D3DXVECTOR3 vtxMax;							//モデルの最大
 	int nType;									//モデルの種類
+	int nExitOKcnt;								//脱出可能までのカウント
 	bool bUse;									//モデルが使用されているかどうか
 	bool bExitOK;								//脱出可能であるかどうか
 	int nIdxModelParent;						//親子設定

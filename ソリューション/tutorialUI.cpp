@@ -1,37 +1,63 @@
 #include "main.h"
 #include "resultUI.h"
-#include "numberUI.h"
 #include "game.h"
 #include "tutorialUI.h"
+#include "EscapeTutorial.h"
+#include "PlayNumberSelect.h"
 
 //マクロ定義
-#define NUM_SSUI		(4)	//GAMEUIの種類数
+#define NUM_SSUI					(6)			//TUTORIALUIの種類数
+#define MAX_SSUI					(5)			//TUTORIALUIの最大使用数
 
-#define POS_TUTORIAL_BG_X		(200.0f)	//「」のX座標の位置
-#define POS_TUTORIAL_BG_Y		(400.0f)	//「」のY座標の位置
-#define SIZE_TUTORIAL_BG_X		(20.0f)		//「」の幅
-#define SIZE_TUTORIAL_BG_Y		(20.0f)		//「」の高さ
+#define POS_TUTORIALUI_ALL_X		(640.0f)	//「」のX座標の位置
+#define POS_TUTORIALUI_ALL_Y		(350.0f)	//「」のY座標の位置
+#define SIZE_TUTORIALUI_ALL_X		(200.0f)	//「」の幅
+#define SIZE_TUTORIALUI_ALL_Y		(100.0f)	//「」の高さ
 
-#define POS_SCORE_BG_X			(400.0f)	//「」のX座標の位置
-#define POS_SCORE_BG_Y			(400.0f)	//「」のY座標の位置
-#define SIZE_SCORE_BG_X			(20.0f)		//「」の幅
-#define SIZE_SCORE_BG_Y			(20.0f)		//「」の高さ
+#define POS_TUTORIALUI_1_01_X		(640.0f)	//「」のX座標の位置
+#define POS_TUTORIALUI_1_01_Y		(620.0f)	//「」のY座標の位置
+#define SIZE_TUTORIALUI_1_01_X		(500.0f)	//「」の幅
+#define SIZE_TUTORIALUI_1_01_Y		(100.0f)	//「」の高さ
 
-#define POS_PERFECT_BG_X		(1040.0f)	//「」のX座標の位置
-#define POS_PERFECT_BG_Y		(100.0f)	//「」のY座標の位置
-#define SIZE_PERFECT_BG_X		(150.0f)	//「」の幅
-#define SIZE_PERFECT_BG_Y		(75.0f)		//「」の高さ
+#define POS_TUTORIALUI_2_01_X		(320.0f)	//「」のX座標の位置
+#define POS_TUTORIALUI_2_01_Y		(600.0f)	//「」のY座標の位置
+#define SIZE_TUTORIALUI_2_01_X		(300.0f)	//「」の幅
+#define SIZE_TUTORIALUI_2_01_Y		(120.0f)	//「」の高さ
 
-#define POS_ALLPERFECT_BG_X		(200.0f)	//「」のX座標の位置
-#define POS_ALLPERFECT_BG_Y		(120.0f)	//「」のY座標の位置
-#define SIZE_ALLPERFECT_BG_X	(200.0f)	//「」の幅
-#define SIZE_ALLPERFECT_BG_Y	(100.0f)	//「」の高さ
+#define POS_TUTORIALUI_2_02_X		(960.0f)	//「」のX座標の位置
+#define POS_TUTORIALUI_2_02_Y		(600.0f)	//「」のY座標の位置
+#define SIZE_TUTORIALUI_2_02_X		(300.0f)	//「」の幅
+#define SIZE_TUTORIALUI_2_02_Y		(120.0f)		//「」の高さ
+
+#define POS_TUTORIALUI_34_01_X		(320.0f)	//「」のX座標の位置
+#define POS_TUTORIALUI_34_01_Y		(310.0f)	//「」のY座標の位置
+#define SIZE_TUTORIALUI_34_01_X		(300.0f)	//「」の幅
+#define SIZE_TUTORIALUI_34_01_Y		(50.0f)		//「」の高さ
+
+#define POS_TUTORIALUI_34_02_X		(960.0f)	//「」のX座標の位置
+#define POS_TUTORIALUI_34_02_Y		(310.0f)	//「」のY座標の位置
+#define SIZE_TUTORIALUI_34_02_X		(300.0f)	//「」の幅
+#define SIZE_TUTORIALUI_34_02_Y		(50.0f)		//「」の高さ
+
+#define POS_TUTORIALUI_34_03_X		(320.0f)	//「」のX座標の位置
+#define POS_TUTORIALUI_34_03_Y		(670.0f)	//「」のY座標の位置
+#define SIZE_TUTORIALUI_34_03_X		(300.0f)	//「」の幅
+#define SIZE_TUTORIALUI_34_03_Y		(50.0f)		//「」の高さ
+
+#define POS_TUTORIALUI_34_04_X		(960.0f)	//「」のX座標の位置
+#define POS_TUTORIALUI_34_04_Y		(670.0f)	//「」のY座標の位置
+#define SIZE_TUTORIALUI_34_04_X		(300.0f)	//「」の幅
+#define SIZE_TUTORIALUI_34_04_Y		(50.0f)		//「」の高さ
+
+#define UP_TUTORIALUI				(100.0f)	//紙を取り出すときの上昇度
+#define UP_TUTORIALUI_COUNTER_MAX	(100)		//紙を取り出す速さのカウンター
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_apTextureTutorialUI[NUM_SSUI] = {};	//テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffTutorialUI = NULL;		//頂点バッファへのポインタ
-bool bUseTutorialUI[NUM_SSUI];		//頂点バッファへのポインタ
+bool bUseTutorialUI[MAX_SSUI];		//頂点バッファへのポインタ
 bool g_bStageClear_Tutorial;
+int TutorialUI_TrueCounter;			//紙を取り出すときのカウンター
 
 //====================================================================
 //タイトル画面の初期化処理
@@ -62,19 +88,24 @@ void InitTutorialUI(void)
 	//	"data\\TEXTURE\\RankingAllPerfect.png",
 	//	&g_apTextureTutorialUI[3]);
 
+	//D3DXCreateTextureFromFile(pDevice,
+	//	"data\\TEXTURE\\RankingAllPerfect.png",
+	//	&g_apTextureTutorialUI[4]);
+
+	//D3DXCreateTextureFromFile(pDevice,
+	//	"data\\TEXTURE\\RankingAllPerfect.png",
+	//	&g_apTextureTutorialUI[5]);
+
 	//UIの表示設定
 	bUseTutorialUI[0] = true;
-	bUseTutorialUI[1] = true;
-	bUseTutorialUI[2] = true;
-	bUseTutorialUI[3] = true;
-
-	if (bUseTutorialUI[1] == true)
-	{
-		SetNumberUI(D3DXVECTOR3(600.0f, 600.0f, 0.0f), 50.0f, 50.0f, 1);
-	}
+	bUseTutorialUI[1] = false;
+	bUseTutorialUI[2] = false;
+	bUseTutorialUI[3] = false;
+	bUseTutorialUI[4] = false;
+	TutorialUI_TrueCounter = 0;
 
 	//頂点バッファの生成
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * NUM_SSUI,
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * MAX_SSUI,
 		D3DUSAGE_WRITEONLY,
 		FVF_VERTEX_2D,
 		D3DPOOL_MANAGED,
@@ -86,40 +117,110 @@ void InitTutorialUI(void)
 					//頂点バッファをロックし、両店情報へのポインタを所得
 	g_pVtxBuffTutorialUI->Lock(0, 0, (void**)&pVtx, 0);
 
-	for (nCntBG = 0; nCntBG < NUM_SSUI; nCntBG++)
+	for (nCntBG = 0; nCntBG < MAX_SSUI; nCntBG++)
 	{
 		switch (nCntBG)
 		{
 		case 0:
 			//頂点座標の設定
-			pVtx[0].pos = D3DXVECTOR3(POS_TUTORIAL_BG_X - SIZE_TUTORIAL_BG_X, POS_TUTORIAL_BG_Y - SIZE_TUTORIAL_BG_Y, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(POS_TUTORIAL_BG_X + SIZE_TUTORIAL_BG_X, POS_TUTORIAL_BG_Y - SIZE_TUTORIAL_BG_Y, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(POS_TUTORIAL_BG_X - SIZE_TUTORIAL_BG_X, POS_TUTORIAL_BG_Y + SIZE_TUTORIAL_BG_Y, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(POS_TUTORIAL_BG_X + SIZE_TUTORIAL_BG_X, POS_TUTORIAL_BG_Y + SIZE_TUTORIAL_BG_Y, 0.0f);
+			pVtx[0].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X - SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y - SIZE_TUTORIALUI_ALL_Y, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X + SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y - SIZE_TUTORIALUI_ALL_Y, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X - SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y + SIZE_TUTORIALUI_ALL_Y, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X + SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y + SIZE_TUTORIALUI_ALL_Y, 0.0f);
 			break;
 
 		case 1:
-			//頂点座標の設定
-			pVtx[0].pos = D3DXVECTOR3(POS_SCORE_BG_X - SIZE_SCORE_BG_X, POS_SCORE_BG_Y - SIZE_SCORE_BG_Y, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(POS_SCORE_BG_X + SIZE_SCORE_BG_X, POS_SCORE_BG_Y - SIZE_SCORE_BG_Y, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(POS_SCORE_BG_X - SIZE_SCORE_BG_X, POS_SCORE_BG_Y + SIZE_SCORE_BG_Y, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(POS_SCORE_BG_X + SIZE_SCORE_BG_X, POS_SCORE_BG_Y + SIZE_SCORE_BG_Y, 0.0f);
+			switch (GetPlayNumberSelect().CurrentSelectNumber)
+			{
+			case 1:
+				//頂点座標の設定
+				pVtx[0].pos = D3DXVECTOR3(POS_TUTORIALUI_1_01_X - SIZE_TUTORIALUI_1_01_X, POS_TUTORIALUI_1_01_Y - SIZE_TUTORIALUI_1_01_Y, 0.0f);
+				pVtx[1].pos = D3DXVECTOR3(POS_TUTORIALUI_1_01_X + SIZE_TUTORIALUI_1_01_X, POS_TUTORIALUI_1_01_Y - SIZE_TUTORIALUI_1_01_Y, 0.0f);
+				pVtx[2].pos = D3DXVECTOR3(POS_TUTORIALUI_1_01_X - SIZE_TUTORIALUI_1_01_X, POS_TUTORIALUI_1_01_Y + SIZE_TUTORIALUI_1_01_Y, 0.0f);
+				pVtx[3].pos = D3DXVECTOR3(POS_TUTORIALUI_1_01_X + SIZE_TUTORIALUI_1_01_X, POS_TUTORIALUI_1_01_Y + SIZE_TUTORIALUI_1_01_Y, 0.0f);
+				break;
+			case 2:
+				//頂点座標の設定
+				pVtx[0].pos = D3DXVECTOR3(POS_TUTORIALUI_2_01_X - SIZE_TUTORIALUI_2_01_X, POS_TUTORIALUI_2_01_Y - SIZE_TUTORIALUI_2_01_Y, 0.0f);
+				pVtx[1].pos = D3DXVECTOR3(POS_TUTORIALUI_2_01_X + SIZE_TUTORIALUI_2_01_X, POS_TUTORIALUI_2_01_Y - SIZE_TUTORIALUI_2_01_Y, 0.0f);
+				pVtx[2].pos = D3DXVECTOR3(POS_TUTORIALUI_2_01_X - SIZE_TUTORIALUI_2_01_X, POS_TUTORIALUI_2_01_Y + SIZE_TUTORIALUI_2_01_Y, 0.0f);
+				pVtx[3].pos = D3DXVECTOR3(POS_TUTORIALUI_2_01_X + SIZE_TUTORIALUI_2_01_X, POS_TUTORIALUI_2_01_Y + SIZE_TUTORIALUI_2_01_Y, 0.0f);
+				break;
+			case 3:
+				//頂点座標の設定
+				pVtx[0].pos = D3DXVECTOR3(POS_TUTORIALUI_34_01_X - SIZE_TUTORIALUI_34_01_X, POS_TUTORIALUI_34_01_Y - SIZE_TUTORIALUI_34_01_Y, 0.0f);
+				pVtx[1].pos = D3DXVECTOR3(POS_TUTORIALUI_34_01_X + SIZE_TUTORIALUI_34_01_X, POS_TUTORIALUI_34_01_Y - SIZE_TUTORIALUI_34_01_Y, 0.0f);
+				pVtx[2].pos = D3DXVECTOR3(POS_TUTORIALUI_34_01_X - SIZE_TUTORIALUI_34_01_X, POS_TUTORIALUI_34_01_Y + SIZE_TUTORIALUI_34_01_Y, 0.0f);
+				pVtx[3].pos = D3DXVECTOR3(POS_TUTORIALUI_34_01_X + SIZE_TUTORIALUI_34_01_X, POS_TUTORIALUI_34_01_Y + SIZE_TUTORIALUI_34_01_Y, 0.0f);
+				break;
+			case 4:
+				//頂点座標の設定
+				pVtx[0].pos = D3DXVECTOR3(POS_TUTORIALUI_34_01_X - SIZE_TUTORIALUI_34_01_X, POS_TUTORIALUI_34_01_Y - SIZE_TUTORIALUI_34_01_Y, 0.0f);
+				pVtx[1].pos = D3DXVECTOR3(POS_TUTORIALUI_34_01_X + SIZE_TUTORIALUI_34_01_X, POS_TUTORIALUI_34_01_Y - SIZE_TUTORIALUI_34_01_Y, 0.0f);
+				pVtx[2].pos = D3DXVECTOR3(POS_TUTORIALUI_34_01_X - SIZE_TUTORIALUI_34_01_X, POS_TUTORIALUI_34_01_Y + SIZE_TUTORIALUI_34_01_Y, 0.0f);
+				pVtx[3].pos = D3DXVECTOR3(POS_TUTORIALUI_34_01_X + SIZE_TUTORIALUI_34_01_X, POS_TUTORIALUI_34_01_Y + SIZE_TUTORIALUI_34_01_Y, 0.0f);
+				break;
+			}
 			break;
 
 		case 2:
-			//頂点座標の設定
-			pVtx[0].pos = D3DXVECTOR3(POS_PERFECT_BG_X - SIZE_PERFECT_BG_X, POS_PERFECT_BG_Y - SIZE_PERFECT_BG_Y, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(POS_PERFECT_BG_X + SIZE_PERFECT_BG_X, POS_PERFECT_BG_Y - SIZE_PERFECT_BG_Y, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(POS_PERFECT_BG_X - SIZE_PERFECT_BG_X, POS_PERFECT_BG_Y + SIZE_PERFECT_BG_Y, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(POS_PERFECT_BG_X + SIZE_PERFECT_BG_X, POS_PERFECT_BG_Y + SIZE_PERFECT_BG_Y, 0.0f);
+			switch (GetPlayNumberSelect().CurrentSelectNumber)
+			{
+			case 2:
+				//頂点座標の設定
+				pVtx[0].pos = D3DXVECTOR3(POS_TUTORIALUI_2_02_X - SIZE_TUTORIALUI_2_02_X, POS_TUTORIALUI_2_02_Y - SIZE_TUTORIALUI_2_02_Y, 0.0f);
+				pVtx[1].pos = D3DXVECTOR3(POS_TUTORIALUI_2_02_X + SIZE_TUTORIALUI_2_02_X, POS_TUTORIALUI_2_02_Y - SIZE_TUTORIALUI_2_02_Y, 0.0f);
+				pVtx[2].pos = D3DXVECTOR3(POS_TUTORIALUI_2_02_X - SIZE_TUTORIALUI_2_02_X, POS_TUTORIALUI_2_02_Y + SIZE_TUTORIALUI_2_02_Y, 0.0f);
+				pVtx[3].pos = D3DXVECTOR3(POS_TUTORIALUI_2_02_X + SIZE_TUTORIALUI_2_02_X, POS_TUTORIALUI_2_02_Y + SIZE_TUTORIALUI_2_02_Y, 0.0f);
+				break;
+			case 3:
+				//頂点座標の設定
+				pVtx[0].pos = D3DXVECTOR3(POS_TUTORIALUI_34_02_X - SIZE_TUTORIALUI_34_02_X, POS_TUTORIALUI_34_02_Y - SIZE_TUTORIALUI_34_02_Y, 0.0f);
+				pVtx[1].pos = D3DXVECTOR3(POS_TUTORIALUI_34_02_X + SIZE_TUTORIALUI_34_02_X, POS_TUTORIALUI_34_02_Y - SIZE_TUTORIALUI_34_02_Y, 0.0f);
+				pVtx[2].pos = D3DXVECTOR3(POS_TUTORIALUI_34_02_X - SIZE_TUTORIALUI_34_02_X, POS_TUTORIALUI_34_02_Y + SIZE_TUTORIALUI_34_02_Y, 0.0f);
+				pVtx[3].pos = D3DXVECTOR3(POS_TUTORIALUI_34_02_X + SIZE_TUTORIALUI_34_02_X, POS_TUTORIALUI_34_02_Y + SIZE_TUTORIALUI_34_02_Y, 0.0f);
+				break;
+			case 4:
+				//頂点座標の設定
+				pVtx[0].pos = D3DXVECTOR3(POS_TUTORIALUI_34_02_X - SIZE_TUTORIALUI_34_02_X, POS_TUTORIALUI_34_02_Y - SIZE_TUTORIALUI_34_02_Y, 0.0f);
+				pVtx[1].pos = D3DXVECTOR3(POS_TUTORIALUI_34_02_X + SIZE_TUTORIALUI_34_02_X, POS_TUTORIALUI_34_02_Y - SIZE_TUTORIALUI_34_02_Y, 0.0f);
+				pVtx[2].pos = D3DXVECTOR3(POS_TUTORIALUI_34_02_X - SIZE_TUTORIALUI_34_02_X, POS_TUTORIALUI_34_02_Y + SIZE_TUTORIALUI_34_02_Y, 0.0f);
+				pVtx[3].pos = D3DXVECTOR3(POS_TUTORIALUI_34_02_X + SIZE_TUTORIALUI_34_02_X, POS_TUTORIALUI_34_02_Y + SIZE_TUTORIALUI_34_02_Y, 0.0f);
+				break;
+			}
 			break;
 
 		case 3:
-			//頂点座標の設定
-			pVtx[0].pos = D3DXVECTOR3(POS_ALLPERFECT_BG_X - SIZE_ALLPERFECT_BG_X, POS_ALLPERFECT_BG_Y - SIZE_ALLPERFECT_BG_Y, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(POS_ALLPERFECT_BG_X + SIZE_ALLPERFECT_BG_X, POS_ALLPERFECT_BG_Y - SIZE_ALLPERFECT_BG_Y, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(POS_ALLPERFECT_BG_X - SIZE_ALLPERFECT_BG_X, POS_ALLPERFECT_BG_Y + SIZE_ALLPERFECT_BG_Y, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(POS_ALLPERFECT_BG_X + SIZE_ALLPERFECT_BG_X, POS_ALLPERFECT_BG_Y + SIZE_ALLPERFECT_BG_Y, 0.0f);
+			switch (GetPlayNumberSelect().CurrentSelectNumber)
+			{
+			case 3:
+				//頂点座標の設定
+				pVtx[0].pos = D3DXVECTOR3(POS_TUTORIALUI_34_03_X - SIZE_TUTORIALUI_34_03_X, POS_TUTORIALUI_34_03_Y - SIZE_TUTORIALUI_34_03_Y, 0.0f);
+				pVtx[1].pos = D3DXVECTOR3(POS_TUTORIALUI_34_03_X + SIZE_TUTORIALUI_34_03_X, POS_TUTORIALUI_34_03_Y - SIZE_TUTORIALUI_34_03_Y, 0.0f);
+				pVtx[2].pos = D3DXVECTOR3(POS_TUTORIALUI_34_03_X - SIZE_TUTORIALUI_34_03_X, POS_TUTORIALUI_34_03_Y + SIZE_TUTORIALUI_34_03_Y, 0.0f);
+				pVtx[3].pos = D3DXVECTOR3(POS_TUTORIALUI_34_03_X + SIZE_TUTORIALUI_34_03_X, POS_TUTORIALUI_34_03_Y + SIZE_TUTORIALUI_34_03_Y, 0.0f);
+				break;
+			case 4:
+				//頂点座標の設定
+				pVtx[0].pos = D3DXVECTOR3(POS_TUTORIALUI_34_03_X - SIZE_TUTORIALUI_34_03_X, POS_TUTORIALUI_34_03_Y - SIZE_TUTORIALUI_34_03_Y, 0.0f);
+				pVtx[1].pos = D3DXVECTOR3(POS_TUTORIALUI_34_03_X + SIZE_TUTORIALUI_34_03_X, POS_TUTORIALUI_34_03_Y - SIZE_TUTORIALUI_34_03_Y, 0.0f);
+				pVtx[2].pos = D3DXVECTOR3(POS_TUTORIALUI_34_03_X - SIZE_TUTORIALUI_34_03_X, POS_TUTORIALUI_34_03_Y + SIZE_TUTORIALUI_34_03_Y, 0.0f);
+				pVtx[3].pos = D3DXVECTOR3(POS_TUTORIALUI_34_03_X + SIZE_TUTORIALUI_34_03_X, POS_TUTORIALUI_34_03_Y + SIZE_TUTORIALUI_34_03_Y, 0.0f);
+				break;
+			}
+			break;
+
+		case 4:
+			switch (GetPlayNumberSelect().CurrentSelectNumber)
+			{
+			case 4:
+				//頂点座標の設定
+				pVtx[0].pos = D3DXVECTOR3(POS_TUTORIALUI_34_04_X - SIZE_TUTORIALUI_34_04_X, POS_TUTORIALUI_34_04_Y - SIZE_TUTORIALUI_34_04_Y, 0.0f);
+				pVtx[1].pos = D3DXVECTOR3(POS_TUTORIALUI_34_04_X + SIZE_TUTORIALUI_34_04_X, POS_TUTORIALUI_34_04_Y - SIZE_TUTORIALUI_34_04_Y, 0.0f);
+				pVtx[2].pos = D3DXVECTOR3(POS_TUTORIALUI_34_04_X - SIZE_TUTORIALUI_34_04_X, POS_TUTORIALUI_34_04_Y + SIZE_TUTORIALUI_34_04_Y, 0.0f);
+				pVtx[3].pos = D3DXVECTOR3(POS_TUTORIALUI_34_04_X + SIZE_TUTORIALUI_34_04_X, POS_TUTORIALUI_34_04_Y + SIZE_TUTORIALUI_34_04_Y, 0.0f);
+				break;
+			}
 			break;
 		}
 
@@ -177,7 +278,53 @@ void UninitTutorialUI(void)
 //====================================================================
 void UpdateTutorialUI(void)
 {
+	switch (GetEscapeTutorial())
+	{
+	case TUTORIAL_STATE_STANDBY:
+		//紙を取り出すときのカウンターを増やす
+		if (TutorialUI_TrueCounter < UP_TUTORIALUI_COUNTER_MAX)
+		{
+			TutorialUI_TrueCounter++;
+		}
+		break;
 
+	case TUTORIAL_STATE_WAIT:
+		//紙を取り出すときのカウンターを減らす
+		if (TutorialUI_TrueCounter > 0)
+		{
+			TutorialUI_TrueCounter--;
+		}
+		break;
+	}
+
+	//紙を取り出す動き
+	VERTEX_2D*pVtx;	//頂点ポインタを所得
+
+	//頂点バッファをロックし、両店情報へのポインタを所得
+	g_pVtxBuffTutorialUI->Lock(0, 0, (void**)&pVtx, 0);
+
+	for (int nCntBG = 0; nCntBG < NUM_SSUI; nCntBG++)
+	{
+		if (nCntBG == 0 && TutorialUI_TrueCounter < UP_TUTORIALUI_COUNTER_MAX)
+		{
+			//頂点座標の設定
+			pVtx[0].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X - SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y + (UP_TUTORIALUI * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter)) - SIZE_TUTORIALUI_ALL_Y, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X + SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y + (UP_TUTORIALUI * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter)) - SIZE_TUTORIALUI_ALL_Y, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X - SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y + (UP_TUTORIALUI * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter)) + SIZE_TUTORIALUI_ALL_Y, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X + SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y + (UP_TUTORIALUI * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter)) + SIZE_TUTORIALUI_ALL_Y, 0.0f);
+
+			//頂点カラーの設定
+			pVtx[0].col = D3DXCOLOR(0.9f, 0.9f, 0.9f, 1.0f * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter));
+			pVtx[1].col = D3DXCOLOR(0.9f, 0.9f, 0.9f, 1.0f * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter));
+			pVtx[2].col = D3DXCOLOR(0.9f, 0.9f, 0.9f, 1.0f * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter));
+			pVtx[3].col = D3DXCOLOR(0.9f, 0.9f, 0.9f, 1.0f * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter));
+		}
+
+		pVtx += 4;	//頂点データのポインタを４つ分進める
+	}
+
+	//頂点バッファをアンロックする
+	g_pVtxBuffTutorialUI->Unlock();
 }
 
 //====================================================================
@@ -198,7 +345,7 @@ void DrawTutorialUI(void)
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
-	for (nCntBG = 0; nCntBG < NUM_SSUI; nCntBG++)
+	for (nCntBG = 0; nCntBG < MAX_SSUI; nCntBG++)
 	{
 		//テクスチャの設定
 		pDevice->SetTexture(0, g_apTextureTutorialUI[nCntBG]);
@@ -215,32 +362,7 @@ void DrawTutorialUI(void)
 //====================================================================
 //ランキングUIの設定処理
 //====================================================================
-void SetTutorialUI(TUTORIALUI SetClear, bool Clear)
+void SetTutorialUI(bool bUse, int nCnt)
 {
-	/*g_bStageClear_Ranking = Clear;
-
-	bUseRankingUI[1] = true;
-	switch (SetClear)
-	{
-	case RANKING_NORMAL:
-
-	bUseRankingUI[2] = false;
-	bUseRankingUI[3] = false;
-
-	break;
-
-	case RANKING_PERFECT:
-
-	bUseRankingUI[2] = true;
-	bUseRankingUI[3] = false;
-
-	break;
-
-	case RANKING_ALLPERFECT:
-
-	bUseRankingUI[2] = true;
-	bUseRankingUI[3] = true;
-
-	break;
-	}*/
+	bUseTutorialUI[nCnt] = bUse;
 }
