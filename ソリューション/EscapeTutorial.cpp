@@ -244,6 +244,11 @@ void UpdateEscapeTutorial()
 			SetTutorialUI(false, nCntTutorial);
 			MovePosCheckUI(nPlayer, true);
 		}
+		for (int nCntTutorial = 0; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber; nCntTutorial++)
+		{
+			SetPaperBG01(false, nCntTutorial);
+		}
+
 		g_Counter = 0;
 		break;
 	case TUTORIAL_STATE_WAIT:
@@ -262,6 +267,10 @@ void UpdateEscapeTutorial()
 		{
 			SetTutorialUI(true, nCntTutorial);
 			MovePosCheckUI(nPlayer, false);
+		}
+		for (int nCntTutorial = 0; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber; nCntTutorial++)
+		{
+			SetPaperBG01(true, nCntTutorial);
 		}
 		break;
 	}
@@ -318,29 +327,43 @@ void UpdateEscapeTutorial()
 	{
 	case MODE_MOVE:
 
+		g_Tutorial = MODE_CAM_MOVE;
+
 		break;
 
 	case MODE_CAM_MOVE:
+
+		g_Tutorial = MODE_DASH;
 
 		break;
 
 	case MODE_DASH:
 
+		g_Tutorial = MODE_STELTH;
+
 		break;
 
 	case MODE_STELTH:
+
+		g_Tutorial = MODE_VIBE;
 
 		break;
 
 	case MODE_VIBE:
 
+		g_Tutorial = MODE_GET_KEY;
+
 		break;
 
 	case MODE_GET_KEY:
 
+		g_Tutorial = MODE_ESCAPE;
+
 		break;
 
 	case MODE_ESCAPE:
+
+		/*g_Tutorial = MODE_CAM_MOVE;*/
 
 		break;
 	}
