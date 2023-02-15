@@ -6,13 +6,8 @@
 //マクロ定義
 #define MAX_CHECK_TEX		(2)				//チェックボックスのテクスチャ最大数
 
-<<<<<<< HEAD
-#define CHECKUIPOS_X_1		(-10.0f)		//チェックボックスのUIのX位置1
-#define CHECKUIPOS_Y_1		(350.0f)		//チェックボックスのUIのY位置1
-=======
-#define CHECKUIPOS_X_1	(25.0f)			//チェックボックスのUIのX位置1
-#define CHECKUIPOS_Y_1	(350.0f)		//チェックボックスのUIのY位置1
->>>>>>> 3c1ab6ec40d2986d361626d60a22a57874703004
+#define CHECKUIPOS_X_1	(25.0f)				//チェックボックスのUIのX位置1
+#define CHECKUIPOS_Y_1	(350.0f)			//チェックボックスのUIのY位置1
 
 #define CHECKUIPOS_X_2		(670.0f)		//チェックボックスのUIのX位置2
 #define CHECKUIPOS_Y_2		(700.0f)		//チェックボックスのUIのY位置2
@@ -98,12 +93,8 @@ void InitCheckboxUI(void)
 			g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_3_3, CHECKUIPOS_Y_3_3, 0.0f);  //4人目の位置を初期化
 		}
 		g_anCheckUI[nCntCheckUI].nCheckUI = 3;		//鍵UIの値を初期化
-<<<<<<< HEAD
-		g_anCheckUI[nCntCheckUI].bUse = false;		//使っていないことに
-=======
 		g_anCheckUI[nCntCheckUI].bUse = false;  //使っていないことに
 		btutorial = true;  //チュートリアル用紙を使っていることにする
->>>>>>> 3c1ab6ec40d2986d361626d60a22a57874703004
 	}
 
 	//頂点バッファの生成
