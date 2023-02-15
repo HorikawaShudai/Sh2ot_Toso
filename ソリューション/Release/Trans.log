@@ -1,19 +1,23 @@
 ﻿  CheckboxUI.cpp
+  EscapeTutorial.cpp
+  PlayModeSelect.cpp
+  PlayNumberSelect.cpp
+  camera.cpp
+  exit.cpp
+  game.cpp
+  keyUI.cpp
+  life.cpp
+  main.cpp
+  paperBG01.cpp
+  player.cpp
+  playerBG.cpp
+  score.cpp
+  stamina.cpp
+  tutorialUI.cpp
   コード生成しています。
-  0 of 475 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  12 of 476 functions ( 2.5%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    73 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
-debugproc.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
-Effect.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
-Fade.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
-field.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
-Fog.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
-input.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
-light.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
-meshcylinder.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
-meshdome.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
-meshfield.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
-NumberUI.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
-objectBG.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
-objectLight.obj : fatal error LNK1103: デバッグ情報が壊れています。モジュールを再コンパイルしてください。
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
