@@ -71,30 +71,30 @@ void InitTutorialUI(void)
 							   //デバイスの所得
 	pDevice = GetDevice();
 
-	////テクスチャの読み込み
-	//D3DXCreateTextureFromFile(pDevice,
-	//	"data\\TEXTURE\\RankingBG.png",
-	//	&g_apTextureTutorialUI[0]);
+	//テクスチャの読み込み
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\TUTORIAL\\tutorial_move.png",
+		&g_apTextureTutorialUI[0]);
 
-	//D3DXCreateTextureFromFile(pDevice,
-	//	"data\\TEXTURE\\Ranking_Score.png",
-	//	&g_apTextureTutorialUI[1]);
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\TUTORIAL\\tutorial_cammove.png",
+		&g_apTextureTutorialUI[1]);
 
-	//D3DXCreateTextureFromFile(pDevice,
-	//	"data\\TEXTURE\\TUTORIAL\\clear_tousou.png",
-	//	&g_apTextureTutorialUI[2]);
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\TUTORIAL\\tutorial_dash.png",
+		&g_apTextureTutorialUI[2]);
 
-	//D3DXCreateTextureFromFile(pDevice,
-	//	"data\\TEXTURE\\RankingAllPerfect.png",
-	//	&g_apTextureTutorialUI[3]);
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\stealth.png",
+		&g_apTextureTutorialUI[3]);
 
-	//D3DXCreateTextureFromFile(pDevice,
-	//	"data\\TEXTURE\\RankingAllPerfect.png",
-	//	&g_apTextureTutorialUI[4]);
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\tutorial_key.png",
+		&g_apTextureTutorialUI[4]);
 
-	//D3DXCreateTextureFromFile(pDevice,
-	//	"data\\TEXTURE\\RankingAllPerfect.png",
-	//	&g_apTextureTutorialUI[5]);
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\open_doar.png",
+		&g_apTextureTutorialUI[5]);
 
 	//UIの表示設定
 	bUseTutorialUI[0] = true;

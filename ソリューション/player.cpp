@@ -324,16 +324,6 @@ void UpdatePlayer0(void)
 			}
 		}
 
-		if (GetGamepadTrigger(BUTTON_A, nSelectPlayer) == true)
-		{
-			MovePosCheckUI(nSelectPlayer, false);
-		}
-
-		if (GetGamepadTrigger(BUTTON_B, nSelectPlayer) == true)
-		{
-			MovePosCheckUI(nSelectPlayer, true);
-		}
-
 		//脱出処理
 		if (g_aPlayer[nSelectPlayer].bGetKey == true)
 		{//プレイヤーが鍵を持っている場合
@@ -347,7 +337,6 @@ void UpdatePlayer0(void)
 
 					g_aPlayer[nSelectPlayer].bCheck = false;
 					SetCheckUI(nSelectPlayer, false);
-					MovePosCheckUI(nSelectPlayer, true);
 				}
 			}
 		}
@@ -501,6 +490,9 @@ void PlayerMoveInput(int nCnt)
 
 				//プレイヤーをダッシュ状態にする
 				g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_DASH;
+
+				//ダッシュしたらチェック状態にする処理
+				SetCheckUI(nCnt, true);
 			}
 		}
 		else if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) < 0.95f)
@@ -516,6 +508,9 @@ void PlayerMoveInput(int nCnt)
 
 			//カメラ状態を無へ
 			pCamera[nCnt].State = CAMERASTATE_NONE;
+
+			////チェックをつける処理
+			//SetCheckUI(nCnt, true);
 		}
 		else if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) != 0)
 		{//入力している状態のとき

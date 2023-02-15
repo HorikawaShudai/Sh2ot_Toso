@@ -201,6 +201,9 @@ void UpdateEscapeTutorial()
 {
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+
+	int nPlayer = GetCurrentCamera();
+
 #ifdef _DEBUG
 	if (GetKeyboardPress(DIK_RETURN))
 	{//ENTERキーを押したときリザルトにフェード
@@ -239,6 +242,7 @@ void UpdateEscapeTutorial()
 		for (int nCntTutorial = 1; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber + 1; nCntTutorial++)
 		{
 			SetTutorialUI(false, nCntTutorial);
+			MovePosCheckUI(nPlayer, true);
 		}
 		for (int nCntTutorial = 0; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber; nCntTutorial++)
 		{
@@ -262,6 +266,7 @@ void UpdateEscapeTutorial()
 		for (int nCntTutorial = 1; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber + 1; nCntTutorial++)
 		{
 			SetTutorialUI(true, nCntTutorial);
+			MovePosCheckUI(nPlayer, false);
 		}
 		for (int nCntTutorial = 0; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber; nCntTutorial++)
 		{
