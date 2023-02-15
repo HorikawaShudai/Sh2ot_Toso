@@ -82,7 +82,7 @@ void InitCamera(void)
 	g_nCurrentCamera = 0;			//選択されているカメラの番号を最初のカメラへ
 	g_bTpsCamera = false;			//観察用カメラを使っていない状態へ
 	bEnter = false;					//エンターを押していない状態に
-	g_cTutorial == MODE_MOVE;
+	g_cTutorial = MODE_MOVE;
 
 	g_Rand_RankingCameraBG = rand() % 2;
 	
