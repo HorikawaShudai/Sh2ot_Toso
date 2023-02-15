@@ -10,6 +10,7 @@
 #include "player.h"
 #include "PlayNumberSelect.h"
 #include "debugproc.h"
+#include "CheckboxUI.h"
 
 //マクロ定義
 #define MAX_CAMERA				(5)		//カメラの最大数
@@ -325,14 +326,30 @@ void PlayerFpsCamera(void)
 			if (GetKeyboardPress(DIK_I) == true)
 			{
 				g_aCamera[g_nCurrentCamera].rot.x += CAMERA_VR_SPEED;
+
+				SetCheckUI(g_nCurrentCamera, true);
 			}
 			if (GetKeyboardPress(DIK_K) == true)
 			{
 				g_aCamera[g_nCurrentCamera].rot.x -= CAMERA_VR_SPEED;
+
+				SetCheckUI(g_nCurrentCamera, true);
 			}
 
 			//右スティックの上下視点移動入力
 			g_aCamera[g_nCurrentCamera].rot.x += GetGamepad_Stick_Right(0).y * CAMERA_VR_SPEED;
+
+			//カメラの横移動をしたらチェックをつける処理
+			if (g_aCamera[g_nCurrentCamera].rot.x > 0.1f || g_aCamera[g_nCurrentCamera].rot.x < -0.1f)
+			{
+				SetCheckUI(g_nCurrentCamera, true);
+			}
+
+			//カメラの縦移動をしたらチェックをつける処理
+			if (g_aCamera[g_nCurrentCamera].rot.y > 0.1f || g_aCamera[g_nCurrentCamera].rot.y < -0.1f)
+			{
+				SetCheckUI(g_nCurrentCamera, true);
+			}
 
 			if (GetMousePress(PUSH_LEFT) == true || GetMousePress(PUSH_RIGHT) == true)
 			{
