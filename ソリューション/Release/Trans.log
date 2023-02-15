@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+﻿  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Trans.exe
+=======
+<<<<<<< HEAD
 ﻿  CheckboxUI.cpp
   EscapeTutorial.cpp
   PlayModeSelect.cpp
@@ -87,5 +90,6 @@
     9 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Trans.exe
+>>>>>>> bced589b2fce7594737ce036c22dc8f0c69e8c59
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
 >>>>>>> 6158827c7ebd77e74a384ff075ec5c523360fe2b

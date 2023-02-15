@@ -11,6 +11,7 @@
 #include "PlayNumberSelect.h"
 #include "debugproc.h"
 #include "CheckboxUI.h"
+#include "EscapeTutorial.h"
 
 //マクロ定義
 #define MAX_CAMERA				(5)		//カメラの最大数
@@ -53,6 +54,8 @@ bool g_bTpsCamera;				//観察用のカメラを使うかどうか
 bool bEnter;					//エンターが押されたかどうか
 int g_Rand_RankingCameraBG;		//ランキング画面の背景を決めるための変数
 
+TUTORIAL_MODE g_cTutorial;
+
 //====================================================================
 //カメラの初期化処理
 //====================================================================
@@ -79,6 +82,8 @@ void InitCamera(void)
 	g_nCurrentCamera = 0;			//選択されているカメラの番号を最初のカメラへ
 	g_bTpsCamera = false;			//観察用カメラを使っていない状態へ
 	bEnter = false;					//エンターを押していない状態に
+	g_cTutorial == MODE_MOVE;
+
 	g_Rand_RankingCameraBG = rand() % 2;
 	
 	switch (PlayNumber.CurrentSelectNumber)
@@ -327,13 +332,19 @@ void PlayerFpsCamera(void)
 			{
 				g_aCamera[g_nCurrentCamera].rot.x += CAMERA_VR_SPEED;
 
-				SetCheckUI(g_nCurrentCamera, true);
+				if (g_cTutorial == MODE_CAM_MOVE)
+				{
+					SetCheckUI(g_nCurrentCamera, true);
+				}
 			}
 			if (GetKeyboardPress(DIK_K) == true)
 			{
 				g_aCamera[g_nCurrentCamera].rot.x -= CAMERA_VR_SPEED;
 
-				SetCheckUI(g_nCurrentCamera, true);
+				if (g_cTutorial == MODE_CAM_MOVE)
+				{
+					SetCheckUI(g_nCurrentCamera, true);
+				}
 			}
 
 			//右スティックの上下視点移動入力
@@ -342,13 +353,19 @@ void PlayerFpsCamera(void)
 			//カメラの横移動をしたらチェックをつける処理
 			if (g_aCamera[g_nCurrentCamera].rot.x > 0.1f || g_aCamera[g_nCurrentCamera].rot.x < -0.1f)
 			{
-				SetCheckUI(g_nCurrentCamera, true);
+				if (g_cTutorial == MODE_CAM_MOVE)
+				{
+					SetCheckUI(g_nCurrentCamera, true);
+				}
 			}
 
 			//カメラの縦移動をしたらチェックをつける処理
 			if (g_aCamera[g_nCurrentCamera].rot.y > 0.1f || g_aCamera[g_nCurrentCamera].rot.y < -0.1f)
 			{
-				SetCheckUI(g_nCurrentCamera, true);
+				if (g_cTutorial == MODE_CAM_MOVE)
+				{
+					SetCheckUI(g_nCurrentCamera, true);
+				}
 			}
 
 			if (GetMousePress(PUSH_LEFT) == true || GetMousePress(PUSH_RIGHT) == true)

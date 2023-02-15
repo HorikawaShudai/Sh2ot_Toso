@@ -25,6 +25,7 @@
 #include "light.h"
 #include "CheckboxUI.h"
 #include "PolygonBG.h"
+#include "EscapeTutorial.h"
 
 //マクロ定義
 #define PLAYER_STEALTHSPEED		(0.3f)			//プレイヤーのステルススピード
@@ -56,6 +57,7 @@ int g_Rand_PolygonColor_R;
 int g_Rand_PolygonColor_G;
 int g_Rand_PolygonColor_B;
 int g_Rand_PolygonColor_A;
+TUTORIAL_MODE g_nTutorial;
 
 //====================================================================
 //プレイヤーの初期化処理
@@ -107,6 +109,8 @@ void InitPlayer(void)
 		g_Rand_PolygonColor_A = 0;
 
 		g_aPlayer[nCntPlayer].nNumModel = 1;
+
+		g_nTutorial = MODE_MOVE;
 
 		//Xファイルの読み込み
 		D3DXLoadMeshFromX("data\\MODEL\\player.x",
@@ -319,7 +323,11 @@ void UpdatePlayer0(void)
 					SetKeyUI(nSelectPlayer, true);				//鍵UIを表示する
 
 					g_aPlayer[nSelectPlayer].bCheck = true;
-					SetCheckUI(nSelectPlayer, true);
+
+					if (g_nTutorial == MODE_GET_KEY)
+					{
+						SetCheckUI(nSelectPlayer, true);
+					}
 				}
 			}
 		}
@@ -335,8 +343,10 @@ void UpdatePlayer0(void)
 					g_aPlayer[nSelectPlayer].bGetKey = false;	//鍵を入手してない状態にする
 					SetKeyUI(nSelectPlayer, false);			//鍵UIを非表示にする
 
-					g_aPlayer[nSelectPlayer].bCheck = false;
-					SetCheckUI(nSelectPlayer, false);
+					if (g_nTutorial == MODE_ESCAPE)
+					{
+						SetCheckUI(nSelectPlayer, true);
+					}
 				}
 			}
 		}
@@ -437,7 +447,11 @@ void PlayerMoveInput(int nCnt)
 				g_aPlayer[nCnt].NormarizeMove.x += sinf(Getrot(CurrentCamera).y);
 
 				g_aPlayer[CurrentCamera].bCheck = true;
-				SetCheckUI(CurrentCamera, true);
+
+				if (g_nTutorial == MODE_MOVE)
+				{
+					SetCheckUI(CurrentCamera, true);
+				}
 			}
 			if (GetGamepad_Stick_Left(0).y < 0.0f)
 			{//左スティックの下入力
@@ -445,7 +459,11 @@ void PlayerMoveInput(int nCnt)
 				g_aPlayer[nCnt].NormarizeMove.x -= sinf(Getrot(CurrentCamera).y);
 
 				g_aPlayer[CurrentCamera].bCheck = true;
-				SetCheckUI(CurrentCamera, true);
+
+				if (g_nTutorial == MODE_MOVE)
+				{
+					SetCheckUI(CurrentCamera, true);
+				}
 			}
 			if (GetGamepad_Stick_Left(0).x > 0.0f)
 			{//左スティックの右入力
@@ -454,7 +472,11 @@ void PlayerMoveInput(int nCnt)
 				g_aPlayer[nCnt].NormarizeMove.z -= sinf(Getrot(CurrentCamera).y);
 
 				g_aPlayer[CurrentCamera].bCheck = true;
-				SetCheckUI(CurrentCamera, true);
+
+				if (g_nTutorial == MODE_MOVE)
+				{
+					SetCheckUI(CurrentCamera, true);
+				}
 			}
 			if (GetGamepad_Stick_Left(0).x < 0.0f)
 			{//左スティックの左入力
@@ -463,7 +485,11 @@ void PlayerMoveInput(int nCnt)
 				g_aPlayer[nCnt].NormarizeMove.z += sinf(Getrot(CurrentCamera).y);
 
 				g_aPlayer[CurrentCamera].bCheck = true;
-				SetCheckUI(CurrentCamera, true);
+				
+				if (g_nTutorial == MODE_MOVE)
+				{
+					SetCheckUI(CurrentCamera, true);
+				}
 			}
 		}
 
@@ -492,7 +518,10 @@ void PlayerMoveInput(int nCnt)
 				g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_DASH;
 
 				//ダッシュしたらチェック状態にする処理
-				SetCheckUI(nCnt, true);
+				if (g_nTutorial == MODE_DASH)
+				{
+					SetCheckUI(nCnt, true);
+				}
 			}
 		}
 		else if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) < 0.95f)
@@ -508,9 +537,6 @@ void PlayerMoveInput(int nCnt)
 
 			//カメラ状態を無へ
 			pCamera[nCnt].State = CAMERASTATE_NONE;
-
-			////チェックをつける処理
-			//SetCheckUI(nCnt, true);
 		}
 		else if (fabsf(GetGamepad_Stick_Left(0).y) + fabsf(GetGamepad_Stick_Left(0).x) != 0)
 		{//入力している状態のとき
@@ -529,6 +555,12 @@ void PlayerMoveInput(int nCnt)
 
 			//プレイヤーをステルス状態にする
 			g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;
+
+			if (g_nTutorial == MODE_STELTH)
+			{
+				//チェックをつける処理
+				SetCheckUI(nCnt, true);
+			}
 
 			//カメラ状態を無へ
 			pCamera[nCnt].State = CAMERASTATE_NONE;

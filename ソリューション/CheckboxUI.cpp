@@ -2,6 +2,7 @@
 #include "fade.h"
 #include "player.h"
 #include "PlayNumberSelect.h"
+#include "EscapeTutorial.h"
 
 //マクロ定義
 #define MAX_CHECK_TEX		(2)				//チェックボックスのテクスチャ最大数
@@ -284,15 +285,18 @@ void DrawCheckboxUI(void)
 	for (int nCnt = 0; nCnt < PlayNumber.CurrentSelectNumber; nCnt++)
 	{
 		if (g_anCheckUI[nCnt].bUse == false)
-		{//鍵を取得していないとき
+		{//チェックがついていないとき
 		 //テクスチャの設定
 			pDevice->SetTexture(0, g_pTextureCheckUI[0]);
 		}
 
 		else
-		{//鍵を取得しているとき
+		{//チェックがついたとき
 		 //テクスチャの設定
 			pDevice->SetTexture(0, g_pTextureCheckUI[1]);
+
+			//チェックがついたときチュートリアル用紙を出す
+			SetEscapeTutorial(TUTORIAL_STATE_STANDBY);
 		}
 
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCnt * 4, 2);
