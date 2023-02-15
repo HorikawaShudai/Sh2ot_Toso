@@ -673,7 +673,40 @@ bool DetectPlayer(D3DXVECTOR3*postg, D3DXVECTOR3 pos, float fmoveRot, int nLife)
 //====================================================================
 void EnemyPatrol(int nEnemy)
 {
-	
+	Player*pPlayer = GetPlayer();
+	for (int nCnt = 0; nCnt < 4; nCnt++, pPlayer++)
+	{
+		if (pPlayer->bUse == true)
+		{
+			float fDis = (g_Enemy[nEnemy].pos.x - pPlayer->pos.x) + (g_Enemy[nEnemy].pos.z - pPlayer->pos.z);
+			if (fDis < 0)
+			{
+				fDis *= -1.0f;
+			}
+			if (pPlayer->MoveState == PLAYER_MOVESTATE_DASH && fDis <= 700.0f)
+			{
+				D3DXVECTOR3 rot = pPlayer->pos - g_Enemy[nEnemy].pos;
+				rot.y = atan2f(rot.x, rot.y);
+				if (DetectPlayer(&g_Enemy[nEnemy].Tgpos, g_Enemy[nEnemy].pos, rot.y, 400) == true)
+				{
+					g_Enemy[nEnemy].state = ENEMYSTATE_CHASE;
+					break;
+				}
+			}
+			if (pPlayer->MoveState == PLAYER_MOVESTATE_NORMAL && fDis <= 530.0f)
+			{
+				D3DXVECTOR3 rot = pPlayer->pos - g_Enemy[nEnemy].pos;
+				rot.y = atan2f(rot.x, rot.y);
+				if (DetectPlayer(&g_Enemy[nEnemy].Tgpos, g_Enemy[nEnemy].pos, rot.y, 400) == true)
+				{
+					g_Enemy[nEnemy].state = ENEMYSTATE_CHASE;
+					break;
+				}
+			}
+		}
+	}
+
+
 		//Še•ûˆÊ‚É‚ ‚é•Ç‚Æ‚Ì‹——£‚ð‘ª’è
 		g_Enemy[nEnemy].fDistanceN = DetectWall(g_Enemy[nEnemy].pos, 0.0f, 100);
 		g_Enemy[nEnemy].fDistanceS = DetectWall(g_Enemy[nEnemy].pos, D3DX_PI, 100);

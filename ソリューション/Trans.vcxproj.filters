@@ -28,9 +28,6 @@
     <Filter Include="ソース ファイル\mesh">
       <UniqueIdentifier>{8d7752d7-f9b7-4e14-bad4-ffe152795c21}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\mesh">
-      <UniqueIdentifier>{4e42f885-dcda-4904-a2c2-807e1131ec63}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\system">
       <UniqueIdentifier>{8743d561-a5b4-4b69-87af-b74012e5c15e}</UniqueIdentifier>
     </Filter>
@@ -48,6 +45,9 @@
     </Filter>
     <Filter Include="ヘッダー ファイル\UI">
       <UniqueIdentifier>{16657bc2-54c1-4ee5-a2ec-1a3d09c2857a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Map\mesh">
+      <UniqueIdentifier>{4e42f885-dcda-4904-a2c2-807e1131ec63}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -267,13 +267,13 @@
       <Filter>ヘッダー ファイル\mode</Filter>
     </ClInclude>
     <ClInclude Include="meshcylinder.h">
-      <Filter>ヘッダー ファイル\mesh</Filter>
+      <Filter>ヘッダー ファイル\Map\mesh</Filter>
     </ClInclude>
     <ClInclude Include="meshdome.h">
-      <Filter>ヘッダー ファイル\mesh</Filter>
+      <Filter>ヘッダー ファイル\Map\mesh</Filter>
     </ClInclude>
     <ClInclude Include="meshwall.h">
-      <Filter>ヘッダー ファイル\mesh</Filter>
+      <Filter>ヘッダー ファイル\Map\mesh</Filter>
     </ClInclude>
     <ClInclude Include="Billboard.h">
       <Filter>ヘッダー ファイル\Map</Filter>
@@ -363,7 +363,7 @@
       <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
     <ClInclude Include="meshfield.h">
-      <Filter>ヘッダー ファイル\mesh</Filter>
+      <Filter>ヘッダー ファイル\Map\mesh</Filter>
     </ClInclude>
     <ClInclude Include="tutorial.h">
       <Filter>ヘッダー ファイル</Filter>
