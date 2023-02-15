@@ -4,7 +4,7 @@
 //マクロ定義
 #define MAX_MODEL (32)	//モデルの最大数
 #define MAX_PARTS (32)	//パーツの総数
-#define MAX_KEY (10)	//キーの総数
+#define MAX_KEY (16)	//キーの総数
 
 //プレイヤーのモーション
 typedef enum
@@ -12,6 +12,7 @@ typedef enum
 	PLAYERBG_ACTION_WAIT = 0,
 	PLAYERBG_ACTION_MOVE,
 	PLAYERBG_ACTION_JUMP,
+	PLAYERBG_ACTION_WAIT2,
 	PLAYERBG_ACTION_MAX,
 
 }MOTION_TYPE;

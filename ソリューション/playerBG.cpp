@@ -33,20 +33,23 @@ int g_nIndexPlayerBGShadow = -1;					//影のインデックス(番号)
 
 const char *c_apPlayerBG[] =					//モデルデータ読み込み
 {
-	"Data\\MODEL\\player\\00_body_murabito.x",
-	"Data\\MODEL\\player\\01_head_murabito.x",
-	"Data\\MODEL\\player\\02_shoulderL_murabito.x",
-	"Data\\MODEL\\player\\03_armL_murabito.x",
-	"Data\\MODEL\\player\\06_handL_murabito.x",
-	"Data\\MODEL\\player\\04_legL_murabito.x",
-	"Data\\MODEL\\player\\05_footL_murabito.x",
-	"Data\\MODEL\\player\\07_shoesL_murabito.x",
-	"Data\\MODEL\\player\\08_shoulderR_murabito.x",
-	"Data\\MODEL\\player\\09_armR_murabito.x",
-	"Data\\MODEL\\player\\12_handR_murabito.x",
-	"Data\\MODEL\\player\\10_legR_murabito.x",
-	"Data\\MODEL\\player\\11_footR_murabito.x",
-	"Data\\MODEL\\player\\13_shoesR_murabito.x"
+	"Data\\MODEL\\player\\00_hip.x",
+	"Data\\MODEL\\player\\01_body.x",
+	"Data\\MODEL\\player\\02_Head.x",
+	"Data\\MODEL\\player\\03_R_Shoulder.x",
+	"Data\\MODEL\\player\\04_R_upperarm.x",
+	"Data\\MODEL\\player\\05_R_forearm.x",
+	"Data\\MODEL\\player\\06_R_Hand.x",
+	"Data\\MODEL\\player\\07_L_Shoulder.x",
+	"Data\\MODEL\\player\\08_L_upperarm.x",
+	"Data\\MODEL\\player\\09_L_forearm.x",
+	"Data\\MODEL\\player\\10_L_Hand.x",
+	"Data\\MODEL\\player\\11_R_Thigh.x",
+	"Data\\MODEL\\player\\12_R_Shin.x",
+	"Data\\MODEL\\player\\13_R_Leg.x",
+	"Data\\MODEL\\player\\14_L_Thigh.x",
+	"Data\\MODEL\\player\\15_L_Shin.x",
+	"Data\\MODEL\\player\\16_L_Leg.x"
 };
 
 //====================================================================
@@ -84,7 +87,7 @@ void InitPlayerBG(void)
 			SetMotion(g_PlayerBG[nCntPlayerBG].MotionType, nCntPlayerBG);
 			break;
 		case 3:
-			g_PlayerBG[nCntPlayerBG].MotionType = PLAYERBG_ACTION_MOVE;
+			g_PlayerBG[nCntPlayerBG].MotionType = PLAYERBG_ACTION_WAIT2;
 			SetMotion(g_PlayerBG[nCntPlayerBG].MotionType, nCntPlayerBG);
 			break;
 		}
@@ -356,7 +359,7 @@ void LoadMotion(int nPlayerBG)
 	pFile = fopen("", "r");
 
 	//ファイルを開く
-	pFile = fopen("data\\TEXT\\murabito.txt", "r");
+	pFile = fopen("data\\TEXT\\motion_player.txt", "r");
 
 	if (pFile != NULL)
 	{//ファイルが開けた場合
