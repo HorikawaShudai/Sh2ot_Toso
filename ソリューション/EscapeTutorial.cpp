@@ -244,6 +244,11 @@ void UpdateEscapeTutorial()
 			SetTutorialUI(false, nCntTutorial);
 			MovePosCheckUI(nPlayer, true);
 		}
+		for (int nCntTutorial = 0; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber; nCntTutorial++)
+		{
+			SetPaperBG01(false, nCntTutorial);
+		}
+
 		g_Counter = 0;
 		break;
 	case TUTORIAL_STATE_WAIT:
@@ -262,6 +267,10 @@ void UpdateEscapeTutorial()
 		{
 			SetTutorialUI(true, nCntTutorial);
 			MovePosCheckUI(nPlayer, false);
+		}
+		for (int nCntTutorial = 0; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber; nCntTutorial++)
+		{
+			SetPaperBG01(true, nCntTutorial);
 		}
 		break;
 	}

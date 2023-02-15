@@ -16,38 +16,38 @@
 
 #define POS_TUTORIALUI_1_01_X		(640.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_1_01_Y		(620.0f)	//「」のY座標の位置
-#define SIZE_TUTORIALUI_1_01_X		(500.0f)	//「」の幅
-#define SIZE_TUTORIALUI_1_01_Y		(100.0f)	//「」の高さ
+#define SIZE_TUTORIALUI_1_01_X		(300.0f)	//「」の幅
+#define SIZE_TUTORIALUI_1_01_Y		(50.0f)		//「」の高さ
 
 #define POS_TUTORIALUI_2_01_X		(320.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_2_01_Y		(600.0f)	//「」のY座標の位置
-#define SIZE_TUTORIALUI_2_01_X		(300.0f)	//「」の幅
-#define SIZE_TUTORIALUI_2_01_Y		(120.0f)	//「」の高さ
+#define SIZE_TUTORIALUI_2_01_X		(150.0f)	//「」の幅
+#define SIZE_TUTORIALUI_2_01_Y		(60.0f)		//「」の高さ
 
 #define POS_TUTORIALUI_2_02_X		(960.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_2_02_Y		(600.0f)	//「」のY座標の位置
-#define SIZE_TUTORIALUI_2_02_X		(300.0f)	//「」の幅
-#define SIZE_TUTORIALUI_2_02_Y		(120.0f)		//「」の高さ
+#define SIZE_TUTORIALUI_2_02_X		(150.0f)	//「」の幅
+#define SIZE_TUTORIALUI_2_02_Y		(60.0f)		//「」の高さ
 
 #define POS_TUTORIALUI_34_01_X		(320.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_34_01_Y		(310.0f)	//「」のY座標の位置
-#define SIZE_TUTORIALUI_34_01_X		(300.0f)	//「」の幅
-#define SIZE_TUTORIALUI_34_01_Y		(50.0f)		//「」の高さ
+#define SIZE_TUTORIALUI_34_01_X		(150.0f)	//「」の幅
+#define SIZE_TUTORIALUI_34_01_Y		(25.0f)		//「」の高さ
 
 #define POS_TUTORIALUI_34_02_X		(960.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_34_02_Y		(310.0f)	//「」のY座標の位置
-#define SIZE_TUTORIALUI_34_02_X		(300.0f)	//「」の幅
-#define SIZE_TUTORIALUI_34_02_Y		(50.0f)		//「」の高さ
+#define SIZE_TUTORIALUI_34_02_X		(150.0f)	//「」の幅
+#define SIZE_TUTORIALUI_34_02_Y		(25.0f)		//「」の高さ
 
 #define POS_TUTORIALUI_34_03_X		(320.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_34_03_Y		(670.0f)	//「」のY座標の位置
-#define SIZE_TUTORIALUI_34_03_X		(300.0f)	//「」の幅
-#define SIZE_TUTORIALUI_34_03_Y		(50.0f)		//「」の高さ
+#define SIZE_TUTORIALUI_34_03_X		(150.0f)	//「」の幅
+#define SIZE_TUTORIALUI_34_03_Y		(25.0f)		//「」の高さ
 
 #define POS_TUTORIALUI_34_04_X		(960.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_34_04_Y		(670.0f)	//「」のY座標の位置
-#define SIZE_TUTORIALUI_34_04_X		(300.0f)	//「」の幅
-#define SIZE_TUTORIALUI_34_04_Y		(50.0f)		//「」の高さ
+#define SIZE_TUTORIALUI_34_04_X		(150.0f)	//「」の幅
+#define SIZE_TUTORIALUI_34_04_Y		(25.0f)		//「」の高さ
 
 #define UP_TUTORIALUI				(100.0f)	//紙を取り出すときの上昇度
 #define UP_TUTORIALUI_COUNTER_MAX	(100)		//紙を取り出す速さのカウンター
@@ -225,10 +225,10 @@ void InitTutorialUI(void)
 		}
 
 		//頂点カラーの設定
-		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f);
+		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f);
+		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f);
+		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f);
 
 		//rhwの設定
 		pVtx[0].rhw = 1.0f;

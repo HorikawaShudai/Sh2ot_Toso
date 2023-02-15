@@ -35,6 +35,7 @@
 #define PLAYER_JUMP				(12.0f)			//プレイヤーのジャンプ力
 #define PLAYER_LIFE				(3)				//プレイヤーの初期ライフ
 #define PLAYER_COLLISIONSIZE	(15.0f)			//プレイヤーの当たり判定の大きさ
+#define PLAYER_LIGHT			(1000.0f)		//プレイヤーの当たり判定の大きさ
 
 //プロトタイプ
 void UpdatePlayer0(void);
@@ -308,8 +309,8 @@ void UpdatePlayer0(void)
 		PlayerDistance(nSelectPlayer);
 
 		//プレイヤーが保持するライトの更新処理
-		SetLight(g_aPlayer[nSelectPlayer].LightIdx00, D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(g_aPlayer[nSelectPlayer].pos.x, g_aPlayer[nSelectPlayer].pos.y + 50.0f, g_aPlayer[nSelectPlayer].pos.z), D3DXVECTOR3(sinf(Getrot(CurrentCamera).y), sinf(Getrot(CurrentCamera).x), cosf(Getrot(CurrentCamera).y)), 1000.0f,1.0f);
-		SetLight(g_aPlayer[nSelectPlayer].LightIdx01, D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(g_aPlayer[nSelectPlayer].pos.x, g_aPlayer[nSelectPlayer].pos.y + 50.0f, g_aPlayer[nSelectPlayer].pos.z), D3DXVECTOR3(sinf(Getrot(CurrentCamera).y), sinf(Getrot(CurrentCamera).x), cosf(Getrot(CurrentCamera).y)), 1000.0f,1.0f);
+		SetLight(g_aPlayer[nSelectPlayer].LightIdx00, D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(g_aPlayer[nSelectPlayer].pos.x, g_aPlayer[nSelectPlayer].pos.y + 50.0f, g_aPlayer[nSelectPlayer].pos.z), D3DXVECTOR3(sinf(Getrot(CurrentCamera).y), sinf(Getrot(CurrentCamera).x), cosf(Getrot(CurrentCamera).y)), PLAYER_LIGHT,1.0f);
+		SetLight(g_aPlayer[nSelectPlayer].LightIdx01, D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(g_aPlayer[nSelectPlayer].pos.x, g_aPlayer[nSelectPlayer].pos.y + 50.0f, g_aPlayer[nSelectPlayer].pos.z), D3DXVECTOR3(sinf(Getrot(CurrentCamera).y), sinf(Getrot(CurrentCamera).x), cosf(Getrot(CurrentCamera).y)), PLAYER_LIGHT,1.0f);
 
 		//鍵の入手処理
 		if (g_aPlayer[nSelectPlayer].bGetKey == false)
