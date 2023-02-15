@@ -86,6 +86,7 @@ const char *c_apModelObj[] =					//モデルデータ読み込み
 	"Data\\MODEL\\gareki.x",
 	"Data\\MODEL\\lounge.x",
 	"Data\\MODEL\\CultureTank.x",
+	"Data\\MODEL\\BigCultureTank.x",
 };
 
 //====================================================================
