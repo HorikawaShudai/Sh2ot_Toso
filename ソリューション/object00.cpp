@@ -2,6 +2,7 @@
 //
 // オブジェクトの処理[Object00.cpp]
 // Author: 坂本　翔唯
+// Author: 丹野竜之介
 //
 //========================================================================================
 #include "main.h"
@@ -12,7 +13,7 @@
 #include "score.h"
 
 #define OBJECT00_LIFE (7)		//オブジェクトの体力
-#define FALSE_SIZE (10.0f)		//エディットモードのバックスペースの判定の大きさ
+#define FALSE_SIZE (20.0f)		//エディットモードのバックスペースの判定の大きさ
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureObject00[64][OBJECT00_NTYPE_MAX] = {};		//テクスチャのポインタ
@@ -86,8 +87,17 @@ const char *c_apModelObj[] =					//モデルデータ読み込み
 	"Data\\MODEL\\gareki.x",
 	"Data\\MODEL\\lounge.x",
 	"Data\\MODEL\\CultureTank.x",
+	"Data\\MODEL\\ka-ten00.x",
 	"Data\\MODEL\\BigCultureTank.x",
+	"Data\\MODEL\\ori00.x",
 	"Data\\MODEL\\CrashArea.x",
+	"Data\\MODEL\\Messychair.x",
+	"Data\\MODEL\\MessyDesk.x",
+	"Data\\MODEL\\MessyMachine.x",
+	"Data\\MODEL\\MessyObject00.x",
+	"Data\\MODEL\\MessyStairs.x",
+	"Data\\MODEL\\DummbellTower.x",
+	
 };
 
 //====================================================================
@@ -138,10 +148,6 @@ void InitObject00(void)
 	{
 		//マテリアル情報に対するポインタを所得
 		pMat = (D3DXMATERIAL*)g_pBuffMatObject00[nCntNumObject]->GetBufferPointer();
-		if (nCntNumObject == 58)
-		{
-			int a = 5;
-		}
 
 		for (int nCntMat = 0; nCntMat < (int)g_dwNumMatObject00[nCntNumObject]; nCntMat++)
 		{
@@ -243,6 +249,7 @@ void DrawObject00(void)
 
 			for (int nCntMat = 0; nCntMat < (int)g_dwNumMatObject00[g_Object00[nCntObject].nType]; nCntMat++)
 			{
+
 				//マテリアルの設定
 				pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
 
@@ -507,6 +514,11 @@ void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 
 			CollisionRotObject00(nCntObject);
 
+			if (nType == 58)
+			{
+				int a = 0;
+			}
+
 			break;
 		}
 	}
@@ -736,19 +748,6 @@ D3DXVECTOR3 CollisionOuterProductObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOl
 			}
 		}
 	}
-	/*	for ( nCount = 0; nCount < MAX_NUMBER - 1; nCount++)
-	{
-		for ( nCheck = (nCount + 1); nCheck < MAX_NUMBER; nCheck++)
-		{
-			nTemp = nNumber[nCheck];
-			if (nNumber[nCount] < nNumber[nCheck])
-			{
-				nNumber[nCheck] = nNumber[nCount];
-				nNumber[nCount] = nTemp;
-
-			}
-		}
-	}*/
 
 	return pos[0];
 }

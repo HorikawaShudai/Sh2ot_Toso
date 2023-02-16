@@ -2,6 +2,7 @@
 //
 // オブジェクトの処理[Object00.h]
 // Author: 坂本　翔唯
+// Author: 丹野竜之介
 //
 //========================================================================================
 #ifndef _OBJECT00_H_
@@ -71,6 +72,14 @@ typedef enum
 	OBJECT00_NTYPE056,
 	OBJECT00_NTYPE057,
 	OBJECT00_NTYPE058,
+	OBJECT00_NTYPE059,
+	OBJECT00_NTYPE060,
+	OBJECT00_NTYPE061,
+	OBJECT00_NTYPE062,
+	OBJECT00_NTYPE063,
+	OBJECT00_NTYPE064,
+	OBJECT00_NTYPE065,
+	OBJECT00_NTYPE066,
 	OBJECT00_NTYPE_MAX,
 
 }OBJECT00_NTYPE;
@@ -92,7 +101,6 @@ typedef struct
 	bool bUse;									//モデルが使用されているかどうか
 	D3DXMATERIAL pMatE;							//エディット状態のマテリアル
 	int nIdxModelParent; //親子設定
-	LPDIRECT3DTEXTURE9 g_pTexture[64] = {};		//テクスチャのポインタ
 }Object00;
 
 //プロトタイプ宣言
