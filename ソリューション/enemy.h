@@ -99,6 +99,6 @@ void CollisionEnemyShadow(D3DXVECTOR3 *pPos);
 ENEMY * GetEnemy(void);
 
 float DetectWall(D3DXVECTOR3 pos, float fmoveRot, int nLife);
-bool DetectPlayer(D3DXVECTOR3*postg, D3DXVECTOR3 pos, float fmoveRot, int nLife);
+bool DetectPlayer(D3DXVECTOR3 pos, float fmoveRot, int nEnemy);
 
 #endif

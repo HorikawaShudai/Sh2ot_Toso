@@ -2,6 +2,7 @@
 //
 // オブジェクトの処理[Object00.cpp]
 // Author: 坂本　翔唯
+// Author: 丹野竜之介
 //
 //========================================================================================
 #include "main.h"
@@ -733,19 +734,6 @@ D3DXVECTOR3 CollisionOuterProductObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOl
 			}
 		}
 	}
-	/*	for ( nCount = 0; nCount < MAX_NUMBER - 1; nCount++)
-	{
-		for ( nCheck = (nCount + 1); nCheck < MAX_NUMBER; nCheck++)
-		{
-			nTemp = nNumber[nCheck];
-			if (nNumber[nCount] < nNumber[nCheck])
-			{
-				nNumber[nCheck] = nNumber[nCount];
-				nNumber[nCount] = nTemp;
-
-			}
-		}
-	}*/
 
 	return pos[0];
 }
