@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+﻿  EscapeTutorial.cpp
+  camera.cpp
+  player.cpp
+=======
 ﻿  Billboard.cpp
   CheckboxUI.cpp
   Effect.cpp
@@ -55,11 +60,16 @@ camera.cpp(85): warning C4553: '==': 演算子にプログラム上の作用が�
   time.cpp
   title.cpp
   tutorialUI.cpp
+>>>>>>> a79c572ccabbfd987dc443fb7ada1583c0a94145
   コード生成しています。
-  473 of 477 functions (99.2%) were compiled, the rest were copied from previous compilation.
-    64 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  6 of 482 functions ( 1.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    3 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
+<<<<<<< HEAD
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+=======
 <<<<<<< HEAD
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
@@ -67,3 +77,4 @@ camera.cpp(85): warning C4553: '==': 演算子にプログラム上の作用が�
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
 >>>>>>> 3e41f9ccf89a93c1f25d7603f0edaf881403d16f
+>>>>>>> a79c572ccabbfd987dc443fb7ada1583c0a94145
