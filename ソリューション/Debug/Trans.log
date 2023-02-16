@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 ﻿  object00.cpp
   game.cpp
   コードを生成中...
   Trans.vcxproj -> C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+﻿  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作2\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作2\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+>>>>>>> 4795da4b47f1acec8e4c0b0c11127e1769c570bf
