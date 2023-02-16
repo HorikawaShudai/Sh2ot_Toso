@@ -87,6 +87,7 @@ const char *c_apModelObj[] =					//モデルデータ読み込み
 	"Data\\MODEL\\lounge.x",
 	"Data\\MODEL\\CultureTank.x",
 	"Data\\MODEL\\BigCultureTank.x",
+	"Data\\MODEL\\CrashArea.x",
 };
 
 //====================================================================
@@ -137,6 +138,10 @@ void InitObject00(void)
 	{
 		//マテリアル情報に対するポインタを所得
 		pMat = (D3DXMATERIAL*)g_pBuffMatObject00[nCntNumObject]->GetBufferPointer();
+		if (nCntNumObject == 58)
+		{
+			int a = 5;
+		}
 
 		for (int nCntMat = 0; nCntMat < (int)g_dwNumMatObject00[nCntNumObject]; nCntMat++)
 		{
@@ -238,7 +243,6 @@ void DrawObject00(void)
 
 			for (int nCntMat = 0; nCntMat < (int)g_dwNumMatObject00[g_Object00[nCntObject].nType]; nCntMat++)
 			{
-
 				//マテリアルの設定
 				pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
 

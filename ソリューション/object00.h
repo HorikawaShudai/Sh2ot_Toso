@@ -70,6 +70,7 @@ typedef enum
 	OBJECT00_NTYPE055,
 	OBJECT00_NTYPE056,
 	OBJECT00_NTYPE057,
+	OBJECT00_NTYPE058,
 	OBJECT00_NTYPE_MAX,
 
 }OBJECT00_NTYPE;
@@ -91,6 +92,7 @@ typedef struct
 	bool bUse;									//モデルが使用されているかどうか
 	D3DXMATERIAL pMatE;							//エディット状態のマテリアル
 	int nIdxModelParent; //親子設定
+	LPDIRECT3DTEXTURE9 g_pTexture[64] = {};		//テクスチャのポインタ
 }Object00;
 
 //プロトタイプ宣言
