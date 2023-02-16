@@ -87,6 +87,7 @@ const char *c_apModelObj[] =					//モデルデータ読み込み
 	"Data\\MODEL\\lounge.x",
 	"Data\\MODEL\\CultureTank.x",
 	"Data\\MODEL\\BigCultureTank.x",
+	"Data\\MODEL\\ka-ten00.x",
 };
 
 //====================================================================
