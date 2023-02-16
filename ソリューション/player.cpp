@@ -53,11 +53,13 @@ Player g_aPlayer[NUM_PLAYER];					//プレイヤーの情報
 int g_nIndexPlayerShadow = -1;					//影のインデックス(番号)
 bool g_bPlayerOps;
 bool g_GameEnd;
+bool bMove;										//プレイヤーが移動したかどうか
 int g_Rand_PolygonColor_R;
 int g_Rand_PolygonColor_G;
 int g_Rand_PolygonColor_B;
 int g_Rand_PolygonColor_A;
-TUTORIAL_MODE g_nTutorial;
+
+int nStelthCnt;									//チュートリアル用ステルス状態を数える処理
 
 //====================================================================
 //プレイヤーの初期化処理
@@ -102,6 +104,8 @@ void InitPlayer(void)
 
 		g_bPlayerOps = false;
 		g_GameEnd = false;
+		bMove = false;
+		nStelthCnt = 0;
 
 		g_Rand_PolygonColor_R = 0;
 		g_Rand_PolygonColor_G = 0;
@@ -109,8 +113,6 @@ void InitPlayer(void)
 		g_Rand_PolygonColor_A = 0;
 
 		g_aPlayer[nCntPlayer].nNumModel = 1;
-
-		g_nTutorial = MODE_MOVE;
 
 		//Xファイルの読み込み
 		D3DXLoadMeshFromX("data\\MODEL\\player.x",
@@ -191,6 +193,8 @@ void UpdatePlayer(void)
 //====================================================================
 void UpdatePlayer0(void)
 {
+	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
+
 	//ポインタ情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 	int CurrentCamera = GetCurrentCamera();
@@ -324,9 +328,19 @@ void UpdatePlayer0(void)
 
 					g_aPlayer[nSelectPlayer].bCheck = true;
 
-					if (g_nTutorial == MODE_GET_KEY)
+					//鍵をゲットしたとき
+					if (do_Tutorial == MODE_GET_KEY)
 					{
+						//チェックをつける処理
 						SetCheckUI(nSelectPlayer, true);
+
+						//チュートリアルモードを脱出に
+						DoEscapeTutorial(MODE_ESCAPE);
+					}
+
+					if (do_Tutorial != MODE_GET_KEY)
+					{
+
 					}
 				}
 			}
@@ -343,9 +357,19 @@ void UpdatePlayer0(void)
 					g_aPlayer[nSelectPlayer].bGetKey = false;	//鍵を入手してない状態にする
 					SetKeyUI(nSelectPlayer, false);			//鍵UIを非表示にする
 
-					if (g_nTutorial == MODE_ESCAPE)
+					//チュートリアルモード脱出の時
+					if (do_Tutorial == MODE_ESCAPE)
 					{
+						//チェックをつける
 						SetCheckUI(nSelectPlayer, true);
+
+						//チュートリアルモードを終わらせる
+						DoEscapeTutorial(MODE_END);
+					}
+
+					if (do_Tutorial != MODE_ESCAPE)
+					{
+
 					}
 				}
 			}
@@ -409,6 +433,7 @@ void PlayerMoveInput(int nCnt)
 	Camera *pCamera = GetCamera();
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 	int CurrentCamera = GetCurrentCamera();
+	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
 
 	//斜め移動の速度修正用の関数を初期化する
 	g_aPlayer[nCnt].NormarizeMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -448,9 +473,14 @@ void PlayerMoveInput(int nCnt)
 
 				g_aPlayer[CurrentCamera].bCheck = true;
 
-				if (g_nTutorial == MODE_MOVE)
+				//移動したらチェックをつける処理
+				if (do_Tutorial == MODE_MOVE)
 				{
-					SetCheckUI(CurrentCamera, true);
+					//移動した状態にする
+					MoveCheck(true);
+
+					//チュートリアル用紙をカメラ移動に
+					DoEscapeTutorial(MODE_CAM_MOVE);
 				}
 			}
 			if (GetGamepad_Stick_Left(0).y < 0.0f)
@@ -460,9 +490,14 @@ void PlayerMoveInput(int nCnt)
 
 				g_aPlayer[CurrentCamera].bCheck = true;
 
-				if (g_nTutorial == MODE_MOVE)
+				//移動したらチェックをつける処理
+				if (do_Tutorial == MODE_MOVE)
 				{
-					SetCheckUI(CurrentCamera, true);
+					//移動した状態にする
+					MoveCheck(true);
+
+					//チュートリアル用紙をカメラ移動に
+					DoEscapeTutorial(MODE_CAM_MOVE);
 				}
 			}
 			if (GetGamepad_Stick_Left(0).x > 0.0f)
@@ -473,9 +508,14 @@ void PlayerMoveInput(int nCnt)
 
 				g_aPlayer[CurrentCamera].bCheck = true;
 
-				if (g_nTutorial == MODE_MOVE)
+				//移動したらチェックをつける処理
+				if (do_Tutorial == MODE_MOVE)
 				{
-					SetCheckUI(CurrentCamera, true);
+					//移動した状態にする
+					MoveCheck(true);
+
+					//チュートリアル用紙をカメラ移動に
+					DoEscapeTutorial(MODE_CAM_MOVE);
 				}
 			}
 			if (GetGamepad_Stick_Left(0).x < 0.0f)
@@ -486,9 +526,14 @@ void PlayerMoveInput(int nCnt)
 
 				g_aPlayer[CurrentCamera].bCheck = true;
 				
-				if (g_nTutorial == MODE_MOVE)
+				//移動したらチェックをつける処理
+				if (do_Tutorial == MODE_MOVE)
 				{
-					SetCheckUI(CurrentCamera, true);
+					//移動した状態にする
+					MoveCheck(true);
+
+					//チュートリアル用紙をカメラ移動に
+					DoEscapeTutorial(MODE_CAM_MOVE);
 				}
 			}
 		}
@@ -518,9 +563,11 @@ void PlayerMoveInput(int nCnt)
 				g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_DASH;
 
 				//ダッシュしたらチェック状態にする処理
-				if (g_nTutorial == MODE_DASH)
+				if (do_Tutorial == MODE_DASH)
 				{
 					SetCheckUI(nCnt, true);
+
+					DoEscapeTutorial(MODE_VIBE);
 				}
 			}
 		}
@@ -534,6 +581,27 @@ void PlayerMoveInput(int nCnt)
 
 			//プレイヤーをステルス状態にする
 			g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;
+
+			//チュートリアルステルス状態の時の処理
+			if (do_Tutorial == MODE_STELTH && g_aPlayer[nCnt].MoveState == PLAYER_MOVESTATE_STEALTH)
+			{
+					if (g_aPlayer[nCnt].move != D3DXVECTOR3(0.0f, 0.0f, 0.0f) && nStelthCnt > 299)
+					{
+						{
+							//チェックをつける処理
+							SetCheckUI(nCnt, true);
+
+							//チュートリアル用紙を鍵の取得に
+							DoEscapeTutorial(MODE_GET_KEY);
+						}
+					}
+					nStelthCnt++;
+			}
+
+			else if (do_Tutorial != MODE_STELTH)
+			{
+
+			}
 
 			//カメラ状態を無へ
 			pCamera[nCnt].State = CAMERASTATE_NONE;
@@ -555,12 +623,6 @@ void PlayerMoveInput(int nCnt)
 
 			//プレイヤーをステルス状態にする
 			g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;
-
-			if (g_nTutorial == MODE_STELTH)
-			{
-				//チェックをつける処理
-				SetCheckUI(nCnt, true);
-			}
 
 			//カメラ状態を無へ
 			pCamera[nCnt].State = CAMERASTATE_NONE;
@@ -1103,6 +1165,8 @@ void PlayerDistance(int nCnt)
 {
 	ENEMY *pEnemy = GetEnemy();
 
+	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
+
 	for (int nCntEnemy = 0; nCntEnemy < MAX_ENEMY; nCntEnemy++, pEnemy++)
 	{
 		if (pEnemy->bUse == true)
@@ -1134,6 +1198,18 @@ void PlayerDistance(int nCnt)
 				if (g_aPlayer[nCnt].VibrtionFalseCount <= 0)
 				{
 					PlayerSetVibrtion(nCnt, 10, 10, 60000, 0);
+
+					if (do_Tutorial == MODE_VIBE)
+					{
+						SetCheckUI(nCnt, true);
+
+						DoEscapeTutorial(MODE_STELTH);
+					}
+
+					else if (do_Tutorial != MODE_VIBE)
+					{
+
+					}
 				}
 			}
 			else

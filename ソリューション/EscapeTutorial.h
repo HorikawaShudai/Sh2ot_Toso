@@ -20,6 +20,7 @@ typedef enum
 	MODE_STELTH,		//ステルス
 	MODE_GET_KEY,		//鍵をとる
 	MODE_ESCAPE,		//脱出
+	MODE_END,			//チュートリアル項目の終了
 	MODE__TUTORIAL_MAX,
 }TUTORIAL_MODE;
 
@@ -30,4 +31,9 @@ void UpdateEscapeTutorial();
 void DrawEscapeTutorial();
 TUTORIAL_STATE GetEscapeTutorial();
 void SetEscapeTutorial(TUTORIAL_STATE nSet);
+void DoEscapeTutorial(TUTORIAL_MODE nMode);
+TUTORIAL_MODE GetDoEscapeTutorial(void);
+void MoveCheck(bool check);
+void CamMoveCheck(bool camcheck);
+
 #endif
