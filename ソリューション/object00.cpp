@@ -12,7 +12,7 @@
 #include "score.h"
 
 #define OBJECT00_LIFE (7)		//オブジェクトの体力
-#define FALSE_SIZE (10.0f)		//エディットモードのバックスペースの判定の大きさ
+#define FALSE_SIZE (20.0f)		//エディットモードのバックスペースの判定の大きさ
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureObject00[64][OBJECT00_NTYPE_MAX] = {};		//テクスチャのポインタ
@@ -86,8 +86,10 @@ const char *c_apModelObj[] =					//モデルデータ読み込み
 	"Data\\MODEL\\gareki.x",
 	"Data\\MODEL\\lounge.x",
 	"Data\\MODEL\\CultureTank.x",
-	"Data\\MODEL\\BigCultureTank.x",
 	"Data\\MODEL\\ka-ten00.x",
+	"Data\\MODEL\\BigCultureTank.x",
+	"Data\\MODEL\\ori00.x",
+	
 };
 
 //====================================================================
@@ -503,6 +505,11 @@ void SetObject00(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 			//}
 
 			CollisionRotObject00(nCntObject);
+
+			if (nType == 58)
+			{
+				int a = 0;
+			}
 
 			break;
 		}
