@@ -3,6 +3,7 @@
 // プレイヤーの処理[player.cpp]
 // Author: 小笠原　彪
 // Author: 坂本　翔唯
+// Author: 丹野竜之介
 //
 //========================================================================================
 #include "main.h"
@@ -298,7 +299,7 @@ void UpdatePlayer0(void)
 		g_aPlayer[nSelectPlayer].pos += g_aPlayer[nSelectPlayer].move;
 
 		//オブジェクトとの当たり判定
-		CollisionObject00(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
+		CollisionObject00(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 50.0f, 10.0f), 10.0f);
 		//外積の当たり判定
 		//CollisionOuterProductObject00(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move);
 
@@ -1254,6 +1255,144 @@ int CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY,
 		}
 	}
 	return nCntHit;
+}
+//====================================================================
+//プレイヤーとの外積の当たり判定
+//====================================================================
+D3DXVECTOR3 CollisionOuterProductPlayer(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove)
+{
+	//移動ベクトルを割り出す
+	D3DXVECTOR3 vecMove = *pPos - *pPosOld;
+	//座標保管用
+	int nPosCount = 0;
+	D3DXVECTOR3 pos[MAX_OBJECT00 * 4] = {};
+	for (int nCnt = 0; nCnt < MAX_OBJECT00; nCnt++)
+	{
+		if (g_aPlayer[nCnt].bUse == true)
+		{
+			for (int nLine = 0; nLine < 4; nLine++)
+			{
+				bool bHit = false;
+				bool bHit1 = false;
+				bool bHit2 = false;
+
+				D3DXVECTOR3 pos0, pos1;
+				switch (nLine)
+				{//紙片の当たり判定
+				case 0:
+					pos0 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + -25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + 25.0f);
+					pos1 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + 25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + 25.0f);
+					break;
+				case 1:
+					pos0 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + 25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + 25.0f);
+					pos1 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + 25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + -25.0f);
+					break;
+				case 2:
+					pos0 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + 25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + -25.0f);
+					pos1 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + -25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + -25.0f);
+					break;
+				case 3:
+					pos0 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + -25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + -25.0f);
+					pos1 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + -25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + 25.0f);
+					break;
+				default:
+					break;
+				}
+
+				//ベクトルの目標地点
+
+				D3DXVECTOR3 vecLine = pos1 - pos0;
+
+				D3DXVECTOR3 vecToPos = *pPos - pos0;
+
+				D3DXVECTOR3 vecToPos2 = *pPosOld - pos0;
+
+				float A, B, fRate;
+				A = (vecToPos.z * vecMove.x) - (vecToPos.x * vecMove.z);
+				B = (vecLine.z * vecMove.x) - (vecLine.x * vecMove.z);
+				if (B != 0)
+				{
+					fRate = A / B;
+				}
+				else
+				{
+					fRate = 10.0f;
+				}
+
+				if (fRate >= 0.0f &&fRate <= 1.0f)
+				{//vecLineを横切ったとき
+					if ((vecLine.z * vecToPos.x) - (vecLine.x * vecToPos.z) < 0)
+					{
+						bHit1 = true;
+					}
+
+					if ((vecLine.z * vecToPos2.x) - (vecLine.x * vecToPos2.z) < 0)
+					{
+						bHit2 = true;
+					}
+
+					if (bHit1 != bHit2)
+					{
+						bHit = true;
+					}
+
+					bHit1 = false;
+					bHit2 = false;
+
+					if ((vecLine.z * vecToPos.x) + (vecLine.x * vecToPos.z) > 0)
+					{
+						bHit1 = true;
+					}
+
+					if ((vecLine.z * vecToPos2.x) + (vecLine.x * vecToPos2.z) > 0)
+					{
+						bHit2 = true;
+					}
+
+					if (bHit1 != bHit2)
+					{
+						bHit = true;
+					}
+				}
+				if (bHit == true)
+				{
+					pos[nPosCount] = pos0 + vecLine*fRate;
+					nPosCount++;
+				}
+			}
+		}
+
+	}
+	if (nPosCount > 1)
+	{
+		for (int nCheck = 0; nCheck < nPosCount - 1; nCheck++)
+		{//距離の差を割り出して昇順にソート
+
+			for (int nCnt = (nCheck + 1); nCnt < nPosCount; nCnt++)
+			{
+				D3DXVECTOR3 Temp = pos[nCnt];
+				float fDis1, fDis2;
+				fDis1 = (pos[nCheck].x - pPosOld->x) + (pos[nCheck].z - pPosOld->z);
+				fDis2 = (pos[nCnt].x - pPosOld->x) + (pos[nCnt].z - pPosOld->z);
+				if (fDis1 < 0)
+				{
+					fDis1 *= -1.0f;
+				}
+				if (fDis2 < 0)
+				{
+					fDis2 *= -1.0f;
+				}
+				if (fDis1 > fDis2)
+				{
+					pos[nCnt] = pos[nCheck];
+					pos[nCheck] = Temp;
+				}
+			}
+		}
+	}
+	
+
+	return pos[0];
 }
 
 //====================================================================
