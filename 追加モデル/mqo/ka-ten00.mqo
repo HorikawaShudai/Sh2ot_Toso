@@ -2,14 +2,13 @@ Metasequoia Document
 Format Text Ver 1.0
 
 Scene {
-	pos -159.0080 -603.0416 6144.0000
+	pos -183.6962 -71.1215 9830.4004
 	lookat 0.0000 0.0000 0.0000
-	head -6.2701
-	pich 0.1508
+	head -6.2802
+	pich 0.1408
 	bank 0.0200
-	ortho 1
-	zoom2 1.2207
-	zoom_pers 1.2207
+	ortho 0
+	zoom2 0.7629
 	amb 0.250 0.250 0.250
 	dirlights 1 {
 		light {
@@ -18,15 +17,13 @@ Scene {
 		}
 	}
 }
-Material 4 {
+Material 2 {
 	"mat1" col(0.553 0.553 0.553 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00)
 	"mat2" col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("C:\Users\student\Desktop\チーム制作2\Sh2ot_Toso\ソリューション\Data\TEXTURE\ka-ten00.png")
-	"mat3" col(0.502 0.502 0.502 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00)
-	"mat4" col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00)
 }
 Object "上" {
 	visible 15
-	locking 0
+	locking 1
 	shading 1
 	facet 59.5
 	color 0.898 0.498 0.698
