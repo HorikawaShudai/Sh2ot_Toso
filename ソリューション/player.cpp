@@ -194,6 +194,7 @@ void UpdatePlayer(void)
 //====================================================================
 void UpdatePlayer0(void)
 {
+	//チュートリアルの項目情報を与える処理
 	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
 
 	//ポインタ情報の取得

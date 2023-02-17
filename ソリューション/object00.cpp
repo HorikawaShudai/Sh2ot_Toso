@@ -97,7 +97,6 @@ const char *c_apModelObj[] =					//モデルデータ読み込み
 	"Data\\MODEL\\MessyObject00.x",
 	"Data\\MODEL\\MessyStairs.x",
 	"Data\\MODEL\\DummbellTower.x",
-	
 };
 
 //====================================================================
