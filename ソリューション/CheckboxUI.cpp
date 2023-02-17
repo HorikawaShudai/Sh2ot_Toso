@@ -14,16 +14,16 @@
 #define CHECKUIPOS_Y_2		(700.0f)		//チェックボックスのUIのY位置2
 
 #define CHECKUIPOS_X_3_0  (200.0)			//チュートリアル用紙が出ているときのX位置(1人目)
-#define CHECKUIPOS_Y_3_0  (700.0)			//チュートリアル用紙が出ているときのY位置(1人目)
+#define CHECKUIPOS_Y_3_0  (650.0)			//チュートリアル用紙が出ているときのY位置(1人目)
 
 #define CHECKUIPOS_X_3_1  (400.0)			//チュートリアル用紙が出ているときのX位置(2人目)
-#define CHECKUIPOS_Y_3_1  (700.0)			//チュートリアル用紙が出ているときのY位置(2人目)
+#define CHECKUIPOS_Y_3_1  (650.0)			//チュートリアル用紙が出ているときのY位置(2人目)
 
 #define CHECKUIPOS_X_3_2  (600.0)			//チュートリアル用紙が出ているときのX位置(3人目)
-#define CHECKUIPOS_Y_3_2  (700.0)			//チュートリアル用紙が出ているときのY位置(3人目)
+#define CHECKUIPOS_Y_3_2  (650.0)			//チュートリアル用紙が出ているときのY位置(3人目)
 
 #define CHECKUIPOS_X_3_3  (800.0)			//チュートリアル用紙が出ているときのX位置(4人目)
-#define CHECKUIPOS_Y_3_3  (700.0)			//チュートリアル用紙が出ているときのY位置(4人目)
+#define CHECKUIPOS_Y_3_3  (650.0)			//チュートリアル用紙が出ているときのY位置(4人目)
 
 #define CHECKUI_WIDTH		(50.0f)			//チェックボックスのUIの幅
 #define CHECKUI_HEIGHT		(50.0f)			//チェックボックスのUIの高さ
