@@ -416,11 +416,11 @@ void DrawEscapeTutorial()
 		//プレイヤーの描画処理
 		DrawPlayer();
 
-		/*if (pPlayer->bAppear == true)
-		{*/
+		if (pPlayer->bAppear == true)
+		{
 			//敵の描画処理
 			DrawEnemy();
-		//}
+		}
 
 		//スタミナの描画処理
 		DrawStamina();
@@ -442,8 +442,6 @@ void DrawEscapeTutorial()
 		//鍵UIの描画処理
 		DrawKeyUI();
 
-		DrawCheckboxUI();
-
 		//エフェクトの描画処理
 		DrawEffect();
 
@@ -460,6 +458,9 @@ void DrawEscapeTutorial()
 	DrawPaperBG01();
 
 	DrawTutorialUI();
+
+	//チェックボックスの描画
+	DrawCheckboxUI();
 }
 
 //====================================================================
