@@ -1,7 +1,24 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+﻿  player.cpp
+  camera.cpp
+  EscapeTutorial.cpp
+  コードを生成中...
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+>>>>>>> fd65e63e557a124a6b82d4fc3d1eb4812e8fb5a3
 ﻿  stage.cpp
   game.cpp
   edit.cpp
   コードを生成中...
 cl : コマンド ライン warning D9028: 簡易リビルド時のエラーです、通常のビルドに戻します
+<<<<<<< HEAD
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作2\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作2\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+>>>>>>> a79c572ccabbfd987dc443fb7ada1583c0a94145
+>>>>>>> fd65e63e557a124a6b82d4fc3d1eb4812e8fb5a3

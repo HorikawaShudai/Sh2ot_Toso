@@ -34,6 +34,8 @@
 TUTORIAL_STATE g_TutorialState;
 int g_Counter;
 TUTORIAL_MODE g_Tutorial;
+bool bpMove;
+bool bpCamMove;
 
 //====================================================================
 //チュートリアル画面の初期化処理
@@ -41,9 +43,10 @@ TUTORIAL_MODE g_Tutorial;
 void InitEscapeTutorial()
 {
 	g_TutorialState = TUTORIAL_STATE_STANDBY;
-	g_Counter = 0;
-
 	g_Tutorial = MODE_MOVE;
+	g_Counter = 0;
+	bool bMove = false;
+	bool bCamMove = false;
 
 	DWORD time = timeGetTime();
 	srand((unsigned int)time);
@@ -72,13 +75,13 @@ void InitEscapeTutorial()
 	//敵の初期化処理
 	InitEnemy();
 
+	SetEnemy(D3DXVECTOR3(-1050.0f, 0.0f, 100.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+
 	//スタミナの初期化処理
 	InitStamina();
 
 	//ライフの初期化処理
 	InitLife();
-
-	SetEnemy(D3DXVECTOR3(-2300.0f, 0.0f, -500.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
 	//スコアの初期化
 	InitScore();
@@ -199,6 +202,8 @@ void UninitEscapeTutorial()
 //====================================================================
 void UpdateEscapeTutorial()
 {
+	FADE pFade = GetFade();
+
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 
@@ -209,6 +214,9 @@ void UpdateEscapeTutorial()
 	{//ENTERキーを押したときリザルトにフェード
 		SetFade(MODE_GAME);
 	}
+
+#endif
+
 	if (GetKeyboardTrigger(DIK_V))
 	{
 		switch (g_TutorialState)
@@ -224,13 +232,6 @@ void UpdateEscapeTutorial()
 			break;
 		}
 	}
-#endif
-
-	//カメラの更新処理
-	UpdateCamera();
-
-	//ライトの更新処理
-	UpdateLight();
 
 	//UpdateSpotLight();
 
@@ -263,6 +264,7 @@ void UpdateEscapeTutorial()
 	case TUTORIAL_STATE_PLAY:
 		SetPaperBG00(false);
 		SetTutorialUI(false,0);
+
 		for (int nCntTutorial = 1; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber + 1; nCntTutorial++)
 		{
 			SetTutorialUI(true, nCntTutorial);
@@ -275,6 +277,12 @@ void UpdateEscapeTutorial()
 		break;
 	}
 
+	//カメラの更新処理
+	UpdateCamera();
+
+	//ライトの更新処理
+	UpdateLight();
+
 	//メッシュの壁の更新処理
 	UpdateMeshWall();
 
@@ -285,8 +293,12 @@ void UpdateEscapeTutorial()
 	UpdateObject00();
 	UpdateObjectBG();
 
-	//プレイヤーの更新処理
-	UpdatePlayer();
+	//チュートリアル実行画面の時のみ移動可能
+	if (g_TutorialState == TUTORIAL_STATE_PLAY)
+	{
+		//プレイヤーの更新処理
+		UpdatePlayer();
+	}
 
 	//スタミナの更新処理
 	UpdateStamina();
@@ -327,45 +339,41 @@ void UpdateEscapeTutorial()
 	{
 	case MODE_MOVE:
 
-		g_Tutorial = MODE_CAM_MOVE;
-
 		break;
 
 	case MODE_CAM_MOVE:
-
-		g_Tutorial = MODE_DASH;
 
 		break;
 
 	case MODE_DASH:
 
-		g_Tutorial = MODE_STELTH;
-
 		break;
 
 	case MODE_STELTH:
-
-		g_Tutorial = MODE_VIBE;
 
 		break;
 
 	case MODE_VIBE:
 
-		g_Tutorial = MODE_GET_KEY;
-
 		break;
 
 	case MODE_GET_KEY:
-
-		g_Tutorial = MODE_ESCAPE;
 
 		break;
 
 	case MODE_ESCAPE:
 
-		/*g_Tutorial = MODE_CAM_MOVE;*/
+		break;
+
+	case MODE_END:
+
+		if (pFade == FADE_NONE)
+		{
+			SetFade(MODE_GAME);			//モードの設定(ゲーム画面に移行)
+		}
 
 		break;
+
 	}
 }
 
@@ -408,11 +416,11 @@ void DrawEscapeTutorial()
 		//プレイヤーの描画処理
 		DrawPlayer();
 
-		if (pPlayer->bAppear == true)
-		{
+		/*if (pPlayer->bAppear == true)
+		{*/
 			//敵の描画処理
 			DrawEnemy();
-		}
+		//}
 
 		//スタミナの描画処理
 		DrawStamina();
@@ -469,3 +477,48 @@ void SetEscapeTutorial(TUTORIAL_STATE nSet)
 {
 	g_TutorialState = nSet;
 }
+
+//====================================================================
+//チュートリアル項目の状態管理
+//====================================================================
+void DoEscapeTutorial(TUTORIAL_MODE nMode)
+{
+	g_Tutorial = nMode;
+}
+
+//=====================================
+//チュートリアル項目の情報を与える処理
+//=====================================
+TUTORIAL_MODE GetDoEscapeTutorial(void)
+{
+	return g_Tutorial;
+}
+
+//==============================
+//移動したかどうかのチェック用
+//==============================
+void MoveCheck(bool check)
+{
+	//プレイヤーが動いたことに
+	bpMove = check;
+}
+
+//==================================
+//カメラが動いたかどうかのチェック
+//==================================
+void CamMoveCheck(bool camcheck)
+{
+	//カメラが動いたことに
+	bpCamMove = camcheck;
+
+	//プレイヤーとカメラが動いたときに
+	if (bpMove == true && bpCamMove == true)
+	{
+		//チェックをつける処理
+		SetCheckUI(0, true);
+
+		//チュートリアルモードをダッシュにする
+		DoEscapeTutorial(MODE_DASH);
+	}
+}
+

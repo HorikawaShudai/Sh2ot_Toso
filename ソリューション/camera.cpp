@@ -52,9 +52,8 @@ int g_nCurrentCamera;			//選択されているカメラの番号
 int g_nSaveCamera;				//カメラ番号保存用
 bool g_bTpsCamera;				//観察用のカメラを使うかどうか
 bool bEnter;					//エンターが押されたかどうか
+bool bCamMove;					//カメラが動いたかどうか
 int g_Rand_RankingCameraBG;		//ランキング画面の背景を決めるための変数
-
-TUTORIAL_MODE g_cTutorial;
 
 //====================================================================
 //カメラの初期化処理
@@ -82,7 +81,7 @@ void InitCamera(void)
 	g_nCurrentCamera = 0;			//選択されているカメラの番号を最初のカメラへ
 	g_bTpsCamera = false;			//観察用カメラを使っていない状態へ
 	bEnter = false;					//エンターを押していない状態に
-	g_cTutorial = MODE_MOVE;
+	bCamMove = false;
 
 	g_Rand_RankingCameraBG = rand() % 2;
 	
@@ -310,6 +309,7 @@ void PlayerFpsCamera(void)
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 	Player *pPlayer = GetPlayer();
+	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
 
 	//カメラ変更
 	if (GetKeyboardTrigger(DIK_F4) == true)
@@ -332,18 +332,22 @@ void PlayerFpsCamera(void)
 			{
 				g_aCamera[g_nCurrentCamera].rot.x += CAMERA_VR_SPEED;
 
-				if (g_cTutorial == MODE_CAM_MOVE)
+				//チュートリアル項目がカメラムーブの時
+				if (do_Tutorial == MODE_CAM_MOVE)
 				{
-					SetCheckUI(g_nCurrentCamera, true);
+					//カメラを移動したことにする
+					CamMoveCheck(true);
 				}
 			}
 			if (GetKeyboardPress(DIK_K) == true)
 			{
 				g_aCamera[g_nCurrentCamera].rot.x -= CAMERA_VR_SPEED;
 
-				if (g_cTutorial == MODE_CAM_MOVE)
+				//チュートリアル項目がカメラムーブの時
+				if (do_Tutorial == MODE_CAM_MOVE)
 				{
-					SetCheckUI(g_nCurrentCamera, true);
+					//カメラを移動したことにする
+					CamMoveCheck(true);
 				}
 			}
 
@@ -353,18 +357,23 @@ void PlayerFpsCamera(void)
 			//カメラの横移動をしたらチェックをつける処理
 			if (g_aCamera[g_nCurrentCamera].rot.x > 0.1f || g_aCamera[g_nCurrentCamera].rot.x < -0.1f)
 			{
-				if (g_cTutorial == MODE_CAM_MOVE)
+				if (do_Tutorial == MODE_CAM_MOVE)
 				{
-					SetCheckUI(g_nCurrentCamera, true);
+					CamMoveCheck(true);
 				}
 			}
 
 			//カメラの縦移動をしたらチェックをつける処理
 			if (g_aCamera[g_nCurrentCamera].rot.y > 0.1f || g_aCamera[g_nCurrentCamera].rot.y < -0.1f)
 			{
-				if (g_cTutorial == MODE_CAM_MOVE)
+				if (do_Tutorial == MODE_CAM_MOVE)
 				{
-					SetCheckUI(g_nCurrentCamera, true);
+					CamMoveCheck(true);
+				}
+
+				else if (do_Tutorial != MODE_CAM_MOVE)
+				{
+
 				}
 			}
 

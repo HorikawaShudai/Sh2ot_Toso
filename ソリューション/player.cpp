@@ -3,6 +3,7 @@
 // プレイヤーの処理[player.cpp]
 // Author: 小笠原　彪
 // Author: 坂本　翔唯
+// Author: 丹野竜之介
 //
 //========================================================================================
 #include "main.h"
@@ -53,11 +54,13 @@ Player g_aPlayer[NUM_PLAYER];					//プレイヤーの情報
 int g_nIndexPlayerShadow = -1;					//影のインデックス(番号)
 bool g_bPlayerOps;
 bool g_GameEnd;
+bool bMove;										//プレイヤーが移動したかどうか
 int g_Rand_PolygonColor_R;
 int g_Rand_PolygonColor_G;
 int g_Rand_PolygonColor_B;
 int g_Rand_PolygonColor_A;
-TUTORIAL_MODE g_nTutorial;
+
+int nStelthCnt;									//チュートリアル用ステルス状態を数える処理
 
 //====================================================================
 //プレイヤーの初期化処理
@@ -102,6 +105,8 @@ void InitPlayer(void)
 
 		g_bPlayerOps = false;
 		g_GameEnd = false;
+		bMove = false;
+		nStelthCnt = 0;
 
 		g_Rand_PolygonColor_R = 0;
 		g_Rand_PolygonColor_G = 0;
@@ -109,8 +114,6 @@ void InitPlayer(void)
 		g_Rand_PolygonColor_A = 0;
 
 		g_aPlayer[nCntPlayer].nNumModel = 1;
-
-		g_nTutorial = MODE_MOVE;
 
 		//Xファイルの読み込み
 		D3DXLoadMeshFromX("data\\MODEL\\player.x",
@@ -191,6 +194,8 @@ void UpdatePlayer(void)
 //====================================================================
 void UpdatePlayer0(void)
 {
+	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
+
 	//ポインタ情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 	int CurrentCamera = GetCurrentCamera();
@@ -324,9 +329,19 @@ void UpdatePlayer0(void)
 
 					g_aPlayer[nSelectPlayer].bCheck = true;
 
-					if (g_nTutorial == MODE_GET_KEY)
+					//鍵をゲットしたとき
+					if (do_Tutorial == MODE_GET_KEY)
 					{
+						//チェックをつける処理
 						SetCheckUI(nSelectPlayer, true);
+
+						//チュートリアルモードを脱出に
+						DoEscapeTutorial(MODE_ESCAPE);
+					}
+
+					if (do_Tutorial != MODE_GET_KEY)
+					{
+
 					}
 				}
 			}
@@ -343,9 +358,19 @@ void UpdatePlayer0(void)
 					g_aPlayer[nSelectPlayer].bGetKey = false;	//鍵を入手してない状態にする
 					SetKeyUI(nSelectPlayer, false);			//鍵UIを非表示にする
 
-					if (g_nTutorial == MODE_ESCAPE)
+					//チュートリアルモード脱出の時
+					if (do_Tutorial == MODE_ESCAPE)
 					{
+						//チェックをつける
 						SetCheckUI(nSelectPlayer, true);
+
+						//チュートリアルモードを終わらせる
+						DoEscapeTutorial(MODE_END);
+					}
+
+					if (do_Tutorial != MODE_ESCAPE)
+					{
+
 					}
 				}
 			}
@@ -409,6 +434,7 @@ void PlayerMoveInput(int nCnt)
 	Camera *pCamera = GetCamera();
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 	int CurrentCamera = GetCurrentCamera();
+	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
 
 	//斜め移動の速度修正用の関数を初期化する
 	g_aPlayer[nCnt].NormarizeMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -448,9 +474,14 @@ void PlayerMoveInput(int nCnt)
 
 				g_aPlayer[CurrentCamera].bCheck = true;
 
-				if (g_nTutorial == MODE_MOVE)
+				//移動したらチェックをつける処理
+				if (do_Tutorial == MODE_MOVE)
 				{
-					SetCheckUI(CurrentCamera, true);
+					//移動した状態にする
+					MoveCheck(true);
+
+					//チュートリアル用紙をカメラ移動に
+					DoEscapeTutorial(MODE_CAM_MOVE);
 				}
 			}
 			if (GetGamepad_Stick_Left(0).y < 0.0f)
@@ -460,9 +491,14 @@ void PlayerMoveInput(int nCnt)
 
 				g_aPlayer[CurrentCamera].bCheck = true;
 
-				if (g_nTutorial == MODE_MOVE)
+				//移動したらチェックをつける処理
+				if (do_Tutorial == MODE_MOVE)
 				{
-					SetCheckUI(CurrentCamera, true);
+					//移動した状態にする
+					MoveCheck(true);
+
+					//チュートリアル用紙をカメラ移動に
+					DoEscapeTutorial(MODE_CAM_MOVE);
 				}
 			}
 			if (GetGamepad_Stick_Left(0).x > 0.0f)
@@ -473,9 +509,14 @@ void PlayerMoveInput(int nCnt)
 
 				g_aPlayer[CurrentCamera].bCheck = true;
 
-				if (g_nTutorial == MODE_MOVE)
+				//移動したらチェックをつける処理
+				if (do_Tutorial == MODE_MOVE)
 				{
-					SetCheckUI(CurrentCamera, true);
+					//移動した状態にする
+					MoveCheck(true);
+
+					//チュートリアル用紙をカメラ移動に
+					DoEscapeTutorial(MODE_CAM_MOVE);
 				}
 			}
 			if (GetGamepad_Stick_Left(0).x < 0.0f)
@@ -486,9 +527,14 @@ void PlayerMoveInput(int nCnt)
 
 				g_aPlayer[CurrentCamera].bCheck = true;
 				
-				if (g_nTutorial == MODE_MOVE)
+				//移動したらチェックをつける処理
+				if (do_Tutorial == MODE_MOVE)
 				{
-					SetCheckUI(CurrentCamera, true);
+					//移動した状態にする
+					MoveCheck(true);
+
+					//チュートリアル用紙をカメラ移動に
+					DoEscapeTutorial(MODE_CAM_MOVE);
 				}
 			}
 		}
@@ -518,9 +564,11 @@ void PlayerMoveInput(int nCnt)
 				g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_DASH;
 
 				//ダッシュしたらチェック状態にする処理
-				if (g_nTutorial == MODE_DASH)
+				if (do_Tutorial == MODE_DASH)
 				{
 					SetCheckUI(nCnt, true);
+
+					DoEscapeTutorial(MODE_VIBE);
 				}
 			}
 		}
@@ -534,6 +582,27 @@ void PlayerMoveInput(int nCnt)
 
 			//プレイヤーをステルス状態にする
 			g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;
+
+			//チュートリアルステルス状態の時の処理
+			if (do_Tutorial == MODE_STELTH && g_aPlayer[nCnt].MoveState == PLAYER_MOVESTATE_STEALTH)
+			{
+					if (g_aPlayer[nCnt].move != D3DXVECTOR3(0.0f, 0.0f, 0.0f) && nStelthCnt > 299)
+					{
+						{
+							//チェックをつける処理
+							SetCheckUI(nCnt, true);
+
+							//チュートリアル用紙を鍵の取得に
+							DoEscapeTutorial(MODE_GET_KEY);
+						}
+					}
+					nStelthCnt++;
+			}
+
+			else if (do_Tutorial != MODE_STELTH)
+			{
+
+			}
 
 			//カメラ状態を無へ
 			pCamera[nCnt].State = CAMERASTATE_NONE;
@@ -555,12 +624,6 @@ void PlayerMoveInput(int nCnt)
 
 			//プレイヤーをステルス状態にする
 			g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;
-
-			if (g_nTutorial == MODE_STELTH)
-			{
-				//チェックをつける処理
-				SetCheckUI(nCnt, true);
-			}
 
 			//カメラ状態を無へ
 			pCamera[nCnt].State = CAMERASTATE_NONE;
@@ -1103,6 +1166,8 @@ void PlayerDistance(int nCnt)
 {
 	ENEMY *pEnemy = GetEnemy();
 
+	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
+
 	for (int nCntEnemy = 0; nCntEnemy < MAX_ENEMY; nCntEnemy++, pEnemy++)
 	{
 		if (pEnemy->bUse == true)
@@ -1134,6 +1199,18 @@ void PlayerDistance(int nCnt)
 				if (g_aPlayer[nCnt].VibrtionFalseCount <= 0)
 				{
 					PlayerSetVibrtion(nCnt, 10, 10, 60000, 0);
+
+					if (do_Tutorial == MODE_VIBE)
+					{
+						SetCheckUI(nCnt, true);
+
+						DoEscapeTutorial(MODE_STELTH);
+					}
+
+					else if (do_Tutorial != MODE_VIBE)
+					{
+
+					}
 				}
 			}
 			else
@@ -1178,6 +1255,144 @@ int CollisionPlayer(D3DXVECTOR3 pos, D3DXVECTOR3 posOld, float Size, float MaxY,
 		}
 	}
 	return nCntHit;
+}
+//====================================================================
+//プレイヤーとの外積の当たり判定
+//====================================================================
+D3DXVECTOR3 CollisionOuterProductPlayer(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove)
+{
+	//移動ベクトルを割り出す
+	D3DXVECTOR3 vecMove = *pPos - *pPosOld;
+	//座標保管用
+	int nPosCount = 0;
+	D3DXVECTOR3 pos[MAX_OBJECT00 * 4] = {};
+	for (int nCnt = 0; nCnt < MAX_OBJECT00; nCnt++)
+	{
+		if (g_aPlayer[nCnt].bUse == true)
+		{
+			for (int nLine = 0; nLine < 4; nLine++)
+			{
+				bool bHit = false;
+				bool bHit1 = false;
+				bool bHit2 = false;
+
+				D3DXVECTOR3 pos0, pos1;
+				switch (nLine)
+				{//紙片の当たり判定
+				case 0:
+					pos0 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + -25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + 25.0f);
+					pos1 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + 25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + 25.0f);
+					break;
+				case 1:
+					pos0 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + 25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + 25.0f);
+					pos1 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + 25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + -25.0f);
+					break;
+				case 2:
+					pos0 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + 25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + -25.0f);
+					pos1 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + -25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + -25.0f);
+					break;
+				case 3:
+					pos0 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + -25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + -25.0f);
+					pos1 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + -25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + 25.0f);
+					break;
+				default:
+					break;
+				}
+
+				//ベクトルの目標地点
+
+				D3DXVECTOR3 vecLine = pos1 - pos0;
+
+				D3DXVECTOR3 vecToPos = *pPos - pos0;
+
+				D3DXVECTOR3 vecToPos2 = *pPosOld - pos0;
+
+				float A, B, fRate;
+				A = (vecToPos.z * vecMove.x) - (vecToPos.x * vecMove.z);
+				B = (vecLine.z * vecMove.x) - (vecLine.x * vecMove.z);
+				if (B != 0)
+				{
+					fRate = A / B;
+				}
+				else
+				{
+					fRate = 10.0f;
+				}
+
+				if (fRate >= 0.0f &&fRate <= 1.0f)
+				{//vecLineを横切ったとき
+					if ((vecLine.z * vecToPos.x) - (vecLine.x * vecToPos.z) < 0)
+					{
+						bHit1 = true;
+					}
+
+					if ((vecLine.z * vecToPos2.x) - (vecLine.x * vecToPos2.z) < 0)
+					{
+						bHit2 = true;
+					}
+
+					if (bHit1 != bHit2)
+					{
+						bHit = true;
+					}
+
+					bHit1 = false;
+					bHit2 = false;
+
+					if ((vecLine.z * vecToPos.x) + (vecLine.x * vecToPos.z) > 0)
+					{
+						bHit1 = true;
+					}
+
+					if ((vecLine.z * vecToPos2.x) + (vecLine.x * vecToPos2.z) > 0)
+					{
+						bHit2 = true;
+					}
+
+					if (bHit1 != bHit2)
+					{
+						bHit = true;
+					}
+				}
+				if (bHit == true)
+				{
+					pos[nPosCount] = pos0 + vecLine*fRate;
+					nPosCount++;
+				}
+			}
+		}
+
+	}
+	if (nPosCount > 1)
+	{
+		for (int nCheck = 0; nCheck < nPosCount - 1; nCheck++)
+		{//距離の差を割り出して昇順にソート
+
+			for (int nCnt = (nCheck + 1); nCnt < nPosCount; nCnt++)
+			{
+				D3DXVECTOR3 Temp = pos[nCnt];
+				float fDis1, fDis2;
+				fDis1 = (pos[nCheck].x - pPosOld->x) + (pos[nCheck].z - pPosOld->z);
+				fDis2 = (pos[nCnt].x - pPosOld->x) + (pos[nCnt].z - pPosOld->z);
+				if (fDis1 < 0)
+				{
+					fDis1 *= -1.0f;
+				}
+				if (fDis2 < 0)
+				{
+					fDis2 *= -1.0f;
+				}
+				if (fDis1 > fDis2)
+				{
+					pos[nCnt] = pos[nCheck];
+					pos[nCheck] = Temp;
+				}
+			}
+		}
+	}
+	
+
+	return pos[0];
 }
 
 //====================================================================
