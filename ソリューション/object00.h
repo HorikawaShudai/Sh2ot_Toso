@@ -18,12 +18,12 @@ typedef enum
 	OBJECT00_NTYPE02,			//階段上
 	OBJECT00_NTYPE03,			//受付
 	OBJECT00_NTYPE04,			//机
-	OBJECT00_NTYPE05,			//ホコリ
+	OBJECT00_NTYPE05,			//資料棚
 	OBJECT00_NTYPE06,			//がれき
 	OBJECT00_NTYPE07,			//ラボテーブル
 	OBJECT00_NTYPE08,			//ラウンジ
-	OBJECT00_NTYPE09,			//カルチャータンク
-	OBJECT00_NTYPE10,			//カルチャータンク(大)
+	OBJECT00_NTYPE09,			//カルチャータンク			研究室
+	OBJECT00_NTYPE10,			//カルチャータンク(大)		研究室
 	OBJECT00_NTYPE11,			//マシン					研究室
 	OBJECT00_NTYPE12,			//積み重なった椅子
 	OBJECT00_NTYPE13,			//積み重なった机
@@ -36,6 +36,15 @@ typedef enum
 	OBJECT00_NTYPE20,			//牢屋						収容
 	OBJECT00_NTYPE21,			//下に落ちてるがれき
 	OBJECT00_NTYPE22,			//カーテン
+	OBJECT00_NTYPE23,			//薬が入ってる棚
+	OBJECT00_NTYPE24,			//資料棚(小)
+	OBJECT00_NTYPE25,			//資料棚(大)
+	OBJECT00_NTYPE26,			//箱の置いてある棚
+	OBJECT00_NTYPE27,			//ケージ
+	OBJECT00_NTYPE28,			//ケージ
+	OBJECT00_NTYPE29,			//フェンス
+	OBJECT00_NTYPE30,			//ソファ
+	OBJECT00_NTYPE31,			//柱
 	OBJECT00_NTYPE_MAX,
 
 }OBJECT00_NTYPE;

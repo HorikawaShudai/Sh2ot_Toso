@@ -150,7 +150,7 @@ void LoadStage(int nStageNumber)
 	else if (nStageNumber == 4)
 	{
 		//ファイルを開く
-		pFile = fopen("Data\\TEXT\\tutorial_tousou.txt", "r");
+		//pFile = fopen("Data\\TEXT\\tutorial_tousou.txt", "r");
 	}
 
 	if (pFile != NULL)
