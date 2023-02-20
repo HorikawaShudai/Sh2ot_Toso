@@ -3,12 +3,13 @@
 #include "player.h"
 #include "PlayNumberSelect.h"
 #include "EscapeTutorial.h"
+#include "input.h"
 
 //マクロ定義
 #define MAX_CHECK_TEX		(2)				//チェックボックスのテクスチャ最大数
 
 #define CHECKUIPOS_X_1	(1200.0f)			//チェックボックスのUIのX位置1
-#define CHECKUIPOS_Y_1	(650.0f)		//チェックボックスのUIのY位置1
+#define CHECKUIPOS_Y_1	(650.0f)			//チェックボックスのUIのY位置1
 
 #define CHECKUIPOS_X_2		(1200.0f)		//チェックボックスのUIのX位置2
 #define CHECKUIPOS_Y_2		(700.0f)		//チェックボックスのUIのY位置2
@@ -44,9 +45,9 @@ CHECKUI g_anCheckUI[NUM_PLAYER];							//チェックボックスのUIの情報
 int g_NumPlayerCheckUI;
 bool btutorial;  //チュートリアル用紙が表示されているかどうか
 
-				 //====================================================================
-				 //チェックボックスの初期化処理
-				 //====================================================================
+//====================================================================
+//チェックボックスの初期化処理
+//====================================================================
 void InitCheckboxUI(void)
 {
 	//デバイスの取得
@@ -70,6 +71,12 @@ void InitCheckboxUI(void)
 	D3DXCreateTextureFromFile(pDevice,
 		"Data\\TEXTURE\\use_check.png",
 		&g_pTextureCheckUI[1]);
+
+	for (nCntCheckUI = 0; nCntCheckUI < NUM_PLAYER; nCntCheckUI++)
+	{
+		g_anCheckUI[nCntCheckUI].bUse = true;  //使っていることに
+	}
+
 
 	//鍵UIの情報を初期化
 	for (nCntCheckUI = 0; nCntCheckUI < PlayNumber.CurrentSelectNumber; nCntCheckUI++)
@@ -180,6 +187,52 @@ void UpdateCheckboxUI(void)
 
 	//変数宣言
 	int nCntCheckUI;
+
+	if (g_anCheckUI[0].bUse == true && g_anCheckUI[1].bUse == true && g_anCheckUI[2].bUse == true && g_anCheckUI[3].bUse == true)
+	{
+		switch (GetEscapeTutorial())
+		{
+		case TUTORIAL_STATE_PLAY:
+			for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
+			{
+				g_anCheckUI[nCntPlayer].bUse = false;
+			}
+
+			switch (GetDoEscapeTutorial())
+			{
+			case MODE_MOVE:
+				//チュートリアル用紙をカメラ移動に
+				DoEscapeTutorial(MODE_DASH);
+				break;
+			case MODE_DASH:
+				//チュートリアル用紙をバイブに
+				DoEscapeTutorial(MODE_VIBE);
+				break;
+			case MODE_VIBE:
+				//チュートリアル用紙をステルスに
+				DoEscapeTutorial(MODE_STELTH);
+				break;
+			case MODE_STELTH:
+				//チュートリアル用紙を鍵をとるに
+				DoEscapeTutorial(MODE_GET_KEY);
+				break;
+			case MODE_GET_KEY:
+				//チュートリアル用紙を脱出に
+				DoEscapeTutorial(MODE_ESCAPE);
+				break;
+			case MODE_ESCAPE:
+				//チュートリアル用紙をチュートリアル項目の終了に
+				DoEscapeTutorial(MODE_END);
+				break;
+			}
+
+			SetEscapeTutorial(TUTORIAL_STATE_STANDBY);
+
+		//case TUTORIAL_STATE_STANDBY:
+		//	SetEscapeTutorial(TUTORIAL_STATE_WAIT);
+		//	break;
+		}
+	}
 
 	VERTEX_2D *pVtx;    //頂点情報へのポインタ
 
@@ -294,9 +347,6 @@ void DrawCheckboxUI(void)
 		{//チェックがついたとき
 		 //テクスチャの設定
 			pDevice->SetTexture(0, g_pTextureCheckUI[1]);
-
-			//チェックがついたときチュートリアル用紙を出す
-			SetEscapeTutorial(TUTORIAL_STATE_STANDBY);
 		}
 
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCnt * 4, 2);
@@ -309,11 +359,10 @@ void DrawCheckboxUI(void)
 void SetCheckUI(int nPlayer, bool SetCheck)
 {
 	g_anCheckUI[nPlayer].bUse = SetCheck;
-
 }
 
 //============================
-//チェックボックスの設定
+//チェックボックスの位置設定
 //============================
 void MovePosCheckUI(int nPlayer, bool SetCheck)
 {

@@ -14,7 +14,6 @@ typedef enum
 typedef enum
 {
 	MODE_MOVE = 0,		//プレイヤーの移動
-	MODE_CAM_MOVE,		//カメラの移動
 	MODE_DASH,			//ダッシュ
 	MODE_VIBE,			//バイブ
 	MODE_STELTH,		//ステルス
@@ -33,7 +32,7 @@ TUTORIAL_STATE GetEscapeTutorial();
 void SetEscapeTutorial(TUTORIAL_STATE nSet);
 void DoEscapeTutorial(TUTORIAL_MODE nMode);
 TUTORIAL_MODE GetDoEscapeTutorial(void);
-void MoveCheck(bool check);
-void CamMoveCheck(bool camcheck);
+void MoveCheck(int nCnt, bool check);
+void CamMoveCheck(int nCnt, bool camcheck);
 
 #endif

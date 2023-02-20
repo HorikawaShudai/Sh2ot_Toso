@@ -333,10 +333,10 @@ void PlayerFpsCamera(void)
 				g_aCamera[g_nCurrentCamera].rot.x += CAMERA_VR_SPEED;
 
 				//チュートリアル項目がカメラムーブの時
-				if (do_Tutorial == MODE_CAM_MOVE)
+				if (do_Tutorial == MODE_MOVE)
 				{
 					//カメラを移動したことにする
-					CamMoveCheck(true);
+					CamMoveCheck(g_nCurrentCamera, true);
 				}
 			}
 			if (GetKeyboardPress(DIK_K) == true)
@@ -344,10 +344,10 @@ void PlayerFpsCamera(void)
 				g_aCamera[g_nCurrentCamera].rot.x -= CAMERA_VR_SPEED;
 
 				//チュートリアル項目がカメラムーブの時
-				if (do_Tutorial == MODE_CAM_MOVE)
+				if (do_Tutorial == MODE_MOVE)
 				{
 					//カメラを移動したことにする
-					CamMoveCheck(true);
+					CamMoveCheck(g_nCurrentCamera, true);
 				}
 			}
 
@@ -357,21 +357,21 @@ void PlayerFpsCamera(void)
 			//カメラの横移動をしたらチェックをつける処理
 			if (g_aCamera[g_nCurrentCamera].rot.x > 0.1f || g_aCamera[g_nCurrentCamera].rot.x < -0.1f)
 			{
-				if (do_Tutorial == MODE_CAM_MOVE)
+				if (do_Tutorial == MODE_MOVE)
 				{
-					CamMoveCheck(true);
+					CamMoveCheck(g_nCurrentCamera, true);
 				}
 			}
 
 			//カメラの縦移動をしたらチェックをつける処理
 			if (g_aCamera[g_nCurrentCamera].rot.y > 0.1f || g_aCamera[g_nCurrentCamera].rot.y < -0.1f)
 			{
-				if (do_Tutorial == MODE_CAM_MOVE)
+				if (do_Tutorial == MODE_MOVE)
 				{
-					CamMoveCheck(true);
+					CamMoveCheck(g_nCurrentCamera, true);
 				}
 
-				else if (do_Tutorial != MODE_CAM_MOVE)
+				else if (do_Tutorial != MODE_MOVE)
 				{
 
 				}
