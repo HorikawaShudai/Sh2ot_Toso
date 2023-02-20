@@ -1,23 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-﻿  スキップ中... (関連する変更は検出されませんでした)
-  RankingUI.cpp
-  RankingNumber.cpp
-  PolygonBG.cpp
-  PlayModeSelect.cpp
+﻿  stage.cpp
+cl : コマンド ライン warning D9028: 簡易リビルド時のエラーです、通常のビルドに戻します
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-﻿  main.cpp
-cl : コマンド ライン warning D9028: 簡易リビルド時のエラーです、通常のビルドに戻します
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-=======
-<<<<<<< HEAD
-﻿  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作1\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作1\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
->>>>>>> 5d8491dbc96faafd6ac9eb2ef6a76978c4e8dd3b
-=======
-﻿  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
->>>>>>> 9604ed1435a419e3676c2f2a67142b376f9a5c6f
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
->>>>>>> ad99c371ff67d816ab8aedb3b18b84b2b6719b19
