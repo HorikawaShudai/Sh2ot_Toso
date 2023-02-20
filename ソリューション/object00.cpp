@@ -30,73 +30,29 @@ int g_ObjectCount;								//オブジェクトの数
 
 const char *c_apModelObj[] =					//モデルデータ読み込み
 {
-	"Data\\MODEL\\HighPolyWall.x",
-	"Data\\MODEL\\pc.x",
-	"Data\\MODEL\\desk.x",
-	"Data\\MODEL\\fan.x",
-	"Data\\MODEL\\locker.x",
-	"Data\\MODEL\\whiteboard.x",
-	"Data\\MODEL\\officechair.x",
-	"Data\\MODEL\\corkboard.x",
-	"Data\\MODEL\\camera.x",
-	"Data\\MODEL\\art.x",
-	"Data\\MODEL\\document.x",
-	"Data\\MODEL\\door_side1.x",
-	"Data\\MODEL\\door_side2.x",
-	"Data\\MODEL\\doorup.x",
-	"Data\\MODEL\\illumination.x",
-	"Data\\MODEL\\jewelry.x",
-	"Data\\MODEL\\key.x",
-	"Data\\MODEL\\lightbutton.x",
-	"Data\\MODEL\\longdesk.x",
-	"Data\\MODEL\\machine.x",
-	"Data\\MODEL\\moniter.x",
-	"Data\\MODEL\\paper.x",
-	"Data\\MODEL\\pot.x",
-	"Data\\MODEL\\projecter.x",
-	"Data\\MODEL\\shelf.x",
-	"Data\\MODEL\\vent.x",
-	"Data\\MODEL\\window.x",
-	"Data\\MODEL\\desk_pc.x",
-	"Data\\MODEL\\projecter2.x",
-	"Data\\MODEL\\screen.x",
-	"Data\\MODEL\\plant.x",
-	"Data\\MODEL\\dustbox.x",
-	"Data\\MODEL\\partition.x",
-	"Data\\MODEL\\book_shelf.x",
-	"Data\\MODEL\\papercut_desk.x",
-	"Data\\MODEL\\coat_rack.x",
-	"Data\\MODEL\\endai.x",
-	"Data\\MODEL\\paper_cut.x",
-	"Data\\MODEL\\watch.x",
-	"Data\\MODEL\\copy.x",
-	"Data\\MODEL\\BuleBox.x",
-	"Data\\MODEL\\Cabinet.x",
-	"Data\\MODEL\\chemicalshelf.x",
-	"Data\\MODEL\\Height_Cabinet.x",
-	"Data\\MODEL\\rubble.x",
-	"Data\\MODEL\\stretcher.x",
-	"Data\\MODEL\\catcar.x",
-	"Data\\MODEL\\fence.x",
-	"Data\\MODEL\\rock2.x",
-	"Data\\MODEL\\BlackDesk.x",
-	"Data\\MODEL\\prison.x",
-	"Data\\MODEL\\door_1.x",
-	"Data\\MODEL\\door_2.x",
-	"Data\\MODEL\\door_huti.x",
-	"Data\\MODEL\\gareki.x",
-	"Data\\MODEL\\lounge.x",
-	"Data\\MODEL\\CultureTank.x",
-	"Data\\MODEL\\ka-ten00.x",
-	"Data\\MODEL\\BigCultureTank.x",
-	"Data\\MODEL\\ori00.x",
-	"Data\\MODEL\\CrashArea.x",
-	"Data\\MODEL\\Messychair.x",
-	"Data\\MODEL\\MessyDesk.x",
-	"Data\\MODEL\\MessyMachine.x",
-	"Data\\MODEL\\MessyObject00.x",
-	"Data\\MODEL\\MessyStairs.x",
-	"Data\\MODEL\\DummbellTower.x",
+	"Data\\MODEL\\HighPolyWall.x",				//ポリゴン数の多い壁
+	"Data\\MODEL\\kaidan.x",					//階段
+	"Data\\MODEL\\kaidanR_up.x",				//階段上
+	"Data\\MODEL\\countertable.x",				//受付
+	"Data\\MODEL\\desk.x",						//机
+	"Data\\MODEL\\dropdust.x",					//ホコリ
+	"Data\\MODEL\\gareki.x",					//がれき
+	"Data\\MODEL\\LaboTable.x",					//ラボテーブル
+	"Data\\MODEL\\lounge.x",					//ラウンジ
+	"Data\\MODEL\\CultureTank.x",				//カルチャータンク			研究室
+	"Data\\MODEL\\BigCultureTank.x",			//カルチャータンク(大)		研究室
+	"Data\\MODEL\\machine.x",					//マシン					研究室
+	"Data\\MODEL\\Messychair.x",				//積み重なった椅子
+	"Data\\MODEL\\MessyDesk.x",					//積み重なった机
+	"Data\\MODEL\\MessyMachine.x",				//がれきが乗ってるマシン
+	"Data\\MODEL\\MessyObject00.x",				//色々なものが重なっているオブジェクト
+	"Data\\MODEL\\MessyStairs.x",				//崩れてるアーチ階段
+	"Data\\MODEL\\moniter.x",					//モニター
+	"Data\\MODEL\\ori00.x",						//檻
+	"Data\\MODEL\\pot.x",						//ポット					研究室
+	"Data\\MODEL\\prison.x",					//牢屋						収容
+	"Data\\MODEL\\rubble.x",					//下に落ちてるがれき
+	"Data\\MODEL\\ka-ten00.x",					//カーテン
 };
 
 //====================================================================
