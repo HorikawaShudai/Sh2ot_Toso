@@ -35,7 +35,7 @@ const char *c_apModelObj[] =					//モデルデータ読み込み
 	"Data\\MODEL\\kaidanR_up.x",				//階段上
 	"Data\\MODEL\\countertable.x",				//受付
 	"Data\\MODEL\\desk.x",						//机
-	"Data\\MODEL\\dropdust.x",					//ホコリ
+	"Data\\MODEL\\PapersShelf.x",				//資料棚
 	"Data\\MODEL\\gareki.x",					//がれき
 	"Data\\MODEL\\LaboTable.x",					//ラボテーブル
 	"Data\\MODEL\\lounge.x",					//ラウンジ
@@ -53,6 +53,17 @@ const char *c_apModelObj[] =					//モデルデータ読み込み
 	"Data\\MODEL\\prison.x",					//牢屋						収容
 	"Data\\MODEL\\rubble.x",					//下に落ちてるがれき
 	"Data\\MODEL\\ka-ten00.x",					//カーテン
+	"Data\\MODEL\\chemicalshelf.x",				//薬が入ってる棚
+	"Data\\MODEL\\PapersShelf.x",				//資料棚(小)
+	"Data\\MODEL\\PapersShelf1.x",				//資料棚(大)
+	"Data\\MODEL\\Cabinet.x",					//箱の置いてある棚
+	"Data\\MODEL\\small_cage.x",				//ケージ
+	"Data\\MODEL\\small_cage_twin.x",			//ケージ
+	"Data\\MODEL\\fence.x",						//フェンス
+	"Data\\MODEL\\sofaa.x",						//ソファ
+	"Data\\MODEL\\pillar.x",					//柱
+	"Data\\MODEL\\desk_pc.x",					//PCが載っているデスク
+	"Data\\MODEL\\officechair.x",				//オフィスの椅子
 };
 
 //====================================================================

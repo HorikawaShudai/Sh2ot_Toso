@@ -84,9 +84,6 @@
     <ClCompile Include="EscapeClearResult.cpp">
       <Filter>ソース ファイル\mode</Filter>
     </ClCompile>
-    <ClCompile Include="EscapeOverResult.cpp">
-      <Filter>ソース ファイル\mode</Filter>
-    </ClCompile>
     <ClCompile Include="VillainResult.cpp">
       <Filter>ソース ファイル\mode</Filter>
     </ClCompile>
@@ -221,6 +218,9 @@
     </ClCompile>
     <ClCompile Include="ActionHelpUI.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="EscapeOverResult.cpp">
+      <Filter>ソース ファイル\mesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -3912,7 +3912,7 @@ Mesh {
    1.000000;1.000000;1.000000;;
    0.150600;0.181200;0.148200;;
    TextureFilename {
-    "C:\\Users\\Student\\Pictures\\ÉQÅ[ÉÄópëfçﬁ\\âº\\monitor00.jpg";
+    "Data\\TEXTURE\\monitor00.jpg";
    }
   }
  }

@@ -34,7 +34,7 @@ void CollisionRotExit(int nCnt);
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureExit[64][EXIT_TYPE_MAX] = {};		//テクスチャのポインタ
-LPD3DXMESH g_pMeshExit[EXIT_TYPE_MAX] = {};					//メッシュ(頂点情報)へのポインタ
+LPD3DXMESH g_pMeshExit[EXIT_TYPE_MAX] = {};						//メッシュ(頂点情報)へのポインタ
 LPD3DXBUFFER g_pBuffMatExit[EXIT_TYPE_MAX] = {};				//マテリアルへのポインタ
 DWORD g_dwNumMatExit[EXIT_TYPE_MAX] = {};						//マテリアルの数
 
@@ -246,29 +246,6 @@ void DoorOpen(void)
 				if (g_aExit[nCntExit].parts[nCntExit1].nType != EXIT_TYPE_BIGFRAME)
 				{//出口の種類がフレーム以外の場合
 
-					/*float frotRDiff;
-					float frotLDiff;*/
-
-					//目的の角度との差を求める
-					/*frotLDiff = (g_aExit[nCntExit].parts[3].rotSave.y - 1.57f) - g_aExit[nCntExit].parts[3].rot.y;
-
-					frotRDiff = (g_aExit[nCntExit].parts[4].rotSave.y - 1.57f) - g_aExit[nCntExit].parts[4].rot.y;*/
-
-					//一周した時の向きの補正
-					/*if (g_aExit[nCntExit].parts[4].rot.y > D3DX_PI)
-					{
-						g_aExit[nCntExit].parts[4].rot.y -= D3DX_PI * 2.0f;
-					}
-					else if (g_aExit[nCntExit].parts[4].rot.y < -D3DX_PI)
-					{
-						g_aExit[nCntExit].parts[4].rot.y += D3DX_PI * 2.0f;
-					}*/
-
-					//目的の角度との差を縮める
-					//g_aExit[nCntExit].parts[3].rot.y += frotLDiff * 0.007f;
-
-					//g_aExit[nCntExit].parts[4].rot.y -= frotRDiff * 0.007f;
-
 					if (g_aExit[nCntExit].parts[4].rotSave.y - 1.57f <= g_aExit[nCntExit].parts[4].rot.y)
 					{
 						g_aExit[nCntExit].parts[4].rot.y -= 0.007f;
@@ -278,7 +255,6 @@ void DoorOpen(void)
 					{
 						g_aExit[nCntExit].parts[3].rot.y += 0.007f;
 					}
-					
 				}
 
 				//出口から出れるまでのカウント
@@ -315,7 +291,7 @@ void ExsitClossLine(int nCntExit)
 			D3DXVECTOR3 pos0, pos1;			//場所
 			D3DXVECTOR3 Cross;				//交点の場所
 
-											//場所の計算
+			//場所の計算
 			pos0 = MeshWall.pos + D3DXVECTOR3(cosf(MeshWall.rot.y) + 50.0f, 0.0f, sinf(MeshWall.rot.y));
 
 			pos1 = MeshWall.pos + D3DXVECTOR3(cosf(MeshWall.rot.y) - 50.0f, 0.0f, sinf(MeshWall.rot.y));
