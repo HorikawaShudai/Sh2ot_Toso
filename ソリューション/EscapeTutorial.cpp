@@ -29,6 +29,7 @@
 #include "tutorialUI.h"
 #include "CheckboxUI.h"
 #include "EscapeTutorial.h"
+#include "ActionHelpUI.h"
 #include "player.h"
 
 //グローバル変数宣言
@@ -111,12 +112,14 @@ void InitEscapeTutorial()
 	//出口の初期化処理
 	InitExit();
 
-	SetExit(D3DXVECTOR3(-1000.0f,0.0f,0.8f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), EXIT_TYPE_BIGFRAME,0);
-	SetExit(D3DXVECTOR3(-1070.0f, 0.0f, 0.8f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), EXIT_TYPE_BIGDOOR_R,0);
-	SetExit(D3DXVECTOR3(-935.0f, 0.0f, 0.8f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), EXIT_TYPE_BIGDOOR_L,0);
+	SetExit(D3DXVECTOR3(-1000.0f,0.0f,0.8f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0,0);
+	SetExit(D3DXVECTOR3(-1070.0f, 0.0f, 0.8f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), 0,0);
+	SetExit(D3DXVECTOR3(-935.0f, 0.0f, 0.8f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), 0,0);
 
 	//スコアアイテムの初期化
 	InitItem();
+
+	InitActionHelpUI();
 
 	InitPolygonBG();
 
@@ -193,6 +196,8 @@ void UninitEscapeTutorial()
 	//出口の終了処理
 	UninitExit();
 
+	UninitActionHelpUI();
+
 	UninitTime();
 
 	UninitPaperBG00();
@@ -248,7 +253,7 @@ void UpdateEscapeTutorial()
 
 	switch (g_TutorialState)
 	{
-	case TUTORIAL_STATE_STANDBY:
+	case TUTORIAL_STATE_STANDBY:	//スタンバイ状態
 		SetPaperBG00(true);
 		SetTutorialUI(true,0);
 		for (int nCntTutorial = 1; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber + 1; nCntTutorial++)
@@ -263,16 +268,21 @@ void UpdateEscapeTutorial()
 
 		g_Counter = 0;
 		break;
-	case TUTORIAL_STATE_WAIT:
+	case TUTORIAL_STATE_WAIT:	//待機状態
 		SetPaperBG00(true);
 		SetTutorialUI(true,0);
 		g_Counter++;
 		if (g_Counter > 100)
 		{
+			//チェックボックスを人数分オフにする
+			for (int nCntTutorial = 0; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber; nCntTutorial++)
+			{
+				SetCheckUI(nCntTutorial, false);
+			}
 			g_TutorialState = TUTORIAL_STATE_PLAY;
 		}
 		break;
-	case TUTORIAL_STATE_PLAY:
+	case TUTORIAL_STATE_PLAY:	//プレイ状態
 		SetPaperBG00(false);
 		SetTutorialUI(false,0);
 
@@ -334,6 +344,7 @@ void UpdateEscapeTutorial()
 		//出口の更新処理
 		UpdateExit();
 	}
+	UpdateActionHelpUI();
 
 	UpdateTime();
 
@@ -427,6 +438,9 @@ void DrawEscapeTutorial()
 			//敵の描画処理
 			DrawEnemy();
 		}
+
+		//ヘルプUIの描画処理
+		DrawActionHelpUI();
 
 		//スタミナの描画処理
 		DrawStamina();

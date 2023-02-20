@@ -42,7 +42,7 @@ typedef struct
 typedef struct
 {
 	ExitParts parts[MAX_EXIT];
-
+	D3DXVECTOR3 PseudoCenter;
 	bool bUse;
 
 }EXIT;
