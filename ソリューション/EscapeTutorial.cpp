@@ -29,13 +29,14 @@
 #include "tutorialUI.h"
 #include "CheckboxUI.h"
 #include "EscapeTutorial.h"
+#include "player.h"
 
 //グローバル変数宣言
 TUTORIAL_STATE g_TutorialState;
 int g_Counter;
 TUTORIAL_MODE g_Tutorial;
-bool bpMove;
-bool bpCamMove;
+bool bpMove[NUM_PLAYER];
+bool bpCamMove[NUM_PLAYER];
 
 //====================================================================
 //チュートリアル画面の初期化処理
@@ -45,8 +46,18 @@ void InitEscapeTutorial()
 	g_TutorialState = TUTORIAL_STATE_STANDBY;
 	g_Tutorial = MODE_MOVE;
 	g_Counter = 0;
-	bool bMove = false;
-	bool bCamMove = false;
+
+	for (int nCntPlayer = 0; nCntPlayer < NUM_PLAYER; nCntPlayer++)
+	{
+		bpMove[nCntPlayer] = true;
+		bpCamMove[nCntPlayer] = true;
+	}
+
+	for (int nCntPlayer = 0; nCntPlayer < GetPlayNumberSelect().CurrentSelectNumber; nCntPlayer++)
+	{
+		bpMove[nCntPlayer] = false;
+		bpCamMove[nCntPlayer] = false;
+	}
 
 	DWORD time = timeGetTime();
 	srand((unsigned int)time);
@@ -298,31 +309,31 @@ void UpdateEscapeTutorial()
 	{
 		//プレイヤーの更新処理
 		UpdatePlayer();
+
+		//スタミナの更新処理
+		UpdateStamina();
+
+		//ライフの更新処理
+		UpdateLife();
+
+		//スコアの更新処理
+		UpdateScore();
+
+		//スコアアイテムの更新処理
+		UpdateItem();
+
+		//鍵の更新処理
+		UpdateKey();
+
+		//鍵UIの更新処理
+		UpdateKeyUI();
+
+		//エフェクトの更新処理
+		UpdateEffect();
+
+		//出口の更新処理
+		UpdateExit();
 	}
-
-	//スタミナの更新処理
-	UpdateStamina();
-
-	//ライフの更新処理
-	UpdateLife();
-
-	//スコアの更新処理
-	UpdateScore();
-
-	//スコアアイテムの更新処理
-	UpdateItem();
-
-	//鍵の更新処理
-	UpdateKey();
-
-	//鍵UIの更新処理
-	UpdateKeyUI();
-
-	//エフェクトの更新処理
-	UpdateEffect();
-
-	//出口の更新処理
-	UpdateExit();
 
 	UpdateTime();
 
@@ -338,11 +349,6 @@ void UpdateEscapeTutorial()
 	switch (g_Tutorial)
 	{
 	case MODE_MOVE:
-
-		break;
-
-	case MODE_CAM_MOVE:
-
 		break;
 
 	case MODE_DASH:
@@ -498,28 +504,25 @@ TUTORIAL_MODE GetDoEscapeTutorial(void)
 //==============================
 //移動したかどうかのチェック用
 //==============================
-void MoveCheck(bool check)
+void MoveCheck(int nCnt,bool check)
 {
 	//プレイヤーが動いたことに
-	bpMove = check;
+	bpMove[nCnt] = check;
 }
 
 //==================================
 //カメラが動いたかどうかのチェック
 //==================================
-void CamMoveCheck(bool camcheck)
+void CamMoveCheck(int nCnt,bool camcheck)
 {
 	//カメラが動いたことに
-	bpCamMove = camcheck;
+	bpCamMove[nCnt] = camcheck;
 
 	//プレイヤーとカメラが動いたときに
-	if (bpMove == true && bpCamMove == true)
+	if (bpMove[nCnt] == true && bpCamMove[nCnt] == true)
 	{
 		//チェックをつける処理
-		SetCheckUI(0, true);
-
-		//チュートリアルモードをダッシュにする
-		DoEscapeTutorial(MODE_DASH);
+		SetCheckUI(nCnt, true);
 	}
 }
 

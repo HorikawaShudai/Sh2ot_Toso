@@ -221,6 +221,11 @@ void UpdatePlayer0(void)
 		//バイブレーションの更新処理
 		PlayerVibrtionUpdate(nSelectPlayer);
 
+		if(GetMode() == MODE_TUTORIAL)
+		{
+			TutorialInputPaper(nSelectPlayer);
+		}
+
 		//プレイヤーの状態
 		switch (g_aPlayer[nSelectPlayer].State)
 		{
@@ -335,9 +340,6 @@ void UpdatePlayer0(void)
 					{
 						//チェックをつける処理
 						SetCheckUI(nSelectPlayer, true);
-
-						//チュートリアルモードを脱出に
-						DoEscapeTutorial(MODE_ESCAPE);
 					}
 
 					if (do_Tutorial != MODE_GET_KEY)
@@ -364,9 +366,6 @@ void UpdatePlayer0(void)
 					{
 						//チェックをつける
 						SetCheckUI(nSelectPlayer, true);
-
-						//チュートリアルモードを終わらせる
-						DoEscapeTutorial(MODE_END);
 					}
 
 					if (do_Tutorial != MODE_ESCAPE)
@@ -479,10 +478,7 @@ void PlayerMoveInput(int nCnt)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(true);
-
-					//チュートリアル用紙をカメラ移動に
-					DoEscapeTutorial(MODE_CAM_MOVE);
+					MoveCheck(nCnt, true);
 				}
 			}
 			if (GetGamepad_Stick_Left(0).y < 0.0f)
@@ -496,10 +492,7 @@ void PlayerMoveInput(int nCnt)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(true);
-
-					//チュートリアル用紙をカメラ移動に
-					DoEscapeTutorial(MODE_CAM_MOVE);
+					MoveCheck(nCnt, true);
 				}
 			}
 			if (GetGamepad_Stick_Left(0).x > 0.0f)
@@ -514,10 +507,7 @@ void PlayerMoveInput(int nCnt)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(true);
-
-					//チュートリアル用紙をカメラ移動に
-					DoEscapeTutorial(MODE_CAM_MOVE);
+					MoveCheck(nCnt, true);
 				}
 			}
 			if (GetGamepad_Stick_Left(0).x < 0.0f)
@@ -532,10 +522,7 @@ void PlayerMoveInput(int nCnt)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(true);
-
-					//チュートリアル用紙をカメラ移動に
-					DoEscapeTutorial(MODE_CAM_MOVE);
+					MoveCheck(nCnt, true);
 				}
 			}
 		}
@@ -568,8 +555,6 @@ void PlayerMoveInput(int nCnt)
 				if (do_Tutorial == MODE_DASH)
 				{
 					SetCheckUI(nCnt, true);
-
-					DoEscapeTutorial(MODE_VIBE);
 				}
 			}
 		}
@@ -592,9 +577,6 @@ void PlayerMoveInput(int nCnt)
 						{
 							//チェックをつける処理
 							SetCheckUI(nCnt, true);
-
-							//チュートリアル用紙を鍵の取得に
-							DoEscapeTutorial(MODE_GET_KEY);
 						}
 					}
 					nStelthCnt++;
@@ -1204,8 +1186,6 @@ void PlayerDistance(int nCnt)
 					if (do_Tutorial == MODE_VIBE)
 					{
 						SetCheckUI(nCnt, true);
-
-						DoEscapeTutorial(MODE_STELTH);
 					}
 
 					else if (do_Tutorial != MODE_VIBE)
@@ -1442,6 +1422,20 @@ void PlayerHit(int nCnt,int nDamage)
 		{
 			g_aPlayer[nCnt].State = PLAYER_HIT;
 			g_aPlayer[nCnt].nHitCounter = 60;
+		}
+	}
+}
+
+//====================================================================
+//チュートリアル時のスタンバイ状態のチェック項目を入れる処理
+//====================================================================
+void TutorialInputPaper(int nCnt)
+{
+	if (GetEscapeTutorial() == TUTORIAL_STATE_STANDBY)
+	{
+		if (GetGamepadTrigger(BUTTON_A, nCnt) || GetGamepadTrigger(BUTTON_B, nCnt))
+		{
+			SetCheckUI(nCnt, true);
 		}
 	}
 }
