@@ -8,7 +8,7 @@
 #ifndef _OBJECT00_H_
 #define _OBJECT00_H_
 
-#define MAX_OBJECT00 (1024)		//オブジェクトの最大数
+#define MAX_OBJECT00 (1224)		//オブジェクトの最大数
 
 //モデルの構造体
 typedef enum
@@ -45,6 +45,8 @@ typedef enum
 	OBJECT00_NTYPE29,			//フェンス
 	OBJECT00_NTYPE30,			//ソファ
 	OBJECT00_NTYPE31,			//柱
+	OBJECT00_NTYPE32,			//パソコンが載っている机
+	OBJECT00_NTYPE33,			//机の椅子
 	OBJECT00_NTYPE_MAX,
 
 }OBJECT00_NTYPE;
