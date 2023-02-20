@@ -185,6 +185,9 @@ void UpdateCheckboxUI(void)
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 
+	//プレイヤー情報の所得
+	Player *pPlayer = GetPlayer();
+
 	//変数宣言
 	int nCntCheckUI;
 
@@ -193,9 +196,10 @@ void UpdateCheckboxUI(void)
 		switch (GetEscapeTutorial())
 		{
 		case TUTORIAL_STATE_PLAY:
-			for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
+			for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++,pPlayer++)
 			{
 				g_anCheckUI[nCntPlayer].bUse = false;
+				pPlayer->MoveState = PLAYER_MOVESTATE_NORMAL;
 			}
 
 			switch (GetDoEscapeTutorial())
@@ -228,9 +232,9 @@ void UpdateCheckboxUI(void)
 
 			SetEscapeTutorial(TUTORIAL_STATE_STANDBY);
 
-		//case TUTORIAL_STATE_STANDBY:
-		//	SetEscapeTutorial(TUTORIAL_STATE_WAIT);
-		//	break;
+		case TUTORIAL_STATE_STANDBY:
+			SetEscapeTutorial(TUTORIAL_STATE_WAIT);
+			break;
 		}
 	}
 
