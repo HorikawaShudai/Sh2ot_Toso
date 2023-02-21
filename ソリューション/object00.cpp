@@ -30,7 +30,7 @@ int g_ObjectCount;								//オブジェクトの数
 
 const char *c_apModelObj[] =					//モデルデータ読み込み
 {
-	"Data\\MODEL\\HighPolyWall.x",				//ポリゴン数の多い壁
+	"Data\\MODEL\\HighPolyWall1.x",				//ポリゴン数の多い壁
 	"Data\\MODEL\\kaidan.x",					//階段
 	"Data\\MODEL\\kaidanR_up.x",				//階段上
 	"Data\\MODEL\\countertable.x",				//受付
