@@ -216,6 +216,12 @@ void UpdateGame()
 			g_bBG_Edit = 0;
 		}
 	}
+
+	if (GetKeyboardTrigger(DIK_R) == true)
+	{
+		SetFade(MODE_GAME);
+	}
+
 #endif
 
 	if (g_bPause == false && g_bEdit == false)
