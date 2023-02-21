@@ -17,6 +17,7 @@
 #include "player.h"
 #include "meshwall.h"
 #include "debugproc.h"
+#include "ActionHelpUI.h"
 
 const char *c_apExit[] =					//モデルデータ読み込み
 {
@@ -448,6 +449,50 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 	}
 
 	return bHit;
+}
+
+//====================================================================
+//プレイヤーとの当たり判定処理
+//====================================================================
+void CollisionExitHelpUI(D3DXVECTOR3 *pPos, float Size)
+{
+	for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
+	{
+		for (int nCntExit1 = 0; nCntExit1 < MAX_EXIT; nCntExit1++)
+		{
+			if (g_aExit[nCntExit].parts[nCntExit1].bUse == true && g_aExit[nCntExit].parts[nCntExit1].bExitOK == false && g_aExit[nCntExit].bHelpUI == false)
+			{
+				if (pPos->x >= g_aExit[nCntExit].PseudoCenter.x - Size
+					&& pPos->x <= g_aExit[nCntExit].PseudoCenter.x + Size
+					&& pPos->y >= g_aExit[nCntExit].PseudoCenter.y - Size
+					&& pPos->y <= g_aExit[nCntExit].PseudoCenter.y + Size
+					&& pPos->z >= g_aExit[nCntExit].PseudoCenter.z - Size
+					&& pPos->z <= g_aExit[nCntExit].PseudoCenter.z + Size)
+
+				{//アイテムとプレイヤーが当たった(X軸)
+					g_aExit[nCntExit].bHelpUI = true;
+					g_aExit[nCntExit].IndexUI = SetActionHelpUI(D3DXVECTOR3(g_aExit[nCntExit].PseudoCenter.x, g_aExit[nCntExit].PseudoCenter.y + 20.0f, g_aExit[nCntExit].PseudoCenter.z), ACTIONHELPUI_DOOR);
+					break;
+				}
+			}
+
+			if (g_aExit[nCntExit].parts[nCntExit1].bUse == true && g_aExit[nCntExit].parts[nCntExit1].bExitOK == false && g_aExit[nCntExit].bHelpUI == true)
+			{
+				if (pPos->x <= g_aExit[nCntExit].PseudoCenter.x - Size
+					|| pPos->x >= g_aExit[nCntExit].PseudoCenter.x + Size
+					|| pPos->y <= g_aExit[nCntExit].PseudoCenter.y - Size
+					|| pPos->y >= g_aExit[nCntExit].PseudoCenter.y + Size
+					|| pPos->z <= g_aExit[nCntExit].PseudoCenter.z - Size
+					|| pPos->z >= g_aExit[nCntExit].PseudoCenter.z + Size)
+
+				{//アイテムとプレイヤーが当たった(X軸)
+					g_aExit[nCntExit].bHelpUI = false;
+					FalseActionHelpUI(g_aExit[nCntExit].IndexUI);
+					break;
+				}
+			}
+		}
+	}
 }
 
 //====================================================================

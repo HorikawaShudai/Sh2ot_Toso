@@ -43,6 +43,8 @@ typedef struct
 {
 	ExitParts parts[MAX_EXIT];
 	D3DXVECTOR3 PseudoCenter;
+	bool bHelpUI;								//ヘルプUIが使われているかどうか
+	int IndexUI;								//ヘルプUIの使用番号
 	bool bUse;
 
 }EXIT;
@@ -54,6 +56,7 @@ void UpdateExit(void);
 void DrawExit(void);
 void SetExit(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nType, int nNumExit);
 bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size, int nPlayer);
+void CollisionExitHelpUI(D3DXVECTOR3 *pPos, float Size);
 bool CollisionExi(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size);
 
 void LoadExit(void);
