@@ -36,7 +36,7 @@
 #define PLAYER_JUMP				(12.0f)			//プレイヤーのジャンプ力
 #define PLAYER_LIFE				(3)				//プレイヤーの初期ライフ
 #define PLAYER_COLLISIONSIZE	(15.0f)			//プレイヤーの当たり判定の大きさ
-#define PLAYER_LIGHT			(1000.0f)		//プレイヤーの当たり判定の大きさ
+#define PLAYER_LIGHT			(350.0f)		//プレイヤーの当たり判定の大きさ
 
 //プロトタイプ
 void UpdatePlayer0(void);
@@ -320,8 +320,14 @@ void UpdatePlayer0(void)
 		SetLight(g_aPlayer[nSelectPlayer].LightIdx01, D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(g_aPlayer[nSelectPlayer].pos.x, g_aPlayer[nSelectPlayer].pos.y + 50.0f, g_aPlayer[nSelectPlayer].pos.z), D3DXVECTOR3(sinf(Getrot(CurrentCamera).y), sinf(Getrot(CurrentCamera).x), cosf(Getrot(CurrentCamera).y)), PLAYER_LIGHT,1.0f);
 
 		//ヘルプUIの表示
-		CollisionKeyHelpUI(&g_aPlayer[nSelectPlayer].pos, 30.0f);
-		//CollisionExit(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nSelectPlayer);
+		if (g_aPlayer[nSelectPlayer].bGetKey == false)
+		{
+			CollisionKeyHelpUI(&g_aPlayer[nSelectPlayer].pos, 30.0f);
+		}
+		if (g_aPlayer[nSelectPlayer].bGetKey == true)
+		{
+			CollisionExitHelpUI(&g_aPlayer[nSelectPlayer].pos, 30.0f);
+		}
 
 		//鍵の入手処理
 		if (g_aPlayer[nSelectPlayer].bGetKey == false)

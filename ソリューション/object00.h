@@ -47,9 +47,29 @@ typedef enum
 	OBJECT00_NTYPE31,			//柱
 	OBJECT00_NTYPE32,			//パソコンが載っている机
 	OBJECT00_NTYPE33,			//机の椅子
-	OBJECT00_NTYPE34,			//偉い人用椅子
-	OBJECT00_NTYPE35,			//偉い人用机
-	OBJECT00_NTYPE36,			//応接室用机
+	OBJECT00_NTYPE34,			//ロッカー
+	OBJECT00_NTYPE35,			//ホワイトボード
+	OBJECT00_NTYPE36,			//監視カメラ
+	OBJECT00_NTYPE37,			//蛍光灯
+	OBJECT00_NTYPE38,			//ロングデスク
+	OBJECT00_NTYPE39,			//プロジェクターのうつすほう
+	OBJECT00_NTYPE40,			//観葉植物
+	OBJECT00_NTYPE41,			//ゴミ箱
+	OBJECT00_NTYPE42,			//パーテーション
+	OBJECT00_NTYPE43,			//本棚
+	OBJECT00_NTYPE44,			//コート掛け
+	OBJECT00_NTYPE45,			//演説用の台
+	OBJECT00_NTYPE46,			//コピー機
+	OBJECT00_NTYPE47,			//ブルーシートのかかった箱
+	OBJECT00_NTYPE48,			//低めの棚
+	OBJECT00_NTYPE49,			//がれき
+	OBJECT00_NTYPE50,			//救急ベッド
+	OBJECT00_NTYPE51,			//うばぐるま
+	OBJECT00_NTYPE52,			//理科室にあるデスク
+	OBJECT00_NTYPE53,			//崩れた小部屋
+	OBJECT00_NTYPE54,			//壁(メインホール)
+	OBJECT00_NTYPE55,			//壁(黒レンガ)
+	OBJECT00_NTYPE56,			//壁(廊下)
 	OBJECT00_NTYPE_MAX,
 
 }OBJECT00_NTYPE;
