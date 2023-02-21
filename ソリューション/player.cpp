@@ -36,7 +36,7 @@
 #define PLAYER_JUMP				(12.0f)			//プレイヤーのジャンプ力
 #define PLAYER_LIFE				(3)				//プレイヤーの初期ライフ
 #define PLAYER_COLLISIONSIZE	(15.0f)			//プレイヤーの当たり判定の大きさ
-#define PLAYER_LIGHT			(1000.0f)		//プレイヤーの当たり判定の大きさ
+#define PLAYER_LIGHT			(350.0f)		//プレイヤーの当たり判定の大きさ
 
 //プロトタイプ
 void UpdatePlayer0(void);
