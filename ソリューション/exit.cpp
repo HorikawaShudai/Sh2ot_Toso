@@ -343,6 +343,10 @@ void SetExit(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nType, int nNumExit)
 			g_aExit[nNumExit].parts[nCntExit1].rot = rot;
 			g_aExit[nNumExit].parts[nCntExit1].rotSave = rot;
 			g_aExit[nNumExit].parts[nCntExit1].nType = nType;
+			if (g_aExit[nNumExit].parts[nCntExit1].nType == 1)
+			{
+				g_aExit[nNumExit].PseudoCenter = D3DXVECTOR3(g_aExit[nNumExit].parts[nCntExit1].pos.x, g_aExit[nNumExit].parts[nCntExit1].pos.y - 100.0f, g_aExit[nNumExit].parts[nCntExit1].pos.z);
+			}
 
 			g_aExit[nNumExit].parts[nCntExit1].bUse = true;
 
@@ -391,7 +395,7 @@ void SetExit(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nType, int nNumExit)
 
 				pVtxBuff += dwSizeFVF;	//頂点フォーマットのサイズ分ポインタを進める
 			}
-			
+
 			//頂点バッファをアンロック
 			g_pMeshExit[nType]->UnlockVertexBuffer();
 
@@ -418,12 +422,12 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 		{
 			if (g_aExit[nCntExit].parts[nCntExit1].bUse == true && g_aExit[nCntExit].parts[nCntExit1].bExitOK == false)
 			{
-				if (pPos->x >= g_aExit[nCntExit].parts[nCntExit1].pos.x - Size
-					&& pPos->x <= g_aExit[nCntExit].parts[nCntExit1].pos.x + Size
-					&& pPos->y >= g_aExit[nCntExit].parts[nCntExit1].pos.y - Size
-					&& pPos->y <= g_aExit[nCntExit].parts[nCntExit1].pos.y + Size
-					&& pPos->z >= g_aExit[nCntExit].parts[nCntExit1].pos.z - Size
-					&& pPos->z <= g_aExit[nCntExit].parts[nCntExit1].pos.z + Size)
+				if (   pPos->x >= g_aExit[nCntExit].PseudoCenter.x - Size
+					&& pPos->x <= g_aExit[nCntExit].PseudoCenter.x + Size
+					&& pPos->y >= g_aExit[nCntExit].PseudoCenter.y - Size
+					&& pPos->y <= g_aExit[nCntExit].PseudoCenter.y + Size
+					&& pPos->z >= g_aExit[nCntExit].PseudoCenter.z - Size
+					&& pPos->z <= g_aExit[nCntExit].PseudoCenter.z + Size)
 
 				{//アイテムとプレイヤーが当たった(X軸)
 					bHit = true;

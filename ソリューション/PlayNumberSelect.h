@@ -28,6 +28,7 @@ typedef struct
 	D3DXVECTOR3 pos;					//位置
 	int CurrentSelectNumber = 1;		//現在選択されている番号
 	bool bUse;							//使われているか
+	bool bPush;							//選択したかどうかの判断
 } PlayNumberSelect;
 
 //プロトタイプ宣言

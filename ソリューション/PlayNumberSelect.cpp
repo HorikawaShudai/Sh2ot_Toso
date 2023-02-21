@@ -83,6 +83,7 @@ void InitPlayNumberSelect(void)
 	g_PlayNumberSelect.pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	g_PlayNumberSelect.CurrentSelectNumber = 0;
 	g_PlayNumberSelect.bUse = true;
+	g_PlayNumberSelect.bPush = false;
 
 	//ƒOƒ[ƒoƒ‹éŒ¾‚Ì‰Šú‰»
 	g_PaleColorPns = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
@@ -396,6 +397,7 @@ void PlayerSelect(void)
 
 				g_PlayNumberSelect.bUse = false;
 			}
+			g_PlayNumberSelect.bPush = true;
 		}
 	}
 }

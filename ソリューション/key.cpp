@@ -10,6 +10,7 @@
 #include "input.h"
 #include "debugproc.h"
 #include "key.h"
+#include "ActionHelpUI.h"
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureKey[64][KEY_TYPE_MAX] = {};		//テクスチャのポインタ
@@ -44,6 +45,8 @@ void InitKey(void)
 		g_Key[nCntKey].vtxMax = D3DXVECTOR3(-1000.0f, -1000.0f, -1000.0f);
 		g_Key[nCntKey].bUse = false;
 		g_Key[nCntKey].nType = KEY_TYPE_ITEM;
+		g_Key[nCntKey].bHelpUI = false;
+		g_Key[nCntKey].IndexUI = -1;
 	}
 
 	//Xファイルの読み込み
@@ -291,6 +294,7 @@ bool CollisionKey(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D
 				&& pPos->z <= g_Key[nCntKey].pos.z + Size)
 			{//アイテムとプレイヤーが当たった(X軸)
 				g_Key[nCntKey].bUse = false;
+				FalseActionHelpUI(g_Key[nCntKey].IndexUI);
 				bHit = true;
 				break;
 			}
@@ -298,6 +302,43 @@ bool CollisionKey(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D
 	}
 
 	return bHit;
+}
+
+//====================================================================
+//プレイヤーとの当たり判定処理
+//====================================================================
+void CollisionKeyHelpUI(D3DXVECTOR3 *pPos, float Size)
+{
+	for (int nCntKey = 0; nCntKey < MAX_KEY; nCntKey++)
+	{
+		if (g_Key[nCntKey].bUse == true && g_Key[nCntKey].bHelpUI == false)
+		{
+			if (pPos->x >= g_Key[nCntKey].pos.x - Size
+				&& pPos->x <= g_Key[nCntKey].pos.x + Size
+				&& pPos->y >= g_Key[nCntKey].pos.y - Size
+				&& pPos->y <= g_Key[nCntKey].pos.y + Size
+				&& pPos->z >= g_Key[nCntKey].pos.z - Size
+				&& pPos->z <= g_Key[nCntKey].pos.z + Size)
+			{//アイテムとプレイヤーが当たった(X軸)
+				g_Key[nCntKey].bHelpUI = true;
+				g_Key[nCntKey].IndexUI = SetActionHelpUI(D3DXVECTOR3(g_Key[nCntKey].pos.x, g_Key[nCntKey].pos.y + 20.0f, g_Key[nCntKey].pos.z), ACTIONHELPUI_KEY);
+			}
+		}
+
+		if (g_Key[nCntKey].bUse == true && g_Key[nCntKey].bHelpUI == true)
+		{
+			if (pPos->x <= g_Key[nCntKey].pos.x - Size
+				|| pPos->x >= g_Key[nCntKey].pos.x + Size
+				|| pPos->y <= g_Key[nCntKey].pos.y - Size
+				|| pPos->y >= g_Key[nCntKey].pos.y + Size
+				|| pPos->z <= g_Key[nCntKey].pos.z - Size
+				|| pPos->z >= g_Key[nCntKey].pos.z + Size)
+			{//アイテムとプレイヤーが当たった(X軸)
+				g_Key[nCntKey].bHelpUI = false;
+				FalseActionHelpUI(g_Key[nCntKey].IndexUI);
+			}
+		}
+	}
 }
 
 //====================================================================

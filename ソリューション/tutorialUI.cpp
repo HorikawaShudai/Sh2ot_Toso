@@ -49,8 +49,8 @@
 #define SIZE_TUTORIALUI_34_04_X		(150.0f)	//「」の幅
 #define SIZE_TUTORIALUI_34_04_Y		(25.0f)		//「」の高さ
 
-#define UP_TUTORIALUI				(100.0f)	//紙を取り出すときの上昇度
-#define UP_TUTORIALUI_COUNTER_MAX	(100)		//紙を取り出す速さのカウンター
+#define UP_PAPERBG01				(100.0f)	//紙を取り出すときの上昇度
+#define UP_PAPERBG01_COUNTER_MAX	(100)		//紙を取り出す速さのカウンター
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_apTextureTutorialUI[NUM_SSUI] = {};	//テクスチャへのポインタ
@@ -290,7 +290,7 @@ void UpdateTutorialUI(void)
 	{
 	case TUTORIAL_STATE_STANDBY:
 		//紙を取り出すときのカウンターを増やす
-		if (TutorialUI_TrueCounter < UP_TUTORIALUI_COUNTER_MAX)
+		if (TutorialUI_TrueCounter < UP_PAPERBG01_COUNTER_MAX)
 		{
 			TutorialUI_TrueCounter++;
 		}
@@ -313,19 +313,19 @@ void UpdateTutorialUI(void)
 
 	for (int nCntBG = 0; nCntBG < NUM_SSUI; nCntBG++)
 	{
-		if (nCntBG == 0 && TutorialUI_TrueCounter < UP_TUTORIALUI_COUNTER_MAX)
+		if (nCntBG == 0 && TutorialUI_TrueCounter < UP_PAPERBG01_COUNTER_MAX)
 		{
 			//頂点座標の設定
-			pVtx[0].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X - SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y + (UP_TUTORIALUI * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter)) - SIZE_TUTORIALUI_ALL_Y, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X + SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y + (UP_TUTORIALUI * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter)) - SIZE_TUTORIALUI_ALL_Y, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X - SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y + (UP_TUTORIALUI * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter)) + SIZE_TUTORIALUI_ALL_Y, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X + SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y + (UP_TUTORIALUI * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter)) + SIZE_TUTORIALUI_ALL_Y, 0.0f);
+			pVtx[0].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X - SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y + (UP_PAPERBG01 * ((float)UP_PAPERBG01_COUNTER_MAX / (float)TutorialUI_TrueCounter)) - SIZE_TUTORIALUI_ALL_Y, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X + SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y + (UP_PAPERBG01 * ((float)UP_PAPERBG01_COUNTER_MAX / (float)TutorialUI_TrueCounter)) - SIZE_TUTORIALUI_ALL_Y, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X - SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y + (UP_PAPERBG01 * ((float)UP_PAPERBG01_COUNTER_MAX / (float)TutorialUI_TrueCounter)) + SIZE_TUTORIALUI_ALL_Y, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X + SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y + (UP_PAPERBG01 * ((float)UP_PAPERBG01_COUNTER_MAX / (float)TutorialUI_TrueCounter)) + SIZE_TUTORIALUI_ALL_Y, 0.0f);
 
 			//頂点カラーの設定
-			pVtx[0].col = D3DXCOLOR(0.9f, 0.9f, 0.9f, 1.0f * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter));
-			pVtx[1].col = D3DXCOLOR(0.9f, 0.9f, 0.9f, 1.0f * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter));
-			pVtx[2].col = D3DXCOLOR(0.9f, 0.9f, 0.9f, 1.0f * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter));
-			pVtx[3].col = D3DXCOLOR(0.9f, 0.9f, 0.9f, 1.0f * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter));
+			pVtx[0].col = D3DXCOLOR(0.9f, 0.9f, 0.9f, 1.0f * ((float)UP_PAPERBG01_COUNTER_MAX / (float)TutorialUI_TrueCounter));
+			pVtx[1].col = D3DXCOLOR(0.9f, 0.9f, 0.9f, 1.0f * ((float)UP_PAPERBG01_COUNTER_MAX / (float)TutorialUI_TrueCounter));
+			pVtx[2].col = D3DXCOLOR(0.9f, 0.9f, 0.9f, 1.0f * ((float)UP_PAPERBG01_COUNTER_MAX / (float)TutorialUI_TrueCounter));
+			pVtx[3].col = D3DXCOLOR(0.9f, 0.9f, 0.9f, 1.0f * ((float)UP_PAPERBG01_COUNTER_MAX / (float)TutorialUI_TrueCounter));
 		}
 
 		pVtx += 4;	//頂点データのポインタを４つ分進める

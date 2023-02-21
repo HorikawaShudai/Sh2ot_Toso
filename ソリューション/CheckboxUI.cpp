@@ -15,20 +15,23 @@
 #define CHECKUIPOS_Y_2		(700.0f)		//チェックボックスのUIのY位置2
 
 #define CHECKUIPOS_X_3_0  (200.0)			//チュートリアル用紙が出ているときのX位置(1人目)
-#define CHECKUIPOS_Y_3_0  (650.0)			//チュートリアル用紙が出ているときのY位置(1人目)
+#define CHECKUIPOS_Y_3_0  (550.0)			//チュートリアル用紙が出ているときのY位置(1人目)
 
 #define CHECKUIPOS_X_3_1  (400.0)			//チュートリアル用紙が出ているときのX位置(2人目)
-#define CHECKUIPOS_Y_3_1  (650.0)			//チュートリアル用紙が出ているときのY位置(2人目)
+#define CHECKUIPOS_Y_3_1  (550.0)			//チュートリアル用紙が出ているときのY位置(2人目)
 
 #define CHECKUIPOS_X_3_2  (600.0)			//チュートリアル用紙が出ているときのX位置(3人目)
-#define CHECKUIPOS_Y_3_2  (650.0)			//チュートリアル用紙が出ているときのY位置(3人目)
+#define CHECKUIPOS_Y_3_2  (550.0)			//チュートリアル用紙が出ているときのY位置(3人目)
 
 #define CHECKUIPOS_X_3_3  (800.0)			//チュートリアル用紙が出ているときのX位置(4人目)
-#define CHECKUIPOS_Y_3_3  (650.0)			//チュートリアル用紙が出ているときのY位置(4人目)
+#define CHECKUIPOS_Y_3_3  (550.0)			//チュートリアル用紙が出ているときのY位置(4人目)
 
 #define CHECKUI_WIDTH		(50.0f)			//チェックボックスのUIの幅
 #define CHECKUI_HEIGHT		(50.0f)			//チェックボックスのUIの高さ
 #define CHECKUI_INTERVAL	(50.0f)			//チェックボックスのUI同士の間隔
+
+#define UP_CHECKBOXUI				(100.0f)	//紙を取り出すときの上昇度
+#define UP_CHECKBOXUI_COUNTER_MAX	(100)		//紙を取り出す速さのカウンター
 
 //チェックボックスUIの構造体
 typedef struct
@@ -44,6 +47,7 @@ LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffCheckUI = NULL;			//頂点バッファへのポインタ
 CHECKUI g_anCheckUI[NUM_PLAYER];							//チェックボックスのUIの情報
 int g_NumPlayerCheckUI;
 bool btutorial;  //チュートリアル用紙が表示されているかどうか
+int ChecboxUITrueCounter;			//紙を取り出すときのカウンター
 
 //====================================================================
 //チェックボックスの初期化処理
@@ -191,6 +195,34 @@ void UpdateCheckboxUI(void)
 	//変数宣言
 	int nCntCheckUI;
 
+	switch (GetEscapeTutorial())
+	{
+	case TUTORIAL_STATE_STANDBY:
+		//スタンバイ状態の時にチェックをオンにする入力処理
+		for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
+		{
+			if ((GetGamepadTrigger(BUTTON_A, nCntPlayer) || GetGamepadTrigger(BUTTON_B, nCntPlayer)) && ChecboxUITrueCounter >= UP_CHECKBOXUI_COUNTER_MAX)
+			{
+				SetCheckUI(nCntPlayer, true);
+			}
+		}
+
+		//紙を取り出す処理
+		if (ChecboxUITrueCounter < UP_CHECKBOXUI_COUNTER_MAX)
+		{
+			ChecboxUITrueCounter++;
+		}
+		break;
+	case TUTORIAL_STATE_WAIT:
+
+		//紙をしまう処理
+		if (ChecboxUITrueCounter > 0)
+		{
+			ChecboxUITrueCounter--;
+		}
+		break;
+	}
+
 	if (g_anCheckUI[0].bUse == true && g_anCheckUI[1].bUse == true && g_anCheckUI[2].bUse == true && g_anCheckUI[3].bUse == true)
 	{
 		switch (GetEscapeTutorial())
@@ -198,8 +230,8 @@ void UpdateCheckboxUI(void)
 		case TUTORIAL_STATE_PLAY:
 			for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++,pPlayer++)
 			{
-				g_anCheckUI[nCntPlayer].bUse = false;
 				pPlayer->MoveState = PLAYER_MOVESTATE_NORMAL;
+				GetGamepad_Vibrtion_false(nCntPlayer);
 			}
 
 			switch (GetDoEscapeTutorial())
@@ -229,8 +261,13 @@ void UpdateCheckboxUI(void)
 				DoEscapeTutorial(MODE_END);
 				break;
 			}
-
+			//チェックボックスを人数分オフにする
+			for (int nCntTutorial = 0; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber; nCntTutorial++)
+			{
+				g_anCheckUI[nCntTutorial].bUse = false;
+			}
 			SetEscapeTutorial(TUTORIAL_STATE_STANDBY);
+			break;
 
 		case TUTORIAL_STATE_STANDBY:
 			SetEscapeTutorial(TUTORIAL_STATE_WAIT);
@@ -240,7 +277,7 @@ void UpdateCheckboxUI(void)
 
 	VERTEX_2D *pVtx;    //頂点情報へのポインタ
 
-						//頂点バッファをロックし、頂点情報へのポインタを取得
+	//頂点バッファをロックし、頂点情報へのポインタを取得
 	g_pVtxBuffCheckUI->Lock(0, 0, (void**)&pVtx, 0);
 
 	//チュートリアル用紙が使われていなかったら
@@ -306,13 +343,23 @@ void UpdateCheckboxUI(void)
 				g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_3_3, CHECKUIPOS_Y_3_3, 0.0f);  //4人目の位置を初期化
 			}
 
-			g_anCheckUI[nCntCheckUI].bUse = false;
+			////頂点座標の設定
+			//pVtx[0].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x - CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y - CHECKUI_HEIGHT, 0.0f);
+			//pVtx[1].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x + CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y - CHECKUI_HEIGHT, 0.0f);
+			//pVtx[2].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x - CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y + CHECKUI_HEIGHT, 0.0f);
+			//pVtx[3].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x + CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y + CHECKUI_HEIGHT, 0.0f);
 
 			//頂点座標の設定
-			pVtx[0].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x - CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y - CHECKUI_HEIGHT, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x + CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y - CHECKUI_HEIGHT, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x - CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y + CHECKUI_HEIGHT, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x + CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y + CHECKUI_HEIGHT, 0.0f);
+			pVtx[0].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x - CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y + (UP_CHECKBOXUI * ((float)UP_CHECKBOXUI_COUNTER_MAX / (float)ChecboxUITrueCounter)) - CHECKUI_HEIGHT, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x + CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y + (UP_CHECKBOXUI * ((float)UP_CHECKBOXUI_COUNTER_MAX / (float)ChecboxUITrueCounter)) - CHECKUI_HEIGHT, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x - CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y + (UP_CHECKBOXUI * ((float)UP_CHECKBOXUI_COUNTER_MAX / (float)ChecboxUITrueCounter)) + CHECKUI_HEIGHT, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x + CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y + (UP_CHECKBOXUI * ((float)UP_CHECKBOXUI_COUNTER_MAX / (float)ChecboxUITrueCounter)) + CHECKUI_HEIGHT, 0.0f);
+
+			//頂点カラーの設定
+			pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f * ((float)UP_CHECKBOXUI_COUNTER_MAX / (float)ChecboxUITrueCounter));
+			pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f * ((float)UP_CHECKBOXUI_COUNTER_MAX / (float)ChecboxUITrueCounter));
+			pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f * ((float)UP_CHECKBOXUI_COUNTER_MAX / (float)ChecboxUITrueCounter));
+			pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f * ((float)UP_CHECKBOXUI_COUNTER_MAX / (float)ChecboxUITrueCounter));
 
 			pVtx += 4;
 		}

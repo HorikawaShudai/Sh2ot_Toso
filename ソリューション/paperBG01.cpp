@@ -43,8 +43,8 @@
 #define SIZE_TUTORIALUI_34_04_X		(300.0f)	//「」の幅
 #define SIZE_TUTORIALUI_34_04_Y		(50.0f)		//「」の高さ
 
-#define UP_TUTORIALUI				(100.0f)	//紙を取り出すときの上昇度
-#define UP_TUTORIALUI_COUNTER_MAX	(100)		//紙を取り出す速さのカウンター
+#define UP_PAPERBG01				(100.0f)	//紙を取り出すときの上昇度
+#define UP_PAPERBG01_COUNTER_MAX	(100)		//紙を取り出す速さのカウンター
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_apTexturePaperBG01[MAX_SSUI] = {};	//テクスチャへのポインタ
