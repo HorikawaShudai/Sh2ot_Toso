@@ -47,6 +47,9 @@ typedef enum
 	OBJECT00_NTYPE31,			//柱
 	OBJECT00_NTYPE32,			//パソコンが載っている机
 	OBJECT00_NTYPE33,			//机の椅子
+	OBJECT00_NTYPE34,			//偉い人用椅子
+	OBJECT00_NTYPE35,			//偉い人用机
+	OBJECT00_NTYPE36,			//応接室用机
 	OBJECT00_NTYPE_MAX,
 
 }OBJECT00_NTYPE;
