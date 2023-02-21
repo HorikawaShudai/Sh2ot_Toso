@@ -64,6 +64,26 @@ const char *c_apModelObj[] =					//モデルデータ読み込み
 	"Data\\MODEL\\pillar.x",					//柱
 	"Data\\MODEL\\desk_pc.x",					//PCが載っているデスク
 	"Data\\MODEL\\officechair.x",				//オフィスの椅子
+	"Data\\MODEL\\locker.x",		//ロッカー
+	"Data\\MODEL\\whiteboard.x",	//ホワイトボード
+	"Data\\MODEL\\camera.x",		//監視カメラ
+	"Data\\MODEL\\illumination.x",	//蛍光灯
+	"Data\\MODEL\\longdesk.x",		//ロングデスク
+	"Data\\MODEL\\projecter2.x",	//プロジェクターのうつすほう
+	"Data\\MODEL\\plant.x",			//観葉植物
+	"Data\\MODEL\\dustbox.x",		//ゴミ箱
+	"Data\\MODEL\\partition.x",		//パーテーション
+	"Data\\MODEL\\book_shelf.x",	//本棚
+	"Data\\MODEL\\coat_rack.x",		//コート掛け
+	"Data\\MODEL\\endai.x",			//演説用の台
+	"Data\\MODEL\\copy.x",			//コピー機
+	"Data\\MODEL\\BuleBox.x",		//ブルーシートのかかった箱
+	"Data\\MODEL\\Height_Cabinet.x",//低めの棚
+	"Data\\MODEL\\rubble.x",		//がれき
+	"Data\\MODEL\\stretcher.x",		//救急ベッド
+	"Data\\MODEL\\catcar.x",		//うばぐるま
+	"Data\\MODEL\\BlackDesk.x",		//理科室にあるデスク
+	"Data\\MODEL\\CrashArea.x",		//崩れた小部屋
 };
 
 //====================================================================
