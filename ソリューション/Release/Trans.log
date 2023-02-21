@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  EscapeClearResult.cpp
   EscapeOverResult.cpp
   EscapeRanking.cpp
@@ -24,3 +25,7 @@
   コード生成が終了しました。
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+=======
+﻿  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+>>>>>>> cafd984ccd2be3214f5fc765958d7dae64903808

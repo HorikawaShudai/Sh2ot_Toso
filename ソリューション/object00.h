@@ -67,6 +67,9 @@ typedef enum
 	OBJECT00_NTYPE51,			//うばぐるま
 	OBJECT00_NTYPE52,			//理科室にあるデスク
 	OBJECT00_NTYPE53,			//崩れた小部屋
+	OBJECT00_NTYPE54,			//壁(メインホール)
+	OBJECT00_NTYPE55,			//壁(黒レンガ)
+	OBJECT00_NTYPE56,			//壁(廊下)
 	OBJECT00_NTYPE_MAX,
 
 }OBJECT00_NTYPE;
