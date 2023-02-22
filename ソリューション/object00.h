@@ -8,7 +8,7 @@
 #ifndef _OBJECT00_H_
 #define _OBJECT00_H_
 
-#define MAX_OBJECT00 (1224)		//オブジェクトの最大数
+#define MAX_OBJECT00 (2048)		//オブジェクトの最大数
 
 //モデルの構造体
 typedef enum
@@ -70,6 +70,11 @@ typedef enum
 	OBJECT00_NTYPE54,			//壁(メインホール)
 	OBJECT00_NTYPE55,			//壁(黒レンガ)
 	OBJECT00_NTYPE56,			//壁(廊下)
+	OBJECT00_NTYPE57,			//ラボタンク
+	OBJECT00_NTYPE58,			//偉い人用のテーブル
+	OBJECT00_NTYPE59,			//偉い人用の椅子
+	OBJECT00_NTYPE60,			//応接室の机
+	OBJECT00_NTYPE61,			//壁(白タイル)
 	OBJECT00_NTYPE_MAX,
 
 }OBJECT00_NTYPE;

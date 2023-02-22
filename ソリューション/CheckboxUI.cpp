@@ -32,6 +32,7 @@
 
 #define UP_CHECKBOXUI				(100.0f)	//紙を取り出すときの上昇度
 #define UP_CHECKBOXUI_COUNTER_MAX	(100)		//紙を取り出す速さのカウンター
+#define UP_CHECKBOXUI_WAITCOUNTER	(90)		//項目達成時の余韻
 
 //チェックボックスUIの構造体
 typedef struct
@@ -48,6 +49,7 @@ CHECKUI g_anCheckUI[NUM_PLAYER];							//チェックボックスのUIの情報
 int g_NumPlayerCheckUI;
 bool btutorial;  //チュートリアル用紙が表示されているかどうか
 int ChecboxUITrueCounter;			//紙を取り出すときのカウンター
+int ChecboxUIWaitCount;				//チェックをいれたときの余韻
 
 //====================================================================
 //チェックボックスの初期化処理
@@ -65,6 +67,7 @@ void InitCheckboxUI(void)
 
 	//グローバル宣言の初期化
 	g_NumPlayerCheckUI = 0;
+	ChecboxUIWaitCount = 0;
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
@@ -225,54 +228,64 @@ void UpdateCheckboxUI(void)
 
 	if (g_anCheckUI[0].bUse == true && g_anCheckUI[1].bUse == true && g_anCheckUI[2].bUse == true && g_anCheckUI[3].bUse == true)
 	{
-		switch (GetEscapeTutorial())
-		{
-		case TUTORIAL_STATE_PLAY:
-			for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++,pPlayer++)
+			switch (GetEscapeTutorial())
 			{
-				pPlayer->MoveState = PLAYER_MOVESTATE_NORMAL;
-				GetGamepad_Vibrtion_false(nCntPlayer);
-			}
+			case TUTORIAL_STATE_PLAY:
+				ChecboxUIWaitCount++;
+				if (ChecboxUIWaitCount >= UP_CHECKBOXUI_WAITCOUNTER)
+				{
+					ChecboxUIWaitCount = 0;
+					for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++, pPlayer++)
+					{
+						pPlayer->MoveState = PLAYER_MOVESTATE_NORMAL;
+						GetGamepad_Vibrtion_false(nCntPlayer);
+					}
 
-			switch (GetDoEscapeTutorial())
-			{
-			case MODE_MOVE:
-				//チュートリアル用紙をカメラ移動に
-				DoEscapeTutorial(MODE_DASH);
+					switch (GetDoEscapeTutorial())
+					{
+					case MODE_MOVE:
+						//チュートリアル用紙をカメラ移動に
+						DoEscapeTutorial(MODE_DASH);
+						break;
+					case MODE_DASH:
+						//チュートリアル用紙をバイブに
+						DoEscapeTutorial(MODE_VIBE);
+						break;
+					case MODE_VIBE:
+						//チュートリアル用紙をステルスに
+						DoEscapeTutorial(MODE_STELTH);
+						break;
+					case MODE_STELTH:
+						//チュートリアル用紙を鍵をとるに
+						DoEscapeTutorial(MODE_GET_KEY);
+						break;
+					case MODE_GET_KEY:
+						//チュートリアル用紙を脱出に
+						DoEscapeTutorial(MODE_ESCAPE);
+						break;
+					case MODE_ESCAPE:
+						//チュートリアル用紙をチュートリアル項目の終了に
+						DoEscapeTutorial(MODE_GOEXIT);
+						break;
+					case MODE_GOEXIT:
+						//チュートリアル用紙をチュートリアル項目の終了に
+						DoEscapeTutorial(MODE_END);
+						break;
+					}
+					//チェックボックスを人数分オフにする
+					for (int nCntTutorial = 0; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber; nCntTutorial++)
+					{
+						g_anCheckUI[nCntTutorial].bUse = false;
+					}
+					SetEscapeTutorial(TUTORIAL_STATE_STANDBY);
+				}
 				break;
-			case MODE_DASH:
-				//チュートリアル用紙をバイブに
-				DoEscapeTutorial(MODE_VIBE);
-				break;
-			case MODE_VIBE:
-				//チュートリアル用紙をステルスに
-				DoEscapeTutorial(MODE_STELTH);
-				break;
-			case MODE_STELTH:
-				//チュートリアル用紙を鍵をとるに
-				DoEscapeTutorial(MODE_GET_KEY);
-				break;
-			case MODE_GET_KEY:
-				//チュートリアル用紙を脱出に
-				DoEscapeTutorial(MODE_ESCAPE);
-				break;
-			case MODE_ESCAPE:
-				//チュートリアル用紙をチュートリアル項目の終了に
-				DoEscapeTutorial(MODE_END);
-				break;
-			}
-			//チェックボックスを人数分オフにする
-			for (int nCntTutorial = 0; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber; nCntTutorial++)
-			{
-				g_anCheckUI[nCntTutorial].bUse = false;
-			}
-			SetEscapeTutorial(TUTORIAL_STATE_STANDBY);
-			break;
 
-		case TUTORIAL_STATE_STANDBY:
-			SetEscapeTutorial(TUTORIAL_STATE_WAIT);
-			break;
-		}
+
+			case TUTORIAL_STATE_STANDBY:
+				SetEscapeTutorial(TUTORIAL_STATE_WAIT);
+				break;
+			}
 	}
 
 	VERTEX_2D *pVtx;    //頂点情報へのポインタ
