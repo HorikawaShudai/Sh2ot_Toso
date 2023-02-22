@@ -17,7 +17,7 @@
 #define ENEMY_SPEED (2.0f) //敵の移動速度
 
 #define	DETECT_SPEED (5000.0f) //探査波の速度
-#define	PLAYERDETECT_SPEED (2500.0f) //探査波の速度
+#define	PLAYERDETECT_SPEED (1000.0f) //探査波の速度
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureENEMY[64][ENEMY_NTYPE_MAX] = {};	//テクスチャのポインタ
@@ -43,6 +43,14 @@ const char *c_apModelEnemy[] =					//モデルデータ読み込み
 	"Data\\MODEL\\officechair.x",
 };
 
+const D3DXVECTOR3 TeleportPos[] = //移動先の座標
+{
+	D3DXVECTOR3(0.0f,0.0f,0.0f),
+	D3DXVECTOR3(0.0f,0.0f,0.0f),
+	D3DXVECTOR3(0.0f,0.0f,0.0f),
+	D3DXVECTOR3(0.0f,0.0f,0.0f),
+	D3DXVECTOR3(0.0f,0.0f,0.0f),
+};
 
 //====================================================================
 //敵の初期化処理
@@ -221,6 +229,7 @@ void UpdateEnemy(void)
 				//目標地点に到達したとき
 				if (vecEnemy.x < 10.0f && vecEnemy.x > -10.0f && vecEnemy.z < 10.0f && vecEnemy.z > -10.0f)
 				{//探索状態に切り替える
+					
 					g_Enemy[nCntObject].state = ENEMYSTATE_SEEK;
 					g_Enemy[nCntObject].StateCount = 30;
 				
@@ -237,6 +246,7 @@ void UpdateEnemy(void)
 							g_Enemy[nCntObject].state = ENEMYSTATE_ATTACK;
 							g_Enemy[nCntObject].StateCount = 30;
 							PlayerHit(nCnt, 1);
+							TeleportationEnemy(&g_Enemy[nCntObject].pos);
 						}
 					}
 				}
@@ -575,7 +585,32 @@ void CollisionEnemyShadow(D3DXVECTOR3 *pPos)
 		}
 	}
 }
-
+void TeleportationEnemy(D3DXVECTOR3 *pPos)
+{
+	int nCnt = 0;
+	int nRand;
+	Player*pPlayer;
+	while (1)
+	{
+		nCnt++;
+		nRand = rand() % 5;
+		pPlayer = GetPlayer();
+		float fDis = TeleportPos[nRand].x - pPlayer->pos.x + TeleportPos[nRand].z - pPlayer->pos.z;
+		if (fDis < 0)
+		{
+			fDis *= -1;
+		}
+		if (fDis > 1000.0f)
+		{
+			*pPos = TeleportPos[nRand];
+			break;
+		}
+		if (nCnt > 100)
+		{
+			break;
+		}
+	}
+}
 //====================================================================
 //敵の取得
 //====================================================================
