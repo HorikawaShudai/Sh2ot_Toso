@@ -38,8 +38,13 @@ void InitPaperBG00(void)
 
 	////テクスチャの読み込み
 	//D3DXCreateTextureFromFile(pDevice,
-	//	"data\\TEXTURE\\RankingBG.png",
+	//	"Data\\TEXTURE\\TUTORIAL\\paper.jpg",
 	//	&g_apTexturePaperBG00[0]);
+
+	//テクスチャの読み込み
+	D3DXCreateTextureFromFile(pDevice,
+		"Data\\TEXTURE\\TUTORIAL\\paper.jpg",
+		&g_apTexturePaperBG00[1]);
 
 	//UIの表示設定
 	bUsePaperBG00[0] = true;

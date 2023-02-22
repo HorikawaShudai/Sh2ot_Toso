@@ -44,13 +44,13 @@ void InitPolygonBG(void)
 	pDevice = GetDevice();
 
 	//テクスチャの読み込み
-	//D3DXCreateTextureFromFile(pDevice,
-	//	"data\\TEXTURE\\Damage00.jpg",
-	//	&g_apTexturePolygonBG[0]);
-
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\Damage00.jpg",
-		&g_apTexturePolygonBG[1]);
+		"Data\\TEXTURE\\TUTORIAL\\paper.jpg",
+		&g_apTexturePolygonBG[0]);
+
+	/*D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\TUTORIAL\\paper.jpg",
+		&g_apTexturePolygonBG[1]);*/
 
 	//D3DXCreateTextureFromFile(pDevice,
 	//	"data\\TEXTURE\\Damage00.jpg",

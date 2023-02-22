@@ -378,6 +378,10 @@ void UpdateEscapeTutorial()
 
 		break;
 
+	case MODE_GOEXIT:
+
+		break;
+
 	case MODE_END:
 
 		if (pFade == FADE_NONE)

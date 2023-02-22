@@ -63,26 +63,22 @@ void InitPaperBG01(void)
 							   //デバイスの所得
 	pDevice = GetDevice();
 
-	////テクスチャの読み込み
-	//D3DXCreateTextureFromFile(pDevice,
-	//	"data\\TEXTURE\\RankingBG.png",
-	//	&g_apTexturePaperBG01[0]);
+	//テクスチャの読み込み
+	D3DXCreateTextureFromFile(pDevice,
+		"Data\\TEXTURE\\TUTORIAL\\paper.jpg",
+		&g_apTexturePaperBG01[0]);
 
-	//D3DXCreateTextureFromFile(pDevice,
-	//	"data\\TEXTURE\\Ranking_Score.png",
-	//	&g_apTexturePaperBG01[1]);
+	D3DXCreateTextureFromFile(pDevice,
+		"Data\\TEXTURE\\TUTORIAL\\paper.jpg",
+		&g_apTexturePaperBG01[1]);
 
-	//D3DXCreateTextureFromFile(pDevice,
-	//	"data\\TEXTURE\\TUTORIAL\\clear_tousou.png",
-	//	&g_apTexturePaperBG01[2]);
+	D3DXCreateTextureFromFile(pDevice,
+		"Data\\TEXTURE\\TUTORIAL\\paper.jpg",
+		&g_apTexturePaperBG01[2]);
 
-	//D3DXCreateTextureFromFile(pDevice,
-	//	"data\\TEXTURE\\RankingAllPerfect.png",
-	//	&g_apTexturePaperBG01[3]);
-
-	//D3DXCreateTextureFromFile(pDevice,
-	//	"data\\TEXTURE\\RankingAllPerfect.png",
-	//	&g_apTexturePaperBG01[4]);
+	D3DXCreateTextureFromFile(pDevice,
+		"Data\\TEXTURE\\TUTORIAL\\paper.jpg",
+		&g_apTexturePaperBG01[3]);
 
 	//UIの表示設定
 	bUsePaperBG01[0] = false;
