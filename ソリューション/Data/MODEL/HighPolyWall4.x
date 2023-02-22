@@ -1259,7 +1259,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\チーム制作\\Sh2ot_Toso\\ソ\リューション\\Data\\TEXTURE\\Concretewall.jpg";
+    "Data\\TEXTURE\\Concretewall.jpg";
    }
   }
   Material {
@@ -1268,7 +1268,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\チーム制作\\Sh2ot_Toso\\ソ\リューション\\Data\\TEXTURE\\thumb_concrete.jpg";
+    "Data\\TEXTURE\\thumb_concrete.jpg";
    }
   }
   Material {
@@ -1277,7 +1277,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\チーム制作\\Sh2ot_Toso\\ソ\リューション\\Data\\TEXTURE\\istockphoto-923479130-612x612.jpg";
+    "Data\\TEXTURE\\istockphoto-923479130-612x612.jpg";
    }
   }
   Material {

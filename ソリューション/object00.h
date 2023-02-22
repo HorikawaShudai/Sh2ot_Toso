@@ -74,6 +74,7 @@ typedef enum
 	OBJECT00_NTYPE58,			//偉い人用のテーブル
 	OBJECT00_NTYPE59,			//偉い人用の椅子
 	OBJECT00_NTYPE60,			//応接室の机
+	OBJECT00_NTYPE61,			//壁(白タイル)
 	OBJECT00_NTYPE_MAX,
 
 }OBJECT00_NTYPE;
