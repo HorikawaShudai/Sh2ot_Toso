@@ -4,6 +4,8 @@
 #include "PlayNumberSelect.h"
 #include "EscapeTutorial.h"
 #include "input.h"
+#include "key.h"
+#include "enemy.h"
 
 //マクロ定義
 #define MAX_CHECK_TEX		(2)				//チェックボックスのテクスチャ最大数
@@ -32,7 +34,7 @@
 
 #define UP_CHECKBOXUI				(100.0f)	//紙を取り出すときの上昇度
 #define UP_CHECKBOXUI_COUNTER_MAX	(100)		//紙を取り出す速さのカウンター
-#define UP_CHECKBOXUI_WAITCOUNTER	(90)		//項目達成時の余韻
+#define UP_CHECKBOXUI_WAITCOUNTER	(60)		//項目達成時の余韻
 
 //チェックボックスUIの構造体
 typedef struct
@@ -250,6 +252,9 @@ void UpdateCheckboxUI(void)
 					case MODE_DASH:
 						//チュートリアル用紙をバイブに
 						DoEscapeTutorial(MODE_VIBE);
+
+						SetEnemy(D3DXVECTOR3(-1050.0f, 0.0f, 100.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+
 						break;
 					case MODE_VIBE:
 						//チュートリアル用紙をステルスに
@@ -258,6 +263,14 @@ void UpdateCheckboxUI(void)
 					case MODE_STELTH:
 						//チュートリアル用紙を鍵をとるに
 						DoEscapeTutorial(MODE_GET_KEY);
+
+						FalseEnemy();
+
+						for (int nCntTutorial = 0; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber; nCntTutorial++)
+						{
+							SetKey(D3DXVECTOR3(-950.0f + (50.0f * nCntTutorial), 0.0f, -50.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), KEY_TYPE_ITEM);
+						}
+
 						break;
 					case MODE_GET_KEY:
 						//チュートリアル用紙を脱出に

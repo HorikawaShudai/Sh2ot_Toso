@@ -585,6 +585,20 @@ ENEMY * GetEnemy(void)
 }
 
 //====================================================================
+//“G‚Ìíœˆ—
+//====================================================================
+void FalseEnemy(void)
+{
+	for (int nCntObject = 0; nCntObject < MAX_ENEMY; nCntObject++)
+	{
+		if (g_Enemy[nCntObject].bUse == true)
+		{
+			g_Enemy[nCntObject].bUse = false;
+		}
+	}
+}
+
+//====================================================================
 //•Ç‚Ì’Tõ
 //====================================================================
 float DetectWall(D3DXVECTOR3 pos, float fmoveRot, int nLife)

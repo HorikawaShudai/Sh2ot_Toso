@@ -92,6 +92,11 @@ const char *c_apModelObj[] =					//モデルデータ読み込み
 	"Data\\MODEL\\erai_chear.x",				//偉い人用の椅子
 	"Data\\MODEL\\drawing_chair.x",				//応接室の机
 	"Data\\MODEL\\HighPolyWall8.x",				//壁(白タイル)
+	"Data\\MODEL\\ceiling.x",					//天井(白)
+	"Data\\MODEL\\ceiling1.x",					//天井(コンクリ)
+	"Data\\MODEL\\ceiling2.x",					//天井(雨濡れコンクリ)
+	"Data\\MODEL\\ceiling3.x",					//天井(タイル)
+	"Data\\MODEL\\ceiling4.x",					//天井(白模様入り)
 };
 
 //====================================================================
@@ -267,7 +272,7 @@ void DrawObject00(void)
 void UpdateEditObject00(void)
 {
 	//キーボードの移動処理----------
-	if (g_Object00[EditIndex].nType == 0 || g_Object00[EditIndex].nType == OBJECT00_NTYPE54 || g_Object00[EditIndex].nType == OBJECT00_NTYPE55 || g_Object00[EditIndex].nType == OBJECT00_NTYPE56 || g_Object00[EditIndex].nType == OBJECT00_NTYPE61)
+	if (g_Object00[EditIndex].nType == 0 || g_Object00[EditIndex].nType == OBJECT00_NTYPE54 || g_Object00[EditIndex].nType == OBJECT00_NTYPE55 || g_Object00[EditIndex].nType == OBJECT00_NTYPE56 || g_Object00[EditIndex].nType == OBJECT00_NTYPE61 || g_Object00[EditIndex].nType == OBJECT00_NTYPE62 || g_Object00[EditIndex].nType == OBJECT00_NTYPE63 || g_Object00[EditIndex].nType == OBJECT00_NTYPE64 || g_Object00[EditIndex].nType == OBJECT00_NTYPE65 || g_Object00[EditIndex].nType == OBJECT00_NTYPE66)
 	{//選択されているオブジェクトが壁の時
 		if (GetKeyboardTrigger(DIK_UP) == true)
 		{//前移動
@@ -287,7 +292,7 @@ void UpdateEditObject00(void)
 		}
 	}
 
-	if(g_Object00[EditIndex].nType != 0 && g_Object00[EditIndex].nType != OBJECT00_NTYPE54 && g_Object00[EditIndex].nType != OBJECT00_NTYPE55 && g_Object00[EditIndex].nType != OBJECT00_NTYPE56 && g_Object00[EditIndex].nType != OBJECT00_NTYPE61)
+	if(g_Object00[EditIndex].nType != 0 && g_Object00[EditIndex].nType != OBJECT00_NTYPE54 && g_Object00[EditIndex].nType != OBJECT00_NTYPE55 && g_Object00[EditIndex].nType != OBJECT00_NTYPE56 && g_Object00[EditIndex].nType != OBJECT00_NTYPE61 && g_Object00[EditIndex].nType != OBJECT00_NTYPE62 && g_Object00[EditIndex].nType == OBJECT00_NTYPE63 && g_Object00[EditIndex].nType == OBJECT00_NTYPE64 && g_Object00[EditIndex].nType == OBJECT00_NTYPE65 && g_Object00[EditIndex].nType == OBJECT00_NTYPE66)
 	{//選択されているオブジェクトが壁以外の時
 		if (GetKeyboardPress(DIK_UP) == true)
 		{//前移動
@@ -336,9 +341,14 @@ void UpdateEditObject00(void)
 			EditType = 0;
 		}
 
-		if (EditType == 0 && EditType == OBJECT00_NTYPE54 || EditType == OBJECT00_NTYPE55 || EditType == OBJECT00_NTYPE56 || EditType == OBJECT00_NTYPE61)
+		if (EditType == 0 || EditType == OBJECT00_NTYPE54 || EditType == OBJECT00_NTYPE55 || EditType == OBJECT00_NTYPE56 || EditType == OBJECT00_NTYPE61)
 		{
 			EditPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		}
+
+		if (EditType == OBJECT00_NTYPE62 || EditType == OBJECT00_NTYPE63 || EditType == OBJECT00_NTYPE64 || EditType == OBJECT00_NTYPE65 || EditType == OBJECT00_NTYPE66)
+		{
+			EditPos = D3DXVECTOR3(0.0f, 150.0f, 0.0f);
 		}
 	}
 	if (GetKeyboardTrigger(DIK_8) == true)
