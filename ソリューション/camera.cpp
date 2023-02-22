@@ -83,7 +83,7 @@ void InitCamera(void)
 	bEnter = false;					//ÉGÉìÉ^Å[ÇâüÇµÇƒÇ¢Ç»Ç¢èÛë‘Ç…
 	bCamMove = false;
 
-	g_Rand_RankingCameraBG = rand() % 2;
+	g_Rand_RankingCameraBG = 3; /*rand() % 2;*/
 	
 	switch (PlayNumber.CurrentSelectNumber)
 	{
@@ -905,12 +905,22 @@ void RankingCamera(void)
 	switch (g_Rand_RankingCameraBG)
 	{
 	case 0:
-		g_aCamera[4].posV = D3DXVECTOR3(975.0f, 200.0f, -430.0f);
-		g_aCamera[4].posR = D3DXVECTOR3(420.0f, 100.0f, 500.0);
+		g_aCamera[4].posV = D3DXVECTOR3(-1953.70f, 35.0f, 1640.36f);
+		g_aCamera[4].posR = D3DXVECTOR3(-2170.67f,35.0f,1748.42f);
 		break;
 	case 1:
-		g_aCamera[4].posV = D3DXVECTOR3(475.0f, 200.0f, -430.0f);
-		g_aCamera[4].posR = D3DXVECTOR3(-120.0f, 100.0f, 500.0);
+		g_aCamera[4].posV = D3DXVECTOR3(473.15f, 35.0f, -69.61f);
+		g_aCamera[4].posR = D3DXVECTOR3(300.0f, 35.0f, 556.61f);
+		break;
+
+	case 2:
+		g_aCamera[4].posV = D3DXVECTOR3(-2200.96f, 35.0f, 1579.65f);
+		g_aCamera[4].posR = D3DXVECTOR3(-1950.85f, 100.0f, 1420.71f);
+		break;
+
+	case 3:
+		g_aCamera[4].posV = D3DXVECTOR3(-2200.96f, 35.0f, 1579.65f);
+		g_aCamera[4].posR = D3DXVECTOR3(-1950.85f, 100.0f, 1420.71f);
 		break;
 	}
 }

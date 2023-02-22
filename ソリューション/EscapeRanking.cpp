@@ -9,6 +9,7 @@
 #include "objectBG.h"
 #include "objectLight.h"
 #include "time.h"
+#include "meshfield.h"
 
 //グローバル変数宣言
 
@@ -36,6 +37,8 @@ void InitEscapeRanking()
 	InitRankingUI();
 
 	InitRanKingNumber();
+
+	InitMeshField();
 }
 
 //====================================================================
@@ -59,6 +62,8 @@ void UninitEscapeRanking()
 	UninitRankingUI();
 
 	UninitRanKingNumber();
+
+	UninitMeshField();
 }
 
 //====================================================================
@@ -82,6 +87,8 @@ void UpdateEscapeRanking()
 	UpdateRankingUI();
 
 	UpdateRanKingNumber();
+
+	UpdateMeshField();
 }
 
 //====================================================================
@@ -99,6 +106,8 @@ void DrawEscapeRanking()
 
 	//カメラのセット処理
 	SetCamera(4);
+
+	DrawMeshField();
 
 	//オブジェクトの描画処理
 	DrawObject00();
