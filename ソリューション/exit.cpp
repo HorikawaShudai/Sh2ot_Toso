@@ -18,6 +18,8 @@
 #include "meshwall.h"
 #include "debugproc.h"
 #include "ActionHelpUI.h"
+#include "EscapeTutorial.h"
+#include "CheckboxUI.h"
 
 const char *c_apExit[] =					//モデルデータ読み込み
 {

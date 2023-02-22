@@ -19,6 +19,7 @@ typedef enum
 	MODE_STELTH,		//ステルス
 	MODE_GET_KEY,		//鍵をとる
 	MODE_ESCAPE,		//脱出
+	MODE_GOEXIT,		//出口から出る
 	MODE_END,			//チュートリアル項目の終了
 	MODE__TUTORIAL_MAX,
 }TUTORIAL_MODE;
