@@ -91,7 +91,7 @@ void InitGame()
 	InitLife();
 
 
-	//SetEnemy(D3DXVECTOR3(-900.0f, 0.0f, 850.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetEnemy(D3DXVECTOR3(-900.0f, 0.0f, 850.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	//SetEnemy(D3DXVECTOR3(-1400.0f, 0.0f, -500.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	//SetEnemy(D3DXVECTOR3(-1000.0f, 0.0f, -500.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
