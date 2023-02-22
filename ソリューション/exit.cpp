@@ -285,6 +285,7 @@ void ExsitClossLine(int nCntExit)
 
 	for (int nCntWall = 0; nCntWall < MAX_EXIT; nCntWall++, pPlayer++)
 	{
+
 		if (pPlayer->bUse == true && MeshWall.bUse == true)
 		{
 			float fRate;					//ƒxƒNƒgƒ‹‚ÌŠ„‡

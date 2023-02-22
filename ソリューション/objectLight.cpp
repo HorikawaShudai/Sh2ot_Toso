@@ -21,9 +21,9 @@ DWORD g_dwNumMatObjectLight[OBJECTLIGHT_NTYPE_MAX] = {};						//マテリアルの数
 
 ObjectLight g_ObjectLight[MAX_OBJECTLIGHT];					//オブジェクトLightの情報
 int EditIndex02;								//エディットモード用の番号
-D3DXVECTOR3 EditPos02;						//エディットモードのオブジェクトの位置
-D3DXVECTOR3 EditRot02;						//エディットモードのオブジェクトの向き
-int EditType02;								//エディットモードのオブジェクトの種類
+D3DXVECTOR3 EditPos02;							//エディットモードのオブジェクトの位置
+D3DXVECTOR3 EditRot02;							//エディットモードのオブジェクトの向き
+int EditType02;									//エディットモードのオブジェクトの種類
 int g_ObjectCount02;							//オブジェクトの数
 
 const char *c_apModelObj02[] =					//モデルデータ読み込み

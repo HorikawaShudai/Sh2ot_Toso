@@ -1073,7 +1073,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\チーム制作\\Sh2ot_Toso\\ソ\リューション\\Data\\TEXTURE\\kak-vyiglyadit-belyiy-naturalnyiy-mramor-1.jpg";
+    "Data\\TEXTURE\\kak-vyiglyadit-belyiy-naturalnyiy-mramor-1.jpg";
    }
   }
   Material {
@@ -1082,7 +1082,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\チーム制作\\Sh2ot_Toso\\ソ\リューション\\Data\\TEXTURE\\istockphoto-923479130-612x612.jpg";
+    "Data\\TEXTURE\\istockphoto-923479130-612x612.jpg";
    }
   }
   Material {
