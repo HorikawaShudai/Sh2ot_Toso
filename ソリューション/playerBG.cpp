@@ -177,15 +177,17 @@ void UpdatePlayerBG(void)
 {
 	PlayNumberSelect nPlayerNumber = GetPlayNumberSelect();
 
-	for (int nCntPlayerBG = 0; nCntPlayerBG < MAX_PLAYREBG; nCntPlayerBG++)
+	if (GetPlayNumberSelect().bPush == false)
 	{
-		g_PlayerBG[nCntPlayerBG].bUse = false;
+		for (int nCntPlayerBG = 0; nCntPlayerBG < MAX_PLAYREBG; nCntPlayerBG++)
+		{
+			g_PlayerBG[nCntPlayerBG].bUse = false;
+		}
+		for (int nCntPlayerBG = 0; nCntPlayerBG <= nPlayerNumber.CurrentSelectNumber; nCntPlayerBG++)
+		{
+			g_PlayerBG[nCntPlayerBG].bUse = true;
+		}
 	}
-	for (int nCntPlayerBG = 0; nCntPlayerBG <= nPlayerNumber.CurrentSelectNumber; nCntPlayerBG++)
-	{
-		g_PlayerBG[nCntPlayerBG].bUse = true;
-	}
-
 
 	for (int nCntPlayerBG = 0; nCntPlayerBG < MAX_PLAYREBG; nCntPlayerBG++)
 	{
@@ -203,22 +205,6 @@ void UpdatePlayerBG(void)
 		if (g_PlayerBG[nCntPlayerBG].move.z <= 0.005f && g_PlayerBG[nCntPlayerBG].move.z >= -0.005f)
 		{
 			g_PlayerBG[nCntPlayerBG].move.z = 0.0f;
-		}
-
-		////プレイヤーの移動入力処理
-		//PlayerBGMoveInput(nCntPlayerBG);
-
-		//ジャンプ処理
-		if (g_PlayerBG[nCntPlayerBG].bJump == false)
-		{//ジャンプをしていないとき
-			if (GetKeyboardTrigger(DIK_SPACE) == true || GetGamepadTrigger(BUTTON_B, 0) == true)
-			{//ジャンプボタン入力時
-				g_PlayerBG[nCntPlayerBG].move.y = PLAYERBG_JUMP;	//ジャンプする
-				g_PlayerBG[nCntPlayerBG].bJump = true;			//ジャンプを使用している状態にする
-			}
-		}
-		else
-		{
 		}
 
 		//位置更新(入力による動き)

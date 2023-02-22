@@ -1,80 +1,59 @@
-<<<<<<< HEAD
-﻿  EscapeTutorial.cpp
-  camera.cpp
-  player.cpp
-=======
-﻿  Billboard.cpp
-  CheckboxUI.cpp
-  Effect.cpp
-  EscapeClearResult.cpp
+﻿  EscapeClearResult.cpp
   EscapeOverResult.cpp
   EscapeRanking.cpp
   EscapeTutorial.cpp
-  Fade.cpp
-  Fog.cpp
-  NumberUI.cpp
-  PlayModeSelect.cpp
   PlayNumberSelect.cpp
-  PolygonBG.cpp
-  RankingNumber.cpp
-  RankingUI.cpp
-  SpotLight.cpp
-  Thunder.cpp
-  VillainRanking.cpp
-  VillainResult.cpp
-  camera.cpp
-camera.cpp(85): warning C4553: '==': 演算子にプログラム上の作用がありません。'=' を意図しましたか?
-  コンパイル中...
-  debugproc.cpp
   edit.cpp
   enemy.cpp
   exit.cpp
-  field.cpp
   game.cpp
-  input.cpp
   key.cpp
-  keyUI.cpp
-  life.cpp
-  light.cpp
-  main.cpp
-  meshcylinder.cpp
-  meshdome.cpp
-  meshfield.cpp
   meshwall.cpp
   object00.cpp
-  objectBG.cpp
-  objectLight.cpp
-  paperBG00.cpp
-  コンパイル中...
-  paperBG01.cpp
-  particle.cpp
   player.cpp
   playerBG.cpp
   result.cpp
-  resultUI.cpp
-  score.cpp
   score_item.cpp
-  sound.cpp
   stage.cpp
-  stamina.cpp
-  time.cpp
   title.cpp
-  tutorialUI.cpp
->>>>>>> a79c572ccabbfd987dc443fb7ada1583c0a94145
   コード生成しています。
-  6 of 482 functions ( 1.2%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    3 functions had inline decision re-evaluated but remain unchanged
+  374 of 492 functions (76.0%) were compiled, the rest were copied from previous compilation.
+    43 functions were new in current compilation
+    58 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
-<<<<<<< HEAD
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
-=======
-<<<<<<< HEAD
+CheckboxUI.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+debugproc.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+Effect.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+Fade.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+field.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+Fog.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+input.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+keyUI.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+life.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+light.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+meshcylinder.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+meshdome.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+meshfield.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+NumberUI.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+objectLight.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+paperBG00.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+paperBG01.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+particle.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+PlayModeSelect.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+PolygonBG.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+RankingNumber.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+RankingUI.obj : warning LNK4099: PDB 'vc140.pdb' が 'RankingUI.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+resultUI.obj : warning LNK4099: PDB 'vc140.pdb' が 'resultUI.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+score.obj : warning LNK4099: PDB 'vc140.pdb' が 'score.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+sound.obj : warning LNK4099: PDB 'vc140.pdb' が 'sound.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+SpotLight.obj : warning LNK4099: PDB 'vc140.pdb' が 'SpotLight.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+stamina.obj : warning LNK4099: PDB 'vc140.pdb' が 'stamina.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+Thunder.obj : warning LNK4099: PDB 'vc140.pdb' が 'Thunder.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+time.obj : warning LNK4099: PDB 'vc140.pdb' が 'time.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+tutorial.obj : warning LNK4099: PDB 'vc140.pdb' が 'tutorial.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+tutorialUI.obj : warning LNK4099: PDB 'vc140.pdb' が 'tutorialUI.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+VillainRanking.obj : warning LNK4099: PDB 'vc140.pdb' が 'VillainRanking.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+VillainResult.obj : warning LNK4099: PDB 'vc140.pdb' が 'VillainResult.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+VillainTutorial.obj : warning LNK4099: PDB 'vc140.pdb' が 'VillainTutorial.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
-=======
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー\Sh2ot_Toso\ソリューション\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
->>>>>>> 3e41f9ccf89a93c1f25d7603f0edaf881403d16f
->>>>>>> a79c572ccabbfd987dc443fb7ada1583c0a94145

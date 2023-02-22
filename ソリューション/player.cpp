@@ -36,7 +36,7 @@
 #define PLAYER_JUMP				(12.0f)			//プレイヤーのジャンプ力
 #define PLAYER_LIFE				(3)				//プレイヤーの初期ライフ
 #define PLAYER_COLLISIONSIZE	(15.0f)			//プレイヤーの当たり判定の大きさ
-#define PLAYER_LIGHT			(1000.0f)		//プレイヤーの当たり判定の大きさ
+#define PLAYER_LIGHT			(350.0f)		//プレイヤーの当たり判定の大きさ
 
 //プロトタイプ
 void UpdatePlayer0(void);
@@ -59,8 +59,6 @@ int g_Rand_PolygonColor_R;
 int g_Rand_PolygonColor_G;
 int g_Rand_PolygonColor_B;
 int g_Rand_PolygonColor_A;
-
-int nStelthCnt;									//チュートリアル用ステルス状態を数える処理
 
 //====================================================================
 //プレイヤーの初期化処理
@@ -106,7 +104,10 @@ void InitPlayer(void)
 		g_bPlayerOps = false;
 		g_GameEnd = false;
 		bMove = false;
-		nStelthCnt = 0;
+		g_aPlayer[nCntPlayer].nStelthCnt = 0;
+		g_aPlayer[nCntPlayer].nVibCnt = 0;
+		g_aPlayer[nCntPlayer].KeyHelpUI = false;
+		g_aPlayer[nCntPlayer].ExitHelpUI = false;
 
 		g_Rand_PolygonColor_R = 0;
 		g_Rand_PolygonColor_G = 0;
@@ -194,6 +195,7 @@ void UpdatePlayer(void)
 //====================================================================
 void UpdatePlayer0(void)
 {
+	//チュートリアルの項目情報を与える処理
 	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
 
 	//ポインタ情報の取得
@@ -317,6 +319,16 @@ void UpdatePlayer0(void)
 		SetLight(g_aPlayer[nSelectPlayer].LightIdx00, D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(g_aPlayer[nSelectPlayer].pos.x, g_aPlayer[nSelectPlayer].pos.y + 50.0f, g_aPlayer[nSelectPlayer].pos.z), D3DXVECTOR3(sinf(Getrot(CurrentCamera).y), sinf(Getrot(CurrentCamera).x), cosf(Getrot(CurrentCamera).y)), PLAYER_LIGHT,1.0f);
 		SetLight(g_aPlayer[nSelectPlayer].LightIdx01, D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(g_aPlayer[nSelectPlayer].pos.x, g_aPlayer[nSelectPlayer].pos.y + 50.0f, g_aPlayer[nSelectPlayer].pos.z), D3DXVECTOR3(sinf(Getrot(CurrentCamera).y), sinf(Getrot(CurrentCamera).x), cosf(Getrot(CurrentCamera).y)), PLAYER_LIGHT,1.0f);
 
+		//ヘルプUIの表示
+		if (g_aPlayer[nSelectPlayer].bGetKey == false)
+		{
+			CollisionKeyHelpUI(&g_aPlayer[nSelectPlayer].pos, 30.0f);
+		}
+		if (g_aPlayer[nSelectPlayer].bGetKey == true)
+		{
+			CollisionExitHelpUI(&g_aPlayer[nSelectPlayer].pos, 30.0f);
+		}
+
 		//鍵の入手処理
 		if (g_aPlayer[nSelectPlayer].bGetKey == false)
 		{//プレイヤーが鍵を持っていない場合
@@ -334,9 +346,6 @@ void UpdatePlayer0(void)
 					{
 						//チェックをつける処理
 						SetCheckUI(nSelectPlayer, true);
-
-						//チュートリアルモードを脱出に
-						DoEscapeTutorial(MODE_ESCAPE);
 					}
 
 					if (do_Tutorial != MODE_GET_KEY)
@@ -363,9 +372,6 @@ void UpdatePlayer0(void)
 					{
 						//チェックをつける
 						SetCheckUI(nSelectPlayer, true);
-
-						//チュートリアルモードを終わらせる
-						DoEscapeTutorial(MODE_END);
 					}
 
 					if (do_Tutorial != MODE_ESCAPE)
@@ -478,10 +484,7 @@ void PlayerMoveInput(int nCnt)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(true);
-
-					//チュートリアル用紙をカメラ移動に
-					DoEscapeTutorial(MODE_CAM_MOVE);
+					MoveCheck(nCnt, true);
 				}
 			}
 			if (GetGamepad_Stick_Left(0).y < 0.0f)
@@ -495,10 +498,7 @@ void PlayerMoveInput(int nCnt)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(true);
-
-					//チュートリアル用紙をカメラ移動に
-					DoEscapeTutorial(MODE_CAM_MOVE);
+					MoveCheck(nCnt, true);
 				}
 			}
 			if (GetGamepad_Stick_Left(0).x > 0.0f)
@@ -513,10 +513,7 @@ void PlayerMoveInput(int nCnt)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(true);
-
-					//チュートリアル用紙をカメラ移動に
-					DoEscapeTutorial(MODE_CAM_MOVE);
+					MoveCheck(nCnt, true);
 				}
 			}
 			if (GetGamepad_Stick_Left(0).x < 0.0f)
@@ -531,10 +528,7 @@ void PlayerMoveInput(int nCnt)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(true);
-
-					//チュートリアル用紙をカメラ移動に
-					DoEscapeTutorial(MODE_CAM_MOVE);
+					MoveCheck(nCnt, true);
 				}
 			}
 		}
@@ -567,8 +561,6 @@ void PlayerMoveInput(int nCnt)
 				if (do_Tutorial == MODE_DASH)
 				{
 					SetCheckUI(nCnt, true);
-
-					DoEscapeTutorial(MODE_VIBE);
 				}
 			}
 		}
@@ -586,17 +578,14 @@ void PlayerMoveInput(int nCnt)
 			//チュートリアルステルス状態の時の処理
 			if (do_Tutorial == MODE_STELTH && g_aPlayer[nCnt].MoveState == PLAYER_MOVESTATE_STEALTH)
 			{
-					if (g_aPlayer[nCnt].move != D3DXVECTOR3(0.0f, 0.0f, 0.0f) && nStelthCnt > 299)
+					if (g_aPlayer[nCnt].move != D3DXVECTOR3(0.0f, 0.0f, 0.0f) && g_aPlayer[nCnt].nStelthCnt > 299)
 					{
 						{
 							//チェックをつける処理
 							SetCheckUI(nCnt, true);
-
-							//チュートリアル用紙を鍵の取得に
-							DoEscapeTutorial(MODE_GET_KEY);
 						}
 					}
-					nStelthCnt++;
+					g_aPlayer[nCnt].nStelthCnt++;
 			}
 
 			else if (do_Tutorial != MODE_STELTH)
@@ -739,42 +728,6 @@ void PlayerRotUpdate(int nCnt)
 	if (GetKeyboardPress(DIK_W) == true || GetKeyboardPress(DIK_A) == true || GetKeyboardPress(DIK_S) == true || GetKeyboardPress(DIK_D) == true || GetGamepad_Stick_Left(0).y != 0.0f || GetGamepad_Stick_Left(0).x != 0.0f)
 	{
 		g_aPlayer[nCnt].rot.y = fRotMove;
-	}
-}
-
-//====================================================================
-//プレイヤーのバイブレーションの更新処理
-//====================================================================
-void PlayerVibrtionUpdate(int nCnt)
-{
-	if (g_aPlayer[nCnt].bVibrtion == true)
-	{
-		g_aPlayer[nCnt].VibrtionTrueCount++;
-
-		if (g_aPlayer[nCnt].VibrtionTrueCount >= g_aPlayer[nCnt].VibrtionTime)
-		{
-			g_aPlayer[nCnt].bVibrtion = false;
-			g_aPlayer[nCnt].VibrtionTrueCount = 0;
-			GetGamepad_Vibrtion_false(nCnt);
-		}
-	}
-	else if (g_aPlayer[nCnt].VibrtionFalseCount > 0)
-	{
-		g_aPlayer[nCnt].VibrtionFalseCount--;
-	}
-}
-
-//====================================================================
-//プレイヤーのバイブレーションの設定処理
-//====================================================================
-void PlayerSetVibrtion(int nCnt, int nTrueCounter, int nFalseCounter, int nLeftPower, int RightPoewr)
-{
-	if (g_aPlayer[nCnt].bVibrtion == false)
-	{
-		g_aPlayer[nCnt].bVibrtion = true;
-		g_aPlayer[nCnt].VibrtionTime = nTrueCounter;
-		g_aPlayer[nCnt].VibrtionFalseCount = nFalseCounter;
-		GetGamepad_Vibrtion(nCnt, nLeftPower, RightPoewr);
 	}
 }
 
@@ -1158,6 +1111,41 @@ void ResPlayerrot(int nCnt)
 	}
 }
 
+//====================================================================
+//プレイヤーのバイブレーションの更新処理
+//====================================================================
+void PlayerVibrtionUpdate(int nCnt)
+{
+	if (g_aPlayer[nCnt].bVibrtion == true)
+	{
+		g_aPlayer[nCnt].VibrtionTrueCount++;
+
+		if (g_aPlayer[nCnt].VibrtionTrueCount >= g_aPlayer[nCnt].VibrtionTime)
+		{
+			g_aPlayer[nCnt].bVibrtion = false;
+			g_aPlayer[nCnt].VibrtionTrueCount = 0;
+			GetGamepad_Vibrtion_false(nCnt);
+		}
+	}
+	else if (g_aPlayer[nCnt].VibrtionFalseCount > 0)
+	{
+		g_aPlayer[nCnt].VibrtionFalseCount--;
+	}
+}
+
+//====================================================================
+//プレイヤーのバイブレーションの設定処理
+//====================================================================
+void PlayerSetVibrtion(int nCnt, int nTrueCounter, int nFalseCounter, int nLeftPower, int RightPoewr)
+{
+	if (g_aPlayer[nCnt].bVibrtion == false)
+	{
+		g_aPlayer[nCnt].bVibrtion = true;
+		g_aPlayer[nCnt].VibrtionTime = nTrueCounter;
+		g_aPlayer[nCnt].VibrtionFalseCount = nFalseCounter;
+		GetGamepad_Vibrtion(nCnt, nLeftPower, RightPoewr);
+	}
+}
 
 //====================================================================
 //プレイヤーと敵との距離判定
@@ -1202,9 +1190,11 @@ void PlayerDistance(int nCnt)
 
 					if (do_Tutorial == MODE_VIBE)
 					{
-						SetCheckUI(nCnt, true);
-
-						DoEscapeTutorial(MODE_STELTH);
+						g_aPlayer[nCnt].nVibCnt++;
+						if (g_aPlayer[nCnt].nVibCnt > 5)
+						{
+							SetCheckUI(nCnt, true);
+						}
 					}
 
 					else if (do_Tutorial != MODE_VIBE)

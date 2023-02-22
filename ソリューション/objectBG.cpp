@@ -31,9 +31,18 @@ const char *c_apModelObj01[] =					//モデルデータ読み込み
 	"Data\\MODEL\\rock.x",
 	"Data\\MODEL\\Labo.x",
 	"Data\\MODEL\\title_field.x",
-	"Data\\MODEL\\door_1.x",
-	"Data\\MODEL\\door_2.x",
-	"Data\\MODEL\\door_huti.x",
+	"Data\\MODEL\\dropdust.x",					//ホコリ
+	"Data\\MODEL\\storns.x",					//石
+	"Data\\MODEL\\fan.x",			//換気扇b
+	"Data\\MODEL\\corkboard.x",		//コルクボードb
+	"Data\\MODEL\\art.x",			//壁掛けアートb
+	"Data\\MODEL\\document.x",		//資料単体b
+	"Data\\MODEL\\lightbutton.x",	//ライトのスイッチb
+	"Data\\MODEL\\paper.x",			//資料単体b
+	"Data\\MODEL\\vent.x",			//通気口b
+	"Data\\MODEL\\window.x",		//窓b
+	"Data\\MODEL\\screen.x",		//プロジェクターのうつされるほうb
+	"Data\\MODEL\\watch.x",			//時計b
 };
 
 //====================================================================

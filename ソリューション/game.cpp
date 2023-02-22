@@ -91,7 +91,7 @@ void InitGame()
 	InitLife();
 
 
-	//SetEnemy(D3DXVECTOR3(300.0f, 0.0f, 500.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	//SetEnemy(D3DXVECTOR3(-900.0f, 0.0f, 850.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetEnemy(D3DXVECTOR3(-1400.0f, 0.0f, -500.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	//SetEnemy(D3DXVECTOR3(-1000.0f, 0.0f, -500.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
@@ -121,7 +121,7 @@ void InitGame()
 	InitFog();
 
 	//ÉtÉHÉOÇÃê›íË
-	SetFog(D3DFOG_LINEAR, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.5f), 10.0f, 1000.0f, 0.1f);
+	SetFog(D3DFOG_LINEAR, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.2f), 10.0f, 1000.0f, 0.1f);
 	
 	SetKey(D3DXVECTOR3(-1000.0f, 0.0f, -600.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetKey(D3DXVECTOR3(-2550.0f, 0.0f, -150.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
@@ -216,6 +216,12 @@ void UpdateGame()
 			g_bBG_Edit = 0;
 		}
 	}
+
+	if (GetKeyboardTrigger(DIK_R) == true)
+	{
+		SetFade(MODE_GAME);
+	}
+
 #endif
 
 	if (g_bPause == false && g_bEdit == false)

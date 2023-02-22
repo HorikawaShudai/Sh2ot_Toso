@@ -17,6 +17,7 @@
 #include "player.h"
 #include "meshwall.h"
 #include "debugproc.h"
+#include "ActionHelpUI.h"
 
 const char *c_apExit[] =					//モデルデータ読み込み
 {
@@ -34,7 +35,7 @@ void CollisionRotExit(int nCnt);
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureExit[64][EXIT_TYPE_MAX] = {};		//テクスチャのポインタ
-LPD3DXMESH g_pMeshExit[EXIT_TYPE_MAX] = {};					//メッシュ(頂点情報)へのポインタ
+LPD3DXMESH g_pMeshExit[EXIT_TYPE_MAX] = {};						//メッシュ(頂点情報)へのポインタ
 LPD3DXBUFFER g_pBuffMatExit[EXIT_TYPE_MAX] = {};				//マテリアルへのポインタ
 DWORD g_dwNumMatExit[EXIT_TYPE_MAX] = {};						//マテリアルの数
 
@@ -246,29 +247,6 @@ void DoorOpen(void)
 				if (g_aExit[nCntExit].parts[nCntExit1].nType != EXIT_TYPE_BIGFRAME)
 				{//出口の種類がフレーム以外の場合
 
-					/*float frotRDiff;
-					float frotLDiff;*/
-
-					//目的の角度との差を求める
-					/*frotLDiff = (g_aExit[nCntExit].parts[3].rotSave.y - 1.57f) - g_aExit[nCntExit].parts[3].rot.y;
-
-					frotRDiff = (g_aExit[nCntExit].parts[4].rotSave.y - 1.57f) - g_aExit[nCntExit].parts[4].rot.y;*/
-
-					//一周した時の向きの補正
-					/*if (g_aExit[nCntExit].parts[4].rot.y > D3DX_PI)
-					{
-						g_aExit[nCntExit].parts[4].rot.y -= D3DX_PI * 2.0f;
-					}
-					else if (g_aExit[nCntExit].parts[4].rot.y < -D3DX_PI)
-					{
-						g_aExit[nCntExit].parts[4].rot.y += D3DX_PI * 2.0f;
-					}*/
-
-					//目的の角度との差を縮める
-					//g_aExit[nCntExit].parts[3].rot.y += frotLDiff * 0.007f;
-
-					//g_aExit[nCntExit].parts[4].rot.y -= frotRDiff * 0.007f;
-
 					if (g_aExit[nCntExit].parts[4].rotSave.y - 1.57f <= g_aExit[nCntExit].parts[4].rot.y)
 					{
 						g_aExit[nCntExit].parts[4].rot.y -= 0.007f;
@@ -278,7 +256,6 @@ void DoorOpen(void)
 					{
 						g_aExit[nCntExit].parts[3].rot.y += 0.007f;
 					}
-					
 				}
 
 				//出口から出れるまでのカウント
@@ -315,7 +292,7 @@ void ExsitClossLine(int nCntExit)
 			D3DXVECTOR3 pos0, pos1;			//場所
 			D3DXVECTOR3 Cross;				//交点の場所
 
-											//場所の計算
+			//場所の計算
 			pos0 = MeshWall.pos + D3DXVECTOR3(cosf(MeshWall.rot.y) + 50.0f, 0.0f, sinf(MeshWall.rot.y));
 
 			pos1 = MeshWall.pos + D3DXVECTOR3(cosf(MeshWall.rot.y) - 50.0f, 0.0f, sinf(MeshWall.rot.y));
@@ -367,6 +344,10 @@ void SetExit(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nType, int nNumExit)
 			g_aExit[nNumExit].parts[nCntExit1].rot = rot;
 			g_aExit[nNumExit].parts[nCntExit1].rotSave = rot;
 			g_aExit[nNumExit].parts[nCntExit1].nType = nType;
+			if (g_aExit[nNumExit].parts[nCntExit1].nType == 1)
+			{
+				g_aExit[nNumExit].PseudoCenter = D3DXVECTOR3(g_aExit[nNumExit].parts[nCntExit1].pos.x, g_aExit[nNumExit].parts[nCntExit1].pos.y - 100.0f, g_aExit[nNumExit].parts[nCntExit1].pos.z);
+			}
 
 			g_aExit[nNumExit].parts[nCntExit1].bUse = true;
 
@@ -415,7 +396,7 @@ void SetExit(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nType, int nNumExit)
 
 				pVtxBuff += dwSizeFVF;	//頂点フォーマットのサイズ分ポインタを進める
 			}
-			
+
 			//頂点バッファをアンロック
 			g_pMeshExit[nType]->UnlockVertexBuffer();
 
@@ -442,12 +423,12 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 		{
 			if (g_aExit[nCntExit].parts[nCntExit1].bUse == true && g_aExit[nCntExit].parts[nCntExit1].bExitOK == false)
 			{
-				if (pPos->x >= g_aExit[nCntExit].parts[nCntExit1].pos.x - Size
-					&& pPos->x <= g_aExit[nCntExit].parts[nCntExit1].pos.x + Size
-					&& pPos->y >= g_aExit[nCntExit].parts[nCntExit1].pos.y - Size
-					&& pPos->y <= g_aExit[nCntExit].parts[nCntExit1].pos.y + Size
-					&& pPos->z >= g_aExit[nCntExit].parts[nCntExit1].pos.z - Size
-					&& pPos->z <= g_aExit[nCntExit].parts[nCntExit1].pos.z + Size)
+				if (   pPos->x >= g_aExit[nCntExit].PseudoCenter.x - Size
+					&& pPos->x <= g_aExit[nCntExit].PseudoCenter.x + Size
+					&& pPos->y >= g_aExit[nCntExit].PseudoCenter.y - Size
+					&& pPos->y <= g_aExit[nCntExit].PseudoCenter.y + Size
+					&& pPos->z >= g_aExit[nCntExit].PseudoCenter.z - Size
+					&& pPos->z <= g_aExit[nCntExit].PseudoCenter.z + Size)
 
 				{//アイテムとプレイヤーが当たった(X軸)
 					bHit = true;
@@ -468,6 +449,50 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 	}
 
 	return bHit;
+}
+
+//====================================================================
+//プレイヤーとの当たり判定処理
+//====================================================================
+void CollisionExitHelpUI(D3DXVECTOR3 *pPos, float Size)
+{
+	for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
+	{
+		for (int nCntExit1 = 0; nCntExit1 < MAX_EXIT; nCntExit1++)
+		{
+			if (g_aExit[nCntExit].parts[nCntExit1].bUse == true && g_aExit[nCntExit].parts[nCntExit1].bExitOK == false && g_aExit[nCntExit].bHelpUI == false)
+			{
+				if (pPos->x >= g_aExit[nCntExit].PseudoCenter.x - Size
+					&& pPos->x <= g_aExit[nCntExit].PseudoCenter.x + Size
+					&& pPos->y >= g_aExit[nCntExit].PseudoCenter.y - Size
+					&& pPos->y <= g_aExit[nCntExit].PseudoCenter.y + Size
+					&& pPos->z >= g_aExit[nCntExit].PseudoCenter.z - Size
+					&& pPos->z <= g_aExit[nCntExit].PseudoCenter.z + Size)
+
+				{//アイテムとプレイヤーが当たった(X軸)
+					g_aExit[nCntExit].bHelpUI = true;
+					g_aExit[nCntExit].IndexUI = SetActionHelpUI(D3DXVECTOR3(g_aExit[nCntExit].PseudoCenter.x, g_aExit[nCntExit].PseudoCenter.y + 20.0f, g_aExit[nCntExit].PseudoCenter.z), ACTIONHELPUI_DOOR);
+					break;
+				}
+			}
+
+			if (g_aExit[nCntExit].parts[nCntExit1].bUse == true && g_aExit[nCntExit].parts[nCntExit1].bExitOK == false && g_aExit[nCntExit].bHelpUI == true)
+			{
+				if (pPos->x <= g_aExit[nCntExit].PseudoCenter.x - Size
+					|| pPos->x >= g_aExit[nCntExit].PseudoCenter.x + Size
+					|| pPos->y <= g_aExit[nCntExit].PseudoCenter.y - Size
+					|| pPos->y >= g_aExit[nCntExit].PseudoCenter.y + Size
+					|| pPos->z <= g_aExit[nCntExit].PseudoCenter.z - Size
+					|| pPos->z >= g_aExit[nCntExit].PseudoCenter.z + Size)
+
+				{//アイテムとプレイヤーが当たった(X軸)
+					g_aExit[nCntExit].bHelpUI = false;
+					FalseActionHelpUI(g_aExit[nCntExit].IndexUI);
+					break;
+				}
+			}
+		}
+	}
 }
 
 //====================================================================

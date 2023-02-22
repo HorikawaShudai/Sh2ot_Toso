@@ -29,13 +29,15 @@
 #include "tutorialUI.h"
 #include "CheckboxUI.h"
 #include "EscapeTutorial.h"
+#include "ActionHelpUI.h"
+#include "player.h"
 
 //グローバル変数宣言
 TUTORIAL_STATE g_TutorialState;
 int g_Counter;
 TUTORIAL_MODE g_Tutorial;
-bool bpMove;
-bool bpCamMove;
+bool bpMove[NUM_PLAYER];
+bool bpCamMove[NUM_PLAYER];
 
 //====================================================================
 //チュートリアル画面の初期化処理
@@ -45,8 +47,18 @@ void InitEscapeTutorial()
 	g_TutorialState = TUTORIAL_STATE_STANDBY;
 	g_Tutorial = MODE_MOVE;
 	g_Counter = 0;
-	bool bMove = false;
-	bool bCamMove = false;
+
+	for (int nCntPlayer = 0; nCntPlayer < NUM_PLAYER; nCntPlayer++)
+	{
+		bpMove[nCntPlayer] = true;
+		bpCamMove[nCntPlayer] = true;
+	}
+
+	for (int nCntPlayer = 0; nCntPlayer < GetPlayNumberSelect().CurrentSelectNumber; nCntPlayer++)
+	{
+		bpMove[nCntPlayer] = false;
+		bpCamMove[nCntPlayer] = false;
+	}
 
 	DWORD time = timeGetTime();
 	srand((unsigned int)time);
@@ -89,7 +101,10 @@ void InitEscapeTutorial()
 	//鍵の初期化処理
 	InitKey();
 
-	SetKey(D3DXVECTOR3(-1000.0f, 0.0f, -50.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), KEY_TYPE_ITEM);
+	SetKey(D3DXVECTOR3(-1000.0f, 0.0f, -50.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), KEY_TYPE_ITEM);
+	SetKey(D3DXVECTOR3(-950.0f, 0.0f, -50.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), KEY_TYPE_ITEM);
+	SetKey(D3DXVECTOR3(-1050.0f, 0.0f, -50.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), KEY_TYPE_ITEM);
+	SetKey(D3DXVECTOR3(-1100.0f, 0.0f, -50.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), KEY_TYPE_ITEM);
 
 	//鍵UIの初期化処理
 	InitKeyUI();
@@ -100,12 +115,14 @@ void InitEscapeTutorial()
 	//出口の初期化処理
 	InitExit();
 
-	SetExit(D3DXVECTOR3(-1000.0f,0.0f,0.8f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), EXIT_TYPE_BIGFRAME,0);
-	SetExit(D3DXVECTOR3(-1070.0f, 0.0f, 0.8f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), EXIT_TYPE_BIGDOOR_R,0);
-	SetExit(D3DXVECTOR3(-935.0f, 0.0f, 0.8f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), EXIT_TYPE_BIGDOOR_L,0);
+	SetExit(D3DXVECTOR3(-1000.0f,0.0f,0.8f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0,0);
+	SetExit(D3DXVECTOR3(-1070.0f, 0.0f, 0.8f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), 0,0);
+	SetExit(D3DXVECTOR3(-935.0f, 0.0f, 0.8f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), 0,0);
 
 	//スコアアイテムの初期化
 	InitItem();
+
+	InitActionHelpUI();
 
 	InitPolygonBG();
 
@@ -182,6 +199,8 @@ void UninitEscapeTutorial()
 	//出口の終了処理
 	UninitExit();
 
+	UninitActionHelpUI();
+
 	UninitTime();
 
 	UninitPaperBG00();
@@ -237,7 +256,7 @@ void UpdateEscapeTutorial()
 
 	switch (g_TutorialState)
 	{
-	case TUTORIAL_STATE_STANDBY:
+	case TUTORIAL_STATE_STANDBY:	//スタンバイ状態
 		SetPaperBG00(true);
 		SetTutorialUI(true,0);
 		for (int nCntTutorial = 1; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber + 1; nCntTutorial++)
@@ -252,16 +271,21 @@ void UpdateEscapeTutorial()
 
 		g_Counter = 0;
 		break;
-	case TUTORIAL_STATE_WAIT:
+	case TUTORIAL_STATE_WAIT:	//待機状態
 		SetPaperBG00(true);
 		SetTutorialUI(true,0);
 		g_Counter++;
 		if (g_Counter > 100)
 		{
+			//チェックボックスを人数分オフにする
+			for (int nCntTutorial = 0; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber; nCntTutorial++)
+			{
+				SetCheckUI(nCntTutorial, false);
+			}
 			g_TutorialState = TUTORIAL_STATE_PLAY;
 		}
 		break;
-	case TUTORIAL_STATE_PLAY:
+	case TUTORIAL_STATE_PLAY:	//プレイ状態
 		SetPaperBG00(false);
 		SetTutorialUI(false,0);
 
@@ -298,31 +322,32 @@ void UpdateEscapeTutorial()
 	{
 		//プレイヤーの更新処理
 		UpdatePlayer();
+
+		//スタミナの更新処理
+		UpdateStamina();
+
+		//ライフの更新処理
+		UpdateLife();
+
+		//スコアの更新処理
+		UpdateScore();
+
+		//スコアアイテムの更新処理
+		UpdateItem();
+
+		//鍵の更新処理
+		UpdateKey();
+
+		//鍵UIの更新処理
+		UpdateKeyUI();
+
+		//エフェクトの更新処理
+		UpdateEffect();
+
+		//出口の更新処理
+		UpdateExit();
 	}
-
-	//スタミナの更新処理
-	UpdateStamina();
-
-	//ライフの更新処理
-	UpdateLife();
-
-	//スコアの更新処理
-	UpdateScore();
-
-	//スコアアイテムの更新処理
-	UpdateItem();
-
-	//鍵の更新処理
-	UpdateKey();
-
-	//鍵UIの更新処理
-	UpdateKeyUI();
-
-	//エフェクトの更新処理
-	UpdateEffect();
-
-	//出口の更新処理
-	UpdateExit();
+	UpdateActionHelpUI();
 
 	UpdateTime();
 
@@ -338,11 +363,6 @@ void UpdateEscapeTutorial()
 	switch (g_Tutorial)
 	{
 	case MODE_MOVE:
-
-		break;
-
-	case MODE_CAM_MOVE:
-
 		break;
 
 	case MODE_DASH:
@@ -416,11 +436,14 @@ void DrawEscapeTutorial()
 		//プレイヤーの描画処理
 		DrawPlayer();
 
-		/*if (pPlayer->bAppear == true)
-		{*/
+		if (pPlayer->bAppear == true)
+		{
 			//敵の描画処理
 			DrawEnemy();
-		//}
+		}
+
+		//ヘルプUIの描画処理
+		DrawActionHelpUI();
 
 		//スタミナの描画処理
 		DrawStamina();
@@ -442,8 +465,6 @@ void DrawEscapeTutorial()
 		//鍵UIの描画処理
 		DrawKeyUI();
 
-		DrawCheckboxUI();
-
 		//エフェクトの描画処理
 		DrawEffect();
 
@@ -460,6 +481,9 @@ void DrawEscapeTutorial()
 	DrawPaperBG01();
 
 	DrawTutorialUI();
+
+	//チェックボックスの描画
+	DrawCheckboxUI();
 }
 
 //====================================================================
@@ -497,28 +521,25 @@ TUTORIAL_MODE GetDoEscapeTutorial(void)
 //==============================
 //移動したかどうかのチェック用
 //==============================
-void MoveCheck(bool check)
+void MoveCheck(int nCnt,bool check)
 {
 	//プレイヤーが動いたことに
-	bpMove = check;
+	bpMove[nCnt] = check;
 }
 
 //==================================
 //カメラが動いたかどうかのチェック
 //==================================
-void CamMoveCheck(bool camcheck)
+void CamMoveCheck(int nCnt,bool camcheck)
 {
 	//カメラが動いたことに
-	bpCamMove = camcheck;
+	bpCamMove[nCnt] = camcheck;
 
 	//プレイヤーとカメラが動いたときに
-	if (bpMove == true && bpCamMove == true)
+	if (bpMove[nCnt] == true && bpCamMove[nCnt] == true)
 	{
 		//チェックをつける処理
-		SetCheckUI(0, true);
-
-		//チュートリアルモードをダッシュにする
-		DoEscapeTutorial(MODE_DASH);
+		SetCheckUI(nCnt, true);
 	}
 }
 

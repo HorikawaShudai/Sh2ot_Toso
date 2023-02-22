@@ -29,6 +29,8 @@ typedef struct
 	D3DXVECTOR3 vtxMax;							//モデルの最大
 	int nType;									//モデルの種類
 	bool bUse;									//モデルが使用されているかどうか
+	bool bHelpUI;								//ヘルプUIが使われているかどうか
+	int IndexUI;								//ヘルプUIの使用番号
 	int nIdxModelParent; //親子設定
 }KEY;
 
@@ -39,4 +41,5 @@ void UpdateKey(void);
 void DrawKey(void);
 void SetKey(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType);
 bool CollisionKey(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size, int nPlayer);
+void CollisionKeyHelpUI(D3DXVECTOR3 *pPos, float Size);
 #endif

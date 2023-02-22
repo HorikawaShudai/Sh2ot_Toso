@@ -6,7 +6,7 @@
 #include "PlayNumberSelect.h"
 
 //マクロ定義
-#define NUM_SSUI					(6)			//TUTORIALUIの種類数
+#define NUM_SSUI					(8)			//TUTORIALUIの種類数
 #define MAX_SSUI					(5)			//TUTORIALUIの最大使用数
 
 #define POS_TUTORIALUI_ALL_X		(640.0f)	//「」のX座標の位置
@@ -49,8 +49,8 @@
 #define SIZE_TUTORIALUI_34_04_X		(150.0f)	//「」の幅
 #define SIZE_TUTORIALUI_34_04_Y		(25.0f)		//「」の高さ
 
-#define UP_TUTORIALUI				(100.0f)	//紙を取り出すときの上昇度
-#define UP_TUTORIALUI_COUNTER_MAX	(100)		//紙を取り出す速さのカウンター
+#define UP_PAPERBG01				(100.0f)	//紙を取り出すときの上昇度
+#define UP_PAPERBG01_COUNTER_MAX	(100)		//紙を取り出す速さのカウンター
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_apTextureTutorialUI[NUM_SSUI] = {};	//テクスチャへのポインタ
@@ -85,16 +85,24 @@ void InitTutorialUI(void)
 		&g_apTextureTutorialUI[2]);
 
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\stealth.png",
+		"data\\TEXTURE\\TUTORIAL\\vibe.png",
 		&g_apTextureTutorialUI[3]);
 
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\tutorial_key.png",
+		"data\\TEXTURE\\TUTORIAL\\stealth.png",
 		&g_apTextureTutorialUI[4]);
 
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\open_doar.png",
+		"data\\TEXTURE\\TUTORIAL\\tutorial_key.png",
 		&g_apTextureTutorialUI[5]);
+
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\TUTORIAL\\open_doar.png",
+		&g_apTextureTutorialUI[6]);
+
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\TUTORIAL\\tutorial_end.png",
+		&g_apTextureTutorialUI[7]);
 
 	//UIの表示設定
 	bUseTutorialUI[0] = true;
@@ -282,7 +290,7 @@ void UpdateTutorialUI(void)
 	{
 	case TUTORIAL_STATE_STANDBY:
 		//紙を取り出すときのカウンターを増やす
-		if (TutorialUI_TrueCounter < UP_TUTORIALUI_COUNTER_MAX)
+		if (TutorialUI_TrueCounter < UP_PAPERBG01_COUNTER_MAX)
 		{
 			TutorialUI_TrueCounter++;
 		}
@@ -305,19 +313,19 @@ void UpdateTutorialUI(void)
 
 	for (int nCntBG = 0; nCntBG < NUM_SSUI; nCntBG++)
 	{
-		if (nCntBG == 0 && TutorialUI_TrueCounter < UP_TUTORIALUI_COUNTER_MAX)
+		if (nCntBG == 0 && TutorialUI_TrueCounter < UP_PAPERBG01_COUNTER_MAX)
 		{
 			//頂点座標の設定
-			pVtx[0].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X - SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y + (UP_TUTORIALUI * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter)) - SIZE_TUTORIALUI_ALL_Y, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X + SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y + (UP_TUTORIALUI * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter)) - SIZE_TUTORIALUI_ALL_Y, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X - SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y + (UP_TUTORIALUI * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter)) + SIZE_TUTORIALUI_ALL_Y, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X + SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y + (UP_TUTORIALUI * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter)) + SIZE_TUTORIALUI_ALL_Y, 0.0f);
+			pVtx[0].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X - SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y + (UP_PAPERBG01 * ((float)UP_PAPERBG01_COUNTER_MAX / (float)TutorialUI_TrueCounter)) - SIZE_TUTORIALUI_ALL_Y, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X + SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y + (UP_PAPERBG01 * ((float)UP_PAPERBG01_COUNTER_MAX / (float)TutorialUI_TrueCounter)) - SIZE_TUTORIALUI_ALL_Y, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X - SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y + (UP_PAPERBG01 * ((float)UP_PAPERBG01_COUNTER_MAX / (float)TutorialUI_TrueCounter)) + SIZE_TUTORIALUI_ALL_Y, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(POS_TUTORIALUI_ALL_X + SIZE_TUTORIALUI_ALL_X, POS_TUTORIALUI_ALL_Y + (UP_PAPERBG01 * ((float)UP_PAPERBG01_COUNTER_MAX / (float)TutorialUI_TrueCounter)) + SIZE_TUTORIALUI_ALL_Y, 0.0f);
 
 			//頂点カラーの設定
-			pVtx[0].col = D3DXCOLOR(0.9f, 0.9f, 0.9f, 1.0f * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter));
-			pVtx[1].col = D3DXCOLOR(0.9f, 0.9f, 0.9f, 1.0f * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter));
-			pVtx[2].col = D3DXCOLOR(0.9f, 0.9f, 0.9f, 1.0f * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter));
-			pVtx[3].col = D3DXCOLOR(0.9f, 0.9f, 0.9f, 1.0f * ((float)UP_TUTORIALUI_COUNTER_MAX / (float)TutorialUI_TrueCounter));
+			pVtx[0].col = D3DXCOLOR(0.9f, 0.9f, 0.9f, 1.0f * ((float)UP_PAPERBG01_COUNTER_MAX / (float)TutorialUI_TrueCounter));
+			pVtx[1].col = D3DXCOLOR(0.9f, 0.9f, 0.9f, 1.0f * ((float)UP_PAPERBG01_COUNTER_MAX / (float)TutorialUI_TrueCounter));
+			pVtx[2].col = D3DXCOLOR(0.9f, 0.9f, 0.9f, 1.0f * ((float)UP_PAPERBG01_COUNTER_MAX / (float)TutorialUI_TrueCounter));
+			pVtx[3].col = D3DXCOLOR(0.9f, 0.9f, 0.9f, 1.0f * ((float)UP_PAPERBG01_COUNTER_MAX / (float)TutorialUI_TrueCounter));
 		}
 
 		pVtx += 4;	//頂点データのポインタを４つ分進める
@@ -332,11 +340,14 @@ void UpdateTutorialUI(void)
 //====================================================================
 void DrawTutorialUI(void)
 {
+	//チュートリアルの項目情報を与える処理
+	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
+
 	int nCntBG;
 
 	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
 
-							   //デバイスの所得
+	//デバイスの所得
 	pDevice = GetDevice();
 
 	//頂点バッファをデータストリームに設定
@@ -345,11 +356,60 @@ void DrawTutorialUI(void)
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
+	switch (do_Tutorial)
+	{
+	case MODE_MOVE:
+
+		//テクスチャの設定
+		pDevice->SetTexture(0, g_apTextureTutorialUI[0]);
+
+		break;
+
+	case MODE_DASH:
+
+		//テクスチャの設定
+		pDevice->SetTexture(0, g_apTextureTutorialUI[2]);
+
+		break;
+
+	case MODE_VIBE:
+
+		//テクスチャの設定
+		pDevice->SetTexture(0, g_apTextureTutorialUI[3]);
+
+		break;
+
+	case MODE_STELTH:
+
+		//テクスチャの設定
+		pDevice->SetTexture(0, g_apTextureTutorialUI[4]);
+
+		break;
+
+	case MODE_GET_KEY:
+
+		//テクスチャの設定
+		pDevice->SetTexture(0, g_apTextureTutorialUI[5]);
+
+		break;
+
+	case MODE_ESCAPE:
+
+		//テクスチャの設定
+		pDevice->SetTexture(0, g_apTextureTutorialUI[6]);
+
+		break;
+
+	case MODE_END:
+
+		//テクスチャの設定
+		pDevice->SetTexture(0, g_apTextureTutorialUI[7]);
+
+		break;
+	}
+
 	for (nCntBG = 0; nCntBG < MAX_SSUI; nCntBG++)
 	{
-		//テクスチャの設定
-		pDevice->SetTexture(0, g_apTextureTutorialUI[nCntBG]);
-
 		if (bUseTutorialUI[nCntBG] == true)
 		{
 			//ポリゴンの描画
