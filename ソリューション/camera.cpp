@@ -223,8 +223,8 @@ void UpdateCamera(void)
 		if (g_bTpsCamera == false)
 		{//使っていない場合
 		 //プレイヤー視点カメラ
-			PlayerFpsCamera();
-			//ResPlayerCamera();
+			//PlayerFpsCamera();
+			ResPlayerCamera();
 		}
 		else
 		{//使われている場合
@@ -243,8 +243,8 @@ void UpdateCamera(void)
 		if (g_bTpsCamera == false)
 		{//使っていない場合
 			//プレイヤー視点カメラ
-			PlayerFpsCamera();
-			//ResPlayerCamera();
+			//PlayerFpsCamera();
+			ResPlayerCamera();
 		}
 		else
 		{//使われている場合
@@ -369,11 +369,6 @@ void PlayerFpsCamera(void)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					CamMoveCheck(g_nCurrentCamera, true);
-				}
-
-				else if (do_Tutorial != MODE_MOVE)
-				{
-
 				}
 			}
 
@@ -762,7 +757,7 @@ void ResPlayerCamera(void)
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 	Player *pPlayer = GetPlayer();
-
+	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
 
 	for (int nCntCamera = 0; nCntCamera < MAX_CAMERA; nCntCamera++)
 	{
@@ -777,10 +772,42 @@ void ResPlayerCamera(void)
 				if (GetKeyboardPress(DIK_I) == true)
 				{
 					g_aCamera[nCntCamera].rot.x += CAMERA_VR_SPEED;
+
+					//チュートリアル項目がカメラムーブの時
+					if (do_Tutorial == MODE_MOVE)
+					{
+						//カメラを移動したことにする
+						CamMoveCheck(nCntCamera, true);
+					}
 				}
 				if (GetKeyboardPress(DIK_K) == true)
 				{
 					g_aCamera[nCntCamera].rot.x -= CAMERA_VR_SPEED;
+
+					//チュートリアル項目がカメラムーブの時
+					if (do_Tutorial == MODE_MOVE)
+					{
+						//カメラを移動したことにする
+						CamMoveCheck(nCntCamera, true);
+					}
+				}
+
+				//カメラの横移動をしたらチェックをつける処理
+				if (g_aCamera[nCntCamera].rot.x > 0.1f || g_aCamera[nCntCamera].rot.x < -0.1f)
+				{
+					if (do_Tutorial == MODE_MOVE)
+					{
+						CamMoveCheck(nCntCamera, true);
+					}
+				}
+
+				//カメラの縦移動をしたらチェックをつける処理
+				if (g_aCamera[nCntCamera].rot.y > 0.1f || g_aCamera[nCntCamera].rot.y < -0.1f)
+				{
+					if (do_Tutorial == MODE_MOVE)
+					{
+						CamMoveCheck(nCntCamera, true);
+					}
 				}
 
 				//右スティックの上下視点移動入力
@@ -920,7 +947,7 @@ void RankingCamera(void)
 //==========================================
 Camera *GetCamera(void)
 {
-	return &g_aCamera[4];
+	return &g_aCamera[0];
 }
 
 //==========================================
@@ -928,7 +955,7 @@ Camera *GetCamera(void)
 //==========================================
 D3DXVECTOR3 Getrot(int nPlayer)
 {
-	return g_aCamera[g_nCurrentCamera].rot;
+	return g_aCamera[nPlayer].rot;
 }
 
 //==========================================
