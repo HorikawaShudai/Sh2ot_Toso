@@ -87,6 +87,7 @@ const char *c_apModelObj[] =					//モデルデータ読み込み
 	"Data\\MODEL\\HighPolyWall2.x",				//壁(メインホール)
 	"Data\\MODEL\\HighPolyWall3.x",				//壁(黒レンガ)
 	"Data\\MODEL\\HighPolyWall5.x",				//壁(廊下)
+	"Data\\MODEL\\LaboTank.x",					//ラボタンク
 	"Data\\MODEL\\erai_table.x",				//偉い人用のテーブル
 	"Data\\MODEL\\erai_chear.x",				//偉い人用の椅子
 	"Data\\MODEL\\drawing_chair.x",				//応接室の机

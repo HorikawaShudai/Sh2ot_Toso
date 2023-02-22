@@ -403,8 +403,17 @@ void UpdatePlayer0(void)
 		{
 			if (g_aPlayer[0].bExit == true && g_aPlayer[1].bExit == true && g_aPlayer[2].bExit == true && g_aPlayer[3].bExit == true)
 			{
-				g_GameEnd = true;
-				SetGameState(GAMESTATE_CLEAR_END, 60);
+				//チュートリアルモード脱出の時
+				if (GetMode() == MODE_TUTORIAL)
+				{
+					g_GameEnd = true;
+					SetFade(MODE_GAME);
+				}
+				if (GetMode() == MODE_GAME)
+				{
+					g_GameEnd = true;
+					SetGameState(GAMESTATE_CLEAR_END, 60);
+				}
 			}
 
 			if (g_aPlayer[0].bUse == false && g_aPlayer[1].bUse == false && g_aPlayer[2].bUse == false && g_aPlayer[3].bUse == false)
