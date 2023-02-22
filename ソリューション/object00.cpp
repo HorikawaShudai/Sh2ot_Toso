@@ -87,6 +87,7 @@ const char *c_apModelObj[] =					//モデルデータ読み込み
 	"Data\\MODEL\\HighPolyWall2.x",				//壁(メインホール)
 	"Data\\MODEL\\HighPolyWall3.x",				//壁(黒レンガ)
 	"Data\\MODEL\\HighPolyWall5.x",				//壁(廊下)
+	"Data\\MODEL\\LaboTank.x",					//ラボタンク
 };
 
 //====================================================================
