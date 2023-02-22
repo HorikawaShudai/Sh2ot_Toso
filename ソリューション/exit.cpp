@@ -443,6 +443,7 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 
 						g_aExit[nCntExit].parts[3].bExitOK = true;
 						g_aExit[nCntExit].parts[4].bExitOK = true;
+						FalseActionHelpUI(g_aExit[nCntExit].IndexUI);
 					}
 
 					break;

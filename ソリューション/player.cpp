@@ -372,9 +372,21 @@ void UpdatePlayer0(void)
 					{
 						//チェックをつける
 						SetCheckUI(nSelectPlayer, true);
+
+						do_Tutorial = MODE_GOEXIT;
 					}
 
-					if (do_Tutorial != MODE_ESCAPE)
+					else if (do_Tutorial != MODE_ESCAPE)
+					{
+
+					}
+
+					if (do_Tutorial == MODE_GOEXIT)
+					{
+						do_Tutorial = MODE_END;
+					}
+
+					else if (do_Tutorial != MODE_GOEXIT)
 					{
 
 					}

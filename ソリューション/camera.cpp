@@ -29,16 +29,16 @@
 #define POS_MOVE_MAX			(5.0f)		//視点位置の最大値
 #define UP_DOWN_SPPED			(0.4f)		//視点の上下移動の速さ
 #define YUAN_TO_CORRE			(0.2f)		//視点の元の位置への補正
-#define CAM_MOVE_SPEED			(0.0005f)			//タイトル用カメラの移動スピード
+#define CAM_MOVE_SPEED			(0.0005f)	//タイトル用カメラの移動スピード
 
 //プロトタイプ宣言
-void TpsCamera(void);										//観察用カメラ
-void PlayerFpsCamera(void);									//プレイヤーの視点カメラ
-void Camerafollow(int nCurrentCamera);						//追従カメラ
-void CameraMove(int nCurrentCamera);						//カメラ移動
+void TpsCamera(void);						//観察用カメラ
+void PlayerFpsCamera(void);					//プレイヤーの視点カメラ
+void Camerafollow(int nCurrentCamera);		//追従カメラ
+void CameraMove(int nCurrentCamera);		//カメラ移動
 void StateYMove(int nCurrentCamera);		//カメラの縦の動き
 
-void ResPlayerCamera(void);									//コントローラーそれぞれに対応
+void ResPlayerCamera(void);					//コントローラーそれぞれに対応
 
 void Titlecamera(void);
 void SelectNumberCamera(void);
@@ -46,14 +46,14 @@ void ResultCamera(void);
 void RankingCamera(void);
 
 //グローバル変数
-Camera g_aCamera[MAX_CAMERA];	//カメラの情報
+Camera g_aCamera[MAX_CAMERA];				//カメラの情報
 
-int g_nCurrentCamera;			//選択されているカメラの番号
-int g_nSaveCamera;				//カメラ番号保存用
-bool g_bTpsCamera;				//観察用のカメラを使うかどうか
-bool bEnter;					//エンターが押されたかどうか
-bool bCamMove;					//カメラが動いたかどうか
-int g_Rand_RankingCameraBG;		//ランキング画面の背景を決めるための変数
+int g_nCurrentCamera;						//選択されているカメラの番号
+int g_nSaveCamera;							//カメラ番号保存用
+bool g_bTpsCamera;							//観察用のカメラを使うかどうか
+bool bEnter;								//エンターが押されたかどうか
+bool bCamMove;								//カメラが動いたかどうか
+int g_Rand_RankingCameraBG;					//ランキング画面の背景を決めるための変数
 
 //====================================================================
 //カメラの初期化処理
@@ -155,14 +155,14 @@ void InitCamera(void)
 		g_aCamera[1].viewport.MaxZ = 1.0f;
 		//3・4人用(3人目)
 		g_aCamera[2].viewport.X = 0;				// 描画する画面の左上X座標
-		g_aCamera[2].viewport.Y = 360;					// 描画する画面の左上Y座標
+		g_aCamera[2].viewport.Y = 360;				// 描画する画面の左上Y座標
 		g_aCamera[2].viewport.Width = 640;			// 画面の幅
 		g_aCamera[2].viewport.Height = 360;			// 画面の高さ
 		g_aCamera[2].viewport.MinZ = 0.0f;
 		g_aCamera[2].viewport.MaxZ = 1.0f;
 		//3・4人用(4人目)
 		g_aCamera[3].viewport.X = 640;				// 描画する画面の左上X座標
-		g_aCamera[3].viewport.Y = 360;					// 描画する画面の左上Y座標
+		g_aCamera[3].viewport.Y = 360;				// 描画する画面の左上Y座標
 		g_aCamera[3].viewport.Width = 640;			// 画面の幅
 		g_aCamera[3].viewport.Height = 360;			// 画面の高さ
 		g_aCamera[3].viewport.MinZ = 0.0f;
@@ -171,12 +171,12 @@ void InitCamera(void)
 	}
 	
 	//その他用(3D画面タイトルなど)
-	g_aCamera[4].viewport.X = 0;				// 描画する画面の左上X座標
-	g_aCamera[4].viewport.Y = 0;				// 描画する画面の左上Y座標
-	g_aCamera[4].viewport.Width = 1280;			// 画面の幅
-	g_aCamera[4].viewport.Height = 720;			// 画面の高さ
-	g_aCamera[4].viewport.MinZ = 0.0f;			// 
-	g_aCamera[4].viewport.MaxZ = 1.0f;			// 
+	g_aCamera[4].viewport.X = 0;					// 描画する画面の左上X座標
+	g_aCamera[4].viewport.Y = 0;					// 描画する画面の左上Y座標
+	g_aCamera[4].viewport.Width = 1280;				// 画面の幅
+	g_aCamera[4].viewport.Height = 720;				// 画面の高さ
+	g_aCamera[4].viewport.MinZ = 0.0f;				// 
+	g_aCamera[4].viewport.MaxZ = 1.0f;				// 
 }
 
 //====================================================================
