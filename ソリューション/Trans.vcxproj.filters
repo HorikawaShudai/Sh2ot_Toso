@@ -195,19 +195,7 @@
     <ClCompile Include="tutorial.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="EscapeTutorial.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="VillainTutorial.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="paperBG00.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="paperBG01.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CheckboxUI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="objectLight.cpp">
@@ -216,11 +204,23 @@
     <ClCompile Include="sound.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ActionHelpUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="EscapeOverResult.cpp">
       <Filter>ソース ファイル\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionHelpUI.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckboxUI.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="EscapeTutorial.cpp">
+      <Filter>ソース ファイル\mode</Filter>
+    </ClCompile>
+    <ClCompile Include="paperBG00.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="paperBG01.cpp">
+      <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -371,19 +371,7 @@
     <ClInclude Include="tutorial.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="EscapeTutorial.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="VillainTutorial.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="paperBG00.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="paperBG01.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CheckboxUI.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="objectLight.h">
@@ -393,7 +381,19 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ActionHelpUI.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckboxUI.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="EscapeTutorial.h">
+      <Filter>ヘッダー ファイル\mode</Filter>
+    </ClInclude>
+    <ClInclude Include="paperBG00.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="paperBG01.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

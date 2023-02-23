@@ -13,7 +13,7 @@
 #include "score.h"
 
 #define OBJECT00_LIFE (7)		//オブジェクトの体力
-#define FALSE_SIZE (20.0f)		//エディットモードのバックスペースの判定の大きさ
+#define FALSE_SIZE (10.0f)		//エディットモードのバックスペースの判定の大きさ
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureObject00[64][OBJECT00_NTYPE_MAX] = {};		//テクスチャのポインタ
@@ -84,13 +84,22 @@ const char *c_apModelObj[] =					//モデルデータ読み込み
 	"Data\\MODEL\\catcar.x",					//うばぐるま
 	"Data\\MODEL\\BlackDesk.x",					//理科室にあるデスク
 	"Data\\MODEL\\CrashArea.x",					//崩れた小部屋
-	"Data\\MODEL\\HighPolyWall2.x",				//壁(メインホール)
-	"Data\\MODEL\\HighPolyWall3.x",				//壁(黒レンガ)
-	"Data\\MODEL\\HighPolyWall5.x",				//壁(廊下)
+	"Data\\MODEL\\HighPolyWall7.x",				//壁(メインホール)
+	"Data\\MODEL\\HighPolyWall6.x",				//壁(ノーマルコンクリ)
+	"Data\\MODEL\\HighPolyWall5.x",				//壁(雨濡れコンクリ)
 	"Data\\MODEL\\LaboTank.x",					//ラボタンク
 	"Data\\MODEL\\erai_table.x",				//偉い人用のテーブル
 	"Data\\MODEL\\erai_chear.x",				//偉い人用の椅子
 	"Data\\MODEL\\drawing_chair.x",				//応接室の机
+	"Data\\MODEL\\HighPolyWall8.x",				//壁(白タイル)
+	"Data\\MODEL\\ceiling.x",					//天井(白)
+	"Data\\MODEL\\ceiling1.x",					//天井(コンクリ)
+	"Data\\MODEL\\ceiling2.x",					//天井(雨濡れコンクリ)
+	"Data\\MODEL\\ceiling3.x",					//天井(タイル)
+	"Data\\MODEL\\ceiling4.x",					//天井(白模様入り)
+	"Data\\MODEL\\hotel_bed.x",					//ホテルベット
+	"Data\\MODEL\\kaidanRD.x",					//階段_右_下
+	"Data\\MODEL\\kaidanLD.x",					//階段_左_下
 };
 
 //====================================================================
@@ -266,7 +275,7 @@ void DrawObject00(void)
 void UpdateEditObject00(void)
 {
 	//キーボードの移動処理----------
-	if (g_Object00[EditIndex].nType == 0 || g_Object00[EditIndex].nType == OBJECT00_NTYPE54 || g_Object00[EditIndex].nType == OBJECT00_NTYPE55 || g_Object00[EditIndex].nType == OBJECT00_NTYPE56)
+	if (g_Object00[EditIndex].nType == 0 || g_Object00[EditIndex].nType == OBJECT00_NTYPE54 || g_Object00[EditIndex].nType == OBJECT00_NTYPE55 || g_Object00[EditIndex].nType == OBJECT00_NTYPE56 || g_Object00[EditIndex].nType == OBJECT00_NTYPE61 || g_Object00[EditIndex].nType == OBJECT00_NTYPE62 || g_Object00[EditIndex].nType == OBJECT00_NTYPE63 || g_Object00[EditIndex].nType == OBJECT00_NTYPE64 || g_Object00[EditIndex].nType == OBJECT00_NTYPE65 || g_Object00[EditIndex].nType == OBJECT00_NTYPE66)
 	{//選択されているオブジェクトが壁の時
 		if (GetKeyboardTrigger(DIK_UP) == true)
 		{//前移動
@@ -286,7 +295,7 @@ void UpdateEditObject00(void)
 		}
 	}
 
-	if(g_Object00[EditIndex].nType != 0 && g_Object00[EditIndex].nType != OBJECT00_NTYPE54 && g_Object00[EditIndex].nType != OBJECT00_NTYPE55 && g_Object00[EditIndex].nType != OBJECT00_NTYPE56)
+	if(g_Object00[EditIndex].nType != 0 && g_Object00[EditIndex].nType != OBJECT00_NTYPE54 && g_Object00[EditIndex].nType != OBJECT00_NTYPE55 && g_Object00[EditIndex].nType != OBJECT00_NTYPE56 && g_Object00[EditIndex].nType != OBJECT00_NTYPE61 && g_Object00[EditIndex].nType != OBJECT00_NTYPE62 && g_Object00[EditIndex].nType != OBJECT00_NTYPE63 && g_Object00[EditIndex].nType != OBJECT00_NTYPE64 && g_Object00[EditIndex].nType != OBJECT00_NTYPE65 && g_Object00[EditIndex].nType != OBJECT00_NTYPE66)
 	{//選択されているオブジェクトが壁以外の時
 		if (GetKeyboardPress(DIK_UP) == true)
 		{//前移動
@@ -335,9 +344,14 @@ void UpdateEditObject00(void)
 			EditType = 0;
 		}
 
-		if (EditType == 0 || EditType == OBJECT00_NTYPE54 || EditType == OBJECT00_NTYPE55 || EditType == OBJECT00_NTYPE56)
+		if (EditType == 0 || EditType == OBJECT00_NTYPE54 || EditType == OBJECT00_NTYPE55 || EditType == OBJECT00_NTYPE56 || EditType == OBJECT00_NTYPE61)
 		{
 			EditPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		}
+
+		if (EditType == OBJECT00_NTYPE62 || EditType == OBJECT00_NTYPE63 || EditType == OBJECT00_NTYPE64 || EditType == OBJECT00_NTYPE65 || EditType == OBJECT00_NTYPE66)
+		{
+			EditPos = D3DXVECTOR3(0.0f, 150.0f, 0.0f);
 		}
 	}
 	if (GetKeyboardTrigger(DIK_8) == true)
@@ -363,7 +377,7 @@ void UpdateEditObject00(void)
 	//オブジェクトの削除処理(重なっているもの)----------
 	if (GetKeyboardTrigger(DIK_BACKSPACE))
 	{
-		EditCollisionObject00(EditPos, g_Object00[EditIndex].vtxMin, g_Object00[EditIndex].vtxMax, FALSE_SIZE);
+		EditCollisionObject00(D3DXVECTOR3(EditPos.x, EditPos.y + 0.0f, EditPos.z), g_Object00[EditIndex].vtxMin, g_Object00[EditIndex].vtxMax, FALSE_SIZE);
 	}
 
 	//オブジェクトの削除処理(CTRL+Z)----------

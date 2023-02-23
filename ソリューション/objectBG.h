@@ -28,6 +28,8 @@ typedef enum
 	OBJECTBG_NTYPE13,			//窓
 	OBJECTBG_NTYPE14,			//プロジェクターのうつされるほう
 	OBJECTBG_NTYPE15,			//時計
+	OBJECTBG_NTYPE16,			//階段_右_上
+	OBJECTBG_NTYPE17,			//階段_左_上
 	OBJECTBG_NTYPE_MAX,
 
 }OBJECTBG_NTYPE;

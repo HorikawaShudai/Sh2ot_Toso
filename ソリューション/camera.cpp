@@ -29,16 +29,16 @@
 #define POS_MOVE_MAX			(5.0f)		//視点位置の最大値
 #define UP_DOWN_SPPED			(0.4f)		//視点の上下移動の速さ
 #define YUAN_TO_CORRE			(0.2f)		//視点の元の位置への補正
-#define CAM_MOVE_SPEED			(0.0005f)			//タイトル用カメラの移動スピード
+#define CAM_MOVE_SPEED			(0.0005f)	//タイトル用カメラの移動スピード
 
 //プロトタイプ宣言
-void TpsCamera(void);										//観察用カメラ
-void PlayerFpsCamera(void);									//プレイヤーの視点カメラ
-void Camerafollow(int nCurrentCamera);						//追従カメラ
-void CameraMove(int nCurrentCamera);						//カメラ移動
+void TpsCamera(void);						//観察用カメラ
+void PlayerFpsCamera(void);					//プレイヤーの視点カメラ
+void Camerafollow(int nCurrentCamera);		//追従カメラ
+void CameraMove(int nCurrentCamera);		//カメラ移動
 void StateYMove(int nCurrentCamera);		//カメラの縦の動き
 
-void ResPlayerCamera(void);									//コントローラーそれぞれに対応
+void ResPlayerCamera(void);					//コントローラーそれぞれに対応
 
 void Titlecamera(void);
 void SelectNumberCamera(void);
@@ -46,14 +46,14 @@ void ResultCamera(void);
 void RankingCamera(void);
 
 //グローバル変数
-Camera g_aCamera[MAX_CAMERA];	//カメラの情報
+Camera g_aCamera[MAX_CAMERA];				//カメラの情報
 
-int g_nCurrentCamera;			//選択されているカメラの番号
-int g_nSaveCamera;				//カメラ番号保存用
-bool g_bTpsCamera;				//観察用のカメラを使うかどうか
-bool bEnter;					//エンターが押されたかどうか
-bool bCamMove;					//カメラが動いたかどうか
-int g_Rand_RankingCameraBG;		//ランキング画面の背景を決めるための変数
+int g_nCurrentCamera;						//選択されているカメラの番号
+int g_nSaveCamera;							//カメラ番号保存用
+bool g_bTpsCamera;							//観察用のカメラを使うかどうか
+bool bEnter;								//エンターが押されたかどうか
+bool bCamMove;								//カメラが動いたかどうか
+int g_Rand_RankingCameraBG;					//ランキング画面の背景を決めるための変数
 
 //====================================================================
 //カメラの初期化処理
@@ -83,7 +83,7 @@ void InitCamera(void)
 	bEnter = false;					//エンターを押していない状態に
 	bCamMove = false;
 
-	g_Rand_RankingCameraBG = rand() % 2;
+	g_Rand_RankingCameraBG = rand() % 4;
 	
 	switch (PlayNumber.CurrentSelectNumber)
 	{
@@ -155,14 +155,14 @@ void InitCamera(void)
 		g_aCamera[1].viewport.MaxZ = 1.0f;
 		//3・4人用(3人目)
 		g_aCamera[2].viewport.X = 0;				// 描画する画面の左上X座標
-		g_aCamera[2].viewport.Y = 360;					// 描画する画面の左上Y座標
+		g_aCamera[2].viewport.Y = 360;				// 描画する画面の左上Y座標
 		g_aCamera[2].viewport.Width = 640;			// 画面の幅
 		g_aCamera[2].viewport.Height = 360;			// 画面の高さ
 		g_aCamera[2].viewport.MinZ = 0.0f;
 		g_aCamera[2].viewport.MaxZ = 1.0f;
 		//3・4人用(4人目)
 		g_aCamera[3].viewport.X = 640;				// 描画する画面の左上X座標
-		g_aCamera[3].viewport.Y = 360;					// 描画する画面の左上Y座標
+		g_aCamera[3].viewport.Y = 360;				// 描画する画面の左上Y座標
 		g_aCamera[3].viewport.Width = 640;			// 画面の幅
 		g_aCamera[3].viewport.Height = 360;			// 画面の高さ
 		g_aCamera[3].viewport.MinZ = 0.0f;
@@ -171,12 +171,12 @@ void InitCamera(void)
 	}
 	
 	//その他用(3D画面タイトルなど)
-	g_aCamera[4].viewport.X = 0;				// 描画する画面の左上X座標
-	g_aCamera[4].viewport.Y = 0;				// 描画する画面の左上Y座標
-	g_aCamera[4].viewport.Width = 1280;			// 画面の幅
-	g_aCamera[4].viewport.Height = 720;			// 画面の高さ
-	g_aCamera[4].viewport.MinZ = 0.0f;			// 
-	g_aCamera[4].viewport.MaxZ = 1.0f;			// 
+	g_aCamera[4].viewport.X = 0;					// 描画する画面の左上X座標
+	g_aCamera[4].viewport.Y = 0;					// 描画する画面の左上Y座標
+	g_aCamera[4].viewport.Width = 1280;				// 画面の幅
+	g_aCamera[4].viewport.Height = 720;				// 画面の高さ
+	g_aCamera[4].viewport.MinZ = 0.0f;				// 
+	g_aCamera[4].viewport.MaxZ = 1.0f;				// 
 }
 
 //====================================================================
@@ -223,8 +223,8 @@ void UpdateCamera(void)
 		if (g_bTpsCamera == false)
 		{//使っていない場合
 		 //プレイヤー視点カメラ
-			PlayerFpsCamera();
-			//ResPlayerCamera();
+			//PlayerFpsCamera();
+			ResPlayerCamera();
 		}
 		else
 		{//使われている場合
@@ -243,8 +243,8 @@ void UpdateCamera(void)
 		if (g_bTpsCamera == false)
 		{//使っていない場合
 			//プレイヤー視点カメラ
-			PlayerFpsCamera();
-			//ResPlayerCamera();
+			//PlayerFpsCamera();
+			ResPlayerCamera();
 		}
 		else
 		{//使われている場合
@@ -369,11 +369,6 @@ void PlayerFpsCamera(void)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					CamMoveCheck(g_nCurrentCamera, true);
-				}
-
-				else if (do_Tutorial != MODE_MOVE)
-				{
-
 				}
 			}
 
@@ -762,7 +757,7 @@ void ResPlayerCamera(void)
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 	Player *pPlayer = GetPlayer();
-
+	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
 
 	for (int nCntCamera = 0; nCntCamera < MAX_CAMERA; nCntCamera++)
 	{
@@ -777,10 +772,42 @@ void ResPlayerCamera(void)
 				if (GetKeyboardPress(DIK_I) == true)
 				{
 					g_aCamera[nCntCamera].rot.x += CAMERA_VR_SPEED;
+
+					//チュートリアル項目がカメラムーブの時
+					if (do_Tutorial == MODE_MOVE)
+					{
+						//カメラを移動したことにする
+						CamMoveCheck(nCntCamera, true);
+					}
 				}
 				if (GetKeyboardPress(DIK_K) == true)
 				{
 					g_aCamera[nCntCamera].rot.x -= CAMERA_VR_SPEED;
+
+					//チュートリアル項目がカメラムーブの時
+					if (do_Tutorial == MODE_MOVE)
+					{
+						//カメラを移動したことにする
+						CamMoveCheck(nCntCamera, true);
+					}
+				}
+
+				//カメラの横移動をしたらチェックをつける処理
+				if (g_aCamera[nCntCamera].rot.x > 0.1f || g_aCamera[nCntCamera].rot.x < -0.1f)
+				{
+					if (do_Tutorial == MODE_MOVE)
+					{
+						CamMoveCheck(nCntCamera, true);
+					}
+				}
+
+				//カメラの縦移動をしたらチェックをつける処理
+				if (g_aCamera[nCntCamera].rot.y > 0.1f || g_aCamera[nCntCamera].rot.y < -0.1f)
+				{
+					if (do_Tutorial == MODE_MOVE)
+					{
+						CamMoveCheck(nCntCamera, true);
+					}
 				}
 
 				//右スティックの上下視点移動入力
@@ -905,12 +932,22 @@ void RankingCamera(void)
 	switch (g_Rand_RankingCameraBG)
 	{
 	case 0:
-		g_aCamera[4].posV = D3DXVECTOR3(975.0f, 200.0f, -430.0f);
-		g_aCamera[4].posR = D3DXVECTOR3(420.0f, 100.0f, 500.0);
+		g_aCamera[4].posV = D3DXVECTOR3(-1953.70f, 35.0f, 1640.36f);
+		g_aCamera[4].posR = D3DXVECTOR3(-2170.67f,35.0f,1748.42f);
 		break;
 	case 1:
-		g_aCamera[4].posV = D3DXVECTOR3(475.0f, 200.0f, -430.0f);
-		g_aCamera[4].posR = D3DXVECTOR3(-120.0f, 100.0f, 500.0);
+		g_aCamera[4].posV = D3DXVECTOR3(473.15f, 35.0f, -69.61f);
+		g_aCamera[4].posR = D3DXVECTOR3(300.0f, 35.0f, 556.61f);
+		break;
+
+	case 2:
+		g_aCamera[4].posV = D3DXVECTOR3(-2200.96f, 35.0f, 1579.65f);
+		g_aCamera[4].posR = D3DXVECTOR3(-1950.85f, 100.0f, 1420.71f);
+		break;
+
+	case 3:
+		g_aCamera[4].posV = D3DXVECTOR3(-1029.69f, 35.0f, 1339.42f);
+		g_aCamera[4].posR = D3DXVECTOR3(-929.04f, 35.0f, 1300.73f);
 		break;
 	}
 }
@@ -920,7 +957,7 @@ void RankingCamera(void)
 //==========================================
 Camera *GetCamera(void)
 {
-	return &g_aCamera[4];
+	return &g_aCamera[0];
 }
 
 //==========================================
@@ -928,7 +965,7 @@ Camera *GetCamera(void)
 //==========================================
 D3DXVECTOR3 Getrot(int nPlayer)
 {
-	return g_aCamera[g_nCurrentCamera].rot;
+	return g_aCamera[nPlayer].rot;
 }
 
 //==========================================

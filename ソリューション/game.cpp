@@ -27,6 +27,7 @@
 #include "polygonBG.h"
 #include "fog.h"
 #include "time.h"
+#include "ActionHelpUI.h"
 
 //エディットに使うオブジェクトの種類の構造体
 typedef enum
@@ -44,6 +45,7 @@ int g_bBG_Edit = 0;
 bool g_bGameClear = false;
 GAMESTATE gGameState = GAMESTATE_NONE;
 int g_nCounterGameState = 0;
+int GameSetEnemyCount = 0;
 
 //====================================================================
 //ゲーム画面の初期化処理
@@ -54,6 +56,7 @@ void InitGame()
 	g_bEdit = false;
 	g_bBG_Edit = 0;
 	g_bGameClear = false;
+	GameSetEnemyCount = 0;
 
 	DWORD time = timeGetTime();
 	srand((unsigned int)time);
@@ -84,16 +87,14 @@ void InitGame()
 	//敵の初期化処理
 	InitEnemy();
 
+	//ヘルプUIの初期化処理
+	InitActionHelpUI();
+
 	//スタミナの初期化処理
 	InitStamina();
 
 	//ライフの初期化処理
 	InitLife();
-
-
-	//SetEnemy(D3DXVECTOR3(-900.0f, 0.0f, 850.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	SetEnemy(D3DXVECTOR3(-1400.0f, 0.0f, -500.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	//SetEnemy(D3DXVECTOR3(-1000.0f, 0.0f, -500.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
 	//スコアの初期化
 	InitScore();
@@ -123,12 +124,36 @@ void InitGame()
 	//フォグの設定
 	SetFog(D3DFOG_LINEAR, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.2f), 10.0f, 1000.0f, 0.1f);
 	
-	SetKey(D3DXVECTOR3(-1000.0f, 0.0f, -600.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	SetKey(D3DXVECTOR3(-2550.0f, 0.0f, -150.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	SetKey(D3DXVECTOR3(650.0f, 0.0f, 240.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	SetKey(D3DXVECTOR3(900.0f, 0.0f, -1000.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	SetKey(D3DXVECTOR3(1900.0f, 0.0f, -1800.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	SetKey(D3DXVECTOR3(1250.0f, 0.0f, -200.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	//プレイヤーの数に応じて敵をセットする回数を指定する。
+	switch (GetPlayNumberSelect().CurrentSelectNumber)
+	{
+	case 1:
+		GameSetEnemyCount = 2;
+		break;
+	case 2:
+		GameSetEnemyCount = 2;
+		break;
+	case 3:
+		GameSetEnemyCount = 3;
+		break;
+	case 4:
+		GameSetEnemyCount = 3;
+		break;
+	}
+
+	//敵設置用変数の値のぶん敵を設置する
+	for (int nCnt = 0; nCnt < GameSetEnemyCount; nCnt++)
+	{
+
+	}
+	//SetEnemy(D3DXVECTOR3(-1000.0f, 0.0f, 350.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+
+	//プレイヤーの数だけ鍵を設置する
+	for (int nCnt = 0; nCnt < GetPlayNumberSelect().CurrentSelectNumber; nCnt++)
+	{
+
+	}
+	//SetKey(D3DXVECTOR3(-1000.0f, 0.0f, -600.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
 	//ステージの読み込み
 	SetStage(0);
@@ -163,6 +188,9 @@ void UninitGame()
 
 	//敵の終了処理
 	UninitEnemy();
+
+	//ヘルプUIの終了処理
+	UninitActionHelpUI();
 
 	//スタミナの終了処理
 	UninitStamina();
@@ -302,6 +330,9 @@ void UpdateGame()
 		//敵の更新処理
 		UpdateEnemy();
 
+		//ヘルプUIの更新処理
+		UpdateActionHelpUI();
+
 		//スタミナの更新処理
 		UpdateStamina();
 
@@ -426,6 +457,9 @@ void DrawGame()
 			//敵の描画処理
 			DrawEnemy();
 		}
+
+		//ヘルプUIの描画処理
+		DrawActionHelpUI();
 
 		//スタミナの描画処理
 		DrawStamina();

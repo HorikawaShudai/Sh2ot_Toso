@@ -74,6 +74,15 @@ typedef enum
 	OBJECT00_NTYPE58,			//偉い人用のテーブル
 	OBJECT00_NTYPE59,			//偉い人用の椅子
 	OBJECT00_NTYPE60,			//応接室の机
+	OBJECT00_NTYPE61,			//壁(白タイル)
+	OBJECT00_NTYPE62,			//天井(白)
+	OBJECT00_NTYPE63,			//天井(コンクリ)
+	OBJECT00_NTYPE64,			//天井(雨濡れコンクリ)
+	OBJECT00_NTYPE65,			//天井(タイル)
+	OBJECT00_NTYPE66,			//天井(白模様入り)
+	OBJECT00_NTYPE67,			//ホテルベット
+	OBJECT00_NTYPE68,			//階段_右_下
+	OBJECT00_NTYPE69,			//階段_左_下
 	OBJECT00_NTYPE_MAX,
 
 }OBJECT00_NTYPE;

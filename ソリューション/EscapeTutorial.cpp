@@ -87,8 +87,6 @@ void InitEscapeTutorial()
 	//敵の初期化処理
 	InitEnemy();
 
-	SetEnemy(D3DXVECTOR3(-1050.0f, 0.0f, 100.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-
 	//スタミナの初期化処理
 	InitStamina();
 
@@ -100,11 +98,6 @@ void InitEscapeTutorial()
 
 	//鍵の初期化処理
 	InitKey();
-
-	SetKey(D3DXVECTOR3(-1000.0f, 0.0f, -50.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), KEY_TYPE_ITEM);
-	SetKey(D3DXVECTOR3(-950.0f, 0.0f, -50.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), KEY_TYPE_ITEM);
-	SetKey(D3DXVECTOR3(-1050.0f, 0.0f, -50.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), KEY_TYPE_ITEM);
-	SetKey(D3DXVECTOR3(-1100.0f, 0.0f, -50.0f), D3DXVECTOR3(0.0f,0.0f,0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), KEY_TYPE_ITEM);
 
 	//鍵UIの初期化処理
 	InitKeyUI();
@@ -382,6 +375,10 @@ void UpdateEscapeTutorial()
 		break;
 
 	case MODE_ESCAPE:
+
+		break;
+
+	case MODE_GOEXIT:
 
 		break;
 

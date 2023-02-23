@@ -154,7 +154,9 @@ void UpdateTitle(void)
 	Camera *pCamera = GetCamera();
 	THUNDER aThunder = GetThunder();
 
-		if (bTitle == false && bPress ==false)
+	pCamera += 4;
+
+	if (bTitle == false && bPress ==false)
 	{
 		g_nFadeCnt++;
 		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadPress(BUTTON_START, 0) || GetGamepadPress(BUTTON_A, 0))
