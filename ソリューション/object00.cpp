@@ -97,6 +97,9 @@ const char *c_apModelObj[] =					//モデルデータ読み込み
 	"Data\\MODEL\\ceiling2.x",					//天井(雨濡れコンクリ)
 	"Data\\MODEL\\ceiling3.x",					//天井(タイル)
 	"Data\\MODEL\\ceiling4.x",					//天井(白模様入り)
+	"Data\\MODEL\\hotel_bed.x",					//ホテルベット
+	"Data\\MODEL\\kaidanRD.x",					//階段_右_下
+	"Data\\MODEL\\kaidanLD.x",					//階段_左_下
 };
 
 //====================================================================
@@ -292,7 +295,7 @@ void UpdateEditObject00(void)
 		}
 	}
 
-	if(g_Object00[EditIndex].nType != 0 && g_Object00[EditIndex].nType != OBJECT00_NTYPE54 && g_Object00[EditIndex].nType != OBJECT00_NTYPE55 && g_Object00[EditIndex].nType != OBJECT00_NTYPE56 && g_Object00[EditIndex].nType != OBJECT00_NTYPE61 && g_Object00[EditIndex].nType != OBJECT00_NTYPE62 && g_Object00[EditIndex].nType == OBJECT00_NTYPE63 && g_Object00[EditIndex].nType == OBJECT00_NTYPE64 && g_Object00[EditIndex].nType == OBJECT00_NTYPE65 && g_Object00[EditIndex].nType == OBJECT00_NTYPE66)
+	if(g_Object00[EditIndex].nType != 0 && g_Object00[EditIndex].nType != OBJECT00_NTYPE54 && g_Object00[EditIndex].nType != OBJECT00_NTYPE55 && g_Object00[EditIndex].nType != OBJECT00_NTYPE56 && g_Object00[EditIndex].nType != OBJECT00_NTYPE61 && g_Object00[EditIndex].nType != OBJECT00_NTYPE62 && g_Object00[EditIndex].nType != OBJECT00_NTYPE63 && g_Object00[EditIndex].nType != OBJECT00_NTYPE64 && g_Object00[EditIndex].nType != OBJECT00_NTYPE65 && g_Object00[EditIndex].nType != OBJECT00_NTYPE66)
 	{//選択されているオブジェクトが壁以外の時
 		if (GetKeyboardPress(DIK_UP) == true)
 		{//前移動

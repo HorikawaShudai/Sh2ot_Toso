@@ -83,7 +83,7 @@ void InitCamera(void)
 	bEnter = false;					//エンターを押していない状態に
 	bCamMove = false;
 
-	g_Rand_RankingCameraBG = rand() % 2;
+	g_Rand_RankingCameraBG = rand() % 4;
 	
 	switch (PlayNumber.CurrentSelectNumber)
 	{
@@ -223,8 +223,8 @@ void UpdateCamera(void)
 		if (g_bTpsCamera == false)
 		{//使っていない場合
 		 //プレイヤー視点カメラ
-			PlayerFpsCamera();
-			//ResPlayerCamera();
+			//PlayerFpsCamera();
+			ResPlayerCamera();
 		}
 		else
 		{//使われている場合
@@ -243,8 +243,8 @@ void UpdateCamera(void)
 		if (g_bTpsCamera == false)
 		{//使っていない場合
 			//プレイヤー視点カメラ
-			PlayerFpsCamera();
-			//ResPlayerCamera();
+			//PlayerFpsCamera();
+			ResPlayerCamera();
 		}
 		else
 		{//使われている場合
@@ -369,11 +369,6 @@ void PlayerFpsCamera(void)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					CamMoveCheck(g_nCurrentCamera, true);
-				}
-
-				else if (do_Tutorial != MODE_MOVE)
-				{
-
 				}
 			}
 
@@ -762,7 +757,7 @@ void ResPlayerCamera(void)
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 	Player *pPlayer = GetPlayer();
-
+	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
 
 	for (int nCntCamera = 0; nCntCamera < MAX_CAMERA; nCntCamera++)
 	{
@@ -777,10 +772,42 @@ void ResPlayerCamera(void)
 				if (GetKeyboardPress(DIK_I) == true)
 				{
 					g_aCamera[nCntCamera].rot.x += CAMERA_VR_SPEED;
+
+					//チュートリアル項目がカメラムーブの時
+					if (do_Tutorial == MODE_MOVE)
+					{
+						//カメラを移動したことにする
+						CamMoveCheck(nCntCamera, true);
+					}
 				}
 				if (GetKeyboardPress(DIK_K) == true)
 				{
 					g_aCamera[nCntCamera].rot.x -= CAMERA_VR_SPEED;
+
+					//チュートリアル項目がカメラムーブの時
+					if (do_Tutorial == MODE_MOVE)
+					{
+						//カメラを移動したことにする
+						CamMoveCheck(nCntCamera, true);
+					}
+				}
+
+				//カメラの横移動をしたらチェックをつける処理
+				if (g_aCamera[nCntCamera].rot.x > 0.1f || g_aCamera[nCntCamera].rot.x < -0.1f)
+				{
+					if (do_Tutorial == MODE_MOVE)
+					{
+						CamMoveCheck(nCntCamera, true);
+					}
+				}
+
+				//カメラの縦移動をしたらチェックをつける処理
+				if (g_aCamera[nCntCamera].rot.y > 0.1f || g_aCamera[nCntCamera].rot.y < -0.1f)
+				{
+					if (do_Tutorial == MODE_MOVE)
+					{
+						CamMoveCheck(nCntCamera, true);
+					}
 				}
 
 				//右スティックの上下視点移動入力
@@ -905,12 +932,22 @@ void RankingCamera(void)
 	switch (g_Rand_RankingCameraBG)
 	{
 	case 0:
-		g_aCamera[4].posV = D3DXVECTOR3(975.0f, 200.0f, -430.0f);
-		g_aCamera[4].posR = D3DXVECTOR3(420.0f, 100.0f, 500.0);
+		g_aCamera[4].posV = D3DXVECTOR3(-1953.70f, 35.0f, 1640.36f);
+		g_aCamera[4].posR = D3DXVECTOR3(-2170.67f,35.0f,1748.42f);
 		break;
 	case 1:
-		g_aCamera[4].posV = D3DXVECTOR3(475.0f, 200.0f, -430.0f);
-		g_aCamera[4].posR = D3DXVECTOR3(-120.0f, 100.0f, 500.0);
+		g_aCamera[4].posV = D3DXVECTOR3(473.15f, 35.0f, -69.61f);
+		g_aCamera[4].posR = D3DXVECTOR3(300.0f, 35.0f, 556.61f);
+		break;
+
+	case 2:
+		g_aCamera[4].posV = D3DXVECTOR3(-2200.96f, 35.0f, 1579.65f);
+		g_aCamera[4].posR = D3DXVECTOR3(-1950.85f, 100.0f, 1420.71f);
+		break;
+
+	case 3:
+		g_aCamera[4].posV = D3DXVECTOR3(-1029.69f, 35.0f, 1339.42f);
+		g_aCamera[4].posR = D3DXVECTOR3(-929.04f, 35.0f, 1300.73f);
 		break;
 	}
 }
@@ -920,7 +957,7 @@ void RankingCamera(void)
 //==========================================
 Camera *GetCamera(void)
 {
-	return &g_aCamera[4];
+	return &g_aCamera[0];
 }
 
 //==========================================
@@ -928,7 +965,7 @@ Camera *GetCamera(void)
 //==========================================
 D3DXVECTOR3 Getrot(int nPlayer)
 {
-	return g_aCamera[g_nCurrentCamera].rot;
+	return g_aCamera[nPlayer].rot;
 }
 
 //==========================================
