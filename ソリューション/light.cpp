@@ -104,7 +104,7 @@ void InitLight(void)
 	{
 		g_Light_LightIdx[nCntlight] = SetIndexLight();		//ライトの使用番号を指定する
 
-		if (GetMode() == MODE_GAME)
+		if (GetMode() == MODE_GAME || GetMode() == MODE_TUTORIAL)
 		{
 			//ライトの方向を設定
 			switch (nCntlight)
@@ -172,7 +172,7 @@ void UpdateLight(void)
 	{
 		if (GetNightVersion() == false)
 		{
-			if (GetMode() == MODE_GAME)
+			if (GetMode() == MODE_GAME || GetMode() == MODE_TUTORIAL)
 			{
 				//ライトの方向を設定
 				switch (nCntlight)
