@@ -27,6 +27,7 @@
 #include "polygonBG.h"
 #include "fog.h"
 #include "time.h"
+#include "ActionHelpUI.h"
 
 //エディットに使うオブジェクトの種類の構造体
 typedef enum
@@ -83,6 +84,9 @@ void InitGame()
 
 	//敵の初期化処理
 	InitEnemy();
+
+	//ヘルプUIの初期化処理
+	InitActionHelpUI();
 
 	//スタミナの初期化処理
 	InitStamina();
@@ -162,6 +166,9 @@ void UninitGame()
 
 	//敵の終了処理
 	UninitEnemy();
+
+	//ヘルプUIの終了処理
+	UninitActionHelpUI();
 
 	//スタミナの終了処理
 	UninitStamina();
@@ -301,6 +308,9 @@ void UpdateGame()
 		//敵の更新処理
 		UpdateEnemy();
 
+		//ヘルプUIの更新処理
+		UpdateActionHelpUI();
+
 		//スタミナの更新処理
 		UpdateStamina();
 
@@ -425,6 +435,9 @@ void DrawGame()
 			//敵の描画処理
 			DrawEnemy();
 		}
+
+		//ヘルプUIの描画処理
+		DrawActionHelpUI();
 
 		//スタミナの描画処理
 		DrawStamina();

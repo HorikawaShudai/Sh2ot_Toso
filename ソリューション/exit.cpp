@@ -78,7 +78,6 @@ void InitExit(void)
 			g_aExit[nCntExit].parts[nCntExit1].bExitOK		= false;
 			g_aExit[nCntExit].parts[nCntExit1].nType		= EXIT_TYPE_BIGFRAME;
 			g_aExit[nCntExit].parts[nCntExit1].nExitOKcnt	= 120;
-
 			g_aExit[nCntExit].bUse = false;
 		}
 	}
@@ -350,6 +349,7 @@ void SetExit(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nType, int nNumExit)
 			if (g_aExit[nNumExit].parts[nCntExit1].nType == 1)
 			{
 				g_aExit[nNumExit].PseudoCenter = D3DXVECTOR3(g_aExit[nNumExit].parts[nCntExit1].pos.x, g_aExit[nNumExit].parts[nCntExit1].pos.y - 100.0f, g_aExit[nNumExit].parts[nCntExit1].pos.z);
+				g_aExit[nNumExit].IndexUI = SetActionHelpUI(D3DXVECTOR3(g_aExit[nNumExit].PseudoCenter.x, g_aExit[nNumExit].PseudoCenter.y + 20.0f, g_aExit[nNumExit].PseudoCenter.z), ACTIONHELPUI_DOOR);
 			}
 
 			g_aExit[nNumExit].parts[nCntExit1].bUse = true;
@@ -458,13 +458,15 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 //====================================================================
 //プレイヤーとの当たり判定処理
 //====================================================================
-void CollisionExitHelpUI(D3DXVECTOR3 *pPos, float Size)
+bool CollisionExitHelpUI(D3DXVECTOR3 *pPos, float Size)
 {
+	int bHelpUI = false;
+
 	for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
 	{
 		for (int nCntExit1 = 0; nCntExit1 < MAX_EXIT; nCntExit1++)
 		{
-			if (g_aExit[nCntExit].parts[nCntExit1].bUse == true && g_aExit[nCntExit].parts[nCntExit1].bExitOK == false && g_aExit[nCntExit].bHelpUI == false)
+			if (g_aExit[nCntExit].parts[nCntExit1].bUse == true && g_aExit[nCntExit].parts[nCntExit1].bExitOK == false)
 			{
 				if (pPos->x >= g_aExit[nCntExit].PseudoCenter.x - Size
 					&& pPos->x <= g_aExit[nCntExit].PseudoCenter.x + Size
@@ -474,29 +476,17 @@ void CollisionExitHelpUI(D3DXVECTOR3 *pPos, float Size)
 					&& pPos->z <= g_aExit[nCntExit].PseudoCenter.z + Size)
 
 				{//アイテムとプレイヤーが当たった(X軸)
-					g_aExit[nCntExit].bHelpUI = true;
-					g_aExit[nCntExit].IndexUI = SetActionHelpUI(D3DXVECTOR3(g_aExit[nCntExit].PseudoCenter.x, g_aExit[nCntExit].PseudoCenter.y + 20.0f, g_aExit[nCntExit].PseudoCenter.z), ACTIONHELPUI_DOOR);
-					break;
+					bHelpUI = true;
 				}
 			}
-
-			if (g_aExit[nCntExit].parts[nCntExit1].bUse == true && g_aExit[nCntExit].parts[nCntExit1].bExitOK == false && g_aExit[nCntExit].bHelpUI == true)
+			else
 			{
-				if (pPos->x <= g_aExit[nCntExit].PseudoCenter.x - Size
-					|| pPos->x >= g_aExit[nCntExit].PseudoCenter.x + Size
-					|| pPos->y <= g_aExit[nCntExit].PseudoCenter.y - Size
-					|| pPos->y >= g_aExit[nCntExit].PseudoCenter.y + Size
-					|| pPos->z <= g_aExit[nCntExit].PseudoCenter.z - Size
-					|| pPos->z >= g_aExit[nCntExit].PseudoCenter.z + Size)
-
-				{//アイテムとプレイヤーが当たった(X軸)
-					g_aExit[nCntExit].bHelpUI = false;
-					FalseActionHelpUI(g_aExit[nCntExit].IndexUI);
-					break;
-				}
+				bHelpUI = false;
 			}
 		}
 	}
+
+	return bHelpUI;
 }
 
 //====================================================================
