@@ -1,36 +1,63 @@
-<<<<<<< HEAD
-﻿  object00.cpp
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-<<<<<<< HEAD
-﻿  camera.cpp
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-=======
-<<<<<<< HEAD
 ﻿  tutorialUI.cpp
+  time.cpp
+  stamina.cpp
+  sound.cpp
+  score.cpp
+  resultUI.cpp
+  playerBG.cpp
   player.cpp
-  EscapeTutorial.cpp
+  particle.cpp
+  objectBG.cpp
+  meshwall.cpp
+  meshfield.cpp
+  meshdome.cpp
+  meshcylinder.cpp
+  main.cpp
+  light.cpp
+  life.cpp
+  keyUI.cpp
+  input.cpp
+  field.cpp
   コードを生成中...
-cl : コマンド ライン warning D9028: 簡易リビルド時のエラーです、通常のビルドに戻します
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-<<<<<<< HEAD
-﻿  object00.cpp
+  コンパイル中...
+  exit.cpp
+  enemy.cpp
+  debugproc.cpp
+  camera.cpp
+  VillainResult.cpp
+  VillainRanking.cpp
+  Thunder.cpp
+  SpotLight.cpp
+  RankingUI.cpp
+  RankingNumber.cpp
+  PlayNumberSelect.cpp
+  PlayModeSelect.cpp
+  NumberUI.cpp
+  Fog.cpp
+  Fade.cpp
+  EscapeTutorial.cpp
+  Effect.cpp
+  CheckboxUI.cpp
+  Billboard.cpp
+  コードを生成中...
+  コンパイル中...
+  game.cpp
+  コードを生成中...
+  スキップ中... (関連する変更は検出されませんでした)
+  title.cpp
+  stage.cpp
+  score_item.cpp
+  result.cpp
+  paperBG01.cpp
+  paperBG00.cpp
+  objectLight.cpp
+  object00.cpp
+  key.cpp
+  edit.cpp
+  PolygonBG.cpp
+  EscapeRanking.cpp
+  EscapeOverResult.cpp
+  EscapeClearResult.cpp
+  ActionHelpUI.cpp
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-<<<<<<< HEAD
-﻿cl : コマンド ライン warning D9028: 簡易リビルド時のエラーです、通常のビルドに戻します
-  paperBG00.cpp
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-﻿  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
->>>>>>> 0f7918bc9cd714c28c95e0ab4856421bf99030a6
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
->>>>>>> 8afa288121506ddce77ac7af5fb6b7b9cae77233
->>>>>>> b220a9926b3b553d3b6a8ea26323dc8989eaa0bd
->>>>>>> 250bba9536901d61c307c51963b7a03e12bf3577
->>>>>>> 3389791bf3901649d496af509ba69afbbf874e12
