@@ -93,6 +93,7 @@ void DrawEnemy(void);
 void UpdateEditEnemy(void);
 void DrawEditEnemy(void);
 void SetEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType);
+void TeleportationEnemy(D3DXVECTOR3 *pPos);
 void CollisionRotEnemy(int nCnt);
 bool CollisionEnemy(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size);
 void CollisionEnemyShadow(D3DXVECTOR3 *pPos);
