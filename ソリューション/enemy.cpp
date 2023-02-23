@@ -28,6 +28,8 @@ DWORD g_dwNumMatENEMY[ENEMY_NTYPE_MAX] = {};						//マテリアルの数
 ENEMY g_Enemy[MAX_ENEMY];					//敵の情報
 int EditIndexEnemy;							//エディットモード用の番号
 
+int g_nDetect;
+
 //プロトタイプ宣言
 void EnemyPatrol(int nEnemy);
 void EnemyDirection(int nEnemy);
@@ -90,7 +92,7 @@ void InitEnemy(void)
 		g_Enemy[nCntObject].aModel[1].nIdxModelParent = 0;
 	}
 	EditIndexEnemy = 0;
-
+	g_nDetect = 0;
 	for (int nCntEnemy = 0; nCntEnemy < ENEMY_NTYPE_MAX; nCntEnemy++)
 	{
 		D3DXLoadMeshFromX(c_apModelEnemy[nCntEnemy],
@@ -161,6 +163,7 @@ void UninitEnemy(void)
 //====================================================================
 void UpdateEnemy(void)
 {
+	g_nDetect++;
 	for (int nCntObject = 0; nCntObject < MAX_ENEMY; nCntObject++)
 	{
 		if (g_Enemy[nCntObject].bUse == true)
@@ -190,15 +193,15 @@ void UpdateEnemy(void)
 			//プレイヤー探知
 			if (g_Enemy[nCntObject].state != ENEMYSTATE_ATTACK)
 			{
-				for (int nDetect = 0; nDetect < 6; nDetect++)
-				{
-					float DetectRot = g_Enemy[nCntObject].rot.y - D3DXToRadian(45.0f) + D3DXToRadian(15.0f * nDetect);
+				
+				
+					float DetectRot = g_Enemy[nCntObject].rot.y - D3DXToRadian(45.0f) + D3DXToRadian(15.0f * (g_nDetect % 6));
 					if (DetectPlayer(g_Enemy[nCntObject].pos, DetectRot, nCntObject) == true)
 					{
 						g_Enemy[nCntObject].state = ENEMYSTATE_CHASE;
 						break;
 					}
-				}
+				
 			}
 			
 			if (g_Enemy[nCntObject].state == ENEMYSTATE_PATROL)
