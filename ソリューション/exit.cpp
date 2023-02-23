@@ -460,7 +460,7 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 //====================================================================
 bool CollisionExitHelpUI(D3DXVECTOR3 *pPos, float Size)
 {
-	int bHelpUI = false;
+	bool bHelpUI = false;
 
 	for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
 	{

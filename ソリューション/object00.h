@@ -81,6 +81,8 @@ typedef enum
 	OBJECT00_NTYPE65,			//天井(タイル)
 	OBJECT00_NTYPE66,			//天井(白模様入り)
 	OBJECT00_NTYPE67,			//ホテルベット
+	OBJECT00_NTYPE68,			//階段_右_下
+	OBJECT00_NTYPE69,			//階段_左_下
 	OBJECT00_NTYPE_MAX,
 
 }OBJECT00_NTYPE;

@@ -939,31 +939,31 @@ void UpdatePlayer1(void)
 			{
 				PlayerHit(nCntPlayer, 1);
 			}
+		}
+	}
 
-			//ゲーム終了処理
-			if (g_GameEnd == false)
+	//ゲーム終了処理
+	if (g_GameEnd == false)
+	{
+		if (g_aPlayer[0].bExit == true && g_aPlayer[1].bExit == true && g_aPlayer[2].bExit == true && g_aPlayer[3].bExit == true)
+		{
+			//チュートリアルモード脱出の時
+			if (GetMode() == MODE_TUTORIAL)
 			{
-				if (g_aPlayer[0].bExit == true && g_aPlayer[1].bExit == true && g_aPlayer[2].bExit == true && g_aPlayer[3].bExit == true)
-				{
-					//チュートリアルモード脱出の時
-					if (GetMode() == MODE_TUTORIAL)
-					{
-						g_GameEnd = true;
-						SetFade(MODE_GAME);
-					}
-					if (GetMode() == MODE_GAME)
-					{
-						g_GameEnd = true;
-						SetGameState(GAMESTATE_CLEAR_END, 60);
-					}
-				}
-
-				if (g_aPlayer[0].bUse == false && g_aPlayer[1].bUse == false && g_aPlayer[2].bUse == false && g_aPlayer[3].bUse == false)
-				{
-					g_GameEnd = true;
-					SetGameState(GAMESTATE_GAMEOVER_END, 60);
-				}
+				g_GameEnd = true;
+				SetFade(MODE_GAME);
 			}
+			if (GetMode() == MODE_GAME)
+			{
+				g_GameEnd = true;
+				SetGameState(GAMESTATE_CLEAR_END, 60);
+			}
+		}
+
+		if (g_aPlayer[0].bUse == false && g_aPlayer[1].bUse == false && g_aPlayer[2].bUse == false && g_aPlayer[3].bUse == false)
+		{
+			g_GameEnd = true;
+			SetGameState(GAMESTATE_GAMEOVER_END, 60);
 		}
 	}
 
@@ -1632,6 +1632,17 @@ void DrawPlayer(void)
 
 		//保存していたマテリアルを戻す
 		pDevice->SetMaterial(&matDef);
+	}
+}
+
+//====================================================================
+//制限時間終了時の処理
+//====================================================================
+void PlayerAllDown(void)
+{
+	for (int nCntPlayer = 0; nCntPlayer < NUM_PLAYER; nCntPlayer++)
+	{
+		g_aPlayer[nCntPlayer].bUse = false;
 	}
 }
 

@@ -43,6 +43,8 @@ const char *c_apModelObj01[] =					//モデルデータ読み込み
 	"Data\\MODEL\\window.x",		//窓b
 	"Data\\MODEL\\screen.x",		//プロジェクターのうつされるほうb
 	"Data\\MODEL\\watch.x",			//時計b
+	"Data\\MODEL\\kaidanRU.x",		//階段_右_上
+	"Data\\MODEL\\kaidanLU.x",		//階段_左_上
 };
 
 //====================================================================
