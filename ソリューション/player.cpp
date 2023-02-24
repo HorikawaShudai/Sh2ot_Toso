@@ -27,6 +27,7 @@
 #include "CheckboxUI.h"
 #include "PolygonBG.h"
 #include "EscapeTutorial.h"
+#include "sound.h"
 
 //マクロ定義
 #define PLAYER_STEALTHSPEED		(0.3f)			//プレイヤーのステルススピード
@@ -1032,6 +1033,9 @@ void ResPlayerMove(int nCnt)
 				g_aPlayer[nCnt].NormarizeMove.z += cosf(pCamera[nCnt].rot.y);
 				g_aPlayer[nCnt].NormarizeMove.x += sinf(pCamera[nCnt].rot.y);
 
+				//プレイヤーの歩き
+				PlaySound(SOUND_LABEL_SE_WALK);
+
 				//移動したらチェックをつける処理
 				if (do_Tutorial == MODE_MOVE)
 				{
@@ -1043,6 +1047,9 @@ void ResPlayerMove(int nCnt)
 			{//左スティックの下入力
 				g_aPlayer[nCnt].NormarizeMove.z -= cosf(pCamera[nCnt].rot.y);
 				g_aPlayer[nCnt].NormarizeMove.x -= sinf(pCamera[nCnt].rot.y);
+
+				//プレイヤーの歩き
+				PlaySound(SOUND_LABEL_SE_WALK);
 
 				//移動したらチェックをつける処理
 				if (do_Tutorial == MODE_MOVE)
@@ -1057,6 +1064,9 @@ void ResPlayerMove(int nCnt)
 				g_aPlayer[nCnt].NormarizeMove.x += cosf(pCamera[nCnt].rot.y);
 				g_aPlayer[nCnt].NormarizeMove.z -= sinf(pCamera[nCnt].rot.y);
 
+				//プレイヤーの歩き
+				PlaySound(SOUND_LABEL_SE_WALK);
+
 				//移動したらチェックをつける処理
 				if (do_Tutorial == MODE_MOVE)
 				{
@@ -1069,6 +1079,9 @@ void ResPlayerMove(int nCnt)
 			 //左スティックによる左右移動
 				g_aPlayer[nCnt].NormarizeMove.x -= cosf(pCamera[nCnt].rot.y);
 				g_aPlayer[nCnt].NormarizeMove.z += sinf(pCamera[nCnt].rot.y);
+
+				//プレイヤーの歩き
+				PlaySound(SOUND_LABEL_SE_WALK);
 
 				//移動したらチェックをつける処理
 				if (do_Tutorial == MODE_MOVE)
@@ -1100,6 +1113,9 @@ void ResPlayerMove(int nCnt)
 				g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_DASHSPEED;
 				g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_DASHSPEED;
 
+				//ダッシュ状態の音
+				PlaySound(SOUND_LABEL_SE_RUN);
+
 				//プレイヤーをダッシュ状態にする
 				g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_DASH;
 
@@ -1117,6 +1133,9 @@ void ResPlayerMove(int nCnt)
 			g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_STEALTHSPEED;
 
 			g_aPlayer[nCnt].move += g_aPlayer[nCnt].NormarizeMove;
+
+			//ダッシュ状態の音
+			PlaySound(SOUND_LABEL_SE_STELTH);
 
 			//プレイヤーをステルス状態にする
 			g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;

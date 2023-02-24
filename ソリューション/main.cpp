@@ -19,6 +19,7 @@
 #include "VillainTutorial.h"
 #include "RankingNumber.h"
 #include "input.h"
+#include "sound.h"
 
 //マクロ定義
 #define CLASS_NAME "WindowClass"     //ウィンドウクラスの名前
@@ -288,6 +289,9 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	g_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
 	g_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
 	g_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT);
+
+	//サウンドの初期化
+	InitSound(hWnd);
 
 	//透明度の設定
 

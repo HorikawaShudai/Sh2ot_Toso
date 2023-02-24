@@ -28,6 +28,7 @@
 #include "fog.h"
 #include "time.h"
 #include "ActionHelpUI.h"
+#include "sound.h"
 
 //エディットに使うオブジェクトの種類の構造体
 typedef enum
@@ -164,6 +165,9 @@ void InitGame()
 //====================================================================
 void UninitGame()
 {
+	////サウンドの終了
+	//StopSound();
+
 	//カメラの終了処理
 	UninitCamera();
 

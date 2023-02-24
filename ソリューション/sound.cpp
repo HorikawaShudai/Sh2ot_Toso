@@ -27,7 +27,10 @@ DWORD g_aSizeAudio[SOUND_LABEL_MAX] = {};					// オーディオデータサイズ
 															// サウンドの情報
 SOUNDINFO g_aSoundInfo[SOUND_LABEL_MAX] =
 {
-	{ "data/BGM/Title.wav", -1 },				// タイトルBGM
+	//{ "data/BGM/Title.wav", -1 },				// タイトルBGM
+	{ "data/SE/walk.wav", 0 },				// プレイヤー歩きSE
+	{ "data/SE/run.wav", 0 },				// プレイヤーは走りSE
+	{ "data/SE/stelth.wav", 0 },				// プレイヤー忍び足SE
 };
 
 //=============================================================================
