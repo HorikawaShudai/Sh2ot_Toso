@@ -33,9 +33,11 @@ SOUNDINFO g_aSoundInfo[SOUND_LABEL_MAX] =
 	{ "Data/SE/choise.wav",0},					//選択音
 	{ "Data/SE/enter.wav",0},					//決定音
 	{ "Data/SE/paper.wav",0},					//紙をめくる音
-	{ "Data/SE/walk.wav", 0 },				// プレイヤー歩きSE
-	{ "Data/SE/run.wav", 0 },				// プレイヤーは走りSE
-	{ "Data/SE/stelth.wav", 0 },				// プレイヤー忍び足SE
+	{ "Data/SE/walk.wav", 0 },					// プレイヤー歩きSE
+	{ "Data/SE/run.wav", 0 },					// プレイヤーは走りSE
+	{ "Data/SE/stelth.wav", 0 },				//プレイヤー忍び足SE
+	{ "Data/SE/door.wav", 0 },					//ドアの開閉
+	{ "Data/SE/enemy_walk.wav", 0 },			//敵の移動音
 };
 
 //=============================================================================
