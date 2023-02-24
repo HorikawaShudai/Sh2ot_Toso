@@ -765,10 +765,10 @@ void EnemyPatrol(int nEnemy)
 		PrintDebugProc("Enemy%d‘O:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceFront);
 
 		//©g‚Ìi‚Ş•ûŒü‚É•Ç‚ª‚ ‚Á‚½ê‡
-		if (((g_Enemy[nEnemy].MoveState == ENEMYMOVE_N && g_Enemy[nEnemy].fDistanceN <= 150.0f) ||
-			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_S && g_Enemy[nEnemy].fDistanceS <= 150.0f) ||
-			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_E && g_Enemy[nEnemy].fDistanceE <= 150.0f) ||
-			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_W && g_Enemy[nEnemy].fDistanceW <= 150.0f) ||
+		if (((g_Enemy[nEnemy].MoveState == ENEMYMOVE_N && g_Enemy[nEnemy].fDistanceN <= 50.0f) ||
+			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_S && g_Enemy[nEnemy].fDistanceS <= 50.0f) ||
+			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_E && g_Enemy[nEnemy].fDistanceE <= 50.0f) ||
+			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_W && g_Enemy[nEnemy].fDistanceW <= 50.0f) ||
 			 g_Enemy[nEnemy].MoveState == ENEMYMOVE_NONE))
 		{
 			EnemyDirection(nEnemy);
