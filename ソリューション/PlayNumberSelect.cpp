@@ -17,6 +17,7 @@
 #include "objectBG.h"
 #include "stage.h"
 #include "object00.h"
+#include "sound.h"
 
 //***********************************
 //マクロ定義
@@ -318,6 +319,9 @@ void PlayerSelect(void)
 	{
 		if (GetKeyboardTrigger(DIK_D) == true || GetGamepadTrigger(BUTTON_RIGHT, 0) == true || GetGamepad_LStick_Trigger(0, LSTICK_RIGHT) == true)
 		{
+			//選択音
+			PlaySound(SOUND_LABEL_CHOICE);
+
 			//頂点バッファをロック
 			g_pVtxBuffPlayNumberSelect->Lock(0, 0, (void**)&pVtx, 0);
 
@@ -351,6 +355,9 @@ void PlayerSelect(void)
 		}
 		else if (GetKeyboardTrigger(DIK_A) == true || GetGamepadTrigger(BUTTON_LEFT, 0) == true || GetGamepad_LStick_Trigger(0, LSTICK_LEFT) == true)
 		{
+			//選択音
+			PlaySound(SOUND_LABEL_CHOICE);
+
 			//頂点バッファをロック
 			g_pVtxBuffPlayNumberSelect->Lock(0, 0, (void**)&pVtx, 0);
 
@@ -385,6 +392,10 @@ void PlayerSelect(void)
 
 		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadTrigger(BUTTON_START, 0) || GetGamepadTrigger(BUTTON_A, 0))
 		{//決定キー(ENTERキー)が押された
+
+			//決定音
+			PlaySound(SOUND_LABEL_ENTER);
+
 			if (g_PlayNumberSelect.CurrentSelectNumber >= 0 && g_PlayNumberSelect.CurrentSelectNumber < PLAYNUMBER_FOUR)
 			{
 				g_PlayNumberSelect.CurrentSelectNumber = g_PlayNumberSelect.CurrentSelectNumber + 1;			//プレイ人数に合わせるため

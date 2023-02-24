@@ -1,7 +1,7 @@
-<<<<<<< HEAD
 ﻿  ActionHelpUI.cpp
   CheckboxUI.cpp
   EscapeTutorial.cpp
+  PlayNumberSelect.cpp
   Thunder.cpp
   game.cpp
   main.cpp
@@ -9,15 +9,55 @@
   sound.cpp
   title.cpp
   コード生成しています。
-  13 of 501 functions ( 2.6%) were compiled, the rest were copied from previous compilation.
+  9 of 507 functions ( 1.8%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    4 functions had inline decision re-evaluated but remain unchanged
+    9 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
+Billboard.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+camera.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+debugproc.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+edit.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+Effect.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+enemy.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+EscapeClearResult.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+EscapeOverResult.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+EscapeRanking.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+exit.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+Fade.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+field.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+Fog.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+input.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+keyUI.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+life.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+light.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+meshcylinder.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+meshdome.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+meshfield.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+meshwall.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+NumberUI.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+object00.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+objectBG.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+objectLight.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+paperBG00.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+paperBG01.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+particle.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+playerBG.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+PlayModeSelect.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+PolygonBG.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+RankingNumber.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+RankingUI.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+result.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+resultUI.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+score.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+score_item.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+SpotLight.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+stage.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+stamina.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+time.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
 tutorial.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+tutorialUI.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+VillainRanking.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+VillainResult.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
 VillainTutorial.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
-=======
-﻿  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (5)\Sh2ot_Toso\ソリューション\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (5)\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
->>>>>>> bf31cb946bbc6909150bf703ca3afc18290b6625
