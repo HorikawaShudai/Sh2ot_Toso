@@ -27,10 +27,15 @@ DWORD g_aSizeAudio[SOUND_LABEL_MAX] = {};					// オーディオデータサイズ
 															// サウンドの情報
 SOUNDINFO g_aSoundInfo[SOUND_LABEL_MAX] =
 {
-	//{ "data/BGM/Title.wav", -1 },				// タイトルBGM
-	{ "data/SE/walk.wav", 0 },				// プレイヤー歩きSE
-	{ "data/SE/run.wav", 0 },				// プレイヤーは走りSE
-	{ "data/SE/stelth.wav", 0 },				// プレイヤー忍び足SE
+	{ "Data/BGM/rain.wav", -1 },				// タイトルBGM
+	{ "Data/SE/Thunder.wav",0},					//雷の音
+	{ "Data/SE/wind.wav",0 },					//風の音
+	{ "Data/SE/choise.wav",0},					//選択音
+	{ "Data/SE/enter.wav",0},					//決定音
+	{ "Data/SE/paper.wav",0},					//紙をめくる音
+	{ "Data/SE/walk.wav", 0 },				// プレイヤー歩きSE
+	{ "Data/SE/run.wav", 0 },				// プレイヤーは走りSE
+	{ "Data/SE/stelth.wav", 0 },				// プレイヤー忍び足SE
 };
 
 //=============================================================================

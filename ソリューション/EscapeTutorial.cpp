@@ -31,6 +31,7 @@
 #include "EscapeTutorial.h"
 #include "ActionHelpUI.h"
 #include "player.h"
+#include "sound.h"
 
 //ƒOƒ[ƒoƒ‹•Ï”éŒ¾
 TUTORIAL_STATE g_TutorialState;
