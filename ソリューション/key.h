@@ -15,6 +15,20 @@ typedef enum
 	KEY_TYPE_MAX,
 }KEY_TYPE;
 
+const D3DXVECTOR3 KeyPos[] = //鍵の座標
+{
+	D3DXVECTOR3(-1934.0f,2.0f,1745.0f),
+	D3DXVECTOR3(-2055.0f,2.0f,540.0f),
+	D3DXVECTOR3(460.0f,2.0f,560.0f),
+	D3DXVECTOR3(-850.0f,2.0f,124.0f),
+	D3DXVECTOR3(-983.0f,2.0f,1733.0f),
+	D3DXVECTOR3(160.0f,2.0f,285.0f),
+	D3DXVECTOR3(-832.0f,2.0f,1960.0f),
+	D3DXVECTOR3(-1150.0f,2.0f,1300.0f),
+	D3DXVECTOR3(-1652.0f,2.0f,750.0f),
+	D3DXVECTOR3(-1570.0f,2.0f,1434.0f),
+};
+
 //鍵の構造体
 typedef struct
 {
@@ -32,6 +46,7 @@ typedef struct
 	bool bHelpUI;								//ヘルプUIが使われているかどうか
 	int IndexUI;								//ヘルプUIの使用番号
 	int nIdxModelParent; //親子設定
+	int nCntMove;								//上下の動きのカウント
 }KEY;
 
 //プロトタイプ宣言

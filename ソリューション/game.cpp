@@ -152,9 +152,10 @@ void InitGame()
 	//プレイヤーの数だけ鍵を設置する
 	for (int nCnt = 0; nCnt < GetPlayNumberSelect().CurrentSelectNumber; nCnt++)
 	{
-
+		int nKey;
+		nKey = rand() % 9;
+		SetKey(KeyPos[nKey], D3DXVECTOR3(0.0f, 0.03f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	}
-	SetKey(D3DXVECTOR3(-1000.0f, 0.0f, -600.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
 	//ステージの読み込み
 	SetStage(0);
