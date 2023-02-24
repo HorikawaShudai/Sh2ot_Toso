@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  ActionHelpUI.cpp
   CheckboxUI.cpp
   EscapeTutorial.cpp
@@ -16,3 +17,7 @@ tutorial.obj : warning LNK4020: 'c:\users\student\documents\授業用\グルー�
 VillainTutorial.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+=======
+﻿  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (5)\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (5)\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+>>>>>>> bf31cb946bbc6909150bf703ca3afc18290b6625

@@ -2,13 +2,13 @@ Metasequoia Document
 Format Text Ver 1.0
 
 Scene {
-	pos -0.6030 -140.4804 2400.0012
+	pos -165.3958 -267.8303 2328.3064
 	lookat 0.0000 0.0000 0.0000
-	head 37.6567
-	pich 0.1792
+	head 36.4966
+	pich 0.2008
 	bank 0.0000
 	ortho 0
-	zoom2 3.1250
+	zoom2 3.2212
 	amb 0.250 0.250 0.250
 	dirlights 1 {
 		light {
@@ -16,6 +16,9 @@ Scene {
 			color 1.000 1.000 1.000
 		}
 	}
+}
+Material 1 {
+	"Enemy_Statue" col(0.988 1.000 0.671 1.000) dif(0.860) amb(0.600) emi(0.100) spc(0.120) power(14.00)
 }
 Object "standard_Player" {
 	visible 15
