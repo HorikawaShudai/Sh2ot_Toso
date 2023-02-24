@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-﻿  title.cpp
+﻿  player.cpp
+cl : コマンド ライン warning D9028: 簡易リビルド時のエラーです、通常のビルドに戻します
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-﻿  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (5)\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (5)\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
->>>>>>> bf31cb946bbc6909150bf703ca3afc18290b6625

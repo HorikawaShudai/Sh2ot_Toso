@@ -905,6 +905,9 @@ void UpdatePlayer1(void)
 					if (CollisionExit(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nCntPlayer) == true)
 					{//鍵を入手出来た場合
 
+						//ドアの開閉音
+						PlaySound(SOUND_LABEL_SE_DOOR);
+
 						g_aPlayer[nCntPlayer].bGetKey = false;	//鍵を入手してない状態にする
 						SetKeyUI(nCntPlayer, false);			//鍵UIを非表示にする
 
@@ -1333,6 +1336,10 @@ void PlayerDistance(int nCnt)
 		{
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, 300.0f, 0.0f, -10.0f, 50.0f) == true)
 			{//敵の表示処理
+
+				////敵の移動量
+				//PlaySound(SOUND_LABEL_SE_ENEMYMOVE);
+		
 				g_aPlayer[nCnt].bAppear = true;
 				break;
 			}
