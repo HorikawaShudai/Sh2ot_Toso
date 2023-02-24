@@ -6,6 +6,7 @@
 #include "input.h"
 #include "key.h"
 #include "enemy.h"
+#include "sound.h"
 
 //マクロ定義
 #define MAX_CHECK_TEX		(2)				//チェックボックスのテクスチャ最大数
@@ -291,12 +292,16 @@ void UpdateCheckboxUI(void)
 						g_anCheckUI[nCntTutorial].bUse = false;
 					}
 					SetEscapeTutorial(TUTORIAL_STATE_STANDBY);
+					//紙の音
+					PlaySound(SOUND_LABEL_PAPER);
 				}
 				break;
 
 
 			case TUTORIAL_STATE_STANDBY:
 				SetEscapeTutorial(TUTORIAL_STATE_WAIT);
+				//紙の音
+				PlaySound(SOUND_LABEL_PAPER);
 				break;
 			}
 	}
@@ -435,6 +440,15 @@ void DrawCheckboxUI(void)
 //============================
 void SetCheckUI(int nPlayer, bool SetCheck)
 {
+	if (g_anCheckUI[nPlayer].bUse == false)
+	{
+		if (SetCheck == true)
+		{
+			//紙の音
+			PlaySound(SOUND_LABEL_ENTER);
+		}
+	}
+
 	g_anCheckUI[nPlayer].bUse = SetCheck;
 }
 
@@ -445,12 +459,4 @@ void MovePosCheckUI(int nPlayer, bool SetCheck)
 {
 	btutorial = SetCheck;
 }
-//============================
-//チェックボックスのリセット
-//============================
-void ResetCheckUI(int nPlayer)
-{
-	g_anCheckUI[nPlayer].bUse = false;
-}
-
 

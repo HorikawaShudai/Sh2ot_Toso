@@ -633,7 +633,7 @@ D3DXVECTOR3 CollisionOuterProductObject00(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOl
 	D3DXVECTOR3 pos[MAX_OBJECT00 * 4] = {};
 	for (int nCnt = 0; nCnt < MAX_OBJECT00; nCnt++)
 	{
-		if (g_Object00[nCnt].bUse == true)
+		if (g_Object00[nCnt].bUse == true && g_Object00[nCnt].nType != OBJECT00_NTYPE62 && g_Object00[nCnt].nType != OBJECT00_NTYPE63 && g_Object00[nCnt].nType != OBJECT00_NTYPE64 && g_Object00[nCnt].nType != OBJECT00_NTYPE65 && g_Object00[nCnt].nType != OBJECT00_NTYPE66)
 		{
 			for (int nLine = 0; nLine < 4; nLine++)
 			{
