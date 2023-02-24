@@ -24,12 +24,12 @@ void InitActionHelpUI(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\BOSS00.png",
+		"data\\TEXTURE\\TUTORIAL\\GetUi.png",
 		&g_pTextureActionHelpUI[ACTIONHELPUI_KEY]);
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\BOSS00.png",
+		"data\\TEXTURE\\TUTORIAL\\OpenUi.png",
 		&g_pTextureActionHelpUI[ACTIONHELPUI_DOOR]);
 
 	for (nCntUI = 0; nCntUI < MAX_ACTIONHELPUI; nCntUI++)

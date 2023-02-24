@@ -6,6 +6,7 @@
 #include "input.h"
 #include "key.h"
 #include "enemy.h"
+#include "sound.h"
 
 //マクロ定義
 #define MAX_CHECK_TEX		(2)				//チェックボックスのテクスチャ最大数

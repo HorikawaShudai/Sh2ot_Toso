@@ -98,9 +98,10 @@ void InitTime(void)
 		pVtx += 4;	//頂点データのポインタを４つ分進める
 	}
 
+	//時間の初期化処理
 	g_aTexU[0] = 0;
-	g_aTexU[1] = 0;
-	g_aTexU[2] = 1;
+	g_aTexU[1] = 4;
+	g_aTexU[2] = 0;
 	g_aTexU[3] = 0;
 
 	g_nMaxTime = (g_aTexU[3] + g_aTexU[2] * 10 + g_aTexU[1] * 60 + g_aTexU[0] * 600) * 60;

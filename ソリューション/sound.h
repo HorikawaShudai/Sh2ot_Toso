@@ -8,7 +8,15 @@
 //*****************************************************************************
 typedef enum
 {
-	SOUND_LABEL_BGM_TITLE = 0,			// タイトル
+	SOUND_LABEL_BGM_TITLE = 0,			// タイトルBGM(雨)
+	SOUND_LABEL_THUNDER,				//雷の音
+	SOUND_LABEL_WIND,					//風の音
+	SOUND_LABEL_CHOICE,					//選択音
+	SOUND_LABEL_ENTER,					//決定音
+	SOUND_LABEL_PAPER,					//紙をめくる音
+	SOUND_LABEL_SE_WALK,				//プレイヤーの歩き
+	SOUND_LABEL_SE_RUN,					//プレイヤーのダッシュ
+	SOUND_LABEL_SE_STELTH,				//プレイヤーの忍び足
 	SOUND_LABEL_MAX,
 } SOUND_LABEL;
 

@@ -20,6 +20,7 @@
 #include "Billboard.h"
 #include "Thunder.h"
 #include "effect.h"
+#include "sound.h"
 
 //**********************************************
 //マクロ定義
@@ -116,9 +117,11 @@ void InitTitle(void)
 		}
 	}
 
-
 	//3D
 	Init3DTitle();
+
+	//タイトルのBGM(雨)
+	PlaySound(SOUND_LABEL_BGM_TITLE);
 }
 
 //============================================================================
@@ -126,6 +129,9 @@ void InitTitle(void)
 //============================================================================
 void UninitTitle(void)
 {
+	//曲を止める
+	StopSound();
+
 	for (int nCntTitle = 0; nCntTitle < NUM_TEX; nCntTitle++)
 	{
 		//テクスチャの破棄
@@ -162,6 +168,9 @@ void UpdateTitle(void)
 		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadPress(BUTTON_START, 0) || GetGamepadPress(BUTTON_A, 0))
 		{//決定キー(ENTERキー)が押された
 			g_nFadeCnt = 219;
+
+			//選択音
+			PlaySound(SOUND_LABEL_ENTER);
 		}
 		else if (g_nFadeCnt == 220)
 		{
@@ -410,6 +419,9 @@ void UpdateTitleSelect(void)
 	{
 		if (GetKeyboardTrigger(DIK_S) == true || GetGamepadTrigger(BUTTON_DOWN, 0) == true || GetGamepad_LStick_Trigger(0, LSTICK_DOWN) == true)
 		{
+			//選択音
+			PlaySound(SOUND_LABEL_CHOICE);
+
 			//頂点バッファをロックし、頂点情報へのポインタを取得
 			g_pVtxBuffTitle->Lock(0, 0, (void**)&pVtx, 0);
 
@@ -443,6 +455,9 @@ void UpdateTitleSelect(void)
 		}
 		else if (GetKeyboardTrigger(DIK_W) == true || GetGamepadTrigger(BUTTON_UP, 0) == true || GetGamepad_LStick_Trigger(0, LSTICK_UP) == true)
 		{
+			//選択音
+			PlaySound(SOUND_LABEL_CHOICE);
+
 			//頂点バッファをロックし、頂点情報へのポインタを取得
 			g_pVtxBuffTitle->Lock(0, 0, (void**)&pVtx, 0);
 
@@ -480,6 +495,9 @@ void UpdateTitleSelect(void)
 			//モードの設定(ゲーム画面に移行)
 			if (bPress == false)
 			{
+				//決定音
+				PlaySound(SOUND_LABEL_ENTER);
+
 				//テクスチャを変える処理
 				ChangeMeshDome();
 				ChangeMeshCylinder();

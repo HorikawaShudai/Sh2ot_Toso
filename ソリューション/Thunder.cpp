@@ -6,6 +6,7 @@
 //====================================================================
 #include "Thunder.h"
 #include "Billboard.h"
+#include "sound.h"
 //É}ÉNÉçíËã`
 #define THUNDER_HEIGHT (2000.0f)
 
@@ -84,6 +85,9 @@ void UpdateThunder(void)
 		{
 			g_Thunder.bUse = false;
 			g_Thunder.nType = THUNDER_NONE;
+
+			//óãÇÃâπ
+			PlaySound(SOUND_LABEL_THUNDER);
 		}
 	}
 

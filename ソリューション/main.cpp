@@ -19,6 +19,7 @@
 #include "VillainTutorial.h"
 #include "RankingNumber.h"
 #include "input.h"
+#include "sound.h"
 
 //マクロ定義
 #define CLASS_NAME "WindowClass"     //ウィンドウクラスの名前
@@ -46,7 +47,7 @@ bool bWire;				//ワイヤーフレームを使っているかどうか
 bool g_bNightVision;			//視野の確保を使っているかどうか
 int g_nCountFPS = 0;
 
-MODE g_mode = MODE_GAME;	//開始時点のモード
+MODE g_mode = MODE_TITLE;	//開始時点のモード
 
  //=============================================
  //メイン関数
@@ -288,6 +289,9 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	g_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
 	g_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
 	g_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT);
+
+	//サウンドの初期化
+	InitSound(hWnd);
 
 	//透明度の設定
 

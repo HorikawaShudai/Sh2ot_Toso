@@ -47,6 +47,7 @@ void InitKey(void)
 		g_Key[nCntKey].nType = KEY_TYPE_ITEM;
 		g_Key[nCntKey].bHelpUI = false;
 		g_Key[nCntKey].IndexUI = -1;
+		g_Key[nCntKey].nCntMove = 0;
 	}
 
 	//XÉtÉ@ÉCÉãÇÃì«Ç›çûÇ›
@@ -124,6 +125,12 @@ void UpdateKey(void)
 	{
 		if (g_Key[nCntKey].bUse == true)
 		{
+			g_Key[nCntKey].pos += g_Key[nCntKey].move;
+			g_Key[nCntKey].nCntMove++;
+			if (g_Key[nCntKey].nCntMove % 60 == 0)
+			{
+				g_Key[nCntKey].move *= -1.0;
+			}
 		}
 	}
 }

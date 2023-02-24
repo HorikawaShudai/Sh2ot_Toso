@@ -28,6 +28,7 @@
 #include "fog.h"
 #include "time.h"
 #include "ActionHelpUI.h"
+#include "sound.h"
 
 //エディットに使うオブジェクトの種類の構造体
 typedef enum
@@ -146,14 +147,15 @@ void InitGame()
 	{
 
 	}
-	//SetEnemy(D3DXVECTOR3(-1000.0f, 0.0f, 350.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetEnemy(D3DXVECTOR3(-2162.46f, 0.0f, 1529.39f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
 	//プレイヤーの数だけ鍵を設置する
 	for (int nCnt = 0; nCnt < GetPlayNumberSelect().CurrentSelectNumber; nCnt++)
 	{
-
+		int nKey;
+		nKey = rand() % 9;
+		SetKey(KeyPos[nKey], D3DXVECTOR3(0.0f, 0.03f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	}
-	SetKey(D3DXVECTOR3(-1000.0f, 0.0f, -600.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
 	//ステージの読み込み
 	SetStage(0);
@@ -164,6 +166,9 @@ void InitGame()
 //====================================================================
 void UninitGame()
 {
+	////サウンドの終了
+	//StopSound();
+
 	//カメラの終了処理
 	UninitCamera();
 
@@ -357,7 +362,7 @@ void UpdateGame()
 		//出口の更新処理
 		UpdateExit();
 
-		//UpdateTime();
+		UpdateTime();
 
 		UpdatePolygonBG();
 	}
