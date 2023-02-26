@@ -812,11 +812,11 @@ void EnemyPatrol(int nEnemy)
 			//ç¿ïWÇÃçXêV
 			g_Enemy[nEnemy].move = D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y)*ENEMY_SPEED);
 
-			if (g_Enemy[nEnemy].fDistanceLeft <= 300.0f )
+			if (g_Enemy[nEnemy].fDistanceLeft <= 100.0f )
 			{
 				g_Enemy[nEnemy].move += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED);
 			}
-			else if (g_Enemy[nEnemy].fDistanceRight <= 300.0f)
+			else if (g_Enemy[nEnemy].fDistanceRight <= 100.0f)
 			{
 				g_Enemy[nEnemy].move += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED);
 			}
