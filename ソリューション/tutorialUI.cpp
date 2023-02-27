@@ -10,14 +10,14 @@
 #define MAX_SSUI					(5)			//TUTORIALUIの最大使用数
 
 #define POS_TUTORIALUI_ALL_X		(640.0f)	//「」のX座標の位置
-#define POS_TUTORIALUI_ALL_Y		(350.0f)	//「」のY座標の位置
-#define SIZE_TUTORIALUI_ALL_X		(200.0f)	//「」の幅
+#define POS_TUTORIALUI_ALL_Y		(420.0f)	//「」のY座標の位置
+#define SIZE_TUTORIALUI_ALL_X		(300.0f)	//「」の幅
 #define SIZE_TUTORIALUI_ALL_Y		(100.0f)	//「」の高さ
 
 #define POS_TUTORIALUI_1_01_X		(640.0f)	//「」のX座標の位置
-#define POS_TUTORIALUI_1_01_Y		(620.0f)	//「」のY座標の位置
+#define POS_TUTORIALUI_1_01_Y		(630.0f)	//「」のY座標の位置
 #define SIZE_TUTORIALUI_1_01_X		(300.0f)	//「」の幅
-#define SIZE_TUTORIALUI_1_01_Y		(50.0f)		//「」の高さ
+#define SIZE_TUTORIALUI_1_01_Y		(80.0f)		//「」の高さ
 
 #define POS_TUTORIALUI_2_01_X		(320.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_2_01_Y		(600.0f)	//「」のY座標の位置
@@ -52,6 +52,19 @@
 #define UP_PAPERBG01				(100.0f)	//紙を取り出すときの上昇度
 #define UP_PAPERBG01_COUNTER_MAX	(100)		//紙を取り出す速さのカウンター
 
+//テクスチャファイル名
+const char *c_apTutorialUITexname[] =
+{
+	"data\\TEXTURE\\TUTORIAL\\tutorial_move1.png",
+	"data\\TEXTURE\\TUTORIAL\\tutorial_cammove.png",
+	"data\\TEXTURE\\TUTORIAL\\tutorial_dash1.png",
+	"data\\TEXTURE\\TUTORIAL\\vibe.png",
+	"data\\TEXTURE\\TUTORIAL\\stealth.png",
+	"data\\TEXTURE\\TUTORIAL\\tutorial_key.png",
+	"data\\TEXTURE\\TUTORIAL\\open_doar.png",
+	"data\\TEXTURE\\TUTORIAL\\escape.png",
+};
+
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_apTextureTutorialUI[NUM_SSUI] = {};	//テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffTutorialUI = NULL;		//頂点バッファへのポインタ
@@ -72,37 +85,10 @@ void InitTutorialUI(void)
 	pDevice = GetDevice();
 
 	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\TUTORIAL\\tutorial_move.png",
-		&g_apTextureTutorialUI[0]);
-
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\TUTORIAL\\tutorial_cammove.png",
-		&g_apTextureTutorialUI[1]);
-
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\TUTORIAL\\tutorial_dash.png",
-		&g_apTextureTutorialUI[2]);
-
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\TUTORIAL\\vibe.png",
-		&g_apTextureTutorialUI[3]);
-
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\TUTORIAL\\stealth.png",
-		&g_apTextureTutorialUI[4]);
-
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\TUTORIAL\\tutorial_key.png",
-		&g_apTextureTutorialUI[5]);
-
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\TUTORIAL\\open_doar.png",
-		&g_apTextureTutorialUI[6]);
-
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\TUTORIAL\\escape.png",
-		&g_apTextureTutorialUI[7]);
+	for (int nCntUI = 0; nCntUI < NUM_SSUI; nCntUI++)
+	{
+		D3DXCreateTextureFromFile(pDevice, c_apTutorialUITexname[nCntUI], &g_apTextureTutorialUI[nCntUI]);
+	}
 
 	//UIの表示設定
 	bUseTutorialUI[0] = true;

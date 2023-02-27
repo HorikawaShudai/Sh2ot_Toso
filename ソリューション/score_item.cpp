@@ -79,7 +79,7 @@ void InitItem(void)
 		}
 	}
 
-	////スコア用アイテムの配置
+	//スコア用アイテムの配置
 	//SetNumItems(72, D3DXVECTOR3(-2400.0f, 0.0f, -500.0f), 50.0f, 0.0f);
 
 	//SetNumItems(48, D3DXVECTOR3(-2200.0f, 0.0f, 97.0f), 50.0f, 0.0f);

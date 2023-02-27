@@ -204,7 +204,6 @@
     <ClCompile Include="Thunder.cpp" />
     <ClCompile Include="time.cpp" />
     <ClCompile Include="title.cpp" />
-    <ClCompile Include="tutorial.cpp" />
     <ClCompile Include="tutorialUI.cpp" />
     <ClCompile Include="VillainRanking.cpp" />
     <ClCompile Include="VillainResult.cpp" />
@@ -264,7 +263,6 @@
     <ClInclude Include="Thunder.h" />
     <ClInclude Include="time.h" />
     <ClInclude Include="title.h" />
-    <ClInclude Include="tutorial.h" />
     <ClInclude Include="tutorialUI.h" />
     <ClInclude Include="VillainRanking.h" />
     <ClInclude Include="VillainResult.h" />
