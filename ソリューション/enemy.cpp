@@ -778,12 +778,12 @@ void EnemyPatrol(int nEnemy)
 		
 
 
-		if (g_Enemy[nEnemy].fDistanceLeft >= 300.0f && 	g_Enemy[nEnemy].nCoolTurn <= 0)
+		if (g_Enemy[nEnemy].fDistanceLeft >= 200.0f && 	g_Enemy[nEnemy].nCoolTurn <= 0)
 		{
 			EnemyDirection(nEnemy);
 			g_Enemy[nEnemy].nCoolTurn = 120;
 		}
-		if (g_Enemy[nEnemy].fDistanceRight >= 300.0f&& 	g_Enemy[nEnemy].nCoolTurn <= 0)
+		if (g_Enemy[nEnemy].fDistanceRight >= 200.0f&& 	g_Enemy[nEnemy].nCoolTurn <= 0)
 		{
 			EnemyDirection(nEnemy);
 			g_Enemy[nEnemy].nCoolTurn = 120;
@@ -812,11 +812,11 @@ void EnemyPatrol(int nEnemy)
 			//À•W‚ÌXV
 			g_Enemy[nEnemy].move = D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y)*ENEMY_SPEED);
 
-			if (g_Enemy[nEnemy].fDistanceLeft <= 300.0f )
+			if (g_Enemy[nEnemy].fDistanceLeft <= 200.0f)
 			{
 				g_Enemy[nEnemy].move += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED);
 			}
-			else if (g_Enemy[nEnemy].fDistanceRight <= 300.0f)
+			else if (g_Enemy[nEnemy].fDistanceRight <= 200.0f)
 			{
 				g_Enemy[nEnemy].move += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED);
 			}
