@@ -1336,10 +1336,6 @@ void PlayerDistance(int nCnt)
 		{
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, 300.0f, 0.0f, -10.0f, 50.0f) == true)
 			{//“G‚Ì•\¦ˆ—
-
-				////“G‚ÌˆÚ“®—Ê
-				//PlaySound(SOUND_LABEL_SE_ENEMYMOVE);
-		
 				g_aPlayer[nCnt].bAppear = true;
 				break;
 			}
