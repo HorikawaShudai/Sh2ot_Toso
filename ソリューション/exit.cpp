@@ -23,8 +23,8 @@
 
 const char *c_apExit[] =					//モデルデータ読み込み
 {
-	"Data\\MODEL\\Exit\\BigDoorFrame00.x",
-	"Data\\MODEL\\Exit\\BigDoor_UP.x",
+	"Data\\MODEL\\Exit\\BigDoorFrame01.x",
+	"Data\\MODEL\\Exit\\BigDoor_UP00.x",
 	"Data\\MODEL\\Exit\\BigDoor_L.x",
 	"Data\\MODEL\\Exit\\BigDoor_R.x",
 };

@@ -14,7 +14,7 @@
 #include "Effect.h"
 
 #define ENEMY_LIFE (7)		//オブジェクトの体力
-#define ENEMY_SPEED (2.0f) //敵の移動速度
+#define ENEMY_SPEED (4.0f) //敵の移動速度
 
 #define	DETECT_SPEED (5000.0f) //探査波の速度
 #define	PLAYERDETECT_SPEED (1000.0f) //探査波の速度
@@ -47,11 +47,11 @@ const char *c_apModelEnemy[] =					//モデルデータ読み込み
 
 const D3DXVECTOR3 TeleportPos[] = //移動先の座標
 {
-	D3DXVECTOR3(0.0f,0.0f,0.0f),
-	D3DXVECTOR3(0.0f,0.0f,0.0f),
-	D3DXVECTOR3(0.0f,0.0f,0.0f),
-	D3DXVECTOR3(0.0f,0.0f,0.0f),
-	D3DXVECTOR3(0.0f,0.0f,0.0f),
+	D3DXVECTOR3(-2150.0f, 0.0f, 455.0f),
+	D3DXVECTOR3(-1721.0f, 0.0f, 1254.0f),
+	D3DXVECTOR3(-1250.0f, 0.0f, 1315.0f),
+	D3DXVECTOR3(-800.0f,  0.0f, 2058.0f),
+	D3DXVECTOR3(-1352.0f, 0.0f, 1434.0f),
 };
 
 //====================================================================
@@ -660,7 +660,7 @@ float DetectWall(D3DXVECTOR3 pos, float fmoveRot, int nLife)
 				fDis *= -1.0f;
 			}
 			Detect.fDistance = sqrtf(fDis);
-			SetEffect(posPoint, D3DXCOLOR(1.0f, 0.2f, 0.2f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 120.0f, 60, 0);
+			//SetEffect(posPoint, D3DXCOLOR(1.0f, 0.2f, 0.2f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 120.0f, 60, 0);
 			return Detect.fDistance;
 		}
 		else
@@ -778,12 +778,12 @@ void EnemyPatrol(int nEnemy)
 		
 
 
-		if (g_Enemy[nEnemy].fDistanceLeft >= 300.0f && 	g_Enemy[nEnemy].nCoolTurn <= 0)
+		if (g_Enemy[nEnemy].fDistanceLeft >= 200.0f && 	g_Enemy[nEnemy].nCoolTurn <= 0)
 		{
 			EnemyDirection(nEnemy);
 			g_Enemy[nEnemy].nCoolTurn = 120;
 		}
-		if (g_Enemy[nEnemy].fDistanceRight >= 300.0f&& 	g_Enemy[nEnemy].nCoolTurn <= 0)
+		if (g_Enemy[nEnemy].fDistanceRight >= 200.0f&& 	g_Enemy[nEnemy].nCoolTurn <= 0)
 		{
 			EnemyDirection(nEnemy);
 			g_Enemy[nEnemy].nCoolTurn = 120;
@@ -812,11 +812,11 @@ void EnemyPatrol(int nEnemy)
 			//座標の更新
 			g_Enemy[nEnemy].move = D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y)*ENEMY_SPEED);
 
-			if (g_Enemy[nEnemy].fDistanceLeft <= 300.0f )
+			if (g_Enemy[nEnemy].fDistanceLeft <= 200.0f)
 			{
 				g_Enemy[nEnemy].move += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED);
 			}
-			else if (g_Enemy[nEnemy].fDistanceRight <= 300.0f)
+			else if (g_Enemy[nEnemy].fDistanceRight <= 200.0f)
 			{
 				g_Enemy[nEnemy].move += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED);
 			}
@@ -831,30 +831,30 @@ void EnemyDirection(int nEnemy)
 	{//ランダムに移動方向を決定
 		nCount++;
 		int nRand = rand() % 4;
-		if (g_Enemy[nEnemy].fDistanceN >= 300.0f && nRand == 0 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_S)
+		if (g_Enemy[nEnemy].fDistanceN >= 200.0f && nRand == 0 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_S)
 		{
 			g_Enemy[nEnemy].MoveState = ENEMYMOVE_N;
 			break;
 		}
-		else if (g_Enemy[nEnemy].fDistanceS >= 300.0f && nRand == 1 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_N)
+		else if (g_Enemy[nEnemy].fDistanceS >= 200.0f && nRand == 1 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_N)
 		{
 			g_Enemy[nEnemy].MoveState = ENEMYMOVE_S;
 			break;
 		}
-		else if (g_Enemy[nEnemy].fDistanceW >= 300.0f && nRand == 2 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_E)
+		else if (g_Enemy[nEnemy].fDistanceW >= 200.0f && nRand == 2 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_E)
 		{
 			g_Enemy[nEnemy].MoveState = ENEMYMOVE_W;
 			break;
 		}
-		else if (g_Enemy[nEnemy].fDistanceE >= 300.0f && nRand == 3 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_W)
+		else if (g_Enemy[nEnemy].fDistanceE >= 200.0f && nRand == 3 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_W)
 		{
 			g_Enemy[nEnemy].MoveState = ENEMYMOVE_E;
 			break;
 		}
-		else if (((g_Enemy[nEnemy].MoveState == ENEMYMOVE_N && g_Enemy[nEnemy].fDistanceN < 300.0f) ||
-			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_S && g_Enemy[nEnemy].fDistanceS < 300.0f) ||
-			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_W && g_Enemy[nEnemy].fDistanceW < 300.0f) ||
-			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_E && g_Enemy[nEnemy].fDistanceE < 300.0f)))
+		else if (((g_Enemy[nEnemy].MoveState == ENEMYMOVE_N && g_Enemy[nEnemy].fDistanceN < 200.0f) ||
+			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_S && g_Enemy[nEnemy].fDistanceS < 200.0f) ||
+			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_W && g_Enemy[nEnemy].fDistanceW < 200.0f) ||
+			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_E && g_Enemy[nEnemy].fDistanceE < 200.0f)))
 		{
 
 			g_Enemy[nEnemy].MoveState = ENEMYMOVE_NONE;
