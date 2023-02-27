@@ -11,6 +11,7 @@
 #include "fade.h"
 #include "game.h"
 #include "debugproc.h"
+#include "sound.h"
 
 //***********************************
 //マクロ定義
@@ -248,6 +249,9 @@ void ModeSelect(void)
 	{
 		if (GetKeyboardTrigger(DIK_D) == true || GetGamepadTrigger(BUTTON_RIGHT, 0) == true || GetGamepad_LStick_Trigger(0,LSTICK_RIGHT) == true)
 		{
+			//選択音
+			PlaySound(SOUND_LABEL_CHOICE);
+
 			//頂点バッファをロック
 			g_pVtxBuffStage->Lock(0, 0, (void**)&pVtx, 0);
 
@@ -281,6 +285,9 @@ void ModeSelect(void)
 		}
 		else if (GetKeyboardTrigger(DIK_A) == true || GetGamepadTrigger(BUTTON_LEFT, 0) == true || GetGamepad_LStick_Trigger(0, LSTICK_LEFT) == true)
 		{
+			//選択音
+			PlaySound(SOUND_LABEL_CHOICE);
+
 			//頂点バッファをロック
 			g_pVtxBuffStage->Lock(0, 0, (void**)&pVtx, 0);
 
@@ -317,9 +324,13 @@ void ModeSelect(void)
 		{//決定キー(ENTERキー)が押された
 			if (g_PlayModeSelect.CurrentModeNumber >= 0 && g_PlayModeSelect.CurrentModeNumber < NUM_PLAYMODE)
 			{
+				//決定音
+				PlaySound(SOUND_LABEL_ENTER);
+
 				PlayNumber.CurrentSelectNumber = 4;			//プレイ人数に合わせるため
 
-				SetFade(MODE_GAME);			//モードの設定(ゲーム画面に移行)
+				SetFade(MODE_TUTORIAL);			//モードの設定(ゲーム画面に移行)
+				//SetFade(MODE_GAME);			//モードの設定(ゲーム画面に移行)
 			}
 		}
 	}

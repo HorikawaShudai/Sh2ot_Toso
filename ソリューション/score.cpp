@@ -7,7 +7,6 @@
 #include "score.h"  
 #include "player.h"  
 #include "playNumberSelect.h"  
-#include "playModeSelect.h"  
 
 //マクロ定義
 #define NUM_PLACE		(3)			 //スコアの桁数
@@ -157,8 +156,6 @@ void DrawScore(void)
 	LPDIRECT3DDEVICE9 pDevice;
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
-	//プレイモード情報の取得
-	PlayModeSelect PlayMode = GetPlayModeSelect();
 
 	int nCntScore;
 
@@ -176,10 +173,7 @@ void DrawScore(void)
 
 	for (nCntScore = 0; nCntScore < NUM_PLACE * PlayNumber.CurrentSelectNumber; nCntScore++)
 	{//ポリゴンの描画
-		if (PlayMode.CurrentModeNumber == 1)
-		{//プレイモードが悪透モードのとき
-			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCntScore * 4, 2);
-		}
+		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCntScore * 4, 2);
 	}
 }
 

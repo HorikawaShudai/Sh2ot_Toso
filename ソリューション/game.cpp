@@ -21,6 +21,7 @@
 #include "score_item.h"
 #include "score.h"
 #include "PlayNumberSelect.h"
+#include "PlayModeSelect.h"
 #include "key.h"
 #include "keyUI.h"
 #include "Effect.h"
@@ -105,9 +106,6 @@ void InitGame()
 	//ライフの初期化処理
 	InitLife();
 
-	//スコアの初期化
-	InitScore();
-
 	//鍵の初期化処理
 	InitKey();
 
@@ -120,8 +118,15 @@ void InitGame()
 	//出口の初期化処理
 	InitExit();
 
-	//スコアアイテムの初期化
-	InitItem();
+	if (GetPlayModeSelect().CurrentModeNumber == 1)
+	{//モード選択が悪透モードの時
+
+		//スコアの初期化
+		InitScore();
+
+		//スコアアイテムの初期化
+		InitItem();
+	}
 
 	InitPolygonBG();
 
@@ -221,11 +226,15 @@ void UninitGame()
 	//ライフの終了処理
 	UninitLife();
 
-	//スコアの終了処理
-	UninitScore();
+	if (GetPlayModeSelect().CurrentModeNumber == 1)
+	{//モード選択が悪透モードの時
 
-	//アイテムの終了処理
-	UninitItem();
+		//スコアの終了処理
+		UninitScore();
+
+		//アイテムの終了処理
+		UninitItem();
+	}
 
 	//鍵の終了処理
 	UninitKey();
@@ -389,11 +398,14 @@ void UpdateGame()
 		//ライフの更新処理
 		UpdateLife();
 
-		//スコアの更新処理
-		UpdateScore();
+		if (GetPlayModeSelect().CurrentModeNumber == 1)
+		{//モード選択が悪透モードの時
+			//スコアの更新処理
+			UpdateScore();
 
-		//スコアアイテムの更新処理
-		UpdateItem();
+			//スコアアイテムの更新処理
+			UpdateItem();
+		}
 
 		//鍵の更新処理
 		UpdateKey();
@@ -536,11 +548,15 @@ void DrawGame()
 
 		DrawTime();
 
-		//スコアの描画処理
-		DrawScore();
+		if (GetPlayModeSelect().CurrentModeNumber == 1)
+		{//モード選択が悪透モードの時
 
-		//スコアアイテムの描画処理
-		DrawItem();
+			//スコアアイテムの描画処理
+			DrawItem();
+
+			//スコアの描画処理
+			DrawScore();
+		}
 
 		//鍵の描画処理
 		DrawKey();
