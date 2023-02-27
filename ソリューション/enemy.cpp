@@ -12,6 +12,7 @@
 #include "player.h"
 #include "debugproc.h"
 #include "Effect.h"
+#include "objectPoly.h"
 
 #define ENEMY_LIFE (7)		//オブジェクトの体力
 #define ENEMY_SPEED (4.0f) //敵の移動速度
@@ -19,8 +20,8 @@
 #define	DETECT_SPEED (5000.0f) //探査波の速度
 #define	PLAYERDETECT_SPEED (1000.0f) //探査波の速度
 
-#define TURN_DISTANCE_WALL (50.0f) //曲がるまでの壁との距離
-#define TURN_DISTANCE_CORNER (200.0f) //曲がり角と認識する距離
+#define TURN_DISTANCE_WALL (100.0f) //曲がるまでの壁との距離
+#define TURN_DISTANCE_CORNER (300.0f) //曲がり角と認識する距離
 #define MOVE_DISTANCE_WALL (100.0f) //左右の壁と保つ距離
 
 //グローバル変数
@@ -199,11 +200,11 @@ void UpdateEnemy(void)
 			{
 				
 				
-					float DetectRot = g_Enemy[nCntObject].rot.y - D3DXToRadian(45.0f) + D3DXToRadian(15.0f * (g_nDetect % 6));
+					float DetectRot = g_Enemy[nCntObject].rot.y - D3DXToRadian(45.0f) + D3DXToRadian(7.5f * (g_nDetect % 12));
 					if (DetectPlayer(g_Enemy[nCntObject].pos, DetectRot, nCntObject) == true)
 					{
 						g_Enemy[nCntObject].state = ENEMYSTATE_CHASE;
-						break;
+						
 					}
 				
 			}
@@ -213,6 +214,7 @@ void UpdateEnemy(void)
 				EnemyPatrol(nCntObject);
 
 				CollisionObjectWall(&g_Enemy[nCntObject].pos, &g_Enemy[nCntObject].posOld, &g_Enemy[nCntObject].move, D3DXVECTOR3(-1.0f, -1.0f, -1.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f), 1.0f);
+				CollisionObjectPoly(&g_Enemy[nCntObject].pos, &g_Enemy[nCntObject].posOld, &g_Enemy[nCntObject].move, D3DXVECTOR3(-1.0f, -1.0f, -1.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f), 1.0f);
 
 			}
 
@@ -655,15 +657,31 @@ float DetectWall(D3DXVECTOR3 pos, float fmoveRot, int nLife)
 		Detect.pos += Detect.move;	
 		
 		D3DXVECTOR3 posPoint = CollisionOuterProductObjectWall(&Detect.pos, &Detect.posOld, &Detect.move);
+		D3DXVECTOR3 posPoint2 = CollisionOuterProductObjectPoly(&Detect.pos, &Detect.posOld, &Detect.move);
 		if (pos != NULL)
 		{//壁に当たったとき
 		 //距離を割り出す
 			float fDis = ((powf(Detect.Startpos.x, 2.0f) + powf(Detect.Startpos.z, 2.0f)) - (powf(posPoint.x, 2.0f) + powf(posPoint.z, 2.0f)));
+			float fDis2 = ((powf(Detect.Startpos.x, 2.0f) + powf(Detect.Startpos.z, 2.0f)) - (powf(posPoint2.x, 2.0f) + powf(posPoint2.z, 2.0f)));
 			if (fDis <= 0)
 			{
 				fDis *= -1.0f;
 			}
-			Detect.fDistance = sqrtf(fDis);
+			if (fDis2 <= 0)
+			{
+				fDis2 *= -1.0f;
+			}
+			if (fDis < fDis2)
+			{
+				//SetEffect(posPoint, D3DXCOLOR(1.0f, 0.2f, 0.2f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 120.0f, 60, 0);
+				Detect.fDistance = sqrtf(fDis);
+			}
+			else
+			{
+			//	SetEffect(posPoint2, D3DXCOLOR(1.0f, 0.2f, 0.2f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 120.0f, 60, 0);
+				Detect.fDistance = sqrtf(fDis2);
+			}
+			
 			//SetEffect(posPoint, D3DXCOLOR(1.0f, 0.2f, 0.2f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 120.0f, 60, 0);
 			return Detect.fDistance;
 		}
@@ -686,24 +704,35 @@ bool DetectPlayer(D3DXVECTOR3 pos, float fmoveRot, int nEnemy)
 	Detect.posOld = Detect.pos;
 	Detect.move = D3DXVECTOR3(sinf(Detect.fmoveRot)*PLAYERDETECT_SPEED, 0.0f, cosf(Detect.fmoveRot)*PLAYERDETECT_SPEED);
 	Detect.pos += Detect.move;
-
-	D3DXVECTOR3 posPoint = CollisionOuterProductObjectWall(&Detect.pos, &Detect.posOld, &Detect.move);
-	D3DXVECTOR3 posPoint2 = CollisionOuterProductPlayer(&Detect.pos, &Detect.posOld, &Detect.move);
-	float fDis1, fDis2;
-	fDis1 = posPoint.x - g_Enemy[nEnemy].pos.x + posPoint.z - g_Enemy[nEnemy].pos.z;
-	if (fDis1 < 0)
+	D3DXVECTOR3 posPoint[3];
+	float fDis[3];
+	for (int nCnt = 0; nCnt < 3; nCnt++)
 	{
-		fDis1 *= -1;
+		switch (nCnt)
+		{
+		case 0:
+			 posPoint[nCnt] = CollisionOuterProductObjectWall(&Detect.pos, &Detect.posOld, &Detect.move);
+			 break;
+		case 1:
+			posPoint[nCnt] = CollisionOuterProductPlayer(&Detect.pos, &Detect.posOld, &Detect.move);
+			break;
+		case 2:
+			posPoint[nCnt] = CollisionOuterProductObjectPoly(&Detect.pos, &Detect.posOld, &Detect.move);
+			break;
+		default:
+			break;
+		}
+		fDis[nCnt] = posPoint[nCnt].x - g_Enemy[nEnemy].pos.x + posPoint[nCnt].z - g_Enemy[nEnemy].pos.z;
+		if (fDis[nCnt] < 0)
+		{
+			fDis[nCnt] *= -1;
+		}
 	}
-	fDis2 = posPoint2.x - g_Enemy[nEnemy].pos.x + posPoint2.z - g_Enemy[nEnemy].pos.z;
-	if (fDis2 < 0)
+	
+	
+	if (fDis[1] < fDis[0] && fDis[1] < fDis[2])
 	{
-		fDis2 *= -1;
-	}
-
-	if (fDis1 > fDis2)
-	{
-		g_Enemy[nEnemy].Tgpos = posPoint2;
+		g_Enemy[nEnemy].Tgpos = posPoint[1];
 		return true;
 	}
 	else

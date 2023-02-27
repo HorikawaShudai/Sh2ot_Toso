@@ -33,6 +33,8 @@ void DrawObjectPoly(void);
 void DrawEditObjectPoly(void);
 void SetObjectPoly(D3DXVECTOR3 pos, float Wight, float Height);
 void EditCollisionObjectPoly(D3DXVECTOR3 pos, float Size);
+D3DXVECTOR3 CollisionOuterProductObjectPoly(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove);
+bool CollisionObjectPoly(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size);
 ObjectPoly * GetObjectPoly(void);
 
 #endif
