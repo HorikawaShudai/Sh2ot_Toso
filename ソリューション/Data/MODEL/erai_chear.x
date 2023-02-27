@@ -2153,7 +2153,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\wood_texture.jpg";
+    "Data\\TEXTURE\\wood_texture.jpg";
    }
   }
   Material {
@@ -2168,7 +2168,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\wood_texture.jpg";
+    "Data\\TEXTURE\\wood_texture.jpg";
    }
   }
   Material {
@@ -2213,7 +2213,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\sofa_reg.jpeg";
+    "Data\\TEXTURE\\sofa_reg.jpeg";
    }
   }
   Material {
@@ -2222,7 +2222,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\sofa_reg.jpeg";
+    "Data\\TEXTURE\\sofa_reg.jpeg";
    }
   }
   Material {
@@ -2231,7 +2231,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\erai_chear.jpeg";
+    "Data\\TEXTURE\\erai_chear.jpeg";
    }
   }
  }
