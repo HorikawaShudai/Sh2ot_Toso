@@ -32,6 +32,7 @@
 #include "ActionHelpUI.h"
 #include "player.h"
 #include "sound.h"
+#include "particle.h"
 
 //グローバル変数宣言
 TUTORIAL_STATE g_EscapeTutorialState;
@@ -105,6 +106,9 @@ void InitEscapeTutorial()
 
 	//エフェクトの初期化
 	InitEffect();
+
+	//パーティクルの初期化
+	InitParticle();
 
 	//出口の初期化処理
 	InitExit();
@@ -189,6 +193,9 @@ void UninitEscapeTutorial()
 
 	//エフェクトの終了処理
 	UninitEffect();
+
+	//パーティクルの終了処理
+	UninitParticle();
 
 	//出口の終了処理
 	UninitExit();
@@ -338,6 +345,9 @@ void UpdateEscapeTutorial()
 		//エフェクトの更新処理
 		UpdateEffect();
 
+		//パーティクルの更新
+		UpdateParticle();
+
 		//出口の更新処理
 		UpdateExit();
 	}
@@ -417,6 +427,9 @@ void DrawEscapeTutorial()
 	{
 		//カメラのセット処理
 		SetCamera(nCnt);
+
+		//パーティクルの描画
+		DrawParticle();
 
 		//メッシュウォールの描画処理
 		DrawMeshWall();
