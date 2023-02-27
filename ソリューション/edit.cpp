@@ -14,6 +14,8 @@
 #include "object00.h"
 #include "objectBG.h"
 #include "objectLight.h"
+#include "objectWall.h"
+#include "objectPoly.h"
 #include <stdio.h>
 
 //====================================================================
@@ -24,6 +26,8 @@ void InitEdit()
 	InitObject00();
 	InitObjectBG();
 	InitObjectLight();
+	InitObjectWall();
+	InitObjectPoly();
 }
 
 //====================================================================
@@ -34,6 +38,8 @@ void UninitEdit()
 	UninitObject00();
 	UninitObjectBG();
 	UninitObjectLight();
+	UninitObjectWall();
+	UninitObjectPoly();
 }
 
 //====================================================================
@@ -73,6 +79,8 @@ void SaveEdit()
 	Object00 *pObject00 = GetObject00();
 	ObjectBG *pObjectBG = GetObjectBG();
 	ObjectLight *pObjectLight = GetObjectLight();
+	ObjectWall *pObjectWall = GetObjectWall();
+	ObjectPoly *pObjectPoly = GetObjectPoly();
 	FILE *pFile; //ファイルポインタを宣言
 
 	//ファイルを開く
@@ -83,6 +91,43 @@ void SaveEdit()
 
 		//ステージをセーブする開始の合図
 		fprintf(pFile, "%s\n\n", "STARTSETSTAGE");
+
+		for (int nCntObjectWall = 0; nCntObjectWall < MAX_OBJECTWALL; nCntObjectWall++, pObjectWall++)
+		{
+			if (pObjectWall->bUse == true)
+			{//使用されている場合
+
+			 //オブジェクトをセーブする開始の合図
+				fprintf(pFile, "%s\n", "SETOBJECTWALL");
+
+				//各種変数の情報セーブ
+				fprintf(pFile, "%s			%.3f %.3f %.3f\n", "POS", pObjectWall->pos.x, pObjectWall->pos.y, pObjectWall->pos.z);
+				fprintf(pFile, "%s		%.3f %.3f %.3f\n", "MOVE", pObjectWall->move.x, pObjectWall->move.y, pObjectWall->move.z);
+				fprintf(pFile, "%s			%.3f %.3f %.3f\n", "ROT", pObjectWall->rot.x, pObjectWall->rot.y, pObjectWall->rot.z);
+				fprintf(pFile, "%s		%d\n", "nType", pObjectWall->nType);
+
+				//オブジェクトをセーブした終了の合図
+				fprintf(pFile, "%s\n\n", "ENDOBJECTWALL");
+			}
+		}
+
+		for (int nCntObjectPoly = 0; nCntObjectPoly < MAX_OBJECTPOLY; nCntObjectPoly++, pObjectPoly++)
+		{
+			if (pObjectPoly->bUse == true)
+			{//使用されている場合
+
+			 //オブジェクトをセーブする開始の合図
+				fprintf(pFile, "%s\n", "SETOBJECTPOLY");
+
+				//各種変数の情報セーブ
+				fprintf(pFile, "%s			%.3f %.3f %.3f\n", "POS", pObjectPoly->pos.x, pObjectPoly->pos.y, pObjectPoly->pos.z);
+				fprintf(pFile, "%s		%.3f\n", "WIGHT", pObjectPoly->fWigft);
+				fprintf(pFile, "%s			%.3f\n", "HEIGHT", pObjectPoly->fHeight);
+
+				//オブジェクトをセーブした終了の合図
+				fprintf(pFile, "%s\n\n", "ENDOBJECTPOLY");
+			}
+		}
 
 		for (int nCntObject00 = 0; nCntObject00 < MAX_OBJECT00; nCntObject00++, pObject00++)
 		{

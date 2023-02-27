@@ -10,6 +10,8 @@
 #include "object00.h"
 #include "objectBG.h"
 #include "objectLight.h"
+#include "objectWall.h"
+#include "objectPoly.h"
 #include "edit.h"
 #include <stdio.h>
 
@@ -19,10 +21,14 @@
 #define SET_OBJECT00OK ("SETOBJECT00")			//セットメッセージがあるかどうかの確認
 #define SET_OBJECTBGOK ("SETOBJECTBG")			//セットメッセージがあるかどうかの確認
 #define SET_OBJECTLIGHTOK ("SETOBJECTLIGHT")	//セットメッセージがあるかどうかの確認
+#define SET_OBJECTWALLOK ("SETOBJECTWALL")		//セットメッセージがあるかどうかの確認
+#define SET_OBJECTPOLYOK ("SETOBJECTPOLY")		//セットメッセージがあるかどうかの確認
 #define ENDENEMY_OK ("ENDENEMY")				//エンドメッセージがあるかどうかの確認
 #define END_OBJECT00OK ("ENDOBJECT00")			//エンドメッセージがあるかどうかの確認
 #define END_OBJECTBGOK ("ENDOBJECTBG")			//エンドメッセージがあるかどうかの確認
 #define END_OBJECTLIGHTOK ("ENDOBJECTLIGHT")	//エンドメッセージがあるかどうかの確認
+#define END_OBJECTWALLOK ("ENDOBJECTWALL")		//エンドメッセージがあるかどうかの確認
+#define END_OBJECTPOLYOK ("ENDOBJECTPOLY")		//エンドメッセージがあるかどうかの確認
 #define END_SET_OK ("ENDSETSTAGE")				//エンドメッセージがあるかどうかの確認
 
 //ステージの構造体
@@ -31,7 +37,9 @@ typedef struct
 	D3DXVECTOR3 pos;							//現在の位置
 	D3DXVECTOR3 move;							//移動量
 	D3DXVECTOR3 rot;							//向き
-	int nType;							//向き
+	float fWight;							//幅
+	float fHeight;							//高さ
+	int nType;							//種類
 	bool bUse;									//使用しているかどうか
 }Stage;
 
@@ -56,11 +64,27 @@ typedef struct
 	bool bUse;									//使用しているかどうか
 }Stage_ObjectLight;
 
+//ステージの構造体
+typedef struct
+{
+	int nCount;
+	bool bUse;									//使用しているかどうか
+}Stage_ObjectWall;
+
+//ステージの構造体
+typedef struct
+{
+	int nCount;
+	bool bUse;									//使用しているかどうか
+}Stage_ObjectPoly;
+
 Stage g_Stage[MAX_STAGEOBJECT];
 //Stage_Enemy g_StageEnemy[MAX_STAGEOBJECT];
 Stage_Object00 g_StageObject00[MAX_STAGEOBJECT];
 Stage_ObjectBG g_StageObjectBG[MAX_STAGEOBJECT];
-Stage_ObjectBG g_StageObjectLight[MAX_STAGEOBJECT];
+Stage_ObjectLight g_StageObjectLight[MAX_STAGEOBJECT];
+Stage_ObjectWall g_StageObjectWall[MAX_STAGEOBJECT];
+Stage_ObjectPoly g_StageObjectPoly[MAX_STAGEOBJECT];
 int g_SelectStage;
 
 //====================================================================
@@ -85,6 +109,12 @@ void SetStage(int nStageNumber)
 
 		g_StageObjectLight[nCntStage].nCount = -1;
 		g_StageObjectLight[nCntStage].bUse = false;
+
+		g_StageObjectWall[nCntStage].nCount = -1;
+		g_StageObjectWall[nCntStage].bUse = false;
+
+		g_StageObjectPoly[nCntStage].nCount = -1;
+		g_StageObjectPoly[nCntStage].bUse = false;
 	}
 
 	//ステージを読み込む
@@ -109,6 +139,18 @@ void SetStage(int nStageNumber)
 		if (g_StageObjectLight[nCntStage].bUse == true)
 		{
 			SetObjectLight(g_Stage[nCntStage].pos, g_Stage[nCntStage].move, g_Stage[nCntStage].rot, g_Stage[nCntStage].nType);
+		}
+
+		//オブジェクトWallの配置
+		if (g_StageObjectWall[nCntStage].bUse == true)
+		{
+			SetObjectWall(g_Stage[nCntStage].pos, g_Stage[nCntStage].move, g_Stage[nCntStage].rot, g_Stage[nCntStage].nType);
+		}
+
+		//オブジェクトWallの配置
+		if (g_StageObjectPoly[nCntStage].bUse == true)
+		{
+			SetObjectPoly(g_Stage[nCntStage].pos, g_Stage[nCntStage].fWight, g_Stage[nCntStage].fHeight);
 		}
 	}
 }
@@ -284,6 +326,75 @@ void LoadStage(int nStageNumber)
 						}
 
 					}
+
+					//オブジェクトWallの配置--------------------------
+					if (g_StageObjectWall[nCntStage].bUse == false)
+					{
+
+						if (strcmp(&aSetMessage[0], SET_OBJECTWALLOK) == 0)
+						{
+							fscanf(pFile, "%s", &aString[0]);					//ゴミ箱
+							fscanf(pFile, "%f", &g_Stage[nCntStage].pos.x);		//POSの設定
+							fscanf(pFile, "%f", &g_Stage[nCntStage].pos.y);		//POSの設定
+							fscanf(pFile, "%f", &g_Stage[nCntStage].pos.z);		//POSの設定
+
+							fscanf(pFile, "%s", &aString[0]);					//ゴミ箱
+							fscanf(pFile, "%f", &g_Stage[nCntStage].move.x);	//MOVEの設定
+							fscanf(pFile, "%f", &g_Stage[nCntStage].move.y);	//MOVEの設定
+							fscanf(pFile, "%f", &g_Stage[nCntStage].move.z);	//MOVEの設定
+
+							fscanf(pFile, "%s", &aString[0]);					//ゴミ箱
+							fscanf(pFile, "%f", &g_Stage[nCntStage].rot.x);		//ROTの設定
+							fscanf(pFile, "%f", &g_Stage[nCntStage].rot.y);		//ROTの設定
+							fscanf(pFile, "%f", &g_Stage[nCntStage].rot.z);		//ROTの設定
+
+							fscanf(pFile, "%s", &aString[0]);					//ゴミ箱
+							fscanf(pFile, "%d", &g_Stage[nCntStage].nType);		//TYPEの設定
+
+																				//終了の合図
+							fscanf(pFile, "%s", &aEndMessage[0]);
+							if (strcmp(&aEndMessage[0], END_OBJECTWALLOK) != 0)
+							{
+								break;
+							}
+
+							g_StageObjectWall[nCntStage].nCount++;
+							g_StageObjectWall[nCntStage].bUse = true;
+
+						}
+
+					}
+
+					if (g_StageObjectPoly[nCntStage].bUse == false)
+					{
+
+						if (strcmp(&aSetMessage[0], SET_OBJECTPOLYOK) == 0)
+						{
+							fscanf(pFile, "%s", &aString[0]);					//ゴミ箱
+							fscanf(pFile, "%f", &g_Stage[nCntStage].pos.x);		//POSの設定
+							fscanf(pFile, "%f", &g_Stage[nCntStage].pos.y);		//POSの設定
+							fscanf(pFile, "%f", &g_Stage[nCntStage].pos.z);		//POSの設定
+
+							fscanf(pFile, "%s", &aString[0]);					//ゴミ箱
+							fscanf(pFile, "%f", &g_Stage[nCntStage].fWight);	//WIGHTの設定
+
+							fscanf(pFile, "%s", &aString[0]);					//ゴミ箱
+							fscanf(pFile, "%f", &g_Stage[nCntStage].fHeight);	//HEIGHTの設定
+
+							//終了の合図
+							fscanf(pFile, "%s", &aEndMessage[0]);
+							if (strcmp(&aEndMessage[0], END_OBJECTPOLYOK) != 0)
+							{
+								break;
+							}
+
+							g_StageObjectPoly[nCntStage].nCount++;
+							g_StageObjectPoly[nCntStage].bUse = true;
+
+						}
+
+					}
+
 
 				if (strcmp(&aSetMessage[0], END_SET_OK) == 0)
 				{
