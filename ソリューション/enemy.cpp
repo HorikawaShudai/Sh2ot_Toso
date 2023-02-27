@@ -212,7 +212,7 @@ void UpdateEnemy(void)
 			{
 				EnemyPatrol(nCntObject);
 
-				CollisionObject00(&g_Enemy[nCntObject].pos, &g_Enemy[nCntObject].posOld, &g_Enemy[nCntObject].move, D3DXVECTOR3(-1.0f, -1.0f, -1.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f), 1.0f);
+				CollisionObjectWall(&g_Enemy[nCntObject].pos, &g_Enemy[nCntObject].posOld, &g_Enemy[nCntObject].move, D3DXVECTOR3(-1.0f, -1.0f, -1.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f), 1.0f);
 
 			}
 
@@ -654,7 +654,7 @@ float DetectWall(D3DXVECTOR3 pos, float fmoveRot, int nLife)
 		Detect.move = D3DXVECTOR3(sinf(Detect.fmoveRot)*DETECT_SPEED, 0.0f, cosf(Detect.fmoveRot)*DETECT_SPEED);
 		Detect.pos += Detect.move;	
 		
-		D3DXVECTOR3 posPoint = CollisionOuterProductObject00(&Detect.pos, &Detect.posOld, &Detect.move);
+		D3DXVECTOR3 posPoint = CollisionOuterProductObjectWall(&Detect.pos, &Detect.posOld, &Detect.move);
 		if (pos != NULL)
 		{//ï«Ç…ìñÇΩÇ¡ÇΩÇ∆Ç´
 		 //ãóó£ÇäÑÇËèoÇ∑
@@ -687,7 +687,7 @@ bool DetectPlayer(D3DXVECTOR3 pos, float fmoveRot, int nEnemy)
 	Detect.move = D3DXVECTOR3(sinf(Detect.fmoveRot)*PLAYERDETECT_SPEED, 0.0f, cosf(Detect.fmoveRot)*PLAYERDETECT_SPEED);
 	Detect.pos += Detect.move;
 
-	D3DXVECTOR3 posPoint = CollisionOuterProductObject00(&Detect.pos, &Detect.posOld, &Detect.move);
+	D3DXVECTOR3 posPoint = CollisionOuterProductObjectWall(&Detect.pos, &Detect.posOld, &Detect.move);
 	D3DXVECTOR3 posPoint2 = CollisionOuterProductPlayer(&Detect.pos, &Detect.posOld, &Detect.move);
 	float fDis1, fDis2;
 	fDis1 = posPoint.x - g_Enemy[nEnemy].pos.x + posPoint.z - g_Enemy[nEnemy].pos.z;

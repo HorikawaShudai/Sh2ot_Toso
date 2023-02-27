@@ -23,6 +23,5 @@ void DrawGame();
 void SetGameState(GAMESTATE state, int nCounter);
 GAMESTATE GetGameState();
 bool GetClear(void);
-void SetPause(bool bPause);
 
 #endif

@@ -38,6 +38,9 @@
 #define PLAYER_LIFE				(3)				//プレイヤーの初期ライフ
 #define PLAYER_COLLISIONSIZE	(15.0f)			//プレイヤーの当たり判定の大きさ
 #define PLAYER_LIGHT			(350.0f)		//プレイヤーの当たり判定の大きさ
+#define ENEMY_SE_SPEED			(60)			//敵の足音を鳴らす間隔
+#define PLAYER_SE_WALK			(40)			//プレイヤーの足音を鳴らす間隔(歩き)
+#define PLAYER_SE_DASH			(30)			//プレイヤーの足音を鳴らす間隔(ダッシュ)
 
 //プロトタイプ
 void UpdatePlayer0(void);
@@ -109,6 +112,9 @@ void InitPlayer(void)
 		g_aPlayer[nCntPlayer].nVibCnt = 0;
 		g_aPlayer[nCntPlayer].KeyHelpUI = false;
 		g_aPlayer[nCntPlayer].ExitHelpUI = false;
+
+		g_aPlayer[nCntPlayer].nEnemySECount = 0;
+		g_aPlayer[nCntPlayer].nPlayerSECount = 0;
 
 		g_Rand_PolygonColor_R = 0;
 		g_Rand_PolygonColor_G = 0;
@@ -1036,8 +1042,20 @@ void ResPlayerMove(int nCnt)
 				g_aPlayer[nCnt].NormarizeMove.z += cosf(pCamera[nCnt].rot.y);
 				g_aPlayer[nCnt].NormarizeMove.x += sinf(pCamera[nCnt].rot.y);
 
-				//プレイヤーの歩き
-				PlaySound(SOUND_LABEL_SE_WALK);
+				g_aPlayer[nCnt].nPlayerSECount++;
+
+				if (g_aPlayer[nCnt].nPlayerSECount > PLAYER_SE_WALK && g_aPlayer[nCnt].MoveState == PLAYER_MOVESTATE_NORMAL)
+				{
+					//プレイヤーの歩き
+					PlaySound(SOUND_LABEL_SE_WALK);
+
+					g_aPlayer[nCnt].nPlayerSECount = 0;
+				}
+
+				else
+				{
+					
+				}
 
 				//移動したらチェックをつける処理
 				if (do_Tutorial == MODE_MOVE)
@@ -1051,8 +1069,20 @@ void ResPlayerMove(int nCnt)
 				g_aPlayer[nCnt].NormarizeMove.z -= cosf(pCamera[nCnt].rot.y);
 				g_aPlayer[nCnt].NormarizeMove.x -= sinf(pCamera[nCnt].rot.y);
 
-				//プレイヤーの歩き
-				PlaySound(SOUND_LABEL_SE_WALK);
+				g_aPlayer[nCnt].nPlayerSECount++;
+
+				if (g_aPlayer[nCnt].nPlayerSECount > PLAYER_SE_WALK && g_aPlayer[nCnt].MoveState == PLAYER_MOVESTATE_NORMAL)
+				{
+					//プレイヤーの歩き
+					PlaySound(SOUND_LABEL_SE_WALK);
+
+					g_aPlayer[nCnt].nPlayerSECount = 0;
+				}
+
+				else
+				{
+				
+				}
 
 				//移動したらチェックをつける処理
 				if (do_Tutorial == MODE_MOVE)
@@ -1067,8 +1097,20 @@ void ResPlayerMove(int nCnt)
 				g_aPlayer[nCnt].NormarizeMove.x += cosf(pCamera[nCnt].rot.y);
 				g_aPlayer[nCnt].NormarizeMove.z -= sinf(pCamera[nCnt].rot.y);
 
-				//プレイヤーの歩き
-				PlaySound(SOUND_LABEL_SE_WALK);
+				g_aPlayer[nCnt].nPlayerSECount++;
+
+				if (g_aPlayer[nCnt].nPlayerSECount > PLAYER_SE_WALK && g_aPlayer[nCnt].MoveState == PLAYER_MOVESTATE_NORMAL)
+				{
+					//プレイヤーの歩き
+					PlaySound(SOUND_LABEL_SE_WALK);
+
+					g_aPlayer[nCnt].nPlayerSECount = 0;
+				}
+
+				else
+				{
+					
+				}
 
 				//移動したらチェックをつける処理
 				if (do_Tutorial == MODE_MOVE)
@@ -1083,8 +1125,20 @@ void ResPlayerMove(int nCnt)
 				g_aPlayer[nCnt].NormarizeMove.x -= cosf(pCamera[nCnt].rot.y);
 				g_aPlayer[nCnt].NormarizeMove.z += sinf(pCamera[nCnt].rot.y);
 
-				//プレイヤーの歩き
-				PlaySound(SOUND_LABEL_SE_WALK);
+				g_aPlayer[nCnt].nPlayerSECount++;
+
+				if (g_aPlayer[nCnt].nPlayerSECount > PLAYER_SE_WALK && g_aPlayer[nCnt].MoveState == PLAYER_MOVESTATE_NORMAL)
+				{
+					//プレイヤーの歩き
+					PlaySound(SOUND_LABEL_SE_WALK);
+
+					g_aPlayer[nCnt].nPlayerSECount = 0;
+				}
+
+				else
+				{
+					
+				}
 
 				//移動したらチェックをつける処理
 				if (do_Tutorial == MODE_MOVE)
@@ -1116,8 +1170,20 @@ void ResPlayerMove(int nCnt)
 				g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_DASHSPEED;
 				g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_DASHSPEED;
 
-				//ダッシュ状態の音
-				PlaySound(SOUND_LABEL_SE_RUN);
+				g_aPlayer[nCnt].nPlayerSECount++;
+
+				if (g_aPlayer[nCnt].nPlayerSECount > PLAYER_SE_DASH && g_aPlayer[nCnt].MoveState == PLAYER_MOVESTATE_DASH)
+				{
+					//ダッシュ状態の音
+					PlaySound(SOUND_LABEL_SE_WALK);
+
+					g_aPlayer[nCnt].nPlayerSECount = 0;
+				}
+
+				else
+				{
+					
+				}
 
 				//プレイヤーをダッシュ状態にする
 				g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_DASH;
@@ -1136,9 +1202,6 @@ void ResPlayerMove(int nCnt)
 			g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_STEALTHSPEED;
 
 			g_aPlayer[nCnt].move += g_aPlayer[nCnt].NormarizeMove;
-
-			//ダッシュ状態の音
-			PlaySound(SOUND_LABEL_SE_STELTH);
 
 			//プレイヤーをステルス状態にする
 			g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;
@@ -1336,10 +1399,6 @@ void PlayerDistance(int nCnt)
 		{
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, 300.0f, 0.0f, -10.0f, 50.0f) == true)
 			{//敵の表示処理
-
-				////敵の移動量
-				//PlaySound(SOUND_LABEL_SE_ENEMYMOVE);
-		
 				g_aPlayer[nCnt].bAppear = true;
 				break;
 			}
@@ -1388,7 +1447,14 @@ void PlayerDistance(int nCnt)
 
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, 800.0f, 0.0f, -10.0f, 50.0f) == true)
 			{//サウンド処理
+				g_aPlayer[nCnt].nEnemySECount++;
 
+				if (g_aPlayer[nCnt].nEnemySECount > ENEMY_SE_SPEED)
+				{
+					PlaySound(SOUND_LABEL_SE_ENEMYMOVE);
+
+					g_aPlayer[nCnt].nEnemySECount = 0;
+				}
 			}
 			else
 			{

@@ -37,7 +37,7 @@ typedef struct
 	D3DXVECTOR3 pos;							//現在の位置
 	D3DXVECTOR3 move;							//移動量
 	D3DXVECTOR3 rot;							//向き
-	float fWight;							//幅
+	float fWidth;							//幅
 	float fHeight;							//高さ
 	int nType;							//種類
 	bool bUse;									//使用しているかどうか
@@ -150,7 +150,7 @@ void SetStage(int nStageNumber)
 		//オブジェクトWallの配置
 		if (g_StageObjectPoly[nCntStage].bUse == true)
 		{
-			SetObjectPoly(g_Stage[nCntStage].pos, g_Stage[nCntStage].fWight, g_Stage[nCntStage].fHeight);
+			SetObjectPoly(g_Stage[nCntStage].pos, g_Stage[nCntStage].fWidth, g_Stage[nCntStage].fHeight);
 		}
 	}
 }
@@ -376,7 +376,7 @@ void LoadStage(int nStageNumber)
 							fscanf(pFile, "%f", &g_Stage[nCntStage].pos.z);		//POSの設定
 
 							fscanf(pFile, "%s", &aString[0]);					//ゴミ箱
-							fscanf(pFile, "%f", &g_Stage[nCntStage].fWight);	//WIGHTの設定
+							fscanf(pFile, "%f", &g_Stage[nCntStage].fWidth);	//WIGHTの設定
 
 							fscanf(pFile, "%s", &aString[0]);					//ゴミ箱
 							fscanf(pFile, "%f", &g_Stage[nCntStage].fHeight);	//HEIGHTの設定

@@ -8,7 +8,8 @@
 #define _ENEMY_H_
 
 #include "main.h"
-#include "object00.h"
+#include "objectWall.h"
+#include "objectPoly.h"
 
 #define MAX_ENEMY (64)		//敵最大数
 #define NUM_ENEMYMODEL (2) //敵のパーツ総数
@@ -57,7 +58,7 @@ typedef struct
 	ENEMYSTATE state;							//状態
 	ENEMYMOVE MoveState;						//移動方向の状態
 	int StateCount;
-	Object00 aModel[NUM_ENEMYMODEL]; //持ってるモデルの情報
+	ObjectWall aModel[NUM_ENEMYMODEL]; //持ってるモデルの情報
 	int nType;						//モデルの種類
 	bool bUse;									//モデルが使用されているかどうか
 												//四方位への距離

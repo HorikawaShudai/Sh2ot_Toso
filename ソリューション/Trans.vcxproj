@@ -187,6 +187,7 @@
     <ClCompile Include="paperBG00.cpp" />
     <ClCompile Include="paperBG01.cpp" />
     <ClCompile Include="particle.cpp" />
+    <ClCompile Include="pause.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="playerBG.cpp" />
     <ClCompile Include="PlayNumberSelect.cpp" />
@@ -248,6 +249,7 @@
     <ClInclude Include="paperBG00.h" />
     <ClInclude Include="paperBG01.h" />
     <ClInclude Include="particle.h" />
+    <ClInclude Include="pause.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="playerBG.h" />
     <ClInclude Include="PlayNumberSelect.h" />

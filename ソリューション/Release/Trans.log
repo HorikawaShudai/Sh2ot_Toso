@@ -1,20 +1,45 @@
-﻿  EscapeClearResult.cpp
+﻿  ActionHelpUI.cpp
+  camera.cpp
+  CheckboxUI.cpp
+  edit.cpp
+  enemy.cpp
+  EscapeClearResult.cpp
   EscapeOverResult.cpp
   EscapeRanking.cpp
   EscapeTutorial.cpp
-  PlayNumberSelect.cpp
-  edit.cpp
-  enemy.cpp
+  exit.cpp
   game.cpp
+  keyUI.cpp
+  life.cpp
+  main.cpp
+  NumberUI.cpp
   object00.cpp
   objectBG.cpp
+  objectPoly.cpp
+  ObjectWall.cpp
+  paperBG01.cpp
+  コンパイル中...
+  pause.cpp
+  player.cpp
+  playerBG.cpp
+  PlayNumberSelect.cpp
+  PlayModeSelect.cpp
+  PolygonBG.cpp
+  RankingUI.cpp
   result.cpp
+  resultUI.cpp
+  score.cpp
+  sound.cpp
   stage.cpp
+  stamina.cpp
+  Thunder.cpp
+  time.cpp
   title.cpp
+  tutorialUI.cpp
   コード生成しています。
-  12 of 506 functions ( 2.4%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    37 functions had inline decision re-evaluated but remain unchanged
+  332 of 545 functions (60.9%) were compiled, the rest were copied from previous compilation.
+    71 functions were new in current compilation
+    78 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
   Trans.vcxproj -> C:\Users\Student\Desktop\逃走用ゴミ箱\13\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\逃走用ゴミ箱\13\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)

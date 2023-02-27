@@ -121,7 +121,7 @@ void SaveEdit()
 
 				//各種変数の情報セーブ
 				fprintf(pFile, "%s			%.3f %.3f %.3f\n", "POS", pObjectPoly->pos.x, pObjectPoly->pos.y, pObjectPoly->pos.z);
-				fprintf(pFile, "%s		%.3f\n", "WIGHT", pObjectPoly->fWigft);
+				fprintf(pFile, "%s		%.3f\n", "WIDTH", pObjectPoly->fWidth);
 				fprintf(pFile, "%s			%.3f\n", "HEIGHT", pObjectPoly->fHeight);
 
 				//オブジェクトをセーブした終了の合図

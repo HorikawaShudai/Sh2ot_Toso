@@ -40,14 +40,14 @@ void InitObjectPoly(void)
 	{
 		g_ObjectPoly[nCnt].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//位置を初期化
 		g_ObjectPoly[nCnt].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//向きを初期化
-		g_ObjectPoly[nCnt].fWigft = 100.0f;							//幅を初期化
+		g_ObjectPoly[nCnt].fWidth = 100.0f;							//幅を初期化
 		g_ObjectPoly[nCnt].fHeight = 100.0f;						//高さを初期化
 		g_ObjectPoly[nCnt].bUse = false;							//使用していない状態にする
 	}
 
 	EditIndexPoly = MAX_OBJECTPOLY - 1;								//エディットモード用の番号
 	EditPosPoly = D3DXVECTOR3(0.0f, 0.0f, 0.0f);					//エディットモードのオブジェクトの位置
-	EditWightPoly = g_ObjectPoly[0].fWigft;							//エディットモードのオブジェクトの位置
+	EditWightPoly = g_ObjectPoly[0].fWidth;							//エディットモードのオブジェクトの位置
 	EditHeightPoly = g_ObjectPoly[0].fHeight;						//エディットモードのオブジェクトの位置
 	g_ObjectObjectPolyCount = 0;									//オブジェクトの数
 
@@ -68,10 +68,10 @@ void InitObjectPoly(void)
 	{
 
 		//頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(-g_ObjectPoly[nCnt].fWigft, 0.0f, +g_ObjectPoly[nCnt].fHeight);
-		pVtx[1].pos = D3DXVECTOR3(+g_ObjectPoly[nCnt].fWigft, 0.0f, +g_ObjectPoly[nCnt].fHeight);
-		pVtx[2].pos = D3DXVECTOR3(-g_ObjectPoly[nCnt].fWigft, 0.0f, -g_ObjectPoly[nCnt].fHeight);
-		pVtx[3].pos = D3DXVECTOR3(+g_ObjectPoly[nCnt].fWigft, 0.0f, -g_ObjectPoly[nCnt].fHeight);
+		pVtx[0].pos = D3DXVECTOR3(-g_ObjectPoly[nCnt].fWidth, 0.0f, +g_ObjectPoly[nCnt].fHeight);
+		pVtx[1].pos = D3DXVECTOR3(+g_ObjectPoly[nCnt].fWidth, 0.0f, +g_ObjectPoly[nCnt].fHeight);
+		pVtx[2].pos = D3DXVECTOR3(-g_ObjectPoly[nCnt].fWidth, 0.0f, -g_ObjectPoly[nCnt].fHeight);
+		pVtx[3].pos = D3DXVECTOR3(+g_ObjectPoly[nCnt].fWidth, 0.0f, -g_ObjectPoly[nCnt].fHeight);
 
 		//法線ベクトルの設定
 		pVtx[0].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
@@ -129,10 +129,10 @@ void UpdateObjectPoly(void)
 		if (g_ObjectPoly[nCntObjectPoly].bUse == true)
 		{
 			//頂点座標の設定
-			pVtx[0].pos = D3DXVECTOR3(-g_ObjectPoly[nCntObjectPoly].fWigft, 100.0f - g_ObjectPoly[nCntObjectPoly].pos.y, +g_ObjectPoly[nCntObjectPoly].fHeight);
-			pVtx[1].pos = D3DXVECTOR3(+g_ObjectPoly[nCntObjectPoly].fWigft, 100.0f - g_ObjectPoly[nCntObjectPoly].pos.y, +g_ObjectPoly[nCntObjectPoly].fHeight);
-			pVtx[2].pos = D3DXVECTOR3(-g_ObjectPoly[nCntObjectPoly].fWigft, 100.0f - g_ObjectPoly[nCntObjectPoly].pos.y, -g_ObjectPoly[nCntObjectPoly].fHeight);
-			pVtx[3].pos = D3DXVECTOR3(+g_ObjectPoly[nCntObjectPoly].fWigft, 100.0f - g_ObjectPoly[nCntObjectPoly].pos.y, -g_ObjectPoly[nCntObjectPoly].fHeight);
+			pVtx[0].pos = D3DXVECTOR3(-g_ObjectPoly[nCntObjectPoly].fWidth, 100.0f - g_ObjectPoly[nCntObjectPoly].pos.y, +g_ObjectPoly[nCntObjectPoly].fHeight);
+			pVtx[1].pos = D3DXVECTOR3(+g_ObjectPoly[nCntObjectPoly].fWidth, 100.0f - g_ObjectPoly[nCntObjectPoly].pos.y, +g_ObjectPoly[nCntObjectPoly].fHeight);
+			pVtx[2].pos = D3DXVECTOR3(-g_ObjectPoly[nCntObjectPoly].fWidth, 100.0f - g_ObjectPoly[nCntObjectPoly].pos.y, -g_ObjectPoly[nCntObjectPoly].fHeight);
+			pVtx[3].pos = D3DXVECTOR3(+g_ObjectPoly[nCntObjectPoly].fWidth, 100.0f - g_ObjectPoly[nCntObjectPoly].pos.y, -g_ObjectPoly[nCntObjectPoly].fHeight);
 		}
 
 		pVtx += 4;
@@ -195,7 +195,7 @@ void UpdateEditObjectPoly(void)
 
 	//エディットモードの変更をオブジェクトに反映させる
 	g_ObjectPoly[EditIndexPoly].pos = EditPosPoly;
-	g_ObjectPoly[EditIndexPoly].fWigft = EditWightPoly;
+	g_ObjectPoly[EditIndexPoly].fWidth = EditWightPoly;
 	g_ObjectPoly[EditIndexPoly].fHeight = EditHeightPoly;
 
 	//オブジェクトの削除処理(重なっているもの)----------
@@ -207,7 +207,7 @@ void UpdateEditObjectPoly(void)
 	//オブジェクトの設置処理----------
 	if (GetKeyboardTrigger(DIK_RETURN) == true)
 	{
-		SetObjectPoly(g_ObjectPoly[EditIndexPoly].pos, g_ObjectPoly[EditIndexPoly].fWigft, g_ObjectPoly[EditIndexPoly].fHeight);
+		SetObjectPoly(g_ObjectPoly[EditIndexPoly].pos, g_ObjectPoly[EditIndexPoly].fWidth, g_ObjectPoly[EditIndexPoly].fHeight);
 	}
 
 	VERTEX_3D *pVtx; //頂点座標へのポインタ
@@ -218,10 +218,10 @@ void UpdateEditObjectPoly(void)
 	pVtx += (MAX_OBJECTPOLY - 1) * 4;
 
 	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(-g_ObjectPoly[EditIndexPoly].fWigft, 0.0f, +g_ObjectPoly[EditIndexPoly].fHeight);
-	pVtx[1].pos = D3DXVECTOR3(+g_ObjectPoly[EditIndexPoly].fWigft, 0.0f, +g_ObjectPoly[EditIndexPoly].fHeight);
-	pVtx[2].pos = D3DXVECTOR3(-g_ObjectPoly[EditIndexPoly].fWigft, 0.0f, -g_ObjectPoly[EditIndexPoly].fHeight);
-	pVtx[3].pos = D3DXVECTOR3(+g_ObjectPoly[EditIndexPoly].fWigft, 0.0f, -g_ObjectPoly[EditIndexPoly].fHeight);
+	pVtx[0].pos = D3DXVECTOR3(-g_ObjectPoly[EditIndexPoly].fWidth, 0.0f, +g_ObjectPoly[EditIndexPoly].fHeight);
+	pVtx[1].pos = D3DXVECTOR3(+g_ObjectPoly[EditIndexPoly].fWidth, 0.0f, +g_ObjectPoly[EditIndexPoly].fHeight);
+	pVtx[2].pos = D3DXVECTOR3(-g_ObjectPoly[EditIndexPoly].fWidth, 0.0f, -g_ObjectPoly[EditIndexPoly].fHeight);
+	pVtx[3].pos = D3DXVECTOR3(+g_ObjectPoly[EditIndexPoly].fWidth, 0.0f, -g_ObjectPoly[EditIndexPoly].fHeight);
 
 	//頂点バッファをアンロックする
 	g_pVtxBuffObjectPoly->Unlock();
@@ -328,7 +328,7 @@ void SetObjectPoly(D3DXVECTOR3 pos, float Wight, float Height)
 		if (g_ObjectPoly[nCnt].bUse == false)
 		{
 			g_ObjectPoly[nCnt].pos = pos;	//位置を設定
-			g_ObjectPoly[nCnt].fWigft = Wight;						//幅を設定
+			g_ObjectPoly[nCnt].fWidth = Wight;						//幅を設定
 			g_ObjectPoly[nCnt].fHeight = Height;						//高さを設定
 
 			g_ObjectObjectPolyCount++;
@@ -351,8 +351,8 @@ void EditCollisionObjectPoly(D3DXVECTOR3 pos, float Size)
 		if (g_ObjectPoly[nCnt].bUse == true)
 		{
 			if (
-				pos.x + Size >= g_ObjectPoly[nCnt].pos.x - g_ObjectPoly[nCnt].fWigft
-				&& pos.x - Size <= g_ObjectPoly[nCnt].pos.x + g_ObjectPoly[nCnt].fWigft
+				pos.x + Size >= g_ObjectPoly[nCnt].pos.x - g_ObjectPoly[nCnt].fWidth
+				&& pos.x - Size <= g_ObjectPoly[nCnt].pos.x + g_ObjectPoly[nCnt].fWidth
 				&& pos.z + Size >= g_ObjectPoly[nCnt].pos.z - g_ObjectPoly[nCnt].fHeight
 				&& pos.z - Size <= g_ObjectPoly[nCnt].pos.z + g_ObjectPoly[nCnt].fHeight
 				)
@@ -362,6 +362,144 @@ void EditCollisionObjectPoly(D3DXVECTOR3 pos, float Size)
 			}
 		}
 	}
+}
+
+//====================================================================
+//外積を使ったオブジェクトの当たり判定
+//====================================================================
+D3DXVECTOR3 CollisionOuterProductObjectPoly(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove)
+{
+	//移動ベクトルを割り出す
+	D3DXVECTOR3 vecMove = *pPos - *pPosOld;
+	//座標保管用
+	int nPosCount = 0;
+	D3DXVECTOR3 pos[MAX_OBJECTPOLY * 4] = {};
+	for (int nCnt = 0; nCnt < MAX_OBJECTPOLY; nCnt++)
+	{
+		if (g_ObjectPoly[nCnt].bUse == true)
+		{
+			for (int nLine = 0; nLine < 4; nLine++)
+			{
+				bool bHit = false;
+				bool bHit1 = false;
+				bool bHit2 = false;
+
+				D3DXVECTOR3 pos0, pos1;
+				switch (nLine)
+				{//紙片の当たり判定
+				case 0:
+					pos0 = D3DXVECTOR3(g_ObjectPoly[nCnt].pos.x - g_ObjectPoly[nCnt].fWidth, g_ObjectPoly[nCnt].pos.y, g_ObjectPoly[nCnt].pos.z + g_ObjectPoly[nCnt].fHeight);
+					pos1 = D3DXVECTOR3(g_ObjectPoly[nCnt].pos.x + g_ObjectPoly[nCnt].fWidth, g_ObjectPoly[nCnt].pos.y, g_ObjectPoly[nCnt].pos.z + g_ObjectPoly[nCnt].fHeight);
+					break;
+				case 1:
+					pos0 = D3DXVECTOR3(g_ObjectPoly[nCnt].pos.x + g_ObjectPoly[nCnt].fWidth, g_ObjectPoly[nCnt].pos.y, g_ObjectPoly[nCnt].pos.z + g_ObjectPoly[nCnt].fHeight);
+					pos1 = D3DXVECTOR3(g_ObjectPoly[nCnt].pos.x + g_ObjectPoly[nCnt].fWidth, g_ObjectPoly[nCnt].pos.y, g_ObjectPoly[nCnt].pos.z - g_ObjectPoly[nCnt].fHeight);
+					break;
+				case 2:
+					pos0 = D3DXVECTOR3(g_ObjectPoly[nCnt].pos.x + g_ObjectPoly[nCnt].fWidth, g_ObjectPoly[nCnt].pos.y, g_ObjectPoly[nCnt].pos.z - g_ObjectPoly[nCnt].fHeight);
+					pos1 = D3DXVECTOR3(g_ObjectPoly[nCnt].pos.x - g_ObjectPoly[nCnt].fWidth, g_ObjectPoly[nCnt].pos.y, g_ObjectPoly[nCnt].pos.z - g_ObjectPoly[nCnt].fHeight);
+					break;
+				case 3:
+					pos0 = D3DXVECTOR3(g_ObjectPoly[nCnt].pos.x - g_ObjectPoly[nCnt].fWidth, g_ObjectPoly[nCnt].pos.y, g_ObjectPoly[nCnt].pos.z - g_ObjectPoly[nCnt].fHeight);
+					pos1 = D3DXVECTOR3(g_ObjectPoly[nCnt].pos.x - g_ObjectPoly[nCnt].fWidth, g_ObjectPoly[nCnt].pos.y, g_ObjectPoly[nCnt].pos.z + g_ObjectPoly[nCnt].fHeight);
+					break;
+				default:
+					break;
+				}
+
+				//ベクトルの目標地点
+
+				D3DXVECTOR3 vecLine = pos1 - pos0;
+
+				D3DXVECTOR3 vecToPos = *pPos - pos0;
+
+				D3DXVECTOR3 vecToPos2 = *pPosOld - pos0;
+
+				float A, B, fRate;
+				A = (vecToPos.z * vecMove.x) - (vecToPos.x * vecMove.z);
+				B = (vecLine.z * vecMove.x) - (vecLine.x * vecMove.z);
+				if (B != 0)
+				{
+					fRate = A / B;
+				}
+				else
+				{
+					fRate = 10.0f;
+				}
+
+				if (fRate >= 0.0f &&fRate <= 1.0f)
+				{//vecLineを横切ったとき
+					if ((vecLine.z * vecToPos.x) - (vecLine.x * vecToPos.z) < 0)
+					{
+						bHit1 = true;
+					}
+
+					if ((vecLine.z * vecToPos2.x) - (vecLine.x * vecToPos2.z) < 0)
+					{
+						bHit2 = true;
+					}
+
+					if (bHit1 != bHit2)
+					{
+						bHit = true;
+					}
+
+					bHit1 = false;
+					bHit2 = false;
+
+					if ((vecLine.z * vecToPos.x) + (vecLine.x * vecToPos.z) > 0)
+					{
+						bHit1 = true;
+					}
+
+					if ((vecLine.z * vecToPos2.x) + (vecLine.x * vecToPos2.z) > 0)
+					{
+						bHit2 = true;
+					}
+
+					if (bHit1 != bHit2)
+					{
+						bHit = true;
+					}
+				}
+				if (bHit == true)
+				{
+					pos[nPosCount] = pos0 + vecLine*fRate;
+					nPosCount++;
+				}
+			}
+		}
+
+	}
+	if (nPosCount > 1)
+	{
+		for (int nCheck = 0; nCheck < nPosCount - 1; nCheck++)
+		{//距離の差を割り出して昇順にソート
+
+			for (int nCnt = (nCheck + 1); nCnt < nPosCount; nCnt++)
+			{
+				D3DXVECTOR3 Temp = pos[nCnt];
+				float fDis1, fDis2;
+				fDis1 = (pos[nCheck].x - pPosOld->x) + (pos[nCheck].z - pPosOld->z);
+				fDis2 = (pos[nCnt].x - pPosOld->x) + (pos[nCnt].z - pPosOld->z);
+				if (fDis1 < 0)
+				{
+					fDis1 *= -1.0f;
+				}
+				if (fDis2 < 0)
+				{
+					fDis2 *= -1.0f;
+				}
+				if (fDis1 > fDis2)
+				{
+					pos[nCnt] = pos[nCheck];
+					pos[nCheck] = Temp;
+				}
+			}
+		}
+	}
+
+	return pos[0];
 }
 
 //====================================================================
