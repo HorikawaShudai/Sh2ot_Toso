@@ -407,8 +407,10 @@ void UpdateGame()
 		//出口の更新処理
 		UpdateExit();
 
+		//タイムの更新処理
 		UpdateTime();
-
+		
+		//ダメージリアクション用ポリゴンの更新処理
 		UpdatePolygonBG();
 	}
 

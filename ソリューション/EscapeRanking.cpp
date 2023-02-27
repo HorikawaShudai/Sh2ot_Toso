@@ -8,6 +8,8 @@
 #include "object00.h"
 #include "objectBG.h"
 #include "objectLight.h"
+#include "objectWall.h"
+#include "objectPoly.h"
 #include "time.h"
 #include "meshfield.h"
 
@@ -28,6 +30,8 @@ void InitEscapeRanking()
 	InitObject00();
 	InitObjectBG();
 	InitObjectLight();
+	InitObjectWall();
+	InitObjectPoly();
 
 	//ステージの読み込み
 	SetStage(0);
@@ -56,6 +60,8 @@ void UninitEscapeRanking()
 	UninitObject00();
 	UninitObjectBG();
 	UninitObjectLight();
+	UninitObjectWall();
+	UninitObjectPoly();
 
 	UninitNumberUI();
 
@@ -81,6 +87,8 @@ void UpdateEscapeRanking()
 	UpdateObject00();
 	UpdateObjectBG();
 	UpdateObjectLight();
+	UpdateObjectWall();
+	UpdateObjectPoly();
 
 	UpdateNumberUI();
 
@@ -113,6 +121,8 @@ void DrawEscapeRanking()
 	DrawObject00();
 	DrawObjectBG();
 	DrawObjectLight();
+	DrawObjectWall();
+	DrawObjectPoly();
 
 	DrawNumberUI();
 
