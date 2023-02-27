@@ -19,6 +19,10 @@
 #define	DETECT_SPEED (5000.0f) //探査波の速度
 #define	PLAYERDETECT_SPEED (1000.0f) //探査波の速度
 
+#define TURN_DISTANCE_WALL (50.0f) //曲がるまでの壁との距離
+#define TURN_DISTANCE_CORNER (200.0f) //曲がり角と認識する距離
+#define MOVE_DISTANCE_WALL (100.0f) //左右の壁と保つ距離
+
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureENEMY[64][ENEMY_NTYPE_MAX] = {};	//テクスチャのポインタ
 LPD3DXMESH g_pMeshENEMY[ENEMY_NTYPE_MAX] = {};					//メッシュ(頂点情報)へのポインタ
@@ -765,10 +769,11 @@ void EnemyPatrol(int nEnemy)
 		PrintDebugProc("Enemy%d前:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceFront);
 
 		//自身の進む方向に壁があった場合
-		if (((g_Enemy[nEnemy].MoveState == ENEMYMOVE_N && g_Enemy[nEnemy].fDistanceN <= 150.0f) ||
-			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_S && g_Enemy[nEnemy].fDistanceS <= 150.0f) ||
-			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_E && g_Enemy[nEnemy].fDistanceE <= 150.0f) ||
-			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_W && g_Enemy[nEnemy].fDistanceW <= 150.0f) ||
+
+		if (((g_Enemy[nEnemy].MoveState == ENEMYMOVE_N && g_Enemy[nEnemy].fDistanceN <= TURN_DISTANCE_WALL) ||
+			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_S && g_Enemy[nEnemy].fDistanceS <= TURN_DISTANCE_WALL) ||
+			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_E && g_Enemy[nEnemy].fDistanceE <= TURN_DISTANCE_WALL) ||
+			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_W && g_Enemy[nEnemy].fDistanceW <= TURN_DISTANCE_WALL) ||
 			 g_Enemy[nEnemy].MoveState == ENEMYMOVE_NONE))
 		{
 			EnemyDirection(nEnemy);
@@ -778,12 +783,12 @@ void EnemyPatrol(int nEnemy)
 		
 
 
-		if (g_Enemy[nEnemy].fDistanceLeft >= 300.0f && 	g_Enemy[nEnemy].nCoolTurn <= 0)
+		if (g_Enemy[nEnemy].fDistanceLeft >= TURN_DISTANCE_CORNER && 	g_Enemy[nEnemy].nCoolTurn <= 0)
 		{
 			EnemyDirection(nEnemy);
 			g_Enemy[nEnemy].nCoolTurn = 120;
 		}
-		if (g_Enemy[nEnemy].fDistanceRight >= 300.0f&& 	g_Enemy[nEnemy].nCoolTurn <= 0)
+		if (g_Enemy[nEnemy].fDistanceRight >= TURN_DISTANCE_CORNER && 	g_Enemy[nEnemy].nCoolTurn <= 0)
 		{
 			EnemyDirection(nEnemy);
 			g_Enemy[nEnemy].nCoolTurn = 120;
@@ -812,11 +817,13 @@ void EnemyPatrol(int nEnemy)
 			//座標の更新
 			g_Enemy[nEnemy].move = D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y)*ENEMY_SPEED);
 
-			if (g_Enemy[nEnemy].fDistanceLeft <= 300.0f )
+	
+			if (g_Enemy[nEnemy].fDistanceLeft <= MOVE_DISTANCE_WALL)
 			{
 				g_Enemy[nEnemy].move += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED);
 			}
-			else if (g_Enemy[nEnemy].fDistanceRight <= 300.0f)
+			
+			else if (g_Enemy[nEnemy].fDistanceRight <= MOVE_DISTANCE_WALL)
 			{
 				g_Enemy[nEnemy].move += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED);
 			}
@@ -831,30 +838,30 @@ void EnemyDirection(int nEnemy)
 	{//ランダムに移動方向を決定
 		nCount++;
 		int nRand = rand() % 4;
-		if (g_Enemy[nEnemy].fDistanceN >= 200.0f && nRand == 0 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_S)
+		if (g_Enemy[nEnemy].fDistanceN >= TURN_DISTANCE_WALL * 2 && nRand == 0 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_S)
 		{
 			g_Enemy[nEnemy].MoveState = ENEMYMOVE_N;
 			break;
 		}
-		else if (g_Enemy[nEnemy].fDistanceS >= 200.0f && nRand == 1 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_N)
+		else if (g_Enemy[nEnemy].fDistanceS >= TURN_DISTANCE_WALL * 2 && nRand == 1 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_N)
 		{
 			g_Enemy[nEnemy].MoveState = ENEMYMOVE_S;
 			break;
 		}
-		else if (g_Enemy[nEnemy].fDistanceW >= 200.0f && nRand == 2 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_E)
+		else if (g_Enemy[nEnemy].fDistanceW >= TURN_DISTANCE_WALL * 2 && nRand == 2 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_E)
 		{
 			g_Enemy[nEnemy].MoveState = ENEMYMOVE_W;
 			break;
 		}
-		else if (g_Enemy[nEnemy].fDistanceE >= 200.0f && nRand == 3 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_W)
+		else if (g_Enemy[nEnemy].fDistanceE >= TURN_DISTANCE_WALL * 2 && nRand == 3 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_W)
 		{
 			g_Enemy[nEnemy].MoveState = ENEMYMOVE_E;
 			break;
 		}
-		else if (((g_Enemy[nEnemy].MoveState == ENEMYMOVE_N && g_Enemy[nEnemy].fDistanceN < 200.0f) ||
-			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_S && g_Enemy[nEnemy].fDistanceS < 200.0f) ||
-			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_W && g_Enemy[nEnemy].fDistanceW < 200.0f) ||
-			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_E && g_Enemy[nEnemy].fDistanceE < 200.0f)))
+		else if (((g_Enemy[nEnemy].MoveState == ENEMYMOVE_N && g_Enemy[nEnemy].fDistanceN < TURN_DISTANCE_WALL * 2) ||
+			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_S && g_Enemy[nEnemy].fDistanceS < TURN_DISTANCE_WALL * 2) ||
+			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_W && g_Enemy[nEnemy].fDistanceW < TURN_DISTANCE_WALL * 2) ||
+			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_E && g_Enemy[nEnemy].fDistanceE < TURN_DISTANCE_WALL * 2)))
 		{
 
 			g_Enemy[nEnemy].MoveState = ENEMYMOVE_NONE;
