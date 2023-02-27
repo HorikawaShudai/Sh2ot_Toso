@@ -45,6 +45,11 @@ const char *c_apModelObj01[] =					//モデルデータ読み込み
 	"Data\\MODEL\\watch.x",			//時計b
 	"Data\\MODEL\\kaidanRU.x",		//階段_右_上
 	"Data\\MODEL\\kaidanLU.x",		//階段_左_上
+	"Data\\MODEL\\ceiling.x",					//天井(白)
+	"Data\\MODEL\\ceiling1.x",					//天井(コンクリ)
+	"Data\\MODEL\\ceiling2.x",					//天井(雨濡れコンクリ)
+	"Data\\MODEL\\ceiling3.x",					//天井(タイル)
+	"Data\\MODEL\\ceiling4.x",					//天井(白模様入り)
 };
 
 //====================================================================
@@ -220,29 +225,52 @@ void DrawObjectBG(void)
 void UpdateEditObjectBG(void)
 {
 	//キーボードの移動処理----------
-	if (GetKeyboardPress(DIK_UP) == true)
-	{//前移動
-		EditPos01.z += 1.0f;
+	if (g_ObjectBG[EditIndex01].nType == OBJECTBG_NTYPE18 || g_ObjectBG[EditIndex01].nType == OBJECTBG_NTYPE19 || g_ObjectBG[EditIndex01].nType == OBJECTBG_NTYPE20 || g_ObjectBG[EditIndex01].nType == OBJECTBG_NTYPE21 || g_ObjectBG[EditIndex01].nType == OBJECTBG_NTYPE22)
+	{//選択されているオブジェクトが天井の時
+		if (GetKeyboardTrigger(DIK_UP) == true)
+		{//前移動
+			EditPos01.z += 100.0f;
+		}
+		if (GetKeyboardTrigger(DIK_DOWN) == true)
+		{//後ろ移動
+			EditPos01.z -= 100.0f;
+		}
+		if (GetKeyboardTrigger(DIK_RIGHT) == true)
+		{//右移動
+			EditPos01.x += 100.0f;
+		}
+		if (GetKeyboardTrigger(DIK_LEFT) == true)
+		{//左移動
+			EditPos01.x -= 100.0f;
+		}
 	}
-	if (GetKeyboardPress(DIK_DOWN) == true)
-	{//後ろ移動
-		EditPos01.z -= 1.0f;
-	}
-	if (GetKeyboardPress(DIK_RIGHT) == true)
-	{//右移動
-		EditPos01.x += 1.0f;
-	}
-	if (GetKeyboardPress(DIK_LEFT) == true)
-	{//左移動
-		EditPos01.x -= 1.0f;
-	}
-	if (GetKeyboardPress(DIK_RSHIFT) == true)
-	{//上移動
-		EditPos01.y += 1.0f;
-	}
-	if (GetKeyboardPress(DIK_RCONTROL) == true)
-	{//下移動
-		EditPos01.y -= 1.0f;
+
+	if (g_ObjectBG[EditIndex01].nType != OBJECTBG_NTYPE18 && g_ObjectBG[EditIndex01].nType != OBJECTBG_NTYPE19 && g_ObjectBG[EditIndex01].nType != OBJECTBG_NTYPE20 && g_ObjectBG[EditIndex01].nType != OBJECTBG_NTYPE21 && g_ObjectBG[EditIndex01].nType != OBJECTBG_NTYPE22)
+	{//選択されているオブジェクトが天井以外の時
+		if (GetKeyboardPress(DIK_UP) == true)
+		{//前移動
+			EditPos01.z += 1.0f;
+		}
+		if (GetKeyboardPress(DIK_DOWN) == true)
+		{//後ろ移動
+			EditPos01.z -= 1.0f;
+		}
+		if (GetKeyboardPress(DIK_RIGHT) == true)
+		{//右移動
+			EditPos01.x += 1.0f;
+		}
+		if (GetKeyboardPress(DIK_LEFT) == true)
+		{//左移動
+			EditPos01.x -= 1.0f;
+		}
+		if (GetKeyboardPress(DIK_RSHIFT) == true)
+		{//上移動
+			EditPos01.y += 1.0f;
+		}
+		if (GetKeyboardPress(DIK_RCONTROL) == true)
+		{//下移動
+			EditPos01.y -= 1.0f;
+		}
 	}
 
 	//オブジェクトの回転処理
@@ -264,6 +292,11 @@ void UpdateEditObjectBG(void)
 		if (EditType01 > OBJECTBG_NTYPE_MAX - 1)
 		{
 			EditType01 = 0;
+		}
+
+		if (EditType01 == OBJECTBG_NTYPE18)
+		{//選択されているオブジェクトが天井の時
+			EditPos01 = D3DXVECTOR3(0.0f, 150.0f, 0.0f);
 		}
 	}
 	if (GetKeyboardTrigger(DIK_8) == true)
