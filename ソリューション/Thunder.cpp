@@ -80,7 +80,7 @@ void UpdateThunder(void)
 {
 	if (g_Thunder.bUse == true)
 	{
-		g_Thunder.col.a -= 0.007f;
+		g_Thunder.col.a -= 0.01f;
 		if (g_Thunder.col.a < -0.0f)
 		{
 			g_Thunder.bUse = false;
