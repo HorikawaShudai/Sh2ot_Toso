@@ -39,8 +39,7 @@
 #define PLAYER_COLLISIONSIZE	(15.0f)			//プレイヤーの当たり判定の大きさ
 #define PLAYER_LIGHT			(350.0f)		//プレイヤーの当たり判定の大きさ
 #define ENEMY_SE_SPEED			(60)			//敵の足音を鳴らす間隔
-#define PLAYER_SE_WALK			(30)			//プレイヤーの足音を鳴らす間隔(歩き)
-#define PLAYER_SE_STELTH		(30)			//プレイヤーの足音を鳴らす間隔(忍び足)
+#define PLAYER_SE_WALK			(40)			//プレイヤーの足音を鳴らす間隔(歩き)
 #define PLAYER_SE_DASH			(30)			//プレイヤーの足音を鳴らす間隔(ダッシュ)
 
 //プロトタイプ
@@ -1176,7 +1175,7 @@ void ResPlayerMove(int nCnt)
 				if (g_aPlayer[nCnt].nPlayerSECount > PLAYER_SE_DASH && g_aPlayer[nCnt].MoveState == PLAYER_MOVESTATE_DASH)
 				{
 					//ダッシュ状態の音
-					PlaySound(SOUND_LABEL_SE_RUN);
+					PlaySound(SOUND_LABEL_SE_WALK);
 
 					g_aPlayer[nCnt].nPlayerSECount = 0;
 				}
@@ -1203,21 +1202,6 @@ void ResPlayerMove(int nCnt)
 			g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_STEALTHSPEED;
 
 			g_aPlayer[nCnt].move += g_aPlayer[nCnt].NormarizeMove;
-
-			g_aPlayer[nCnt].nPlayerSECount++;
-
-			if (g_aPlayer[nCnt].nPlayerSECount > PLAYER_SE_STELTH && g_aPlayer[nCnt].MoveState == PLAYER_MOVESTATE_STEALTH)
-			{
-				//ダッシュ状態の音
-				PlaySound(SOUND_LABEL_SE_STELTH);
-
-				g_aPlayer[nCnt].nPlayerSECount = 0;
-			}
-
-			else
-			{
-				
-			}
 
 			//プレイヤーをステルス状態にする
 			g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;
