@@ -503,6 +503,92 @@ D3DXVECTOR3 CollisionOuterProductObjectPoly(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPos
 }
 
 //====================================================================
+//ポリゴンとの当たり判定処理
+//====================================================================
+bool CollisionObjectPoly(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size)
+{
+	bool bHit = false;
+
+	for (int nCntObject = 0; nCntObject < MAX_OBJECTPOLY; nCntObject++)
+	{
+		if (g_ObjectPoly[nCntObject].bUse == true)
+		{
+			if (
+				(
+				pPos->x + Size >= g_ObjectPoly[nCntObject].pos.x - g_ObjectPoly[nCntObject].fWidth &&
+				pPos->x - Size <= g_ObjectPoly[nCntObject].pos.x + g_ObjectPoly[nCntObject].fWidth &&
+				pPos->z + Size >= g_ObjectPoly[nCntObject].pos.z - g_ObjectPoly[nCntObject].fHeight &&
+				pPos->z - Size <= g_ObjectPoly[nCntObject].pos.z + g_ObjectPoly[nCntObject].fHeight
+				))
+			{//壁とプレイヤーが当たった(X軸)
+				pPos->y = pPosOld->y;
+				pMove->y = 0.0f;
+				bHit = true;
+			}
+
+			if (fabsf(pMove->x) >= fabsf(pMove->z))
+			{
+				if (
+					(
+						pPos->z + Size >= g_ObjectPoly[nCntObject].pos.z - g_ObjectPoly[nCntObject].fHeight && pPosOld->z + Size < g_ObjectPoly[nCntObject].pos.z - g_ObjectPoly[nCntObject].fHeight ||
+						pPos->z - Size <= g_ObjectPoly[nCntObject].pos.z + g_ObjectPoly[nCntObject].fHeight && pPosOld->z - Size > g_ObjectPoly[nCntObject].pos.z + g_ObjectPoly[nCntObject].fHeight) &&
+					pPos->x + Size >= g_ObjectPoly[nCntObject].pos.x - g_ObjectPoly[nCntObject].fWidth &&
+					pPos->x - Size <= g_ObjectPoly[nCntObject].pos.x + g_ObjectPoly[nCntObject].fWidth 
+					)
+				{//壁とプレイヤーが当たった(Z軸)
+					pPos->z = pPosOld->z;
+					pMove->z = 0.0f;
+					bHit = true;
+				}
+
+				if (
+					(
+						pPos->x + Size >= g_ObjectPoly[nCntObject].pos.x - g_ObjectPoly[nCntObject].fWidth && pPosOld->x + Size < g_ObjectPoly[nCntObject].pos.x - g_ObjectPoly[nCntObject].fWidth ||
+						pPos->x - Size <= g_ObjectPoly[nCntObject].pos.x + g_ObjectPoly[nCntObject].fWidth && pPosOld->x - Size > g_ObjectPoly[nCntObject].pos.x + g_ObjectPoly[nCntObject].fWidth) &&
+					pPos->z + Size >= g_ObjectPoly[nCntObject].pos.z - g_ObjectPoly[nCntObject].fHeight &&
+					pPos->z - Size <= g_ObjectPoly[nCntObject].pos.z + g_ObjectPoly[nCntObject].fHeight 
+					
+					)
+				{//壁とプレイヤーが当たった(X軸)
+					pPos->x = pPosOld->x;
+					pMove->x = 0.0f;
+					bHit = true;
+				}
+			}
+			else
+			{
+				if (
+					(
+						pPos->x + Size >= g_ObjectPoly[nCntObject].pos.x - g_ObjectPoly[nCntObject].fWidth && pPosOld->x + Size < g_ObjectPoly[nCntObject].pos.x - g_ObjectPoly[nCntObject].fWidth ||
+						pPos->x - Size <= g_ObjectPoly[nCntObject].pos.x + g_ObjectPoly[nCntObject].fWidth && pPosOld->x - Size > g_ObjectPoly[nCntObject].pos.x + g_ObjectPoly[nCntObject].fWidth) &&
+					pPos->z + Size >= g_ObjectPoly[nCntObject].pos.z - g_ObjectPoly[nCntObject].fHeight &&
+					pPos->z - Size <= g_ObjectPoly[nCntObject].pos.z + g_ObjectPoly[nCntObject].fHeight 
+					)
+				{//壁とプレイヤーが当たった(X軸)
+					pPos->x = pPosOld->x;
+					pMove->x = 0.0f;
+					bHit = true;
+				}
+
+				if (
+					(
+						pPos->z + Size >= g_ObjectPoly[nCntObject].pos.z - g_ObjectPoly[nCntObject].fHeight && pPosOld->z + Size < g_ObjectPoly[nCntObject].pos.z - g_ObjectPoly[nCntObject].fHeight ||
+						pPos->z - Size <= g_ObjectPoly[nCntObject].pos.z + g_ObjectPoly[nCntObject].fHeight && pPosOld->z - Size > g_ObjectPoly[nCntObject].pos.z + g_ObjectPoly[nCntObject].fHeight) &&
+					pPos->x + Size >= g_ObjectPoly[nCntObject].pos.x - g_ObjectPoly[nCntObject].fWidth &&
+					pPos->x - Size <= g_ObjectPoly[nCntObject].pos.x + g_ObjectPoly[nCntObject].fWidth 
+					)
+				{//壁とプレイヤーが当たった(Z軸)
+					pPos->z = pPosOld->z;
+					pMove->z = 0.0f;
+					bHit = true;
+				}
+			}
+		}
+	}
+	return bHit;
+}
+
+//====================================================================
 //オブジェクトPolyの所得
 //====================================================================
 ObjectPoly * GetObjectPoly(void)
