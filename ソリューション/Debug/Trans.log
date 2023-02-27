@@ -1,22 +1,21 @@
-<<<<<<< HEAD
-﻿tutorial.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\debug\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
+﻿  sound.cpp
+  player.cpp
+  exit.cpp
+  PlayNumberSelect.cpp
+  CheckboxUI.cpp
+  コードを生成中...
+  コンパイル中...
+  title.cpp
+  main.cpp
+  game.cpp
+  Thunder.cpp
+  EscapeTutorial.cpp
+  ActionHelpUI.cpp
+  コードを生成中...
 RankingUI.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\debug\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
 RankingNumber.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\debug\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
 PolygonBG.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\debug\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
 PlayModeSelect.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\debug\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
-PlayNumberSelect.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\debug\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
 Fog.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\debug\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-<<<<<<< HEAD
-﻿  exit.cpp
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-﻿  player.cpp
-cl : コマンド ライン warning D9028: 簡易リビルド時のエラーです、通常のビルドに戻します
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
->>>>>>> 769193587474aaf81e208aa43960f3e7b6e65fc0
->>>>>>> 0e8a3a1001c09090971c4c96a858a07a5cc258df
