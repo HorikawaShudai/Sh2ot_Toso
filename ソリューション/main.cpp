@@ -490,7 +490,7 @@ void Draw(void)
 void DrawFPS(void)
 {
 	//デバッグ変更とFPS
-	PrintDebugProc("FPS:[%d]\n", g_nCountFPS);
+	PrintDebugProc("FPS:[%d]", g_nCountFPS);
 }
 
 //=============================================

@@ -94,7 +94,7 @@ const char *c_apModelObj[] =					//モデルデータ読み込み
 	"Data\\MODEL\\HighPolyWall8.x",				//壁(白タイル)
 	"Data\\MODEL\\ceiling.x",					//天井(白)
 	"Data\\MODEL\\ceiling1.x",					//天井(コンクリ)
-	"Data\\MODEL\\ceiling2.x",					//天井(雨濡れコンクリ)
+	"Data\\MODEL\\ceiling5.x",					//天井(雨濡れコンクリ)
 	"Data\\MODEL\\ceiling3.x",					//天井(タイル)
 	"Data\\MODEL\\ceiling4.x",					//天井(白模様入り)
 	"Data\\MODEL\\hotel_bed.x",					//ホテルベット
