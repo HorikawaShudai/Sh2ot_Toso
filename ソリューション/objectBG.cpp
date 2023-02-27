@@ -31,25 +31,32 @@ const char *c_apModelObj01[] =					//モデルデータ読み込み
 	"Data\\MODEL\\rock.x",
 	"Data\\MODEL\\Labo.x",
 	"Data\\MODEL\\title_field.x",
-	"Data\\MODEL\\dropdust.x",					//ホコリ
-	"Data\\MODEL\\storns.x",					//石
-	"Data\\MODEL\\fan.x",			//換気扇b
-	"Data\\MODEL\\corkboard.x",		//コルクボードb
-	"Data\\MODEL\\art.x",			//壁掛けアートb
-	"Data\\MODEL\\document.x",		//資料単体b
-	"Data\\MODEL\\lightbutton.x",	//ライトのスイッチb
-	"Data\\MODEL\\paper.x",			//資料単体b
-	"Data\\MODEL\\vent.x",			//通気口b
-	"Data\\MODEL\\window.x",		//窓b
-	"Data\\MODEL\\screen.x",		//プロジェクターのうつされるほうb
-	"Data\\MODEL\\watch.x",			//時計b
-	"Data\\MODEL\\kaidanRU.x",		//階段_右_上
-	"Data\\MODEL\\kaidanLU.x",		//階段_左_上
-	"Data\\MODEL\\ceiling.x",					//天井(白)
-	"Data\\MODEL\\ceiling1.x",					//天井(コンクリ)
-	"Data\\MODEL\\ceiling2.x",					//天井(雨濡れコンクリ)
-	"Data\\MODEL\\ceiling3.x",					//天井(タイル)
-	"Data\\MODEL\\ceiling4.x",					//天井(白模様入り)
+	"Data\\MODEL\\dropdust.x",				//ホコリ
+	"Data\\MODEL\\storns.x",				//石
+	"Data\\MODEL\\fan.x",					//換気扇b
+	"Data\\MODEL\\corkboard.x",				//コルクボードb
+	"Data\\MODEL\\art.x",					//壁掛けアートb
+	"Data\\MODEL\\document.x",				//資料単体b
+	"Data\\MODEL\\lightbutton.x",			//ライトのスイッチb
+	"Data\\MODEL\\paper.x",					//資料単体b
+	"Data\\MODEL\\vent.x",					//通気口b
+	"Data\\MODEL\\window.x",				//窓b
+	"Data\\MODEL\\screen.x",				//プロジェクターのうつされるほうb
+	"Data\\MODEL\\watch.x",					//時計b
+	"Data\\MODEL\\kaidanRU.x",				//階段_右_上
+	"Data\\MODEL\\kaidanLU.x",				//階段_左_上
+	"Data\\MODEL\\ceiling.x",				//天井(白)
+	"Data\\MODEL\\ceiling1.x",				//天井(コンクリ)
+	"Data\\MODEL\\ceiling5.x",				//天井(雨濡れコンクリ)
+	"Data\\MODEL\\ceiling3.x",				//天井(タイル)
+	"Data\\MODEL\\ceiling4.x",				//天井(白模様入り)
+	"Data\\MODEL\\floor.x",					//床(鉄)
+	"Data\\MODEL\\floor1.x",				//床(コンクリ)
+	"Data\\MODEL\\floor2.x",				//床(タイル)
+	"Data\\MODEL\\floor3.x",				//床(オフィス)
+	"Data\\MODEL\\floor4.x",				//床(白)
+	"Data\\MODEL\\floor5.x",				//床(白模様入り)
+	"Data\\MODEL\\Player\\06_R_Hand.x",		//床(白模様入り)
 };
 
 //====================================================================
@@ -225,7 +232,7 @@ void DrawObjectBG(void)
 void UpdateEditObjectBG(void)
 {
 	//キーボードの移動処理----------
-	if (g_ObjectBG[EditIndex01].nType == OBJECTBG_NTYPE18 || g_ObjectBG[EditIndex01].nType == OBJECTBG_NTYPE19 || g_ObjectBG[EditIndex01].nType == OBJECTBG_NTYPE20 || g_ObjectBG[EditIndex01].nType == OBJECTBG_NTYPE21 || g_ObjectBG[EditIndex01].nType == OBJECTBG_NTYPE22)
+	if (g_ObjectBG[EditIndex01].nType == OBJECTBG_NTYPE18 || g_ObjectBG[EditIndex01].nType == OBJECTBG_NTYPE19 || g_ObjectBG[EditIndex01].nType == OBJECTBG_NTYPE20 || g_ObjectBG[EditIndex01].nType == OBJECTBG_NTYPE21 || g_ObjectBG[EditIndex01].nType == OBJECTBG_NTYPE22 || g_ObjectBG[EditIndex01].nType == OBJECTBG_NTYPE23 || g_ObjectBG[EditIndex01].nType == OBJECTBG_NTYPE24 || g_ObjectBG[EditIndex01].nType == OBJECTBG_NTYPE25 || g_ObjectBG[EditIndex01].nType == OBJECTBG_NTYPE26 || g_ObjectBG[EditIndex01].nType == OBJECTBG_NTYPE27 || g_ObjectBG[EditIndex01].nType == OBJECTBG_NTYPE28)
 	{//選択されているオブジェクトが天井の時
 		if (GetKeyboardTrigger(DIK_UP) == true)
 		{//前移動
@@ -245,7 +252,7 @@ void UpdateEditObjectBG(void)
 		}
 	}
 
-	if (g_ObjectBG[EditIndex01].nType != OBJECTBG_NTYPE18 && g_ObjectBG[EditIndex01].nType != OBJECTBG_NTYPE19 && g_ObjectBG[EditIndex01].nType != OBJECTBG_NTYPE20 && g_ObjectBG[EditIndex01].nType != OBJECTBG_NTYPE21 && g_ObjectBG[EditIndex01].nType != OBJECTBG_NTYPE22)
+	if (g_ObjectBG[EditIndex01].nType != OBJECTBG_NTYPE18 && g_ObjectBG[EditIndex01].nType != OBJECTBG_NTYPE19 && g_ObjectBG[EditIndex01].nType != OBJECTBG_NTYPE20 && g_ObjectBG[EditIndex01].nType != OBJECTBG_NTYPE21 && g_ObjectBG[EditIndex01].nType != OBJECTBG_NTYPE22 && g_ObjectBG[EditIndex01].nType != OBJECTBG_NTYPE23 && g_ObjectBG[EditIndex01].nType != OBJECTBG_NTYPE24 && g_ObjectBG[EditIndex01].nType != OBJECTBG_NTYPE25 && g_ObjectBG[EditIndex01].nType != OBJECTBG_NTYPE26 && g_ObjectBG[EditIndex01].nType != OBJECTBG_NTYPE27 && g_ObjectBG[EditIndex01].nType != OBJECTBG_NTYPE28)
 	{//選択されているオブジェクトが天井以外の時
 		if (GetKeyboardPress(DIK_UP) == true)
 		{//前移動
@@ -297,6 +304,11 @@ void UpdateEditObjectBG(void)
 		if (EditType01 == OBJECTBG_NTYPE18)
 		{//選択されているオブジェクトが天井の時
 			EditPos01 = D3DXVECTOR3(0.0f, 150.0f, 0.0f);
+		}
+
+		if (EditType01 == OBJECTBG_NTYPE23)
+		{//選択されているオブジェクトが床の時
+			EditPos01 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		}
 	}
 	if (GetKeyboardTrigger(DIK_8) == true)

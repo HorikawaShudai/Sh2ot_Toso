@@ -8,6 +8,8 @@
 #include "object00.h"
 #include "objectBG.h"
 #include "objectLight.h"
+#include "ObjectWall.h"
+#include "objectPoly.h"
 #include "stage.h"
 #include "player.h"
 #include "debugproc.h"
@@ -19,6 +21,7 @@
 #include "score_item.h"
 #include "score.h"
 #include "PlayNumberSelect.h"
+#include "PlayModeSelect.h"
 #include "key.h"
 #include "keyUI.h"
 #include "Effect.h"
@@ -29,18 +32,21 @@
 #include "time.h"
 #include "ActionHelpUI.h"
 #include "sound.h"
+#include "pause.h"
+#include "particle.h"
 
 //エディットに使うオブジェクトの種類の構造体
 typedef enum
 {
 	EDIT_TYPE_NORMAL = 0,
 	EDIT_TYPE_BG,
+	EDIT_TYPE_POLY,
+	EDIT_TYPE_WALL,
 	EDIT_TYPE_LIGHT,
 	EDIT_TYPE_MAX,
 }EDIT_TYPE;
 
 //グローバル変数宣言
-bool g_bPause = false;
 bool g_bEdit = false;
 int g_bBG_Edit = 0;
 bool g_bGameClear = false;
@@ -53,7 +59,9 @@ int GameSetEnemyCount = 0;
 //====================================================================
 void InitGame()
 {
-	g_bPause = false;
+	//ポーズ情報の取得
+	Pause *pPause = GetPause();
+
 	g_bEdit = false;
 	g_bBG_Edit = 0;
 	g_bGameClear = false;
@@ -81,6 +89,8 @@ void InitGame()
 	InitObject00();
 	InitObjectBG();
 	InitObjectLight();
+	InitObjectWall();
+	InitObjectPoly();
 
 	//プレイヤーの初期化処理
 	InitPlayer();
@@ -97,9 +107,6 @@ void InitGame()
 	//ライフの初期化処理
 	InitLife();
 
-	//スコアの初期化
-	InitScore();
-
 	//鍵の初期化処理
 	InitKey();
 
@@ -109,11 +116,21 @@ void InitGame()
 	//エフェクトの初期化
 	InitEffect();
 
+	//パーティクルの初期化処理
+	InitParticle();
+
 	//出口の初期化処理
 	InitExit();
 
-	//スコアアイテムの初期化
-	InitItem();
+	if (GetPlayModeSelect().CurrentModeNumber == 1)
+	{//モード選択が悪透モードの時
+
+		//スコアの初期化
+		InitScore();
+
+		//スコアアイテムの初期化
+		InitItem();
+	}
 
 	InitPolygonBG();
 
@@ -121,6 +138,12 @@ void InitGame()
 
 	//フォグの初期化
 	InitFog();
+
+	//ポーズの初期化処理
+	InitPause();
+
+	//ポーズ状態のON/OFF
+	pPause->bUse = false;
 
 	//フォグの設定
 	SetFog(D3DFOG_LINEAR, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.2f), 10.0f, 1000.0f, 0.1f);
@@ -156,7 +179,7 @@ void InitGame()
 	{
 		int nKey;
 		nKey = rand() % 9;
-		SetKey(KeyPos[nKey], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		SetKey(KeyPos[nKey], D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	}
 
 	//ステージの読み込み
@@ -189,6 +212,8 @@ void UninitGame()
 	UninitObject00();
 	UninitObjectBG();
 	UninitObjectLight();
+	UninitObjectWall();
+	UninitObjectPoly();
 
 	//プレイヤーの終了処理
 	UninitPlayer();
@@ -205,11 +230,15 @@ void UninitGame()
 	//ライフの終了処理
 	UninitLife();
 
-	//スコアの終了処理
-	UninitScore();
+	if (GetPlayModeSelect().CurrentModeNumber == 1)
+	{//モード選択が悪透モードの時
 
-	//アイテムの終了処理
-	UninitItem();
+		//スコアの終了処理
+		UninitScore();
+
+		//アイテムの終了処理
+		UninitItem();
+	}
 
 	//鍵の終了処理
 	UninitKey();
@@ -220,12 +249,18 @@ void UninitGame()
 	//エフェクトの終了処理
 	UninitEffect();
 
+	//パーティクルの終了処理
+	UninitParticle();
+
 	//出口の終了処理
 	UninitExit();
 
 	UninitTime();
 
 	UninitPolygonBG();
+
+	//ポーズの終了処理
+	UninitPause();
 
 	//フォグの終了処理
 	UninitFog();
@@ -236,6 +271,8 @@ void UninitGame()
 //====================================================================
 void UpdateGame()
 {
+	//ポーズ情報の取得
+	Pause *pPause = GetPause();
 
 #ifdef _DEBUG
 	if (GetKeyboardTrigger(DIK_F2) == true)
@@ -259,18 +296,29 @@ void UpdateGame()
 
 #endif
 
-	if (g_bPause == false && g_bEdit == false)
-	{//ポーズ状態じゃないときかつエディット状態じゃないとき
-		FADE Fade = GetFade();
-
-		if (Fade == FADE_NONE)
-		{
-			if (GetKeyboardPress(DIK_RETURN))
-			{//ENTERキーを押したときリザルトにフェード
-				SetFade(MODE_RESULT);
-			}
-		}
+	if (GetKeyboardTrigger(DIK_P) == true || GetGamepadTrigger(BUTTON_START, 0) == true)
+	{//ポーズ処理
+		pPause->bUse = pPause->bUse ? false : true;
 	}
+
+	if (pPause->bUse == true)
+	{//ポーズが使われているとき
+		//ポーズの更新処理
+		UpdatePause();
+	}
+
+	//if (pPause->bUse == false && g_bEdit == false)
+	//{//ポーズ状態じゃないときかつエディット状態じゃないとき
+	//	FADE Fade = GetFade();
+
+	//	if (Fade == FADE_NONE)
+	//	{
+	//		if (GetKeyboardPress(DIK_RETURN))
+	//		{//ENTERキーを押したときリザルトにフェード
+	//			SetFade(MODE_RESULT);
+	//		}
+	//	}
+	//}
 
 	//カメラの更新処理
 	UpdateCamera();
@@ -282,6 +330,13 @@ void UpdateGame()
 
 	//メッシュの壁の更新処理
 	UpdateMeshWall();
+
+	//オブジェクトの更新処理
+	UpdateObject00();
+	UpdateObjectBG();
+	UpdateObjectLight();
+	UpdateObjectWall();
+	UpdateObjectPoly();
 
 	if (g_bEdit == true)
 	{//エディットモードの時
@@ -299,14 +354,23 @@ void UpdateGame()
 			//エディットモードのオブジェクトBGの更新処理
 			UpdateEditObjectBG();
 			break;
+		case EDIT_TYPE_POLY:
+			//エディットモードのオブジェクトPolyの更新処理
+			UpdateEditObjectPoly();
+			break;
+		case EDIT_TYPE_WALL:
+			//エディットモードのオブジェクトWallの更新処理
+			UpdateEditObjectWall();
+			break;
 		case EDIT_TYPE_LIGHT:
 			//エディットモードのオブジェクトLightの更新処理
 			UpdateEditObjectLight();
 			break;
 		}
 	}
-	else
-	{//通常モードの時
+
+	if (pPause->bUse == false && g_bEdit == false)
+	{//ポーズ状態じゃないときかつエディット状態じゃないとき
 
 		PrintDebugProc("カメラの視点移動【W】【A】【S】【D】\n");
 		PrintDebugProc("カメラの注視点移動 【I】【J】【K】【L】\n");
@@ -326,11 +390,6 @@ void UpdateGame()
 		//床の更新処理
 		UpdateMeshField();
 
-		//オブジェクトの更新処理
-		UpdateObject00();
-		UpdateObjectBG();
-		UpdateObjectLight();
-
 		//プレイヤーの更新処理
 		UpdatePlayer();
 
@@ -346,11 +405,14 @@ void UpdateGame()
 		//ライフの更新処理
 		UpdateLife();
 
-		//スコアの更新処理
-		UpdateScore();
+		if (GetPlayModeSelect().CurrentModeNumber == 1)
+		{//モード選択が悪透モードの時
+			//スコアの更新処理
+			UpdateScore();
 
-		//スコアアイテムの更新処理
-		UpdateItem();
+			//スコアアイテムの更新処理
+			UpdateItem();
+		}
 
 		//鍵の更新処理
 		UpdateKey();
@@ -361,13 +423,19 @@ void UpdateGame()
 		//エフェクトの更新処理
 		UpdateEffect();
 
+		//パーティクルの更新処理
+		UpdateParticle();
+
 		//出口の更新処理
 		UpdateExit();
 
+		//タイムの更新処理
 		UpdateTime();
-
+		
+		//ダメージリアクション用ポリゴンの更新処理
 		UpdatePolygonBG();
 	}
+
 
 	switch (gGameState)
 	{
@@ -413,7 +481,11 @@ void DrawGame()
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 
+	//プレイヤー情報の取得
 	Player *pPlayer = GetPlayer();
+
+	//ポーズ情報の取得
+	Pause *pPause = GetPause();
 
 	//現在のビューポートを取得
 	pDevice->GetViewport(&viewportDef);
@@ -422,6 +494,9 @@ void DrawGame()
 	{
 		//カメラのセット処理
 		SetCamera(nCnt);
+
+		//パーティクルの描画
+		DrawParticle();
 
 		//メッシュウォールの描画処理
 		DrawMeshWall();
@@ -438,6 +513,14 @@ void DrawGame()
 				//エディットモードのオブジェクトBGの描画処理
 				DrawEditObjectBG();
 				break;
+			case EDIT_TYPE_POLY:
+				//エディットモードのオブジェクトPolyの描画処理
+				DrawEditObjectPoly();
+				break;
+			case EDIT_TYPE_WALL:
+				//エディットモードのオブジェクトWallの描画処理
+				DrawEditObjectWall();
+				break;
 			case EDIT_TYPE_LIGHT:
 				//エディットモードのオブジェクトLightの描画処理
 				DrawEditObjectLight();
@@ -446,12 +529,14 @@ void DrawGame()
 		}
 
 		//床の描画処理
-		DrawMeshField();
+		//DrawMeshField();
 
 		//オブジェクトの描画処理
+		DrawObjectPoly();
 		DrawObject00();
 		DrawObjectBG();
 		DrawObjectLight();
+		DrawObjectWall();
 
 		//出口の描画処理
 		DrawExit();
@@ -476,11 +561,15 @@ void DrawGame()
 
 		DrawTime();
 
-		//スコアの描画処理
-		DrawScore();
+		if (GetPlayModeSelect().CurrentModeNumber == 1)
+		{//モード選択が悪透モードの時
 
-		//スコアアイテムの描画処理
-		DrawItem();
+			//スコアアイテムの描画処理
+			DrawItem();
+
+			//スコアの描画処理
+			DrawScore();
+		}
 
 		//鍵の描画処理
 		DrawKey();
@@ -495,6 +584,12 @@ void DrawGame()
 
 		//フォグの描画
 		DrawFog();
+	}
+
+	if (pPause->bUse == true)
+	{//ポーズ中だった場合
+	 //ポーズの描画処理
+		DrawPause();
 	}
 
 	//ビューポートを元に戻す
@@ -524,12 +619,4 @@ GAMESTATE GetGameState()
 bool GetClear(void)
 {
 	return g_bGameClear;
-}
-
-//====================================================================
-//ポーズ状態の設定処理
-//====================================================================
-void SetPause(bool bPause)
-{
-	g_bPause = bPause;
 }

@@ -182,9 +182,12 @@
     <ClCompile Include="object00.cpp" />
     <ClCompile Include="objectBG.cpp" />
     <ClCompile Include="objectLight.cpp" />
+    <ClCompile Include="objectPoly.cpp" />
+    <ClCompile Include="ObjectWall.cpp" />
     <ClCompile Include="paperBG00.cpp" />
     <ClCompile Include="paperBG01.cpp" />
     <ClCompile Include="particle.cpp" />
+    <ClCompile Include="pause.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="playerBG.cpp" />
     <ClCompile Include="PlayNumberSelect.cpp" />
@@ -241,9 +244,12 @@
     <ClInclude Include="object00.h" />
     <ClInclude Include="objectBG.h" />
     <ClInclude Include="objectLight.h" />
+    <ClInclude Include="objectPoly.h" />
+    <ClInclude Include="ObjectWall.h" />
     <ClInclude Include="paperBG00.h" />
     <ClInclude Include="paperBG01.h" />
     <ClInclude Include="particle.h" />
+    <ClInclude Include="pause.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="playerBG.h" />
     <ClInclude Include="PlayNumberSelect.h" />

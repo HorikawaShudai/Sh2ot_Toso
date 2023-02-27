@@ -176,51 +176,51 @@ void UpdateMeshWall(void)
 //====================================================================
 void DrawMeshWall(void)
 {
-	//デバイスの所得
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	D3DXMATRIX mtxRot, mtxTrans;	//計算用マトリックス
+	////デバイスの所得
+	//LPDIRECT3DDEVICE9 pDevice = GetDevice();
+	//D3DXMATRIX mtxRot, mtxTrans;	//計算用マトリックス
 
-	for (int nCntMeshWall = 0; nCntMeshWall < MAX_MESHWALL; nCntMeshWall++)
-	{
-		if (g_aMeshWall[nCntMeshWall].bUse == true)
-		{
-			//ワールドマトリックスの初期化
-			D3DXMatrixIdentity(&g_aMeshWall[nCntMeshWall].mtxWorld);
+	//for (int nCntMeshWall = 0; nCntMeshWall < MAX_MESHWALL; nCntMeshWall++)
+	//{
+	//	if (g_aMeshWall[nCntMeshWall].bUse == true)
+	//	{
+	//		//ワールドマトリックスの初期化
+	//		D3DXMatrixIdentity(&g_aMeshWall[nCntMeshWall].mtxWorld);
 
-			//向きを反映
-			D3DXMatrixRotationYawPitchRoll(&mtxRot, g_aMeshWall[nCntMeshWall].rot.y, g_aMeshWall[nCntMeshWall].rot.x, g_aMeshWall[nCntMeshWall].rot.z);
+	//		//向きを反映
+	//		D3DXMatrixRotationYawPitchRoll(&mtxRot, g_aMeshWall[nCntMeshWall].rot.y, g_aMeshWall[nCntMeshWall].rot.x, g_aMeshWall[nCntMeshWall].rot.z);
 
-			D3DXMatrixMultiply(&g_aMeshWall[nCntMeshWall].mtxWorld, &g_aMeshWall[nCntMeshWall].mtxWorld, &mtxRot);
+	//		D3DXMatrixMultiply(&g_aMeshWall[nCntMeshWall].mtxWorld, &g_aMeshWall[nCntMeshWall].mtxWorld, &mtxRot);
 
-			//位置を反映
-			D3DXMatrixTranslation(&mtxTrans, g_aMeshWall[nCntMeshWall].pos.x, g_aMeshWall[nCntMeshWall].pos.y, g_aMeshWall[nCntMeshWall].pos.z);
+	//		//位置を反映
+	//		D3DXMatrixTranslation(&mtxTrans, g_aMeshWall[nCntMeshWall].pos.x, g_aMeshWall[nCntMeshWall].pos.y, g_aMeshWall[nCntMeshWall].pos.z);
 
-			D3DXMatrixMultiply(&g_aMeshWall[nCntMeshWall].mtxWorld, &g_aMeshWall[nCntMeshWall].mtxWorld, &mtxTrans);
+	//		D3DXMatrixMultiply(&g_aMeshWall[nCntMeshWall].mtxWorld, &g_aMeshWall[nCntMeshWall].mtxWorld, &mtxTrans);
 
-			//ワールドマトリックスの設定
-			pDevice->SetTransform(D3DTS_WORLD, &g_aMeshWall[nCntMeshWall].mtxWorld);
+	//		//ワールドマトリックスの設定
+	//		pDevice->SetTransform(D3DTS_WORLD, &g_aMeshWall[nCntMeshWall].mtxWorld);
 
-			//頂点バッファをデータストリームに設定
-			pDevice->SetStreamSource(0, g_pVtxBuffMeshWall, 0, sizeof(VERTEX_3D));
+	//		//頂点バッファをデータストリームに設定
+	//		pDevice->SetStreamSource(0, g_pVtxBuffMeshWall, 0, sizeof(VERTEX_3D));
 
-			//インデックスバッファをデータストリームに設定
-			pDevice->SetIndices(g_pIndxBuffMeshWall);
+	//		//インデックスバッファをデータストリームに設定
+	//		pDevice->SetIndices(g_pIndxBuffMeshWall);
 
-			//頂点フォーマットの設定
-			pDevice->SetFVF(FVF_VERTEX_3D);
+	//		//頂点フォーマットの設定
+	//		pDevice->SetFVF(FVF_VERTEX_3D);
 
-			//テクスチャの設定
-			pDevice->SetTexture(0, g_pTextureMeshWall);
+	//		//テクスチャの設定
+	//		pDevice->SetTexture(0, g_pTextureMeshWall);
 
-			//ポリゴンの描画
-			pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP,
-				0,
-				0,
-				0,//用意した頂点の数
-				0,
-				(WAIGHT_SIZE * HEIGHT_SIZE + WAIGHT_SIZE * (HEIGHT_SIZE - 2) + 2 * (HEIGHT_SIZE - 2)) - 2);//描画するプリミティブの数
-		}
-	}
+	//		//ポリゴンの描画
+	//		pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP,
+	//			0,
+	//			0,
+	//			0,//用意した頂点の数
+	//			0,
+	//			(WAIGHT_SIZE * HEIGHT_SIZE + WAIGHT_SIZE * (HEIGHT_SIZE - 2) + 2 * (HEIGHT_SIZE - 2)) - 2);//描画するプリミティブの数
+	//	}
+	//}
 }
 
 //====================================================================

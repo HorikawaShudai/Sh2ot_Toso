@@ -36,8 +36,8 @@
 const char *c_apTitleTexName[NUM_TEX] =
 {
 	"Data\\TEXTURE\\TITLE\\Tousou_logo.png",		//透走ロゴ
-	"Data\\TEXTURE\\TITLE\\TitleSelect00.png",		//スタート文字
-	"Data\\TEXTURE\\TITLE\\TitleSelect01.png",		//セレクト文字
+	"Data\\TEXTURE\\TITLE\\TitleSelect02.png",		//スタート文字
+	"Data\\TEXTURE\\TITLE\\TitleSelect03.png",		//セレクト文字
 };
 
 //**********************************************
@@ -165,7 +165,7 @@ void UpdateTitle(void)
 	if (bTitle == false && bPress ==false)
 	{
 		g_nFadeCnt++;
-		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadPress(BUTTON_START, 0) || GetGamepadPress(BUTTON_A, 0))
+		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadPress(BUTTON_START, 0) || GetGamepadTrigger(BUTTON_A, 0))
 		{//決定キー(ENTERキー)が押された
 			g_nFadeCnt = 219;
 
@@ -490,13 +490,14 @@ void UpdateTitleSelect(void)
 			g_pVtxBuffTitle->Unlock();
 		}
 	
-		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadPress(BUTTON_START, 0) || GetGamepadPress(BUTTON_A, 0))
+		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadPress(BUTTON_START, 0) || GetGamepadTrigger(BUTTON_A, 0))
 		{//決定キー(ENTERキー)が押された
 			//モードの設定(ゲーム画面に移行)
 			if (bPress == false)
 			{
 				//決定音
 				PlaySound(SOUND_LABEL_ENTER);
+				StopSound(SOUND_LABEL_BGM_TITLE);
 
 				//テクスチャを変える処理
 				ChangeMeshDome();

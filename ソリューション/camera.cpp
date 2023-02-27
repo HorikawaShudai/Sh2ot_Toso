@@ -69,7 +69,7 @@ void InitCamera(void)
 		g_aCamera[nCntCamera].posV = D3DXVECTOR3(0.0f, 35.0f, 50.0f);
 		g_aCamera[nCntCamera].posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_aCamera[nCntCamera].vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-		g_aCamera[nCntCamera].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_aCamera[nCntCamera].rot = D3DXVECTOR3(0.0f, 3.14f, 0.0f);
 		g_aCamera[nCntCamera].rot2 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_aCamera[nCntCamera].rotOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_aCamera[nCntCamera].State = CAMERASTATE_NONE;
@@ -336,7 +336,7 @@ void PlayerFpsCamera(void)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//カメラを移動したことにする
-					CamMoveCheck(g_nCurrentCamera, true);
+					CamMoveTCheck(g_nCurrentCamera, true);
 				}
 			}
 			if (GetKeyboardPress(DIK_K) == true)
@@ -347,7 +347,7 @@ void PlayerFpsCamera(void)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//カメラを移動したことにする
-					CamMoveCheck(g_nCurrentCamera, true);
+					CamMoveTCheck(g_nCurrentCamera, true);
 				}
 			}
 
@@ -359,7 +359,7 @@ void PlayerFpsCamera(void)
 			{
 				if (do_Tutorial == MODE_MOVE)
 				{
-					CamMoveCheck(g_nCurrentCamera, true);
+					CamMoveTCheck(g_nCurrentCamera, true);
 				}
 			}
 
@@ -368,7 +368,7 @@ void PlayerFpsCamera(void)
 			{
 				if (do_Tutorial == MODE_MOVE)
 				{
-					CamMoveCheck(g_nCurrentCamera, true);
+					CamMoveTCheck(g_nCurrentCamera, true);
 				}
 			}
 
@@ -777,7 +777,7 @@ void ResPlayerCamera(void)
 					if (do_Tutorial == MODE_MOVE)
 					{
 						//カメラを移動したことにする
-						CamMoveCheck(nCntCamera, true);
+						CamMoveTCheck(nCntCamera, true);
 					}
 				}
 				if (GetKeyboardPress(DIK_K) == true)
@@ -788,7 +788,7 @@ void ResPlayerCamera(void)
 					if (do_Tutorial == MODE_MOVE)
 					{
 						//カメラを移動したことにする
-						CamMoveCheck(nCntCamera, true);
+						CamMoveTCheck(nCntCamera, true);
 					}
 				}
 
@@ -797,7 +797,7 @@ void ResPlayerCamera(void)
 				{
 					if (do_Tutorial == MODE_MOVE)
 					{
-						CamMoveCheck(nCntCamera, true);
+						CamMoveTCheck(nCntCamera, true);
 					}
 				}
 
@@ -806,7 +806,7 @@ void ResPlayerCamera(void)
 				{
 					if (do_Tutorial == MODE_MOVE)
 					{
-						CamMoveCheck(nCntCamera, true);
+						CamMoveTCheck(nCntCamera, true);
 					}
 				}
 

@@ -1,4 +1,17 @@
-﻿  enemy.cpp
-cl : コマンド ライン warning D9028: 簡易リビルド時のエラーです、通常のビルドに戻します
-  Trans.vcxproj -> C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+﻿  objectBG.cpp
+  PlayNumberSelect.cpp
+  コードを生成中...
+  コンパイル中...
+  title.cpp
+  stage.cpp
+  result.cpp
+  game.cpp
+  edit.cpp
+  VillainTutorial.cpp
+  EscapeTutorial.cpp
+  EscapeRanking.cpp
+  EscapeOverResult.cpp
+  EscapeClearResult.cpp
+  コードを生成中...
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (2)\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (2)\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)

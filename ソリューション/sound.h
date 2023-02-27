@@ -15,8 +15,6 @@ typedef enum
 	SOUND_LABEL_ENTER,					//決定音
 	SOUND_LABEL_PAPER,					//紙をめくる音
 	SOUND_LABEL_SE_WALK,				//プレイヤーの歩き
-	SOUND_LABEL_SE_RUN,					//プレイヤーのダッシュ
-	SOUND_LABEL_SE_STELTH,				//プレイヤーの忍び足
 	SOUND_LABEL_SE_DOOR,				//ドアの開閉音
 	SOUND_LABEL_SE_ENEMYMOVE,			//敵の移動音
 	SOUND_LABEL_MAX,

@@ -18,6 +18,7 @@
 #include "fade.h"
 #include "life.h"
 #include "PlayNumberSelect.h"
+#include "PlayModeSelect.h"
 #include "score_item.h"
 #include "stamina.h"
 #include "key.h"
@@ -38,6 +39,9 @@
 #define PLAYER_LIFE				(3)				//プレイヤーの初期ライフ
 #define PLAYER_COLLISIONSIZE	(15.0f)			//プレイヤーの当たり判定の大きさ
 #define PLAYER_LIGHT			(350.0f)		//プレイヤーの当たり判定の大きさ
+#define ENEMY_SE_SPEED			(60)			//敵の足音を鳴らす間隔
+#define PLAYER_SE_WALK			(40)			//プレイヤーの足音を鳴らす間隔(歩き)
+#define PLAYER_SE_DASH			(30)			//プレイヤーの足音を鳴らす間隔(ダッシュ)
 
 //プロトタイプ
 void UpdatePlayer0(void);
@@ -109,6 +113,9 @@ void InitPlayer(void)
 		g_aPlayer[nCntPlayer].nVibCnt = 0;
 		g_aPlayer[nCntPlayer].KeyHelpUI = false;
 		g_aPlayer[nCntPlayer].ExitHelpUI = false;
+
+		g_aPlayer[nCntPlayer].nEnemySECount = 0;
+		g_aPlayer[nCntPlayer].nPlayerSECount = 0;
 
 		g_Rand_PolygonColor_R = 0;
 		g_Rand_PolygonColor_G = 0;
@@ -303,12 +310,15 @@ void UpdatePlayer0(void)
 
 		//オブジェクトとの当たり判定
 		CollisionObject00(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 50.0f, 10.0f), 10.0f);
+		CollisionObjectWall(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 50.0f, 10.0f), 10.0f);
 		//外積の当たり判定
 		//CollisionOuterProductObject00(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move);
 
-
-		//アイテムとの当たり判定
-		CollisionItem(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-20.0f, -20.0f, -20.0f), D3DXVECTOR3(20.0f, 20.0f, 20.0f), 20.0f, nSelectPlayer);
+		if (GetPlayModeSelect().CurrentModeNumber == 1)
+		{
+			//アイテムとの当たり判定
+			CollisionItem(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-20.0f, -20.0f, -20.0f), D3DXVECTOR3(20.0f, 20.0f, 20.0f), 20.0f, nSelectPlayer);
+		}
 
 		//出口との当たり判定
 		CollisionExi(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
@@ -491,7 +501,7 @@ void PlayerMoveInput(int nCnt)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(nCnt, true);
+					MoveTCheck(nCnt, true);
 				}
 			}
 			if (GetGamepad_Stick_Left(0).y < 0.0f)
@@ -505,7 +515,7 @@ void PlayerMoveInput(int nCnt)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(nCnt, true);
+					MoveTCheck(nCnt, true);
 				}
 			}
 			if (GetGamepad_Stick_Left(0).x > 0.0f)
@@ -520,7 +530,7 @@ void PlayerMoveInput(int nCnt)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(nCnt, true);
+					MoveTCheck(nCnt, true);
 				}
 			}
 			if (GetGamepad_Stick_Left(0).x < 0.0f)
@@ -535,7 +545,7 @@ void PlayerMoveInput(int nCnt)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(nCnt, true);
+					MoveTCheck(nCnt, true);
 				}
 			}
 		}
@@ -848,12 +858,15 @@ void UpdatePlayer1(void)
 
 			//オブジェクトとの当たり判定
 			CollisionObject00(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 50.0f, 10.0f), 10.0f);
+			CollisionObjectWall(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 50.0f, 10.0f), 10.0f);
 			//外積の当たり判定
 			//CollisionOuterProductObject00(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move);
 
-
-			//アイテムとの当たり判定
-			CollisionItem(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-20.0f, -20.0f, -20.0f), D3DXVECTOR3(20.0f, 20.0f, 20.0f), 20.0f, nCntPlayer);
+			if (GetPlayModeSelect().CurrentModeNumber == 1)
+			{
+				//アイテムとの当たり判定
+				CollisionItem(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-20.0f, -20.0f, -20.0f), D3DXVECTOR3(20.0f, 20.0f, 20.0f), 20.0f, nCntPlayer);
+			}
 
 			//出口との当たり判定
 			CollisionExi(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
@@ -1036,14 +1049,26 @@ void ResPlayerMove(int nCnt)
 				g_aPlayer[nCnt].NormarizeMove.z += cosf(pCamera[nCnt].rot.y);
 				g_aPlayer[nCnt].NormarizeMove.x += sinf(pCamera[nCnt].rot.y);
 
-				//プレイヤーの歩き
-				PlaySound(SOUND_LABEL_SE_WALK);
+				g_aPlayer[nCnt].nPlayerSECount++;
+
+				if (g_aPlayer[nCnt].nPlayerSECount > PLAYER_SE_WALK && g_aPlayer[nCnt].MoveState == PLAYER_MOVESTATE_NORMAL)
+				{
+					//プレイヤーの歩き
+					PlaySound(SOUND_LABEL_SE_WALK);
+
+					g_aPlayer[nCnt].nPlayerSECount = 0;
+				}
+
+				else
+				{
+					
+				}
 
 				//移動したらチェックをつける処理
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(nCnt, true);
+					MoveTCheck(nCnt, true);
 				}
 			}
 			if (GetGamepad_Stick_Left(nCnt).y < 0.0f)
@@ -1051,14 +1076,26 @@ void ResPlayerMove(int nCnt)
 				g_aPlayer[nCnt].NormarizeMove.z -= cosf(pCamera[nCnt].rot.y);
 				g_aPlayer[nCnt].NormarizeMove.x -= sinf(pCamera[nCnt].rot.y);
 
-				//プレイヤーの歩き
-				PlaySound(SOUND_LABEL_SE_WALK);
+				g_aPlayer[nCnt].nPlayerSECount++;
+
+				if (g_aPlayer[nCnt].nPlayerSECount > PLAYER_SE_WALK && g_aPlayer[nCnt].MoveState == PLAYER_MOVESTATE_NORMAL)
+				{
+					//プレイヤーの歩き
+					PlaySound(SOUND_LABEL_SE_WALK);
+
+					g_aPlayer[nCnt].nPlayerSECount = 0;
+				}
+
+				else
+				{
+				
+				}
 
 				//移動したらチェックをつける処理
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(nCnt, true);
+					MoveTCheck(nCnt, true);
 				}
 			}
 			if (GetGamepad_Stick_Left(nCnt).x > 0.0f)
@@ -1067,14 +1104,26 @@ void ResPlayerMove(int nCnt)
 				g_aPlayer[nCnt].NormarizeMove.x += cosf(pCamera[nCnt].rot.y);
 				g_aPlayer[nCnt].NormarizeMove.z -= sinf(pCamera[nCnt].rot.y);
 
-				//プレイヤーの歩き
-				PlaySound(SOUND_LABEL_SE_WALK);
+				g_aPlayer[nCnt].nPlayerSECount++;
+
+				if (g_aPlayer[nCnt].nPlayerSECount > PLAYER_SE_WALK && g_aPlayer[nCnt].MoveState == PLAYER_MOVESTATE_NORMAL)
+				{
+					//プレイヤーの歩き
+					PlaySound(SOUND_LABEL_SE_WALK);
+
+					g_aPlayer[nCnt].nPlayerSECount = 0;
+				}
+
+				else
+				{
+					
+				}
 
 				//移動したらチェックをつける処理
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(nCnt, true);
+					MoveTCheck(nCnt, true);
 				}
 			}
 			if (GetGamepad_Stick_Left(nCnt).x < 0.0f)
@@ -1083,14 +1132,26 @@ void ResPlayerMove(int nCnt)
 				g_aPlayer[nCnt].NormarizeMove.x -= cosf(pCamera[nCnt].rot.y);
 				g_aPlayer[nCnt].NormarizeMove.z += sinf(pCamera[nCnt].rot.y);
 
-				//プレイヤーの歩き
-				PlaySound(SOUND_LABEL_SE_WALK);
+				g_aPlayer[nCnt].nPlayerSECount++;
+
+				if (g_aPlayer[nCnt].nPlayerSECount > PLAYER_SE_WALK && g_aPlayer[nCnt].MoveState == PLAYER_MOVESTATE_NORMAL)
+				{
+					//プレイヤーの歩き
+					PlaySound(SOUND_LABEL_SE_WALK);
+
+					g_aPlayer[nCnt].nPlayerSECount = 0;
+				}
+
+				else
+				{
+					
+				}
 
 				//移動したらチェックをつける処理
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(nCnt, true);
+					MoveTCheck(nCnt, true);
 				}
 			}
 		}
@@ -1116,8 +1177,20 @@ void ResPlayerMove(int nCnt)
 				g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_DASHSPEED;
 				g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_DASHSPEED;
 
-				//ダッシュ状態の音
-				PlaySound(SOUND_LABEL_SE_RUN);
+				g_aPlayer[nCnt].nPlayerSECount++;
+
+				if (g_aPlayer[nCnt].nPlayerSECount > PLAYER_SE_DASH && g_aPlayer[nCnt].MoveState == PLAYER_MOVESTATE_DASH)
+				{
+					//ダッシュ状態の音
+					PlaySound(SOUND_LABEL_SE_WALK);
+
+					g_aPlayer[nCnt].nPlayerSECount = 0;
+				}
+
+				else
+				{
+					
+				}
 
 				//プレイヤーをダッシュ状態にする
 				g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_DASH;
@@ -1136,9 +1209,6 @@ void ResPlayerMove(int nCnt)
 			g_aPlayer[nCnt].NormarizeMove.z *= PLAYER_STEALTHSPEED;
 
 			g_aPlayer[nCnt].move += g_aPlayer[nCnt].NormarizeMove;
-
-			//ダッシュ状態の音
-			PlaySound(SOUND_LABEL_SE_STELTH);
 
 			//プレイヤーをステルス状態にする
 			g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;
@@ -1336,10 +1406,6 @@ void PlayerDistance(int nCnt)
 		{
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, 300.0f, 0.0f, -10.0f, 50.0f) == true)
 			{//敵の表示処理
-
-				////敵の移動量
-				//PlaySound(SOUND_LABEL_SE_ENEMYMOVE);
-		
 				g_aPlayer[nCnt].bAppear = true;
 				break;
 			}
@@ -1388,7 +1454,14 @@ void PlayerDistance(int nCnt)
 
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, 800.0f, 0.0f, -10.0f, 50.0f) == true)
 			{//サウンド処理
+				g_aPlayer[nCnt].nEnemySECount++;
 
+				if (g_aPlayer[nCnt].nEnemySECount > ENEMY_SE_SPEED)
+				{
+					PlaySound(SOUND_LABEL_SE_ENEMYMOVE);
+
+					g_aPlayer[nCnt].nEnemySECount = 0;
+				}
 			}
 			else
 			{

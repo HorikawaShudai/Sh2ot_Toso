@@ -195,9 +195,6 @@
     <ClCompile Include="tutorial.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="VillainTutorial.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="objectLight.cpp">
       <Filter>ソース ファイル\Map</Filter>
     </ClCompile>
@@ -221,6 +218,18 @@
     </ClCompile>
     <ClCompile Include="paperBG01.cpp">
       <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="pause.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectWall.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="objectPoly.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="VillainTutorial.cpp">
+      <Filter>ソース ファイル\mode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -368,12 +377,6 @@
     <ClInclude Include="meshfield.h">
       <Filter>ヘッダー ファイル\Map\mesh</Filter>
     </ClInclude>
-    <ClInclude Include="tutorial.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="VillainTutorial.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="objectLight.h">
       <Filter>ヘッダー ファイル\Map</Filter>
     </ClInclude>
@@ -394,6 +397,21 @@
     </ClInclude>
     <ClInclude Include="paperBG01.h">
       <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="pause.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectWall.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="objectPoly.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="VillainTutorial.h">
+      <Filter>ヘッダー ファイル\mode</Filter>
+    </ClInclude>
+    <ClInclude Include="tutorial.h">
+      <Filter>ヘッダー ファイル\mode</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

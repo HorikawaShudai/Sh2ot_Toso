@@ -11,6 +11,7 @@
 #include "debugproc.h"
 #include "key.h"
 #include "ActionHelpUI.h"
+#include "particle.h"
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureKey[64][KEY_TYPE_MAX] = {};		//テクスチャのポインタ
@@ -131,6 +132,21 @@ void UpdateKey(void)
 			{
 				g_Key[nCntKey].move *= -1.0;
 			}
+
+			//鍵のパーティクル処理
+			SetParticle(D3DXVECTOR3(g_Key[nCntKey].pos.x, g_Key[nCntKey].pos.y + 10.0f, g_Key[nCntKey].pos.z),
+				D3DXVECTOR3(0.0f, 0.0f, 0.0f),
+				D3DXCOLOR(0.3f, 0.0f, 0.6f, 0.5f),
+				D3DXVECTOR3(D3DX_PI * 0.0f, 0.0f, 0.0f),
+				1.0f,
+				10.0f,
+				20,
+				PARTICLE_TYPE_KEY,
+				1,
+				120,
+				1,
+				2);
+
 		}
 	}
 }

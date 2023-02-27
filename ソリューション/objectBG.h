@@ -30,11 +30,18 @@ typedef enum
 	OBJECTBG_NTYPE15,			//時計
 	OBJECTBG_NTYPE16,			//階段_右_上
 	OBJECTBG_NTYPE17,			//階段_左_上
-	OBJECTBG_NTYPE18,					//天井(白)
-	OBJECTBG_NTYPE19,					//天井(コンクリ)
-	OBJECTBG_NTYPE20,					//天井(雨濡れコンクリ)
-	OBJECTBG_NTYPE21,					//天井(タイル)
-	OBJECTBG_NTYPE22,					//天井(白模様入り)
+	OBJECTBG_NTYPE18,			//天井(白)
+	OBJECTBG_NTYPE19,			//天井(コンクリ)
+	OBJECTBG_NTYPE20,			//天井(雨濡れコンクリ)
+	OBJECTBG_NTYPE21,			//天井(タイル)
+	OBJECTBG_NTYPE22,			//天井(白模様入り)
+	OBJECTBG_NTYPE23,			//床(鉄)
+	OBJECTBG_NTYPE24,			//床(コンクリ)
+	OBJECTBG_NTYPE25,			//床(タイル)
+	OBJECTBG_NTYPE26,			//床(オフィス)
+	OBJECTBG_NTYPE27,			//床(白)
+	OBJECTBG_NTYPE28,			//床(白模様入り)
+	OBJECTBG_NTYPE29,			//床(白模様入り)
 	OBJECTBG_NTYPE_MAX,
 
 }OBJECTBG_NTYPE;

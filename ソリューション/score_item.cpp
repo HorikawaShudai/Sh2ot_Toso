@@ -80,61 +80,32 @@ void InitItem(void)
 	}
 
 	////スコア用アイテムの配置
-	//SetNumItems(72, D3DXVECTOR3(-2400.0f, 0.0f, -500.0f), 50.0f, 0.0f);
+	SetNumItems(21, D3DXVECTOR3(-1650.0f, 0.0f, -400.0f), 50.0f, 0.0f);
+	SetNumItems(17, D3DXVECTOR3(-1000.0f, 0.0f, -350.0f), 0.0f, 50.0f);
+	SetNumItems(7, D3DXVECTOR3(-1050.0f, 0.0f, 600.0f), 0.0f, 50.0f);
+	SetNumItems(9, D3DXVECTOR3(-950.0f, 0.0f, 600.0f), 0.0f, 50.0f);
+	SetNumItems(9, D3DXVECTOR3(-1650.0f, 0.0f, -350.0f), 0.0f, 50.0f);
+	SetNumItems(14, D3DXVECTOR3(-2150.0f, 0.0f, 150.0f), 50.0f, 0.0f);
+	SetNumItems(13, D3DXVECTOR3(-1450.0f, 0.0f, 200.0f), 0.0f, 50.0f);
+	SetNumItems(29, D3DXVECTOR3(-1350.0f, 0.0f, 250.0f), 0.0f, 50.0f);
+	SetNumItems(13, D3DXVECTOR3(-1250.0f, 0.0f, 1100.0f), 0.0f, 50.0f);
+	SetNumItems(19, D3DXVECTOR3(-1250.0f, 0.0f, 1050.0f), 50.0f, 0.0f);
+	SetNumItems(10, D3DXVECTOR3(-350.0f, 0.0f, 550.0f), 0.0f, 50.0f);
+	SetNumItems(15, D3DXVECTOR3(-300.0f, 0.0f, 550.0f), 50.0f, 0.0f);
+	SetNumItems(15, D3DXVECTOR3(-600.0f, 0.0f, -400.0f), 0.0f, 50.0f);
+	SetNumItems(8, D3DXVECTOR3(-600.0f, 0.0f, 350.0f), 50.0f, 0.0f);
+	SetNumItems(5, D3DXVECTOR3(-250.0f, 0.0f, 150.0f), 0.0f, 50.0f);
+	SetNumItems(6, D3DXVECTOR3(-200.0f, 0.0f, 150.0f), 50.0f, 0.0f);
+	SetNumItems(11, D3DXVECTOR3(50.0f, 0.0f, -400.0f), 0.0f, 50.0f);
+	SetNumItems(5, D3DXVECTOR3(-2150.0f, 0.0f, 200.0f), 0.0f, 50.0f);
+	SetNumItems(5, D3DXVECTOR3(-1850.0f, 0.0f, 200.0f), 0.0f, 50.0f);
+	SetNumItems(14, D3DXVECTOR3(-2150.0f, 0.0f, 450.0f), 50.0f, 0.0f);
+	SetNumItems(14, D3DXVECTOR3(-2150.0f, 0.0f, 650.0f), 50.0f, 0.0f);
+	SetNumItems(3, D3DXVECTOR3(-2150.0f, 0.0f, 700.0f), 0.0f, 50.0f);
+	SetNumItems(12, D3DXVECTOR3(-2150.0f, 0.0f, 850.0f), 50.0f, 0.0f);
+	SetNumItems(3, D3DXVECTOR3(-1950.0f, 0.0f, 900.0f), 0.0f, 50.0f);
+	SetNumItems(3, D3DXVECTOR3(-1650.0f, 0.0f, 900.0f), 0.0f, 50.0f);
 
-	//SetNumItems(48, D3DXVECTOR3(-2200.0f, 0.0f, 97.0f), 50.0f, 0.0f);
-
-	//SetNumItems(36, D3DXVECTOR3(-1650.0f, 0.0f, 350.0f), 50.0f, 0.0f);
-
-	//SetNumItems(35, D3DXVECTOR3(-1650.0f, 0.0f, 861.0f), 50.0f, 0.0f);
-
-	//SetNumItems(34, D3DXVECTOR3(-756.0f, 0.0f, 1200.0f), 50.0f, 0.0f);
-
-	//SetNumItems(19, D3DXVECTOR3(300.0f, 0.0f, -1195.0f), 50.0f, 0.0f);
-
-	//SetNumItems(14, D3DXVECTOR3(833.0f, 0.0f, -1800.0f), 50.0f, 0.0f);
-
-	//SetNumItems(14, D3DXVECTOR3(1264.0f, 0.0f, -204.0f), 50.0f, 0.0f);
-
-	//SetNumItems(14, D3DXVECTOR3(1264.0f, 0.0f, -410.0f), 50.0f, 0.0f);
-
-	//SetNumItems(14, D3DXVECTOR3(1264.0f, 0.0f, -620.0f), 50.0f, 0.0f);
-
-	//SetNumItems(14, D3DXVECTOR3(1264.0f, 0.0f, -920.0f), 50.0f, 0.0f);
-
-	//SetNumItems(14, D3DXVECTOR3(1264.0f, 0.0f, -1110.0f), 50.0f, 0.0f);
-
-	//SetNumItems(11, D3DXVECTOR3(1489.0f, 0.0f, -1280), 0.0f, -50.0f);
-
-	//SetNumItems(11, D3DXVECTOR3(1710.0f, 0.0f, -1280), 0.0f, -50.0f);
-
-	//SetNumItems(11, D3DXVECTOR3(1910.0f, 0.0f, -1280), 0.0f, -50.0f);
-
-	//SetNumItems(15, D3DXVECTOR3(-1828.0f, 0.0f, -318.0f), 50.0f, 0.0f);
-
-	//SetNumItems(15, D3DXVECTOR3(-1828.0f, 0.0f, -180.0f), 50.0f, 0.0f);
-
-	//SetNumItems(10, D3DXVECTOR3(421.0f, 0.0f, 399.0f), 50.0f, 0.0f);
-
-	//SetNumItems(16, D3DXVECTOR3(880.0f, 0.0f, 382.0f), 0.0f, 50.0f);
-
-	//SetNumItems(11, D3DXVECTOR3(1200.0f, 0.0f, 382.0f), 0.0f, 50.0f);
-
-	//SetNumItems(46, D3DXVECTOR3(293.0f, 0.0f, -1119.0f), 0.0f, 50.0f);
-
-	//SetNumItems(11, D3DXVECTOR3(-996.0f, 0.0f, -453.0f), 0.0f, 50.0f);
-
-	//SetNumItems(10, D3DXVECTOR3(-2381.0f, 0.0f, -49.0f), 0.0f, -50.0f);
-
-	//SetNumItems(14, D3DXVECTOR3(-1606.0f, 0.0f,146.0f), 0.0f, 50.0f);
-
-	//SetNumItems(8, D3DXVECTOR3(-649.0f, 0.0f,859.0f), 0.0f, 50.0f);
-
-	//SetNumItems(8, D3DXVECTOR3(53.0f, 0.0f, 855.0f), 0.0f, 50.0f);
-
-	//SetNumItems(9, D3DXVECTOR3(503.0f, 0.0f, -1214.0f), 0.0f, 50.0f);
-
-	//SetNumItems(13, D3DXVECTOR3(485.0f, 0.0f, -703.0f), 50.0f, 0.0f);
 }
 
 //====================================================================
