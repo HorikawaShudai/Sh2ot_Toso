@@ -179,7 +179,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\チーム制作\\Sh2ot_Toso\\ソ\リューション\\Data\\TEXTURE\\tile.jpg";
+    "Data\\TEXTURE\\tile.jpg";
    }
   }
  }

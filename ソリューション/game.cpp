@@ -29,6 +29,7 @@
 #include "time.h"
 #include "ActionHelpUI.h"
 #include "sound.h"
+#include "pause.h"
 
 //エディットに使うオブジェクトの種類の構造体
 typedef enum
@@ -40,7 +41,6 @@ typedef enum
 }EDIT_TYPE;
 
 //グローバル変数宣言
-bool g_bPause = false;
 bool g_bEdit = false;
 int g_bBG_Edit = 0;
 bool g_bGameClear = false;
@@ -53,7 +53,9 @@ int GameSetEnemyCount = 0;
 //====================================================================
 void InitGame()
 {
-	g_bPause = false;
+	//ポーズ情報の取得
+	Pause *pPause = GetPause();
+
 	g_bEdit = false;
 	g_bBG_Edit = 0;
 	g_bGameClear = false;
@@ -121,6 +123,12 @@ void InitGame()
 
 	//フォグの初期化
 	InitFog();
+
+	//ポーズの初期化処理
+	InitPause();
+
+	//ポーズ状態のON/OFF
+	pPause->bUse = false;
 
 	//フォグの設定
 	SetFog(D3DFOG_LINEAR, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.2f), 10.0f, 1000.0f, 0.1f);
@@ -227,6 +235,9 @@ void UninitGame()
 
 	UninitPolygonBG();
 
+	//ポーズの終了処理
+	UninitPause();
+
 	//フォグの終了処理
 	UninitFog();
 }
@@ -236,6 +247,8 @@ void UninitGame()
 //====================================================================
 void UpdateGame()
 {
+	//ポーズ情報の取得
+	Pause *pPause = GetPause();
 
 #ifdef _DEBUG
 	if (GetKeyboardTrigger(DIK_F2) == true)
@@ -259,18 +272,29 @@ void UpdateGame()
 
 #endif
 
-	if (g_bPause == false && g_bEdit == false)
-	{//ポーズ状態じゃないときかつエディット状態じゃないとき
-		FADE Fade = GetFade();
-
-		if (Fade == FADE_NONE)
-		{
-			if (GetKeyboardPress(DIK_RETURN))
-			{//ENTERキーを押したときリザルトにフェード
-				SetFade(MODE_RESULT);
-			}
-		}
+	if (GetKeyboardTrigger(DIK_P) == true || GetGamepadTrigger(BUTTON_START, 0) == true)
+	{//ポーズ処理
+		pPause->bUse = pPause->bUse ? false : true;
 	}
+
+	if (pPause->bUse == true)
+	{//ポーズが使われているとき
+		//ポーズの更新処理
+		UpdatePause();
+	}
+
+	//if (pPause->bUse == false && g_bEdit == false)
+	//{//ポーズ状態じゃないときかつエディット状態じゃないとき
+	//	FADE Fade = GetFade();
+
+	//	if (Fade == FADE_NONE)
+	//	{
+	//		if (GetKeyboardPress(DIK_RETURN))
+	//		{//ENTERキーを押したときリザルトにフェード
+	//			SetFade(MODE_RESULT);
+	//		}
+	//	}
+	//}
 
 	//カメラの更新処理
 	UpdateCamera();
@@ -305,8 +329,9 @@ void UpdateGame()
 			break;
 		}
 	}
-	else
-	{//通常モードの時
+
+	if (pPause->bUse == false && g_bEdit == false)
+	{//ポーズ状態じゃないときかつエディット状態じゃないとき
 
 		PrintDebugProc("カメラの視点移動【W】【A】【S】【D】\n");
 		PrintDebugProc("カメラの注視点移動 【I】【J】【K】【L】\n");
@@ -369,6 +394,7 @@ void UpdateGame()
 		UpdatePolygonBG();
 	}
 
+
 	switch (gGameState)
 	{
 	case GAMESTATE_NORMAL:
@@ -413,7 +439,11 @@ void DrawGame()
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 
+	//プレイヤー情報の取得
 	Player *pPlayer = GetPlayer();
+
+	//ポーズ情報の取得
+	Pause *pPause = GetPause();
 
 	//現在のビューポートを取得
 	pDevice->GetViewport(&viewportDef);
@@ -497,6 +527,12 @@ void DrawGame()
 		DrawFog();
 	}
 
+	if (pPause->bUse == true)
+	{//ポーズ中だった場合
+	 //ポーズの描画処理
+		DrawPause();
+	}
+
 	//ビューポートを元に戻す
 	pDevice->SetViewport(&viewportDef);
 }
@@ -524,12 +560,4 @@ GAMESTATE GetGameState()
 bool GetClear(void)
 {
 	return g_bGameClear;
-}
-
-//====================================================================
-//ポーズ状態の設定処理
-//====================================================================
-void SetPause(bool bPause)
-{
-	g_bPause = bPause;
 }
