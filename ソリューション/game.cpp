@@ -32,6 +32,7 @@
 #include "ActionHelpUI.h"
 #include "sound.h"
 #include "pause.h"
+#include "particle.h"
 
 //エディットに使うオブジェクトの種類の構造体
 typedef enum
@@ -117,6 +118,9 @@ void InitGame()
 	//エフェクトの初期化
 	InitEffect();
 
+	//パーティクルの初期化処理
+	InitParticle();
+
 	//出口の初期化処理
 	InitExit();
 
@@ -170,7 +174,7 @@ void InitGame()
 	{
 		int nKey;
 		nKey = rand() % 9;
-		SetKey(KeyPos[nKey], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		SetKey(KeyPos[nKey], D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	}
 
 	//ステージの読み込み
@@ -235,6 +239,9 @@ void UninitGame()
 
 	//エフェクトの終了処理
 	UninitEffect();
+
+	//パーティクルの終了処理
+	UninitParticle();
 
 	//出口の終了処理
 	UninitExit();
@@ -404,6 +411,9 @@ void UpdateGame()
 		//エフェクトの更新処理
 		UpdateEffect();
 
+		//パーティクルの更新処理
+		UpdateParticle();
+
 		//出口の更新処理
 		UpdateExit();
 
@@ -472,6 +482,9 @@ void DrawGame()
 	{
 		//カメラのセット処理
 		SetCamera(nCnt);
+
+		//パーティクルの描画
+		DrawParticle();
 
 		//メッシュウォールの描画処理
 		DrawMeshWall();
