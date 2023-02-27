@@ -446,7 +446,7 @@ void DrawGame()
 		}
 
 		//床の描画処理
-		DrawMeshField();
+		//DrawMeshField();
 
 		//オブジェクトの描画処理
 		DrawObject00();
