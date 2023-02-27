@@ -1,28 +1,69 @@
 ﻿  ActionHelpUI.cpp
+  Billboard.cpp
+  camera.cpp
   CheckboxUI.cpp
+  debugproc.cpp
+  edit.cpp
+  Effect.cpp
+  enemy.cpp
   EscapeClearResult.cpp
   EscapeOverResult.cpp
   EscapeRanking.cpp
   EscapeTutorial.cpp
-  PlayNumberSelect.cpp
-  Thunder.cpp
-  edit.cpp
-  enemy.cpp
+  exit.cpp
+  Fade.cpp
+  field.cpp
+  Fog.cpp
   game.cpp
+  input.cpp
+  key.cpp
+  keyUI.cpp
+  コンパイル中...
+  life.cpp
+  light.cpp
   main.cpp
+  meshcylinder.cpp
+  meshdome.cpp
+  meshfield.cpp
+  meshwall.cpp
+  NumberUI.cpp
   object00.cpp
   objectBG.cpp
+  objectLight.cpp
+  objectPoly.cpp
+  ObjectWall.cpp
+  paperBG00.cpp
+  paperBG01.cpp
+  particle.cpp
+  pause.cpp
   player.cpp
+  playerBG.cpp
+  PlayNumberSelect.cpp
+  コンパイル中...
+  PlayModeSelect.cpp
+  PolygonBG.cpp
+  RankingNumber.cpp
+  RankingUI.cpp
   result.cpp
+  resultUI.cpp
+  score.cpp
+  score_item.cpp
   sound.cpp
+  SpotLight.cpp
   stage.cpp
+  stamina.cpp
+  Thunder.cpp
+  time.cpp
   title.cpp
+  tutorial.cpp
+  tutorialUI.cpp
+  VillainRanking.cpp
+  VillainResult.cpp
+  VillainTutorial.cpp
   コード生成しています。
-  20 of 506 functions ( 4.0%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    34 functions had inline decision re-evaluated but remain unchanged
+  541 of 545 functions (99.3%) were compiled, the rest were copied from previous compilation.
+    77 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
-tutorial.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
-VillainTutorial.obj : warning LNK4020: 'c:\users\student\documents\授業用\グループ制作1\グループ制作1\github7\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github7\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)

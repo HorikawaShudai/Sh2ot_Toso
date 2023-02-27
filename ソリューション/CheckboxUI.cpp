@@ -269,7 +269,11 @@ void UpdateCheckboxUI(void)
 
 						for (int nCntTutorial = 0; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber; nCntTutorial++)
 						{
+<<<<<<< HEAD
 							SetKey(D3DXVECTOR3(-950.0f + (50.0f * nCntTutorial), 3.0f, -50.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), KEY_TYPE_ITEM);
+=======
+							SetKey(D3DXVECTOR3(-950.0f + (50.0f * nCntTutorial), 0.0f, -50.0f), D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), KEY_TYPE_ITEM);
+>>>>>>> 2cb86c6eb123fd8d91b07fcf4bd7c458ea9a2c7c
 						}
 
 						break;

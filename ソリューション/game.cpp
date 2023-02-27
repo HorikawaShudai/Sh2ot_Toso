@@ -8,6 +8,8 @@
 #include "object00.h"
 #include "objectBG.h"
 #include "objectLight.h"
+#include "ObjectWall.h"
+#include "objectPoly.h"
 #include "stage.h"
 #include "player.h"
 #include "debugproc.h"
@@ -30,12 +32,15 @@
 #include "ActionHelpUI.h"
 #include "sound.h"
 #include "pause.h"
+#include "particle.h"
 
 //エディットに使うオブジェクトの種類の構造体
 typedef enum
 {
 	EDIT_TYPE_NORMAL = 0,
 	EDIT_TYPE_BG,
+	EDIT_TYPE_POLY,
+	EDIT_TYPE_WALL,
 	EDIT_TYPE_LIGHT,
 	EDIT_TYPE_MAX,
 }EDIT_TYPE;
@@ -83,6 +88,8 @@ void InitGame()
 	InitObject00();
 	InitObjectBG();
 	InitObjectLight();
+	InitObjectWall();
+	InitObjectPoly();
 
 	//プレイヤーの初期化処理
 	InitPlayer();
@@ -110,6 +117,9 @@ void InitGame()
 
 	//エフェクトの初期化
 	InitEffect();
+
+	//パーティクルの初期化処理
+	InitParticle();
 
 	//出口の初期化処理
 	InitExit();
@@ -164,7 +174,7 @@ void InitGame()
 	{
 		int nKey;
 		nKey = rand() % 9;
-		SetKey(KeyPos[nKey], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		SetKey(KeyPos[nKey], D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	}
 
 	//ステージの読み込み
@@ -197,6 +207,8 @@ void UninitGame()
 	UninitObject00();
 	UninitObjectBG();
 	UninitObjectLight();
+	UninitObjectWall();
+	UninitObjectPoly();
 
 	//プレイヤーの終了処理
 	UninitPlayer();
@@ -227,6 +239,9 @@ void UninitGame()
 
 	//エフェクトの終了処理
 	UninitEffect();
+
+	//パーティクルの終了処理
+	UninitParticle();
 
 	//出口の終了処理
 	UninitExit();
@@ -307,6 +322,13 @@ void UpdateGame()
 	//メッシュの壁の更新処理
 	UpdateMeshWall();
 
+	//オブジェクトの更新処理
+	UpdateObject00();
+	UpdateObjectBG();
+	UpdateObjectLight();
+	UpdateObjectWall();
+	UpdateObjectPoly();
+
 	if (g_bEdit == true)
 	{//エディットモードの時
 
@@ -322,6 +344,14 @@ void UpdateGame()
 		case EDIT_TYPE_BG:
 			//エディットモードのオブジェクトBGの更新処理
 			UpdateEditObjectBG();
+			break;
+		case EDIT_TYPE_POLY:
+			//エディットモードのオブジェクトPolyの更新処理
+			UpdateEditObjectPoly();
+			break;
+		case EDIT_TYPE_WALL:
+			//エディットモードのオブジェクトWallの更新処理
+			UpdateEditObjectWall();
 			break;
 		case EDIT_TYPE_LIGHT:
 			//エディットモードのオブジェクトLightの更新処理
@@ -350,11 +380,6 @@ void UpdateGame()
 
 		//床の更新処理
 		UpdateMeshField();
-
-		//オブジェクトの更新処理
-		UpdateObject00();
-		UpdateObjectBG();
-		UpdateObjectLight();
 
 		//プレイヤーの更新処理
 		UpdatePlayer();
@@ -386,11 +411,16 @@ void UpdateGame()
 		//エフェクトの更新処理
 		UpdateEffect();
 
+		//パーティクルの更新処理
+		UpdateParticle();
+
 		//出口の更新処理
 		UpdateExit();
 
+		//タイムの更新処理
 		UpdateTime();
-
+		
+		//ダメージリアクション用ポリゴンの更新処理
 		UpdatePolygonBG();
 	}
 
@@ -453,6 +483,9 @@ void DrawGame()
 		//カメラのセット処理
 		SetCamera(nCnt);
 
+		//パーティクルの描画
+		DrawParticle();
+
 		//メッシュウォールの描画処理
 		DrawMeshWall();
 
@@ -468,6 +501,14 @@ void DrawGame()
 				//エディットモードのオブジェクトBGの描画処理
 				DrawEditObjectBG();
 				break;
+			case EDIT_TYPE_POLY:
+				//エディットモードのオブジェクトPolyの描画処理
+				DrawEditObjectPoly();
+				break;
+			case EDIT_TYPE_WALL:
+				//エディットモードのオブジェクトWallの描画処理
+				DrawEditObjectWall();
+				break;
 			case EDIT_TYPE_LIGHT:
 				//エディットモードのオブジェクトLightの描画処理
 				DrawEditObjectLight();
@@ -479,9 +520,11 @@ void DrawGame()
 		//DrawMeshField();
 
 		//オブジェクトの描画処理
+		DrawObjectPoly();
 		DrawObject00();
 		DrawObjectBG();
 		DrawObjectLight();
+		DrawObjectWall();
 
 		//出口の描画処理
 		DrawExit();
