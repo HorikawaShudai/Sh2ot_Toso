@@ -765,6 +765,7 @@ void EnemyPatrol(int nEnemy)
 		PrintDebugProc("Enemy%d前:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceFront);
 
 		//自身の進む方向に壁があった場合
+
 		if (((g_Enemy[nEnemy].MoveState == ENEMYMOVE_N && g_Enemy[nEnemy].fDistanceN <= 50.0f) ||
 			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_S && g_Enemy[nEnemy].fDistanceS <= 50.0f) ||
 			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_E && g_Enemy[nEnemy].fDistanceE <= 50.0f) ||
@@ -778,12 +779,12 @@ void EnemyPatrol(int nEnemy)
 		
 
 
-		if (g_Enemy[nEnemy].fDistanceLeft >= 300.0f && 	g_Enemy[nEnemy].nCoolTurn <= 0)
+		if (g_Enemy[nEnemy].fDistanceLeft >= 200.0f && 	g_Enemy[nEnemy].nCoolTurn <= 0)
 		{
 			EnemyDirection(nEnemy);
 			g_Enemy[nEnemy].nCoolTurn = 120;
 		}
-		if (g_Enemy[nEnemy].fDistanceRight >= 300.0f&& 	g_Enemy[nEnemy].nCoolTurn <= 0)
+		if (g_Enemy[nEnemy].fDistanceRight >= 200.0f&& 	g_Enemy[nEnemy].nCoolTurn <= 0)
 		{
 			EnemyDirection(nEnemy);
 			g_Enemy[nEnemy].nCoolTurn = 120;
@@ -812,10 +813,12 @@ void EnemyPatrol(int nEnemy)
 			//座標の更新
 			g_Enemy[nEnemy].move = D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y)*ENEMY_SPEED);
 
-			if (g_Enemy[nEnemy].fDistanceLeft <= 100.0f )
+	
+			if (g_Enemy[nEnemy].fDistanceLeft <= 200.0f)
 			{
 				g_Enemy[nEnemy].move += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED);
 			}
+			
 			else if (g_Enemy[nEnemy].fDistanceRight <= 100.0f)
 			{
 				g_Enemy[nEnemy].move += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED);

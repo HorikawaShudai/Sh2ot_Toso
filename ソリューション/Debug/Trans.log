@@ -1,3 +1,21 @@
-﻿  enemy.cpp
+﻿  title.cpp
+  objectBG.cpp
+  object00.cpp
+  main.cpp
+  game.cpp
+  enemy.cpp
+  PlayNumberSelect.cpp
+  EscapeTutorial.cpp
+  コードを生成中...
+  コンパイル中...
+  stage.cpp
+  result.cpp
+  edit.cpp
+  EscapeRanking.cpp
+  EscapeOverResult.cpp
+  EscapeClearResult.cpp
+  コードを生成中...
+VillainTutorial.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
+tutorial.obj : warning LNK4205: 'C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールの現在のデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
   Trans.vcxproj -> C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
