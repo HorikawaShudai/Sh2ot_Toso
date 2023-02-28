@@ -428,12 +428,6 @@ void DrawEscapeTutorial()
 		//カメラのセット処理
 		SetCamera(nCnt);
 
-		//エフェクトの描画処理
-		DrawEffect();
-
-		//パーティクルの描画
-		DrawParticle();
-
 		//メッシュウォールの描画処理
 		DrawMeshWall();
 
@@ -475,6 +469,12 @@ void DrawEscapeTutorial()
 
 		//鍵の描画処理
 		DrawKey();
+
+		//エフェクトの描画処理
+		DrawEffect();
+
+		//パーティクルの描画
+		DrawParticle();
 
 		//鍵UIの描画処理
 		DrawKeyUI();

@@ -21,6 +21,7 @@
 #include "Thunder.h"
 #include "effect.h"
 #include "sound.h"
+#include "exit.h"
 
 //**********************************************
 //マクロ定義
@@ -117,6 +118,12 @@ void InitTitle(void)
 		}
 	}
 
+	//ドアの初期化処理
+	InitExit();
+	/*SetExit(D3DXVECTOR3(-10.43f, 0.0f, 581.81f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0, 0);*/
+	SetExit(D3DXVECTOR3(70.0f, 0.0f, 581.81f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), 2, 0);
+	SetExit(D3DXVECTOR3(0.0f, 0.0f, 581.81f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), 3, 0);
+
 	//3D
 	Init3DTitle();
 
@@ -147,6 +154,9 @@ void UninitTitle(void)
 		g_pVtxBuffTitle->Release();
 		g_pVtxBuffTitle = NULL;
 	}
+
+	//ドアの終了処理
+	UninitExit();
 
 	//3D
 	Uninit3DTitle();
@@ -201,6 +211,9 @@ void UpdateTitle(void)
 		}
 	}
 
+	//ドアの更新処理
+	UpdateExit();
+
 	//デバッグ表示
 	PrintDebugProc("%f\n", pCamera->posV.z);
 	PrintDebugProc("選択 【↑】【↓】\n");
@@ -234,6 +247,9 @@ void DrawTitle(void)
 			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCntTitle * 4, 2);
 		}
 	}
+
+	//ドアの描画
+	DrawExit();
 }
 
 //===================================
