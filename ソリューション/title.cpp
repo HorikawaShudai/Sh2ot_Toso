@@ -31,6 +31,16 @@
 #define NUM_SELECT		(2)		//選択欄の数
 #define CAMERA_FADEPOS	(370.0f)//画面遷移するカメラ位置(Z軸)
 
+#define POS_STAGESELECT_BG_X		(200.0f)	//「ステージセレクト」のX座標の位置
+#define POS_STAGESELECT_BG_Y		(500.0f)	//「ステージセレクト」のY座標の位置
+#define SIZE_STAGESELECT_BG_X		(150.0f)	//「ステージセレクト」の幅
+#define SIZE_STAGESELECT_BG_Y		(70.0f)		//「ステージセレクト」の高さ
+
+#define POS_RANKING_BG_X			(170.0f)	//「ランキング」のX座標の位置
+#define POS_RANKING_BG_Y			(600.0f)	//「ランキング」のY座標の位置
+#define SIZE_RANKING_BG_X			(120.0f)	//「ランキング」の幅
+#define SIZE_RANKING_BG_Y			(50.0f)		//「ランキング」の高さ
+
 //**********************************************
 // テクスチャ名
 //**********************************************
@@ -332,13 +342,13 @@ void InitTitleSelect0(int nCntTitle)
 	pVtx += nCntTitle * 4;		//頂点情報を進める
 
 	//位置
-	g_aTitlePos[1] = D3DXVECTOR3(200.0f, 500.0f, 0.0f);
+	g_aTitlePos[1] = D3DXVECTOR3(POS_STAGESELECT_BG_X, POS_STAGESELECT_BG_Y, 0.0f);
 
 	//頂点座標の設定(原点は中央↑)
-	pVtx[0].pos = D3DXVECTOR3(g_aTitlePos[1].x - 150.0f, g_aTitlePos[1].y, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(g_aTitlePos[1].x + 150.0f, g_aTitlePos[1].y, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(g_aTitlePos[1].x - 150.0f, g_aTitlePos[1].y + 50.0f, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(g_aTitlePos[1].x + 150.0f, g_aTitlePos[1].y + 50.0f, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(g_aTitlePos[1].x - SIZE_STAGESELECT_BG_X, g_aTitlePos[1].y, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(g_aTitlePos[1].x + SIZE_STAGESELECT_BG_X, g_aTitlePos[1].y, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(g_aTitlePos[1].x - SIZE_STAGESELECT_BG_X, g_aTitlePos[1].y + SIZE_STAGESELECT_BG_Y, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(g_aTitlePos[1].x + SIZE_STAGESELECT_BG_X, g_aTitlePos[1].y + SIZE_STAGESELECT_BG_Y, 0.0f);
 
 	//テクスチャ座標
 	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
@@ -374,13 +384,13 @@ void InitTitleSelect1(int nCntTitle)
 	pVtx += nCntTitle * 4;		//頂点情報を進める
 
 	//位置
-	g_aTitlePos[2] = D3DXVECTOR3(200.0f, 600.0f, 0.0f);
+	g_aTitlePos[2] = D3DXVECTOR3(POS_RANKING_BG_X, POS_RANKING_BG_Y, 0.0f);
 
 	//頂点座標の設定(原点は中央↑)
-	pVtx[0].pos = D3DXVECTOR3(g_aTitlePos[2].x - 120.0f, g_aTitlePos[2].y, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(g_aTitlePos[2].x + 120.0f, g_aTitlePos[2].y, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(g_aTitlePos[2].x - 120.0f, g_aTitlePos[2].y + 50.0f, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(g_aTitlePos[2].x + 120.0f, g_aTitlePos[2].y + 50.0f, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(g_aTitlePos[2].x - SIZE_RANKING_BG_X, g_aTitlePos[2].y, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(g_aTitlePos[2].x + SIZE_RANKING_BG_X, g_aTitlePos[2].y, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(g_aTitlePos[2].x - SIZE_RANKING_BG_X, g_aTitlePos[2].y + SIZE_RANKING_BG_Y, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(g_aTitlePos[2].x + SIZE_RANKING_BG_X, g_aTitlePos[2].y + SIZE_RANKING_BG_Y, 0.0f);
 
 	//テクスチャ座標
 	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
