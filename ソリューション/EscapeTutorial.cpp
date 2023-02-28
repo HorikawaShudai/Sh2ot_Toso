@@ -428,6 +428,9 @@ void DrawEscapeTutorial()
 		//カメラのセット処理
 		SetCamera(nCnt);
 
+		//エフェクトの描画処理
+		DrawEffect();
+
 		//パーティクルの描画
 		DrawParticle();
 
@@ -475,9 +478,6 @@ void DrawEscapeTutorial()
 
 		//鍵UIの描画処理
 		DrawKeyUI();
-
-		//エフェクトの描画処理
-		DrawEffect();
 
 		DrawPolygonBG();
 
