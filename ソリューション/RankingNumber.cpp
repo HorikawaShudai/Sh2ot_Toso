@@ -53,7 +53,7 @@ void InitRanKingNumber(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\Number03.png",
+		"data\\TEXTURE\\Number00.png",
 		&g_pTextureRanKingNumber);
 
 	//頂点バッファの生成

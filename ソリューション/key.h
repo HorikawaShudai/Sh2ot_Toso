@@ -19,14 +19,16 @@ const D3DXVECTOR3 KeyPos[] = //åÆÇÃç¿ïW
 {
 	D3DXVECTOR3(-1934.0f,2.0f,1745.0f),
 	D3DXVECTOR3(-2055.0f,2.0f,540.0f),
-	D3DXVECTOR3(460.0f,2.0f,560.0f),
-	D3DXVECTOR3(-850.0f,2.0f,124.0f),
+	D3DXVECTOR3(-1580.0f,2.0f,851.0f),
+	D3DXVECTOR3(-1570.0f,2.0f,1434.0f),
 	D3DXVECTOR3(-983.0f,2.0f,1733.0f),
-	D3DXVECTOR3(160.0f,2.0f,285.0f),
 	D3DXVECTOR3(-832.0f,2.0f,1960.0f),
 	D3DXVECTOR3(-1150.0f,2.0f,1300.0f),
-	D3DXVECTOR3(-1652.0f,2.0f,750.0f),
-	D3DXVECTOR3(-1570.0f,2.0f,1434.0f),
+	D3DXVECTOR3(-680.0f,2.0f,2067.0f),
+	D3DXVECTOR3(460.0f,2.0f,560.0f),
+	D3DXVECTOR3(-300.0f,2.0f,135.0f),
+	D3DXVECTOR3(160.0f,2.0f,285.0f),
+	D3DXVECTOR3(-70.0f,2.0f,-360.0f),
 };
 
 //åÆÇÃç\ë¢ëÃ
@@ -57,4 +59,5 @@ void DrawKey(void);
 void SetKey(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType);
 bool CollisionKey(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size, int nPlayer);
 void CollisionKeyHelpUI(D3DXVECTOR3 *pPos, float Size);
+void PatternSetKey(int nNumPlayer);
 #endif
