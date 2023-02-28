@@ -17,7 +17,9 @@
 #include "objectBG.h"
 #include "stage.h"
 #include "object00.h"
+#include "ObjectWall.h"
 #include "sound.h"
+#include "Exit.h"
 
 //***********************************
 //マクロ定義
@@ -427,14 +429,23 @@ void Init3DSelect(void)
 
 	InitPlayerBG();
 
+	InitExit();
+
 	//オブジェクトの初期化
 	InitObject00();
 
 	//タイトル用マップの初期化
 	InitObjectBG();
+	InitObjectWall();
 
 	//ステージの読み込み
 	SetStage(2);
+
+	SetExit(D3DXVECTOR3(-80.0f, 0.0f, 400.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 0, 0);
+	SetExit(D3DXVECTOR3(80.0f, 0.0f, 400.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 0, 0);
+	SetExit(D3DXVECTOR3(0.0f, 100.0f, 400.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 1, 0);
+	SetExit(D3DXVECTOR3(-70.0f, 0.0f, 400.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 2, 0);
+	SetExit(D3DXVECTOR3(70.0f, 0.0f, 400.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f), 3, 0);
 }
 
 //終了
@@ -446,11 +457,14 @@ void Uninit3DSelect(void)
 
 	UninitPlayerBG();
 
+	UninitExit();
+
 	//オブジェクトの終了
 	UninitObject00();
 
 	//タイトル用オブジェクトの終了
 	UninitObjectBG();
+	UninitObjectWall();
 }
 
 //更新
@@ -462,11 +476,14 @@ void Update3DSelect(void)
 
 	UpdatePlayerBG();
 
+	UpdateExit();
+
 	//オブジェクトの更新
 	UpdateObject00();
 
 	//タイトル用オブジェクトの更新
 	UpdateObjectBG();
+	UpdateObjectWall();
 }
 
 //描画
@@ -476,11 +493,14 @@ void Draw3DSelect(void)
 
 	DrawPlayerBG();
 
+	DrawExit();
+
 	//オブジェクトの描画
 	DrawObject00();
 
 	//タイトル用オブジェクトの描画
 	DrawObjectBG();
+	DrawObjectWall();
 }
 
 //========================================================================

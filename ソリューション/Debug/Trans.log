@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-﻿  main.cpp
+﻿  stage.cpp
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-<<<<<<< HEAD
-﻿  score_item.cpp
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作1\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作1\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-﻿  game.cpp
-  EscapeTutorial.cpp
-  Effect.cpp
-  コードを生成中...
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github8\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github8\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
->>>>>>> f60d09b50ec9ae78ed1f7668d699e224a626a933
->>>>>>> 9fc672370f8c69dc4a7b6f35ab3ea21c4c2fe0ea

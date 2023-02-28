@@ -6,7 +6,7 @@
 #include "PlayNumberSelect.h"
 
 //マクロ定義
-#define NUM_SSUI					(14)			//TUTORIALUIの種類数
+#define NUM_SSUI					(14)		//TUTORIALUIの種類数
 #define MAX_SSUI					(5)			//TUTORIALUIの最大使用数
 
 #define POS_TUTORIALUI_ALL_X		(640.0f)	//「」のX座標の位置
