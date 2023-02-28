@@ -6,13 +6,13 @@
 #include "PlayNumberSelect.h"
 
 //ƒ}ƒNƒ’è‹`
-#define NUM_SSUI					(8)			//TUTORIALUI‚ÌŽí—Þ”
+#define NUM_SSUI					(14)			//TUTORIALUI‚ÌŽí—Þ”
 #define MAX_SSUI					(5)			//TUTORIALUI‚ÌÅ‘åŽg—p”
 
 #define POS_TUTORIALUI_ALL_X		(640.0f)	//uv‚ÌXÀ•W‚ÌˆÊ’u
-#define POS_TUTORIALUI_ALL_Y		(420.0f)	//uv‚ÌYÀ•W‚ÌˆÊ’u
-#define SIZE_TUTORIALUI_ALL_X		(300.0f)	//uv‚Ì•
-#define SIZE_TUTORIALUI_ALL_Y		(100.0f)	//uv‚Ì‚‚³
+#define POS_TUTORIALUI_ALL_Y		(290.0f)	//uv‚ÌYÀ•W‚ÌˆÊ’u
+#define SIZE_TUTORIALUI_ALL_X		(270.0f)	//uv‚Ì•
+#define SIZE_TUTORIALUI_ALL_Y		(330.0f)	//uv‚Ì‚‚³
 
 #define POS_TUTORIALUI_1_01_X		(640.0f)	//uv‚ÌXÀ•W‚ÌˆÊ’u
 #define POS_TUTORIALUI_1_01_Y		(630.0f)	//uv‚ÌYÀ•W‚ÌˆÊ’u
@@ -55,8 +55,14 @@
 //ƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
 const char *c_apTutorialUITexname[] =
 {
+	"data\\TEXTURE\\TUTORIAL\\tutorial0.png",
+	"data\\TEXTURE\\TUTORIAL\\tutorial1.png",
+	"data\\TEXTURE\\TUTORIAL\\tutorial2.png",
+	"data\\TEXTURE\\TUTORIAL\\tutorial3.png",
+	"data\\TEXTURE\\TUTORIAL\\tutorial4.png",
+	"data\\TEXTURE\\TUTORIAL\\tutorial5.png",
+	"data\\TEXTURE\\TUTORIAL\\tutorial6.png",
 	"data\\TEXTURE\\TUTORIAL\\tutorial_move1.png",
-	"data\\TEXTURE\\TUTORIAL\\tutorial_cammove.png",
 	"data\\TEXTURE\\TUTORIAL\\tutorial_dash1.png",
 	"data\\TEXTURE\\TUTORIAL\\vibe.png",
 	"data\\TEXTURE\\TUTORIAL\\stealth.png",
@@ -70,6 +76,7 @@ LPDIRECT3DTEXTURE9 g_apTextureTutorialUI[NUM_SSUI] = {};	//ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffTutorialUI = NULL;		//’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
 bool bUseTutorialUI[MAX_SSUI];		//’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
 bool g_bStageClear_Tutorial;
+bool g_TutorialTEX_Change;			//ƒeƒNƒXƒ`ƒƒ‚ðØ‚è‘Ö‚¦‚é‚½‚ß‚ÌƒJƒEƒ“ƒ^[
 int TutorialUI_TrueCounter;			//Ž†‚ðŽæ‚èo‚·‚Æ‚«‚ÌƒJƒEƒ“ƒ^[
 
 //====================================================================
@@ -97,6 +104,7 @@ void InitTutorialUI(void)
 	bUseTutorialUI[3] = false;
 	bUseTutorialUI[4] = false;
 	TutorialUI_TrueCounter = 0;
+	g_TutorialTEX_Change = false;
 
 	//’¸“_ƒoƒbƒtƒ@‚Ì¶¬
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * MAX_SSUI,
@@ -329,6 +337,8 @@ void DrawTutorialUI(void)
 	//ƒ`ƒ…[ƒgƒŠƒAƒ‹‚Ì€–Úî•ñ‚ð—^‚¦‚éˆ—
 	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
 
+	TUTORIAL_STATE Tutorial_State = GetEscapeTutorial();
+
 	int nCntBG;
 
 	LPDIRECT3DDEVICE9 pDevice; //ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
@@ -342,54 +352,114 @@ void DrawTutorialUI(void)
 	//’¸“_ƒtƒH[ƒ}ƒbƒg‚ÌÝ’è
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
+	if (Tutorial_State == TUTORIAL_STATE_PLAY)
+	{
+		g_TutorialTEX_Change = false;
+	}
+
 	switch (do_Tutorial)
 	{
 	case MODE_MOVE:
 
-		//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
-		pDevice->SetTexture(0, g_apTextureTutorialUI[0]);
+		if (Tutorial_State == TUTORIAL_STATE_STANDBY || Tutorial_State == TUTORIAL_STATE_WAIT)
+		{//ƒ`ƒ…[ƒgƒŠƒAƒ‹‚Ìó‘Ô‚ªSTANDBY‚Ü‚½‚ÍWAIT‚ÌŽž
+			//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+			pDevice->SetTexture(0, g_apTextureTutorialUI[0]);
+		}
+		else
+		{//‚»‚êˆÈŠO‚ÌŽž
+			//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+			pDevice->SetTexture(0, g_apTextureTutorialUI[7]);
+		}
 
 		break;
 
 	case MODE_DASH:
-
-		//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
-		pDevice->SetTexture(0, g_apTextureTutorialUI[2]);
+		if (Tutorial_State == TUTORIAL_STATE_STANDBY || Tutorial_State == TUTORIAL_STATE_WAIT)
+		{//ƒ`ƒ…[ƒgƒŠƒAƒ‹‚Ìó‘Ô‚ªSTANDBY‚Ü‚½‚ÍWAIT‚ÌŽž
+			//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+			pDevice->SetTexture(0, g_apTextureTutorialUI[1]);
+		}
+		else
+		{//‚»‚êˆÈŠO‚ÌŽž
+			 //ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+			pDevice->SetTexture(0, g_apTextureTutorialUI[8]);
+		}
 
 		break;
 
 	case MODE_VIBE:
 
-		//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
-		pDevice->SetTexture(0, g_apTextureTutorialUI[3]);
+		if (Tutorial_State == TUTORIAL_STATE_STANDBY || Tutorial_State == TUTORIAL_STATE_WAIT)
+		{//ƒ`ƒ…[ƒgƒŠƒAƒ‹‚Ìó‘Ô‚ªSTANDBY‚Ü‚½‚ÍWAIT‚ÌŽž
+			//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+			pDevice->SetTexture(0, g_apTextureTutorialUI[2]);
+		}
+		else
+		{//‚»‚êˆÈŠO‚ÌŽž
+			 //ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+			pDevice->SetTexture(0, g_apTextureTutorialUI[9]);
+		}
 
 		break;
 
 	case MODE_STELTH:
 
-		//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
-		pDevice->SetTexture(0, g_apTextureTutorialUI[4]);
+		if (Tutorial_State == TUTORIAL_STATE_STANDBY || Tutorial_State == TUTORIAL_STATE_WAIT)
+		{//ƒ`ƒ…[ƒgƒŠƒAƒ‹‚Ìó‘Ô‚ªSTANDBY‚Ü‚½‚ÍWAIT‚ÌŽž
+			//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+			pDevice->SetTexture(0, g_apTextureTutorialUI[3]);
+		}
+		else
+		{//‚»‚êˆÈŠO‚ÌŽž
+			//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+			pDevice->SetTexture(0, g_apTextureTutorialUI[10]);
+		}
 
 		break;
 
 	case MODE_GET_KEY:
 
-		//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
-		pDevice->SetTexture(0, g_apTextureTutorialUI[5]);
+		if (Tutorial_State == TUTORIAL_STATE_STANDBY || Tutorial_State == TUTORIAL_STATE_WAIT)
+		{//ƒ`ƒ…[ƒgƒŠƒAƒ‹‚Ìó‘Ô‚ªSTANDBY‚Ü‚½‚ÍWAIT‚ÌŽž
+			//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+			pDevice->SetTexture(0, g_apTextureTutorialUI[4]);
+		}
+		else
+		{//‚»‚êˆÈŠO‚ÌŽž
+			//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+			pDevice->SetTexture(0, g_apTextureTutorialUI[11]);
+		}
 
 		break;
 
 	case MODE_ESCAPE:
 
-		//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
-		pDevice->SetTexture(0, g_apTextureTutorialUI[6]);
+		if (Tutorial_State == TUTORIAL_STATE_STANDBY || Tutorial_State == TUTORIAL_STATE_WAIT)
+		{//ƒ`ƒ…[ƒgƒŠƒAƒ‹‚Ìó‘Ô‚ªSTANDBY‚Ü‚½‚ÍWAIT‚ÌŽž
+			//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+			pDevice->SetTexture(0, g_apTextureTutorialUI[5]);
+		}
+		else
+		{//‚»‚êˆÈŠO‚ÌŽž
+			//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+			pDevice->SetTexture(0, g_apTextureTutorialUI[12]);
+		}
 
 		break;
 
 	case MODE_GOEXIT:
 
-		//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
-		pDevice->SetTexture(0, g_apTextureTutorialUI[7]);
+		if (Tutorial_State == TUTORIAL_STATE_STANDBY || Tutorial_State == TUTORIAL_STATE_WAIT)
+		{//ƒ`ƒ…[ƒgƒŠƒAƒ‹‚Ìó‘Ô‚ªSTANDBY‚Ü‚½‚ÍWAIT‚ÌŽž
+			//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+			pDevice->SetTexture(0, g_apTextureTutorialUI[6]);
+		}
+		else
+		{//‚»‚êˆÈŠO‚ÌŽž
+			//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+			pDevice->SetTexture(0, g_apTextureTutorialUI[13]);
+		}
 
 		break;
 

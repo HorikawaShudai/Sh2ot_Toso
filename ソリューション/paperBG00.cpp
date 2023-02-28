@@ -11,9 +11,9 @@
 #define SIZE_BLACK_BG_Y			(360.0f)	//「黒色の背景」の高さ
 
 #define POS_PAPER_BG_X			(640.0f)	//「紙」のX座標の位置
-#define POS_PAPER_BG_Y			(410.0f)	//「紙」のY座標の位置
-#define SIZE_PAPER_BG_X			(400.0f)	//「紙」の幅
-#define SIZE_PAPER_BG_Y			(200.0f)	//「紙」の高さ
+#define POS_PAPER_BG_Y			(270.0f)	//「紙」のY座標の位置
+#define SIZE_PAPER_BG_X			(270.0f)	//「紙」の幅
+#define SIZE_PAPER_BG_Y			(330.0f)	//「紙」の高さ
 
 #define UP_PAPER_BG				(100.0f)	//紙を取り出すときの上昇度
 #define UP_PAPER_COUNTER_MAX	(100)		//紙を取り出す速さのカウンター
