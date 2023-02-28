@@ -41,6 +41,7 @@ typedef enum
 	OBJECTBG_NTYPE26,			//床(オフィス)
 	OBJECTBG_NTYPE27,			//床(白)
 	OBJECTBG_NTYPE28,			//床(白模様入り)
+	OBJECTBG_NTYPE29,			//床(白模様入り)
 	OBJECTBG_NTYPE_MAX,
 
 }OBJECTBG_NTYPE;

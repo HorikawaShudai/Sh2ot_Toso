@@ -179,7 +179,7 @@ void DrawEffect(void)
 
 	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 						
-						//アルファテストを有効化
+	//アルファテストを有効化
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 	pDevice->SetRenderState(D3DRS_ALPHAREF, 80);

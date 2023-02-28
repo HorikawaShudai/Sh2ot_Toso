@@ -18,6 +18,7 @@
 #include "fade.h"
 #include "life.h"
 #include "PlayNumberSelect.h"
+#include "PlayModeSelect.h"
 #include "score_item.h"
 #include "stamina.h"
 #include "key.h"
@@ -310,12 +311,15 @@ void UpdatePlayer0(void)
 		//オブジェクトとの当たり判定
 		CollisionObject00(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 50.0f, 10.0f), 10.0f);
 		CollisionObjectWall(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 50.0f, 10.0f), 10.0f);
+	//	CollisionObjectPoly(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 50.0f, 10.0f), 10.0f);
 		//外積の当たり判定
 		//CollisionOuterProductObject00(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move);
 
-
-		//アイテムとの当たり判定
-		CollisionItem(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-20.0f, -20.0f, -20.0f), D3DXVECTOR3(20.0f, 20.0f, 20.0f), 20.0f, nSelectPlayer);
+		if (GetPlayModeSelect().CurrentModeNumber == 1)
+		{
+			//アイテムとの当たり判定
+			CollisionItem(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-20.0f, -20.0f, -20.0f), D3DXVECTOR3(20.0f, 20.0f, 20.0f), 20.0f, nSelectPlayer);
+		}
 
 		//出口との当たり判定
 		CollisionExi(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
@@ -498,7 +502,7 @@ void PlayerMoveInput(int nCnt)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(nCnt, true);
+					MoveTCheck(nCnt, true);
 				}
 			}
 			if (GetGamepad_Stick_Left(0).y < 0.0f)
@@ -512,7 +516,7 @@ void PlayerMoveInput(int nCnt)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(nCnt, true);
+					MoveTCheck(nCnt, true);
 				}
 			}
 			if (GetGamepad_Stick_Left(0).x > 0.0f)
@@ -527,7 +531,7 @@ void PlayerMoveInput(int nCnt)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(nCnt, true);
+					MoveTCheck(nCnt, true);
 				}
 			}
 			if (GetGamepad_Stick_Left(0).x < 0.0f)
@@ -542,7 +546,7 @@ void PlayerMoveInput(int nCnt)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(nCnt, true);
+					MoveTCheck(nCnt, true);
 				}
 			}
 		}
@@ -859,9 +863,11 @@ void UpdatePlayer1(void)
 			//外積の当たり判定
 			//CollisionOuterProductObject00(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move);
 
-
-			//アイテムとの当たり判定
-			CollisionItem(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-20.0f, -20.0f, -20.0f), D3DXVECTOR3(20.0f, 20.0f, 20.0f), 20.0f, nCntPlayer);
+			if (GetPlayModeSelect().CurrentModeNumber == 1)
+			{
+				//アイテムとの当たり判定
+				CollisionItem(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-20.0f, -20.0f, -20.0f), D3DXVECTOR3(20.0f, 20.0f, 20.0f), 20.0f, nCntPlayer);
+			}
 
 			//出口との当たり判定
 			CollisionExi(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
@@ -1063,7 +1069,7 @@ void ResPlayerMove(int nCnt)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(nCnt, true);
+					MoveTCheck(nCnt, true);
 				}
 			}
 			if (GetGamepad_Stick_Left(nCnt).y < 0.0f)
@@ -1090,7 +1096,7 @@ void ResPlayerMove(int nCnt)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(nCnt, true);
+					MoveTCheck(nCnt, true);
 				}
 			}
 			if (GetGamepad_Stick_Left(nCnt).x > 0.0f)
@@ -1118,7 +1124,7 @@ void ResPlayerMove(int nCnt)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(nCnt, true);
+					MoveTCheck(nCnt, true);
 				}
 			}
 			if (GetGamepad_Stick_Left(nCnt).x < 0.0f)
@@ -1146,7 +1152,7 @@ void ResPlayerMove(int nCnt)
 				if (do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
-					MoveCheck(nCnt, true);
+					MoveTCheck(nCnt, true);
 				}
 			}
 		}
@@ -1592,7 +1598,7 @@ D3DXVECTOR3 CollisionOuterProductPlayer(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld,
 				}
 				if (bHit == true)
 				{
-					pos[nPosCount] = pos0 + vecLine*fRate;
+					pos[nPosCount] = g_aPlayer[nCnt].pos;
 					nPosCount++;
 				}
 			}

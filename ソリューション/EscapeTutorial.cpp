@@ -35,31 +35,31 @@
 #include "particle.h"
 
 //グローバル変数宣言
-TUTORIAL_STATE g_TutorialState;
-int g_Counter;
-TUTORIAL_MODE g_Tutorial;
-bool bpMove[NUM_PLAYER];
-bool bpCamMove[NUM_PLAYER];
+TUTORIAL_STATE g_EscapeTutorialState;
+int g_EscapeCounter;
+TUTORIAL_MODE g_EscapeTutorial;
+bool bpEscapeMove[NUM_PLAYER];
+bool bpEscapeCamMove[NUM_PLAYER];
 
 //====================================================================
 //チュートリアル画面の初期化処理
 //====================================================================
 void InitEscapeTutorial()
 {
-	g_TutorialState = TUTORIAL_STATE_STANDBY;
-	g_Tutorial = MODE_MOVE;
-	g_Counter = 0;
+	g_EscapeTutorialState = TUTORIAL_STATE_STANDBY;
+	g_EscapeTutorial = MODE_MOVE;
+	g_EscapeCounter = 0;
 
 	for (int nCntPlayer = 0; nCntPlayer < NUM_PLAYER; nCntPlayer++)
 	{
-		bpMove[nCntPlayer] = true;
-		bpCamMove[nCntPlayer] = true;
+		bpEscapeMove[nCntPlayer] = true;
+		bpEscapeCamMove[nCntPlayer] = true;
 	}
 
 	for (int nCntPlayer = 0; nCntPlayer < GetPlayNumberSelect().CurrentSelectNumber; nCntPlayer++)
 	{
-		bpMove[nCntPlayer] = false;
-		bpCamMove[nCntPlayer] = false;
+		bpEscapeMove[nCntPlayer] = false;
+		bpEscapeCamMove[nCntPlayer] = false;
 	}
 
 	DWORD time = timeGetTime();
@@ -235,27 +235,27 @@ void UpdateEscapeTutorial()
 		SetFade(MODE_GAME);
 	}
 
-#endif
-
 	if (GetKeyboardTrigger(DIK_V))
 	{
-		switch (g_TutorialState)
+		switch (g_EscapeTutorialState)
 		{
 		case TUTORIAL_STATE_STANDBY:
-			g_TutorialState = TUTORIAL_STATE_WAIT;
+			g_EscapeTutorialState = TUTORIAL_STATE_WAIT;
 			break;
 		case TUTORIAL_STATE_WAIT:
-			g_TutorialState = TUTORIAL_STATE_PLAY;
+			g_EscapeTutorialState = TUTORIAL_STATE_PLAY;
 			break;
 		case TUTORIAL_STATE_PLAY:
-			g_TutorialState = TUTORIAL_STATE_STANDBY;
+			g_EscapeTutorialState = TUTORIAL_STATE_STANDBY;
 			break;
 		}
 	}
 
+#endif
+
 	//UpdateSpotLight();
 
-	switch (g_TutorialState)
+	switch (g_EscapeTutorialState)
 	{
 	case TUTORIAL_STATE_STANDBY:	//スタンバイ状態
 		SetPaperBG00(true);
@@ -270,20 +270,20 @@ void UpdateEscapeTutorial()
 			SetPaperBG01(false, nCntTutorial);
 		}
 
-		g_Counter = 0;
+		g_EscapeCounter = 0;
 		break;
 	case TUTORIAL_STATE_WAIT:	//待機状態
 		SetPaperBG00(true);
 		SetTutorialUI(true,0);
-		g_Counter++;
-		if (g_Counter > 100)
+		g_EscapeCounter++;
+		if (g_EscapeCounter > 100)
 		{
 			//チェックボックスを人数分オフにする
 			for (int nCntTutorial = 0; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber; nCntTutorial++)
 			{
 				SetCheckUI(nCntTutorial, false);
 			}
-			g_TutorialState = TUTORIAL_STATE_PLAY;
+			g_EscapeTutorialState = TUTORIAL_STATE_PLAY;
 		}
 		break;
 	case TUTORIAL_STATE_PLAY:	//プレイ状態
@@ -319,7 +319,7 @@ void UpdateEscapeTutorial()
 	UpdateObjectBG();
 
 	//チュートリアル実行画面の時のみ移動可能
-	if (g_TutorialState == TUTORIAL_STATE_PLAY)
+	if (g_EscapeTutorialState == TUTORIAL_STATE_PLAY)
 	{
 		//プレイヤーの更新処理
 		UpdatePlayer();
@@ -364,7 +364,7 @@ void UpdateEscapeTutorial()
 
 	UpdatePolygonBG();
 
-	switch (g_Tutorial)
+	switch (g_EscapeTutorial)
 	{
 	case MODE_MOVE:
 		break;
@@ -428,6 +428,9 @@ void DrawEscapeTutorial()
 		//カメラのセット処理
 		SetCamera(nCnt);
 
+		//エフェクトの描画処理
+		DrawEffect();
+
 		//パーティクルの描画
 		DrawParticle();
 
@@ -476,9 +479,6 @@ void DrawEscapeTutorial()
 		//鍵UIの描画処理
 		DrawKeyUI();
 
-		//エフェクトの描画処理
-		DrawEffect();
-
 		DrawPolygonBG();
 
 		//フォグの描画
@@ -502,7 +502,7 @@ void DrawEscapeTutorial()
 //====================================================================
 TUTORIAL_STATE GetEscapeTutorial()
 {
-	return g_TutorialState;
+	return g_EscapeTutorialState;
 }
 
 //====================================================================
@@ -510,7 +510,7 @@ TUTORIAL_STATE GetEscapeTutorial()
 //====================================================================
 void SetEscapeTutorial(TUTORIAL_STATE nSet)
 {
-	g_TutorialState = nSet;
+	g_EscapeTutorialState = nSet;
 }
 
 //====================================================================
@@ -518,7 +518,7 @@ void SetEscapeTutorial(TUTORIAL_STATE nSet)
 //====================================================================
 void DoEscapeTutorial(TUTORIAL_MODE nMode)
 {
-	g_Tutorial = nMode;
+	g_EscapeTutorial = nMode;
 }
 
 //=====================================
@@ -526,28 +526,28 @@ void DoEscapeTutorial(TUTORIAL_MODE nMode)
 //=====================================
 TUTORIAL_MODE GetDoEscapeTutorial(void)
 {
-	return g_Tutorial;
+	return g_EscapeTutorial;
 }
 
 //==============================
 //移動したかどうかのチェック用
 //==============================
-void MoveCheck(int nCnt,bool check)
+void MoveTCheck(int nCnt,bool check)
 {
 	//プレイヤーが動いたことに
-	bpMove[nCnt] = check;
+	bpEscapeMove[nCnt] = check;
 }
 
 //==================================
 //カメラが動いたかどうかのチェック
 //==================================
-void CamMoveCheck(int nCnt,bool camcheck)
+void CamMoveTCheck(int nCnt,bool camcheck)
 {
 	//カメラが動いたことに
-	bpCamMove[nCnt] = camcheck;
+	bpEscapeCamMove[nCnt] = camcheck;
 
 	//プレイヤーとカメラが動いたときに
-	if (bpMove[nCnt] == true && bpCamMove[nCnt] == true)
+	if (bpEscapeMove[nCnt] == true && bpEscapeCamMove[nCnt] == true)
 	{
 		//チェックをつける処理
 		SetCheckUI(nCnt, true);
