@@ -171,7 +171,6 @@ void InitGame()
 
 	}
 	SetEnemy(D3DXVECTOR3(-2162.46f, 0.0f, 1529.39f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	SetEnemy(D3DXVECTOR3(-832.0f, 0.0f, 1960.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetEnemy(D3DXVECTOR3(160.0f,  0.0f, 300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
 	//プレイヤーの数だけ鍵を設置する
@@ -181,7 +180,7 @@ void InitGame()
 		nKey = rand() % 9;
 		SetKey(KeyPos[nKey], D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	}
-
+	SetKey(D3DXVECTOR3(-1000.0f, 3.0f, 0.0f), D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	//ステージの読み込み
 	SetStage(0);
 }
@@ -495,12 +494,6 @@ void DrawGame()
 		//カメラのセット処理
 		SetCamera(nCnt);
 
-		//エフェクトの描画処理
-		DrawEffect();
-
-		//パーティクルの描画
-		DrawParticle();
-
 		//メッシュウォールの描画処理
 		DrawMeshWall();
 
@@ -576,6 +569,12 @@ void DrawGame()
 
 		//鍵の描画処理
 		DrawKey();
+
+		//エフェクトの描画処理
+		DrawEffect();
+
+		//パーティクルの描画
+		DrawParticle();
 
 		//鍵UIの描画処理
 		DrawKeyUI();

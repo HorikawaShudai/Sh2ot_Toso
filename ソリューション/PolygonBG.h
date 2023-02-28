@@ -5,8 +5,12 @@
 
 typedef struct
 {
+	D3DXVECTOR3 pos;	//位置
 	D3DXCOLOR col;		//色
+	float fWidth;		//幅
+	float fHeight;		//高さ
 	int nLife;			//寿命
+	int nType;			//種類
 	bool bUse;			//使用しているかどうか
 }PolygonBG;
 
@@ -15,5 +19,5 @@ void InitPolygonBG(void);
 void UninitPolygonBG(void);
 void UpdatePolygonBG(void);
 void DrawPolygonBG(void);
-void SetPolygonBG(D3DXCOLOR Col,int nLife);
+void SetPolygonBG(D3DXVECTOR3 pos, float fWidth, float fHeight, D3DXCOLOR Col, int nLife,int Type);
 #endif

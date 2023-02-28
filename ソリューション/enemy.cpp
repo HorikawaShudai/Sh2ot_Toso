@@ -15,7 +15,7 @@
 #include "objectPoly.h"
 
 #define ENEMY_LIFE (7)		//オブジェクトの体力
-#define ENEMY_SPEED (4.0f) //敵の移動速度
+#define ENEMY_SPEED (3.0f) //敵の移動速度
 
 #define	DETECT_SPEED (5000.0f) //探査波の速度
 #define	PLAYERDETECT_SPEED (1000.0f) //探査波の速度
@@ -788,14 +788,16 @@ void EnemyPatrol(int nEnemy)
 		g_Enemy[nEnemy].fDistanceLeft = DetectWall(g_Enemy[nEnemy].pos, g_Enemy[nEnemy].rot.y + D3DX_PI*-0.5f, 100);
 		g_Enemy[nEnemy].fDistanceRight = DetectWall(g_Enemy[nEnemy].pos, g_Enemy[nEnemy].rot.y + D3DX_PI*0.5f, 100);
 
-		PrintDebugProc("\nEnemy%d北:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceN);
-		PrintDebugProc("Enemy%d南:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceS);
-		PrintDebugProc("Enemy%d西:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceW);
-		PrintDebugProc("Enemy%d東:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceE);
+		//PrintDebugProc("\nEnemy%d北:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceN);
+		//PrintDebugProc("Enemy%d南:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceS);
+		//PrintDebugProc("Enemy%d西:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceW);
+		//PrintDebugProc("Enemy%d東:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceE);
 
-		PrintDebugProc("\nEnemy%d右:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceRight);
-		PrintDebugProc("Enemy%d左:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceLeft);
-		PrintDebugProc("Enemy%d前:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceFront);
+		//PrintDebugProc("\nEnemy%d右:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceRight);
+		//PrintDebugProc("Enemy%d左:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceLeft);
+		//PrintDebugProc("Enemy%d前:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceFront);
+
+		PrintDebugProc("\nEnemy%d(左)(右)(前):(%f)(%f)(%f)\n", nEnemy, g_Enemy[nEnemy].fDistanceLeft,g_Enemy[nEnemy].fDistanceRight, g_Enemy[nEnemy].fDistanceFront);
 
 		//自身の進む方向に壁があった場合
 
