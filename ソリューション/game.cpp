@@ -393,7 +393,7 @@ void UpdateGame()
 		UpdatePlayer();
 
 		//敵の更新処理
-		//UpdateEnemy();
+		UpdateEnemy();
 
 		//ヘルプUIの更新処理
 		UpdateActionHelpUI();

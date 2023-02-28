@@ -828,6 +828,9 @@ void UpdatePlayer1(void)
 						g_aPlayer[nCntPlayer].bGetKey = true;	//鍵を入手状態にする
 						SetKeyUI(nCntPlayer, true);				//鍵UIを表示する
 
+						//鍵の入手音
+						PlaySound(SOUND_LABEL_SE_GETKEY);
+
 						g_aPlayer[nCntPlayer].bCheck = true;
 
 						//鍵をゲットしたとき
@@ -1747,6 +1750,18 @@ void PlayerHit(int nCnt, int nDamage)
 	if (g_aPlayer[nCnt].bUse == true && g_aPlayer[nCnt].State == PLAYER_NORMAL)
 	{
 		g_aPlayer[nCnt].nLife -= nDamage;
+
+		if (g_aPlayer[nCnt].nLife > 0)
+		{
+			//ダメージ音(ライフがマックスか、2の時)
+			PlaySound(SOUND_LABEL_SE_DAMAGE);
+		}
+
+		else
+		{
+			////ダメージ音(ライフが1の時)
+			//PlaySound(SOUND_LABEL_SE_DAMAGE);
+		}
 
 		if (g_aPlayer[nCnt].nLife <= 0)
 		{

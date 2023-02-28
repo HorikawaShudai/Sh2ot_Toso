@@ -36,6 +36,8 @@ SOUNDINFO g_aSoundInfo[SOUND_LABEL_MAX] =
 	{ "Data/SE/walk.wav", 0 },					// プレイヤー歩きSE
 	{ "Data/SE/door.wav", 0 },					//ドアの開閉
 	{ "Data/SE/enemy_walk.wav", 0 },			//敵の移動音
+	{ "Data/SE/getkey.wav",0 },					//鍵を入手する音
+	{ "Data/SE/damage001.wav",0},				//ダメージ音
 };
 
 //=============================================================================
