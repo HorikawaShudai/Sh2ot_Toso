@@ -925,7 +925,7 @@ void UpdatePlayer1(void)
 						g_aPlayer[nCntPlayer].bGetKey = false;	//鍵を入手してない状態にする
 						SetKeyUI(nCntPlayer, false);			//鍵UIを非表示にする
 
-																//チュートリアルモード脱出の時
+						//チュートリアルモード脱出の時
 						if (do_Tutorial == MODE_ESCAPE)
 						{
 							//チェックをつける

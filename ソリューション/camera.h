@@ -47,6 +47,7 @@ void SetCamera(int nIdx);
 
 D3DXVECTOR3 Getrot(int nPlayer);
 Camera *GetCamera(void);
+Camera *GetCamera4(void);
 int GetCurrentCamera(void);
 void MoveTitleCamera(int nCnt);
 
