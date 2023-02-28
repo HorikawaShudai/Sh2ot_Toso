@@ -171,7 +171,6 @@ void InitGame()
 
 	}
 	SetEnemy(D3DXVECTOR3(-2162.46f, 0.0f, 1529.39f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	SetEnemy(D3DXVECTOR3(-832.0f, 0.0f, 1960.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	SetEnemy(D3DXVECTOR3(160.0f,  0.0f, 300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 
 	//プレイヤーの数だけ鍵を設置する
@@ -181,7 +180,7 @@ void InitGame()
 		nKey = rand() % 9;
 		SetKey(KeyPos[nKey], D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	}
-
+	SetKey(D3DXVECTOR3(-1000.0f, 3.0f, 0.0f), D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	//ステージの読み込み
 	SetStage(0);
 }
@@ -307,18 +306,18 @@ void UpdateGame()
 		UpdatePause();
 	}
 
-	//if (pPause->bUse == false && g_bEdit == false)
-	//{//ポーズ状態じゃないときかつエディット状態じゃないとき
-	//	FADE Fade = GetFade();
+	if (pPause->bUse == false && g_bEdit == false)
+	{//ポーズ状態じゃないときかつエディット状態じゃないとき
+		FADE Fade = GetFade();
 
-	//	if (Fade == FADE_NONE)
-	//	{
-	//		if (GetKeyboardPress(DIK_RETURN))
-	//		{//ENTERキーを押したときリザルトにフェード
-	//			SetFade(MODE_RESULT);
-	//		}
-	//	}
-	//}
+		if (Fade == FADE_NONE)
+		{
+			if (GetKeyboardPress(DIK_RETURN))
+			{//ENTERキーを押したときリザルトにフェード
+				SetFade(MODE_RESULT);
+			}
+		}
+	}
 
 	//カメラの更新処理
 	UpdateCamera();
@@ -495,9 +494,6 @@ void DrawGame()
 		//カメラのセット処理
 		SetCamera(nCnt);
 
-		//パーティクルの描画
-		DrawParticle();
-
 		//メッシュウォールの描画処理
 		DrawMeshWall();
 
@@ -574,11 +570,14 @@ void DrawGame()
 		//鍵の描画処理
 		DrawKey();
 
-		//鍵UIの描画処理
-		DrawKeyUI();
-
 		//エフェクトの描画処理
 		DrawEffect();
+
+		//パーティクルの描画
+		DrawParticle();
+
+		//鍵UIの描画処理
+		DrawKeyUI();
 
 		DrawPolygonBG();
 

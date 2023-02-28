@@ -17,9 +17,10 @@ typedef enum
 {
 	PLAYER_NORMAL = 0,
 	PLAYER_WAIT,
-	PLAYER_DAMAGE,
 	PLAYER_HIT,
 	PLAYER_EXSIT,
+	PLAYER_DAMAGE,
+	PLAYER_DEATH,
 	PLAYER_STATE_MAX,
 }PLAYER_STATE;
 
@@ -45,15 +46,15 @@ typedef struct
 	PLAYER_STATE State;							//プレイヤーの状態
 	PLAYER_MOVESTATE MoveState;					//プレイヤーの移動状態
 	int nLife;									//プレイヤーの体力
-	int nWaitCounter;							//待機状態の長さ
-	int nDamageCounter;							//ダメージ状態の長さ
-	int nHitCounter;							//ヒット状態の長さ
 	int nNumModel;								//モデル(パーツ)の総数
 	int VibrtionTrueCount;						//バイブレーション中のカウント
 	int VibrtionFalseCount;						//バイブレーションをしていない間のカウント
 	int VibrtionTime;							//バイブレーションの長さ
 	int LightIdx00;								//ライトの使用番号00
-	int LightIdx01;								//ライトの使用番号01
+	int nWaitCounter;							//プレイヤーの待機状態の長さ
+	int nDamageCounter;							//プレイヤーのダメージ状態の長さ
+	int nDeathCounter;							//プレイヤーの死亡状態の長さ
+	int nHitCounter;							//プレイヤーのヒット状態の長さ
 
 	bool bUse;									//プレイヤーが使用できるかどうか
 	bool bGetKey;								//プレイヤーが鍵を持っているかどうか
@@ -76,6 +77,7 @@ void UpdatePlayer(void);
 void DrawPlayer(void);
 void PlayerMoveInput(int nCnt);
 void PlayerRotUpdate(int nCnt);
+void PlayerState(int nCnt);
 void PlayerDistance(int nCnt);
 void PlayerVibrtionUpdate(int nCnt);
 void PlayerSetVibrtion(int nCnt, int nTrueCounter, int nFalseCounter, int nLeftPower, int RightPoewr);

@@ -57,6 +57,7 @@ const char *c_apModelObj01[] =					//モデルデータ読み込み
 	"Data\\MODEL\\floor4.x",				//床(白)
 	"Data\\MODEL\\floor5.x",				//床(白模様入り)
 	"Data\\MODEL\\Player\\06_R_Hand.x",		//床(白模様入り)
+	"Data\\MODEL\\title_tile.x",			//研究所内の床
 };
 
 //====================================================================

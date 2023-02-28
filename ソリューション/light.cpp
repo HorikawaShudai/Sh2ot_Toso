@@ -104,7 +104,7 @@ void InitLight(void)
 	{
 		g_Light_LightIdx[nCntlight] = SetIndexLight();		//ライトの使用番号を指定する
 
-		if (GetMode() == MODE_GAME || GetMode() == MODE_TUTORIAL)
+		if (GetMode() != MODE_GAME || GetMode() == MODE_TUTORIAL)
 		{
 			//ライトの方向を設定
 			switch (nCntlight)
@@ -117,6 +117,22 @@ void InitLight(void)
 				break;
 			case 2:
 				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, -0.8f, 0.6f), 100.0f, 1.0f);
+				break;
+			}
+		}
+		else if (GetMode() == MODE_NUMBERSELECT)
+		{
+			//ライトの方向を設定
+			switch (nCntlight)
+			{
+			case 0:
+				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.2f, -0.8f, -0.5f), 100.0f, 1.0f);
+				break;
+			case 1:
+				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(-0.5f, -0.8f, -0.5f), 100.0f, 1.0f);
+				break;
+			case 2:
+				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, -0.8f, 0.6f), 100.0f, 1.0f);
 				break;
 			}
 		}
@@ -185,6 +201,22 @@ void UpdateLight(void)
 					break;
 				case 2:
 					SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, -0.8f, 0.6f), 100.0f, 1.0f);
+					break;
+				}
+			}
+			else if (GetMode() == MODE_NUMBERSELECT)
+			{
+				//ライトの方向を設定
+				switch (nCntlight)
+				{
+				case 0:
+					SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.2f, -0.8f, -0.5f), 100.0f, 1.0f);
+					break;
+				case 1:
+					SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(-0.5f, -0.8f, -0.5f), 100.0f, 1.0f);
+					break;
+				case 2:
+					SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, -0.8f, 0.6f), 100.0f, 1.0f);
 					break;
 				}
 			}

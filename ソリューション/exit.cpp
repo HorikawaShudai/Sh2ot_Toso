@@ -164,6 +164,25 @@ void UninitExit(void)
 //====================================================================
 void UpdateExit(void)
 {
+	Camera *pCam = GetCamera4();
+
+	MODE Mode = GetMode();
+
+	for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
+	{
+		if (Mode == MODE_TITLE && pCam->posV.z >= 150.0f)
+		{
+			g_bExitOK = true;
+			for (int nCntExit1 = 0; nCntExit1 < MAX_EXIT; nCntExit1++)
+			{
+				g_aExit[nCntExit].parts[nCntExit1].bUse = true;
+				g_aExit[nCntExit].parts[nCntExit1].bExitOK = true;
+				g_aExit[nCntExit].parts[nCntExit1].bExitOK = true;
+			}
+			FalseActionHelpUI(g_aExit[nCntExit].IndexUI);
+		}
+	}
+
 	//”à‚ªŠJ‚­ˆ—
 	DoorOpen();
 

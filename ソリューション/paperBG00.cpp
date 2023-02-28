@@ -11,12 +11,18 @@
 #define SIZE_BLACK_BG_Y			(360.0f)	//「黒色の背景」の高さ
 
 #define POS_PAPER_BG_X			(640.0f)	//「紙」のX座標の位置
-#define POS_PAPER_BG_Y			(310.0f)	//「紙」のY座標の位置
-#define SIZE_PAPER_BG_X			(500.0f)	//「紙」の幅
-#define SIZE_PAPER_BG_Y			(300.0f)	//「紙」の高さ
+#define POS_PAPER_BG_Y			(270.0f)	//「紙」のY座標の位置
+#define SIZE_PAPER_BG_X			(270.0f)	//「紙」の幅
+#define SIZE_PAPER_BG_Y			(330.0f)	//「紙」の高さ
 
 #define UP_PAPER_BG				(100.0f)	//紙を取り出すときの上昇度
 #define UP_PAPER_COUNTER_MAX	(100)		//紙を取り出す速さのカウンター
+
+//テクスチャファイル名
+const char *c_cpPaperTexname00[] =
+{
+	"Data\\TEXTURE\\TUTORIAL\\paper.jpg",
+};
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_apTexturePaperBG00[NUM_SSUI] = {};	//テクスチャへのポインタ
@@ -36,15 +42,8 @@ void InitPaperBG00(void)
 	//デバイスの所得
 	pDevice = GetDevice();
 
-	////テクスチャの読み込み
-	//D3DXCreateTextureFromFile(pDevice,
-	//	"Data\\TEXTURE\\TUTORIAL\\paper.jpg",
-	//	&g_apTexturePaperBG00[0]);
-
 	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,
-		"Data\\TEXTURE\\TUTORIAL\\paper.jpg",
-		&g_apTexturePaperBG00[1]);
+	D3DXCreateTextureFromFile(pDevice, c_cpPaperTexname00[0], &g_apTexturePaperBG00[1]);
 
 	//UIの表示設定
 	bUsePaperBG00[0] = true;

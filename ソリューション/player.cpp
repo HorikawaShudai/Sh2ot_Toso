@@ -42,6 +42,13 @@
 #define ENEMY_SE_SPEED			(60)			//敵の足音を鳴らす間隔
 #define PLAYER_SE_WALK			(40)			//プレイヤーの足音を鳴らす間隔(歩き)
 #define PLAYER_SE_DASH			(30)			//プレイヤーの足音を鳴らす間隔(ダッシュ)
+#define PLAYER_DISTANCE_SE		(800.0f)		//敵の音が聞こえるようになる距離
+#define PLAYER_DISTANCE_VIB		(600.0f)		//バイブレーションがオンになる距離
+#define PLAYER_DISTANCE_APPEAR	(500.0f)		//敵が見えるようになる距離
+#define PLAYER_WAITCOUNTER		(120)			//プレイヤーの待機状態の長さ
+#define PLAYER_DAMAGECOUNTER	(120)			//プレイヤーのダメージ状態の長さ
+#define PLAYER_DEATHCOUNTER		(1000)			//プレイヤーの死亡状態の長さ
+#define PLAYER_HITCOUNTER		(60)			//プレイヤーのヒット状態の長さ
 
 //プロトタイプ
 void UpdatePlayer0(void);
@@ -50,7 +57,7 @@ void UpdatePlayer1(void);
 void ResPlayerMove(int nCnt);					//プレイヤーそれぞれに対応
 void ResPlayerrot(int nCnt);					//プレイヤーそれぞれに対応
 
-//グローバル変数
+												//グローバル変数
 LPDIRECT3DTEXTURE9 g_pTexturePlayer[100] = {};	//テクスチャのポインタ
 LPD3DXMESH g_pMeshPlayer[32] = {};				//メッシュ(頂点情報)へのポインタ
 LPD3DXBUFFER g_pBuffMatPlayer[32] = {};			//マテリアルへのポインタ
@@ -64,6 +71,7 @@ int g_Rand_PolygonColor_R;
 int g_Rand_PolygonColor_G;
 int g_Rand_PolygonColor_B;
 int g_Rand_PolygonColor_A;
+int g_Rand_PolygonType;
 
 //====================================================================
 //プレイヤーの初期化処理
@@ -96,7 +104,9 @@ void InitPlayer(void)
 		g_aPlayer[nCntPlayer].VibrtionTrueCount = 0;
 		g_aPlayer[nCntPlayer].VibrtionFalseCount = 0;
 		g_aPlayer[nCntPlayer].LightIdx00 = SetIndexLight();		//ライトのセット処理
-		g_aPlayer[nCntPlayer].LightIdx01 = SetIndexLight();		//ライトのセット処理
+		g_aPlayer[nCntPlayer].nWaitCounter = PLAYER_WAITCOUNTER;
+		g_aPlayer[nCntPlayer].nDamageCounter = PLAYER_DAMAGECOUNTER;
+		g_aPlayer[nCntPlayer].nDeathCounter = PLAYER_DEATHCOUNTER;
 
 		g_aPlayer[nCntPlayer].bCheck = false;  //チェックボックスがついていない状態に
 		g_aPlayer[nCntPlayer].bExit = false;
@@ -121,6 +131,7 @@ void InitPlayer(void)
 		g_Rand_PolygonColor_G = 0;
 		g_Rand_PolygonColor_B = 0;
 		g_Rand_PolygonColor_A = 0;
+		g_Rand_PolygonType = 0;
 
 		g_aPlayer[nCntPlayer].nNumModel = 1;
 
@@ -138,7 +149,7 @@ void InitPlayer(void)
 		{
 			D3DXMATERIAL *pMat;	//マテリアルへのポインタ
 
-			//マテリアル情報に対するポインタを所得
+								//マテリアル情報に対するポインタを所得
 			pMat = (D3DXMATERIAL*)g_pBuffMatPlayer[nCntModel]->GetBufferPointer();
 
 			for (int nCntMat = 0; nCntMat < (int)g_dwNumMatPlayer; nCntMat++)
@@ -189,10 +200,10 @@ void UninitPlayer(void)
 //====================================================================
 void UpdatePlayer(void)
 {
-//#ifdef _DEBUG
+	//#ifdef _DEBUG
 	////個別
 	//UpdatePlayer0();
-//#endif
+	//#endif
 
 	//複数
 	UpdatePlayer1();
@@ -212,8 +223,11 @@ void UpdatePlayer0(void)
 
 	//カメラ番号をプレイヤーに代入
 	int nSelectPlayer = GetCurrentCamera();
-	
-	if (g_aPlayer[nSelectPlayer].bUse == true)
+
+	//プレイヤーの状態管理
+	PlayerState(nSelectPlayer);
+
+	if (g_aPlayer[nSelectPlayer].bUse == true && g_aPlayer[nSelectPlayer].State == PLAYER_NORMAL)
 	{
 #ifdef _DEBUG
 		//バイブレーション
@@ -229,49 +243,6 @@ void UpdatePlayer0(void)
 
 		//バイブレーションの更新処理
 		PlayerVibrtionUpdate(nSelectPlayer);
-
-		//プレイヤーの状態
-		switch (g_aPlayer[nSelectPlayer].State)
-		{
-		case PLAYER_NORMAL:
-			break;
-
-		case PLAYER_WAIT:
-			g_aPlayer[nSelectPlayer].nWaitCounter--;
-			if (g_aPlayer[nSelectPlayer].nWaitCounter < 0)
-			{
-				g_aPlayer[nSelectPlayer].State = PLAYER_NORMAL;
-			}
-			break;
-
-		case PLAYER_DAMAGE:
-			g_aPlayer[nSelectPlayer].nDamageCounter--;
-			if (g_aPlayer[nSelectPlayer].nDamageCounter < 0)
-			{
-				g_aPlayer[nSelectPlayer].State = PLAYER_WAIT;
-			}
-			break;
-
-		case PLAYER_HIT:
-			g_aPlayer[nSelectPlayer].nHitCounter--;
-			g_Rand_PolygonColor_R = rand() % 11;
-			g_Rand_PolygonColor_G = rand() % 4;
-			g_Rand_PolygonColor_B = rand() % 11;
-			g_Rand_PolygonColor_A = rand() % 11;
-			if (g_aPlayer[nSelectPlayer].nHitCounter == 59)
-			{
-				SetPolygonBG(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f), 40);
-			}
-			if (g_aPlayer[nSelectPlayer].nHitCounter % 10 == 0)
-			{
-				SetPolygonBG(D3DXCOLOR((float)g_Rand_PolygonColor_R * 0.1f, (float)g_Rand_PolygonColor_G * 0.1f, (float)g_Rand_PolygonColor_B * 0.1f, (float)g_Rand_PolygonColor_A * 0.1f), 30);
-			}
-			if (g_aPlayer[nSelectPlayer].nHitCounter < 0)
-			{
-				g_aPlayer[nSelectPlayer].State = PLAYER_DAMAGE;
-			}
-			break;
-		}
 
 		g_aPlayer[nSelectPlayer].posOld = g_aPlayer[nSelectPlayer].pos;
 
@@ -311,7 +282,7 @@ void UpdatePlayer0(void)
 		//オブジェクトとの当たり判定
 		CollisionObject00(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 50.0f, 10.0f), 10.0f);
 		CollisionObjectWall(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 50.0f, 10.0f), 10.0f);
-	//	CollisionObjectPoly(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 50.0f, 10.0f), 10.0f);
+		//	CollisionObjectPoly(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 50.0f, 10.0f), 10.0f);
 		//外積の当たり判定
 		//CollisionOuterProductObject00(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move);
 
@@ -328,8 +299,7 @@ void UpdatePlayer0(void)
 		PlayerDistance(nSelectPlayer);
 
 		//プレイヤーが保持するライトの更新処理
-		SetLight(g_aPlayer[nSelectPlayer].LightIdx00, D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(g_aPlayer[nSelectPlayer].pos.x, g_aPlayer[nSelectPlayer].pos.y + 50.0f, g_aPlayer[nSelectPlayer].pos.z), D3DXVECTOR3(sinf(Getrot(CurrentCamera).y), sinf(Getrot(CurrentCamera).x), cosf(Getrot(CurrentCamera).y)), PLAYER_LIGHT,1.0f);
-		SetLight(g_aPlayer[nSelectPlayer].LightIdx01, D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(g_aPlayer[nSelectPlayer].pos.x, g_aPlayer[nSelectPlayer].pos.y + 50.0f, g_aPlayer[nSelectPlayer].pos.z), D3DXVECTOR3(sinf(Getrot(CurrentCamera).y), sinf(Getrot(CurrentCamera).x), cosf(Getrot(CurrentCamera).y)), PLAYER_LIGHT,1.0f);
+		SetLight(g_aPlayer[nSelectPlayer].LightIdx00, D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(g_aPlayer[nSelectPlayer].pos.x, g_aPlayer[nSelectPlayer].pos.y + 50.0f, g_aPlayer[nSelectPlayer].pos.z), D3DXVECTOR3(sinf(Getrot(CurrentCamera).y), sinf(Getrot(CurrentCamera).x), cosf(Getrot(CurrentCamera).y)), PLAYER_LIGHT, 1.0f);
 
 		//ヘルプUIの表示
 		if (g_aPlayer[nSelectPlayer].bGetKey == false)
@@ -374,7 +344,7 @@ void UpdatePlayer0(void)
 					g_aPlayer[nSelectPlayer].bGetKey = false;	//鍵を入手してない状態にする
 					SetKeyUI(nSelectPlayer, false);			//鍵UIを非表示にする
 
-					//チュートリアルモード脱出の時
+															//チュートリアルモード脱出の時
 					if (do_Tutorial == MODE_ESCAPE)
 					{
 						//チェックをつける
@@ -440,10 +410,6 @@ void UpdatePlayer0(void)
 			PrintDebugProc("プレイヤー%d人目の座標【X : %f | Y : %f | Z : %f】\n", nCntPlayer, g_aPlayer[nCntPlayer].pos.x, g_aPlayer[nCntPlayer].pos.y, g_aPlayer[nCntPlayer].pos.z);
 			PrintDebugProc("プレイヤー%d人目の移動量【X : %f | Y : %f | Z : %f】\n", nCntPlayer, g_aPlayer[nCntPlayer].move.x, g_aPlayer[nCntPlayer].move.y, g_aPlayer[nCntPlayer].move.z);
 		}
-		PrintDebugProc("左スティックの出力【%f】\n", GetGamepad_Stick_Left(0).y);
-		PrintDebugProc("左スティックの出力【%f】\n", GetGamepad_Stick_Left(0).x);
-		PrintDebugProc("右スティックの出力【%f】\n", GetGamepad_Stick_Right(0).y);
-		PrintDebugProc("右スティックの出力【%f】\n", GetGamepad_Stick_Right(0).x);
 #endif
 	}
 }
@@ -465,7 +431,7 @@ void PlayerMoveInput(int nCnt)
 
 	if (g_aPlayer[nCnt].State != PLAYER_EXSIT)
 	{//プレイヤーの状態が脱出状態以外の場合
-		//キーボードの移動処理
+	 //キーボードの移動処理
 		if (GetKeyboardPress(DIK_W) == true)
 		{
 			g_aPlayer[nCnt].NormarizeMove.z += 1.0f * cosf(Getrot(CurrentCamera).y);
@@ -541,7 +507,7 @@ void PlayerMoveInput(int nCnt)
 				g_aPlayer[nCnt].NormarizeMove.z += sinf(Getrot(CurrentCamera).y);
 
 				g_aPlayer[CurrentCamera].bCheck = true;
-				
+
 				//移動したらチェックをつける処理
 				if (do_Tutorial == MODE_MOVE)
 				{
@@ -596,14 +562,14 @@ void PlayerMoveInput(int nCnt)
 			//チュートリアルステルス状態の時の処理
 			if (do_Tutorial == MODE_STELTH && g_aPlayer[nCnt].MoveState == PLAYER_MOVESTATE_STEALTH)
 			{
-					if (g_aPlayer[nCnt].move != D3DXVECTOR3(0.0f, 0.0f, 0.0f) && g_aPlayer[nCnt].nStelthCnt > 299)
+				if (g_aPlayer[nCnt].move != D3DXVECTOR3(0.0f, 0.0f, 0.0f) && g_aPlayer[nCnt].nStelthCnt > 299)
+				{
 					{
-						{
-							//チェックをつける処理
-							SetCheckUI(nCnt, true);
-						}
+						//チェックをつける処理
+						SetCheckUI(nCnt, true);
 					}
-					g_aPlayer[nCnt].nStelthCnt++;
+				}
+				g_aPlayer[nCnt].nStelthCnt++;
 			}
 
 			//カメラ状態を無へ
@@ -624,7 +590,7 @@ void PlayerMoveInput(int nCnt)
 		else
 		{//入力していない場合
 
-			//プレイヤーをステルス状態にする
+		 //プレイヤーをステルス状態にする
 			g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;
 
 			//カメラ状態を無へ
@@ -762,7 +728,10 @@ void UpdatePlayer1(void)
 
 	for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
 	{
-		if (g_aPlayer[nCntPlayer].bUse == true && pCamera[nCntPlayer].bUse == true)
+		//プレイヤーの状態管理
+		PlayerState(nCntPlayer);
+
+		if (g_aPlayer[nCntPlayer].bUse == true && pCamera[nCntPlayer].bUse == true && g_aPlayer[nCntPlayer].State == PLAYER_NORMAL)
 		{
 #ifdef _DEBUG
 			//バイブレーション
@@ -778,49 +747,6 @@ void UpdatePlayer1(void)
 
 			//バイブレーションの更新処理
 			PlayerVibrtionUpdate(nCntPlayer);
-
-			//プレイヤーの状態
-			switch (g_aPlayer[nCntPlayer].State)
-			{
-			case PLAYER_NORMAL:
-				break;
-
-			case PLAYER_WAIT:
-				g_aPlayer[nCntPlayer].nWaitCounter--;
-				if (g_aPlayer[nCntPlayer].nWaitCounter < 0)
-				{
-					g_aPlayer[nCntPlayer].State = PLAYER_NORMAL;
-				}
-				break;
-
-			case PLAYER_DAMAGE:
-				g_aPlayer[nCntPlayer].nDamageCounter--;
-				if (g_aPlayer[nCntPlayer].nDamageCounter < 0)
-				{
-					g_aPlayer[nCntPlayer].State = PLAYER_WAIT;
-				}
-				break;
-
-			case PLAYER_HIT:
-				g_aPlayer[nCntPlayer].nHitCounter--;
-				g_Rand_PolygonColor_R = rand() % 11;
-				g_Rand_PolygonColor_G = rand() % 4;
-				g_Rand_PolygonColor_B = rand() % 11;
-				g_Rand_PolygonColor_A = rand() % 11;
-				if (g_aPlayer[nCntPlayer].nHitCounter == 59)
-				{
-					SetPolygonBG(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 40);
-				}
-				if (g_aPlayer[nCntPlayer].nHitCounter % 10 == 0)
-				{
-					SetPolygonBG(D3DXCOLOR((float)g_Rand_PolygonColor_R * 0.1f, (float)g_Rand_PolygonColor_G * 0.1f, (float)g_Rand_PolygonColor_B * 0.1f, (float)g_Rand_PolygonColor_A * 0.1f), 30);
-				}
-				if (g_aPlayer[nCntPlayer].nHitCounter < 0)
-				{
-					g_aPlayer[nCntPlayer].State = PLAYER_DAMAGE;
-				}
-				break;
-			}
 
 			g_aPlayer[nCntPlayer].posOld = g_aPlayer[nCntPlayer].pos;
 
@@ -877,7 +803,6 @@ void UpdatePlayer1(void)
 
 			//プレイヤーが保持するライトの更新処理
 			SetLight(g_aPlayer[nCntPlayer].LightIdx00, D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(g_aPlayer[nCntPlayer].pos.x, g_aPlayer[nCntPlayer].pos.y + 50.0f, g_aPlayer[nCntPlayer].pos.z), D3DXVECTOR3(sinf(Getrot(nCntPlayer).y), sinf(Getrot(nCntPlayer).x), cosf(Getrot(nCntPlayer).y)), PLAYER_LIGHT, 1.0f);
-			SetLight(g_aPlayer[nCntPlayer].LightIdx01, D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(g_aPlayer[nCntPlayer].pos.x, g_aPlayer[nCntPlayer].pos.y + 50.0f, g_aPlayer[nCntPlayer].pos.z), D3DXVECTOR3(sinf(Getrot(nCntPlayer).y), sinf(Getrot(nCntPlayer).x), cosf(Getrot(nCntPlayer).y)), PLAYER_LIGHT, 1.0f);
 
 			//ヘルプUIの表示
 			if (g_aPlayer[nCntPlayer].bGetKey == false)
@@ -899,6 +824,9 @@ void UpdatePlayer1(void)
 						g_aPlayer[nCntPlayer].bGetKey = true;	//鍵を入手状態にする
 						SetKeyUI(nCntPlayer, true);				//鍵UIを表示する
 
+						//鍵の入手音
+						PlaySound(SOUND_LABEL_SE_GETKEY);
+
 						g_aPlayer[nCntPlayer].bCheck = true;
 
 						//鍵をゲットしたとき
@@ -919,13 +847,13 @@ void UpdatePlayer1(void)
 					if (CollisionExit(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nCntPlayer) == true)
 					{//鍵を入手出来た場合
 
-						//ドアの開閉音
+					 //ドアの開閉音
 						PlaySound(SOUND_LABEL_SE_DOOR);
 
 						g_aPlayer[nCntPlayer].bGetKey = false;	//鍵を入手してない状態にする
 						SetKeyUI(nCntPlayer, false);			//鍵UIを非表示にする
 
-																//チュートリアルモード脱出の時
+						//チュートリアルモード脱出の時
 						if (do_Tutorial == MODE_ESCAPE)
 						{
 							//チェックをつける
@@ -978,7 +906,7 @@ void UpdatePlayer1(void)
 			}
 		}
 
-		if (g_aPlayer[0].bUse == false && g_aPlayer[1].bUse == false && g_aPlayer[2].bUse == false && g_aPlayer[3].bUse == false)
+		if (g_aPlayer[0].bUse == false && g_aPlayer[1].bUse && false && g_aPlayer[2].bUse && false && g_aPlayer[3].bUse && false)
 		{
 			g_GameEnd = true;
 			SetGameState(GAMESTATE_GAMEOVER_END, 60);
@@ -986,19 +914,11 @@ void UpdatePlayer1(void)
 	}
 
 #ifdef _DEBUG
-		for (int nCntPlayerPlayer = 0; nCntPlayerPlayer < PlayNumber.CurrentSelectNumber; nCntPlayerPlayer++)
-		{
-			PrintDebugProc("プレイヤー%d人目の座標【X : %f | Y : %f | Z : %f】\n", nCntPlayerPlayer + 1, g_aPlayer[nCntPlayerPlayer].pos.x, g_aPlayer[nCntPlayerPlayer].pos.y, g_aPlayer[nCntPlayerPlayer].pos.z);
-			PrintDebugProc("プレイヤー%d人目の移動量【X : %f | Y : %f | Z : %f】\n", nCntPlayerPlayer + 1, g_aPlayer[nCntPlayerPlayer].move.x, g_aPlayer[nCntPlayerPlayer].move.y, g_aPlayer[nCntPlayerPlayer].move.z);
-		}
-		PrintDebugProc("左スティックの出力【%f】\n", GetGamepad_Stick_Left(0).y);
-		PrintDebugProc("左スティックの出力【%f】\n", GetGamepad_Stick_Left(0).x);
-		PrintDebugProc("右スティックの出力【%f】\n", GetGamepad_Stick_Right(0).y);
-		PrintDebugProc("右スティックの出力【%f】\n", GetGamepad_Stick_Right(0).x);
-		PrintDebugProc("左スティックの出力【%f】\n", GetGamepad_Stick_Left(1).y);
-		PrintDebugProc("左スティックの出力【%f】\n", GetGamepad_Stick_Left(1).x);
-		PrintDebugProc("右スティックの出力【%f】\n", GetGamepad_Stick_Right(1).y);
-		PrintDebugProc("右スティックの出力【%f】\n", GetGamepad_Stick_Right(1).x);
+	for (int nCntPlayerPlayer = 0; nCntPlayerPlayer < PlayNumber.CurrentSelectNumber; nCntPlayerPlayer++)
+	{
+		PrintDebugProc("プレイヤー%d人目の座標【X : %f | Y : %f | Z : %f】\n", nCntPlayerPlayer + 1, g_aPlayer[nCntPlayerPlayer].pos.x, g_aPlayer[nCntPlayerPlayer].pos.y, g_aPlayer[nCntPlayerPlayer].pos.z);
+		PrintDebugProc("プレイヤー%d人目の移動量【X : %f | Y : %f | Z : %f】\n", nCntPlayerPlayer + 1, g_aPlayer[nCntPlayerPlayer].move.x, g_aPlayer[nCntPlayerPlayer].move.y, g_aPlayer[nCntPlayerPlayer].move.z);
+	}
 #endif
 }
 
@@ -1019,7 +939,7 @@ void ResPlayerMove(int nCnt)
 
 	if (g_aPlayer[nCnt].State != PLAYER_EXSIT)
 	{//プレイヤーの状態が脱出状態以外の場合
-	//キーボードの移動処理
+	 //キーボードの移動処理
 		if (GetKeyboardPress(DIK_W) == true)
 		{
 			g_aPlayer[nCnt].NormarizeMove.z += 1.0f * cosf(pCamera[nCnt].rot.y);
@@ -1062,7 +982,7 @@ void ResPlayerMove(int nCnt)
 
 				else
 				{
-					
+
 				}
 
 				//移動したらチェックをつける処理
@@ -1089,7 +1009,7 @@ void ResPlayerMove(int nCnt)
 
 				else
 				{
-				
+
 				}
 
 				//移動したらチェックをつける処理
@@ -1117,7 +1037,7 @@ void ResPlayerMove(int nCnt)
 
 				else
 				{
-					
+
 				}
 
 				//移動したらチェックをつける処理
@@ -1145,7 +1065,7 @@ void ResPlayerMove(int nCnt)
 
 				else
 				{
-					
+
 				}
 
 				//移動したらチェックをつける処理
@@ -1170,7 +1090,7 @@ void ResPlayerMove(int nCnt)
 		}
 
 		//左スティックの速度処理と移動の三段階の使い分け処理
-		if (fabsf(GetGamepad_Stick_Left(nCnt).y) + fabsf(GetGamepad_Stick_Left(nCnt).x) != 0 && GetGamepadPress(BUTTON_R, nCnt))
+		if (fabsf(GetGamepad_Stick_Left(nCnt).y) + fabsf(GetGamepad_Stick_Left(nCnt).x) != 0 && GetGamepadPress(BUTTON_R, nCnt) || GetKeyboardPress(DIK_SPACE) == true)
 		{//入力してる状態かつAボタンを押しているとき
 			if (pStamina[nCnt].bFatige == false)			//プレイヤーが走れる状態かどうか
 			{//疲労状態ではなかった場合
@@ -1190,7 +1110,7 @@ void ResPlayerMove(int nCnt)
 
 				else
 				{
-					
+
 				}
 
 				//プレイヤーをダッシュ状態にする
@@ -1357,6 +1277,159 @@ void ResPlayerrot(int nCnt)
 }
 
 //====================================================================
+//プレイヤーの状態管理
+//====================================================================
+void PlayerState(int nCnt)
+{
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+
+	//プレイヤーの状態
+	switch (g_aPlayer[nCnt].State)
+	{
+	case PLAYER_NORMAL:
+		break;
+
+	case PLAYER_WAIT:
+		g_aPlayer[nCnt].nWaitCounter--;
+		if (g_aPlayer[nCnt].nWaitCounter < 0)
+		{
+			g_aPlayer[nCnt].nWaitCounter = PLAYER_WAITCOUNTER;
+			g_aPlayer[nCnt].State = PLAYER_NORMAL;
+		}
+		break;
+
+	case PLAYER_HIT:
+		g_aPlayer[nCnt].nHitCounter--;
+		g_Rand_PolygonColor_R = rand() % 11;
+		g_Rand_PolygonColor_G = rand() % 4;
+		g_Rand_PolygonColor_B = rand() % 11;
+		g_Rand_PolygonColor_A = rand() % 11;
+		g_Rand_PolygonType = rand() % 4;
+		if (g_aPlayer[nCnt].nHitCounter == 59)
+		{
+			switch (PlayNumber.CurrentSelectNumber)
+			{
+			case 1:
+				SetPolygonBG(D3DXVECTOR3(640.0f, 360.0f, 0.0f), 640.0f, 360.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 40, g_Rand_PolygonType);
+				break;
+			case 2:
+				SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 360.0f, 0.0f), 320.0f, 360.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 40, g_Rand_PolygonType);
+				break;
+			case 3:
+				if (nCnt == 2)
+				{//3
+					SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 40, g_Rand_PolygonType);
+				}
+				else
+				{//12
+					SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 40, g_Rand_PolygonType);
+				}
+				break;
+			case 4:
+				if (nCnt == 3)
+				{//4
+					SetPolygonBG(D3DXVECTOR3(960.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 40, g_Rand_PolygonType);
+				}
+				else if (nCnt == 2)
+				{//3
+					SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 40, g_Rand_PolygonType);
+				}
+				else
+				{//12
+					SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 40, g_Rand_PolygonType);
+				}
+				break;
+			}
+		}
+		if (g_aPlayer[nCnt].nHitCounter % 10 == 0)
+		{
+			switch (PlayNumber.CurrentSelectNumber)
+			{
+			case 1:
+				SetPolygonBG(D3DXVECTOR3(640.0f, 360.0f, 0.0f), 640.0f, 360.0f, D3DXCOLOR((float)g_Rand_PolygonColor_R * 0.1f, (float)g_Rand_PolygonColor_G * 0.1f, (float)g_Rand_PolygonColor_B * 0.1f, (float)g_Rand_PolygonColor_A * 0.1f), 30, g_Rand_PolygonType);
+				break;
+			case 2:
+				SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 360.0f, 0.0f), 320.0f, 360.0f, D3DXCOLOR((float)g_Rand_PolygonColor_R * 0.1f, (float)g_Rand_PolygonColor_G * 0.1f, (float)g_Rand_PolygonColor_B * 0.1f, (float)g_Rand_PolygonColor_A * 0.1f), 30, g_Rand_PolygonType);
+				break;
+			case 3:
+				if (nCnt == 2)
+				{//3
+					SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR((float)g_Rand_PolygonColor_R * 0.1f, (float)g_Rand_PolygonColor_G * 0.1f, (float)g_Rand_PolygonColor_B * 0.1f, (float)g_Rand_PolygonColor_A * 0.1f), 30, g_Rand_PolygonType);
+				}
+				else
+				{//12
+					SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR((float)g_Rand_PolygonColor_R * 0.1f, (float)g_Rand_PolygonColor_G * 0.1f, (float)g_Rand_PolygonColor_B * 0.1f, (float)g_Rand_PolygonColor_A * 0.1f), 30, g_Rand_PolygonType);
+				}
+				break;
+			case 4:
+				if (nCnt == 3)
+				{//4
+					SetPolygonBG(D3DXVECTOR3(960.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR((float)g_Rand_PolygonColor_R * 0.1f, (float)g_Rand_PolygonColor_G * 0.1f, (float)g_Rand_PolygonColor_B * 0.1f, (float)g_Rand_PolygonColor_A * 0.1f), 30, g_Rand_PolygonType);
+				}
+				else if (nCnt == 2)
+				{//3
+					SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR((float)g_Rand_PolygonColor_R * 0.1f, (float)g_Rand_PolygonColor_G * 0.1f, (float)g_Rand_PolygonColor_B * 0.1f, (float)g_Rand_PolygonColor_A * 0.1f), 30, g_Rand_PolygonType);
+				}
+				else
+				{//12
+					SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR((float)g_Rand_PolygonColor_R * 0.1f, (float)g_Rand_PolygonColor_G * 0.1f, (float)g_Rand_PolygonColor_B * 0.1f, (float)g_Rand_PolygonColor_A * 0.1f), 30, g_Rand_PolygonType);
+				}
+				break;
+			}
+		}
+		if (g_aPlayer[nCnt].nHitCounter < 0)
+		{
+			g_aPlayer[nCnt].State = PLAYER_WAIT;
+		}
+		break;
+
+	case PLAYER_DAMAGE:
+		g_aPlayer[nCnt].nDamageCounter--;
+		if (g_aPlayer[nCnt].nDamageCounter < 0)
+		{
+			g_aPlayer[nCnt].State = PLAYER_DEATH;
+		}
+		break;
+
+	case PLAYER_DEATH:
+		switch (PlayNumber.CurrentSelectNumber)
+		{
+		case 1:
+			SetPolygonBG(D3DXVECTOR3(640.0f, 360.0f, 0.0f), 640.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
+			break;
+		case 2:
+			SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 360.0f, 0.0f), 320.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
+			break;
+		case 3:
+			if (nCnt == 2)
+			{//3
+				SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
+			}
+			else
+			{//12
+				SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
+			}
+			break;
+		case 4:
+			if (nCnt == 3)
+			{//4
+				SetPolygonBG(D3DXVECTOR3(960.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
+			}
+			else if (nCnt == 2)
+			{//3
+				SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
+			}
+			else
+			{//12
+				SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
+			}
+			break;
+		}
+		break;
+	}
+}
+
+//====================================================================
 //プレイヤーのバイブレーションの更新処理
 //====================================================================
 void PlayerVibrtionUpdate(int nCnt)
@@ -1405,7 +1478,7 @@ void PlayerDistance(int nCnt)
 	{
 		if (pEnemy->bUse == true)
 		{
-			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, 300.0f, 0.0f, -10.0f, 50.0f) == true)
+			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, PLAYER_DISTANCE_APPEAR, 0.0f, -10.0f, 50.0f) == true)
 			{//敵の表示処理
 				g_aPlayer[nCnt].bAppear = true;
 				break;
@@ -1427,7 +1500,7 @@ void PlayerDistance(int nCnt)
 	{
 		if (pEnemy->bUse == true)
 		{
-			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, 600.0f, 0.0f, -10.0f, 50.0f) == true)
+			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, PLAYER_DISTANCE_VIB, 0.0f, -10.0f, 50.0f) == true)
 			{//バイブレーション処理
 				if (g_aPlayer[nCnt].VibrtionFalseCount <= 0)
 				{
@@ -1453,7 +1526,7 @@ void PlayerDistance(int nCnt)
 				//GetGamepad_Vibrtion_false(nCnt);
 			}
 
-			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, 800.0f, 0.0f, -10.0f, 50.0f) == true)
+			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, PLAYER_DISTANCE_SE, 0.0f, -10.0f, 50.0f) == true)
 			{//サウンド処理
 				g_aPlayer[nCnt].nEnemySECount++;
 
@@ -1632,7 +1705,7 @@ D3DXVECTOR3 CollisionOuterProductPlayer(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld,
 			}
 		}
 	}
-	
+
 
 	return pos[0];
 }
@@ -1660,11 +1733,23 @@ bool CollisionCircle(D3DXVECTOR3 pos1, D3DXVECTOR3 pos2, float nRadiusOut, float
 //====================================================================
 //プレイヤーのヒット処理
 //====================================================================
-void PlayerHit(int nCnt,int nDamage)
+void PlayerHit(int nCnt, int nDamage)
 {
 	if (g_aPlayer[nCnt].bUse == true && g_aPlayer[nCnt].State == PLAYER_NORMAL)
 	{
 		g_aPlayer[nCnt].nLife -= nDamage;
+
+		if (g_aPlayer[nCnt].nLife > 0)
+		{
+			//ダメージ音(ライフがマックスか、2の時)
+			PlaySound(SOUND_LABEL_SE_DAMAGE);
+		}
+
+		else
+		{
+			////ダメージ音(ライフが1の時)
+			//PlaySound(SOUND_LABEL_SE_DAMAGE);
+		}
 
 		if (g_aPlayer[nCnt].nLife <= 0)
 		{
@@ -1677,13 +1762,16 @@ void PlayerHit(int nCnt,int nDamage)
 		if (g_aPlayer[nCnt].nLife <= 0)
 		{
 			g_aPlayer[nCnt].bUse = false;
+			g_aPlayer[nCnt].State = PLAYER_DAMAGE;
+			g_aPlayer[nCnt].nDamageCounter = PLAYER_DAMAGECOUNTER;
 		}
 
 		else
 		{
 			g_aPlayer[nCnt].State = PLAYER_HIT;
-			g_aPlayer[nCnt].nHitCounter = 60;
+			g_aPlayer[nCnt].nHitCounter = PLAYER_HITCOUNTER;
 		}
+		g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;
 	}
 }
 
@@ -1696,9 +1784,9 @@ void DrawPlayer(void)
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	D3DXMATRIX mtxRot, mtxTrans;		//計算用マトリックス
 	D3DMATERIAL9 matDef;				//現在のマテリアル保存用
-	//D3DXMATERIAL *pMat;				//マテリアルデータへのポインタ
+										//D3DXMATERIAL *pMat;				//マテリアルデータへのポインタ
 
-	//プレイ人数情報の取得
+										//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 
 	for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)

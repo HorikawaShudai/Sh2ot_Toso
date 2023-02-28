@@ -17,6 +17,8 @@ typedef enum
 	SOUND_LABEL_SE_WALK,				//プレイヤーの歩き
 	SOUND_LABEL_SE_DOOR,				//ドアの開閉音
 	SOUND_LABEL_SE_ENEMYMOVE,			//敵の移動音
+	SOUND_LABEL_SE_GETKEY,				//鍵の入手音
+	SOUND_LABEL_SE_DAMAGE,				//ダメージ音
 	SOUND_LABEL_MAX,
 } SOUND_LABEL;
 
