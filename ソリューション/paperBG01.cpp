@@ -10,7 +10,7 @@
 
 #define POS_TUTORIALUI_1_01_X		(640.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_1_01_Y		(620.0f)	//「」のY座標の位置
-#define SIZE_TUTORIALUI_1_01_X		(500.0f)	//「」の幅
+#define SIZE_TUTORIALUI_1_01_X		(400.0f)	//「」の幅
 #define SIZE_TUTORIALUI_1_01_Y		(100.0f)	//「」の高さ
 
 #define POS_TUTORIALUI_2_01_X		(320.0f)	//「」のX座標の位置
@@ -46,6 +46,15 @@
 #define UP_PAPERBG01				(100.0f)	//紙を取り出すときの上昇度
 #define UP_PAPERBG01_COUNTER_MAX	(100)		//紙を取り出す速さのカウンター
 
+//テクスチャファイル名
+const char *c_cpPaperTexname01[] =
+{
+	"Data\\TEXTURE\\TUTORIAL\\paper.jpg",
+	"Data\\TEXTURE\\TUTORIAL\\paper.jpg",
+	"Data\\TEXTURE\\TUTORIAL\\paper.jpg",
+	"Data\\TEXTURE\\TUTORIAL\\paper.jpg",
+};
+
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_apTexturePaperBG01[MAX_SSUI] = {};	//テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffPaperBG01 = NULL;		//頂点バッファへのポインタ
@@ -63,22 +72,11 @@ void InitPaperBG01(void)
 							   //デバイスの所得
 	pDevice = GetDevice();
 
-	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,
-		"Data\\TEXTURE\\TUTORIAL\\paper.jpg",
-		&g_apTexturePaperBG01[0]);
-
-	D3DXCreateTextureFromFile(pDevice,
-		"Data\\TEXTURE\\TUTORIAL\\paper.jpg",
-		&g_apTexturePaperBG01[1]);
-
-	D3DXCreateTextureFromFile(pDevice,
-		"Data\\TEXTURE\\TUTORIAL\\paper.jpg",
-		&g_apTexturePaperBG01[2]);
-
-	D3DXCreateTextureFromFile(pDevice,
-		"Data\\TEXTURE\\TUTORIAL\\paper.jpg",
-		&g_apTexturePaperBG01[3]);
+	for (int nCntBG = 0; nCntBG < MAX_SSUI; nCntBG++)
+	{
+		//テクスチャの読み込み
+		D3DXCreateTextureFromFile(pDevice, c_cpPaperTexname01[nCntBG], &g_apTexturePaperBG01[nCntBG]);
+	}
 
 	//UIの表示設定
 	bUsePaperBG01[0] = false;

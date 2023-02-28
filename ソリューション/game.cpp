@@ -306,18 +306,18 @@ void UpdateGame()
 		UpdatePause();
 	}
 
-	//if (pPause->bUse == false && g_bEdit == false)
-	//{//ポーズ状態じゃないときかつエディット状態じゃないとき
-	//	FADE Fade = GetFade();
+	if (pPause->bUse == false && g_bEdit == false)
+	{//ポーズ状態じゃないときかつエディット状態じゃないとき
+		FADE Fade = GetFade();
 
-	//	if (Fade == FADE_NONE)
-	//	{
-	//		if (GetKeyboardPress(DIK_RETURN))
-	//		{//ENTERキーを押したときリザルトにフェード
-	//			SetFade(MODE_RESULT);
-	//		}
-	//	}
-	//}
+		if (Fade == FADE_NONE)
+		{
+			if (GetKeyboardPress(DIK_RETURN))
+			{//ENTERキーを押したときリザルトにフェード
+				SetFade(MODE_RESULT);
+			}
+		}
+	}
 
 	//カメラの更新処理
 	UpdateCamera();
@@ -393,7 +393,7 @@ void UpdateGame()
 		UpdatePlayer();
 
 		//敵の更新処理
-		UpdateEnemy();
+		//UpdateEnemy();
 
 		//ヘルプUIの更新処理
 		UpdateActionHelpUI();

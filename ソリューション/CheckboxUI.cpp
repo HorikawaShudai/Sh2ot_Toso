@@ -11,23 +11,23 @@
 //マクロ定義
 #define MAX_CHECK_TEX		(2)				//チェックボックスのテクスチャ最大数
 
-#define CHECKUIPOS_X_1	(1200.0f)			//チェックボックスのUIのX位置1
-#define CHECKUIPOS_Y_1	(650.0f)			//チェックボックスのUIのY位置1
+#define CHECKUIPOS_X_1		(1200.0f)		//チェックボックスのUIのX位置1
+#define CHECKUIPOS_Y_1		(650.0f)		//チェックボックスのUIのY位置1
 
 #define CHECKUIPOS_X_2		(1200.0f)		//チェックボックスのUIのX位置2
 #define CHECKUIPOS_Y_2		(700.0f)		//チェックボックスのUIのY位置2
 
-#define CHECKUIPOS_X_3_0  (200.0)			//チュートリアル用紙が出ているときのX位置(1人目)
-#define CHECKUIPOS_Y_3_0  (550.0)			//チュートリアル用紙が出ているときのY位置(1人目)
+#define CHECKUIPOS_X_3_0	(1100.0)		//チュートリアル用紙が出ているときのX位置(1人目)
+#define CHECKUIPOS_Y_3_0	(550.0)			//チュートリアル用紙が出ているときのY位置(1人目)
 
-#define CHECKUIPOS_X_3_1  (400.0)			//チュートリアル用紙が出ているときのX位置(2人目)
-#define CHECKUIPOS_Y_3_1  (550.0)			//チュートリアル用紙が出ているときのY位置(2人目)
+#define CHECKUIPOS_X_3_1	(400.0)			//チュートリアル用紙が出ているときのX位置(2人目)
+#define CHECKUIPOS_Y_3_1	(550.0)			//チュートリアル用紙が出ているときのY位置(2人目)
 
-#define CHECKUIPOS_X_3_2  (600.0)			//チュートリアル用紙が出ているときのX位置(3人目)
-#define CHECKUIPOS_Y_3_2  (550.0)			//チュートリアル用紙が出ているときのY位置(3人目)
+#define CHECKUIPOS_X_3_2	(600.0)			//チュートリアル用紙が出ているときのX位置(3人目)
+#define CHECKUIPOS_Y_3_2	(550.0)			//チュートリアル用紙が出ているときのY位置(3人目)
 
-#define CHECKUIPOS_X_3_3  (800.0)			//チュートリアル用紙が出ているときのX位置(4人目)
-#define CHECKUIPOS_Y_3_3  (550.0)			//チュートリアル用紙が出ているときのY位置(4人目)
+#define CHECKUIPOS_X_3_3	(800.0)			//チュートリアル用紙が出ているときのX位置(4人目)
+#define CHECKUIPOS_Y_3_3	(550.0)			//チュートリアル用紙が出ているときのY位置(4人目)
 
 #define CHECKUI_WIDTH		(50.0f)			//チェックボックスのUIの幅
 #define CHECKUI_HEIGHT		(50.0f)			//チェックボックスのUIの高さ
@@ -269,7 +269,7 @@ void UpdateCheckboxUI(void)
 
 						for (int nCntTutorial = 0; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber; nCntTutorial++)
 						{
-							SetKey(D3DXVECTOR3(-950.0f + (50.0f * nCntTutorial), 0.0f, -50.0f), D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), KEY_TYPE_ITEM);
+							SetKey(D3DXVECTOR3(-950.0f + (50.0f * nCntTutorial), 3.0f, -50.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), KEY_TYPE_ITEM);
 						}
 
 						break;
