@@ -546,9 +546,8 @@ void Init3DTitle(void)
 
 	//ÉhÉAÇÃèâä˙âªèàóù
 	InitExit();
-	SetExit(D3DXVECTOR3(0.0f, 90.0f, 570.00f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1, 0);
-	SetExit(D3DXVECTOR3(70.0f, 0.0f, 570.00f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), 2, 0);
-	SetExit(D3DXVECTOR3(-70.0f, 0.0f, 570.00f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), 3, 0);
+
+	LoadExit(1);
 
 	InitThunder();
 

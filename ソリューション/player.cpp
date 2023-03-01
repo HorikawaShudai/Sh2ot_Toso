@@ -919,7 +919,7 @@ void UpdatePlayer1(void)
 			(g_aPlayer[3].bUse == false))
 		{//‘SˆõŽ€–S‚µ‚Ä‚¢‚é‚Æ‚«
 
-			g_GameEnd = true;
+			//g_GameEnd = true;
 			SetGameState(GAMESTATE_GAMEOVER_END, 60);
 		}
 	}

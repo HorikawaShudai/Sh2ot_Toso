@@ -124,6 +124,9 @@ void InitGame()
 	//出口の初期化処理
 	InitExit();
 
+	//出口の読み込み
+	LoadExit(0);
+
 	if (GetPlayModeSelect().CurrentModeNumber == 1)
 	{//モード選択が悪透モードの時
 
