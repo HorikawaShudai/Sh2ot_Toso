@@ -13,11 +13,11 @@
 //マクロ定義
 #define MAX_KEY_TEX		(2)				//鍵のテクスチャ最大数
 
-#define KEYUIPOS_X_1	(30.0f)			//鍵UIのX位置1
-#define KEYUIPOS_Y_1	(350.0f)		//鍵UIのY位置1
+#define KEYUIPOS_X_1	(150.0f)			//鍵UIのX位置1
+#define KEYUIPOS_Y_1	(50.0f)		//鍵UIのY位置1
 
 #define KEYUIPOS_X_2	(670.0f)		//鍵UIのX位置2
-#define KEYUIPOS_Y_2	(700.0f)		//鍵UIのY位置2
+#define KEYUIPOS_Y_2	(400.0f)		//鍵UIのY位置2
 
 #define KEYUI_WIDTH		(20.0f)			//鍵UIの幅
 #define KEYUI_HEIGHT	(20.0f)			//鍵UIの高さ
