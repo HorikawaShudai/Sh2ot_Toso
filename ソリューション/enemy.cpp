@@ -204,7 +204,6 @@ void UpdateEnemy(void)
 					if (DetectPlayer(g_Enemy[nCntObject].pos, DetectRot, nCntObject) == true)
 					{
 						g_Enemy[nCntObject].state = ENEMYSTATE_CHASE;
-						
 					}
 				
 			}
@@ -777,7 +776,6 @@ void EnemyPatrol(int nEnemy)
 			}
 		}
 	}
-
 
 		//Še•ûˆÊ‚É‚ ‚é•Ç‚Æ‚Ì‹——£‚ð‘ª’è
 		g_Enemy[nEnemy].fDistanceN = DetectWall(g_Enemy[nEnemy].pos, 0.0f, 100);

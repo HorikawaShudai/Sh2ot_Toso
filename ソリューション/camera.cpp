@@ -12,6 +12,7 @@
 #include "debugproc.h"
 #include "CheckboxUI.h"
 #include "EscapeTutorial.h"
+#include "game.h"
 
 //マクロ定義
 #define MAX_CAMERA				(5)		//カメラの最大数
@@ -922,8 +923,16 @@ void SelectNumberCamera(void)
 //リザルト画面
 void ResultCamera(void)
 {
-	g_aCamera[4].posV = D3DXVECTOR3(975.0f, 20.0f, -430.0f);
-	g_aCamera[4].posR = D3DXVECTOR3(420.0f, 100.0f, 500.0);
+	if (GetClear() == true)
+	{
+		g_aCamera[4].posV = D3DXVECTOR3(975.0f, 20.0f, -430.0f);
+		g_aCamera[4].posR = D3DXVECTOR3(420.0f, 100.0f, 500.0);
+	}
+	else
+	{
+		g_aCamera[4].posV = D3DXVECTOR3(48.0f, 15.0f, 68.0f);
+		g_aCamera[4].posR = D3DXVECTOR3(38.0f, 0.0f, 73.0f);
+	}
 }
 
 //ランキング画面
