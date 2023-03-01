@@ -924,6 +924,9 @@ void ResultCamera(void)
 {
 	g_aCamera[4].posV = D3DXVECTOR3(975.0f, 20.0f, -430.0f);
 	g_aCamera[4].posR = D3DXVECTOR3(420.0f, 100.0f, 500.0);
+
+	//g_aCamera[4].posV = D3DXVECTOR3(200.0f, 200.0f, 70.0f);
+	//g_aCamera[4].posR = D3DXVECTOR3(50.0f, 0.0f, 70.0f);
 }
 
 //ƒ‰ƒ“ƒLƒ“ƒO‰æ–Ê

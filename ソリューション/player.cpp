@@ -107,6 +107,7 @@ void InitPlayer(void)
 		g_aPlayer[nCntPlayer].nWaitCounter = PLAYER_WAITCOUNTER;
 		g_aPlayer[nCntPlayer].nDamageCounter = PLAYER_DAMAGECOUNTER;
 		g_aPlayer[nCntPlayer].nDeathCounter = PLAYER_DEATHCOUNTER;
+		g_aPlayer[nCntPlayer].bChase = false;
 
 		g_aPlayer[nCntPlayer].bCheck = false;  //チェックボックスがついていない状態に
 		g_aPlayer[nCntPlayer].bExit = false;

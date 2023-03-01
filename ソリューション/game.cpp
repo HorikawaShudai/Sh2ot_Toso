@@ -34,6 +34,8 @@
 #include "sound.h"
 #include "pause.h"
 #include "particle.h"
+#include "ChasePolygon.h"
+#include "LifePolygon.h"
 
 //エディットに使うオブジェクトの種類の構造体
 typedef enum
@@ -181,6 +183,11 @@ void InitGame()
 		SetKey(KeyPos[nKey], D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 	}
 	SetKey(D3DXVECTOR3(-1000.0f, 3.0f, 0.0f), D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+
+	InitChasePolygon();
+
+	InitLifePolygon();
+
 	//ステージの読み込み
 	SetStage(0);
 }
@@ -255,6 +262,10 @@ void UninitGame()
 	UninitExit();
 
 	UninitTime();
+
+	UninitLifePolygon();
+
+	UninitChasePolygon();
 
 	UninitPolygonBG();
 
@@ -393,7 +404,7 @@ void UpdateGame()
 		UpdatePlayer();
 
 		//敵の更新処理
-		//UpdateEnemy();
+		UpdateEnemy();
 
 		//ヘルプUIの更新処理
 		UpdateActionHelpUI();
@@ -431,6 +442,10 @@ void UpdateGame()
 		//タイムの更新処理
 		UpdateTime();
 		
+		UpdateLifePolygon();
+
+		UpdateChasePolygon();
+
 		//ダメージリアクション用ポリゴンの更新処理
 		UpdatePolygonBG();
 	}
@@ -578,6 +593,13 @@ void DrawGame()
 
 		//鍵UIの描画処理
 		DrawKeyUI();
+
+		DrawLifePolygon();
+
+		if (pPlayer->bChase == true)
+		{
+			DrawChasePolygon();
+		}
 
 		DrawPolygonBG();
 
