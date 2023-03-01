@@ -918,8 +918,7 @@ void UpdatePlayer1(void)
 			(g_aPlayer[2].bUse == false) && 
 			(g_aPlayer[3].bUse == false))
 		{//全員死亡しているとき
-
-			//g_GameEnd = true;
+			g_GameEnd = true;
 			SetGameState(GAMESTATE_GAMEOVER_END, 60);
 		}
 	}
@@ -1515,7 +1514,7 @@ void PlayerDistance(int nCnt)
 			{//バイブレーション処理
 				if (g_aPlayer[nCnt].VibrtionFalseCount <= 0)
 				{
-					PlayerSetVibrtion(nCnt, 10, 10, 60000, 0);
+					PlayerSetVibrtion(nCnt, 10, 10, 40000, 40000);
 
 					if (do_Tutorial == MODE_VIBE)
 					{

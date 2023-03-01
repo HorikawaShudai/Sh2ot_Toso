@@ -7,6 +7,8 @@
 #include "ResultUI.h"
 #include "fade.h"
 #include "input.h"
+#include "meshdome.h"
+#include "meshcylinder.h"
 
 //グローバル変数宣言
 
@@ -20,6 +22,10 @@ void InitEscapeClearResult()
 
 	//ライトの初期化処理
 	InitLight();
+
+	InitMeshDome();
+
+	InitMeshCylinder();
 
 	InitObject00();
 	InitObjectBG();
@@ -41,6 +47,10 @@ void UninitEscapeClearResult()
 	//ライトの終了処理
 	UninitLight();
 
+	UninitMeshDome();
+
+	UninitMeshCylinder();
+
 	UninitObject00();
 	UninitObjectBG();
 
@@ -59,6 +69,10 @@ void UpdateEscapeClearResult()
 
 	//ライトの更新処理
 	UpdateLight();
+
+	UpdateMeshDome();
+
+	UpdateMeshCylinder();
 
 	UpdateObject00();
 	UpdateObjectBG();
@@ -89,6 +103,10 @@ void DrawEscapeClearResult()
 
 	//カメラのセット処理
 	SetCamera(4);
+
+	DrawMeshDome();
+
+	DrawMeshCylinder();
 
 	DrawObject00();
 	DrawObjectBG();
