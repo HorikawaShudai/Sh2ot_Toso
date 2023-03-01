@@ -4,6 +4,7 @@
 #include "stage.h"
 #include "Object00.h"
 #include "ObjectBG.h"
+#include "ObjectLight.h"
 #include "ResultUI.h"
 #include "fade.h"
 #include "input.h"
@@ -79,11 +80,12 @@ void InitEscapeOverResult()
 
 	InitObject00();
 	InitObjectBG();
+	InitObjectLight();
 
 	//ステージの読み込み
-	SetStage(4);
+	SetStage(5);
 
-	InitResultUI();
+	//InitResultUI();
 }
 
 //====================================================================
@@ -113,8 +115,9 @@ void UninitEscapeOverResult()
 
 	UninitObject00();
 	UninitObjectBG();
+	UninitObjectLight();
 
-	UninitResultUI();
+	//UninitResultUI();
 }
 
 //====================================================================
@@ -132,14 +135,15 @@ void UpdateEscapeOverResult()
 
 	UpdateObject00();
 	UpdateObjectBG();
+	UpdateObjectLight();
 
-	UpdateResultUI();
+	//UpdateResultUI();
 
 	if (Fade == FADE_NONE)
 	{
 		if (GetKeyboardPress(DIK_RETURN) || GetGamepadPress(BUTTON_A, 0))
 		{
-			SetFade(MODE_RANKING);
+			SetFade(MODE_TITLE);
 		}
 	}
 }
@@ -149,12 +153,23 @@ void UpdateEscapeOverResult()
 //====================================================================
 void DrawEscapeOverResult()
 {
-	/*D3DVIEWPORT9 viewportDef;*/
-
 	//デバイスへのポインタを取得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	pDevice = GetDevice();
+	D3DVIEWPORT9 viewportDef;
+
+	//現在のビューポートを取得
+	pDevice->GetViewport(&viewportDef);
+
+	//カメラのセット処理
+	SetCamera(4);
+
+	DrawObject00();
+	DrawObjectBG();
+	DrawObjectLight();
+
+	//ビューポートを元に戻す
+	pDevice->SetViewport(&viewportDef);
 
 	pDevice->SetStreamSource(0, g_pVtxBuffOver, 0, sizeof(VERTEX_2D));
 
@@ -166,18 +181,4 @@ void DrawEscapeOverResult()
 
 	//ポリゴンの描画
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
-
-	////現在のビューポートを取得
-	//pDevice->GetViewport(&viewportDef);
-
-	////カメラのセット処理
-	//SetCamera(4);
-
-	//DrawObject00();
-	//DrawObjectBG();
-
-	//DrawResultUI();
-
-	////ビューポートを元に戻す
-	//pDevice->SetViewport(&viewportDef);
 }

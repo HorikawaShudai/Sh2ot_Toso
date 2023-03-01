@@ -59,6 +59,6 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 bool CollisionExitHelpUI(D3DXVECTOR3 *pPos, float Size);
 bool CollisionExi(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size);
 
-void LoadExit(void);
+void LoadExit(int SetNumber);
 
 #endif

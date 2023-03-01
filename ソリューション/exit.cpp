@@ -29,6 +29,14 @@ const char *c_apExit[] =					//モデルデータ読み込み
 	"Data\\MODEL\\Exit\\BigDoor_R.x",
 };
 
+
+const char *c_apExitSetFile[] =				//出口の読み込み
+{
+	"Data\\TEXT\\Exit_tousou.txt",
+	"Data\\TEXT\\Exit_title.txt",
+	"Data\\TEXT\\Exit_tutorial.txt",
+};
+
 //プロトタイプ宣言
 void DoorOpen(void);
 void ExsitClossLine(int nCntExit);
@@ -122,9 +130,6 @@ void InitExit(void)
 			}
 		}
 	}
-
-	//出口の読み込み
-	LoadExit();
 }
 
 //====================================================================
@@ -168,20 +173,17 @@ void UpdateExit(void)
 
 	MODE Mode = GetMode();
 
-	for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
+	if (Mode == MODE_TITLE && pCam->posV.z >= 150.0f)
 	{
-		if (Mode == MODE_TITLE && pCam->posV.z >= 150.0f)
+		g_bExitOK = true;
+
+		for (int nCntExit1 = 0; nCntExit1 < MAX_EXIT; nCntExit1++)
 		{
-			g_bExitOK = true;
-			for (int nCntExit1 = 0; nCntExit1 < MAX_EXIT; nCntExit1++)
-			{
-				g_aExit[nCntExit].parts[nCntExit1].bUse = true;
-				g_aExit[nCntExit].parts[nCntExit1].bExitOK = true;
-				g_aExit[nCntExit].parts[nCntExit1].bExitOK = true;
-			}
-			FalseActionHelpUI(g_aExit[nCntExit].IndexUI);
+			g_aExit[0].parts[nCntExit1].bExitOK = true;
 		}
-	}
+
+		FalseActionHelpUI(g_aExit[0].IndexUI);
+	}	
 
 	//扉が開く処理
 	DoorOpen();
@@ -266,15 +268,15 @@ void DoorOpen(void)
 			{//出口が使われていて脱出可能の場合
 				if (g_aExit[nCntExit].parts[nCntExit1].nType != EXIT_TYPE_BIGFRAME)
 				{//出口の種類がフレーム以外の場合
-
-					if (g_aExit[nCntExit].parts[4].rotSave.y - 1.57f <= g_aExit[nCntExit].parts[4].rot.y)
-					{
-						g_aExit[nCntExit].parts[4].rot.y -= 0.007f;
-					}
 					
 					if (g_aExit[nCntExit].parts[3].rotSave.y + 1.57f >= g_aExit[nCntExit].parts[3].rot.y)
 					{
 						g_aExit[nCntExit].parts[3].rot.y += 0.007f;
+					}
+
+					if (g_aExit[nCntExit].parts[4].rotSave.y - 1.57f <= g_aExit[nCntExit].parts[4].rot.y)
+					{
+						g_aExit[nCntExit].parts[4].rot.y -= 0.007f;
 					}
 				}
 
@@ -368,7 +370,7 @@ void SetExit(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nType, int nNumExit)
 			if (g_aExit[nNumExit].parts[nCntExit1].nType == 1)
 			{
 				g_aExit[nNumExit].PseudoCenter = D3DXVECTOR3(g_aExit[nNumExit].parts[nCntExit1].pos.x, g_aExit[nNumExit].parts[nCntExit1].pos.y - 100.0f, g_aExit[nNumExit].parts[nCntExit1].pos.z);
-				g_aExit[nNumExit].IndexUI = SetActionHelpUI(D3DXVECTOR3(g_aExit[nNumExit].PseudoCenter.x, g_aExit[nNumExit].PseudoCenter.y + 20.0f, g_aExit[nNumExit].PseudoCenter.z), ACTIONHELPUI_DOOR);
+				g_aExit[nNumExit].IndexUI = SetActionHelpUI(D3DXVECTOR3(g_aExit[nNumExit].PseudoCenter.x + sinf(g_aExit[nNumExit].parts[nCntExit1].rot.y) * 15.0f, g_aExit[nNumExit].PseudoCenter.y + 38.0f, g_aExit[nNumExit].PseudoCenter.z + cosf(g_aExit[nNumExit].parts[nCntExit1].rot.y) * 15.0f), ACTIONHELPUI_DOOR);
 			}
 
 			g_aExit[nNumExit].parts[nCntExit1].bUse = true;
@@ -497,10 +499,10 @@ bool CollisionExitHelpUI(D3DXVECTOR3 *pPos, float Size)
 				{//アイテムとプレイヤーが当たった(X軸)
 					bHelpUI = true;
 				}
-			}
-			else
-			{
-				bHelpUI = false;
+				else
+				{
+					bHelpUI = false;
+				}
 			}
 		}
 	}
@@ -647,7 +649,7 @@ void CollisionExitShadow(D3DXVECTOR3 *pPos)
 //====================================================================
 //出口の読み込み(.txt)
 //====================================================================
-void LoadExit(void)
+void LoadExit(int SetNumber)
 {
 	//変数宣言
 	char not[128];			//使用しない文字列のゴミ箱
@@ -656,7 +658,7 @@ void LoadExit(void)
 	FILE *pFile;			//ファイルポインタを宣言
 
 	//ファイルを開く
-	pFile = fopen("Data\\TEXT\\Exit_tousou.txt", "r");
+	pFile = fopen(c_apExitSetFile[SetNumber], "r");
 
 	if (pFile != NULL)
 	{//ファイルが開けた場合

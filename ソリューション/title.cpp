@@ -208,7 +208,7 @@ void UpdateTitle(void)
 		}
 		else if (g_CurrentNumberTitle == 1 && pCamera->posV.z >= CAMERA_FADEPOS)
 		{//現在の選択番号が1の場合
-			SetFade(MODE_TITLE);		//モードの設定(ランキング画面に移行)
+			SetFade(MODE_RANKING);		//モードの設定(ランキング画面に移行)
 		}
 	}
 
@@ -546,9 +546,8 @@ void Init3DTitle(void)
 
 	//ドアの初期化処理
 	InitExit();
-	SetExit(D3DXVECTOR3(0.0f, 90.0f, 570.00f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1, 0);
-	SetExit(D3DXVECTOR3(70.0f, 0.0f, 570.00f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), 2, 0);
-	SetExit(D3DXVECTOR3(-70.0f, 0.0f, 570.00f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), 3, 0);
+
+	LoadExit(1);
 
 	InitThunder();
 

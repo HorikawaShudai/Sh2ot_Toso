@@ -441,7 +441,7 @@ void DrawVillainTutorial()
 		}
 
 		//ヘルプUIの描画処理
-		DrawActionHelpUI();
+		DrawActionHelpUI(nCnt, pPlayer->bGetKey);
 
 		//スタミナの描画処理
 		DrawStamina();

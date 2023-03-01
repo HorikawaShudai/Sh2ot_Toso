@@ -6,6 +6,7 @@
 //========================================================================================
 #include "main.h"
 #include "light.h"
+#include "game.h"
 
 #define MAX_LIGHT (256)	//使用するライトの数
 
@@ -104,13 +105,15 @@ void InitLight(void)
 	{
 		g_Light_LightIdx[nCntlight] = SetIndexLight();		//ライトの使用番号を指定する
 
-		if (GetMode() != MODE_GAME || GetMode() == MODE_TUTORIAL)
+		if ((GetMode() == MODE_GAME) ||
+			(GetMode() == MODE_TUTORIAL) ||
+			(GetMode() == MODE_RESULT && GetClear() == false))
 		{
 			//ライトの方向を設定
 			switch (nCntlight)
 			{
 			case 0:
-				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.2f, -0.8f, -0.5f), 100.0f,1.0f);
+				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.2f, -0.8f, -0.5f), 100.0f, 1.0f);
 				break;
 			case 1:
 				SetLight(g_Light_LightIdx[nCntlight], D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(-0.5f, -0.8f, -0.5f), 100.0f, 1.0f);
@@ -188,7 +191,9 @@ void UpdateLight(void)
 	{
 		if (GetNightVersion() == false)
 		{
-			if (GetMode() == MODE_GAME || GetMode() == MODE_TUTORIAL)
+			if ((GetMode() == MODE_GAME) ||
+				(GetMode() == MODE_TUTORIAL) ||
+				(GetMode() == MODE_RESULT && GetClear() == false))
 			{
 				//ライトの方向を設定
 				switch (nCntlight)
@@ -291,6 +296,32 @@ int SetIndexLight(void)
 	}
 
 	return nLightIndex;
+}
+
+//====================================================================
+//ライトの描画処理
+//====================================================================
+void DrawLight(int nCnt)
+{
+	//デバイスの所得
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+
+	for (int nCntlight = 3; nCntlight < MAX_LIGHT; nCntlight++)
+	{
+		if (g_bUse[nCntlight] == true)
+		{
+			if (nCntlight == nCnt + 3)
+			{
+				//ライトを有効にする
+				pDevice->LightEnable(nCntlight, TRUE);
+			}
+			else
+			{
+				//ライトを無効にする
+				pDevice->LightEnable(nCntlight, FALSE);
+			}
+		}
+	}
 }
 
 //====================================================================

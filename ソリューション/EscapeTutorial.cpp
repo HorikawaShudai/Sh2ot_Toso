@@ -95,8 +95,8 @@ void InitEscapeTutorial()
 	//ライフの初期化処理
 	InitLife();
 
-	//スコアの初期化
-	InitScore();
+	////スコアの初期化
+	//InitScore();
 
 	//鍵の初期化処理
 	InitKey();
@@ -113,12 +113,11 @@ void InitEscapeTutorial()
 	//出口の初期化処理
 	InitExit();
 
-	SetExit(D3DXVECTOR3(-1000.0f,0.0f,0.8f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0,0);
-	SetExit(D3DXVECTOR3(-1070.0f, 0.0f, 0.8f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), 0,0);
-	SetExit(D3DXVECTOR3(-935.0f, 0.0f, 0.8f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), 0,0);
+	//出口を読み込む
+	LoadExit(2);
 
-	//スコアアイテムの初期化
-	InitItem();
+	////スコアアイテムの初期化
+	//InitItem();
 
 	InitActionHelpUI();
 
@@ -179,11 +178,11 @@ void UninitEscapeTutorial()
 	//ライフの終了処理
 	UninitLife();
 
-	//スコアの終了処理
-	UninitScore();
+	////スコアの終了処理
+	//UninitScore();
 
-	//アイテムの終了処理
-	UninitItem();
+	////アイテムの終了処理
+	//UninitItem();
 
 	//鍵の終了処理
 	UninitKey();
@@ -330,11 +329,11 @@ void UpdateEscapeTutorial()
 		//ライフの更新処理
 		UpdateLife();
 
-		//スコアの更新処理
-		UpdateScore();
+		////スコアの更新処理
+		//UpdateScore();
 
-		//スコアアイテムの更新処理
-		UpdateItem();
+		////スコアアイテムの更新処理
+		//UpdateItem();
 
 		//鍵の更新処理
 		UpdateKey();
@@ -451,7 +450,7 @@ void DrawEscapeTutorial()
 		}
 
 		//ヘルプUIの描画処理
-		DrawActionHelpUI();
+		DrawActionHelpUI(nCnt, pPlayer->bGetKey);
 
 		//スタミナの描画処理
 		DrawStamina();
@@ -461,11 +460,11 @@ void DrawEscapeTutorial()
 
 		DrawTime();
 
-		//スコアの描画処理
-		DrawScore();
+		////スコアの描画処理
+		//DrawScore();
 
-		//スコアアイテムの描画処理
-		DrawItem();
+		////スコアアイテムの描画処理
+		//DrawItem();
 
 		//鍵の描画処理
 		DrawKey();

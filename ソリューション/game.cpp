@@ -34,6 +34,8 @@
 #include "sound.h"
 #include "pause.h"
 #include "particle.h"
+#include "ChasePolygon.h"
+#include "LifePolygon.h"
 
 //エディットに使うオブジェクトの種類の構造体
 typedef enum
@@ -122,6 +124,9 @@ void InitGame()
 	//出口の初期化処理
 	InitExit();
 
+	//出口の読み込み
+	LoadExit(0);
+
 	if (GetPlayModeSelect().CurrentModeNumber == 1)
 	{//モード選択が悪透モードの時
 
@@ -170,17 +175,18 @@ void InitGame()
 	{
 
 	}
-	SetEnemy(D3DXVECTOR3(-2162.46f, 0.0f, 1529.39f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	SetEnemy(D3DXVECTOR3(160.0f,  0.0f, 300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetEnemy(D3DXVECTOR3(-2162.46f, 0.0f, 1529.39f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	SetEnemy(D3DXVECTOR3(160.0f,  0.0f, 300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 	//プレイヤーの数だけ鍵を設置する
-	for (int nCnt = 0; nCnt < GetPlayNumberSelect().CurrentSelectNumber; nCnt++)
-	{
-		int nKey;
-		nKey = rand() % 9;
-		SetKey(KeyPos[nKey], D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	}
+	PatternSetKey(GetPlayNumberSelect().CurrentSelectNumber);
+
 	SetKey(D3DXVECTOR3(-1000.0f, 3.0f, 0.0f), D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+
+	InitChasePolygon();
+
+	InitLifePolygon();
+
 	//ステージの読み込み
 	SetStage(0);
 }
@@ -255,6 +261,10 @@ void UninitGame()
 	UninitExit();
 
 	UninitTime();
+
+	UninitLifePolygon();
+
+	UninitChasePolygon();
 
 	UninitPolygonBG();
 
@@ -431,6 +441,10 @@ void UpdateGame()
 		//タイムの更新処理
 		UpdateTime();
 		
+		UpdateLifePolygon();
+
+		UpdateChasePolygon();
+
 		//ダメージリアクション用ポリゴンの更新処理
 		UpdatePolygonBG();
 	}
@@ -494,6 +508,9 @@ void DrawGame()
 		//カメラのセット処理
 		SetCamera(nCnt);
 
+		//プレイヤーが保持するライトの描画処理
+		DrawLight(nCnt);
+
 		//メッシュウォールの描画処理
 		DrawMeshWall();
 
@@ -547,7 +564,7 @@ void DrawGame()
 		}
 
 		//ヘルプUIの描画処理
-		DrawActionHelpUI();
+		DrawActionHelpUI(nCnt,pPlayer->bGetKey);
 
 		//スタミナの描画処理
 		DrawStamina();
@@ -579,20 +596,27 @@ void DrawGame()
 		//鍵UIの描画処理
 		DrawKeyUI();
 
+		DrawLifePolygon();
+
+		if (pPlayer->bChase == true)
+		{
+			DrawChasePolygon();
+		}
+
 		DrawPolygonBG();
 
 		//フォグの描画
 		DrawFog();
 	}
 
+	//ビューポートを元に戻す
+	pDevice->SetViewport(&viewportDef);
+
 	if (pPause->bUse == true)
 	{//ポーズ中だった場合
 	 //ポーズの描画処理
 		DrawPause();
 	}
-
-	//ビューポートを元に戻す
-	pDevice->SetViewport(&viewportDef);
 }
 
 //====================================================================

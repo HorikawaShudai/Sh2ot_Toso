@@ -148,8 +148,12 @@ void UpdateActionHelpUI(void)
 //====================================================================
 //ヘルプUIの描画処理
 //====================================================================
-void DrawActionHelpUI(void)
+void DrawActionHelpUI(int nCntPlayer,bool GetKey)
 {
+	//プレイヤー情報の取得
+	Player *pPlayer = GetPlayer();
+	pPlayer += nCntPlayer;
+
 	int nCntUI;
 
 	//デバイスの所得
@@ -161,7 +165,10 @@ void DrawActionHelpUI(void)
 	//pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
 	//pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
-						//アルファテストを有効にする
+	//ライトを無効にする
+	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+	//アルファテストを有効にする
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 	pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
@@ -195,9 +202,16 @@ void DrawActionHelpUI(void)
 		pDevice->SetFVF(FVF_VERTEX_3D);
 
 		//テクスチャの設定
-		pDevice->SetTexture(0, g_pTextureActionHelpUI[g_aActionHelpUI[nCntUI].nType]);
+		if (GetKey == true && pPlayer->ExitHelpUI == true)
+		{
+			pDevice->SetTexture(0, g_pTextureActionHelpUI[ACTIONHELPUI_DOOR]);
+		}
+		else if(GetKey == false && pPlayer->KeyHelpUI == true)
+		{
+			pDevice->SetTexture(0, g_pTextureActionHelpUI[ACTIONHELPUI_KEY]);
+		}
 
-		if (g_aActionHelpUI[nCntUI].bUse == true)
+		if (g_aActionHelpUI[nCntUI].bUse == true &&(pPlayer->ExitHelpUI == true || pPlayer->KeyHelpUI == true))
 		{
 			//ポリゴンの描画
 			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,	//プリミティブの種類
@@ -214,6 +228,9 @@ void DrawActionHelpUI(void)
 	////Zテストを有効にする
 	//pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
 	//pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+
+	//ライトを有効にする
+	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 
 //====================================================================

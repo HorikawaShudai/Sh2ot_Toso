@@ -107,6 +107,7 @@ void InitPlayer(void)
 		g_aPlayer[nCntPlayer].nWaitCounter = PLAYER_WAITCOUNTER;
 		g_aPlayer[nCntPlayer].nDamageCounter = PLAYER_DAMAGECOUNTER;
 		g_aPlayer[nCntPlayer].nDeathCounter = PLAYER_DEATHCOUNTER;
+		g_aPlayer[nCntPlayer].bChase = false;
 
 		g_aPlayer[nCntPlayer].bCheck = false;  //チェックボックスがついていない状態に
 		g_aPlayer[nCntPlayer].bExit = false;
@@ -807,11 +808,11 @@ void UpdatePlayer1(void)
 			//ヘルプUIの表示
 			if (g_aPlayer[nCntPlayer].bGetKey == false)
 			{
-				CollisionKeyHelpUI(&g_aPlayer[nCntPlayer].pos, 30.0f);
+				g_aPlayer[nCntPlayer].KeyHelpUI = CollisionKeyHelpUI(&g_aPlayer[nCntPlayer].pos, 200.0f);
 			}
 			if (g_aPlayer[nCntPlayer].bGetKey == true)
 			{
-				CollisionExitHelpUI(&g_aPlayer[nCntPlayer].pos, 30.0f);
+				g_aPlayer[nCntPlayer].ExitHelpUI = CollisionExitHelpUI(&g_aPlayer[nCntPlayer].pos, 350.0f);
 			}
 
 			//鍵の入手処理
@@ -823,6 +824,7 @@ void UpdatePlayer1(void)
 					{//鍵を入手出来た場合
 						g_aPlayer[nCntPlayer].bGetKey = true;	//鍵を入手状態にする
 						SetKeyUI(nCntPlayer, true);				//鍵UIを表示する
+						g_aPlayer[nCntPlayer].KeyHelpUI = false;
 
 						//鍵の入手音
 						PlaySound(SOUND_LABEL_SE_GETKEY);
@@ -852,6 +854,7 @@ void UpdatePlayer1(void)
 
 						g_aPlayer[nCntPlayer].bGetKey = false;	//鍵を入手してない状態にする
 						SetKeyUI(nCntPlayer, false);			//鍵UIを非表示にする
+						g_aPlayer[nCntPlayer].ExitHelpUI = false;
 
 						//チュートリアルモード脱出の時
 						if (do_Tutorial == MODE_ESCAPE)
@@ -891,8 +894,12 @@ void UpdatePlayer1(void)
 	//ゲーム終了処理
 	if (g_GameEnd == false)
 	{
-		if (g_aPlayer[0].bExit == true && g_aPlayer[1].bExit == true && g_aPlayer[2].bExit == true && g_aPlayer[3].bExit == true)
-		{
+		if ((g_aPlayer[0].bExit == true) && 
+			(g_aPlayer[1].bExit == true) && 
+			(g_aPlayer[2].bExit == true) &&
+			(g_aPlayer[3].bExit == true))
+		{//全員脱出しているとき
+
 			//チュートリアルモード脱出の時
 			if (GetMode() == MODE_TUTORIAL)
 			{
@@ -906,9 +913,13 @@ void UpdatePlayer1(void)
 			}
 		}
 
-		if (g_aPlayer[0].bUse == false && g_aPlayer[1].bUse && false && g_aPlayer[2].bUse && false && g_aPlayer[3].bUse && false)
-		{
-			g_GameEnd = true;
+		if ((g_aPlayer[0].bUse == false) && 
+			(g_aPlayer[1].bUse == false) && 
+			(g_aPlayer[2].bUse == false) && 
+			(g_aPlayer[3].bUse == false))
+		{//全員死亡しているとき
+
+			//g_GameEnd = true;
 			SetGameState(GAMESTATE_GAMEOVER_END, 60);
 		}
 	}
@@ -1426,6 +1437,18 @@ void PlayerState(int nCnt)
 			break;
 		}
 		break;
+	case PLAYER_EXSIT:
+
+		D3DXVECTOR3 posDest;			//目的の位置
+
+		D3DXVECTOR3 posDiff = D3DXVECTOR3(-1000.0f, 0.0f, -4000.0f);
+
+		posDest = posDiff - g_aPlayer[nCnt].pos;
+
+		g_aPlayer[nCnt].pos.x += posDest.x * 0.005f;
+		g_aPlayer[nCnt].pos.z += posDest.z * 0.0006f;
+		SetLife(0, nCnt);
+		break;
 	}
 }
 
@@ -1757,7 +1780,7 @@ void PlayerHit(int nCnt, int nDamage)
 		}
 
 		//ライフのセット処理
-		SetLife(g_aPlayer[nCnt].nLife, nCnt);
+		SetLife(nDamage, nCnt);
 
 		if (g_aPlayer[nCnt].nLife <= 0)
 		{

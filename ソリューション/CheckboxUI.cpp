@@ -207,7 +207,7 @@ void UpdateCheckboxUI(void)
 		//スタンバイ状態の時にチェックをオンにする入力処理
 		for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
 		{
-			if ((GetGamepadTrigger(BUTTON_A, nCntPlayer) || GetGamepadTrigger(BUTTON_B, nCntPlayer)) && ChecboxUITrueCounter >= UP_CHECKBOXUI_COUNTER_MAX)
+			if ((GetKeyboardTrigger(DIK_N)) || (GetGamepadTrigger(BUTTON_A, nCntPlayer) || GetGamepadTrigger(BUTTON_B, nCntPlayer)) && ChecboxUITrueCounter >= UP_CHECKBOXUI_COUNTER_MAX)
 			{
 				SetCheckUI(nCntPlayer, true);
 			}
@@ -254,7 +254,7 @@ void UpdateCheckboxUI(void)
 						//チュートリアル用紙をバイブに
 						DoEscapeTutorial(MODE_VIBE);
 
-						SetEnemy(D3DXVECTOR3(-1050.0f, 0.0f, 100.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+						SetEnemy(D3DXVECTOR3(-1050.0f, 0.0f, 100.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 						break;
 					case MODE_VIBE:
@@ -269,7 +269,7 @@ void UpdateCheckboxUI(void)
 
 						for (int nCntTutorial = 0; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber; nCntTutorial++)
 						{
-							SetKey(D3DXVECTOR3(-950.0f + (50.0f * nCntTutorial), 3.0f, -50.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), KEY_TYPE_ITEM);
+							SetKey(D3DXVECTOR3(-1150.0f + (50.0f * nCntTutorial), 3.0f, -50.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), KEY_TYPE_ITEM);
 						}
 
 						break;

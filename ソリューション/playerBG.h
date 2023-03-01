@@ -2,9 +2,9 @@
 #define _PLAYERBG_H_
 
 //マクロ定義
-#define MAX_MODEL (32)	//モデルの最大数
-#define MAX_PARTS (32)	//パーツの総数
-#define MAX_KEY (16)	//キーの総数
+#define MAX_PLAYER_MODEL (32)	//モデルの最大数
+#define MAX_PLAYER_PARTS (32)	//パーツの総数
+#define MAX_PLAYER_KEY (16)	//キーの総数
 
 //プレイヤーのモーション
 typedef enum
@@ -15,7 +15,7 @@ typedef enum
 	PLAYERBG_ACTION_WAIT2,
 	PLAYERBG_ACTION_MAX,
 
-}MOTION_TYPE;
+}PLAYER_MOTION_TYPE;
 
 //キーの構造体
 typedef struct
@@ -26,22 +26,22 @@ typedef struct
 	float fRotX;		//向きX
 	float fRotY;		//向きY
 	float fRotZ;		//向きZ
-}KEY;
+}PLAYER_KEY;
 
 //キー情報の構造体
 typedef struct
 {
 	int nFrame;				//再生フレーム
-	KEY aKey[MAX_PARTS];		//各モデルのキー要素[パーツの総数]
-}KEY_INFO;
+	PLAYER_KEY aKey[MAX_PLAYER_PARTS];		//各モデルのキー要素[パーツの総数]
+}PLAYER_KEY_INFO;
 
 //モーション情報の構造体
 typedef struct
 {
 	bool bLoop;						//ループするかどうか
 	int NumKey;						//各モデルのキー要素
-	KEY_INFO aKeyInfo[MAX_KEY];			//キー情報[キーの総数]
-}MOTION_INFO;
+	PLAYER_KEY_INFO aKeyInfo[MAX_PLAYER_KEY];			//キー情報[キーの総数]
+}PLAYER_MOTION_INFO;
 
 //モデルの構造体
 typedef struct
@@ -57,7 +57,7 @@ typedef struct
 	int nIndexModelParent;						//親モデルのインデックス
 	LPDIRECT3DTEXTURE9 g_pTexturePlayerBG[100];	//テクスチャのポインタ
 	DWORD g_dwNumMatPlayerBG;				//マテリアルの数
-}Model;
+}PlayerModel;
 
 //モデルの構造体
 typedef struct
@@ -70,22 +70,19 @@ typedef struct
 	D3DXMATRIX mtxWorld;						//ワールドマトリックス
 	D3DXVECTOR3 vtxMin;							//モデルの最小
 	D3DXVECTOR3 vtxMax;							//モデルの最大
-	int nLife;									//プレイヤーの体力
-	int nNextLife;								//プレイヤーが引き継ぐ体力
 
-	Model aModel[MAX_MODEL];					//モデル(パーツ)
-	int nNumModel;								//モデル(パーツ)の総数
-	MOTION_INFO aMotionInfo[PLAYERBG_ACTION_MAX];	//モーションの情報[モーションの総数]
-	int nNumMotion;								//モーションの総数
-	MOTION_TYPE MotionType;						//モーションの種類
-	bool bLoopMotion;							//ループするかどうか
-	int nNumkey;								//キーの総数
-	int nkey;									//現在のキーNo.
-	int nCounterMotion;							//モーションのカウンター
-	int g_nNextKey;							//モーション時の次のキー
-	bool g_bMotion;							//モーションしているかどうか
+	PlayerModel aModel[MAX_PLAYER_MODEL];					//モデル(パーツ)
+	int nNumModel;											//モデル(パーツ)の総数
+	PLAYER_MOTION_INFO aMotionInfo[PLAYERBG_ACTION_MAX];	//モーションの情報[モーションの総数]
+	int nNumMotion;											//モーションの総数
+	PLAYER_MOTION_TYPE MotionType;							//モーションの種類
+	bool bLoopMotion;										//ループするかどうか
+	int nNumkey;											//キーの総数
+	int nkey;												//現在のキーNo.
+	int nCounterMotion;										//モーションのカウンター
+	int g_nNextKey;											//モーション時の次のキー
+	bool g_bMotion;											//モーションしているかどうか
 
-	bool bJump;									//ジャンプが使用できるかどうか
 	bool bUse;									//プレイヤーを描画するかどうか
 }PlayerBG;
 
@@ -94,10 +91,8 @@ void InitPlayerBG(void);
 void UninitPlayerBG(void);
 void UpdatePlayerBG(void);
 void DrawPlayerBG(void);
-void UpdateMotion(int nCnt);
-void SetMotion(MOTION_TYPE nType, int nCnt);
-void LoadMotion(int nPlayerBG);
-void PlayerBGMoveInput(int nCnt);
-void PlayerBGRotUpdate(int nCnt);
+void UpdatePlayerMotion(int nCnt);
+void SetPlayerMotion(PLAYER_MOTION_TYPE nType, int nCnt);
+void LoadPlayerMotion(int nPlayerBG);
 PlayerBG * GetPlayerBG(void);
 #endif
