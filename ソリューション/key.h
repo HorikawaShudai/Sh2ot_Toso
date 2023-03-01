@@ -58,6 +58,6 @@ void UpdateKey(void);
 void DrawKey(void);
 void SetKey(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType);
 bool CollisionKey(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, D3DXVECTOR3 min, D3DXVECTOR3 max, float Size, int nPlayer);
-void CollisionKeyHelpUI(D3DXVECTOR3 *pPos, float Size);
+bool CollisionKeyHelpUI(D3DXVECTOR3 *pPos, float Size);
 void PatternSetKey(int nNumPlayer);
 #endif

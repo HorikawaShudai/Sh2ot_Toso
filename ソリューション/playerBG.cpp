@@ -29,7 +29,6 @@
 LPD3DXMESH g_pMeshPlayerBG[32] = {};				//メッシュ(頂点情報)へのポインタ
 LPD3DXBUFFER g_pBuffMatPlayerBG[32] = {};			//マテリアルへのポインタ
 PlayerBG g_PlayerBG[MAX_PLAYREBG];					//プレイヤーの情報
-int g_nIndexPlayerBGShadow = -1;					//影のインデックス(番号)
 
 const char *c_apPlayerBG[] =					//モデルデータ読み込み
 {
@@ -72,34 +71,31 @@ void InitPlayerBG(void)
 		g_PlayerBG[nCntPlayerBG].vtxMax = D3DXVECTOR3(-1000.0f, -1000.0f, -1000.0f);
 		g_PlayerBG[nCntPlayerBG].g_bMotion = true;
 
+		g_PlayerBG[nCntPlayerBG].g_nNextKey = 1;
+
 		switch (nCntPlayerBG)
 		{
 		case 0:
 			g_PlayerBG[nCntPlayerBG].MotionType = PLAYERBG_ACTION_WAIT;
-			SetMotion(g_PlayerBG[nCntPlayerBG].MotionType, nCntPlayerBG);
+			SetPlayerMotion(g_PlayerBG[nCntPlayerBG].MotionType, nCntPlayerBG);
 			break;
 		case 1:
 			g_PlayerBG[nCntPlayerBG].MotionType = PLAYERBG_ACTION_MOVE;
-			SetMotion(g_PlayerBG[nCntPlayerBG].MotionType, nCntPlayerBG);
+			SetPlayerMotion(g_PlayerBG[nCntPlayerBG].MotionType, nCntPlayerBG);
 			break;
 		case 2:
 			g_PlayerBG[nCntPlayerBG].MotionType = PLAYERBG_ACTION_JUMP;
-			SetMotion(g_PlayerBG[nCntPlayerBG].MotionType, nCntPlayerBG);
+			SetPlayerMotion(g_PlayerBG[nCntPlayerBG].MotionType, nCntPlayerBG);
 			break;
 		case 3:
 			g_PlayerBG[nCntPlayerBG].MotionType = PLAYERBG_ACTION_WAIT2;
-			SetMotion(g_PlayerBG[nCntPlayerBG].MotionType, nCntPlayerBG);
+			SetPlayerMotion(g_PlayerBG[nCntPlayerBG].MotionType, nCntPlayerBG);
 			break;
 		}
-
-		g_PlayerBG[nCntPlayerBG].nLife = PLAYERBG_LIFE;
-		g_PlayerBG[nCntPlayerBG].bJump = false;
 		g_PlayerBG[nCntPlayerBG].bUse = true;
 
-		g_PlayerBG[nCntPlayerBG].g_nNextKey = 1;
-
 		//外部ファイルからキャラクター情報を読み込む処理
-		LoadMotion(nCntPlayerBG);
+		LoadPlayerMotion(nCntPlayerBG);
 
 		for (int nCntModel = 0; nCntModel < g_PlayerBG[nCntPlayerBG].nNumModel; nCntModel++)
 		{
@@ -177,6 +173,7 @@ void UpdatePlayerBG(void)
 {
 	PlayNumberSelect nPlayerNumber = GetPlayNumberSelect();
 
+	//ステージセレクト中の決定時に人数が変わるのを防ぐ処理
 	if (GetPlayNumberSelect().bPush == false)
 	{
 		for (int nCntPlayerBG = 0; nCntPlayerBG < MAX_PLAYREBG; nCntPlayerBG++)
@@ -189,80 +186,17 @@ void UpdatePlayerBG(void)
 		}
 	}
 
+	//モーションの更新処理
 	for (int nCntPlayerBG = 0; nCntPlayerBG < MAX_PLAYREBG; nCntPlayerBG++)
 	{
-		g_PlayerBG[nCntPlayerBG].posOld = g_PlayerBG[nCntPlayerBG].pos;
-
-		//減衰係数
-		g_PlayerBG[nCntPlayerBG].move.x = g_PlayerBG[nCntPlayerBG].move.x * 0.5f;
-		g_PlayerBG[nCntPlayerBG].move.z = g_PlayerBG[nCntPlayerBG].move.z * 0.5f;
-
-		//値の切り捨て
-		if (g_PlayerBG[nCntPlayerBG].move.x <= 0.005f && g_PlayerBG[nCntPlayerBG].move.x >= -0.005f)
-		{
-			g_PlayerBG[nCntPlayerBG].move.x = 0.0f;
-		}
-		if (g_PlayerBG[nCntPlayerBG].move.z <= 0.005f && g_PlayerBG[nCntPlayerBG].move.z >= -0.005f)
-		{
-			g_PlayerBG[nCntPlayerBG].move.z = 0.0f;
-		}
-
-		//位置更新(入力による動き)
-		g_PlayerBG[nCntPlayerBG].pos += g_PlayerBG[nCntPlayerBG].move;
-
-		//床の追加
-		if (g_PlayerBG[nCntPlayerBG].pos.y < 0.0f)
-		{//床にふれたとき
-			g_PlayerBG[nCntPlayerBG].pos.y = 0.0f;	//床の上に戻す
-			g_PlayerBG[nCntPlayerBG].move.y = 0.0f;	//
-
-			if (g_PlayerBG[nCntPlayerBG].bJump == true)
-			{
-				g_PlayerBG[nCntPlayerBG].bJump = false;	//ジャンプを使用していない状態にする
-			}
-		}
-
-		//一定速度以上で落下している時にジャンプが出来ない状態にする
-		if (g_PlayerBG[nCntPlayerBG].move.y < 0.0f)
-		{
-			if (g_PlayerBG[nCntPlayerBG].bJump == false)
-			{
-				g_PlayerBG[nCntPlayerBG].bJump = true;			//ジャンプを使用している状態にする
-			}
-		}
-
-		////移動時にプレイヤーの向きを補正する
-		//PlayerBGRotUpdate(nCntPlayerBG);
-
-		////オブジェクトとの当たり判定
-		//if (CollisionObject00(&g_PlayerBG[nCntPlayerBG].pos, &g_PlayerBG[nCntPlayerBG].posOld, &g_PlayerBG[nCntPlayerBG].move, g_PlayerBG[nCntPlayerBG].vtxMin, g_PlayerBG[nCntPlayerBG].vtxMax, 20.0f) == false)
-		//{
-		//	if (g_PlayerBG[nCntPlayerBG].bJump == true)
-		//	{
-		//		g_PlayerBG[nCntPlayerBG].bJump = false;	//ジャンプを使用していない状態にする
-		//	}
-		//}
-
-		////一周した時の向きの補正
-		//if (g_PlayerBG[nCntPlayerBG].rot.y > D3DX_PI * 1.0f)
-		//{
-		//	g_PlayerBG[nCntPlayerBG].rot.y -= D3DX_PI * 2.0f;
-		//}
-		//else if (g_PlayerBG[nCntPlayerBG].rot.y < -D3DX_PI * 1.0f)
-		//{
-		//	g_PlayerBG[nCntPlayerBG].rot.y += D3DX_PI * 2.0f;
-		//}
-
-		UpdateMotion(nCntPlayerBG);
-
-		PrintDebugProc("%f %f %f\n", g_PlayerBG[nCntPlayerBG].pos.x, g_PlayerBG[nCntPlayerBG].pos.y, g_PlayerBG[nCntPlayerBG].pos.z);
+		UpdatePlayerMotion(nCntPlayerBG);
 	}
 }
 
 //====================================================================
 //モーションの更新処理
 //====================================================================
-void UpdateMotion(int nCnt)
+void UpdatePlayerMotion(int nCnt)
 {
 	g_PlayerBG[nCnt].nNumkey = g_PlayerBG[nCnt].aMotionInfo[g_PlayerBG[nCnt].MotionType].NumKey;
 
@@ -320,7 +254,7 @@ void UpdateMotion(int nCnt)
 //====================================================================
 //モーションの設定処理
 //====================================================================
-void SetMotion(MOTION_TYPE nType, int nCnt)
+void SetPlayerMotion(PLAYER_MOTION_TYPE nType, int nCnt)
 {
 	if (g_PlayerBG[nCnt].g_bMotion == true)
 	{
@@ -334,11 +268,10 @@ void SetMotion(MOTION_TYPE nType, int nCnt)
 }
 
 //====================================================================
-//ブロックのロード処理
+//モーションのロード処理
 //====================================================================
-void LoadMotion(int nPlayerBG)
+void LoadPlayerMotion(int nPlayerBG)
 {
-	PlayerBG * pPlayerBG = GetPlayerBG();		//プレイヤーの情報へのポインタ
 	FILE *pFile; //ファイルポインタを宣言
 
 	//ファイルを開く
@@ -546,167 +479,6 @@ void LoadMotion(int nPlayerBG)
 }
 
 //====================================================================
-//プレイヤーの移動入力処理
-//====================================================================
-void PlayerBGMoveInput(int nCnt)
-{
-	g_PlayerBG[nCnt].NormarizeMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	//キーボードの移動処理
-	if (GetKeyboardPress(DIK_W) == true)
-	{
-		g_PlayerBG[nCnt].NormarizeMove.z += 1.0f * cosf(Getrot(4).y) * PLAYERBG_SPEED;
-		g_PlayerBG[nCnt].NormarizeMove.x += 1.0f * sinf(Getrot(4).y) * PLAYERBG_SPEED;
-
-	}
-	if (GetKeyboardPress(DIK_S) == true)
-	{
-		g_PlayerBG[nCnt].NormarizeMove.z += -1.0f * cosf(Getrot(4).y) * PLAYERBG_SPEED;
-		g_PlayerBG[nCnt].NormarizeMove.x += -1.0f * sinf(Getrot(4).y) * PLAYERBG_SPEED;
-	}
-	if (GetKeyboardPress(DIK_A) == true)
-	{
-		g_PlayerBG[nCnt].NormarizeMove.x += -1.0f * cosf(Getrot(4).y) * PLAYERBG_SPEED;
-		g_PlayerBG[nCnt].NormarizeMove.z -= -1.0f * sinf(Getrot(4).y) * PLAYERBG_SPEED;
-
-	}
-	if (GetKeyboardPress(DIK_D) == true)
-	{
-		g_PlayerBG[nCnt].NormarizeMove.x += 1.0f * cosf(Getrot(4).y) * PLAYERBG_SPEED;
-		g_PlayerBG[nCnt].NormarizeMove.z -= 1.0f * sinf(Getrot(4).y) * PLAYERBG_SPEED;
-	}
-
-	if (GetKeyboardPress(DIK_W) == false && GetKeyboardPress(DIK_A) == false && GetKeyboardPress(DIK_S) == false && GetKeyboardPress(DIK_D) == false)
-	{
-		//左スティックによる前後移動	
-		g_PlayerBG[nCnt].move.z += GetGamepad_Stick_Left(0).y * cosf(Getrot(4).y) * PLAYERBG_SPEED;
-		g_PlayerBG[nCnt].move.x += GetGamepad_Stick_Left(0).y * sinf(Getrot(4).y) * PLAYERBG_SPEED;
-
-		//左スティックによる左右移動
-		g_PlayerBG[nCnt].move.x += GetGamepad_Stick_Left(0).x * cosf(Getrot(4).y) * PLAYERBG_SPEED;
-		g_PlayerBG[nCnt].move.z -= GetGamepad_Stick_Left(0).x * sinf(Getrot(4).y) * PLAYERBG_SPEED;
-	}
-
-	if (GetKeyboardPress(DIK_W) == true || GetKeyboardPress(DIK_A) == true || GetKeyboardPress(DIK_S) == true || GetKeyboardPress(DIK_D) == true)
-	{
-		g_PlayerBG[nCnt].NormarizeMove.y = 0.0f;
-
-		D3DXVec3Normalize(&g_PlayerBG[nCnt].NormarizeMove, &g_PlayerBG[nCnt].NormarizeMove);
-
-		g_PlayerBG[nCnt].NormarizeMove.x *= PLAYERBG_SPEED;
-		g_PlayerBG[nCnt].NormarizeMove.z *= PLAYERBG_SPEED;
-	}
-
-	g_PlayerBG[nCnt].move += g_PlayerBG[nCnt].NormarizeMove;
-}
-
-//====================================================================
-//プレイヤーの向きの補正
-//====================================================================
-void PlayerBGRotUpdate(int nCnt)
-{
-	//移動方向に向きを合わせる処理
-	float fRotMove, fRotDest, fRotDiff;
-
-	fRotMove = g_PlayerBG[nCnt].rot.y;
-	fRotDest = Getrot(4).y;
-
-	if (GetKeyboardPress(DIK_E) == true)
-	{
-		g_PlayerBG[nCnt].rot.y += 0.1f;
-	}
-	if (GetKeyboardPress(DIK_Q) == true)
-	{
-		g_PlayerBG[nCnt].rot.y -= 0.1f;
-	}
-
-	if (GetKeyboardPress(DIK_W) == true || GetGamepad_Stick_Left(0).y > 0.1f)
-	{
-		if (GetKeyboardPress(DIK_D) == true || GetGamepad_Stick_Left(0).x > 0.1f)
-		{
-			fRotMove = atan2f(sinf(g_PlayerBG[nCnt].rot.y), cosf(g_PlayerBG[nCnt].rot.y));
-			fRotDest = atan2f(sinf(Getrot(4).y), cosf(Getrot(4).y)) + D3DX_PI * 0.25f;
-		}
-		else if (GetKeyboardPress(DIK_A) == true || GetGamepad_Stick_Left(0).x < -0.1f)
-		{
-			fRotMove = atan2f(sinf(g_PlayerBG[nCnt].rot.y), cosf(g_PlayerBG[nCnt].rot.y));
-			fRotDest = atan2f(sinf(Getrot(4).y), cosf(Getrot(4).y)) + D3DX_PI * -0.25f;
-		}
-		else
-		{
-			fRotMove = atan2f(sinf(g_PlayerBG[nCnt].rot.y), cosf(g_PlayerBG[nCnt].rot.y));
-			fRotDest = atan2f(sinf(Getrot(4).y), cosf(Getrot(4).y));
-		}
-	}
-	else if (GetKeyboardPress(DIK_S) == true || GetGamepad_Stick_Left(0).y < -0.1f)
-	{
-		if (GetKeyboardPress(DIK_D) == true || GetGamepad_Stick_Left(0).x > 0.1f)
-		{
-			fRotMove = atan2f(sinf(g_PlayerBG[nCnt].rot.y), cosf(g_PlayerBG[nCnt].rot.y));
-			fRotDest = atan2f(sinf(Getrot(4).y), cosf(Getrot(4).y)) + D3DX_PI * 0.75f;
-		}
-		else if (GetKeyboardPress(DIK_A) == true || GetGamepad_Stick_Left(0).x < -0.1f)
-		{
-			fRotMove = atan2f(sinf(g_PlayerBG[nCnt].rot.y), cosf(g_PlayerBG[nCnt].rot.y));
-			fRotDest = atan2f(sinf(Getrot(4).y), cosf(Getrot(4).y)) + D3DX_PI * -0.75f;
-		}
-		else
-		{
-			fRotMove = atan2f(sinf(g_PlayerBG[nCnt].rot.y), cosf(g_PlayerBG[nCnt].rot.y));
-			fRotDest = atan2f(sinf(Getrot(4).y), cosf(Getrot(4).y)) + D3DX_PI;
-		}
-	}
-	else if (GetKeyboardPress(DIK_D) == true || GetGamepad_Stick_Left(0).x > 0.1f)
-	{
-		fRotMove = atan2f(sinf(g_PlayerBG[nCnt].rot.y), cosf(g_PlayerBG[nCnt].rot.y));
-		fRotDest = atan2f(sinf(Getrot(4).y), cosf(Getrot(4).y)) + D3DX_PI * 0.5f;
-	}
-	else if (GetKeyboardPress(DIK_A) == true || GetGamepad_Stick_Left(0).x < -0.1f)
-	{
-		fRotMove = atan2f(sinf(g_PlayerBG[nCnt].rot.y), cosf(g_PlayerBG[nCnt].rot.y));
-		fRotDest = atan2f(sinf(Getrot(4).y), cosf(Getrot(4).y)) + D3DX_PI * -0.5f;
-	}
-
-	////左スティックによる前後移動	
-	//g_PlayerBG[nCnt].move.z += GetGamepad_Stick_Left(0).y * cosf(Getrot(4).y) * PLAYERBG_SPEED;
-	//g_PlayerBG[nCnt].move.x += GetGamepad_Stick_Left(0).y * sinf(Getrot(4).y) * PLAYERBG_SPEED;
-
-	////左スティックによる左右移動
-	//g_PlayerBG[nCnt].move.x += GetGamepad_Stick_Left(0).x * cosf(Getrot(4).y) * PLAYERBG_SPEED;
-	//g_PlayerBG[nCnt].move.z -= GetGamepad_Stick_Left(0).x * sinf(Getrot(4).y) * PLAYERBG_SPEED;
-
-	//fRotMove = atan2f(sinf(g_PlayerBG[nCnt].rot.y), cosf(g_PlayerBG[nCnt].rot.y));
-	//fRotDest = atan2f(sinf(Getrot(4).y), cosf(Getrot(4).y) + D3DX_PI * GetGamepad_Stick_Left(0).x);
-
-	fRotDiff = fRotDest - fRotMove;
-
-	if (fRotDiff > D3DX_PI * 1.0f)
-	{
-		fRotDiff -= D3DX_PI * 2.0f;
-	}
-	else if (fRotDiff < -D3DX_PI * 1.0f)
-	{
-		fRotDiff += D3DX_PI * 2.0f;
-	}
-
-	fRotMove += fRotDiff * PLAYERBG_ROT_SPEED;
-
-	if (fRotMove > D3DX_PI * 1.0f)
-	{
-		fRotMove -= D3DX_PI * 2.0f;
-	}
-	else if (fRotMove < -D3DX_PI * 1.0f)
-	{
-		fRotMove += D3DX_PI * 2.0f;
-	}
-
-	if (GetKeyboardPress(DIK_W) == true || GetKeyboardPress(DIK_A) == true || GetKeyboardPress(DIK_S) == true || GetKeyboardPress(DIK_D) == true || GetGamepad_Stick_Left(0).y != 0.0f || GetGamepad_Stick_Left(0).x != 0.0f)
-	{
-		g_PlayerBG[nCnt].rot.y = fRotMove;
-	}
-}
-
-//====================================================================
 //プレイヤーの描画処理
 //====================================================================
 void DrawPlayerBG(void)
@@ -724,12 +496,10 @@ void DrawPlayerBG(void)
 
 		//向きを反映
 		D3DXMatrixRotationYawPitchRoll(&mtxRot, g_PlayerBG[nCntPlayerBG].rot.y, g_PlayerBG[nCntPlayerBG].rot.x, g_PlayerBG[nCntPlayerBG].rot.z);
-
 		D3DXMatrixMultiply(&g_PlayerBG[nCntPlayerBG].mtxWorld, &g_PlayerBG[nCntPlayerBG].mtxWorld, &mtxRot);
 
 		//位置を反映
 		D3DXMatrixTranslation(&mtxTrans, g_PlayerBG[nCntPlayerBG].pos.x, g_PlayerBG[nCntPlayerBG].pos.y, g_PlayerBG[nCntPlayerBG].pos.z);
-
 		D3DXMatrixMultiply(&g_PlayerBG[nCntPlayerBG].mtxWorld, &g_PlayerBG[nCntPlayerBG].mtxWorld, &mtxTrans);
 
 		//ワールドマトリックスの設定
@@ -744,17 +514,15 @@ void DrawPlayerBG(void)
 			D3DXMATRIX mtxRotModel, mtxTransModel;	//計算用マトリックス
 			D3DXMATRIX mtxParent;	//親のマトリックス
 
-									//パーツのマトリックスを初期化
+			//パーツのマトリックスを初期化
 			D3DXMatrixIdentity(&g_PlayerBG[nCntPlayerBG].aModel[nCntModel].mtxWorld);
 
 			//パーツの向きを反映
 			D3DXMatrixRotationYawPitchRoll(&mtxRotModel, g_PlayerBG[nCntPlayerBG].aModel[nCntModel].rot.y, g_PlayerBG[nCntPlayerBG].aModel[nCntModel].rot.x, g_PlayerBG[nCntPlayerBG].aModel[nCntModel].rot.z);
-
 			D3DXMatrixMultiply(&g_PlayerBG[nCntPlayerBG].aModel[nCntModel].mtxWorld, &g_PlayerBG[nCntPlayerBG].aModel[nCntModel].mtxWorld, &mtxRotModel);
 
 			//パーツの位置を反映
 			D3DXMatrixTranslation(&mtxTransModel, g_PlayerBG[nCntPlayerBG].aModel[nCntModel].pos.x, g_PlayerBG[nCntPlayerBG].aModel[nCntModel].pos.y, g_PlayerBG[nCntPlayerBG].aModel[nCntModel].pos.z);
-
 			D3DXMatrixMultiply(&g_PlayerBG[nCntPlayerBG].aModel[nCntModel].mtxWorld, &g_PlayerBG[nCntPlayerBG].aModel[nCntModel].mtxWorld, &mtxTransModel);
 
 			//パーツの「親のマトリックス」を設定
@@ -783,11 +551,11 @@ void DrawPlayerBG(void)
 				//マテリアルの設定
 				pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
 
-				//テクスチャの設定
-				pDevice->SetTexture(0, g_PlayerBG[nCntPlayerBG].aModel[nCntModel].g_pTexturePlayerBG[nCntMat]);
-
 				if (g_PlayerBG[nCntPlayerBG].bUse == true)
 				{
+					//テクスチャの設定
+					pDevice->SetTexture(0, g_PlayerBG[nCntPlayerBG].aModel[nCntModel].g_pTexturePlayerBG[nCntMat]);
+
 					//プレイヤー(パーツ)の描画
 					g_pMeshPlayerBG[nCntModel]->DrawSubset(nCntMat);
 				}

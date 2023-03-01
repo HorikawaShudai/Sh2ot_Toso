@@ -1,2 +1,6 @@
 #TargetFrameworkVersion=v4.0:PlatformToolSet=v140:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=8.1
+<<<<<<< HEAD
+Release|Win32|C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\|
+=======
 Release|Win32|C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github9\Sh2ot_Toso\ソリューション\|
+>>>>>>> 569a71ba83f1f51182868f57b1f07b1e8bce8717

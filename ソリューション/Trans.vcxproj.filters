@@ -49,6 +49,12 @@
     <Filter Include="ヘッダー ファイル\Map\mesh">
       <UniqueIdentifier>{4e42f885-dcda-4904-a2c2-807e1131ec63}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\decoration">
+      <UniqueIdentifier>{2583233e-3f4c-4bdc-acbd-d6a824a68192}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\decoration">
+      <UniqueIdentifier>{d4326a45-ab78-433e-b83d-5622bc7e1347}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game.cpp">
@@ -64,12 +70,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="player.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Effect.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="particle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -180,9 +180,6 @@
     <ClCompile Include="Fog.cpp">
       <Filter>ソース ファイル\system</Filter>
     </ClCompile>
-    <ClCompile Include="PolygonBG.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="resultUI.cpp">
       <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
@@ -194,9 +191,6 @@
     </ClCompile>
     <ClCompile Include="objectLight.cpp">
       <Filter>ソース ファイル\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="sound.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="EscapeOverResult.cpp">
       <Filter>ソース ファイル\mesh</Filter>
@@ -216,23 +210,35 @@
     <ClCompile Include="paperBG01.cpp">
       <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
-    <ClCompile Include="pause.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjectWall.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="objectPoly.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="VillainTutorial.cpp">
       <Filter>ソース ファイル\mode</Filter>
     </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>ソース ファイル\decoration</Filter>
+    </ClCompile>
     <ClCompile Include="ChasePolygon.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\decoration</Filter>
+    </ClCompile>
+    <ClCompile Include="sound.cpp">
+      <Filter>ソース ファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectWall.cpp">
+      <Filter>ソース ファイル\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="objectPoly.cpp">
+      <Filter>ソース ファイル\Map</Filter>
     </ClCompile>
     <ClCompile Include="LifePolygon.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\decoration</Filter>
+    </ClCompile>
+    <ClCompile Include="PolygonBG.cpp">
+      <Filter>ソース ファイル\decoration</Filter>
+    </ClCompile>
+    <ClCompile Include="particle.cpp">
+      <Filter>ソース ファイル\decoration</Filter>
+    </ClCompile>
+    <ClCompile Include="pause.cpp">
+      <Filter>ソース ファイル\system</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -249,12 +255,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="player.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Effect.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="particle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="main.h">
@@ -368,9 +368,6 @@
     <ClInclude Include="fog.h">
       <Filter>ヘッダー ファイル\system</Filter>
     </ClInclude>
-    <ClInclude Include="PolygonBG.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="resultUI.h">
       <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
@@ -382,9 +379,6 @@
     </ClInclude>
     <ClInclude Include="objectLight.h">
       <Filter>ヘッダー ファイル\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="sound.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ActionHelpUI.h">
       <Filter>ヘッダー ファイル\UI</Filter>
@@ -401,23 +395,35 @@
     <ClInclude Include="paperBG01.h">
       <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
-    <ClInclude Include="pause.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectWall.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="objectPoly.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="VillainTutorial.h">
       <Filter>ヘッダー ファイル\mode</Filter>
     </ClInclude>
     <ClInclude Include="ChasePolygon.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\decoration</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>ヘッダー ファイル\decoration</Filter>
     </ClInclude>
     <ClInclude Include="LifePolygon.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\decoration</Filter>
+    </ClInclude>
+    <ClInclude Include="objectPoly.h">
+      <Filter>ヘッダー ファイル\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectWall.h">
+      <Filter>ヘッダー ファイル\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="particle.h">
+      <Filter>ヘッダー ファイル\decoration</Filter>
+    </ClInclude>
+    <ClInclude Include="PolygonBG.h">
+      <Filter>ヘッダー ファイル\decoration</Filter>
+    </ClInclude>
+    <ClInclude Include="sound.h">
+      <Filter>ヘッダー ファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="pause.h">
+      <Filter>ヘッダー ファイル\system</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
