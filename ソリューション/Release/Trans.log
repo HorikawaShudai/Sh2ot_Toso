@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  camera.cpp
   edit.cpp
   game.cpp
@@ -34,3 +35,7 @@ SpotLight.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカル
 tutorialUI.obj : warning LNK4020: 'c:\users\student\desktop\透走用ローカルリポジトリ\sh2ot_toso\ソリューション\release\vc140.pdb' の型レコードは破損しています。一部のシンボルおよび型は、デバッガーからはアクセスできない可能性があります。
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
   Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+=======
+﻿  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github9\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github9\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+>>>>>>> 4f0b56ae08b396b49d3aa33570287d99e6372645
