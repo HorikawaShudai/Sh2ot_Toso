@@ -54,6 +54,8 @@ bool g_bTpsCamera;							//観察用のカメラを使うかどうか
 bool bEnter;								//エンターが押されたかどうか
 bool bCamMove;								//カメラが動いたかどうか
 int g_Rand_RankingCameraBG;					//ランキング画面の背景を決めるための変数
+int g_AccCnt;								//加速のカウント
+float g_c;
 
 //====================================================================
 //カメラの初期化処理
@@ -82,6 +84,8 @@ void InitCamera(void)
 	g_bTpsCamera = false;			//観察用カメラを使っていない状態へ
 	bEnter = false;					//エンターを押していない状態に
 	bCamMove = false;
+	g_AccCnt = 0;
+	g_c = 0.0f;
 
 	g_Rand_RankingCameraBG = rand() % 4;
 	
@@ -992,12 +996,21 @@ void MoveTitleCamera(int nCnt)
 	D3DXVECTOR3 PosVDiff;
 	D3DXVECTOR3 PosRDiff;
 
+	//加速度のカウント
+	g_AccCnt++;
+
+	if (g_AccCnt < 60)
+	{
+		g_c += 0.004f;
+		g_AccCnt = 0;
+	}
+
 	if (g_aCamera[4].posV.x <= 200.0f)
 	{
 		PosVDiff = D3DXVECTOR3(200.0f, 200.0f, 150.0f) - g_aCamera[4].posV;
 
 		PosRDiff = D3DXVECTOR3(-500.0f, 0.0f, 10000.0) - g_aCamera[4].posR;
-
+		
 		g_aCamera[4].posV += PosVDiff * CAM_MOVE_SPEED;
 
 		g_aCamera[4].posR += PosRDiff * CAM_MOVE_SPEED;
@@ -1005,16 +1018,13 @@ void MoveTitleCamera(int nCnt)
 
 	if (nCnt <= 0)
 	{//カメラの位置を移動用に変える処理
-		/*g_aCamera[4].posV = D3DXVECTOR3(0.0f, 50.0f, 150.0f);
-		g_aCamera[4].posR = D3DXVECTOR3(0.0f, 10.0f, 10000.0);*/
-
 		//エンターを押したことにする
 		bEnter = true;
 	}
 
 	else
 	{//0以外の数値が入ってきた場合
-		g_aCamera[4].posV.z += nCnt;
+		g_aCamera[4].posV.z += ((float)nCnt + g_c);
 	}
 	
 	PrintDebugProc("%f , %f , %f", g_aCamera[4].posV.x, g_aCamera[4].posV.y, g_aCamera[4].posV.z);
