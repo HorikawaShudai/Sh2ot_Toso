@@ -83,7 +83,7 @@ void InitEscapeOverResult()
 	InitObjectLight();
 
 	//ステージの読み込み
-	SetStage(3);
+	SetStage(5);
 
 	//InitResultUI();
 }

@@ -892,8 +892,12 @@ void UpdatePlayer1(void)
 	//ゲーム終了処理
 	if (g_GameEnd == false)
 	{
-		if (g_aPlayer[0].bExit == true && g_aPlayer[1].bExit == true && g_aPlayer[2].bExit == true && g_aPlayer[3].bExit == true)
-		{
+		if ((g_aPlayer[0].bExit == true) && 
+			(g_aPlayer[1].bExit == true) && 
+			(g_aPlayer[2].bExit == true) &&
+			(g_aPlayer[3].bExit == true))
+		{//全員脱出しているとき
+
 			//チュートリアルモード脱出の時
 			if (GetMode() == MODE_TUTORIAL)
 			{
@@ -907,8 +911,12 @@ void UpdatePlayer1(void)
 			}
 		}
 
-		if (g_aPlayer[0].bUse == false && g_aPlayer[1].bUse && false && g_aPlayer[2].bUse && false && g_aPlayer[3].bUse && false)
-		{
+		if ((g_aPlayer[0].bUse == false) && 
+			(g_aPlayer[1].bUse == false) && 
+			(g_aPlayer[2].bUse == false) && 
+			(g_aPlayer[3].bUse == false))
+		{//全員死亡しているとき
+
 			g_GameEnd = true;
 			SetGameState(GAMESTATE_GAMEOVER_END, 60);
 		}
