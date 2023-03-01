@@ -1,4 +1,31 @@
+<<<<<<< HEAD
 ﻿  player.cpp
 cl : コマンド ライン warning D9028: 簡易リビルド時のエラーです、通常のビルドに戻します
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+﻿  スキップ中... (関連する変更は検出されませんでした)
+  tutorialUI.cpp
+  resultUI.cpp
+  pause.cpp
+  particle.cpp
+  paperBG01.cpp
+  paperBG00.cpp
+  objectPoly.cpp
+  meshwall.cpp
+  meshfield.cpp
+  meshdome.cpp
+  meshcylinder.cpp
+  input.cpp
+  field.cpp
+  debugproc.cpp
+  SpotLight.cpp
+  RankingUI.cpp
+  PolygonBG.cpp
+  Fog.cpp
+  Fade.cpp
+  Effect.cpp
+  Billboard.cpp
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github9\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github9\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+>>>>>>> 2aba39ebfbfc392bf6d3ca668cc9c22abdfc6c76
