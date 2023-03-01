@@ -92,6 +92,7 @@ void InitEnemy(void)
 		g_Enemy[nCntObject].state = ENEMYSTATE_PATROL;
 		g_Enemy[nCntObject].StateCount = 0;
 		g_Enemy[nCntObject].nCoolTurn = 0;
+		g_Enemy[nCntObject].nTarget = -1;
 
 		//モーションの設定処理
 		g_Enemy[nCntObject].MotionType = ENEMY_ACTION_MOVE;
@@ -260,6 +261,11 @@ void UpdateEnemy(void)
 				{
 					if (pPlayer->bUse == true)
 					{
+						if (g_Enemy[nCntObject].Tgpos == pPlayer->pos)
+						{
+							pPlayer->bChase = true;
+							g_Enemy[nCntObject].nTarget = nCnt;
+						}
 						vecPlayer = pPlayer->pos - g_Enemy[nCntObject].pos;
 						//目標地点に到達したとき
 						if (vecPlayer.x < 30.0f && vecPlayer.x > -30.0f && vecPlayer.z < 30.0f && vecPlayer.z > -30.0f)
@@ -267,6 +273,8 @@ void UpdateEnemy(void)
 							g_Enemy[nCntObject].state = ENEMYSTATE_ATTACK;
 							g_Enemy[nCntObject].StateCount = 30;
 							PlayerHit(nCnt, 1);
+							pPlayer->bChase = false;
+							g_Enemy[nCntObject].nTarget = -1;
 							TeleportationEnemy(&g_Enemy[nCntObject].pos);
 						}
 					}
@@ -299,10 +307,24 @@ void UpdateEnemy(void)
 			if (g_Enemy[nCntObject].StateCount <= 0)
 			{
 				g_Enemy[nCntObject].StateCount = 0;
+				
+				
+
 				switch (g_Enemy[nCntObject].state)
 				{
 				case ENEMYSTATE_SEEK:
 					g_Enemy[nCntObject].state = ENEMYSTATE_PATROL;
+					if (g_Enemy[nCntObject].nTarget >= 0)
+					{
+						Player*pPlayer = GetPlayer();
+						for (int nCnt = 0; nCnt < NUM_PLAYER; nCnt++)
+						{
+							pPlayer++;
+						}
+						pPlayer->bChase = false;
+						g_Enemy[nCntObject].nTarget = -1;
+
+					}
 					break;
 				case ENEMYSTATE_ATTACK:
 					g_Enemy[nCntObject].state = ENEMYSTATE_PATROL;
