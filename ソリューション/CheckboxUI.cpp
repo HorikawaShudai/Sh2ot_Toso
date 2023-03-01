@@ -207,7 +207,7 @@ void UpdateCheckboxUI(void)
 		//スタンバイ状態の時にチェックをオンにする入力処理
 		for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
 		{
-			if ((GetGamepadTrigger(BUTTON_A, nCntPlayer) || GetGamepadTrigger(BUTTON_B, nCntPlayer)) && ChecboxUITrueCounter >= UP_CHECKBOXUI_COUNTER_MAX)
+			if ((GetKeyboardTrigger(DIK_N)) || (GetGamepadTrigger(BUTTON_A, nCntPlayer) || GetGamepadTrigger(BUTTON_B, nCntPlayer)) && ChecboxUITrueCounter >= UP_CHECKBOXUI_COUNTER_MAX)
 			{
 				SetCheckUI(nCntPlayer, true);
 			}

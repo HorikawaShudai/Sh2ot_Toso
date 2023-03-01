@@ -113,9 +113,8 @@ void InitEscapeTutorial()
 	//出口の初期化処理
 	InitExit();
 
-	SetExit(D3DXVECTOR3(-1000.0f,0.0f,0.8f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0,0);
-	SetExit(D3DXVECTOR3(-1070.0f, 0.0f, 0.8f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), 0,0);
-	SetExit(D3DXVECTOR3(-935.0f, 0.0f, 0.8f), D3DXVECTOR3(0.0f, D3DX_PI * 0.0f, 0.0f), 0,0);
+	//出口を読み込む
+	LoadExit(2);
 
 	//スコアアイテムの初期化
 	InitItem();

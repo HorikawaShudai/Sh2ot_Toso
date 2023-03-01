@@ -33,6 +33,7 @@ const char *c_apExit[] =					//モデルデータ読み込み
 const char *c_apExitSetFile[] =				//出口の読み込み
 {
 	"Data\\TEXT\\Exit_tousou.txt",
+	"Data\\TEXT\\Exit_title.txt",
 	"Data\\TEXT\\Exit_tutorial.txt",
 };
 
@@ -182,8 +183,7 @@ void UpdateExit(void)
 		}
 
 		FalseActionHelpUI(g_aExit[0].IndexUI);
-	}
-	
+	}	
 
 	//扉が開く処理
 	DoorOpen();
