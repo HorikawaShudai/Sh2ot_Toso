@@ -1,2 +1,11 @@
-﻿  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github9\Sh2ot_Toso\ソリューション\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github9\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+﻿  EscapeClearResult.cpp
+  EscapeOverResult.cpp
+  EscapeRanking.cpp
+  EscapeTutorial.cpp
+  PlayNumberSelect.cpp
+  VillainTutorial.cpp
+  edit.cpp
+  game.cpp
+  objectBG.cpp
+  result.cpp
+  stage.cpp
