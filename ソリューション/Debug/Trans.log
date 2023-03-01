@@ -1,3 +1,31 @@
+<<<<<<< HEAD
 ﻿  camera.cpp
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+<<<<<<< HEAD
+﻿  title.cpp
+  stage.cpp
+  result.cpp
+  objectBG.cpp
+  game.cpp
+  edit.cpp
+  VillainTutorial.cpp
+  PlayNumberSelect.cpp
+  EscapeTutorial.cpp
+  EscapeRanking.cpp
+  EscapeOverResult.cpp
+=======
+<<<<<<< HEAD
+﻿  title.cpp
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+=======
+﻿  EscapeOverResult.cpp
+>>>>>>> 04e67543522f90f9d7f6dd457cacd34cbb989b65
+  EscapeClearResult.cpp
+  コードを生成中...
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github9\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github9\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
+>>>>>>> 4f0b56ae08b396b49d3aa33570287d99e6372645
+>>>>>>> aa700a188481f4257b64852384b924d3f683801e

@@ -208,7 +208,7 @@ void UpdateTitle(void)
 		}
 		else if (g_CurrentNumberTitle == 1 && pCamera->posV.z >= CAMERA_FADEPOS)
 		{//現在の選択番号が1の場合
-			SetFade(MODE_TITLE);		//モードの設定(ランキング画面に移行)
+			SetFade(MODE_RANKING);		//モードの設定(ランキング画面に移行)
 		}
 	}
 

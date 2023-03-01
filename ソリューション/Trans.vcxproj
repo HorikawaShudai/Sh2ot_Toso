@@ -154,6 +154,7 @@
     <ClCompile Include="ActionHelpUI.cpp" />
     <ClCompile Include="Billboard.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="ChasePolygon.cpp" />
     <ClCompile Include="CheckboxUI.cpp" />
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="edit.cpp" />
@@ -172,6 +173,7 @@
     <ClCompile Include="key.cpp" />
     <ClCompile Include="keyUI.cpp" />
     <ClCompile Include="life.cpp" />
+    <ClCompile Include="LifePolygon.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="meshcylinder.cpp" />
@@ -215,6 +217,7 @@
     <ClInclude Include="ActionHelpUI.h" />
     <ClInclude Include="Billboard.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="ChasePolygon.h" />
     <ClInclude Include="CheckboxUI.h" />
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="edit.h" />
@@ -233,6 +236,7 @@
     <ClInclude Include="key.h" />
     <ClInclude Include="keyUI.h" />
     <ClInclude Include="life.h" />
+    <ClInclude Include="LifePolygon.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="meshcylinder.h" />
