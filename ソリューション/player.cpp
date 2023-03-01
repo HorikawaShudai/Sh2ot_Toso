@@ -808,11 +808,11 @@ void UpdatePlayer1(void)
 			//ヘルプUIの表示
 			if (g_aPlayer[nCntPlayer].bGetKey == false)
 			{
-				CollisionKeyHelpUI(&g_aPlayer[nCntPlayer].pos, 30.0f);
+				g_aPlayer[nCntPlayer].KeyHelpUI = CollisionKeyHelpUI(&g_aPlayer[nCntPlayer].pos, 200.0f);
 			}
 			if (g_aPlayer[nCntPlayer].bGetKey == true)
 			{
-				CollisionExitHelpUI(&g_aPlayer[nCntPlayer].pos, 30.0f);
+				g_aPlayer[nCntPlayer].ExitHelpUI = CollisionExitHelpUI(&g_aPlayer[nCntPlayer].pos, 350.0f);
 			}
 
 			//鍵の入手処理
@@ -824,6 +824,7 @@ void UpdatePlayer1(void)
 					{//鍵を入手出来た場合
 						g_aPlayer[nCntPlayer].bGetKey = true;	//鍵を入手状態にする
 						SetKeyUI(nCntPlayer, true);				//鍵UIを表示する
+						g_aPlayer[nCntPlayer].KeyHelpUI = false;
 
 						//鍵の入手音
 						PlaySound(SOUND_LABEL_SE_GETKEY);
@@ -853,6 +854,7 @@ void UpdatePlayer1(void)
 
 						g_aPlayer[nCntPlayer].bGetKey = false;	//鍵を入手してない状態にする
 						SetKeyUI(nCntPlayer, false);			//鍵UIを非表示にする
+						g_aPlayer[nCntPlayer].ExitHelpUI = false;
 
 						//チュートリアルモード脱出の時
 						if (do_Tutorial == MODE_ESCAPE)

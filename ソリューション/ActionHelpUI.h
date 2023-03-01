@@ -25,7 +25,7 @@ typedef struct
 void InitActionHelpUI(void);
 void UninitActionHelpUI(void);
 void UpdateActionHelpUI(void);
-void DrawActionHelpUI(void);
+void DrawActionHelpUI(int nCntPlayer, bool GetKey);
 int SetActionHelpUI(D3DXVECTOR3 pos, ACTIONHELPUI_TYPE Type);
 void FalseActionHelpUI(int Idx);
 ActionHelpUI * GetActionHelpUI(void);

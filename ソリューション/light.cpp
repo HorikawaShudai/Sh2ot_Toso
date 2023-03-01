@@ -299,6 +299,32 @@ int SetIndexLight(void)
 }
 
 //====================================================================
+//ライトの描画処理
+//====================================================================
+void DrawLight(int nCnt)
+{
+	//デバイスの所得
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+
+	for (int nCntlight = 3; nCntlight < MAX_LIGHT; nCntlight++)
+	{
+		if (g_bUse[nCntlight] == true)
+		{
+			if (nCntlight == nCnt + 3)
+			{
+				//ライトを有効にする
+				pDevice->LightEnable(nCntlight, TRUE);
+			}
+			else
+			{
+				//ライトを無効にする
+				pDevice->LightEnable(nCntlight, FALSE);
+			}
+		}
+	}
+}
+
+//====================================================================
 //ライトの情報設定処理
 //====================================================================
 void SetLight(int nIdxLight, D3DLIGHTTYPE nType, D3DXCOLOR Diffuse, D3DXVECTOR3 pos, D3DXVECTOR3 nVecDir, float nRange,float nPhi)

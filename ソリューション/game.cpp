@@ -172,8 +172,8 @@ void InitGame()
 	{
 
 	}
-	SetEnemy(D3DXVECTOR3(-2162.46f, 0.0f, 1529.39f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	SetEnemy(D3DXVECTOR3(160.0f,  0.0f, 300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+	SetEnemy(D3DXVECTOR3(-2162.46f, 0.0f, 1529.39f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	SetEnemy(D3DXVECTOR3(160.0f,  0.0f, 300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 	//プレイヤーの数だけ鍵を設置する
 	PatternSetKey(GetPlayNumberSelect().CurrentSelectNumber);
@@ -505,6 +505,9 @@ void DrawGame()
 		//カメラのセット処理
 		SetCamera(nCnt);
 
+		//プレイヤーが保持するライトの描画処理
+		DrawLight(nCnt);
+
 		//メッシュウォールの描画処理
 		DrawMeshWall();
 
@@ -558,7 +561,7 @@ void DrawGame()
 		}
 
 		//ヘルプUIの描画処理
-		DrawActionHelpUI();
+		DrawActionHelpUI(nCnt,pPlayer->bGetKey);
 
 		//スタミナの描画処理
 		DrawStamina();
@@ -603,14 +606,14 @@ void DrawGame()
 		DrawFog();
 	}
 
+	//ビューポートを元に戻す
+	pDevice->SetViewport(&viewportDef);
+
 	if (pPause->bUse == true)
 	{//ポーズ中だった場合
 	 //ポーズの描画処理
 		DrawPause();
 	}
-
-	//ビューポートを元に戻す
-	pDevice->SetViewport(&viewportDef);
 }
 
 //====================================================================
