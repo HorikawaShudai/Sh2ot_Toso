@@ -35,7 +35,8 @@ typedef struct
 	D3DVIEWPORT9 viewport;		//ビューポート
 	CAMERASTATE State;
 
-	float fposYmove;
+	float fposVmoveY;			//視点の移動(y)
+	float fposRmoveY;			//注視点の移動(y)
 	bool bUse;					//使われているか
 }Camera;
 
