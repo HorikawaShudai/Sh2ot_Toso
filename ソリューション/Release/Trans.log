@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 ﻿player.obj : error LNK2001: 外部シンボル ""void __cdecl SetPolygonBG(struct D3DXVECTOR3,float,float,struct D3DXCOLOR,int,int)" (?SetPolygonBG@@YAXUD3DXVECTOR3@@MMUD3DXCOLOR@@HH@Z)" は未解決です。
 C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe : fatal error LNK1120: 1 件の未解決の外部参照
+=======
+﻿  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (3)\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Desktop\チーム制作\Sh2ot\GIt用フォルダ\新しいフォルダー (3)\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+>>>>>>> 5ac841eb69a54aa737b73ef966cd8e16b6162419

@@ -387,3 +387,41 @@ void CollisionKeyShadow(D3DXVECTOR3 *pPos)
 		}
 	}
 }
+
+//====================================================================
+//åÆÉâÉìÉ_ÉÄê›íuèàóù
+//====================================================================
+void PatternSetKey(int nNumPlayer)
+{
+	int bnNum;
+	switch (nNumPlayer)
+	{
+	case 1:
+		bnNum = rand() % 12;
+		SetKey(KeyPos[bnNum], D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		break;
+	case 2:
+		bnNum = rand() % 5;
+		SetKey(KeyPos[bnNum], D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		SetKey(KeyPos[bnNum + 5], D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		break;
+	case 3:
+		bnNum = rand() % 4;
+		SetKey(KeyPos[bnNum], D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		bnNum = rand() % 4;
+		SetKey(KeyPos[bnNum + 4], D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		bnNum = rand() % 4;
+		SetKey(KeyPos[bnNum + 8], D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		break;
+	case 4:
+		bnNum = rand() % 2;
+		SetKey(KeyPos[bnNum], D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		bnNum = rand() % 2;
+		SetKey(KeyPos[bnNum + 2], D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		bnNum = rand() % 4;
+		SetKey(KeyPos[bnNum + 4], D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		bnNum = rand() % 4;
+		SetKey(KeyPos[bnNum + 8], D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		break;
+	}
+}
