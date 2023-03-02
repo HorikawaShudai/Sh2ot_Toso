@@ -57,7 +57,7 @@ void UpdatePlayer1(void);
 void ResPlayerMove(int nCnt);					//プレイヤーそれぞれに対応
 void ResPlayerrot(int nCnt);					//プレイヤーそれぞれに対応
 
-												//グローバル変数
+//グローバル変数
 LPDIRECT3DTEXTURE9 g_pTexturePlayer[100] = {};	//テクスチャのポインタ
 LPD3DXMESH g_pMeshPlayer[32] = {};				//メッシュ(頂点情報)へのポインタ
 LPD3DXBUFFER g_pBuffMatPlayer[32] = {};			//マテリアルへのポインタ
@@ -73,6 +73,7 @@ int g_Rand_PolygonColor_B;
 int g_Rand_PolygonColor_A;
 int g_Rand_PolygonType;
 int g_ExitCount;
+int nEnemySECount;
 
 //====================================================================
 //プレイヤーの初期化処理
@@ -126,7 +127,6 @@ void InitPlayer(void)
 		g_aPlayer[nCntPlayer].KeyHelpUI = false;
 		g_aPlayer[nCntPlayer].ExitHelpUI = false;
 
-		g_aPlayer[nCntPlayer].nEnemySECount = 0;
 		g_aPlayer[nCntPlayer].nPlayerSECount = 0;
 
 		g_Rand_PolygonColor_R = 0;
@@ -135,6 +135,8 @@ void InitPlayer(void)
 		g_Rand_PolygonColor_A = 0;
 		g_Rand_PolygonType = 0;
 		g_ExitCount = 0;
+
+		nEnemySECount = 0;
 
 		g_aPlayer[nCntPlayer].nNumModel = 1;
 
@@ -401,7 +403,7 @@ void UpdatePlayer0(void)
 			if (g_aPlayer[0].bUse == false && g_aPlayer[1].bUse == false && g_aPlayer[2].bUse == false && g_aPlayer[3].bUse == false)
 			{
 				g_GameEnd = true;
-				SetGameState(GAMESTATE_GAMEOVER_END, 60);
+				SetGameState(GAMESTATE_GAMEOVER_END, 250);
 			}
 		}
 
@@ -751,6 +753,8 @@ void UpdatePlayer1(void)
 			}
 #endif
 
+			g_aPlayer[nCntPlayer].rot.y += 0.5f;
+
 			//バイブレーションの更新処理
 			PlayerVibrtionUpdate(nCntPlayer);
 
@@ -782,7 +786,7 @@ void UpdatePlayer1(void)
 				//プレイヤーの移動入力処理----------
 				ResPlayerMove(nCntPlayer);
 
-				//移動時にプレイヤーの向きを補正する----------
+				//移動時にプレイヤーの向きを補正
 				ResPlayerrot(nCntPlayer);
 			}
 
@@ -831,8 +835,8 @@ void UpdatePlayer1(void)
 				{//Eキー入力
 					if (CollisionKey(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nCntPlayer) == true)
 					{//鍵を入手出来た場合
-						g_aPlayer[nCntPlayer].bGetKey = true;	//鍵を入手状態にする
-						SetKeyUI(nCntPlayer, true);				//鍵UIを表示する
+						g_aPlayer[nCntPlayer].bGetKey = true;		//鍵を入手状態にする
+						SetKeyUI(nCntPlayer, true);					//鍵UIを表示する
 						g_aPlayer[nCntPlayer].KeyHelpUI = false;
 
 						//鍵の入手音
@@ -858,7 +862,10 @@ void UpdatePlayer1(void)
 					if (CollisionExit(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nCntPlayer) == true)
 					{//鍵を入手出来た場合
 
-					 //ドアの開閉音
+						//ドアのカギを解除する音
+						PlaySound(SOUND_LABEL_SE_UNLOCKKEY);
+
+						//ドアの開閉音
 						PlaySound(SOUND_LABEL_SE_DOOR);
 
 						g_aPlayer[nCntPlayer].bGetKey = false;	//鍵を入手してない状態にする
@@ -882,6 +889,19 @@ void UpdatePlayer1(void)
 				}
 			}
 
+			//プレイヤーがカギを持っていないとき
+			else
+			{//プレイヤーが鍵を持っている場合
+				if (GetKeyboardTrigger(DIK_E) == true || GetGamepadTrigger(BUTTON_A, nCntPlayer) || GetGamepadTrigger(BUTTON_B, nCntPlayer))
+				{//Eキー入力
+					if (CollisionExit(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nCntPlayer) == true)
+					{//鍵を入手出来た場合
+						//鍵を持っていないときの音
+						PlaySound(SOUND_LABEL_SE_NOKEY);
+					}
+				}
+			}
+
 			//一周した時の向きの補正
 			if (g_aPlayer[nCntPlayer].rot.y > D3DX_PI * 1.0f)
 			{
@@ -897,6 +917,10 @@ void UpdatePlayer1(void)
 			{
 				PlayerHit(nCntPlayer, 1);
 			}
+		}
+		else if (g_aPlayer[nCntPlayer].bUse == false)
+		{
+			g_aPlayer[nCntPlayer].State = PLAYER_SMITE;
 		}
 	}
 
@@ -936,7 +960,7 @@ void UpdatePlayer1(void)
 			(g_aPlayer[3].bUse == false))
 		{//全員死亡しているとき
 			g_GameEnd = true;
-			SetGameState(GAMESTATE_GAMEOVER_END, 60);
+			SetGameState(GAMESTATE_GAMEOVER_END, 250);
 		}
 	}
 
@@ -1404,7 +1428,9 @@ void PlayerState(int nCnt)
 		g_aPlayer[nCnt].nDamageCounter--;
 		if (g_aPlayer[nCnt].nDamageCounter < 0)
 		{
-			g_aPlayer[nCnt].State = PLAYER_DEATH;
+			//g_aPlayer[nCnt].State = PLAYER_DEATH;
+
+		g_aPlayer[nCnt].State = PLAYER_SMITE;
 		}
 		break;
 
@@ -1561,13 +1587,13 @@ void PlayerDistance(int nCnt)
 
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, PLAYER_DISTANCE_SE, 0.0f, -10.0f, 50.0f) == true)
 			{//サウンド処理
-				g_aPlayer[nCnt].nEnemySECount++;
+				nEnemySECount++;
 
-				if (g_aPlayer[nCnt].nEnemySECount > ENEMY_SE_SPEED)
+				if (nEnemySECount > ENEMY_SE_SPEED)
 				{
 					PlaySound(SOUND_LABEL_SE_ENEMYMOVE);
 
-					g_aPlayer[nCnt].nEnemySECount = 0;
+					nEnemySECount = 0;
 				}
 			}
 			else

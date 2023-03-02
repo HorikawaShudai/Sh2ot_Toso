@@ -439,6 +439,8 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 {
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 
+	Player *pPlayer = GetPlayer();
+
 	bool bHit = false;
 
 	for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
@@ -447,7 +449,7 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 		{
 			if (g_aExit[nCntExit].parts[nCntExit1].bUse == true && g_aExit[nCntExit].parts[nCntExit1].bExitOK == false)
 			{
-				if (   pPos->x >= g_aExit[nCntExit].PseudoCenter.x - Size
+				if (pPos->x >= g_aExit[nCntExit].PseudoCenter.x - Size
 					&& pPos->x <= g_aExit[nCntExit].PseudoCenter.x + Size
 					&& pPos->y >= g_aExit[nCntExit].PseudoCenter.y - Size
 					&& pPos->y <= g_aExit[nCntExit].PseudoCenter.y + Size
@@ -457,6 +459,11 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 				{//アイテムとプレイヤーが当たった(X軸)
 					bHit = true;
 					g_KeyCount++;
+
+					if (pPlayer->bGetKey == false)
+					{
+						break;
+					}
 
 					if (g_KeyCount > PlayNumber.CurrentSelectNumber - 1)
 					{//鍵がプレイヤー人数分使われた場合

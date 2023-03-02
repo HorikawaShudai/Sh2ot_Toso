@@ -147,6 +147,7 @@ typedef struct
 
 	int nCoolTurn;
 	int nTarget;
+	bool bHit;
 }ENEMY;
 
 //’T¸—p\‘¢‘Ì

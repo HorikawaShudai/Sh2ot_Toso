@@ -39,6 +39,8 @@ SOUNDINFO g_aSoundInfo[SOUND_LABEL_MAX] =
 	{ "Data/SE/getkey.wav",0 },					//鍵を入手する音
 	{ "Data/SE/damage001.wav",0},				//ダメージ音
 	{ "Data/SE/damage_noize.wav",0},			//ダメージ受けた後の耳鳴り音
+	{ "Data/SE/no_key.wav",0},					//鍵のない状態でドアを開けようとする音				
+	{ "Data/SE/dooropen.wav",0 },				//ドアの鍵が開いた音	
 };
 
 //=============================================================================
