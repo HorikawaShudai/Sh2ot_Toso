@@ -213,13 +213,17 @@ void UpdateEnemy(void)
 			}
 
 			//プレイヤー探知
-			if (g_Enemy[nCntObject].state != ENEMYSTATE_ATTACK)
+			if (g_Enemy[nCntObject].state != ENEMYSTATE_ATTACK && g_Enemy[nCntObject].state != ENEMYSTATE_CHASE)
 			{
 				
 				
 					float DetectRot = g_Enemy[nCntObject].rot.y - D3DXToRadian(45.0f) + D3DXToRadian(7.5f * (g_nDetect % 12));
 					if (DetectPlayer(g_Enemy[nCntObject].pos, DetectRot, nCntObject) == true)
 					{
+						//モーションの設定処理
+						g_Enemy[nCntObject].MotionType = ENEMY_ACTION_DASH;
+						SetEnemyMotion(g_Enemy[nCntObject].MotionType, nCntObject);
+
 						g_Enemy[nCntObject].state = ENEMYSTATE_CHASE;
 					}
 				
@@ -273,6 +277,10 @@ void UpdateEnemy(void)
 						//目標地点に到達したとき
 						if (vecPlayer.x < 30.0f && vecPlayer.x > -30.0f && vecPlayer.z < 30.0f && vecPlayer.z > -30.0f)
 						{
+							//モーションの設定処理
+							g_Enemy[nCntObject].MotionType = ENEMY_ACTION_ATTACK;
+							SetEnemyMotion(g_Enemy[nCntObject].MotionType, nCntObject);
+
 							g_Enemy[nCntObject].state = ENEMYSTATE_ATTACK;
 							g_Enemy[nCntObject].StateCount = 30;
 							PlayerHit(nCnt, 1);
@@ -314,6 +322,11 @@ void UpdateEnemy(void)
 				switch (g_Enemy[nCntObject].state)
 				{
 				case ENEMYSTATE_SEEK:
+
+					//モーションの設定処理
+					g_Enemy[nCntObject].MotionType = ENEMY_ACTION_MOVE;
+					SetEnemyMotion(g_Enemy[nCntObject].MotionType, nCntObject);
+
 					g_Enemy[nCntObject].state = ENEMYSTATE_PATROL;
 					if (g_Enemy[nCntObject].nTarget >= 0)
 					{
@@ -328,6 +341,11 @@ void UpdateEnemy(void)
 					}
 					break;
 				case ENEMYSTATE_ATTACK:
+
+					//モーションの設定処理
+					g_Enemy[nCntObject].MotionType = ENEMY_ACTION_MOVE;
+					SetEnemyMotion(g_Enemy[nCntObject].MotionType, nCntObject);
+
 					g_Enemy[nCntObject].state = ENEMYSTATE_PATROL;
 					break;
 				default:
