@@ -1437,6 +1437,18 @@ void PlayerState(int nCnt)
 			break;
 		}
 		break;
+	case PLAYER_EXSIT:
+
+		D3DXVECTOR3 posDest;			//目的の位置
+
+		D3DXVECTOR3 posDiff = D3DXVECTOR3(-1000.0f, 0.0f, -4000.0f);
+
+		posDest = posDiff - g_aPlayer[nCnt].pos;
+
+		g_aPlayer[nCnt].pos.x += posDest.x * 0.005f;
+		g_aPlayer[nCnt].pos.z += posDest.z * 0.0006f;
+		SetLife(0, nCnt);
+		break;
 	}
 }
 
@@ -1768,7 +1780,7 @@ void PlayerHit(int nCnt, int nDamage)
 		}
 
 		//ライフのセット処理
-		SetLife(g_aPlayer[nCnt].nLife, nCnt);
+		SetLife(nDamage, nCnt);
 
 		if (g_aPlayer[nCnt].nLife <= 0)
 		{

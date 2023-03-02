@@ -146,6 +146,7 @@ typedef struct
 	float fDistanceRight;
 
 	int nCoolTurn;
+	int nTarget;
 }ENEMY;
 
 //’T¸—p\‘¢‘Ì
