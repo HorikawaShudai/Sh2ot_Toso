@@ -181,8 +181,6 @@ void InitGame()
 	//プレイヤーの数だけ鍵を設置する
 	PatternSetKey(GetPlayNumberSelect().CurrentSelectNumber);
 
-	SetKey(D3DXVECTOR3(-1000.0f, 3.0f, 0.0f), D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-
 	InitChasePolygon();
 
 	InitLifePolygon();
