@@ -426,6 +426,8 @@ void PlayerMoveInput(int nCnt)
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 	int CurrentCamera = GetCurrentCamera();
 	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
+	MODE mode = GetMode();
+
 
 	//斜め移動の速度修正用の関数を初期化する
 	g_aPlayer[nCnt].NormarizeMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -466,7 +468,7 @@ void PlayerMoveInput(int nCnt)
 				g_aPlayer[CurrentCamera].bCheck = true;
 
 				//移動したらチェックをつける処理
-				if (do_Tutorial == MODE_MOVE)
+				if (mode == MODE_TUTORIAL && do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
 					MoveTCheck(nCnt, true);
@@ -480,7 +482,7 @@ void PlayerMoveInput(int nCnt)
 				g_aPlayer[CurrentCamera].bCheck = true;
 
 				//移動したらチェックをつける処理
-				if (do_Tutorial == MODE_MOVE)
+				if (mode == MODE_TUTORIAL && do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
 					MoveTCheck(nCnt, true);
@@ -495,7 +497,7 @@ void PlayerMoveInput(int nCnt)
 				g_aPlayer[CurrentCamera].bCheck = true;
 
 				//移動したらチェックをつける処理
-				if (do_Tutorial == MODE_MOVE)
+				if (mode == MODE_TUTORIAL && do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
 					MoveTCheck(nCnt, true);
@@ -510,7 +512,7 @@ void PlayerMoveInput(int nCnt)
 				g_aPlayer[CurrentCamera].bCheck = true;
 
 				//移動したらチェックをつける処理
-				if (do_Tutorial == MODE_MOVE)
+				if (mode == MODE_TUTORIAL && do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
 					MoveTCheck(nCnt, true);
@@ -543,7 +545,7 @@ void PlayerMoveInput(int nCnt)
 				g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_DASH;
 
 				//ダッシュしたらチェック状態にする処理
-				if (do_Tutorial == MODE_DASH)
+				if (mode == MODE_TUTORIAL && do_Tutorial == MODE_DASH)
 				{
 					SetCheckUI(nCnt, true);
 				}
@@ -561,7 +563,7 @@ void PlayerMoveInput(int nCnt)
 			g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;
 
 			//チュートリアルステルス状態の時の処理
-			if (do_Tutorial == MODE_STELTH && g_aPlayer[nCnt].MoveState == PLAYER_MOVESTATE_STEALTH)
+			if (mode == MODE_TUTORIAL && do_Tutorial == MODE_STELTH && g_aPlayer[nCnt].MoveState == PLAYER_MOVESTATE_STEALTH)
 			{
 				if (g_aPlayer[nCnt].move != D3DXVECTOR3(0.0f, 0.0f, 0.0f) && g_aPlayer[nCnt].nStelthCnt > 299)
 				{
@@ -718,6 +720,7 @@ void UpdatePlayer1(void)
 {
 	//チュートリアルの項目情報を与える処理
 	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
+	MODE mode = GetMode();
 
 	//ポインタ情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
@@ -832,7 +835,7 @@ void UpdatePlayer1(void)
 						g_aPlayer[nCntPlayer].bCheck = true;
 
 						//鍵をゲットしたとき
-						if (do_Tutorial == MODE_GET_KEY)
+						if (mode == MODE_TUTORIAL && do_Tutorial == MODE_GET_KEY)
 						{
 							//チェックをつける処理
 							SetCheckUI(nCntPlayer, true);
@@ -857,7 +860,7 @@ void UpdatePlayer1(void)
 						g_aPlayer[nCntPlayer].ExitHelpUI = false;
 
 						//チュートリアルモード脱出の時
-						if (do_Tutorial == MODE_ESCAPE)
+						if (mode == MODE_TUTORIAL && do_Tutorial == MODE_ESCAPE)
 						{
 							//チェックをつける
 							SetCheckUI(nCntPlayer, true);
@@ -865,7 +868,7 @@ void UpdatePlayer1(void)
 							do_Tutorial = MODE_GOEXIT;
 						}
 
-						if (do_Tutorial == MODE_GOEXIT)
+						if (mode == MODE_TUTORIAL && do_Tutorial == MODE_GOEXIT)
 						{
 							do_Tutorial = MODE_END;
 						}
@@ -943,6 +946,7 @@ void ResPlayerMove(int nCnt)
 	Camera *pCamera = GetCamera();
 	int CurrentCamera = GetCurrentCamera();
 	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
+	MODE mode = GetMode();
 
 	//斜め移動の速度修正用の関数を初期化する
 	g_aPlayer[nCnt].NormarizeMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -996,7 +1000,7 @@ void ResPlayerMove(int nCnt)
 				}
 
 				//移動したらチェックをつける処理
-				if (do_Tutorial == MODE_MOVE)
+				if (mode == MODE_TUTORIAL && do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
 					MoveTCheck(nCnt, true);
@@ -1023,7 +1027,7 @@ void ResPlayerMove(int nCnt)
 				}
 
 				//移動したらチェックをつける処理
-				if (do_Tutorial == MODE_MOVE)
+				if (mode == MODE_TUTORIAL && do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
 					MoveTCheck(nCnt, true);
@@ -1051,7 +1055,7 @@ void ResPlayerMove(int nCnt)
 				}
 
 				//移動したらチェックをつける処理
-				if (do_Tutorial == MODE_MOVE)
+				if (mode == MODE_TUTORIAL && do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
 					MoveTCheck(nCnt, true);
@@ -1079,7 +1083,7 @@ void ResPlayerMove(int nCnt)
 				}
 
 				//移動したらチェックをつける処理
-				if (do_Tutorial == MODE_MOVE)
+				if (mode == MODE_TUTORIAL && do_Tutorial == MODE_MOVE)
 				{
 					//移動した状態にする
 					MoveTCheck(nCnt, true);
@@ -1127,7 +1131,7 @@ void ResPlayerMove(int nCnt)
 				g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_DASH;
 
 				//ダッシュしたらチェック状態にする処理
-				if (do_Tutorial == MODE_DASH)
+				if (mode == MODE_TUTORIAL && do_Tutorial == MODE_DASH)
 				{
 					SetCheckUI(nCnt, true);
 				}
@@ -1145,7 +1149,7 @@ void ResPlayerMove(int nCnt)
 			g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;
 
 			//チュートリアルステルス状態の時の処理
-			if (do_Tutorial == MODE_STELTH && g_aPlayer[nCnt].MoveState == PLAYER_MOVESTATE_STEALTH)
+			if (mode == MODE_TUTORIAL && do_Tutorial == MODE_STELTH && g_aPlayer[nCnt].MoveState == PLAYER_MOVESTATE_STEALTH)
 			{
 				if (g_aPlayer[nCnt].move != D3DXVECTOR3(0.0f, 0.0f, 0.0f) && g_aPlayer[nCnt].nStelthCnt > 299)
 				{
@@ -1496,6 +1500,8 @@ void PlayerDistance(int nCnt)
 
 	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
 
+	MODE mode = GetMode();
+
 	for (int nCntEnemy = 0; nCntEnemy < MAX_ENEMY; nCntEnemy++, pEnemy++)
 	{
 		if (pEnemy->bUse == true)
@@ -1528,7 +1534,7 @@ void PlayerDistance(int nCnt)
 				{
 					PlayerSetVibrtion(nCnt, 10, 10, 40000, 40000);
 
-					if (do_Tutorial == MODE_VIBE)
+					if (mode == MODE_TUTORIAL && do_Tutorial == MODE_VIBE)
 					{
 						g_aPlayer[nCnt].nVibCnt++;
 						if (g_aPlayer[nCnt].nVibCnt > 5)
