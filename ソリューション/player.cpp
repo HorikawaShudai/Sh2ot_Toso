@@ -1798,6 +1798,9 @@ void PlayerHit(int nCnt, int nDamage)
 		{
 			g_aPlayer[nCnt].State = PLAYER_HIT;
 			g_aPlayer[nCnt].nHitCounter = PLAYER_HITCOUNTER;
+
+			//ダメージ後のノイズの音
+			PlaySound(SOUND_LABEL_SE_NOIZE);
 		}
 		g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;
 	}
