@@ -30,7 +30,7 @@ void InitPolygonBG(void)
 		&g_apTexturePolygonBG[0]);
 
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\Damage01.jpg",
+		"data\\TEXTURE\\Damage01.png",
 		&g_apTexturePolygonBG[1]);
 
 	D3DXCreateTextureFromFile(pDevice,
