@@ -308,8 +308,6 @@ void UpdateEnemy(void)
 			{
 				g_Enemy[nCntObject].StateCount = 0;
 				
-				
-
 				switch (g_Enemy[nCntObject].state)
 				{
 				case ENEMYSTATE_SEEK:

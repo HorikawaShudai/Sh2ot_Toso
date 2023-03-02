@@ -1316,7 +1316,7 @@ Mesh {
    0.950000;0.950000;0.950000;;
    0.220000;0.220000;0.220000;;
    TextureFilename {
-    "C:\\Users\\Student\\Documents\\MODEL\\OBJ\\Eye_tex.jpg";
+     "Data\\TEXTURE\\Eye_tex.jpg";
    }
   }
   Material {
