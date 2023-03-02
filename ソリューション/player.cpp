@@ -1192,18 +1192,6 @@ void ResPlayerMove(int nCnt)
 			g_aPlayer[nCnt].MoveState = PLAYER_MOVESTATE_STEALTH;
 		}
 	}
-	else if (g_aPlayer[nCnt].State == PLAYER_EXSIT)
-	{//プレイヤーの状態が脱出状態の時
-
-		D3DXVECTOR3 posDest;			//目的の位置
-
-		D3DXVECTOR3 posDiff = D3DXVECTOR3(-1000.0f, 0.0f, -4000.0f);
-
-		posDest = posDiff - g_aPlayer[nCnt].pos;
-
-		g_aPlayer[nCnt].pos.x += posDest.x * 0.005f;
-		g_aPlayer[nCnt].pos.z += posDest.z * 0.0006f;
-	}
 
 	g_aPlayer[nCnt].move += g_aPlayer[nCnt].NormarizeMove;
 }
