@@ -35,6 +35,7 @@ typedef enum
 	ENEMYSTATE_CHASE,		//í«ê’
 	ENEMYSTATE_SEEK,		//íTÇ∑
 	ENEMYSTATE_ATTACK,		//çUåÇ
+	ENEMYSTATE_ATTACK_STANDBY,	//çUåÇë“ã@
 	ENEMYSTATE_MAX
 }ENEMYSTATE;
 
@@ -147,6 +148,7 @@ typedef struct
 
 	int nCoolTurn;
 	int nTarget;
+	int nTargetOld;
 }ENEMY;
 
 //íTç∏ópç\ë¢ëÃ
