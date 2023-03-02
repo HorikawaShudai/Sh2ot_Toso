@@ -336,7 +336,7 @@ bool CollisionKeyHelpUI(D3DXVECTOR3 *pPos, float Size)
 
 	for (int nCntKey = 0; nCntKey < MAX_KEY; nCntKey++)
 	{
-		if (g_Key[nCntKey].bUse == true && g_Key[nCntKey].bHelpUI == false)
+		if (g_Key[nCntKey].bUse == true)
 		{
 			if (pPos->x >= g_Key[nCntKey].pos.x - Size
 				&& pPos->x <= g_Key[nCntKey].pos.x + Size
@@ -347,9 +347,10 @@ bool CollisionKeyHelpUI(D3DXVECTOR3 *pPos, float Size)
 			{//アイテムとプレイヤーが当たった(X軸)
 				g_Key[nCntKey].bHelpUI = true;
 				UI = true;
+				break;
 			}
 		}
-		if (g_Key[nCntKey].bUse == true && g_Key[nCntKey].bHelpUI == true)
+		if (g_Key[nCntKey].bUse == true)
 		{
 			if (pPos->x <= g_Key[nCntKey].pos.x - Size
 				|| pPos->x >= g_Key[nCntKey].pos.x + Size
