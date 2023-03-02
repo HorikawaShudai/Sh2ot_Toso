@@ -399,7 +399,7 @@ void UpdatePlayer0(void)
 			if (g_aPlayer[0].bUse == false && g_aPlayer[1].bUse == false && g_aPlayer[2].bUse == false && g_aPlayer[3].bUse == false)
 			{
 				g_GameEnd = true;
-				SetGameState(GAMESTATE_GAMEOVER_END, 60);
+				SetGameState(GAMESTATE_GAMEOVER_END, 250);
 			}
 		}
 
@@ -922,7 +922,7 @@ void UpdatePlayer1(void)
 			(g_aPlayer[3].bUse == false))
 		{//‘SˆõŽ€–S‚µ‚Ä‚¢‚é‚Æ‚«
 			g_GameEnd = true;
-			SetGameState(GAMESTATE_GAMEOVER_END, 60);
+			SetGameState(GAMESTATE_GAMEOVER_END, 250);
 		}
 	}
 
@@ -1405,41 +1405,41 @@ void PlayerState(int nCnt)
 		}
 		break;
 
-	case PLAYER_DEATH:
-		switch (PlayNumber.CurrentSelectNumber)
-		{
-		case 1:
-			SetPolygonBG(D3DXVECTOR3(640.0f, 360.0f, 0.0f), 640.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
-			break;
-		case 2:
-			SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 360.0f, 0.0f), 320.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
-			break;
-		case 3:
-			if (nCnt == 2)
-			{//3
-				SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
-			}
-			else
-			{//12
-				SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
-			}
-			break;
-		case 4:
-			if (nCnt == 3)
-			{//4
-				SetPolygonBG(D3DXVECTOR3(960.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
-			}
-			else if (nCnt == 2)
-			{//3
-				SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
-			}
-			else
-			{//12
-				SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
-			}
-			break;
-		}
-		break;
+	//case PLAYER_DEATH:
+	//	switch (PlayNumber.CurrentSelectNumber)
+	//	{
+	//	case 1:
+	//		SetPolygonBG(D3DXVECTOR3(640.0f, 360.0f, 0.0f), 640.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
+	//		break;
+	//	case 2:
+	//		SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 360.0f, 0.0f), 320.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
+	//		break;
+	//	case 3:
+	//		if (nCnt == 2)
+	//		{//3
+	//			SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
+	//		}
+	//		else
+	//		{//12
+	//			SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
+	//		}
+	//		break;
+	//	case 4:
+	//		if (nCnt == 3)
+	//		{//4
+	//			SetPolygonBG(D3DXVECTOR3(960.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
+	//		}
+	//		else if (nCnt == 2)
+	//		{//3
+	//			SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
+	//		}
+	//		else
+	//		{//12
+	//			SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
+	//		}
+	//		break;
+	//	}
+	//	break;
 	case PLAYER_EXSIT:
 
 		D3DXVECTOR3 posDest;			//–Ú“I‚ÌˆÊ’u
