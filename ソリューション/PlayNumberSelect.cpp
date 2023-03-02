@@ -398,14 +398,14 @@ void PlayerSelect(void)
 			//決定音
 			PlaySound(SOUND_LABEL_ENTER);
 
-			if (g_PlayNumberSelect.CurrentSelectNumber >= 0 && g_PlayNumberSelect.CurrentSelectNumber < PLAYNUMBER_FOUR)
+			if (g_PlayNumberSelect.CurrentSelectNumber >= 0 && g_PlayNumberSelect.CurrentSelectNumber < PLAYNUMBER_MAX)
 			{
 				g_PlayNumberSelect.CurrentSelectNumber = g_PlayNumberSelect.CurrentSelectNumber + 1;			//プレイ人数に合わせるため
 
 				SetFade(MODE_TUTORIAL);			//モードの設定(ゲーム画面に移行)
 				//SetFade(MODE_GAME);			//モードの設定(ゲーム画面に移行)
 			}
-			else if (g_PlayNumberSelect.CurrentSelectNumber == PLAYNUMBER_FOUR)
+			else if (g_PlayNumberSelect.CurrentSelectNumber == PLAYNUMBER_MAX)
 			{
 				g_PlayNumberSelect.CurrentSelectNumber = 4;			//プレイ人数に合わせるため
 
