@@ -38,6 +38,7 @@ SOUNDINFO g_aSoundInfo[SOUND_LABEL_MAX] =
 	{ "Data/SE/enemy_walk.wav", 0 },			//敵の移動音
 	{ "Data/SE/getkey.wav",0 },					//鍵を入手する音
 	{ "Data/SE/damage001.wav",0},				//ダメージ音
+	{ "Data/SE/damage_noize.wav",0},			//ダメージ受けた後の耳鳴り音
 };
 
 //=============================================================================
