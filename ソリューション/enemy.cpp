@@ -39,23 +39,27 @@ void EnemyDirection(int nEnemy);
 
 const char *c_apModelEnemy[] =					//モデルデータ読み込み
 {
-	"Data\\MODEL\\player\\00_hip.x",
-	"Data\\MODEL\\player\\01_body.x",
-	"Data\\MODEL\\player\\02_Head.x",
-	"Data\\MODEL\\player\\03_R_Shoulder.x",
-	"Data\\MODEL\\player\\04_R_upperarm.x",
-	"Data\\MODEL\\player\\05_R_forearm.x",
-	"Data\\MODEL\\player\\06_R_Hand.x",
-	"Data\\MODEL\\player\\07_L_Shoulder.x",
-	"Data\\MODEL\\player\\08_L_upperarm.x",
-	"Data\\MODEL\\player\\09_L_forearm.x",
-	"Data\\MODEL\\player\\10_L_Hand.x",
-	"Data\\MODEL\\player\\11_R_Thigh.x",
-	"Data\\MODEL\\player\\12_R_Shin.x",
-	"Data\\MODEL\\player\\13_R_Leg.x",
-	"Data\\MODEL\\player\\14_L_Thigh.x",
-	"Data\\MODEL\\player\\15_L_Shin.x",
-	"Data\\MODEL\\player\\16_L_Leg.x"
+	"Data\\MODEL\\Enemy\\00_Enemy_Hip.x",
+	"Data\\MODEL\\Enemy\\01_Enemy_Waist.x",
+	"Data\\MODEL\\Enemy\\02_Enemy_Chest.x",
+	"Data\\MODEL\\Enemy\\03_Enemy_Head.x",
+	"Data\\MODEL\\Enemy\\04_Enemy_Right_Arm_UpperArm.x",
+	"Data\\MODEL\\Enemy\\05_Enemy_Right_Arm_ForeArm.x",
+	"Data\\MODEL\\Enemy\\06_Enemy_Right_Arm_Hand.x",
+	"Data\\MODEL\\Enemy\\07_Enemy_Left_Arm_UpperArm.x",
+	"Data\\MODEL\\Enemy\\08_Enemy_Left_Arm_ForeArm.x",
+	"Data\\MODEL\\Enemy\\09_Enemy_Left_Arm_Hand.x",
+	"Data\\MODEL\\Enemy\\10_Enemy_Right_Leg_Thigh.x",
+	"Data\\MODEL\\Enemy\\11_Enemy_Right_Leg_Shin.x",
+	"Data\\MODEL\\Enemy\\12_Enemy_Right_Leg_Foot.x",
+	"Data\\MODEL\\Enemy\\13_Enemy_Left_Leg_Thigh.x",
+	"Data\\MODEL\\Enemy\\14_Enemy_Left_Leg_Shin.x",
+	"Data\\MODEL\\Enemy\\15_Enemy_Left_Leg_Foot.x",
+	"Data\\MODEL\\Enemy\\16_Enemy_Eye.x",
+	"Data\\MODEL\\Enemy\\16_Enemy_Eye.x",
+	"Data\\MODEL\\Enemy\\16_Enemy_Eye.x",
+	"Data\\MODEL\\Enemy\\16_Enemy_Eye.x",
+	"Data\\MODEL\\Enemy\\16_Enemy_Eye.x"
 };
 
 const D3DXVECTOR3 TeleportPos[] = //移動先の座標
@@ -118,7 +122,6 @@ void InitEnemy(void)
 				&g_pMeshENEMY[nCntEnemy]);
 
 			D3DXMATERIAL *pMat;	//マテリアルへのポインタ
-
 
 			//マテリアル情報に対するポインタを所得
 			pMat = (D3DXMATERIAL*)g_pBuffMatENEMY[nCntEnemy]->GetBufferPointer();
@@ -878,7 +881,7 @@ void LoadEnemyMotion(int nEnemyBG)
 	pFile = fopen("", "r");
 
 	//ファイルを開く
-	pFile = fopen("data\\TEXT\\motion_player.txt", "r");
+	pFile = fopen("data\\TEXT\\motion_enemy.txt", "r");
 
 	if (pFile != NULL)
 	{//ファイルが開けた場合
