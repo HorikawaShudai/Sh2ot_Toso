@@ -282,12 +282,34 @@ void SetCamera(int nIdx)
 	//プロジェクションマトリックスの初期化
 	D3DXMatrixIdentity(&g_aCamera[nIdx].mtxProjection);
 
+	if (nIdx == 4)
+	{
+		//プロジェクションマトリックスを作成
+		D3DXMatrixPerspectiveFovLH(&g_aCamera[nIdx].mtxProjection,
+			D3DXToRadian(45.0f),
+			(float)g_aCamera[nIdx].viewport.Width / (float)g_aCamera[nIdx].viewport.Height,
+			10.0f,
+			10000.0f);
+	}
+	else
+	{
+		//プロジェクションマトリックスを作成
+		D3DXMatrixPerspectiveFovLH(&g_aCamera[nIdx].mtxProjection,
+			D3DXToRadian(45.0f),
+			(float)g_aCamera[nIdx].viewport.Width / (float)g_aCamera[nIdx].viewport.Height,
+			10.0f,
+			1000.0f);
+	}
+
+#ifdef _DEBUG
 	//プロジェクションマトリックスを作成
 	D3DXMatrixPerspectiveFovLH(&g_aCamera[nIdx].mtxProjection,
 		D3DXToRadian(45.0f),
 		(float)g_aCamera[nIdx].viewport.Width / (float)g_aCamera[nIdx].viewport.Height,
 		10.0f,
 		10000.0f);
+#endif // _DEBUG
+
 
 	//プロジェクションマトリックスの設定
 	pDevice->SetTransform(D3DTS_PROJECTION, &g_aCamera[nIdx].mtxProjection);
