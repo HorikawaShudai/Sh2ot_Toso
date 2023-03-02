@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-﻿  game.cpp
+﻿  keyUI.cpp
+cl : コマンド ライン warning D9028: 簡易リビルド時のエラーです、通常のビルドに戻します
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github10\Sh2ot_Toso\ソリューション\Debug\Trans.exe
   Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github10\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-﻿  main.cpp
-  Trans.vcxproj -> C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\Student\Desktop\チーム制作\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
->>>>>>> f5725f8f1322e6fa5f2ff10eecadcd75dfb12c7b
