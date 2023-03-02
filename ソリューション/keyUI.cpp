@@ -13,7 +13,7 @@
 //マクロ定義
 #define MAX_KEY_TEX		(2)				//鍵のテクスチャ最大数
 
-#define KEYUIPOS_X_1	(150.0f)			//鍵UIのX位置1
+#define KEYUIPOS_X_1	(80.0f)			//鍵UIのX位置1
 #define KEYUIPOS_Y_1	(50.0f)		//鍵UIのY位置1
 
 #define KEYUIPOS_X_2	(670.0f)		//鍵UIのX位置2
@@ -188,13 +188,13 @@ void DrawKeyUI(void)
 	{
 		if (g_anKeyUI[nCnt].bUse == false)
 		{//鍵を取得していないとき
-			//テクスチャの設定
+		 //テクスチャの設定
 			pDevice->SetTexture(0, g_pTextureKeyUI[0]);
 		}
 
 		else
 		{//鍵を取得しているとき
-			//テクスチャの設定
+		 //テクスチャの設定
 			pDevice->SetTexture(0, g_pTextureKeyUI[1]);
 		}
 
