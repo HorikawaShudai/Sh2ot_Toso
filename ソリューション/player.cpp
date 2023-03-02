@@ -57,7 +57,7 @@ void UpdatePlayer1(void);
 void ResPlayerMove(int nCnt);					//プレイヤーそれぞれに対応
 void ResPlayerrot(int nCnt);					//プレイヤーそれぞれに対応
 
-												//グローバル変数
+//グローバル変数
 LPDIRECT3DTEXTURE9 g_pTexturePlayer[100] = {};	//テクスチャのポインタ
 LPD3DXMESH g_pMeshPlayer[32] = {};				//メッシュ(頂点情報)へのポインタ
 LPD3DXBUFFER g_pBuffMatPlayer[32] = {};			//マテリアルへのポインタ
@@ -749,6 +749,8 @@ void UpdatePlayer1(void)
 			}
 #endif
 
+			g_aPlayer[nCntPlayer].rot.y += 0.5f;
+
 			//バイブレーションの更新処理
 			PlayerVibrtionUpdate(nCntPlayer);
 
@@ -780,7 +782,7 @@ void UpdatePlayer1(void)
 				//プレイヤーの移動入力処理----------
 				ResPlayerMove(nCntPlayer);
 
-				//移動時にプレイヤーの向きを補正する----------
+				//移動時にプレイヤーの向きを補正
 				ResPlayerrot(nCntPlayer);
 			}
 
@@ -825,8 +827,8 @@ void UpdatePlayer1(void)
 				{//Eキー入力
 					if (CollisionKey(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nCntPlayer) == true)
 					{//鍵を入手出来た場合
-						g_aPlayer[nCntPlayer].bGetKey = true;	//鍵を入手状態にする
-						SetKeyUI(nCntPlayer, true);				//鍵UIを表示する
+						g_aPlayer[nCntPlayer].bGetKey = true;		//鍵を入手状態にする
+						SetKeyUI(nCntPlayer, true);					//鍵UIを表示する
 						g_aPlayer[nCntPlayer].KeyHelpUI = false;
 
 						//鍵の入手音
@@ -891,6 +893,10 @@ void UpdatePlayer1(void)
 			{
 				PlayerHit(nCntPlayer, 1);
 			}
+		}
+		else if (g_aPlayer[nCntPlayer].bUse == false)
+		{
+			g_aPlayer[nCntPlayer].State = PLAYER_SMITE;
 		}
 	}
 
@@ -1401,7 +1407,9 @@ void PlayerState(int nCnt)
 		g_aPlayer[nCnt].nDamageCounter--;
 		if (g_aPlayer[nCnt].nDamageCounter < 0)
 		{
-			g_aPlayer[nCnt].State = PLAYER_DEATH;
+			//g_aPlayer[nCnt].State = PLAYER_DEATH;
+
+		g_aPlayer[nCnt].State = PLAYER_SMITE;
 		}
 		break;
 

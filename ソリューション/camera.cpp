@@ -13,6 +13,7 @@
 #include "CheckboxUI.h"
 #include "EscapeTutorial.h"
 #include "game.h"
+#include "enemy.h"
 
 //マクロ定義
 #define MAX_CAMERA				(5)		//カメラの最大数
@@ -32,6 +33,18 @@
 #define YUAN_TO_CORRE			(0.2f)		//視点の元の位置への補正
 #define CAM_MOVE_SPEED			(0.0005f)	//タイトル用カメラの移動スピード
 
+//ダメージをくらった時のカメラ設定
+#define DAMAGECAMERA_ROT_Y		(-0.5f)		//ダメージを受けた時のカメラを下に向ける角度
+#define DAMAGECAMERA_TIME		(120)		//下を向かせ続ける時間
+#define DAMAGECAMERA_UPSPEED	(0.009f)	//下に向けた角度から前に向かせる速さ
+
+//死んだ時のカメラ設定
+#define DEATHCAMERA_POS_Y		(8.0f)		//カメラが下にどこまで落ちるか
+#define DEATHCAMERA_SPEED		(2.0f)		//カメラが下に落ちる速さ
+#define DEATHCAMERA_ROTEND		(1.0f)		//カメラ上に向ける限界
+#define DEATHCAMERA_TIME		(120)		//カメラが動かない時間
+#define DEATHCAMERA_UPSPEED		(0.001f)		//
+
 //プロトタイプ宣言
 void TpsCamera(void);						//観察用カメラ
 void PlayerFpsCamera(void);					//プレイヤーの視点カメラ
@@ -41,7 +54,8 @@ void StateYMove(int nCurrentCamera);		//カメラの縦の動き
 
 void ResPlayerCamera(void);					//コントローラーそれぞれに対応
 void DownCamera(int nCntCamera);			//ダメージを受けた時のカメラ
-void DeathCamera(int nCntCamera);			//死んだときのカメラ
+void DeathCameraEnemy(int nCntCamera);		//死んだときのカメラ(敵の方向に向ける)
+void DeathCamera(int nCntCamera);			//死んだときのカメラ(カメラが落ちる)
 
 void Titlecamera(void);
 void SelectNumberCamera(void);
@@ -60,7 +74,6 @@ int g_Rand_RankingCameraBG;					//ランキング画面の背景を決めるための変数
 int g_AccCnt;								//加速のカウント
 float g_c;
 int g_nCount;
-
 
 //====================================================================
 //カメラの初期化処理
@@ -502,7 +515,7 @@ void Camerafollow(int nCurrentCamera)
 
 	//目的の注視点を設定(初期値)
 	g_aCamera[nCurrentCamera].posRDest = D3DXVECTOR3(pPlayer[nCurrentCamera].pos.x + sinf(pPlayer->rot.y + D3DX_PI) * 0.0f,
-													pPlayer[nCurrentCamera].pos.y + g_aCamera[nCurrentCamera].fposRmoveY,
+													pPlayer[nCurrentCamera].pos.y,
 													pPlayer[nCurrentCamera].pos.z + cosf(pPlayer->rot.y + D3DX_PI) * 0.0f);
 
 	posRDiff = g_aCamera[nCurrentCamera].posRDest - g_aCamera[nCurrentCamera].posR;			//注視点の差分
@@ -522,16 +535,16 @@ void DownCamera(int nCntCamera)
 
 	if (pPlayer[nCntCamera].State == PLAYER_HIT)
 	{
-		g_aCamera[nCntCamera].rot.x = -0.5f;
-		pPlayer[nCntCamera].rot.x = -0.5f;
+		g_aCamera[nCntCamera].rot.x = DAMAGECAMERA_ROT_Y;
+		pPlayer[nCntCamera].rot.x = DAMAGECAMERA_ROT_Y;
 	}
 
 	g_AccCnt++;
 
-	if (pPlayer[nCntCamera].State == PLAYER_WAIT && g_aCamera[nCntCamera].rot.x <= 0.0f && g_AccCnt >= 120)
+	if (pPlayer[nCntCamera].State == PLAYER_WAIT && g_aCamera[nCntCamera].rot.x <= 0.0f && g_AccCnt >= DAMAGECAMERA_TIME)
 	{
-		g_aCamera[nCntCamera].rot.x += 0.009f;
-		pPlayer[nCntCamera].rot.x += 0.009f;
+		g_aCamera[nCntCamera].rot.x += DAMAGECAMERA_UPSPEED;
+		pPlayer[nCntCamera].rot.x += DAMAGECAMERA_UPSPEED;
 	}
 
 	if (pPlayer[nCntCamera].State == PLAYER_NORMAL)
@@ -543,30 +556,75 @@ void DownCamera(int nCntCamera)
 //==============================
 //死んだ時のカメラの動き
 //==============================
+void DeathCameraEnemy(int nCntCamera)
+{
+	//プレイヤー情報の取得
+	Player *pPlayer = GetPlayer();
+	ENEMY *pEnemy = GetEnemy();
+	PlayNumberSelect NumberSelect = GetPlayNumberSelect();
+
+	float rotYDiff;
+
+	for (int nCnt = 0; nCnt < 2; nCnt++)
+	{
+		if (pEnemy[nCnt].bHit == true)
+		{
+			//敵の位置からプレイヤーの角度を求める
+			rotYDiff = atan2f((pEnemy[nCnt].pos.x - g_aCamera[nCntCamera].posR.x), (pEnemy[nCnt].pos.z - g_aCamera[nCntCamera].posR.z));
+
+			//襲ってきた敵とプレイヤーとの角度を求める
+			/*rotYDiff.x = pEnemy[nCnt].pos.x - g_aCamera[nCntCamera].pos.x;
+			rotYDiff.y = pEnemy[nCnt].pos.y - g_aCamera[nCntCamera].pos.y;*/
+			//rotYDiff.z = pEnemy[nCnt].pos.z - g_aCamera[nCntCamera].pos.z;
+
+			//ベクトルを正規化する
+			//D3DXVec3Normalize(&rotYDiff, &rotYDiff);
+
+			g_aCamera[nCntCamera].rot.y = rotYDiff;
+
+			pPlayer[nCntCamera].rot.y = g_aCamera[nCntCamera].rot.y;
+
+			/*if (rotYDiff.y <= 2.0f && rotYDiff.y >= -2.0f)
+			{
+				pPlayer[nCntCamera].State = PLAYER_DEATH;
+
+				pEnemy->bHit = false;
+			}*/
+		}
+	}
+
+}
+
+//==============================
+//死んだ時のカメラの動き
+//==============================
 void DeathCamera(int nCntCamera)
 {
+	//プレイヤー情報の取得
 	Player *pPlayer = GetPlayer();
 
+	//上に向かせるまでのカウント
 	g_nCount++;
 
-	if (g_aCamera[nCntCamera].posV.y >= 8.0f)
-	{
-		g_aCamera[nCntCamera].posR.y -= 2.0f;
-		g_aCamera[nCntCamera].posV.y -= 2.0f;
+	//カメラを下に落とす
+	if (g_aCamera[nCntCamera].posV.y >= DEATHCAMERA_POS_Y)
+	{//カメラの位置が宇内以上の時
+		//カメラを落とす
+		g_aCamera[nCntCamera].posR.y -= DEATHCAMERA_SPEED;
+		g_aCamera[nCntCamera].posV.y -= DEATHCAMERA_SPEED;
 
+		//カウントを初期化する
 		g_c = 0;
 	}
-	else if (g_aCamera[nCntCamera].rot.x <= 1.0f && g_nCount >= 120)
-	{
-		g_c += 0.001f;
+	else if (g_aCamera[nCntCamera].rot.x <= DEATHCAMERA_ROTEND && g_nCount >= DEATHCAMERA_TIME)
+	{//カメラの向きが数値以下かつカウントより上の時
+		//速さを徐々に増やす
+		g_c += DEATHCAMERA_UPSPEED;
 
-		g_aCamera[nCntCamera].rot.x += 0.001f + g_c;
-		g_aCamera[nCntCamera].rot.z += 0.001f + g_c;
+		//カメラを上に傾ける
+		g_aCamera[nCntCamera].rot.x += DEATHCAMERA_UPSPEED + g_c;
+		g_aCamera[nCntCamera].rot.z += DEATHCAMERA_UPSPEED + g_c;
 	}
-	/*else
-	{
-	g_nCount = 0;
-	}*/
 }
 
 //==============================
@@ -957,6 +1015,10 @@ void ResPlayerCamera(void)
 				//ダウン状態によるカメラの動き
 				DownCamera(nCntCamera);
 			}
+		}
+		else if (pPlayer[nCntCamera].State == PLAYER_SMITE)
+		{
+			DeathCameraEnemy(nCntCamera);
 		}
 		else if (pPlayer[nCntCamera].State == PLAYER_DEATH)
 		{
