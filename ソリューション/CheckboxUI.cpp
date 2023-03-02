@@ -11,7 +11,7 @@
 //マクロ定義
 #define MAX_CHECK_TEX		(2)				//チェックボックスのテクスチャ最大数
 
-#define CHECKUIPOS_X_1		(200.0f)		//チェックボックスのUIのX位置1
+#define CHECKUIPOS_X_1		(300.0f)		//チェックボックスのUIのX位置1
 #define CHECKUIPOS_Y_1		(650.0f)		//チェックボックスのUIのY位置1
 
 #define CHECKUIPOS_X_2		(1200.0f)		//チェックボックスのUIのX位置2
