@@ -35,6 +35,7 @@ void InitActionHelpUI(void)
 	for (nCntUI = 0; nCntUI < MAX_ACTIONHELPUI; nCntUI++)
 	{
 		g_aActionHelpUI[nCntUI].pos = D3DXVECTOR3(0.0f, 50.0f, 0.0f);
+		g_aActionHelpUI[nCntUI].fSize = ACTIONHELPUI_SIZE;
 		g_aActionHelpUI[nCntUI].bUse = false;
 		g_aActionHelpUI[nCntUI].nType = ACTIONHELPUI_KEY;
 	}
@@ -55,10 +56,10 @@ void InitActionHelpUI(void)
 	for (nCntUI = 0; nCntUI < MAX_ACTIONHELPUI; nCntUI++)
 	{
 		//頂点座標の設定 
-		pVtx[0].pos = D3DXVECTOR3(-ACTIONHELPUI_SIZE, +ACTIONHELPUI_SIZE, 0.0f);
-		pVtx[1].pos = D3DXVECTOR3(+ACTIONHELPUI_SIZE, +ACTIONHELPUI_SIZE, 0.0f);
-		pVtx[2].pos = D3DXVECTOR3(-ACTIONHELPUI_SIZE, -ACTIONHELPUI_SIZE, 0.0f);
-		pVtx[3].pos = D3DXVECTOR3(+ACTIONHELPUI_SIZE, -ACTIONHELPUI_SIZE, 0.0f);
+		pVtx[0].pos = D3DXVECTOR3(-g_aActionHelpUI[nCntUI].fSize, +g_aActionHelpUI[nCntUI].fSize, 0.0f);
+		pVtx[1].pos = D3DXVECTOR3(+g_aActionHelpUI[nCntUI].fSize, +g_aActionHelpUI[nCntUI].fSize, 0.0f);
+		pVtx[2].pos = D3DXVECTOR3(-g_aActionHelpUI[nCntUI].fSize, -g_aActionHelpUI[nCntUI].fSize, 0.0f);
+		pVtx[3].pos = D3DXVECTOR3(+g_aActionHelpUI[nCntUI].fSize, -g_aActionHelpUI[nCntUI].fSize, 0.0f);
 
 		//法線ベクトルの設定
 		pVtx[0].nor = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
@@ -133,10 +134,10 @@ void UpdateActionHelpUI(void)
 		if (g_aActionHelpUI[nCntUI].bUse == true)
 		{
 			//頂点座標の設定 
-			pVtx[0].pos = D3DXVECTOR3(-ACTIONHELPUI_SIZE, +ACTIONHELPUI_SIZE, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(+ACTIONHELPUI_SIZE, +ACTIONHELPUI_SIZE, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(-ACTIONHELPUI_SIZE, -ACTIONHELPUI_SIZE, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(+ACTIONHELPUI_SIZE, -ACTIONHELPUI_SIZE, 0.0f);
+			pVtx[0].pos = D3DXVECTOR3(-g_aActionHelpUI[nCntUI].fSize, +g_aActionHelpUI[nCntUI].fSize, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(+g_aActionHelpUI[nCntUI].fSize, +g_aActionHelpUI[nCntUI].fSize, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(-g_aActionHelpUI[nCntUI].fSize, -g_aActionHelpUI[nCntUI].fSize, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(+g_aActionHelpUI[nCntUI].fSize, -g_aActionHelpUI[nCntUI].fSize, 0.0f);
 		}
 
 		pVtx += 4;	//頂点データのポインタを４つ分進める
@@ -236,7 +237,7 @@ void DrawActionHelpUI(int nCntPlayer,bool GetKey)
 //====================================================================
 //ヘルプUIの設定処理
 //====================================================================
-int SetActionHelpUI(D3DXVECTOR3 pos, ACTIONHELPUI_TYPE Type)
+int SetActionHelpUI(D3DXVECTOR3 pos, float Size, ACTIONHELPUI_TYPE Type)
 {
 	int nIdx = -1;
 
@@ -245,6 +246,7 @@ int SetActionHelpUI(D3DXVECTOR3 pos, ACTIONHELPUI_TYPE Type)
 		if (g_aActionHelpUI[nCntUI].bUse == false)
 		{
 			g_aActionHelpUI[nCntUI].pos = pos;
+			g_aActionHelpUI[nCntUI].fSize = Size;
 			g_aActionHelpUI[nCntUI].nType = Type;
 			g_aActionHelpUI[nCntUI].bUse = true;
 			nIdx = nCntUI;

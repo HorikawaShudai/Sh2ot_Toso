@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-﻿  main.cpp
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
-=======
-﻿  stamina.cpp
+﻿  tutorialUI.cpp
+  stamina.cpp
   score.cpp
   playerBG.cpp
   player.cpp
@@ -13,7 +9,6 @@
   keyUI.cpp
   game.cpp
   exit.cpp
-  enemy.cpp
   camera.cpp
   VillainTutorial.cpp
   PlayNumberSelect.cpp
@@ -23,13 +18,5 @@
   CheckboxUI.cpp
   ChasePolygon.cpp
   コードを生成中...
-tutorialUI.obj : warning LNK4204: 'C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github10\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールのデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
-title.obj : warning LNK4204: 'C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github10\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールのデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
-Thunder.obj : warning LNK4204: 'C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github10\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールのデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
-stage.obj : warning LNK4204: 'C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github10\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールのデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
-sound.obj : warning LNK4204: 'C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github10\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールのデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
-edit.obj : warning LNK4204: 'C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github10\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールのデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
-ActionHelpUI.obj : warning LNK4204: 'C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github10\Sh2ot_Toso\ソリューション\Debug\vc140.pdb' に参照するモジュールのデバッグ情報がありません。デバッグ情報を無視してオブジェクトをリンクします。
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github10\Sh2ot_Toso\ソリューション\Debug\Trans.exe
-  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github10\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)
->>>>>>> 10a1ca3dbf07949facb2ffbef380c15d88e442f4
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.exe
+  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Debug\Trans.pdb (Full PDB)

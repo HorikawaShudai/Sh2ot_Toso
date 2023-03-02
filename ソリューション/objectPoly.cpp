@@ -7,6 +7,7 @@
 #include "main.h"
 #include "input.h"
 #include "objectPoly.h"
+#include "debugproc.h"
 
 //マクロ変数
 
@@ -118,7 +119,7 @@ void UninitObjectPoly(void)
 //========================
 void UpdateObjectPoly(void)
 {
-
+#ifdef _DEBUG
 	VERTEX_3D *pVtx; //頂点座標へのポインタ
 
 	//頂点バッファをロックし,頂点情報へのポインタを取得
@@ -140,6 +141,9 @@ void UpdateObjectPoly(void)
 
 	//頂点バッファをアンロックする
 	g_pVtxBuffObjectPoly->Unlock();
+
+	PrintDebugProc("外積用ポリゴンの数:%d\n", g_ObjectObjectPolyCount);
+#endif // _DEBUG
 }
 
 //========================

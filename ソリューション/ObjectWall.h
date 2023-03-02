@@ -8,7 +8,7 @@
 #ifndef _OBJECTWALL_H_
 #define _OBJECTWALL_H_
 
-#define MAX_OBJECTWALL (2048)		//オブジェクトの最大数
+#define MAX_OBJECTWALL (550)		//オブジェクトの最大数
 
 //モデルの構造体
 typedef enum

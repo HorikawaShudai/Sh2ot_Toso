@@ -72,6 +72,7 @@ int g_Rand_PolygonColor_G;
 int g_Rand_PolygonColor_B;
 int g_Rand_PolygonColor_A;
 int g_Rand_PolygonType;
+int g_ExitCount;
 
 //====================================================================
 //プレイヤーの初期化処理
@@ -133,6 +134,7 @@ void InitPlayer(void)
 		g_Rand_PolygonColor_B = 0;
 		g_Rand_PolygonColor_A = 0;
 		g_Rand_PolygonType = 0;
+		g_ExitCount = 0;
 
 		g_aPlayer[nCntPlayer].nNumModel = 1;
 
@@ -799,8 +801,12 @@ void UpdatePlayer1(void)
 				CollisionItem(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-20.0f, -20.0f, -20.0f), D3DXVECTOR3(20.0f, 20.0f, 20.0f), 20.0f, nCntPlayer);
 			}
 
-			//出口との当たり判定
-			CollisionExi(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
+			if (g_aPlayer[nCntPlayer].bExit == false)
+			{//脱出していない状態の時
+
+			 //出口との当たり判定
+				CollisionExi(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
+			}
 
 			//プレイヤーと敵との距離
 			PlayerDistance(nCntPlayer);
@@ -897,11 +903,19 @@ void UpdatePlayer1(void)
 	//ゲーム終了処理
 	if (g_GameEnd == false)
 	{
-		if ((g_aPlayer[0].bExit == true) && 
-			(g_aPlayer[1].bExit == true) && 
-			(g_aPlayer[2].bExit == true) &&
-			(g_aPlayer[3].bExit == true))
+		if ((g_aPlayer[0].bExit == true || g_aPlayer[0].bUse == false) &&
+			(g_aPlayer[1].bExit == true || g_aPlayer[1].bUse == false) &&
+			(g_aPlayer[2].bExit == true || g_aPlayer[2].bUse == false) &&
+			(g_aPlayer[3].bExit == true || g_aPlayer[3].bUse == false))
 		{//全員脱出しているとき
+
+			for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
+			{
+				if (g_aPlayer[nCntPlayer].bExit == true)
+				{
+					g_ExitCount++;
+				}
+			}
 
 			//チュートリアルモード脱出の時
 			if (GetMode() == MODE_TUTORIAL)
@@ -931,6 +945,7 @@ void UpdatePlayer1(void)
 	{
 		PrintDebugProc("プレイヤー%d人目の座標【X : %f | Y : %f | Z : %f】\n", nCntPlayerPlayer + 1, g_aPlayer[nCntPlayerPlayer].pos.x, g_aPlayer[nCntPlayerPlayer].pos.y, g_aPlayer[nCntPlayerPlayer].pos.z);
 		PrintDebugProc("プレイヤー%d人目の移動量【X : %f | Y : %f | Z : %f】\n", nCntPlayerPlayer + 1, g_aPlayer[nCntPlayerPlayer].move.x, g_aPlayer[nCntPlayerPlayer].move.y, g_aPlayer[nCntPlayerPlayer].move.z);
+		PrintDebugProc("プレイヤーが脱出した数【%d】\n", g_ExitCount);
 	}
 #endif
 }
@@ -1439,6 +1454,8 @@ void PlayerState(int nCnt)
 			}
 			break;
 		}
+		//死んだプレイヤーのバイブレーションをオフにする
+		GetGamepad_Vibrtion_false(nCnt);
 		break;
 	case PLAYER_EXSIT:
 

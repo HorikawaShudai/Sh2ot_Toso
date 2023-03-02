@@ -7,7 +7,7 @@
 #ifndef _KEY_H_
 #define _KEY_H_
 
-#define MAX_KEY (32)		//Œ®‚ÌÅ‘å”
+#define MAX_KEY (8)		//Œ®‚ÌÅ‘å”
 
 typedef enum
 {
