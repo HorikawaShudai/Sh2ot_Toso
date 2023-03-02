@@ -72,6 +72,7 @@ int g_Rand_PolygonColor_G;
 int g_Rand_PolygonColor_B;
 int g_Rand_PolygonColor_A;
 int g_Rand_PolygonType;
+int  nEnemySECount;							//敵のSEを鳴らす間隔
 
 //====================================================================
 //プレイヤーの初期化処理
@@ -124,8 +125,6 @@ void InitPlayer(void)
 		g_aPlayer[nCntPlayer].nVibCnt = 0;
 		g_aPlayer[nCntPlayer].KeyHelpUI = false;
 		g_aPlayer[nCntPlayer].ExitHelpUI = false;
-
-		g_aPlayer[nCntPlayer].nEnemySECount = 0;
 		g_aPlayer[nCntPlayer].nPlayerSECount = 0;
 
 		g_Rand_PolygonColor_R = 0;
@@ -135,6 +134,9 @@ void InitPlayer(void)
 		g_Rand_PolygonType = 0;
 
 		g_aPlayer[nCntPlayer].nNumModel = 1;
+
+		//敵のSEを鳴らす間隔
+		nEnemySECount = 0;
 
 		//Xファイルの読み込み
 		D3DXLoadMeshFromX("data\\MODEL\\player.x",
@@ -852,7 +854,10 @@ void UpdatePlayer1(void)
 					if (CollisionExit(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nCntPlayer) == true)
 					{//鍵を入手出来た場合
 
-					 //ドアの開閉音
+						//鍵の開く音
+						PlaySound(SOUND_LABEL_SE_UNLOCKKEY);
+
+						//ドアの開閉音
 						PlaySound(SOUND_LABEL_SE_DOOR);
 
 						g_aPlayer[nCntPlayer].bGetKey = false;	//鍵を入手してない状態にする
@@ -872,6 +877,19 @@ void UpdatePlayer1(void)
 						{
 							do_Tutorial = MODE_END;
 						}
+					}
+				}
+			}
+
+			//鍵を持っていないときの処理
+			else
+			{//プレイヤーが鍵を持っていない場合
+				if (GetKeyboardTrigger(DIK_E) == true || GetGamepadTrigger(BUTTON_A, nCntPlayer) || GetGamepadTrigger(BUTTON_B, nCntPlayer))
+				{//Eキー入力
+					if (CollisionExit(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nCntPlayer) == true)
+					{//鍵を入手出来た場合
+						//ドアが開かない音
+						PlaySound(SOUND_LABEL_SE_NOKEY);
 					}
 				}
 			}
@@ -1556,13 +1574,13 @@ void PlayerDistance(int nCnt)
 
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, PLAYER_DISTANCE_SE, 0.0f, -10.0f, 50.0f) == true)
 			{//サウンド処理
-				g_aPlayer[nCnt].nEnemySECount++;
+				nEnemySECount++;
 
-				if (g_aPlayer[nCnt].nEnemySECount > ENEMY_SE_SPEED)
+				if (nEnemySECount > ENEMY_SE_SPEED)
 				{
 					PlaySound(SOUND_LABEL_SE_ENEMYMOVE);
 
-					g_aPlayer[nCnt].nEnemySECount = 0;
+					nEnemySECount = 0;
 				}
 			}
 			else
