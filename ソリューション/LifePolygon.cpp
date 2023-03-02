@@ -19,7 +19,7 @@
 #define SIZE_TUTORIALUI_2_01_X		(320.0f)	//「」の幅
 #define SIZE_TUTORIALUI_2_01_Y		(360.0f)	//「」の高さ
 
-#define POS_TUTORIALUI_2_02_X		(320.0f)	//「」のX座標の位置
+#define POS_TUTORIALUI_2_02_X		(960.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_2_02_Y		(360.0f)	//「」のY座標の位置
 #define SIZE_TUTORIALUI_2_02_X		(320.0f)	//「」の幅
 #define SIZE_TUTORIALUI_2_02_Y		(360.0f)	//「」の高さ

@@ -8,7 +8,7 @@
 #ifndef _OBJECT00_H_
 #define _OBJECT00_H_
 
-#define MAX_OBJECT00 (2048)		//オブジェクトの最大数
+#define MAX_OBJECT00 (512)		//オブジェクトの最大数
 
 //モデルの構造体
 typedef enum

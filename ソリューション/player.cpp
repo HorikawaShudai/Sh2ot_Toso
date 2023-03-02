@@ -72,7 +72,7 @@ int g_Rand_PolygonColor_G;
 int g_Rand_PolygonColor_B;
 int g_Rand_PolygonColor_A;
 int g_Rand_PolygonType;
-int  nEnemySECount;							//敵のSEを鳴らす間隔
+int g_ExitCount;
 
 //====================================================================
 //プレイヤーの初期化処理
@@ -125,6 +125,8 @@ void InitPlayer(void)
 		g_aPlayer[nCntPlayer].nVibCnt = 0;
 		g_aPlayer[nCntPlayer].KeyHelpUI = false;
 		g_aPlayer[nCntPlayer].ExitHelpUI = false;
+
+		g_aPlayer[nCntPlayer].nEnemySECount = 0;
 		g_aPlayer[nCntPlayer].nPlayerSECount = 0;
 
 		g_Rand_PolygonColor_R = 0;
@@ -132,11 +134,9 @@ void InitPlayer(void)
 		g_Rand_PolygonColor_B = 0;
 		g_Rand_PolygonColor_A = 0;
 		g_Rand_PolygonType = 0;
+		g_ExitCount = 0;
 
 		g_aPlayer[nCntPlayer].nNumModel = 1;
-
-		//敵のSEを鳴らす間隔
-		nEnemySECount = 0;
 
 		//Xファイルの読み込み
 		D3DXLoadMeshFromX("data\\MODEL\\player.x",
@@ -801,8 +801,12 @@ void UpdatePlayer1(void)
 				CollisionItem(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-20.0f, -20.0f, -20.0f), D3DXVECTOR3(20.0f, 20.0f, 20.0f), 20.0f, nCntPlayer);
 			}
 
-			//出口との当たり判定
-			CollisionExi(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
+			if (g_aPlayer[nCntPlayer].bExit == false)
+			{//脱出していない状態の時
+
+			 //出口との当たり判定
+				CollisionExi(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
+			}
 
 			//プレイヤーと敵との距離
 			PlayerDistance(nCntPlayer);
@@ -854,10 +858,7 @@ void UpdatePlayer1(void)
 					if (CollisionExit(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nCntPlayer) == true)
 					{//鍵を入手出来た場合
 
-						//鍵の開く音
-						PlaySound(SOUND_LABEL_SE_UNLOCKKEY);
-
-						//ドアの開閉音
+					 //ドアの開閉音
 						PlaySound(SOUND_LABEL_SE_DOOR);
 
 						g_aPlayer[nCntPlayer].bGetKey = false;	//鍵を入手してない状態にする
@@ -877,19 +878,6 @@ void UpdatePlayer1(void)
 						{
 							do_Tutorial = MODE_END;
 						}
-					}
-				}
-			}
-
-			//鍵を持っていないときの処理
-			else
-			{//プレイヤーが鍵を持っていない場合
-				if (GetKeyboardTrigger(DIK_E) == true || GetGamepadTrigger(BUTTON_A, nCntPlayer) || GetGamepadTrigger(BUTTON_B, nCntPlayer))
-				{//Eキー入力
-					if (CollisionExit(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nCntPlayer) == true)
-					{//鍵を入手出来た場合
-						//ドアが開かない音
-						PlaySound(SOUND_LABEL_SE_NOKEY);
 					}
 				}
 			}
@@ -915,11 +903,19 @@ void UpdatePlayer1(void)
 	//ゲーム終了処理
 	if (g_GameEnd == false)
 	{
-		if ((g_aPlayer[0].bExit == true) && 
-			(g_aPlayer[1].bExit == true) && 
-			(g_aPlayer[2].bExit == true) &&
-			(g_aPlayer[3].bExit == true))
+		if ((g_aPlayer[0].bExit == true || g_aPlayer[0].bUse == false) &&
+			(g_aPlayer[1].bExit == true || g_aPlayer[1].bUse == false) &&
+			(g_aPlayer[2].bExit == true || g_aPlayer[2].bUse == false) &&
+			(g_aPlayer[3].bExit == true || g_aPlayer[3].bUse == false))
 		{//全員脱出しているとき
+
+			for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
+			{
+				if (g_aPlayer[nCntPlayer].bExit == true)
+				{
+					g_ExitCount++;
+				}
+			}
 
 			//チュートリアルモード脱出の時
 			if (GetMode() == MODE_TUTORIAL)
@@ -949,6 +945,7 @@ void UpdatePlayer1(void)
 	{
 		PrintDebugProc("プレイヤー%d人目の座標【X : %f | Y : %f | Z : %f】\n", nCntPlayerPlayer + 1, g_aPlayer[nCntPlayerPlayer].pos.x, g_aPlayer[nCntPlayerPlayer].pos.y, g_aPlayer[nCntPlayerPlayer].pos.z);
 		PrintDebugProc("プレイヤー%d人目の移動量【X : %f | Y : %f | Z : %f】\n", nCntPlayerPlayer + 1, g_aPlayer[nCntPlayerPlayer].move.x, g_aPlayer[nCntPlayerPlayer].move.y, g_aPlayer[nCntPlayerPlayer].move.z);
+		PrintDebugProc("プレイヤーが脱出した数【%d】\n", g_ExitCount);
 	}
 #endif
 }
@@ -1457,6 +1454,8 @@ void PlayerState(int nCnt)
 			}
 			break;
 		}
+		//死んだプレイヤーのバイブレーションをオフにする
+		GetGamepad_Vibrtion_false(nCnt);
 		break;
 	case PLAYER_EXSIT:
 
@@ -1574,13 +1573,13 @@ void PlayerDistance(int nCnt)
 
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, PLAYER_DISTANCE_SE, 0.0f, -10.0f, 50.0f) == true)
 			{//サウンド処理
-				nEnemySECount++;
+				g_aPlayer[nCnt].nEnemySECount++;
 
-				if (nEnemySECount > ENEMY_SE_SPEED)
+				if (g_aPlayer[nCnt].nEnemySECount > ENEMY_SE_SPEED)
 				{
 					PlaySound(SOUND_LABEL_SE_ENEMYMOVE);
 
-					nEnemySECount = 0;
+					g_aPlayer[nCnt].nEnemySECount = 0;
 				}
 			}
 			else

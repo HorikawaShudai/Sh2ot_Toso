@@ -202,14 +202,9 @@ void UninitObject00(void)
 //====================================================================
 void UpdateObject00(void)
 {
-	for (int nCntObject = 0; nCntObject < MAX_OBJECT00; nCntObject++)
-	{
-		if (g_Object00[nCntObject].bUse == true)
-		{
-
-		}
-	}
+#ifdef _DEBUG
 	PrintDebugProc("オブジェクトの数:%d\n", g_ObjectCount);
+#endif // _DEBUG
 }
 
 //====================================================================

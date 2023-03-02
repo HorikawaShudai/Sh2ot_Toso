@@ -134,7 +134,7 @@ void UpdateKey(void)
 			}
 
 			//鍵のパーティクル処理
-			SetParticle(D3DXVECTOR3(g_Key[nCntKey].pos.x, g_Key[nCntKey].pos.y + 10.0f, g_Key[nCntKey].pos.z),
+			SetParticle(D3DXVECTOR3(g_Key[nCntKey].pos.x, g_Key[nCntKey].pos.y, g_Key[nCntKey].pos.z),
 				D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 				D3DXCOLOR(0.3f, 0.0f, 0.6f, 0.5f),
 				D3DXVECTOR3(D3DX_PI * 0.0f, 0.0f, 0.0f),
@@ -213,6 +213,7 @@ void DrawKey(void)
 //====================================================================
 void UpdateEditKey(void)
 {
+
 }
 
 //====================================================================
@@ -239,7 +240,7 @@ void SetKey(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 			g_Key[nCntKey].move = move;
 			g_Key[nCntKey].rot = rot;
 			g_Key[nCntKey].nType = nType;
-			g_Key[nCntKey].IndexUI = SetActionHelpUI(D3DXVECTOR3(g_Key[nCntKey].pos.x, g_Key[nCntKey].pos.y + 20.0f, g_Key[nCntKey].pos.z), ACTIONHELPUI_KEY);
+			g_Key[nCntKey].IndexUI = SetActionHelpUI(D3DXVECTOR3(g_Key[nCntKey].pos.x, g_Key[nCntKey].pos.y + 5.0f, g_Key[nCntKey].pos.z), 2.5f, ACTIONHELPUI_KEY);
 			g_Key[nCntKey].bUse = true;
 
 			int nNumVtx;		//頂点数
@@ -350,18 +351,23 @@ bool CollisionKeyHelpUI(D3DXVECTOR3 *pPos, float Size)
 				break;
 			}
 		}
-		if (g_Key[nCntKey].bUse == true)
+		//else if (g_Key[nCntKey].bUse == true && g_Key[nCntKey].bHelpUI == true)
+		//{
+		//	if (pPos->x <= g_Key[nCntKey].pos.x - Size
+		//		|| pPos->x >= g_Key[nCntKey].pos.x + Size
+		//		|| pPos->y <= g_Key[nCntKey].pos.y - Size
+		//		|| pPos->y >= g_Key[nCntKey].pos.y + Size
+		//		|| pPos->z <= g_Key[nCntKey].pos.z - Size
+		//		|| pPos->z >= g_Key[nCntKey].pos.z + Size)
+		//	{//アイテムとプレイヤーが当たった(X軸)
+		//		g_Key[nCntKey].bHelpUI = false;
+		//		UI = false;
+		//	}
+		//}
+		else
 		{
-			if (pPos->x <= g_Key[nCntKey].pos.x - Size
-				|| pPos->x >= g_Key[nCntKey].pos.x + Size
-				|| pPos->y <= g_Key[nCntKey].pos.y - Size
-				|| pPos->y >= g_Key[nCntKey].pos.y + Size
-				|| pPos->z <= g_Key[nCntKey].pos.z - Size
-				|| pPos->z >= g_Key[nCntKey].pos.z + Size)
-			{//アイテムとプレイヤーが当たった(X軸)
-				g_Key[nCntKey].bHelpUI = false;
-				UI = false;
-			}
+			g_Key[nCntKey].bHelpUI = false;
+			UI = false;
 		}
 	}
 
@@ -397,40 +403,35 @@ void CollisionKeyShadow(D3DXVECTOR3 *pPos)
 //====================================================================
 void PatternSetKey(int nNumPlayer)
 {
-	int bnNum = 0;
-
-	//int bnNum;
-	//switch (nNumPlayer)
-	//{
-	//case 1:
-	//	bnNum = rand() % 12;
-	//	SetKey(KeyPos[bnNum], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	//	break;
-	//case 2:
-	//	bnNum = rand() % 5;
-	//	SetKey(KeyPos[bnNum], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	//	SetKey(KeyPos[bnNum + 5], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	//	break;
-	//case 3:
-	//	bnNum = rand() % 4;
-	//	SetKey(KeyPos[bnNum], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	//	bnNum = rand() % 4;
-	//	SetKey(KeyPos[bnNum + 4], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	//	bnNum = rand() % 4;
-	//	SetKey(KeyPos[bnNum + 8], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	//	break;
-	//case 4:
-	//	bnNum = rand() % 2;
-	//	SetKey(KeyPos[bnNum], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	//	bnNum = rand() % 2;
-	//	SetKey(KeyPos[bnNum + 2], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	//	bnNum = rand() % 4;
-	//	SetKey(KeyPos[bnNum + 4], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	//	bnNum = rand() % 4;
-	//	SetKey(KeyPos[bnNum + 8], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-	//	break;
-	//}
-
-	SetKey(KeyPos[bnNum], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-
+	int bnNum;
+	switch (nNumPlayer)
+	{
+	case 1:
+		bnNum = rand() % 12;
+		SetKey(KeyPos[bnNum], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		break;
+	case 2:
+		bnNum = rand() % 5;
+		SetKey(KeyPos[bnNum], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		SetKey(KeyPos[bnNum + 5], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		break;
+	case 3:
+		bnNum = rand() % 4;
+		SetKey(KeyPos[bnNum], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		bnNum = rand() % 4;
+		SetKey(KeyPos[bnNum + 4], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		bnNum = rand() % 4;
+		SetKey(KeyPos[bnNum + 8], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		break;
+	case 4:
+		bnNum = rand() % 2;
+		SetKey(KeyPos[bnNum], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		bnNum = rand() % 2;
+		SetKey(KeyPos[bnNum + 2], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		bnNum = rand() % 4;
+		SetKey(KeyPos[bnNum + 4], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		bnNum = rand() % 4;
+		SetKey(KeyPos[bnNum + 8], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
+		break;
+	}
 }
