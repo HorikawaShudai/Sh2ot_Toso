@@ -138,6 +138,7 @@ void UninitObjectLight(void)
 //====================================================================
 void UpdateObjectLight(void)
 {
+#ifdef _DEBUG
 	for (int nCntObject = 0; nCntObject < MAX_OBJECTLIGHT; nCntObject++)
 	{
 		if (g_ObjectLight[nCntObject].bUse == true)
@@ -146,7 +147,9 @@ void UpdateObjectLight(void)
 			SetLight(g_ObjectLight[nCntObject].LightIdx, D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(g_ObjectLight[nCntObject].pos.x, g_ObjectLight[nCntObject].pos.y, g_ObjectLight[nCntObject].pos.z), D3DXVECTOR3(0.0f, -1.0f, 0.0f), 200.0f, 2.0f);
 		}
 	}
-	PrintDebugProc("背景オブジェクトの数:%d\n", g_ObjectCount02);
+
+	PrintDebugProc("ライトオブジェクトの数:%d\n", g_ObjectCount02);
+#endif // _DEBUG
 }
 
 //====================================================================

@@ -316,6 +316,7 @@ void UpdateTime(void)
 	if (g_aTexU[0] == 0 && g_aTexU[1] == 0 && g_aTexU[2] == 0 && g_aTexU[3] == 0)
 	{//§ŒÀŠÔ‚ª‚O‚É‚È‚Á‚½‚Æ‚«
 		PlayerAllDown();
+		g_bTimeCount = false;
 	}
 }
 

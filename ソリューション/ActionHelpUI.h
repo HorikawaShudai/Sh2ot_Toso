@@ -17,6 +17,7 @@ typedef struct
 {
 	D3DXVECTOR3 pos;							//位置
 	D3DXMATRIX mtxWorld;						//ワールドマトリックス
+	float fSize;								//サイズ
 	ACTIONHELPUI_TYPE nType;					//種類
 	bool bUse;									//使用しているかどうか
 }ActionHelpUI;
@@ -26,7 +27,7 @@ void InitActionHelpUI(void);
 void UninitActionHelpUI(void);
 void UpdateActionHelpUI(void);
 void DrawActionHelpUI(int nCntPlayer, bool GetKey);
-int SetActionHelpUI(D3DXVECTOR3 pos, ACTIONHELPUI_TYPE Type);
+int SetActionHelpUI(D3DXVECTOR3 pos, float Size, ACTIONHELPUI_TYPE Type);
 void FalseActionHelpUI(int Idx);
 ActionHelpUI * GetActionHelpUI(void);
 #endif

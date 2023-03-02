@@ -20,6 +20,8 @@ typedef enum
 	SOUND_LABEL_SE_GETKEY,				//鍵の入手音
 	SOUND_LABEL_SE_DAMAGE,				//ダメージ音
 	SOUND_LABEL_SE_NOIZE,				//ダメージ後のノイズ音
+	SOUND_LABEL_SE_NOKEY,				//鍵を持っていないときのドアの音
+	SOUND_LABEL_SE_UNLOCKKEY,			//ドアの鍵が開く音
 	SOUND_LABEL_MAX,
 } SOUND_LABEL;
 

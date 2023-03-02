@@ -166,14 +166,9 @@ void UninitObjectBG(void)
 //====================================================================
 void UpdateObjectBG(void)
 {
-	for (int nCntObject = 0; nCntObject < MAX_OBJECTBG; nCntObject++)
-	{
-		if (g_ObjectBG[nCntObject].bUse == true)
-		{
-
-		}
-	}
+#ifdef _DEBUG
 	PrintDebugProc("背景オブジェクトの数:%d\n", g_ObjectCount01);
+#endif // _DEBUG
 }
 
 //====================================================================

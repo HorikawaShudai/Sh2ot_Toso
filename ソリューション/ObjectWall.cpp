@@ -137,14 +137,9 @@ void UninitObjectWall(void)
 //====================================================================
 void UpdateObjectWall(void)
 {
-	for (int nCntObject = 0; nCntObject < MAX_OBJECTWALL; nCntObject++)
-	{
-		if (g_ObjectWall[nCntObject].bUse == true)
-		{
-
-		}
-	}
+#ifdef _DEBUG
 	PrintDebugProc("壁オブジェクトの数:%d\n", g_ObjectWallCount);
+#endif // _DEBUG
 }
 
 //====================================================================

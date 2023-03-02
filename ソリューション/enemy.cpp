@@ -244,10 +244,12 @@ void UpdateEnemy(void)
 				//ベクトルを求める
 				D3DXVECTOR3 vecEnemy = g_Enemy[nCntObject].Tgpos - g_Enemy[nCntObject].pos ;
 				vecEnemy.y = atan2f(vecEnemy.x, vecEnemy.z);
-				
+#ifdef _DEBUG
+
 				PrintDebugProc("座標：x%fz%f\n", g_Enemy[nCntObject].pos.x, g_Enemy[nCntObject].pos.z);
 				PrintDebugProc("目標座標：x%fz%f\n", g_Enemy[nCntObject].Tgpos.x, g_Enemy[nCntObject].Tgpos.z);
 				PrintDebugProc("移動角度：%f\n",vecEnemy.y);
+#endif // _DEBUG
 				g_Enemy[nCntObject].rotDest = vecEnemy;
 				//座標の更新
 			
@@ -695,6 +697,8 @@ void EnemyPatrol(int nEnemy)
 		g_Enemy[nEnemy].fDistanceLeft = DetectWall(g_Enemy[nEnemy].pos, g_Enemy[nEnemy].rot.y + D3DX_PI*-0.5f, 100);
 		g_Enemy[nEnemy].fDistanceRight = DetectWall(g_Enemy[nEnemy].pos, g_Enemy[nEnemy].rot.y + D3DX_PI*0.5f, 100);
 
+#ifdef _DEBUG
+
 		//PrintDebugProc("\nEnemy%d北:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceN);
 		//PrintDebugProc("Enemy%d南:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceS);
 		//PrintDebugProc("Enemy%d西:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceW);
@@ -704,7 +708,9 @@ void EnemyPatrol(int nEnemy)
 		//PrintDebugProc("Enemy%d左:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceLeft);
 		//PrintDebugProc("Enemy%d前:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceFront);
 
-		PrintDebugProc("\nEnemy%d(左)(右)(前):(%f)(%f)(%f)\n", nEnemy, g_Enemy[nEnemy].fDistanceLeft,g_Enemy[nEnemy].fDistanceRight, g_Enemy[nEnemy].fDistanceFront);
+		PrintDebugProc("\nEnemy%d(左)(右)(前):(%f)(%f)(%f)\n", nEnemy, g_Enemy[nEnemy].fDistanceLeft, g_Enemy[nEnemy].fDistanceRight, g_Enemy[nEnemy].fDistanceFront);
+
+#endif // _DEBUG
 
 		//自身の進む方向に壁があった場合
 
@@ -895,7 +901,7 @@ void LoadEnemyMotion(int nEnemyBG)
 {
 	FILE *pFile; //ファイルポインタを宣言
 
-				 //ファイルを開く
+	//ファイルを開く
 	pFile = fopen("", "r");
 
 	//ファイルを開く

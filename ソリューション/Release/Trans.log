@@ -1,37 +1,9 @@
 ﻿  ActionHelpUI.cpp
-  CheckboxUI.cpp
-  EscapeTutorial.cpp
-  PlayModeSelect.cpp
-  PlayNumberSelect.cpp
-  Thunder.cpp
-  VillainTutorial.cpp
-  enemy.cpp
-  game.cpp
-  main.cpp
-  player.cpp
-  sound.cpp
-  title.cpp
+  objectBG.cpp
   コード生成しています。
-  473 of 574 functions (82.4%) were compiled, the rest were copied from previous compilation.
-    59 functions were new in current compilation
-    16 functions had inline decision re-evaluated but remain unchanged
+  187 of 574 functions (32.6%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    70 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
-object00.obj : warning LNK4099: PDB 'vc140.pdb' が 'object00.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-objectBG.obj : warning LNK4099: PDB 'vc140.pdb' が 'objectBG.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-objectLight.obj : warning LNK4099: PDB 'vc140.pdb' が 'objectLight.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-objectPoly.obj : warning LNK4099: PDB 'vc140.pdb' が 'objectPoly.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-paperBG00.obj : warning LNK4099: PDB 'vc140.pdb' が 'paperBG00.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-paperBG01.obj : warning LNK4099: PDB 'vc140.pdb' が 'paperBG01.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-particle.obj : warning LNK4099: PDB 'vc140.pdb' が 'particle.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-pause.obj : warning LNK4099: PDB 'vc140.pdb' が 'pause.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-playerBG.obj : warning LNK4099: PDB 'vc140.pdb' が 'playerBG.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-result.obj : warning LNK4099: PDB 'vc140.pdb' が 'result.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-resultUI.obj : warning LNK4099: PDB 'vc140.pdb' が 'resultUI.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-score.obj : warning LNK4099: PDB 'vc140.pdb' が 'score.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-score_item.obj : warning LNK4099: PDB 'vc140.pdb' が 'score_item.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-stage.obj : warning LNK4099: PDB 'vc140.pdb' が 'stage.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-stamina.obj : warning LNK4099: PDB 'vc140.pdb' が 'stamina.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-time.obj : warning LNK4099: PDB 'vc140.pdb' が 'time.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-tutorialUI.obj : warning LNK4099: PDB 'vc140.pdb' が 'tutorialUI.obj' で、または 'C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\vc140.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.exe
-  Trans.vcxproj -> C:\Users\Student\Desktop\透走用ローカルリポジトリ\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github10\Sh2ot_Toso\ソリューション\Trans.exe
+  Trans.vcxproj -> C:\Users\student\Documents\授業用\グループ制作1\グループ制作1\github10\Sh2ot_Toso\ソリューション\Trans.pdb (Full PDB)

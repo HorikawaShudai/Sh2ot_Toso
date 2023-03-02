@@ -67,7 +67,6 @@ typedef struct
 	int nVibCnt;								//チュートリアル用バイブレーション状態を数える処理
 	bool KeyHelpUI;								//鍵のヘルプUIの表示がされているかどうか
 	bool ExitHelpUI;							//出口のヘルプUIの表示がされているかどうか
-	int  nEnemySECount;							//敵のSEを鳴らす間隔
 	int  nPlayerSECount;						//プレイヤーのSEを鳴らす間隔
 	bool bChase;								//敵に追いかけられているかどうか
 }Player;

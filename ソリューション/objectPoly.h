@@ -11,7 +11,7 @@
 #include "main.h"
 
 //ƒ}ƒNƒ•Ï”
-#define MAX_OBJECTPOLY (512)  //°‚ÌÅ‘å”
+#define MAX_OBJECTPOLY (128)  //°‚ÌÅ‘å”
 
 //°‚Ì\‘¢‘Ì
 typedef struct

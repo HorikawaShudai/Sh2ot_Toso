@@ -72,6 +72,8 @@ int g_Rand_PolygonColor_G;
 int g_Rand_PolygonColor_B;
 int g_Rand_PolygonColor_A;
 int g_Rand_PolygonType;
+int g_ExitCount;
+int nEnemySECount;
 
 //====================================================================
 //プレイヤーの初期化処理
@@ -125,7 +127,6 @@ void InitPlayer(void)
 		g_aPlayer[nCntPlayer].KeyHelpUI = false;
 		g_aPlayer[nCntPlayer].ExitHelpUI = false;
 
-		g_aPlayer[nCntPlayer].nEnemySECount = 0;
 		g_aPlayer[nCntPlayer].nPlayerSECount = 0;
 
 		g_Rand_PolygonColor_R = 0;
@@ -133,6 +134,9 @@ void InitPlayer(void)
 		g_Rand_PolygonColor_B = 0;
 		g_Rand_PolygonColor_A = 0;
 		g_Rand_PolygonType = 0;
+		g_ExitCount = 0;
+
+		nEnemySECount = 0;
 
 		g_aPlayer[nCntPlayer].nNumModel = 1;
 
@@ -801,8 +805,12 @@ void UpdatePlayer1(void)
 				CollisionItem(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-20.0f, -20.0f, -20.0f), D3DXVECTOR3(20.0f, 20.0f, 20.0f), 20.0f, nCntPlayer);
 			}
 
-			//出口との当たり判定
-			CollisionExi(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
+			if (g_aPlayer[nCntPlayer].bExit == false)
+			{//脱出していない状態の時
+
+			 //出口との当たり判定
+				CollisionExi(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
+			}
 
 			//プレイヤーと敵との距離
 			PlayerDistance(nCntPlayer);
@@ -854,7 +862,10 @@ void UpdatePlayer1(void)
 					if (CollisionExit(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nCntPlayer) == true)
 					{//鍵を入手出来た場合
 
-					 //ドアの開閉音
+						//ドアのカギを解除する音
+						PlaySound(SOUND_LABEL_SE_UNLOCKKEY);
+
+						//ドアの開閉音
 						PlaySound(SOUND_LABEL_SE_DOOR);
 
 						g_aPlayer[nCntPlayer].bGetKey = false;	//鍵を入手してない状態にする
@@ -874,6 +885,19 @@ void UpdatePlayer1(void)
 						{
 							do_Tutorial = MODE_END;
 						}
+					}
+				}
+			}
+
+			//プレイヤーがカギを持っていないとき
+			else
+			{//プレイヤーが鍵を持っている場合
+				if (GetKeyboardTrigger(DIK_E) == true || GetGamepadTrigger(BUTTON_A, nCntPlayer) || GetGamepadTrigger(BUTTON_B, nCntPlayer))
+				{//Eキー入力
+					if (CollisionExit(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nCntPlayer) == true)
+					{//鍵を入手出来た場合
+						//鍵を持っていないときの音
+						PlaySound(SOUND_LABEL_SE_NOKEY);
 					}
 				}
 			}
@@ -903,11 +927,19 @@ void UpdatePlayer1(void)
 	//ゲーム終了処理
 	if (g_GameEnd == false)
 	{
-		if ((g_aPlayer[0].bExit == true) && 
-			(g_aPlayer[1].bExit == true) && 
-			(g_aPlayer[2].bExit == true) &&
-			(g_aPlayer[3].bExit == true))
+		if ((g_aPlayer[0].bExit == true || g_aPlayer[0].bUse == false) &&
+			(g_aPlayer[1].bExit == true || g_aPlayer[1].bUse == false) &&
+			(g_aPlayer[2].bExit == true || g_aPlayer[2].bUse == false) &&
+			(g_aPlayer[3].bExit == true || g_aPlayer[3].bUse == false))
 		{//全員脱出しているとき
+
+			for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
+			{
+				if (g_aPlayer[nCntPlayer].bExit == true)
+				{
+					g_ExitCount++;
+				}
+			}
 
 			//チュートリアルモード脱出の時
 			if (GetMode() == MODE_TUTORIAL)
@@ -937,6 +969,7 @@ void UpdatePlayer1(void)
 	{
 		PrintDebugProc("プレイヤー%d人目の座標【X : %f | Y : %f | Z : %f】\n", nCntPlayerPlayer + 1, g_aPlayer[nCntPlayerPlayer].pos.x, g_aPlayer[nCntPlayerPlayer].pos.y, g_aPlayer[nCntPlayerPlayer].pos.z);
 		PrintDebugProc("プレイヤー%d人目の移動量【X : %f | Y : %f | Z : %f】\n", nCntPlayerPlayer + 1, g_aPlayer[nCntPlayerPlayer].move.x, g_aPlayer[nCntPlayerPlayer].move.y, g_aPlayer[nCntPlayerPlayer].move.z);
+		PrintDebugProc("プレイヤーが脱出した数【%d】\n", g_ExitCount);
 	}
 #endif
 }
@@ -1413,41 +1446,43 @@ void PlayerState(int nCnt)
 		}
 		break;
 
-	//case PLAYER_DEATH:
-	//	switch (PlayNumber.CurrentSelectNumber)
-	//	{
-	//	case 1:
-	//		SetPolygonBG(D3DXVECTOR3(640.0f, 360.0f, 0.0f), 640.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
-	//		break;
-	//	case 2:
-	//		SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 360.0f, 0.0f), 320.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
-	//		break;
-	//	case 3:
-	//		if (nCnt == 2)
-	//		{//3
-	//			SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
-	//		}
-	//		else
-	//		{//12
-	//			SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
-	//		}
-	//		break;
-	//	case 4:
-	//		if (nCnt == 3)
-	//		{//4
-	//			SetPolygonBG(D3DXVECTOR3(960.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
-	//		}
-	//		else if (nCnt == 2)
-	//		{//3
-	//			SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
-	//		}
-	//		else
-	//		{//12
-	//			SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
-	//		}
-	//		break;
-	//	}
-	//	break;
+	case PLAYER_DEATH:
+		switch (PlayNumber.CurrentSelectNumber)
+		{
+		case 1:
+			SetPolygonBG(D3DXVECTOR3(640.0f, 360.0f, 0.0f), 640.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
+			break;
+		case 2:
+			SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 360.0f, 0.0f), 320.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
+			break;
+		case 3:
+			if (nCnt == 2)
+			{//3
+				SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
+			}
+			else
+			{//12
+				SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
+			}
+			break;
+		case 4:
+			if (nCnt == 3)
+			{//4
+				SetPolygonBG(D3DXVECTOR3(960.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
+			}
+			else if (nCnt == 2)
+			{//3
+				SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
+			}
+			else
+			{//12
+				SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
+			}
+			break;
+		}
+		//死んだプレイヤーのバイブレーションをオフにする
+		GetGamepad_Vibrtion_false(nCnt);
+		break;
 	case PLAYER_EXSIT:
 
 		D3DXVECTOR3 posDest;			//目的の位置
@@ -1564,13 +1599,13 @@ void PlayerDistance(int nCnt)
 
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, PLAYER_DISTANCE_SE, 0.0f, -10.0f, 50.0f) == true)
 			{//サウンド処理
-				g_aPlayer[nCnt].nEnemySECount++;
+				nEnemySECount++;
 
-				if (g_aPlayer[nCnt].nEnemySECount > ENEMY_SE_SPEED)
+				if (nEnemySECount > ENEMY_SE_SPEED)
 				{
 					PlaySound(SOUND_LABEL_SE_ENEMYMOVE);
 
-					g_aPlayer[nCnt].nEnemySECount = 0;
+					nEnemySECount = 0;
 				}
 			}
 			else

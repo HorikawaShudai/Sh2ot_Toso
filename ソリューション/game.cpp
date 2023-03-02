@@ -181,8 +181,6 @@ void InitGame()
 	//プレイヤーの数だけ鍵を設置する
 	PatternSetKey(GetPlayNumberSelect().CurrentSelectNumber);
 
-	SetKey(D3DXVECTOR3(-1000.0f, 3.0f, 0.0f), D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
-
 	InitChasePolygon();
 
 	InitLifePolygon();
@@ -381,6 +379,7 @@ void UpdateGame()
 	if (pPause->bUse == false && g_bEdit == false)
 	{//ポーズ状態じゃないときかつエディット状態じゃないとき
 
+#ifdef _DEBUG
 		PrintDebugProc("カメラの視点移動【W】【A】【S】【D】\n");
 		PrintDebugProc("カメラの注視点移動 【I】【J】【K】【L】\n");
 		PrintDebugProc("カメラの上下移動 【左SHIFT】【左CTRL】\n");
@@ -395,6 +394,7 @@ void UpdateGame()
 		PrintDebugProc("ナイトビジョンのオン/オフ 【F8】\n");
 		PrintDebugProc("エディットモード時のセーブ 【F9】\n");
 		PrintDebugProc("ワイヤーフレームのオン/オフ【F11】\n");
+#endif // _DEBUG
 
 		//床の更新処理
 		UpdateMeshField();
@@ -572,8 +572,6 @@ void DrawGame()
 		//ライフの描画処理
 		DrawLife();
 
-		DrawTime();
-
 		if (GetPlayModeSelect().CurrentModeNumber == 1)
 		{//モード選択が悪透モードの時
 
@@ -611,6 +609,9 @@ void DrawGame()
 
 	//ビューポートを元に戻す
 	pDevice->SetViewport(&viewportDef);
+
+	//タイムの描画処理
+	DrawTime();
 
 	if (pPause->bUse == true)
 	{//ポーズ中だった場合
