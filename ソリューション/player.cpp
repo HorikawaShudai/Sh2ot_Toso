@@ -884,6 +884,18 @@ void UpdatePlayer1(void)
 				}
 			}
 
+			//脱出処理
+			else
+			{//プレイヤーが鍵を持っている場合
+				if (GetKeyboardTrigger(DIK_E) == true || GetGamepadTrigger(BUTTON_A, nCntPlayer) || GetGamepadTrigger(BUTTON_B, nCntPlayer))
+				{//Eキー入力
+					if (CollisionExit(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nCntPlayer) == true)
+					{//鍵を入手出来た場合
+						//
+					}
+				}
+			}
+
 			//一周した時の向きの補正
 			if (g_aPlayer[nCntPlayer].rot.y > D3DX_PI * 1.0f)
 			{
@@ -1567,7 +1579,7 @@ void PlayerDistance(int nCnt)
 
 				if (EnemySECount > ENEMY_SE_SPEED)
 				{
-					PlaySound(SOUND_LABEL_SE_ENEMYMOVE);
+					PlaySound(SOUND_LABEL_SE_ENEMYMOVE);	//敵の足音
 
 					EnemySECount = 0;
 				}
