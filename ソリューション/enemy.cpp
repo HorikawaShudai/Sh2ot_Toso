@@ -21,7 +21,7 @@
 #define	DETECT_SPEED (5000.0f) //探査波の速度
 #define	PLAYERDETECT_SPEED (1000.0f) //探査波の速度
 
-#define TURN_DISTANCE_WALL (120.0f) //曲がるまでの壁との距離
+#define TURN_DISTANCE_WALL (150.0f) //曲がるまでの壁との距離
 #define TURN_DISTANCE_CORNER (500.0f) //曲がり角と認識する距離
 #define MOVE_DISTANCE_WALL (300.0f) //左右の壁と保つ距離
 
