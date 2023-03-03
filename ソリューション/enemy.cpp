@@ -22,8 +22,8 @@
 #define	PLAYERDETECT_SPEED (1000.0f) //探査波の速度
 
 #define TURN_DISTANCE_WALL (150.0f) //曲がるまでの壁との距離
-#define TURN_DISTANCE_CORNER (500.0f) //曲がり角と認識する距離
-#define MOVE_DISTANCE_WALL (300.0f) //左右の壁と保つ距離
+#define TURN_DISTANCE_CORNER (300.0f) //曲がり角と認識する距離
+#define MOVE_DISTANCE_WALL (100.0f) //左右の壁と保つ距離
 
 //グローバル変数
 LPD3DXMESH g_pMeshENEMY[MAX_ENEMY_MODEL] = {};					//メッシュ(頂点情報)へのポインタ
@@ -585,45 +585,45 @@ float DetectWall(D3DXVECTOR3 pos, float fmoveRot, int nLife)
 	Detect.Startpos = pos;
 	Detect.pos = pos;
 	Detect.fmoveRot = fmoveRot;
-	
-		Detect.posOld = Detect.pos;
-		Detect.move = D3DXVECTOR3(sinf(Detect.fmoveRot)*DETECT_SPEED, 0.0f, cosf(Detect.fmoveRot)*DETECT_SPEED);
-		Detect.pos += Detect.move;	
-		
-		D3DXVECTOR3 posPoint = CollisionOuterProductObjectWall(&Detect.pos, &Detect.posOld, &Detect.move);
-		D3DXVECTOR3 posPoint2 = CollisionOuterProductObjectPoly(&Detect.pos, &Detect.posOld, &Detect.move);
-		if (pos != NULL)
-		{//壁に当たったとき
-		 //距離を割り出す
-			float fDis = ((powf(Detect.Startpos.x, 2.0f) + powf(Detect.Startpos.z, 2.0f)) - (powf(posPoint.x, 2.0f) + powf(posPoint.z, 2.0f)));
-			float fDis2 = ((powf(Detect.Startpos.x, 2.0f) + powf(Detect.Startpos.z, 2.0f)) - (powf(posPoint2.x, 2.0f) + powf(posPoint2.z, 2.0f)));
-			if (fDis <= 0)
-			{
-				fDis *= -1.0f;
-			}
-			if (fDis2 <= 0)
-			{
-				fDis2 *= -1.0f;
-			}
-			if (fDis < fDis2)
-			{
-				//SetEffect(posPoint, D3DXCOLOR(1.0f, 0.2f, 0.2f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 120.0f, 60, 0);
-				Detect.fDistance = sqrtf(fDis);
-			}
-			else
-			{
-				//SetEffect(posPoint2, D3DXCOLOR(1.0f, 0.2f, 0.2f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 120.0f, 60, 0);
-				Detect.fDistance = sqrtf(fDis2);
-			}
-			
+
+	Detect.posOld = Detect.pos;
+	Detect.move = D3DXVECTOR3(sinf(Detect.fmoveRot)*DETECT_SPEED, 0.0f, cosf(Detect.fmoveRot)*DETECT_SPEED);
+	Detect.pos += Detect.move;
+
+	D3DXVECTOR3 posPoint = CollisionOuterProductObjectWall(&Detect.pos, &Detect.posOld, &Detect.move);
+	D3DXVECTOR3 posPoint2 = CollisionOuterProductObjectPoly(&Detect.pos, &Detect.posOld, &Detect.move);
+	if (pos != NULL)
+	{//壁に当たったとき
+	 //距離を割り出す
+		float fDis = ((powf(Detect.Startpos.x, 2.0f) + powf(Detect.Startpos.z, 2.0f)) - (powf(posPoint.x, 2.0f) + powf(posPoint.z, 2.0f)));
+		float fDis2 = ((powf(Detect.Startpos.x, 2.0f) + powf(Detect.Startpos.z, 2.0f)) - (powf(posPoint2.x, 2.0f) + powf(posPoint2.z, 2.0f)));
+		if (fDis <= 0)
+		{
+			fDis *= -1.0f;
+		}
+		if (fDis2 <= 0)
+		{
+			fDis2 *= -1.0f;
+		}
+		if (fDis < fDis2)
+		{
 			//SetEffect(posPoint, D3DXCOLOR(1.0f, 0.2f, 0.2f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 120.0f, 60, 0);
-			return Detect.fDistance;
+			Detect.fDistance = sqrtf(fDis);
 		}
 		else
 		{
-			return 10000;
+			//	SetEffect(posPoint2, D3DXCOLOR(1.0f, 0.2f, 0.2f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 120.0f, 60, 0);
+			Detect.fDistance = sqrtf(fDis2);
 		}
-	
+
+		//SetEffect(posPoint, D3DXCOLOR(1.0f, 0.2f, 0.2f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 120.0f, 60, 0);
+		return Detect.fDistance;
+	}
+	else
+	{
+		return 10000;
+	}
+
 }
 
 //====================================================================
