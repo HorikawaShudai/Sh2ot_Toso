@@ -16,13 +16,13 @@
 #define LIFEPOS_X_0     (40.0f)		//1人目ライフのX位置
 #define LIFEPOS_Y_0     (50.0f)		//1人目ライフのY位置
 
-#define LIFEPOS_X_1     (660.0f)	//2人目ライフのX位置
+#define LIFEPOS_X_1     (680.0f)	//2人目ライフのX位置
 #define LIFEPOS_Y_1     (50.0f)		//2人目ライフのY位置
 
 #define LIFEPOS_X_2     (40.0f)		//3人目ライフのX位置
 #define LIFEPOS_Y_2     (400.0f)	//3人目ライフのY位置
 
-#define LIFEPOS_X_3     (660.0f)	//4人目ライフのX位置
+#define LIFEPOS_X_3     (680.0f)	//4人目ライフのX位置
 #define LIFEPOS_Y_3     (400.0f)	//4人目ライフのY位置
 
 #define LIFE_WIDTH    (40.0f)		//ライフの幅

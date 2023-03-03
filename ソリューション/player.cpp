@@ -28,6 +28,7 @@
 #include "CheckboxUI.h"
 #include "PolygonBG.h"
 #include "EscapeTutorial.h"
+#include "key.h"
 #include "sound.h"
 
 //É}ÉNÉçíËã`
@@ -1823,6 +1824,7 @@ void PlayerHit(int nCnt, int nDamage)
 			g_aPlayer[nCnt].bUse = false;
 			g_aPlayer[nCnt].State = PLAYER_DAMAGE;
 			g_aPlayer[nCnt].nDamageCounter = PLAYER_DAMAGECOUNTER;
+			SetKey(D3DXVECTOR3(g_aPlayer[nCnt].pos.x, g_aPlayer[nCnt].pos.y + 5.0f, g_aPlayer[nCnt].pos.z), D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.1f, 0.0f), 0);
 		}
 
 		else
