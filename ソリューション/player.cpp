@@ -1640,8 +1640,8 @@ D3DXVECTOR3 CollisionOuterProductPlayer(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld,
 	D3DXVECTOR3 vecMove = *pPos - *pPosOld;
 	//ç¿ïWï€ä«óp
 	int nPosCount = 0;
-	D3DXVECTOR3 pos[MAX_OBJECT00 * 4] = {};
-	for (int nCnt = 0; nCnt < MAX_OBJECT00; nCnt++)
+	D3DXVECTOR3 pos[NUM_PLAYER * 4] = {};
+	for (int nCnt = 0; nCnt < NUM_PLAYER; nCnt++)
 	{
 		if (g_aPlayer[nCnt].bUse == true)
 		{
@@ -1764,10 +1764,12 @@ D3DXVECTOR3 CollisionOuterProductPlayer(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld,
 				}
 			}
 		}
+		return pos[0];
 	}
+	
 
 
-	return pos[0];
+	return D3DXVECTOR3(FLT_MAX, FLT_MAX, FLT_MAX);
 }
 
 //====================================================================
