@@ -21,7 +21,7 @@
 #define	DETECT_SPEED (5000.0f) //’T¸”g‚Ì‘¬“x
 #define	PLAYERDETECT_SPEED (1000.0f) //’T¸”g‚Ì‘¬“x
 
-#define TURN_DISTANCE_WALL (120.0f) //‹È‚ª‚é‚Ü‚Å‚Ì•Ç‚Æ‚Ì‹——£
+#define TURN_DISTANCE_WALL (150.0f) //‹È‚ª‚é‚Ü‚Å‚Ì•Ç‚Æ‚Ì‹——£
 #define TURN_DISTANCE_CORNER (500.0f) //‹È‚ª‚èŠp‚Æ”FŽ¯‚·‚é‹——£
 #define MOVE_DISTANCE_WALL (300.0f) //¶‰E‚Ì•Ç‚Æ•Û‚Â‹——£
 
@@ -97,6 +97,7 @@ void InitEnemy(void)
 		g_Enemy[nCntObject].StateCount = 0;
 		g_Enemy[nCntObject].nCoolTurn = 0;
 		g_Enemy[nCntObject].nTarget = -1;
+		g_Enemy[nCntObject].bHit = false;
 		g_Enemy[nCntObject].nTargetOld = -1;
 
 		//ƒ‚[ƒVƒ‡ƒ“‚ÌÝ’èˆ—
@@ -215,9 +216,7 @@ void UpdateEnemy(void)
 
 			//ƒvƒŒƒCƒ„[’T’m
 			if (g_Enemy[nCntObject].state != ENEMYSTATE_ATTACK && g_Enemy[nCntObject].state != ENEMYSTATE_CHASE)
-			{
-				
-				
+			{	
 					float DetectRot = g_Enemy[nCntObject].rot.y - D3DXToRadian(45.0f) + D3DXToRadian(7.5f * (g_nDetect % 12));
 					if (DetectPlayer(g_Enemy[nCntObject].pos, DetectRot, nCntObject) == true)
 					{
@@ -288,6 +287,7 @@ void UpdateEnemy(void)
 							g_Enemy[nCntObject].state = ENEMYSTATE_ATTACK;
 							g_Enemy[nCntObject].StateCount = 30;
 							PlayerHit(nCnt, 1);
+							g_Enemy[nCnt].bHit = true;
 							pPlayer->bChase = false;
 							g_Enemy[nCntObject].nTarget = -1;
 							if (pPlayer->nLife > 0)

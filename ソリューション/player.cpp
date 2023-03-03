@@ -28,6 +28,7 @@
 #include "CheckboxUI.h"
 #include "PolygonBG.h"
 #include "EscapeTutorial.h"
+#include "key.h"
 #include "sound.h"
 
 //マクロ定義
@@ -57,7 +58,7 @@ void UpdatePlayer1(void);
 void ResPlayerMove(int nCnt);					//プレイヤーそれぞれに対応
 void ResPlayerrot(int nCnt);					//プレイヤーそれぞれに対応
 
-												//グローバル変数
+//グローバル変数
 LPDIRECT3DTEXTURE9 g_pTexturePlayer[100] = {};	//テクスチャのポインタ
 LPD3DXMESH g_pMeshPlayer[32] = {};				//メッシュ(頂点情報)へのポインタ
 LPD3DXBUFFER g_pBuffMatPlayer[32] = {};			//マテリアルへのポインタ
@@ -403,7 +404,7 @@ void UpdatePlayer0(void)
 			if (g_aPlayer[0].bUse == false && g_aPlayer[1].bUse == false && g_aPlayer[2].bUse == false && g_aPlayer[3].bUse == false)
 			{
 				g_GameEnd = true;
-				SetGameState(GAMESTATE_GAMEOVER_END, 60);
+				SetGameState(GAMESTATE_GAMEOVER_END, 250);
 			}
 		}
 
@@ -753,6 +754,8 @@ void UpdatePlayer1(void)
 			}
 #endif
 
+			g_aPlayer[nCntPlayer].rot.y += 0.5f;
+
 			//バイブレーションの更新処理
 			PlayerVibrtionUpdate(nCntPlayer);
 
@@ -784,7 +787,7 @@ void UpdatePlayer1(void)
 				//プレイヤーの移動入力処理----------
 				ResPlayerMove(nCntPlayer);
 
-				//移動時にプレイヤーの向きを補正する----------
+				//移動時にプレイヤーの向きを補正
 				ResPlayerrot(nCntPlayer);
 			}
 
@@ -833,8 +836,8 @@ void UpdatePlayer1(void)
 				{//Eキー入力
 					if (CollisionKey(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nCntPlayer) == true)
 					{//鍵を入手出来た場合
-						g_aPlayer[nCntPlayer].bGetKey = true;	//鍵を入手状態にする
-						SetKeyUI(nCntPlayer, true);				//鍵UIを表示する
+						g_aPlayer[nCntPlayer].bGetKey = true;		//鍵を入手状態にする
+						SetKeyUI(nCntPlayer, true);					//鍵UIを表示する
 						g_aPlayer[nCntPlayer].KeyHelpUI = false;
 
 						//鍵の入手音
@@ -860,7 +863,10 @@ void UpdatePlayer1(void)
 					if (CollisionExit(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nCntPlayer) == true)
 					{//鍵を入手出来た場合
 
-					 //ドアの開閉音
+						//ドアのカギを解除する音
+						PlaySound(SOUND_LABEL_SE_UNLOCKKEY);
+
+						//ドアの開閉音
 						PlaySound(SOUND_LABEL_SE_DOOR);
 
 						g_aPlayer[nCntPlayer].bGetKey = false;	//鍵を入手してない状態にする
@@ -884,14 +890,15 @@ void UpdatePlayer1(void)
 				}
 			}
 
-			//脱出処理
+			//プレイヤーがカギを持っていないとき
 			else
 			{//プレイヤーが鍵を持っている場合
 				if (GetKeyboardTrigger(DIK_E) == true || GetGamepadTrigger(BUTTON_A, nCntPlayer) || GetGamepadTrigger(BUTTON_B, nCntPlayer))
 				{//Eキー入力
 					if (CollisionExit(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nCntPlayer) == true)
 					{//鍵を入手出来た場合
-						//
+						//鍵を持っていないときの音
+						PlaySound(SOUND_LABEL_SE_NOKEY);
 					}
 				}
 			}
@@ -911,6 +918,10 @@ void UpdatePlayer1(void)
 			{
 				PlayerHit(nCntPlayer, 1);
 			}
+		}
+		else if (g_aPlayer[nCntPlayer].bUse == false)
+		{
+			g_aPlayer[nCntPlayer].State = PLAYER_SMITE;
 		}
 	}
 
@@ -950,7 +961,7 @@ void UpdatePlayer1(void)
 			(g_aPlayer[3].bUse == false))
 		{//全員死亡しているとき
 			g_GameEnd = true;
-			SetGameState(GAMESTATE_GAMEOVER_END, 60);
+			SetGameState(GAMESTATE_GAMEOVER_END, 250);
 		}
 	}
 
@@ -1418,7 +1429,9 @@ void PlayerState(int nCnt)
 		g_aPlayer[nCnt].nDamageCounter--;
 		if (g_aPlayer[nCnt].nDamageCounter < 0)
 		{
-			g_aPlayer[nCnt].State = PLAYER_DEATH;
+			//g_aPlayer[nCnt].State = PLAYER_DEATH;
+
+		g_aPlayer[nCnt].State = PLAYER_SMITE;
 		}
 		break;
 
@@ -1579,7 +1592,7 @@ void PlayerDistance(int nCnt)
 
 				if (EnemySECount > ENEMY_SE_SPEED)
 				{
-					PlaySound(SOUND_LABEL_SE_ENEMYMOVE);	//敵の足音
+					PlaySound(SOUND_LABEL_SE_ENEMYMOVE);
 
 					EnemySECount = 0;
 				}
@@ -1811,6 +1824,7 @@ void PlayerHit(int nCnt, int nDamage)
 			g_aPlayer[nCnt].bUse = false;
 			g_aPlayer[nCnt].State = PLAYER_DAMAGE;
 			g_aPlayer[nCnt].nDamageCounter = PLAYER_DAMAGECOUNTER;
+			SetKey(D3DXVECTOR3(g_aPlayer[nCnt].pos.x, g_aPlayer[nCnt].pos.y + 5.0f, g_aPlayer[nCnt].pos.z), D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.1f, 0.0f), 0);
 		}
 
 		else
