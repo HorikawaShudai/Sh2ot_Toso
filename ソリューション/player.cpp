@@ -73,6 +73,7 @@ int g_Rand_PolygonColor_B;
 int g_Rand_PolygonColor_A;
 int g_Rand_PolygonType;
 int g_ExitCount;
+int EnemySECount;								//“G‚ÌSE‚ð–Â‚ç‚·ŠÔŠu
 
 //====================================================================
 //ƒvƒŒƒCƒ„[‚Ì‰Šú‰»ˆ—
@@ -126,7 +127,6 @@ void InitPlayer(void)
 		g_aPlayer[nCntPlayer].KeyHelpUI = false;
 		g_aPlayer[nCntPlayer].ExitHelpUI = false;
 
-		g_aPlayer[nCntPlayer].nEnemySECount = 0;
 		g_aPlayer[nCntPlayer].nPlayerSECount = 0;
 
 		g_Rand_PolygonColor_R = 0;
@@ -135,6 +135,8 @@ void InitPlayer(void)
 		g_Rand_PolygonColor_A = 0;
 		g_Rand_PolygonType = 0;
 		g_ExitCount = 0;
+
+		EnemySECount = 0;  //“G‚ÌSE‚ð–Â‚ç‚·ˆ—‚ð‰Šú‰»
 
 		g_aPlayer[nCntPlayer].nNumModel = 1;
 
@@ -1561,13 +1563,13 @@ void PlayerDistance(int nCnt)
 
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, PLAYER_DISTANCE_SE, 0.0f, -10.0f, 50.0f) == true)
 			{//ƒTƒEƒ“ƒhˆ—
-				g_aPlayer[nCnt].nEnemySECount++;
+				EnemySECount++;
 
-				if (g_aPlayer[nCnt].nEnemySECount > ENEMY_SE_SPEED)
+				if (EnemySECount > ENEMY_SE_SPEED)
 				{
 					PlaySound(SOUND_LABEL_SE_ENEMYMOVE);
 
-					g_aPlayer[nCnt].nEnemySECount = 0;
+					EnemySECount = 0;
 				}
 			}
 			else
