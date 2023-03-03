@@ -664,7 +664,7 @@ bool DetectPlayer(D3DXVECTOR3 pos, float fmoveRot, int nEnemy)
 	}
 	
 	
-	if (fDis[1] < fDis[0] && fDis[1] < fDis[2])
+	if (fDis[1] < fDis[0] && fDis[1] < fDis[2] )
 	{
 		g_Enemy[nEnemy].Tgpos = posPoint[1];
 		return true;
