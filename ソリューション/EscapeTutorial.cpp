@@ -251,6 +251,10 @@ void UpdateEscapeTutorial()
 	}
 
 #endif
+	if (GetKeyboardPress(DIK_RETURN))
+	{//ENTERキーを押したときリザルトにフェード
+		SetFade(MODE_GAME);
+	}
 
 	//UpdateSpotLight();
 
