@@ -1429,7 +1429,7 @@ void PlayerState(int nCnt)
 		g_aPlayer[nCnt].nDamageCounter--;
 		if (g_aPlayer[nCnt].nDamageCounter < 0)
 		{
-			//g_aPlayer[nCnt].State = PLAYER_DEATH;
+			g_aPlayer[nCnt].State = PLAYER_DEATH;
 
 		g_aPlayer[nCnt].State = PLAYER_SMITE;
 		}
@@ -1824,7 +1824,7 @@ void PlayerHit(int nCnt, int nDamage)
 			g_aPlayer[nCnt].bUse = false;
 			g_aPlayer[nCnt].State = PLAYER_DAMAGE;
 			g_aPlayer[nCnt].nDamageCounter = PLAYER_DAMAGECOUNTER;
-			SetKey(D3DXVECTOR3(g_aPlayer[nCnt].pos.x, g_aPlayer[nCnt].pos.y + 5.0f, g_aPlayer[nCnt].pos.z), D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.1f, 0.0f), 0);
+			SetKey(D3DXVECTOR3(g_aPlayer[nCnt].pos.x, g_aPlayer[nCnt].pos.y + 3.0f, g_aPlayer[nCnt].pos.z), D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.1f, 0.0f), 0);
 		}
 
 		else
