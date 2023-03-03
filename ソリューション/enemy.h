@@ -150,6 +150,7 @@ typedef struct
 	int nTarget;
 	bool bHit;
 	int nTargetOld;
+	int nCntStop;
 }ENEMY;
 
 //’T¸—p\‘¢‘Ì

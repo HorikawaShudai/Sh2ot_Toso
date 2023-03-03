@@ -286,7 +286,7 @@ void UpdatePlayer0(void)
 		g_aPlayer[nSelectPlayer].pos += g_aPlayer[nSelectPlayer].move;
 
 		//オブジェクトとの当たり判定
-		CollisionObject00(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 50.0f, 10.0f), 10.0f);
+		CollisionObjectPoly(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 50.0f, 10.0f), 10.0f);
 		CollisionObjectWall(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 50.0f, 10.0f), 10.0f);
 		//	CollisionObjectPoly(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 50.0f, 10.0f), 10.0f);
 		//外積の当たり判定
@@ -1429,7 +1429,7 @@ void PlayerState(int nCnt)
 		g_aPlayer[nCnt].nDamageCounter--;
 		if (g_aPlayer[nCnt].nDamageCounter < 0)
 		{
-			//g_aPlayer[nCnt].State = PLAYER_DEATH;
+			g_aPlayer[nCnt].State = PLAYER_DEATH;
 
 		g_aPlayer[nCnt].State = PLAYER_SMITE;
 		}
@@ -1640,8 +1640,8 @@ D3DXVECTOR3 CollisionOuterProductPlayer(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld,
 	D3DXVECTOR3 vecMove = *pPos - *pPosOld;
 	//座標保管用
 	int nPosCount = 0;
-	D3DXVECTOR3 pos[MAX_OBJECT00 * 4] = {};
-	for (int nCnt = 0; nCnt < MAX_OBJECT00; nCnt++)
+	D3DXVECTOR3 pos[NUM_PLAYER * 4] = {};
+	for (int nCnt = 0; nCnt < NUM_PLAYER; nCnt++)
 	{
 		if (g_aPlayer[nCnt].bUse == true)
 		{
@@ -1764,10 +1764,12 @@ D3DXVECTOR3 CollisionOuterProductPlayer(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld,
 				}
 			}
 		}
+		return pos[0];
 	}
+	
 
 
-	return pos[0];
+	return D3DXVECTOR3(FLT_MAX, FLT_MAX, FLT_MAX);
 }
 
 //====================================================================
@@ -1824,7 +1826,7 @@ void PlayerHit(int nCnt, int nDamage)
 			g_aPlayer[nCnt].bUse = false;
 			g_aPlayer[nCnt].State = PLAYER_DAMAGE;
 			g_aPlayer[nCnt].nDamageCounter = PLAYER_DAMAGECOUNTER;
-			SetKey(D3DXVECTOR3(g_aPlayer[nCnt].pos.x, g_aPlayer[nCnt].pos.y + 5.0f, g_aPlayer[nCnt].pos.z), D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.1f, 0.0f), 0);
+			SetKey(D3DXVECTOR3(g_aPlayer[nCnt].pos.x, g_aPlayer[nCnt].pos.y + 3.0f, g_aPlayer[nCnt].pos.z), D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.1f, 0.0f), 0);
 		}
 
 		else

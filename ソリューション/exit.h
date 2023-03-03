@@ -7,7 +7,7 @@
 #ifndef _EXIT_H_
 #define _EXIT_H_
 
-#define MAX_EXIT (6)		//Œ®‚ÌÅ‘å”
+#define MAX_EXIT (8)		//Œ®‚ÌÅ‘å”
 
 typedef enum
 {
