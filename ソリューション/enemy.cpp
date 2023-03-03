@@ -738,11 +738,7 @@ void EnemyPatrol(int nEnemy)
 
 		//©g‚Ìi‚Ş•ûŒü‚É•Ç‚ª‚ ‚Á‚½ê‡
 
-		if (((g_Enemy[nEnemy].MoveState == ENEMYMOVE_N && g_Enemy[nEnemy].fDistanceN <= TURN_DISTANCE_WALL) ||
-			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_S && g_Enemy[nEnemy].fDistanceS <= TURN_DISTANCE_WALL) ||
-			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_E && g_Enemy[nEnemy].fDistanceE <= TURN_DISTANCE_WALL) ||
-			(g_Enemy[nEnemy].MoveState == ENEMYMOVE_W && g_Enemy[nEnemy].fDistanceW <= TURN_DISTANCE_WALL) ||
-			 g_Enemy[nEnemy].MoveState == ENEMYMOVE_NONE))
+		if (g_Enemy[nEnemy].fDistanceFront <= TURN_DISTANCE_WALL || g_Enemy[nEnemy].MoveState == ENEMYMOVE_NONE)
 		{
 			EnemyDirection(nEnemy);
 			g_Enemy[nEnemy].nCoolTurn = 30;
