@@ -97,6 +97,7 @@ void InitEnemy(void)
 		g_Enemy[nCntObject].StateCount = 0;
 		g_Enemy[nCntObject].nCoolTurn = 0;
 		g_Enemy[nCntObject].nTarget = -1;
+		g_Enemy[nCntObject].bHit = false;
 		g_Enemy[nCntObject].nTargetOld = -1;
 
 		//モーションの設定処理
@@ -215,9 +216,7 @@ void UpdateEnemy(void)
 
 			//プレイヤー探知
 			if (g_Enemy[nCntObject].state != ENEMYSTATE_ATTACK && g_Enemy[nCntObject].state != ENEMYSTATE_CHASE)
-			{
-				
-				
+			{	
 					float DetectRot = g_Enemy[nCntObject].rot.y - D3DXToRadian(45.0f) + D3DXToRadian(7.5f * (g_nDetect % 12));
 					if (DetectPlayer(g_Enemy[nCntObject].pos, DetectRot, nCntObject) == true)
 					{
@@ -288,6 +287,7 @@ void UpdateEnemy(void)
 							g_Enemy[nCntObject].state = ENEMYSTATE_ATTACK;
 							g_Enemy[nCntObject].StateCount = 30;
 							PlayerHit(nCnt, 1);
+							g_Enemy[nCnt].bHit = true;
 							pPlayer->bChase = false;
 							g_Enemy[nCntObject].nTarget = -1;
 							if (pPlayer->nLife > 0)
