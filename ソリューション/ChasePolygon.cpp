@@ -58,6 +58,8 @@ const char *c_cpChaPolyTexname01[] =
 LPDIRECT3DTEXTURE9 g_apTextureChasePolygon[NUM_SSUI] = {};	//テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffChasePolygon = NULL;		//頂点バッファへのポインタ
 bool bUseChasePolygon[MAX_SSUI];		//頂点バッファへのポインタ
+float g_ChasePolygonColorA[MAX_SSUI];		//ポリゴンのα値
+float g_ChasePolygonColorA_MAX[MAX_SSUI];		//ポリゴンのα値の最大値
 
 //====================================================================
 //タイトル画面の初期化処理
@@ -264,6 +266,18 @@ void UninitChasePolygon(void)
 //====================================================================
 void UpdateChasePolygon(void)
 {
+	float ColorA[MAX_SSUI];
+	for (int nCntBG = 0; nCntBG < MAX_SSUI; nCntBG++)
+	{
+		if (g_ChasePolygonColorA[nCntBG] > g_ChasePolygonColorA_MAX[nCntBG])
+		{
+			ColorA[nCntBG] = (g_ChasePolygonColorA_MAX[nCntBG] * 2 - g_ChasePolygonColorA[nCntBG]) / g_ChasePolygonColorA_MAX[nCntBG];
+		}
+		else
+		{
+			ColorA[nCntBG] = g_ChasePolygonColorA[nCntBG] / g_ChasePolygonColorA_MAX[nCntBG];
+		}
+	}
 
 	VERTEX_2D*pVtx;	//頂点ポインタを所得
 
@@ -273,14 +287,13 @@ void UpdateChasePolygon(void)
 	for (int nCntBG = 0; nCntBG < MAX_SSUI; nCntBG++)
 	{
 		//頂点カラーの設定
-		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, ColorA[nCntBG] * 0.75f);
+		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, ColorA[nCntBG] * 0.75f);
+		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, ColorA[nCntBG] * 0.75f);
+		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, ColorA[nCntBG] * 0.75f);
 
 		pVtx += 4;	//頂点データのポインタを４つ分進める
 	}
-
 	//頂点バッファをアンロックする
 	g_pVtxBuffChasePolygon->Unlock();
 }
@@ -355,7 +368,17 @@ void DrawChasePolygon(int nCnt)
 //====================================================================
 //ランキングUIの設定処理
 //====================================================================
-void SetChasePolygon(bool bUse, int nCnt)
+void SetColorChasePolygon(float a, int nCnt)
 {
-	bUseChasePolygon[nCnt] = bUse;
+	g_ChasePolygonColorA[nCnt * 2] = a;
+	g_ChasePolygonColorA[nCnt * 2 + 1] = a;
+}
+
+//====================================================================
+//ランキングUIの設定処理
+//====================================================================
+void SetColorChasePolygonMAX(float a, int nCnt)
+{
+	g_ChasePolygonColorA_MAX[nCnt * 2] = a / 2;
+	g_ChasePolygonColorA_MAX[nCnt * 2 + 1] = a / 2;
 }

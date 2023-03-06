@@ -29,6 +29,7 @@
 #include "PolygonBG.h"
 #include "EscapeTutorial.h"
 #include "key.h"
+#include "ChasePolygon.h"
 #include "sound.h"
 
 //マクロ定義
@@ -1480,6 +1481,7 @@ void PlayerVibrtionUpdate(int nCnt)
 	if (g_aPlayer[nCnt].bVibrtion == true)
 	{
 		g_aPlayer[nCnt].VibrtionTrueCount++;
+		SetColorChasePolygon((float)g_aPlayer[nCnt].VibrtionTrueCount, nCnt);
 
 		if (g_aPlayer[nCnt].VibrtionTrueCount >= g_aPlayer[nCnt].VibrtionTime)
 		{
@@ -1505,6 +1507,7 @@ void PlayerSetVibrtion(int nCnt, int nTrueCounter, int nFalseCounter, int nLeftP
 		g_aPlayer[nCnt].VibrtionTime = nTrueCounter;
 		g_aPlayer[nCnt].VibrtionFalseCount = nFalseCounter;
 		GetGamepad_Vibrtion(nCnt, nLeftPower, RightPoewr);
+		SetColorChasePolygonMAX((float)nTrueCounter, nCnt);
 	}
 }
 
@@ -1545,6 +1548,21 @@ void PlayerDistance(int nCnt)
 	{
 		if (pEnemy->bUse == true)
 		{
+			//チュートリアル項目用距離判定
+			if (mode == MODE_TUTORIAL && do_Tutorial == MODE_VIBE)
+			{
+				if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, PLAYER_DISTANCE_VIB_S, 0.0f, -10.0f, 50.0f) == true)
+				{//バイブレーション処理
+					if (g_aPlayer[nCnt].VibrtionFalseCount <= 0)
+					{
+						g_aPlayer[nCnt].nVibCnt++;
+						if (g_aPlayer[nCnt].nVibCnt > 5)
+						{
+							SetCheckUI(nCnt, true);
+						}
+					}
+				}
+			}
 
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, PLAYER_DISTANCE_VIB_L, 0.0f, -10.0f, 50.0f) == true)
 			{//バイブレーション処理(大)
@@ -1568,23 +1586,6 @@ void PlayerDistance(int nCnt)
 				}
 			}
 
-			//チュートリアル項目用距離判定
-			if (mode == MODE_TUTORIAL && do_Tutorial == MODE_VIBE)
-			{
-				if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, PLAYER_DISTANCE_VIB_S, 0.0f, -10.0f, 50.0f) == true)
-				{//バイブレーション処理
-					if (g_aPlayer[nCnt].VibrtionFalseCount <= 0)
-					{
-						g_aPlayer[nCnt].nVibCnt++;
-						if (g_aPlayer[nCnt].nVibCnt > 5)
-						{
-							SetCheckUI(nCnt, true);
-						}
-					}
-				}
-			}
-
-
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, PLAYER_DISTANCE_SE, 0.0f, -10.0f, 50.0f) == true)
 			{//サウンド処理
 				EnemySECount++;
@@ -1603,7 +1604,7 @@ void PlayerDistance(int nCnt)
 	pEnemy = GetEnemy();
 	Camera *pCamera = GetCamera();
 	pCamera += nCnt;
-	for (int nCntEnemy = 0; nCntEnemy < MAX_ENEMY; nCntEnemy++, pEnemy++)
+	for (int nCntEnemy = 0, nEnemyL = 0, nEnemyR = 0; nCntEnemy < MAX_ENEMY; nCntEnemy++, pEnemy++)
 	{
 		if (pEnemy->bUse == true)
 		{
@@ -1626,21 +1627,35 @@ void PlayerDistance(int nCnt)
 				if (A < 0)
 				{
 					g_aPlayer[nCnt].bEnemyRight = true;
+					nEnemyR++;
 				}
 				else
 				{
 					g_aPlayer[nCnt].bEnemyLeft = true;
+					nEnemyL++;
 				}
 #ifdef _DEBUG
 				PrintDebugProc("aaaaaa:%f\n", A);
 				PrintDebugProc("aaaaaa:%f\n", pCamera->rot.y);
 #endif // DEBUG
 			}
+			if (nEnemyR > 0)
+			{
+				g_aPlayer[nCnt].bEnemyRight = true;
+			}
 			else
 			{
 				g_aPlayer[nCnt].bEnemyRight = false;
+			}
+			if (nEnemyL > 0)
+			{
+				g_aPlayer[nCnt].bEnemyLeft = true;
+			}
+			else
+			{
 				g_aPlayer[nCnt].bEnemyLeft = false;
 			}
+
 		}
 	}
 }

@@ -577,7 +577,11 @@ void DeathCameraEnemy(int nCntCamera)
 				//
 				g_aCamera[nCntCamera].rot.y = rotYDiff;
 
+				g_aCamera[nCntCamera].rot.x = 0.8f;
+
 				pPlayer[nCntCamera].rot.y = g_aCamera[nCntCamera].rot.y;
+
+				pPlayer[nCntCamera].rot.x = g_aCamera[nCntCamera].rot.x;
 
 				if (pEnemy->state == ENEMYSTATE_PATROL)
 				{
