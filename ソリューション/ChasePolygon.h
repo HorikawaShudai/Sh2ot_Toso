@@ -7,6 +7,6 @@
 void InitChasePolygon(void);
 void UninitChasePolygon(void);
 void UpdateChasePolygon(void);
-void DrawChasePolygon(void);
+void DrawChasePolygon(int nCnt);
 void SetChasePolygon(bool bUse, int nCnt);
 #endif

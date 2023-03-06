@@ -6,8 +6,9 @@
 #include "PlayNumberSelect.h"
 
 //マクロ定義
-#define NUM_SSUI					(14)		//TUTORIALUIの種類数
+#define NUM_SSUI					(15)		//TUTORIALUIの種類数
 #define MAX_SSUI					(5)			//TUTORIALUIの最大使用数
+#define MAX_BUFF					(2)			//バッファの最大数
 
 #define POS_TUTORIALUI_ALL_X		(640.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_ALL_Y		(290.0f)	//「」のY座標の位置
@@ -52,6 +53,10 @@
 #define UP_PAPERBG01				(100.0f)	//紙を取り出すときの上昇度
 #define UP_PAPERBG01_COUNTER_MAX	(100)		//紙を取り出す速さのカウンター
 
+//プロトタイプ宣言
+void InitSkip(void);
+void DrawSkip(void);
+
 //テクスチャファイル名
 const char *c_apTutorialUITexname[] =
 {
@@ -69,15 +74,18 @@ const char *c_apTutorialUITexname[] =
 	"data\\TEXTURE\\TUTORIAL\\getkey.png",
 	"data\\TEXTURE\\TUTORIAL\\open_doar1.png",
 	"data\\TEXTURE\\TUTORIAL\\escape.png",
+	"data\\TEXTURE\\TUTORIAL\\skip.png",
 };
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_apTextureTutorialUI[NUM_SSUI] = {};	//テクスチャへのポインタ
-LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffTutorialUI = NULL;		//頂点バッファへのポインタ
+LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffTutorialUI[MAX_BUFF] = {};		//頂点バッファへのポインタ
 bool bUseTutorialUI[MAX_SSUI];		//頂点バッファへのポインタ
 bool g_bStageClear_Tutorial;
 bool g_TutorialTEX_Change;			//テクスチャを切り替えるためのカウンター
 int TutorialUI_TrueCounter;			//紙を取り出すときのカウンター
+
+D3DXVECTOR3 pos;
 
 //====================================================================
 //タイトル画面の初期化処理
@@ -106,18 +114,26 @@ void InitTutorialUI(void)
 	TutorialUI_TrueCounter = 0;
 	g_TutorialTEX_Change = false;
 
-	//頂点バッファの生成
+	//頂点バッファの生成0
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * MAX_SSUI,
 		D3DUSAGE_WRITEONLY,
 		FVF_VERTEX_2D,
 		D3DPOOL_MANAGED,
-		&g_pVtxBuffTutorialUI,
+		&g_pVtxBuffTutorialUI[0],
+		NULL);
+
+	//頂点バッファの生成1
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4,
+		D3DUSAGE_WRITEONLY,
+		FVF_VERTEX_2D,
+		D3DPOOL_MANAGED,
+		&g_pVtxBuffTutorialUI[1],
 		NULL);
 
 	VERTEX_2D*pVtx;	//頂点ポインタを所得
 
-					//頂点バッファをロックし、両店情報へのポインタを所得
-	g_pVtxBuffTutorialUI->Lock(0, 0, (void**)&pVtx, 0);
+	//頂点バッファをロックし、両店情報へのポインタを所得
+	g_pVtxBuffTutorialUI[0]->Lock(0, 0, (void**)&pVtx, 0);
 
 	for (nCntBG = 0; nCntBG < MAX_SSUI; nCntBG++)
 	{
@@ -248,7 +264,50 @@ void InitTutorialUI(void)
 	}
 
 	//頂点バッファをアンロックする
-	g_pVtxBuffTutorialUI->Unlock();
+	g_pVtxBuffTutorialUI[0]->Unlock();
+
+	//スキップUIの初期化
+	InitSkip();
+}
+
+//==============================================
+//画面にスキップUIを表示する
+//==============================================
+void InitSkip(void)
+{
+	pos = D3DXVECTOR3(1160.0f, 690.0f, 0.0f);
+
+	VERTEX_2D*pVtx;	//頂点ポインタを所得
+
+	//頂点バッファをロックし、頂点情報へのポインタを所得
+	g_pVtxBuffTutorialUI[1]->Lock(0, 0, (void**)&pVtx, 0);
+
+	//頂点座標の設定
+	pVtx[0].pos = D3DXVECTOR3(pos.x - 100, pos.y - 30, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(pos.x + 100, pos.y - 30, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(pos.x - 100, pos.y + 30, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(pos.x + 100, pos.y + 30, 0.0f);
+
+	//頂点カラーの設定
+	pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+	//rhwの設定
+	pVtx[0].rhw = 1.0f;
+	pVtx[1].rhw = 1.0f;
+	pVtx[2].rhw = 1.0f;
+	pVtx[3].rhw = 1.0f;
+
+	//テクスチャ座標の設定
+	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+
+	//頂点バッファをアンロックする
+	g_pVtxBuffTutorialUI[1]->Unlock();
 }
 
 //====================================================================
@@ -266,12 +325,14 @@ void UninitTutorialUI(void)
 			g_apTextureTutorialUI[nCntBG] = NULL;
 		}
 	}
-
-	//頂点バッファの破棄
-	if (g_pVtxBuffTutorialUI != NULL)
+	for (int nCntBuff = 0; nCntBuff < MAX_BUFF; nCntBuff++)
 	{
-		g_pVtxBuffTutorialUI->Release();
-		g_pVtxBuffTutorialUI = NULL;
+		//頂点バッファの破棄
+		if (g_pVtxBuffTutorialUI[nCntBuff] != NULL)
+		{
+			g_pVtxBuffTutorialUI[nCntBuff]->Release();
+			g_pVtxBuffTutorialUI[nCntBuff] = NULL;
+		}
 	}
 }
 
@@ -303,7 +364,7 @@ void UpdateTutorialUI(void)
 	VERTEX_2D*pVtx;	//頂点ポインタを所得
 
 	//頂点バッファをロックし、両店情報へのポインタを所得
-	g_pVtxBuffTutorialUI->Lock(0, 0, (void**)&pVtx, 0);
+	g_pVtxBuffTutorialUI[0]->Lock(0, 0, (void**)&pVtx, 0);
 
 	for (int nCntBG = 0; nCntBG < NUM_SSUI; nCntBG++)
 	{
@@ -326,7 +387,7 @@ void UpdateTutorialUI(void)
 	}
 
 	//頂点バッファをアンロックする
-	g_pVtxBuffTutorialUI->Unlock();
+	g_pVtxBuffTutorialUI[0]->Unlock();
 }
 
 //====================================================================
@@ -347,7 +408,7 @@ void DrawTutorialUI(void)
 	pDevice = GetDevice();
 
 	//頂点バッファをデータストリームに設定
-	pDevice->SetStreamSource(0, g_pVtxBuffTutorialUI, 0, sizeof(VERTEX_2D));
+	pDevice->SetStreamSource(0, g_pVtxBuffTutorialUI[0], 0, sizeof(VERTEX_2D));
 
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
@@ -478,7 +539,32 @@ void DrawTutorialUI(void)
 				2);
 		}
 	}
+
+	DrawSkip();
 }
+
+void DrawSkip(void)
+{
+	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
+
+	//デバイスの所得
+	pDevice = GetDevice();
+
+	//頂点バッファをデータストリームに設定
+	pDevice->SetStreamSource(0, g_pVtxBuffTutorialUI[1], 0, sizeof(VERTEX_2D));
+
+	//頂点フォーマットの設定
+	pDevice->SetFVF(FVF_VERTEX_2D);
+
+	pDevice->SetTexture(0, g_apTextureTutorialUI[14]);
+
+	//ポリゴンの描画
+	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,	//プリミティブの種類
+		0,						//プリミティブ(ポリゴン)数
+		2);
+	
+}
+
 //====================================================================
 //ランキングUIの設定処理
 //====================================================================

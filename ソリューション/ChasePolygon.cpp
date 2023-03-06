@@ -4,9 +4,11 @@
 #include "ChasePolygon.h"
 #include "EscapeTutorial.h"
 #include "PlayNumberSelect.h"
+#include "player.h"
 
 //マクロ定義
-#define MAX_SSUI					(4)			//TUTORIALUIの最大使用数
+#define MAX_SSUI					(8)			//TUTORIALUIの最大使用数
+#define NUM_SSUI					(1)			//TUTORIALUIの最大種類数
 
 #define POS_TUTORIALUI_1_01_X		(640.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_1_01_Y		(360.0f)	//「」のY座標の位置
@@ -50,13 +52,10 @@
 const char *c_cpChaPolyTexname01[] =
 {
 	"Data\\TEXTURE\\shadow001.jpg",
-	"Data\\TEXTURE\\shadow001.jpg",
-	"Data\\TEXTURE\\shadow001.jpg",
-	"Data\\TEXTURE\\shadow001.jpg",
 };
 
 //グローバル変数
-LPDIRECT3DTEXTURE9 g_apTextureChasePolygon[MAX_SSUI] = {};	//テクスチャへのポインタ
+LPDIRECT3DTEXTURE9 g_apTextureChasePolygon[NUM_SSUI] = {};	//テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffChasePolygon = NULL;		//頂点バッファへのポインタ
 bool bUseChasePolygon[MAX_SSUI];		//頂点バッファへのポインタ
 
@@ -72,17 +71,17 @@ void InitChasePolygon(void)
 							   //デバイスの所得
 	pDevice = GetDevice();
 
-	for (int nCntBG = 0; nCntBG < MAX_SSUI; nCntBG++)
+	for (int nCntBG = 0; nCntBG < NUM_SSUI; nCntBG++)
 	{
 		//テクスチャの読み込み
 		D3DXCreateTextureFromFile(pDevice, c_cpChaPolyTexname01[nCntBG], &g_apTextureChasePolygon[nCntBG]);
 	}
 
-	//UIの表示設定
-	bUseChasePolygon[0] = true;
-	bUseChasePolygon[1] = true;
-	bUseChasePolygon[2] = true;
-	bUseChasePolygon[3] = true;
+	for (nCntBG = 0; nCntBG < MAX_SSUI; nCntBG++)
+	{
+		//UIの表示設定
+		bUseChasePolygon[nCntBG] = true;
+	}
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * MAX_SSUI,
@@ -102,6 +101,7 @@ void InitChasePolygon(void)
 		switch (nCntBG)
 		{
 		case 0:
+		case 1:
 			switch (GetPlayNumberSelect().CurrentSelectNumber)
 			{
 			case 1:
@@ -135,7 +135,8 @@ void InitChasePolygon(void)
 			}
 			break;
 
-		case 1:
+		case 2:
+		case 3:
 			switch (GetPlayNumberSelect().CurrentSelectNumber)
 			{
 			case 2:
@@ -162,7 +163,8 @@ void InitChasePolygon(void)
 			}
 			break;
 
-		case 2:
+		case 4:
+		case 5:
 			switch (GetPlayNumberSelect().CurrentSelectNumber)
 			{
 			case 3:
@@ -182,7 +184,8 @@ void InitChasePolygon(void)
 			}
 			break;
 
-		case 3:
+		case 6:
+		case 7:
 			switch (GetPlayNumberSelect().CurrentSelectNumber)
 			{
 			case 4:
@@ -208,11 +211,22 @@ void InitChasePolygon(void)
 		pVtx[2].rhw = 1.0f;
 		pVtx[3].rhw = 1.0f;
 
-		//テクスチャ座標の設定
-		pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-		pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
-		pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
-		pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+		if (nCntBG % 2 == 0)
+		{
+			//テクスチャ座標の設定
+			pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+			pVtx[1].tex = D3DXVECTOR2(0.5f, 0.0f);
+			pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+			pVtx[3].tex = D3DXVECTOR2(0.5f, 1.0f);
+		}
+		else
+		{
+			//テクスチャ座標の設定
+			pVtx[0].tex = D3DXVECTOR2(0.5f, 0.0f);
+			pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+			pVtx[2].tex = D3DXVECTOR2(0.5f, 1.0f);
+			pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+		}
 
 		pVtx += 4;	//頂点データのポインタを４つ分進める
 	}
@@ -227,7 +241,7 @@ void InitChasePolygon(void)
 void UninitChasePolygon(void)
 {
 	int nCntBG;
-	for (nCntBG = 0; nCntBG < MAX_SSUI; nCntBG++)
+	for (nCntBG = 0; nCntBG < NUM_SSUI; nCntBG++)
 	{
 		//テクスチャの破棄
 		if (g_apTextureChasePolygon[nCntBG] != NULL)
@@ -274,8 +288,10 @@ void UpdateChasePolygon(void)
 //====================================================================
 //タイトル画面の描画処理
 //====================================================================
-void DrawChasePolygon(void)
+void DrawChasePolygon(int nCnt)
 {
+	Player *pPlayer = GetPlayer();
+	pPlayer += nCnt;
 	int nCntBG;
 
 	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
@@ -297,14 +313,37 @@ void DrawChasePolygon(void)
 	for (nCntBG = 0; nCntBG < MAX_SSUI; nCntBG++)
 	{
 		//テクスチャの設定
-		pDevice->SetTexture(0, g_apTextureChasePolygon[nCntBG]);
+		pDevice->SetTexture(0, g_apTextureChasePolygon[0]);
 
-		if (bUseChasePolygon[nCntBG] == true)
+		if (pPlayer->bEnemyLeft == true && pPlayer->bEnemyRight == true)
 		{
-			//ポリゴンの描画
-			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,	//プリミティブの種類
-				4 * nCntBG,						//プリミティブ(ポリゴン)数
-				2);
+			if (bUseChasePolygon[nCntBG] == true && (nCntBG == nCnt * 2 || nCntBG == nCnt * 2 + 1))
+			{
+				//ポリゴンの描画
+				pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,	//プリミティブの種類
+					4 * nCntBG,						//プリミティブ(ポリゴン)数
+					2);
+			}
+		}
+		else if (pPlayer->bEnemyLeft == true)
+		{
+			if (bUseChasePolygon[nCntBG] == true && (nCntBG == nCnt * 2 + 1))
+			{
+				//ポリゴンの描画
+				pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,	//プリミティブの種類
+					4 * nCntBG,						//プリミティブ(ポリゴン)数
+					2);
+			}
+		}
+		else if (pPlayer->bEnemyRight == true)
+		{
+			if (bUseChasePolygon[nCntBG] == true && (nCntBG == nCnt * 2))
+			{
+				//ポリゴンの描画
+				pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,	//プリミティブの種類
+					4 * nCntBG,						//プリミティブ(ポリゴン)数
+					2);
+			}
 		}
 	}
 

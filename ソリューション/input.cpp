@@ -614,13 +614,13 @@ float GetGamepad_Trigger_Right(int nPlayer)
 }
 
 //====================================================================
-//ゲームパッドの左のバイブレーションの処理
+//ゲームパッドのバイブレーションの処理
 //====================================================================
 void GetGamepad_Vibrtion(int nPlayer, int nLeftPower, int RightPoewr)
 {
 	vibration[nPlayer].wLeftMotorSpeed = nLeftPower;
 	vibration[nPlayer].wRightMotorSpeed = RightPoewr;
-	XInputSetState(nPlayer, &vibration[0]);
+	XInputSetState(nPlayer, &vibration[nPlayer]);
 }
 
 //====================================================================

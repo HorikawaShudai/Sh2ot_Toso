@@ -56,6 +56,7 @@ typedef struct
 	int nDamageCounter;							//プレイヤーのダメージ状態の長さ
 	int nDeathCounter;							//プレイヤーの死亡状態の長さ
 	int nHitCounter;							//プレイヤーのヒット状態の長さ
+	D3DXCOLOR LightColor;						//プレイヤーのライトの色
 
 	bool bUse;									//プレイヤーが使用できるかどうか
 	bool bGetKey;								//プレイヤーが鍵を持っているかどうか
@@ -69,6 +70,8 @@ typedef struct
 	bool ExitHelpUI;							//出口のヘルプUIの表示がされているかどうか
 	int  nPlayerSECount;						//プレイヤーのSEを鳴らす間隔
 	bool bChase;								//敵に追いかけられているかどうか
+	bool bEnemyRight;							//敵が右にいるかどうか
+	bool bEnemyLeft;							//敵が左にいるかどうか
 }Player;
 
 //プロトタイプ宣言

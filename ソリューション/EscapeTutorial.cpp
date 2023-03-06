@@ -256,6 +256,11 @@ void UpdateEscapeTutorial()
 		SetFade(MODE_GAME);
 	}
 
+	if (GetKeyboardPress(DIK_RETURN) || GetGamepadTrigger(BUTTON_START, 0) == true)
+	{//ENTERキーを押したときリザルトにフェード
+		SetFade(MODE_GAME);
+	}
+
 	//UpdateSpotLight();
 
 	switch (g_EscapeTutorialState)
