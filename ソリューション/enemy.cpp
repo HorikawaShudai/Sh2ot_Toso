@@ -25,6 +25,9 @@
 #define TURN_DISTANCE_CORNER (300.0f) //曲がり角と認識する距離
 #define MOVE_DISTANCE_WALL (100.0f) //左右の壁と保つ距離
 
+#define ATTACK_SEEK			(30)
+#define ATTACK_COUNT		(200)
+
 //グローバル変数
 LPD3DXMESH g_pMeshENEMY[MAX_ENEMY_MODEL] = {};					//メッシュ(頂点情報)へのポインタ
 LPD3DXBUFFER g_pBuffMatENEMY[MAX_ENEMY_MODEL] = {};				//マテリアルへのポインタ
@@ -263,7 +266,7 @@ void UpdateEnemy(void)
 				{//探索状態に切り替える
 					
 					g_Enemy[nCntObject].state = ENEMYSTATE_SEEK;
-					g_Enemy[nCntObject].StateCount = 30;
+					g_Enemy[nCntObject].StateCount = ATTACK_SEEK;
 				
 				}
 				D3DXVECTOR3	vecPlayer;
@@ -291,9 +294,9 @@ void UpdateEnemy(void)
 							SetEnemyMotion(g_Enemy[nCntObject].MotionType, nCntObject);
 
 							g_Enemy[nCntObject].state = ENEMYSTATE_ATTACK;
-							g_Enemy[nCntObject].StateCount = 30;
+							g_Enemy[nCntObject].StateCount = ATTACK_COUNT;
 							PlayerHit(nCnt, 1);
-							g_Enemy[nCnt].bHit = true;
+							g_Enemy[nCntObject].bHit = true;
 							pPlayer->bChase = false;
 							g_Enemy[nCntObject].nTarget = -1;
 							if (pPlayer->nLife > 0)

@@ -48,7 +48,7 @@
 #define PLAYER_DISTANCE_VIB_S	(600.0f)		//バイブレーション(小)がオンになる距離
 #define PLAYER_DISTANCE_VIB_M	(400.0f)		//バイブレーション(中)がオンになる距離
 #define PLAYER_DISTANCE_VIB_L	(200.0f)		//バイブレーション(大)がオンになる距離
-#define PLAYER_DISTANCE_APPEAR	(300.0f)		//敵が見えるようになる距離
+#define PLAYER_DISTANCE_APPEAR	(250.0f)		//敵が見えるようになる距離
 #define PLAYER_WAITCOUNTER		(120)			//プレイヤーの待機状態の長さ
 #define PLAYER_DAMAGECOUNTER	(120)			//プレイヤーのダメージ状態の長さ
 #define PLAYER_DEATHCOUNTER		(1000)			//プレイヤーの死亡状態の長さ
@@ -388,31 +388,32 @@ void UpdatePlayer0(void)
 		{
 			PlayerHit(nSelectPlayer, 1);
 		}
+	}
 
-		//ゲーム終了処理
-		if (g_GameEnd == false)
+	//ゲーム終了処理
+	if (g_GameEnd == false)
+	{
+		if (g_aPlayer[0].bExit == true && g_aPlayer[1].bExit == true && g_aPlayer[2].bExit == true && g_aPlayer[3].bExit == true)
 		{
-			if (g_aPlayer[0].bExit == true && g_aPlayer[1].bExit == true && g_aPlayer[2].bExit == true && g_aPlayer[3].bExit == true)
-			{
-				//チュートリアルモード脱出の時
-				if (GetMode() == MODE_TUTORIAL)
-				{
-					g_GameEnd = true;
-					SetFade(MODE_GAME);
-				}
-				if (GetMode() == MODE_GAME)
-				{
-					g_GameEnd = true;
-					SetGameState(GAMESTATE_CLEAR_END, 60);
-				}
-			}
-
-			if (g_aPlayer[0].bUse == false && g_aPlayer[1].bUse == false && g_aPlayer[2].bUse == false && g_aPlayer[3].bUse == false)
+			//チュートリアルモード脱出の時
+			if (GetMode() == MODE_TUTORIAL)
 			{
 				g_GameEnd = true;
-				SetGameState(GAMESTATE_GAMEOVER_END, 250);
+				SetFade(MODE_GAME);
+			}
+			if (GetMode() == MODE_GAME)
+			{
+				g_GameEnd = true;
+				SetGameState(GAMESTATE_CLEAR_END, 60);
 			}
 		}
+
+		if (g_aPlayer[0].bUse == false && g_aPlayer[1].bUse == false && g_aPlayer[2].bUse == false && g_aPlayer[3].bUse == false)
+		{
+			g_GameEnd = true;
+			SetGameState(GAMESTATE_GAMEOVER_END, 250);
+		}
+	}
 
 #ifdef _DEBUG
 		PrintDebugProc("【F3】でプレイヤー切り替え：【プレイヤー%d】\n", nSelectPlayer + 1);
@@ -423,7 +424,6 @@ void UpdatePlayer0(void)
 			PrintDebugProc("プレイヤー%d人目の移動量【X : %f | Y : %f | Z : %f】\n", nCntPlayer, g_aPlayer[nCntPlayer].move.x, g_aPlayer[nCntPlayer].move.y, g_aPlayer[nCntPlayer].move.z);
 		}
 #endif
-	}
 }
 
 //====================================================================
@@ -938,7 +938,7 @@ void UpdatePlayer1(void)
 				PlayerHit(nCntPlayer, 1);
 			}
 		}
-		else if (g_aPlayer[nCntPlayer].bUse == false)
+		else if (g_aPlayer[nCntPlayer].bUse == false && g_aPlayer[nCntPlayer].State != PLAYER_DEATH)
 		{
 			g_aPlayer[nCntPlayer].State = PLAYER_SMITE;
 		}
@@ -980,7 +980,7 @@ void UpdatePlayer1(void)
 			(g_aPlayer[3].bUse == false))
 		{//全員死亡しているとき
 			g_GameEnd = true;
-			SetGameState(GAMESTATE_GAMEOVER_END, 250);
+			SetGameState(GAMESTATE_GAMEOVER_END, 340);
 		}
 	}
 
@@ -1455,39 +1455,6 @@ void PlayerState(int nCnt)
 		break;
 
 	case PLAYER_DEATH:
-		switch (PlayNumber.CurrentSelectNumber)
-		{
-		case 1:
-			SetPolygonBG(D3DXVECTOR3(640.0f, 360.0f, 0.0f), 640.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
-			break;
-		case 2:
-			SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 360.0f, 0.0f), 320.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
-			break;
-		case 3:
-			if (nCnt == 2)
-			{//3
-				SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
-			}
-			else
-			{//12
-				SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
-			}
-			break;
-		case 4:
-			if (nCnt == 3)
-			{//4
-				SetPolygonBG(D3DXVECTOR3(960.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
-			}
-			else if (nCnt == 2)
-			{//3
-				SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
-			}
-			else
-			{//12
-				SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 30, 4);
-			}
-			break;
-		}
 		//死んだプレイヤーのバイブレーションをオフにする
 		GetGamepad_Vibrtion_false(nCnt);
 		break;
@@ -1914,7 +1881,11 @@ void PlayerHit(int nCnt, int nDamage)
 			g_aPlayer[nCnt].bUse = false;
 			g_aPlayer[nCnt].State = PLAYER_DAMAGE;
 			g_aPlayer[nCnt].nDamageCounter = PLAYER_DAMAGECOUNTER;
-			SetKey(D3DXVECTOR3(g_aPlayer[nCnt].pos.x, g_aPlayer[nCnt].pos.y + 3.0f, g_aPlayer[nCnt].pos.z), D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.1f, 0.0f), 0);
+			if (g_aPlayer[nCnt].bGetKey == true)
+			{
+				g_aPlayer[nCnt].bGetKey = false;
+				SetKey(D3DXVECTOR3(g_aPlayer[nCnt].pos.x, g_aPlayer[nCnt].pos.y + 3.0f, g_aPlayer[nCnt].pos.z), D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.1f, 0.0f), 0);
+			}
 		}
 
 		else
