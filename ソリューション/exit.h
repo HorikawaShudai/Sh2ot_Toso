@@ -46,6 +46,7 @@ typedef struct
 	bool bHelpUI;								//ヘルプUIが使われているかどうか
 	int IndexUI;								//ヘルプUIの使用番号
 	bool bUse;
+	bool bExitOK;
 
 }EXIT;
 

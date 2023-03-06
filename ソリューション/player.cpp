@@ -48,7 +48,7 @@
 #define PLAYER_DISTANCE_VIB_S	(600.0f)		//バイブレーション(小)がオンになる距離
 #define PLAYER_DISTANCE_VIB_M	(400.0f)		//バイブレーション(中)がオンになる距離
 #define PLAYER_DISTANCE_VIB_L	(200.0f)		//バイブレーション(大)がオンになる距離
-#define PLAYER_DISTANCE_APPEAR	(300.0f)		//敵が見えるようになる距離
+#define PLAYER_DISTANCE_APPEAR	(250.0f)		//敵が見えるようになる距離
 #define PLAYER_WAITCOUNTER		(120)			//プレイヤーの待機状態の長さ
 #define PLAYER_DAMAGECOUNTER	(120)			//プレイヤーのダメージ状態の長さ
 #define PLAYER_DEATHCOUNTER		(1000)			//プレイヤーの死亡状態の長さ
@@ -1914,7 +1914,11 @@ void PlayerHit(int nCnt, int nDamage)
 			g_aPlayer[nCnt].bUse = false;
 			g_aPlayer[nCnt].State = PLAYER_DAMAGE;
 			g_aPlayer[nCnt].nDamageCounter = PLAYER_DAMAGECOUNTER;
-			SetKey(D3DXVECTOR3(g_aPlayer[nCnt].pos.x, g_aPlayer[nCnt].pos.y + 3.0f, g_aPlayer[nCnt].pos.z), D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.1f, 0.0f), 0);
+			if (g_aPlayer[nCnt].bGetKey == true)
+			{
+				g_aPlayer[nCnt].bGetKey = false;
+				SetKey(D3DXVECTOR3(g_aPlayer[nCnt].pos.x, g_aPlayer[nCnt].pos.y + 3.0f, g_aPlayer[nCnt].pos.z), D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.1f, 0.0f), 0);
+			}
 		}
 
 		else
