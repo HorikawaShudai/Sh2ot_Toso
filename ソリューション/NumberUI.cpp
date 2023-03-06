@@ -1,3 +1,10 @@
+//========================================================================================
+//
+// 数字のテクスチャを呼び出す処理[NumberUI.cpp]
+// Author: 坂本　翔唯
+//
+//========================================================================================
+
 #include "main.h"
 #include "numberUI.h"
 #include "game.h"
@@ -10,9 +17,10 @@
 
 //マクロ定義
 #define NUMBER_MAX		(128)	//数字の最大数
+#define NUMBER_NUM		(2)	//数字の種類数
 
 //グローバル変数
-LPDIRECT3DTEXTURE9 g_apTextureNumberUI = NULL;	//テクスチャへのポインタ
+LPDIRECT3DTEXTURE9 g_apTextureNumberUI[NUMBER_NUM] = {};	//テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffNumberUI = NULL;		//頂点バッファへのポインタ
 NumberUI g_NumberUI[NUMBER_MAX];
 
@@ -29,14 +37,20 @@ void InitNumberUI(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\NumberUI03.png",
-		&g_apTextureNumberUI);
+		"data\\TEXTURE\\Number00.png",
+		&g_apTextureNumberUI[0]);
+
+	//テクスチャの読み込み
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\Number00.png",
+		&g_apTextureNumberUI[1]);
 
 	//各種変数の初期化
 	for (nCntNUMBER = 0; nCntNUMBER < NUMBER_MAX; nCntNUMBER++)
 	{
 		g_NumberUI[nCntNUMBER].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_NumberUI[nCntNUMBER].nNumberUI = 0;
+		g_NumberUI[nCntNUMBER].nType = 0;
 		g_NumberUI[nCntNUMBER].Width = 0.0f;
 		g_NumberUI[nCntNUMBER].Height = 0.0f;
 		g_NumberUI[nCntNUMBER].bUse = false;
@@ -96,13 +110,13 @@ void UninitNumberUI(void)
 	//StopSound();
 
 	int nCntNUMBER;
-	for (nCntNUMBER = 0; nCntNUMBER < NUMBER_MAX; nCntNUMBER++)
+	for (nCntNUMBER = 0; nCntNUMBER < NUMBER_NUM; nCntNUMBER++)
 	{
 		//テクスチャの破棄
-		if (g_apTextureNumberUI != NULL)
+		if (g_apTextureNumberUI[nCntNUMBER] != NULL)
 		{
-			g_apTextureNumberUI->Release();
-			g_apTextureNumberUI = NULL;
+			g_apTextureNumberUI[nCntNUMBER]->Release();
+			g_apTextureNumberUI[nCntNUMBER] = NULL;
 		}
 	}
 
@@ -158,7 +172,7 @@ void UpdateNumberUI(void)
 //====================================================================
 //タイトル画面の設定処理
 //====================================================================
-void SetNumberUI(D3DXVECTOR3 pos, float SizeX, float SizeY, int NumberUI)
+void SetNumberUI(D3DXVECTOR3 pos, float SizeX, float SizeY, int NumberUI, int nType)
 {
 	int nCntNUMBER;
 
@@ -170,6 +184,7 @@ void SetNumberUI(D3DXVECTOR3 pos, float SizeX, float SizeY, int NumberUI)
 			g_NumberUI[nCntNUMBER].Width = SizeX;
 			g_NumberUI[nCntNUMBER].Height = SizeY;
 			g_NumberUI[nCntNUMBER].nNumberUI = NumberUI;
+			g_NumberUI[nCntNUMBER].nType = nType;
 			g_NumberUI[nCntNUMBER].bUse = true;
 			break;
 		}
@@ -197,7 +212,7 @@ void DrawNumberUI(void)
 	for (nCntNUMBER = 0; nCntNUMBER < NUMBER_MAX; nCntNUMBER++)
 	{
 		//テクスチャの設定
-		pDevice->SetTexture(0, g_apTextureNumberUI);
+		pDevice->SetTexture(0, g_apTextureNumberUI[g_NumberUI[nCntNUMBER].nType]);
 
 		if (g_NumberUI[nCntNUMBER].bUse == true)
 		{

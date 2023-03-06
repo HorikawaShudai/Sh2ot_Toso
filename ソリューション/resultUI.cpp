@@ -69,7 +69,7 @@ void InitResultUI(void)
 
 	if (bUseResultUI[1] == true)
 	{
-		SetNumberUI(D3DXVECTOR3(600.0f, 600.0f, 0.0f), 50.0f, 50.0f, 1);
+		SetNumberUI(D3DXVECTOR3(600.0f, 600.0f, 0.0f), 50.0f, 50.0f, 1, 0);
 	}
 
 	//頂点バッファの生成

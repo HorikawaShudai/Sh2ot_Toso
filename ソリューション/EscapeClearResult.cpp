@@ -1,3 +1,9 @@
+//========================================================================================
+//
+// リザルトのゲームクリア処理[EscapeClearResult.cpp]
+// Author: 坂本　翔唯
+//
+//========================================================================================
 #include "EscapeClearResult.h"
 #include "camera.h"
 #include "light.h"
@@ -9,6 +15,7 @@
 #include "input.h"
 #include "meshdome.h"
 #include "meshcylinder.h"
+#include "numberUI.h"
 
 //グローバル変数宣言
 
@@ -33,6 +40,8 @@ void InitEscapeClearResult()
 	//ステージの読み込み
 	SetStage(3);
 
+	InitNumberUI();
+
 	InitResultUI();
 }
 
@@ -53,6 +62,8 @@ void UninitEscapeClearResult()
 
 	UninitObject00();
 	UninitObjectBG();
+
+	UninitNumberUI();
 
 	UninitResultUI();
 }
@@ -76,6 +87,8 @@ void UpdateEscapeClearResult()
 
 	UpdateObject00();
 	UpdateObjectBG();
+
+	UpdateNumberUI();
 
 	UpdateResultUI();
 
@@ -110,6 +123,8 @@ void DrawEscapeClearResult()
 
 	DrawObject00();
 	DrawObjectBG();
+
+	DrawNumberUI();
 
 	DrawResultUI();
 

@@ -67,10 +67,8 @@ void InitRankingUI(void)
 	bUseRankingUI[2] = true;
 	bUseRankingUI[3] = true;
 
-	if (bUseRankingUI[1] == true)
-	{
-		SetNumberUI(D3DXVECTOR3(600.0f, 600.0f, 0.0f), 50.0f, 50.0f, 1);
-	}
+	//数字を呼び出す
+	SetNumberUI(D3DXVECTOR3(600.0f, 600.0f, 0.0f), 50.0f, 50.0f, 1, 0);
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * NUM_SSUI,
