@@ -123,12 +123,12 @@ void InitTutorialUI(void)
 		NULL);
 
 	//頂点バッファの生成1
-	/*pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4,
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4,
 		D3DUSAGE_WRITEONLY,
 		FVF_VERTEX_2D,
 		D3DPOOL_MANAGED,
 		&g_pVtxBuffTutorialUI[1],
-		NULL);*/
+		NULL);
 
 	VERTEX_2D*pVtx;	//頂点ポインタを所得
 
@@ -267,23 +267,26 @@ void InitTutorialUI(void)
 	g_pVtxBuffTutorialUI[0]->Unlock();
 
 	//スキップUIの初期化
-	//InitSkip();
+	InitSkip();
 }
 
+//==============================================
+//画面にスキップUIを表示する
+//==============================================
 void InitSkip(void)
 {
-	pos = D3DXVECTOR3(640.0f, 10.0f, 0.0f);
+	pos = D3DXVECTOR3(1160.0f, 690.0f, 0.0f);
 
 	VERTEX_2D*pVtx;	//頂点ポインタを所得
 
-	//頂点バッファをロックし、両店情報へのポインタを所得
+	//頂点バッファをロックし、頂点情報へのポインタを所得
 	g_pVtxBuffTutorialUI[1]->Lock(0, 0, (void**)&pVtx, 0);
 
 	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(pos.x - 30, pos.y - 10, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(pos.x + 30, pos.y - 10, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(pos.x - 30, pos.y + 10, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(pos.x + 30, pos.y + 10, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(pos.x - 100, pos.y - 30, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(pos.x + 100, pos.y - 30, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(pos.x - 100, pos.y + 30, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(pos.x + 100, pos.y + 30, 0.0f);
 
 	//頂点カラーの設定
 	pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -537,7 +540,7 @@ void DrawTutorialUI(void)
 		}
 	}
 
-	//DrawSkip();
+	DrawSkip();
 }
 
 void DrawSkip(void)
