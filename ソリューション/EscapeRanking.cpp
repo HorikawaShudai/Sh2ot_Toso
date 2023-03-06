@@ -1,3 +1,9 @@
+//========================================================================================
+//
+// ランキング処理[EscapeRanking.cpp]
+// Author: 坂本　翔唯
+//
+//========================================================================================
 #include "EscapeRanking.h"
 #include "camera.h"
 #include "light.h"
@@ -12,6 +18,7 @@
 #include "objectPoly.h"
 #include "time.h"
 #include "meshfield.h"
+#include "numberUI.h"
 
 //グローバル変数宣言
 
@@ -40,6 +47,8 @@ void InitEscapeRanking()
 
 	InitRankingUI();
 
+	InitNumberUI();
+
 	InitRanKingNumber();
 
 	InitMeshField();
@@ -67,6 +76,8 @@ void UninitEscapeRanking()
 
 	UninitRankingUI();
 
+	UninitNumberUI();
+
 	UninitRanKingNumber();
 
 	UninitMeshField();
@@ -93,6 +104,8 @@ void UpdateEscapeRanking()
 	UpdateNumberUI();
 
 	UpdateRankingUI();
+
+	UpdateNumberUI();
 
 	UpdateRanKingNumber();
 
@@ -127,6 +140,8 @@ void DrawEscapeRanking()
 	DrawNumberUI();
 
 	DrawRankingUI();
+
+	DrawNumberUI();
 
 	DrawRanKingNumber();
 

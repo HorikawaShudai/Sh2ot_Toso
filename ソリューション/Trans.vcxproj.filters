@@ -52,7 +52,7 @@
     <Filter Include="ヘッダー ファイル\decoration">
       <UniqueIdentifier>{d4326a45-ab78-433e-b83d-5622bc7e1347}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\system\UI">
+    <Filter Include="ソース ファイル\UI">
       <UniqueIdentifier>{5b91d6a8-9331-4dab-878d-94f219db7582}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -112,13 +112,13 @@
       <Filter>ソース ファイル\system</Filter>
     </ClCompile>
     <ClCompile Include="keyUI.cpp">
-      <Filter>ソース ファイル\system\UI</Filter>
+      <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="NumberUI.cpp">
-      <Filter>ソース ファイル\system\UI</Filter>
+      <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="RankingUI.cpp">
-      <Filter>ソース ファイル\system\UI</Filter>
+      <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="edit.cpp">
       <Filter>ソース ファイル\Map</Filter>
@@ -145,22 +145,22 @@
       <Filter>ソース ファイル\system</Filter>
     </ClCompile>
     <ClCompile Include="RankingNumber.cpp">
-      <Filter>ソース ファイル\system\UI</Filter>
+      <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="life.cpp">
-      <Filter>ソース ファイル\system\UI</Filter>
+      <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="time.cpp">
-      <Filter>ソース ファイル\system\UI</Filter>
+      <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="score.cpp">
-      <Filter>ソース ファイル\system\UI</Filter>
+      <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="field.cpp">
       <Filter>ソース ファイル\Map</Filter>
     </ClCompile>
     <ClCompile Include="stamina.cpp">
-      <Filter>ソース ファイル\system\UI</Filter>
+      <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="exit.cpp">
       <Filter>ソース ファイル\Map</Filter>
@@ -181,10 +181,10 @@
       <Filter>ソース ファイル\system</Filter>
     </ClCompile>
     <ClCompile Include="resultUI.cpp">
-      <Filter>ソース ファイル\system\UI</Filter>
+      <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="tutorialUI.cpp">
-      <Filter>ソース ファイル\system\UI</Filter>
+      <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="meshfield.cpp">
       <Filter>ソース ファイル\mesh</Filter>
@@ -196,19 +196,19 @@
       <Filter>ソース ファイル\mesh</Filter>
     </ClCompile>
     <ClCompile Include="ActionHelpUI.cpp">
-      <Filter>ソース ファイル\system\UI</Filter>
+      <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="CheckboxUI.cpp">
-      <Filter>ソース ファイル\system\UI</Filter>
+      <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="EscapeTutorial.cpp">
       <Filter>ソース ファイル\mode</Filter>
     </ClCompile>
     <ClCompile Include="paperBG00.cpp">
-      <Filter>ソース ファイル\system\UI</Filter>
+      <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="paperBG01.cpp">
-      <Filter>ソース ファイル\system\UI</Filter>
+      <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="VillainTutorial.cpp">
       <Filter>ソース ファイル\mode</Filter>
