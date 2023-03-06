@@ -596,9 +596,9 @@ void DrawGame()
 
 		DrawLifePolygon();
 
-		if (pPlayer->bChase == true)
+		if (pPlayer->bEnemyLeft == true || pPlayer->bEnemyRight == true)
 		{
-			DrawChasePolygon();
+			DrawChasePolygon(nCnt);
 		}
 
 		DrawPolygonBG();
