@@ -44,8 +44,10 @@
 #define PLAYER_SE_WALK			(40)			//プレイヤーの足音を鳴らす間隔(歩き)
 #define PLAYER_SE_DASH			(30)			//プレイヤーの足音を鳴らす間隔(ダッシュ)
 #define PLAYER_DISTANCE_SE		(800.0f)		//敵の音が聞こえるようになる距離
-#define PLAYER_DISTANCE_VIB		(600.0f)		//バイブレーションがオンになる距離
-#define PLAYER_DISTANCE_APPEAR	(500.0f)		//敵が見えるようになる距離
+#define PLAYER_DISTANCE_VIB_S	(600.0f)		//バイブレーション(小)がオンになる距離
+#define PLAYER_DISTANCE_VIB_M	(400.0f)		//バイブレーション(中)がオンになる距離
+#define PLAYER_DISTANCE_VIB_L	(200.0f)		//バイブレーション(大)がオンになる距離
+#define PLAYER_DISTANCE_APPEAR	(300.0f)		//敵が見えるようになる距離
 #define PLAYER_WAITCOUNTER		(120)			//プレイヤーの待機状態の長さ
 #define PLAYER_DAMAGECOUNTER	(120)			//プレイヤーのダメージ状態の長さ
 #define PLAYER_DEATHCOUNTER		(1000)			//プレイヤーの死亡状態の長さ
@@ -111,6 +113,7 @@ void InitPlayer(void)
 		g_aPlayer[nCntPlayer].nDamageCounter = PLAYER_DAMAGECOUNTER;
 		g_aPlayer[nCntPlayer].nDeathCounter = PLAYER_DEATHCOUNTER;
 		g_aPlayer[nCntPlayer].bChase = false;
+		g_aPlayer[nCntPlayer].LightColor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 		g_aPlayer[nCntPlayer].bCheck = false;  //チェックボックスがついていない状態に
 		g_aPlayer[nCntPlayer].bExit = false;
@@ -119,6 +122,8 @@ void InitPlayer(void)
 #if _DEBUG
 		g_aPlayer[nCntPlayer].bAppear = true;
 #endif
+		g_aPlayer[nCntPlayer].bEnemyRight = false;
+		g_aPlayer[nCntPlayer].bEnemyLeft = false;
 
 		g_bPlayerOps = false;
 		g_GameEnd = false;
@@ -816,8 +821,21 @@ void UpdatePlayer1(void)
 			//プレイヤーと敵との距離
 			PlayerDistance(nCntPlayer);
 
+			if (g_aPlayer[nCntPlayer].bChase == true)
+			{
+				g_aPlayer[nCntPlayer].LightColor = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
+			}
+			else
+			{
+				if (g_aPlayer[nCntPlayer].LightColor.b <= 1.0f || g_aPlayer[nCntPlayer].LightColor.g <= 1.0f)
+				{
+					g_aPlayer[nCntPlayer].LightColor.b += 0.005f;
+					g_aPlayer[nCntPlayer].LightColor.g += 0.005f;
+				}
+			}
+
 			//プレイヤーが保持するライトの更新処理
-			SetLight(g_aPlayer[nCntPlayer].LightIdx00, D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(g_aPlayer[nCntPlayer].pos.x, g_aPlayer[nCntPlayer].pos.y + 50.0f, g_aPlayer[nCntPlayer].pos.z), D3DXVECTOR3(sinf(Getrot(nCntPlayer).y), sinf(Getrot(nCntPlayer).x), cosf(Getrot(nCntPlayer).y)), PLAYER_LIGHT, 1.0f);
+			SetLight(g_aPlayer[nCntPlayer].LightIdx00, D3DLIGHT_SPOT, g_aPlayer[nCntPlayer].LightColor, D3DXVECTOR3(g_aPlayer[nCntPlayer].pos.x, g_aPlayer[nCntPlayer].pos.y + 50.0f, g_aPlayer[nCntPlayer].pos.z), D3DXVECTOR3(sinf(Getrot(nCntPlayer).y), sinf(Getrot(nCntPlayer).x), cosf(Getrot(nCntPlayer).y)), PLAYER_LIGHT, 1.0f);
 
 			//ヘルプUIの表示
 			if (g_aPlayer[nCntPlayer].bGetKey == false)
@@ -1524,7 +1542,7 @@ void PlayerSetVibrtion(int nCnt, int nTrueCounter, int nFalseCounter, int nLeftP
 }
 
 //====================================================================
-//プレイヤーと敵との距離判定
+//プレイヤーと敵との距離判定と位置関係の外積
 //====================================================================
 void PlayerDistance(int nCnt)
 {
@@ -1560,13 +1578,35 @@ void PlayerDistance(int nCnt)
 	{
 		if (pEnemy->bUse == true)
 		{
-			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, PLAYER_DISTANCE_VIB, 0.0f, -10.0f, 50.0f) == true)
-			{//バイブレーション処理
+
+			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, PLAYER_DISTANCE_VIB_L, 0.0f, -10.0f, 50.0f) == true)
+			{//バイブレーション処理(大)
+				if (g_aPlayer[nCnt].VibrtionFalseCount <= 0)
+				{
+					PlayerSetVibrtion(nCnt, 5, 5, 60000, 60000);
+				}
+			}
+			else if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, PLAYER_DISTANCE_VIB_M, 0.0f, -10.0f, 50.0f) == true)
+			{//バイブレーション処理(中)
 				if (g_aPlayer[nCnt].VibrtionFalseCount <= 0)
 				{
 					PlayerSetVibrtion(nCnt, 10, 10, 40000, 40000);
+				}
+			}
+			else if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, PLAYER_DISTANCE_VIB_S, 0.0f, -10.0f, 50.0f) == true)
+			{//バイブレーション処理(小)
+				if (g_aPlayer[nCnt].VibrtionFalseCount <= 0)
+				{
+					PlayerSetVibrtion(nCnt, 20, 20, 20000, 20000);
+				}
+			}
 
-					if (mode == MODE_TUTORIAL && do_Tutorial == MODE_VIBE)
+			//チュートリアル項目用距離判定
+			if (mode == MODE_TUTORIAL && do_Tutorial == MODE_VIBE)
+			{
+				if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, PLAYER_DISTANCE_VIB_S, 0.0f, -10.0f, 50.0f) == true)
+				{//バイブレーション処理
+					if (g_aPlayer[nCnt].VibrtionFalseCount <= 0)
 					{
 						g_aPlayer[nCnt].nVibCnt++;
 						if (g_aPlayer[nCnt].nVibCnt > 5)
@@ -1574,17 +1614,9 @@ void PlayerDistance(int nCnt)
 							SetCheckUI(nCnt, true);
 						}
 					}
-
-					else if (do_Tutorial != MODE_VIBE)
-					{
-
-					}
 				}
 			}
-			else
-			{
-				//GetGamepad_Vibrtion_false(nCnt);
-			}
+
 
 			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, PLAYER_DISTANCE_SE, 0.0f, -10.0f, 50.0f) == true)
 			{//サウンド処理
@@ -1597,9 +1629,50 @@ void PlayerDistance(int nCnt)
 					EnemySECount = 0;
 				}
 			}
+		}
+	}
+
+	//プレイヤーと敵の位置関係を示す外積
+	pEnemy = GetEnemy();
+	Camera *pCamera = GetCamera();
+	pCamera += nCnt;
+	for (int nCntEnemy = 0; nCntEnemy < MAX_ENEMY; nCntEnemy++, pEnemy++)
+	{
+		if (pEnemy->bUse == true)
+		{
+
+			if (CollisionCircle(g_aPlayer[nCnt].pos, pEnemy->pos, PLAYER_DISTANCE_VIB_S, 0.0f, -10.0f, 50.0f) == true)
+			{
+				D3DXVECTOR3 vecToPos;
+				D3DXVECTOR3 vecLine;
+				float A;
+
+				vecToPos.x = (pEnemy->pos.x) - (g_aPlayer[nCnt].pos.x);
+				vecToPos.z = (pEnemy->pos.z) - (g_aPlayer[nCnt].pos.z);
+
+				vecLine.x = sinf(pCamera->rot.y);
+				vecLine.y = 0.0f;
+				vecLine.z = cosf(pCamera->rot.y);
+
+				A = (vecLine.z * vecToPos.x) - (vecLine.x * vecToPos.z);
+
+				if (A < 0)
+				{
+					g_aPlayer[nCnt].bEnemyRight = true;
+				}
+				else
+				{
+					g_aPlayer[nCnt].bEnemyLeft = true;
+				}
+#ifdef _DEBUG
+				PrintDebugProc("aaaaaa:%f\n", A);
+				PrintDebugProc("aaaaaa:%f\n", pCamera->rot.y);
+#endif // DEBUG
+			}
 			else
 			{
-
+				g_aPlayer[nCnt].bEnemyRight = false;
+				g_aPlayer[nCnt].bEnemyLeft = false;
 			}
 		}
 	}
