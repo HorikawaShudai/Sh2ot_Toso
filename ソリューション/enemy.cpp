@@ -16,7 +16,8 @@
 #include <stdio.h>
 
 #define ENEMY_LIFE (7)		//オブジェクトの体力
-#define ENEMY_SPEED (3.0f) //敵の移動速度
+#define ENEMY_DASHSPEED (2.95f) //敵の移動速度
+#define ENEMY_NORMALSPEED (2.0f) //敵の移動速度
 
 #define	DETECT_SPEED (5000.0f) //探査波の速度
 #define	PLAYERDETECT_SPEED (1000.0f) //探査波の速度
@@ -24,6 +25,9 @@
 #define TURN_DISTANCE_WALL (150.0f) //曲がるまでの壁との距離
 #define TURN_DISTANCE_CORNER (300.0f) //曲がり角と認識する距離
 #define MOVE_DISTANCE_WALL (100.0f) //左右の壁と保つ距離
+
+#define ATTACK_SEEK			(30)
+#define ATTACK_COUNT		(200)
 
 //グローバル変数
 LPD3DXMESH g_pMeshENEMY[MAX_ENEMY_MODEL] = {};					//メッシュ(頂点情報)へのポインタ
@@ -255,7 +259,7 @@ void UpdateEnemy(void)
 				g_Enemy[nCntObject].rotDest = vecEnemy;
 				//座標の更新
 			
-				g_Enemy[nCntObject].move = D3DXVECTOR3(sinf(g_Enemy[nCntObject].rot.y)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nCntObject].rot.y)*ENEMY_SPEED);
+				g_Enemy[nCntObject].move = D3DXVECTOR3(sinf(g_Enemy[nCntObject].rot.y)*ENEMY_DASHSPEED, 0.0f, cosf(g_Enemy[nCntObject].rot.y)*ENEMY_DASHSPEED);
 				g_Enemy[nCntObject].pos += g_Enemy[nCntObject].move;
 		
 				//目標地点に到達したとき
@@ -263,7 +267,7 @@ void UpdateEnemy(void)
 				{//探索状態に切り替える
 					
 					g_Enemy[nCntObject].state = ENEMYSTATE_SEEK;
-					g_Enemy[nCntObject].StateCount = 30;
+					g_Enemy[nCntObject].StateCount = ATTACK_SEEK;
 				
 				}
 				D3DXVECTOR3	vecPlayer;
@@ -291,9 +295,9 @@ void UpdateEnemy(void)
 							SetEnemyMotion(g_Enemy[nCntObject].MotionType, nCntObject);
 
 							g_Enemy[nCntObject].state = ENEMYSTATE_ATTACK;
-							g_Enemy[nCntObject].StateCount = 30;
+							g_Enemy[nCntObject].StateCount = ATTACK_COUNT;
 							PlayerHit(nCnt, 1);
-							g_Enemy[nCnt].bHit = true;
+							g_Enemy[nCntObject].bHit = true;
 							pPlayer->bChase = false;
 							g_Enemy[nCntObject].nTarget = -1;
 							if (pPlayer->nLife > 0)
@@ -795,17 +799,17 @@ void EnemyPatrol(int nEnemy)
 		{//移動処理
 			
 			//座標の更新
-			g_Enemy[nEnemy].move = D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y)*ENEMY_SPEED);
+			g_Enemy[nEnemy].move = D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y)*ENEMY_NORMALSPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y)*ENEMY_NORMALSPEED);
 
 	
 			if (g_Enemy[nEnemy].fDistanceLeft <= MOVE_DISTANCE_WALL && g_Enemy[nEnemy].fDistanceLeft < g_Enemy[nEnemy].fDistanceRight)
 			{
-				g_Enemy[nEnemy].move += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED);
+				g_Enemy[nEnemy].move += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_NORMALSPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_NORMALSPEED);
 			}
 			
 			else if (g_Enemy[nEnemy].fDistanceRight <= MOVE_DISTANCE_WALL && g_Enemy[nEnemy].fDistanceRight < g_Enemy[nEnemy].fDistanceLeft)
 			{
-				g_Enemy[nEnemy].move += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED);
+				g_Enemy[nEnemy].move += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_NORMALSPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_NORMALSPEED);
 			}
 
 			g_Enemy[nEnemy].pos += g_Enemy[nEnemy].move;

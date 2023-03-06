@@ -54,8 +54,8 @@
 #define UP_PAPERBG01_COUNTER_MAX	(100)		//紙を取り出す速さのカウンター
 
 //プロトタイプ宣言
-void InitSkip(void);
-void DrawSkip(void);
+void InitSkipUI(void);
+void DrawSkipUI(void);
 
 //テクスチャファイル名
 const char *c_apTutorialUITexname[] =
@@ -267,13 +267,13 @@ void InitTutorialUI(void)
 	g_pVtxBuffTutorialUI[0]->Unlock();
 
 	//スキップUIの初期化
-	InitSkip();
+	InitSkipUI();
 }
 
 //==============================================
 //画面にスキップUIを表示する
 //==============================================
-void InitSkip(void)
+void InitSkipUI(void)
 {
 	pos = D3DXVECTOR3(1160.0f, 690.0f, 0.0f);
 
@@ -540,10 +540,13 @@ void DrawTutorialUI(void)
 		}
 	}
 
-	DrawSkip();
+	DrawSkipUI();
 }
 
-void DrawSkip(void)
+//====================================================================
+//スキップUIの描画処理
+//====================================================================
+void DrawSkipUI(void)
 {
 	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
 
