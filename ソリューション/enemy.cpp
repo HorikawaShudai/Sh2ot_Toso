@@ -490,12 +490,22 @@ void SetEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot)
 			g_Enemy[nCntObject].move = move;
 			g_Enemy[nCntObject].rot = rot;
 
-			//switch (nType)
-			//{
-			//case 0:
-			//	g_Enemy[nCntObject].nType = ENEMY_NTYPE00;
-			//	break;
-			//}
+			g_Enemy[nCntObject].Tgpos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+			g_Enemy[nCntObject].rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+			g_Enemy[nCntObject].MoveState = ENEMYMOVE_NONE;
+			g_Enemy[nCntObject].state = ENEMYSTATE_PATROL;
+			g_Enemy[nCntObject].StateCount = 0;
+			g_Enemy[nCntObject].nCoolTurn = 0;
+			g_Enemy[nCntObject].nTarget = -1;
+			g_Enemy[nCntObject].bHit = false;
+			g_Enemy[nCntObject].nTargetOld = -1;
+
+			//モーションの設定処理
+			g_Enemy[nCntObject].MotionType = ENEMY_ACTION_MOVE;
+			SetEnemyMotion(g_Enemy[nCntObject].MotionType, nCntObject);
+
+			//外部ファイルからキャラクター情報を読み込む処理
+			LoadEnemyMotion(nCntObject);
 
 			g_Enemy[nCntObject].bUse = true;
 

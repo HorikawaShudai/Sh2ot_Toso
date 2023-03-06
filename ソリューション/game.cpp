@@ -594,12 +594,12 @@ void DrawGame()
 		//Œ®UI‚Ì•`‰æˆ—
 		DrawKeyUI();
 
-		DrawLifePolygon();
-
 		if (pPlayer->bEnemyLeft == true || pPlayer->bEnemyRight == true)
 		{
 			DrawChasePolygon(nCnt);
 		}
+
+		DrawLifePolygon();
 
 		DrawPolygonBG();
 
