@@ -274,6 +274,12 @@ void UpdateEnemy(void)
 				{
 					if (pPlayer->bUse == true)
 					{
+						D3DXVECTOR3 rot = pPlayer->pos - g_Enemy[nCntObject].pos;
+						rot.y = atan2f(rot.x, rot.z);
+						if (DetectPlayer(g_Enemy[nCntObject].pos, rot.y, nCntObject) == true)
+						{
+							g_Enemy[nCntObject].Tgpos;
+						}
 						if (g_Enemy[nCntObject].Tgpos == pPlayer->pos)
 						{
 							pPlayer->bChase = true;
