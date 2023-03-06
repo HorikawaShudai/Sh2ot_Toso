@@ -66,8 +66,8 @@ const char *c_apTutorialUITexname[] =
 	"data\\TEXTURE\\TUTORIAL\\tutorial_dash1.png",
 	"data\\TEXTURE\\TUTORIAL\\vibe.png",
 	"data\\TEXTURE\\TUTORIAL\\stealth.png",
-	"data\\TEXTURE\\TUTORIAL\\tutorial_key.png",
-	"data\\TEXTURE\\TUTORIAL\\open_doar.png",
+	"data\\TEXTURE\\TUTORIAL\\getkey.png",
+	"data\\TEXTURE\\TUTORIAL\\open_doar1.png",
 	"data\\TEXTURE\\TUTORIAL\\escape.png",
 };
 
