@@ -40,7 +40,7 @@
 
 //死んだ時のカメラ設定
 #define DEATHCAMERA_POS_Y		(8.0f)		//カメラが下にどこまで落ちるか
-#define DEATHCAMERA_SPEED		(2.0f)		//カメラが下に落ちる速さ
+#define DEATHCAMERA_SPEED		(1.0f)		//カメラが下に落ちる速さ
 #define DEATHCAMERA_ROTEND		(1.0f)		//カメラ上に向ける限界
 #define DEATHCAMERA_TIME		(120)		//カメラが動かない時間
 #define DEATHCAMERA_UPSPEED		(0.001f)		//
@@ -565,31 +565,27 @@ void DeathCameraEnemy(int nCntCamera)
 
 	float rotYDiff;
 
-	for (int nCnt = 0; nCnt < 2; nCnt++)
+	if (pPlayer[nCntCamera].nLife <= 0)
 	{
-		if (pEnemy[nCnt].bHit == true)
+		for (int nCnt = 0; nCnt < 2; nCnt++, pEnemy++)
 		{
-			//敵の位置からプレイヤーの角度を求める
-			rotYDiff = atan2f((pEnemy[nCnt].pos.x - g_aCamera[nCntCamera].posR.x), (pEnemy[nCnt].pos.z - g_aCamera[nCntCamera].posR.z));
-
-			//襲ってきた敵とプレイヤーとの角度を求める
-			/*rotYDiff.x = pEnemy[nCnt].pos.x - g_aCamera[nCntCamera].pos.x;
-			rotYDiff.y = pEnemy[nCnt].pos.y - g_aCamera[nCntCamera].pos.y;*/
-			//rotYDiff.z = pEnemy[nCnt].pos.z - g_aCamera[nCntCamera].pos.z;
-
-			//ベクトルを正規化する
-			//D3DXVec3Normalize(&rotYDiff, &rotYDiff);
-
-			g_aCamera[nCntCamera].rot.y = rotYDiff;
-
-			pPlayer[nCntCamera].rot.y = g_aCamera[nCntCamera].rot.y;
-
-			/*if (rotYDiff.y <= 2.0f && rotYDiff.y >= -2.0f)
+			if (pEnemy->bHit == true)
 			{
-				pPlayer[nCntCamera].State = PLAYER_DEATH;
+				//敵の位置からプレイヤーの角度を求める
+				rotYDiff = atan2f((pEnemy->pos.x - g_aCamera[nCntCamera].posR.x), (pEnemy->pos.z - g_aCamera[nCntCamera].posR.z));
 
-				pEnemy->bHit = false;
-			}*/
+				//
+				g_aCamera[nCntCamera].rot.y = rotYDiff;
+
+				pPlayer[nCntCamera].rot.y = g_aCamera[nCntCamera].rot.y;
+
+				if (pEnemy->state == ENEMYSTATE_PATROL)
+				{
+					pPlayer[nCntCamera].State = PLAYER_DEATH;
+
+					pEnemy->bHit = false;
+				}
+			}
 		}
 	}
 
