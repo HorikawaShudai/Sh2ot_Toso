@@ -50,7 +50,7 @@ typedef enum
 //グローバル変数宣言
 bool g_bEdit = false;
 int g_bBG_Edit = 0;
-bool g_bGameClear = false;
+int g_bGameClear = 0;
 GAMESTATE gGameState = GAMESTATE_NONE;
 int g_nCounterGameState = 0;
 int GameSetEnemyCount = 0;
@@ -65,7 +65,7 @@ void InitGame()
 
 	g_bEdit = false;
 	g_bBG_Edit = 0;
-	g_bGameClear = false;
+	g_bGameClear = 0;
 	GameSetEnemyCount = 0;
 
 	DWORD time = timeGetTime();
@@ -433,7 +433,6 @@ void UpdateGame()
 
 			//フェードの状態を変える
 			SetFade(MODE_RESULT);
-			g_bGameClear = true;
 		}
 		break;
 
@@ -445,7 +444,8 @@ void UpdateGame()
 
 			//フェードの状態を変える
 			SetFade(MODE_RESULT);
-			g_bGameClear = false;
+
+			SetClear(0);
 		}
 		break;
 	}
@@ -600,7 +600,23 @@ GAMESTATE GetGameState()
 //====================================================================
 //クリア情報の所得
 //====================================================================
-bool GetClear(void)
+int GetClear(void)
 {
 	return g_bGameClear;
+}
+
+//====================================================================
+//クリア情報の設定
+//====================================================================
+void SetClear(int ClearNumber)
+{
+	g_bGameClear = ClearNumber;
+}
+
+//====================================================================
+//クリア情報のリセット
+//====================================================================
+void ResetClear(void)
+{
+	g_bGameClear = 0;
 }

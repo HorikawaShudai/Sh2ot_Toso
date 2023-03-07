@@ -29,6 +29,7 @@
 #include "EscapeTutorial.h"
 #include "key.h"
 #include "ChasePolygon.h"
+#include "time.h"
 #include "sound.h"
 
 //マクロ定義
@@ -75,7 +76,7 @@ int g_Rand_PolygonColor_G;
 int g_Rand_PolygonColor_B;
 int g_Rand_PolygonColor_A;
 int g_Rand_PolygonType;
-int g_ExitCount;
+int g_ExitCount;								//脱出した人数
 int EnemySECount;								//敵のSEを鳴らす間隔
 
 //====================================================================
@@ -958,6 +959,21 @@ void UpdatePlayer1(void)
 			{
 				g_GameEnd = true;
 				SetGameState(GAMESTATE_CLEAR_END, 60);
+				SetFalseCount(false);
+				SetRankTime();
+
+				if (g_ExitCount == PlayNumber.CurrentSelectNumber)
+				{//全員脱出出来た場合
+					SetClear(1);
+				}
+				else if (g_ExitCount != 1)
+				{//全員ではないが脱出出来た場合
+					SetClear(2);
+				}
+				else
+				{//一人だけ脱出出来た場合
+					SetClear(3);
+				}
 			}
 		}
 
@@ -968,6 +984,7 @@ void UpdatePlayer1(void)
 		{//全員死亡しているとき
 			g_GameEnd = true;
 			SetGameState(GAMESTATE_GAMEOVER_END, 340);
+			SetFalseCount(false);
 		}
 	}
 
@@ -1922,29 +1939,6 @@ void DrawPlayer(void)
 		//現在のマテリアルを所得
 		pDevice->GetMaterial(&matDef);
 
-		//全モデル(パーツ)の描画
-		//for (int nCntModel = 0; nCntModel < g_aPlayer[nCntPlayer].nNumModel; nCntModel++)
-		//{
-
-		//	//マテリアルデータへのポインタを所得する
-		//	pMat = (D3DXMATERIAL*)g_pBuffMatPlayer[nCntModel]->GetBufferPointer();
-
-		//	for (int nCntMat = 0; nCntMat < (int)g_dwNumMatPlayer; nCntMat++)
-		//	{
-		//		//マテリアルの設定
-		//		pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
-
-		//		//テクスチャの設定
-		//		pDevice->SetTexture(0, g_pTexturePlayer[nCntMat]);
-
-		//		if (g_aPlayer[nCntPlayer].bUse == true)
-		//		{
-		//			//プレイヤー(パーツ)の描画
-		//			g_pMeshPlayer[nCntModel]->DrawSubset(nCntMat);
-		//		}
-		//	}
-		//}
-
 		//保存していたマテリアルを戻す
 		pDevice->SetMaterial(&matDef);
 	}
@@ -1967,4 +1961,12 @@ void PlayerAllDown(void)
 Player * GetPlayer(void)
 {
 	return &g_aPlayer[0];
+}
+
+//====================================================================
+//脱出人数の所得
+//====================================================================
+int GetExitCount(void)
+{
+	return g_ExitCount;
 }

@@ -46,7 +46,7 @@ bool bWire;				//ワイヤーフレームを使っているかどうか
 bool g_bNightVision;			//視野の確保を使っているかどうか
 int g_nCountFPS = 0;
 
-MODE g_mode = MODE_NUMBERSELECT;	//開始時点のモード
+MODE g_mode = MODE_RANKING;	//開始時点のモード
 
  //=============================================
  //メイン関数
@@ -398,7 +398,7 @@ void Update(void)
 		UpdateGame();
 		break;
 	case MODE_RESULT:
-		if (GetClear() == true)
+		if (GetClear() != 0)
 		{
 			//UpdateResult();
 			UpdateEscapeClearResult();
@@ -409,7 +409,9 @@ void Update(void)
 		}
 		break;
 	case MODE_RANKING:
+		
 			UpdateEscapeRanking();
+		
 		break;
 	}
 
@@ -441,7 +443,8 @@ void Draw(void)
 			DrawGame();
 			break;
 		case MODE_RESULT:
-			if (GetClear() == true)
+			
+			if (GetClear() != 0)
 			{
 				DrawResult();
 				DrawEscapeClearResult();
@@ -452,7 +455,9 @@ void Draw(void)
 			}
 			break;
 		case MODE_RANKING:
+			
 				DrawEscapeRanking();
+			
 			break;
 		}
 
@@ -503,7 +508,8 @@ void SetMode(MODE mode)
 		UninitGame();
 		break;
 	case MODE_RESULT:
-		if (GetClear() == true)
+		
+		if (GetClear() != 0)
 		{
 			//UninitResult();
 			UninitEscapeClearResult();
@@ -514,7 +520,9 @@ void SetMode(MODE mode)
 		}
 		break;
 	case MODE_RANKING:
+		
 			UninitEscapeRanking();
+		
 		break;
 	}
 
@@ -535,7 +543,8 @@ void SetMode(MODE mode)
 		InitGame();
 		break;
 	case MODE_RESULT:
-		if (GetClear() == true)
+		
+		if (GetClear() != 0)
 		{
 			//InitResult();
 			InitEscapeClearResult();
@@ -546,7 +555,9 @@ void SetMode(MODE mode)
 		}
 		break;
 	case MODE_RANKING:
+		
 			InitEscapeRanking();
+		
 		break;
 	}
 }

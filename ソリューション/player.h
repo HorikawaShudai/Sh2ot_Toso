@@ -91,4 +91,5 @@ D3DXVECTOR3 CollisionOuterProductPlayer(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld,
 bool CollisionCircle(D3DXVECTOR3 pos1, D3DXVECTOR3 pos2, float nRadiusOut, float nRadiusIn, float MinY, float MaxY);
 void PlayerAllDown(void);
 Player * GetPlayer(void);
+int GetExitCount(void);
 #endif

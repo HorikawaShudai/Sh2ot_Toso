@@ -6,6 +6,7 @@
 //======================================================================================
 #include "main.h"
 #include "Title.h"
+#include "game.h"
 #include "input.h"
 #include "Fade.h"
 #include "debugproc.h"
@@ -99,6 +100,7 @@ void InitTitle(void)
 	bPress = false;
 	g_nFadeCnt = 0;
 	bTitle = false;
+	ResetClear();
 
 	for (nCntTitle = 0; nCntTitle < NUM_TEX; nCntTitle++)
 	{//テクスチャ読み込み

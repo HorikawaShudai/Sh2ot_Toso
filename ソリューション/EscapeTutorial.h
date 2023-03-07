@@ -9,6 +9,7 @@ void UninitEscapeTutorial();
 void UpdateEscapeTutorial();
 void DrawEscapeTutorial();
 TUTORIAL_STATE GetEscapeTutorial();
+TUTORIAL_GUYDE GetEscapeTutorialGuyde();
 void SetEscapeTutorial(TUTORIAL_STATE nSet);
 void DoEscapeTutorial(TUTORIAL_MODE nMode);
 TUTORIAL_MODE GetDoEscapeTutorial(void);

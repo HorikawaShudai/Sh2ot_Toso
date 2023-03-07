@@ -12,5 +12,8 @@ void InitTime(void);
 void UninitTime(void);
 void UpdateTime(void);
 void DrawTime(void);
-bool GetTime(void);
+void SetRankTime(void);
+void SetFalseCount(bool Count);
+bool GetTimeCount(void);
+int *GetTime(void);
 #endif

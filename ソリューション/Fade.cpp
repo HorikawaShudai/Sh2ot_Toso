@@ -25,7 +25,7 @@ void InitFade(MODE modeNext)
 	LPDIRECT3DDEVICE9 pDevice; //デバイスのポインタ
 	pDevice = GetDevice();
 
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * 1,
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4,
 		D3DUSAGE_WRITEONLY,
 		{ FVF_VERTEX_2D },
 		D3DPOOL_MANAGED,

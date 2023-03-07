@@ -193,7 +193,7 @@ void UpdateLight(void)
 		{
 			if ((GetMode() == MODE_GAME) ||
 				(GetMode() == MODE_TUTORIAL) ||
-				(GetMode() == MODE_RESULT && GetClear() == false))
+				(GetMode() == MODE_RESULT && GetClear() == 0))
 			{
 				//ライトの方向を設定
 				switch (nCntlight)
@@ -211,7 +211,7 @@ void UpdateLight(void)
 			}
 			else if ((GetMode() == MODE_NUMBERSELECT) || 
 				(GetMode() == MODE_RANKING) ||
-				(GetMode() == MODE_RESULT && GetClear() == true))
+				(GetMode() == MODE_RESULT && GetClear() != 0))
 			{
 				//ライトの方向を設定
 				switch (nCntlight)
