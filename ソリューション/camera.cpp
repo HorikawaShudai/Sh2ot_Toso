@@ -48,12 +48,11 @@
 
 //プロトタイプ宣言
 void TpsCamera(void);						//観察用カメラ
-void PlayerFpsCamera(void);					//プレイヤーの視点カメラ
 void Camerafollow(int nCurrentCamera);		//追従カメラ
 void CameraMove(int nCurrentCamera);		//カメラ移動
 void StateYMove(int nCurrentCamera);		//カメラの縦の動き
 
-void ResPlayerCamera(void);					//コントローラーそれぞれに対応
+void PlayerCamera(void);					//コントローラーそれぞれに対応
 void DownCamera(int nCntCamera);			//ダメージを受けた時のカメラ
 void DeathCameraEnemy(int nCntCamera);		//死んだときのカメラ(敵の方向に向ける)
 void DeathCamera(int nCntCamera);			//死んだときのカメラ(カメラが落ちる)
@@ -72,9 +71,9 @@ bool g_bTpsCamera;							//観察用のカメラを使うかどうか
 bool bEnter;								//エンターが押されたかどうか
 bool bCamMove;								//カメラが動いたかどうか
 int g_Rand_RankingCameraBG;					//ランキング画面の背景を決めるための変数
-int g_AccCnt;								//加速のカウント
-float g_c;
-int g_nCount;
+int g_nCount[NUM_PLAYER];					//色々なカウント(加速していく時間、ダメージを受けた時のカメラ)
+int g_nCount1[NUM_PLAYER];
+float g_Acc[NUM_PLAYER];									//加速度
 
 //====================================================================
 //カメラの初期化処理
@@ -104,9 +103,13 @@ void InitCamera(void)
 	g_bTpsCamera = false;			//観察用カメラを使っていない状態へ
 	bEnter = false;					//エンターを押していない状態に
 	bCamMove = false;
-	g_AccCnt = 0;
-	g_c = 0.0f;
 
+	for (int nCnt = 0; nCnt < NUM_PLAYER; nCnt++)
+	{
+		g_nCount[nCnt] = 0;
+		g_nCount1[nCnt] = 0;
+		g_Acc[nCnt] = 0.0f;
+	}
 	g_Rand_RankingCameraBG = rand() % 4;
 	
 	switch (PlayNumber.CurrentSelectNumber)
@@ -247,8 +250,7 @@ void UpdateCamera(void)
 		if (g_bTpsCamera == false)
 		{//使っていない場合
 		 //プレイヤー視点カメラ
-			//PlayerFpsCamera();
-			ResPlayerCamera();
+			PlayerCamera();
 		}
 		else
 		{//使われている場合
@@ -268,7 +270,7 @@ void UpdateCamera(void)
 		{//使っていない場合
 			//プレイヤー視点カメラ
 			//PlayerFpsCamera();
-			ResPlayerCamera();
+			PlayerCamera();
 		}
 		else
 		{//使われている場合
@@ -325,8 +327,7 @@ void SetCamera(int nIdx)
 		(float)g_aCamera[nIdx].viewport.Width / (float)g_aCamera[nIdx].viewport.Height,
 		10.0f,
 		10000.0f);
-#endif // _DEBUG
-
+#endif
 
 	//プロジェクションマトリックスの設定
 	pDevice->SetTransform(D3DTS_PROJECTION, &g_aCamera[nIdx].mtxProjection);
@@ -345,157 +346,6 @@ void SetCamera(int nIdx)
 
 	//カメラを使ってる状態へ
 	g_aCamera[nIdx].bUse = true;
-}
-
-//=======================================
-// プレイヤー視点カメラ
-//=======================================
-void PlayerFpsCamera(void)
-{
-	//プレイ人数情報の取得
-	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
-	Player *pPlayer = GetPlayer();
-	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
-	MODE mode = GetMode();
-
-	//カメラ変更
-	if (GetKeyboardTrigger(DIK_F4) == true)
-	{
-		g_nCurrentCamera++;			//使うカメラを変える
-
-		g_nCurrentCamera %= PlayNumber.CurrentSelectNumber;			//カメラ上限まで来たら最初のカメラに戻る
-	}
-
-	
-	if (g_aCamera[g_nCurrentCamera].bUse == true && pPlayer[g_nCurrentCamera].bUse == true)
-	{
-		if (g_aCamera[g_nCurrentCamera].rot.x <= D3DX_PI * 0.5f && g_aCamera[g_nCurrentCamera].rot.x >= -(D3DX_PI * 0.5f))
-		{//入力
-
-			g_aCamera[g_nCurrentCamera].rotOld = g_aCamera[g_nCurrentCamera].rot;
-
-			//キーボード
-			if (GetKeyboardPress(DIK_I) == true)
-			{
-				g_aCamera[g_nCurrentCamera].rot.x += CAMERA_VR_SPEED;
-
-				//チュートリアル項目がカメラムーブの時
-				if (mode == MODE_TUTORIAL && do_Tutorial == MODE_MOVE)
-				{
-					//カメラを移動したことにする
-					CamMoveTCheck(g_nCurrentCamera, true);
-				}
-			}
-			if (GetKeyboardPress(DIK_K) == true)
-			{
-				g_aCamera[g_nCurrentCamera].rot.x -= CAMERA_VR_SPEED;
-
-				//チュートリアル項目がカメラムーブの時
-				if (mode == MODE_TUTORIAL && do_Tutorial == MODE_MOVE)
-				{
-					//カメラを移動したことにする
-					CamMoveTCheck(g_nCurrentCamera, true);
-				}
-			}
-
-			//右スティックの上下視点移動入力
-			g_aCamera[g_nCurrentCamera].rot.x += GetGamepad_Stick_Right(0).y * CAMERA_VR_SPEED;
-
-			//カメラの横移動をしたらチェックをつける処理
-			if (g_aCamera[g_nCurrentCamera].rot.x > 0.1f || g_aCamera[g_nCurrentCamera].rot.x < -0.1f)
-			{
-				if (mode == MODE_TUTORIAL && do_Tutorial == MODE_MOVE)
-				{
-					CamMoveTCheck(g_nCurrentCamera, true);
-				}
-			}
-
-			//カメラの縦移動をしたらチェックをつける処理
-			if (g_aCamera[g_nCurrentCamera].rot.y > 0.1f || g_aCamera[g_nCurrentCamera].rot.y < -0.1f)
-			{
-				if (mode == MODE_TUTORIAL && do_Tutorial == MODE_MOVE)
-				{
-					CamMoveTCheck(g_nCurrentCamera, true);
-				}
-			}
-
-			if (GetMousePress(PUSH_LEFT) == true || GetMousePress(PUSH_RIGHT) == true)
-			{
-				g_aCamera[g_nCurrentCamera].rot.x -= GetMouseMove().y * CAMERA_VR_SPEED;
-			}
-		}
-
-		//右スティックの上下視点移動入力
-		if (fabsf(g_aCamera[g_nCurrentCamera].rot.x) > fabsf(D3DX_PI * 0.5f))
-		{//上限に達した時１フレーム前のrotにもどる
-			g_aCamera[g_nCurrentCamera].rot = g_aCamera[g_nCurrentCamera].rotOld;
-		}
-
-		//キーボード
-		if (GetKeyboardPress(DIK_J) == true)
-		{
-			g_aCamera[g_nCurrentCamera].rot.y -= CAMERA_VR_SPEED;
-
-		}
-		if (GetKeyboardPress(DIK_L) == true)
-		{
-			g_aCamera[g_nCurrentCamera].rot.y += CAMERA_VR_SPEED;
-		}
-
-		//右スティックの左右視点移動入力
-		g_aCamera[g_nCurrentCamera].rot.y += GetGamepad_Stick_Right(0).x * CAMERA_VR_SPEED;
-
-		if (GetMousePress(PUSH_LEFT) == true || GetMousePress(PUSH_RIGHT) == true)
-		{
-			g_aCamera[g_nCurrentCamera].rot.y += GetMouseMove().x * CAMERA_VR_SPEED;
-		}
-
-		//一周した時の向きの補正
-		if (g_aCamera[g_nCurrentCamera].rot.y > D3DX_PI * 1.0f)
-		{
-			g_aCamera[g_nCurrentCamera].rot.y -= D3DX_PI * 2.0f;
-		}
-		else if (g_aCamera[g_nCurrentCamera].rot.y < -D3DX_PI * 1.0f)
-		{
-			g_aCamera[g_nCurrentCamera].rot.y += D3DX_PI * 2.0f;
-		}
-
-		//移動状態によるカメラの動き----------
-		StateYMove(g_nCurrentCamera);
-
-		//モデル追従処理----------------------
-		Camerafollow(g_nCurrentCamera);
-
-		//マウス
-		if (GetMousePress(PUSH_LEFT) == true || GetMousePress(PUSH_RIGHT) == true)
-		{
-			if (GetMousePress(PUSH_LEFT) == true && GetMousePress(PUSH_RIGHT) == true)
-			{
-
-			}
-			if (GetMousePress(PUSH_RIGHT) == true)
-			{
-				//視点の情報を出力する
-				g_aCamera[g_nCurrentCamera].posR.x = g_aCamera[g_nCurrentCamera].posV.x + sinf(g_aCamera[g_nCurrentCamera].rot.y) * cosf(g_aCamera[g_nCurrentCamera].rot.x) * CAMERA_DISTANCE;
-				g_aCamera[g_nCurrentCamera].posR.z = g_aCamera[g_nCurrentCamera].posV.z + cosf(g_aCamera[g_nCurrentCamera].rot.y) * cosf(g_aCamera[g_nCurrentCamera].rot.x) * CAMERA_DISTANCE;
-				g_aCamera[g_nCurrentCamera].posR.y = g_aCamera[g_nCurrentCamera].posV.y + sinf(g_aCamera[g_nCurrentCamera].rot.x) * CAMERA_DISTANCE;
-			}
-			if (GetMousePress(PUSH_LEFT) == true)
-			{
-				//視点の情報を出力する
-				g_aCamera[g_nCurrentCamera].posV.x = g_aCamera[g_nCurrentCamera].posR.x + sinf(g_aCamera[g_nCurrentCamera].rot.y) * -cosf(g_aCamera[g_nCurrentCamera].rot.x) * CAMERA_DISTANCE;
-				g_aCamera[g_nCurrentCamera].posV.z = g_aCamera[g_nCurrentCamera].posR.z + cosf(g_aCamera[g_nCurrentCamera].rot.y) * -cosf(g_aCamera[g_nCurrentCamera].rot.x) * CAMERA_DISTANCE;
-				g_aCamera[g_nCurrentCamera].posV.y = g_aCamera[g_nCurrentCamera].posR.y + sinf(-g_aCamera[g_nCurrentCamera].rot.x) * CAMERA_DISTANCE;
-			}
-		}
-		else
-		{//マウス操作がされていない場合
-			//注視点の情報を出力する
-			g_aCamera[g_nCurrentCamera].posR.x = g_aCamera[g_nCurrentCamera].posV.x + sinf(g_aCamera[g_nCurrentCamera].rot.y) * cosf(g_aCamera[g_nCurrentCamera].rot.x) * CAMERA_DISTANCE;
-			g_aCamera[g_nCurrentCamera].posR.z = g_aCamera[g_nCurrentCamera].posV.z + cosf(g_aCamera[g_nCurrentCamera].rot.y) * cosf(g_aCamera[g_nCurrentCamera].rot.x) * CAMERA_DISTANCE;
-			g_aCamera[g_nCurrentCamera].posR.y = g_aCamera[g_nCurrentCamera].posV.y + sinf(g_aCamera[g_nCurrentCamera].rot.x) * CAMERA_DISTANCE;
-		}
-	}
 }
 
 //====================================================================
@@ -540,9 +390,9 @@ void DownCamera(int nCntCamera)
 		pPlayer[nCntCamera].rot.x = DAMAGECAMERA_ROT_Y;
 	}
 
-	g_AccCnt++;
+	g_nCount[nCntCamera]++;
 
-	if (pPlayer[nCntCamera].State == PLAYER_WAIT && g_aCamera[nCntCamera].rot.x <= 0.0f && g_AccCnt >= DAMAGECAMERA_TIME)
+	if (pPlayer[nCntCamera].State == PLAYER_WAIT && g_aCamera[nCntCamera].rot.x <= 0.0f && g_nCount[nCntCamera] >= DAMAGECAMERA_TIME)
 	{
 		g_aCamera[nCntCamera].rot.x += DAMAGECAMERA_UPSPEED;
 		pPlayer[nCntCamera].rot.x += DAMAGECAMERA_UPSPEED;
@@ -550,7 +400,7 @@ void DownCamera(int nCntCamera)
 
 	if (pPlayer[nCntCamera].State == PLAYER_NORMAL)
 	{
-		g_AccCnt = 0;
+		g_nCount[nCntCamera] = 0;
 	}
 }
 
@@ -568,7 +418,7 @@ void DeathCameraEnemy(int nCntCamera)
 
 	if (pPlayer[nCntCamera].nLife <= 0)
 	{
-		for (int nCnt = 0; nCnt < 2; nCnt++, pEnemy++)
+		for (int nCnt = 0; nCnt < MAX_ENEMY; nCnt++, pEnemy++)
 		{
 			if (pEnemy->bHit == true)
 			{
@@ -579,7 +429,7 @@ void DeathCameraEnemy(int nCntCamera)
 				g_aCamera[nCntCamera].rot.y = rotYDiff;
 				
 				//カメラが向いてる高さを敵の頭の方向へ向ける(固定値)
-				g_aCamera[nCntCamera].rot.x = 0.8f;
+				g_aCamera[nCntCamera].rot.x = 0.85f;
 
 				//カメラの角度をプレイヤーの角度に代入する
 				pPlayer[nCntCamera].rot.y = g_aCamera[nCntCamera].rot.y;
@@ -589,7 +439,7 @@ void DeathCameraEnemy(int nCntCamera)
 				SetLight(pPlayer[nCntCamera].LightIdx00, D3DLIGHT_SPOT, pPlayer[nCntCamera].LightColor, D3DXVECTOR3(pPlayer[nCntCamera].pos.x, pPlayer[nCntCamera].pos.y + 50.0f, pPlayer[nCntCamera].pos.z), D3DXVECTOR3(sinf(Getrot(nCntCamera).y), sinf(Getrot(nCntCamera).x), cosf(Getrot(nCntCamera).y)), 350.0f, 1.0f);
 
 				//死亡状態へ切り替える
-				if (pEnemy->state == ENEMYSTATE_PATROL)
+				if (pEnemy->state == ENEMYSTATE_PATROL && pEnemy->StateCount <= 0)
 				{//敵の状態が巡回モードに切り替わったら
 
 					//プレイヤーの状態を死亡状態へ
@@ -601,7 +451,6 @@ void DeathCameraEnemy(int nCntCamera)
 			}
 		}
 	}
-
 }
 
 //==============================
@@ -613,7 +462,7 @@ void DeathCamera(int nCntCamera)
 	Player *pPlayer = GetPlayer();
 
 	//上に向かせるまでのカウント
-	g_nCount++;
+	g_nCount1[nCntCamera]++;
 
 	//カメラを下に落とす
 	if (g_aCamera[nCntCamera].posV.y >= DEATHCAMERA_POS_Y)
@@ -623,16 +472,19 @@ void DeathCamera(int nCntCamera)
 		g_aCamera[nCntCamera].posV.y -= DEATHCAMERA_SPEED;
 
 		//カウントを初期化する
-		g_c = 0;
+		g_Acc[nCntCamera] = 0;
 	}
-	else if (g_aCamera[nCntCamera].rot.x <= DEATHCAMERA_ROTEND && g_nCount >= DEATHCAMERA_TIME)
+	else if (g_aCamera[nCntCamera].rot.x <= DEATHCAMERA_ROTEND && g_nCount1[nCntCamera] >= DEATHCAMERA_TIME)
 	{//カメラの向きが数値以下かつカウントより上の時
 		//速さを徐々に増やす
-		g_c += DEATHCAMERA_UPSPEED;
+		g_Acc[nCntCamera] += DEATHCAMERA_UPSPEED;
 
 		//カメラを上に傾ける
-		g_aCamera[nCntCamera].rot.x += DEATHCAMERA_UPSPEED + g_c;
-		g_aCamera[nCntCamera].rot.z += DEATHCAMERA_UPSPEED + g_c;
+		g_aCamera[nCntCamera].rot.x += DEATHCAMERA_UPSPEED + g_Acc[nCntCamera];
+		g_aCamera[nCntCamera].rot.z += DEATHCAMERA_UPSPEED + g_Acc[nCntCamera];
+
+		//カウントを初期化
+		g_nCount1[nCntCamera] = 0;
 	}
 }
 
@@ -906,9 +758,9 @@ void CameraMove(int nCntCamera)
 }
 
 //=====================================================
-//コントローラ複数対応
+//プレイヤーのカメラを動かす処理
 //=====================================================
-void ResPlayerCamera(void)
+void PlayerCamera(void)
 {
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
@@ -1174,12 +1026,12 @@ void MoveTitleCamera(int nCnt)
 	D3DXVECTOR3 PosRDiff;
 
 	//加速度のカウント
-	g_AccCnt++;
+	g_nCount[0]++;
 
-	if (g_AccCnt < 60)
+	if (g_nCount[0] < 60)
 	{
-		g_c += 0.004f;
-		g_AccCnt = 0;
+		g_Acc[0] += 0.004f;
+		g_nCount[0] = 0;
 	}
 
 	if (g_aCamera[4].posV.x <= 200.0f)
@@ -1201,7 +1053,7 @@ void MoveTitleCamera(int nCnt)
 
 	else
 	{//0以外の数値が入ってきた場合
-		g_aCamera[4].posV.z += ((float)nCnt + g_c);
+		g_aCamera[4].posV.z += ((float)nCnt + g_Acc[0]);
 	}
 	
 	PrintDebugProc("%f , %f , %f", g_aCamera[4].posV.x, g_aCamera[4].posV.y, g_aCamera[4].posV.z);

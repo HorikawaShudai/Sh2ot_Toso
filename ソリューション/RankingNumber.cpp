@@ -12,8 +12,9 @@
 #define Y_POS_GAME (220.0f)			//ゲーム画面の時のランキングのY座標
 #define X_SIZE_GAME (40.0f)			//ゲーム画面の時のランキングの横幅
 #define Y_SIZE_GAME (40.0f)			//ゲーム画面の時のランキングの縦幅
-#define WIDE_SIZE_GAME_X (75.0f)	//ゲーム画面の時のランキング同士の幅
+#define WIDE_SIZE_GAME_X (60.0f)	//ゲーム画面の時のランキング同士の幅
 #define WIDE_SIZE_GAME_Y (100.0f)	//ゲーム画面の時のランキング同士の高さ
+#define WIDE_SIZE_X (30.0f)	//分と秒の間の幅
 
 //ランキング構造体
 typedef struct
@@ -85,11 +86,25 @@ void InitRanKingNumber(void)
 		{
 			g_RanKingNumber[nCntMax].pos = D3DXVECTOR3(X_POS_GAME + nCntNum * WIDE_SIZE_GAME_X, Y_POS_GAME + nCntMax * WIDE_SIZE_GAME_Y, 0.0f);
 
-			//頂点座標の設定 
-			pVtx[0].pos = D3DXVECTOR3(g_RanKingNumber[nCntMax].pos.x - X_SIZE_GAME, g_RanKingNumber[nCntMax].pos.y - Y_SIZE_GAME, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(g_RanKingNumber[nCntMax].pos.x + X_SIZE_GAME, g_RanKingNumber[nCntMax].pos.y - Y_SIZE_GAME, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(g_RanKingNumber[nCntMax].pos.x - X_SIZE_GAME, g_RanKingNumber[nCntMax].pos.y + Y_SIZE_GAME, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(g_RanKingNumber[nCntMax].pos.x + X_SIZE_GAME, g_RanKingNumber[nCntMax].pos.y + Y_SIZE_GAME, 0.0f);
+			switch (nCntNum)
+			{
+			case 0:
+			case 1:
+				//頂点座標の設定 
+				pVtx[0].pos = D3DXVECTOR3(g_RanKingNumber[nCntMax].pos.x - X_SIZE_GAME, g_RanKingNumber[nCntMax].pos.y - Y_SIZE_GAME, 0.0f);
+				pVtx[1].pos = D3DXVECTOR3(g_RanKingNumber[nCntMax].pos.x + X_SIZE_GAME, g_RanKingNumber[nCntMax].pos.y - Y_SIZE_GAME, 0.0f);
+				pVtx[2].pos = D3DXVECTOR3(g_RanKingNumber[nCntMax].pos.x - X_SIZE_GAME, g_RanKingNumber[nCntMax].pos.y + Y_SIZE_GAME, 0.0f);
+				pVtx[3].pos = D3DXVECTOR3(g_RanKingNumber[nCntMax].pos.x + X_SIZE_GAME, g_RanKingNumber[nCntMax].pos.y + Y_SIZE_GAME, 0.0f);
+				break;
+			case 2:
+			case 3:
+				//頂点座標の設定 
+				pVtx[0].pos = D3DXVECTOR3(g_RanKingNumber[nCntMax].pos.x - X_SIZE_GAME + WIDE_SIZE_X, g_RanKingNumber[nCntMax].pos.y - Y_SIZE_GAME, 0.0f);
+				pVtx[1].pos = D3DXVECTOR3(g_RanKingNumber[nCntMax].pos.x + X_SIZE_GAME + WIDE_SIZE_X, g_RanKingNumber[nCntMax].pos.y - Y_SIZE_GAME, 0.0f);
+				pVtx[2].pos = D3DXVECTOR3(g_RanKingNumber[nCntMax].pos.x - X_SIZE_GAME + WIDE_SIZE_X, g_RanKingNumber[nCntMax].pos.y + Y_SIZE_GAME, 0.0f);
+				pVtx[3].pos = D3DXVECTOR3(g_RanKingNumber[nCntMax].pos.x + X_SIZE_GAME + WIDE_SIZE_X, g_RanKingNumber[nCntMax].pos.y + Y_SIZE_GAME, 0.0f);
+				break;
+			}
 
 			//rhwの設定
 			pVtx[0].rhw = 1.0f;

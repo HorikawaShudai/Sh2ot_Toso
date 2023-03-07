@@ -10,7 +10,6 @@
 #include "result.h"
 #include "Fade.h"
 #include "PlayNumberSelect.h"
-#include "PlayModeSelect.h"
 #include "VillainRanking.h"
 #include "EscapeRanking.h"
 #include "EscapeClearResult.h"
@@ -47,7 +46,7 @@ bool bWire;				//ワイヤーフレームを使っているかどうか
 bool g_bNightVision;			//視野の確保を使っているかどうか
 int g_nCountFPS = 0;
 
-MODE g_mode = MODE_RANKING;	//開始時点のモード
+MODE g_mode = MODE_NUMBERSELECT;	//開始時点のモード
 
  //=============================================
  //メイン関数
@@ -410,14 +409,9 @@ void Update(void)
 		}
 		break;
 	case MODE_RANKING:
-		if (GetPlayModeSelect().CurrentModeNumber == 0)
-		{
+		
 			UpdateEscapeRanking();
-		}
-		else
-		{
-			UpdateVillainRanking();
-		}
+		
 		break;
 	}
 
@@ -449,6 +443,7 @@ void Draw(void)
 			DrawGame();
 			break;
 		case MODE_RESULT:
+			
 			if (GetClear() != 0)
 			{
 				DrawResult();
@@ -460,14 +455,9 @@ void Draw(void)
 			}
 			break;
 		case MODE_RANKING:
-			if (GetPlayModeSelect().CurrentModeNumber == 0)
-			{
+			
 				DrawEscapeRanking();
-			}
-			else
-			{
-				DrawVillainRanking();
-			}
+			
 			break;
 		}
 
@@ -518,6 +508,7 @@ void SetMode(MODE mode)
 		UninitGame();
 		break;
 	case MODE_RESULT:
+		
 		if (GetClear() != 0)
 		{
 			//UninitResult();
@@ -529,14 +520,9 @@ void SetMode(MODE mode)
 		}
 		break;
 	case MODE_RANKING:
-		if (GetPlayModeSelect().CurrentModeNumber == 0)
-		{
+		
 			UninitEscapeRanking();
-		}
-		else
-		{
-			UninitVillainRanking();
-		}
+		
 		break;
 	}
 
@@ -557,6 +543,7 @@ void SetMode(MODE mode)
 		InitGame();
 		break;
 	case MODE_RESULT:
+		
 		if (GetClear() != 0)
 		{
 			//InitResult();
@@ -568,14 +555,9 @@ void SetMode(MODE mode)
 		}
 		break;
 	case MODE_RANKING:
-		if (GetPlayModeSelect().CurrentModeNumber == 0)
-		{
+		
 			InitEscapeRanking();
-		}
-		else
-		{
-			InitVillainRanking();
-		}
+		
 		break;
 	}
 }

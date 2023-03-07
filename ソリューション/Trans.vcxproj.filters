@@ -75,9 +75,6 @@
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル\main</Filter>
     </ClCompile>
-    <ClCompile Include="PlayModeSelect.cpp">
-      <Filter>ソース ファイル\mode</Filter>
-    </ClCompile>
     <ClCompile Include="PlayNumberSelect.cpp">
       <Filter>ソース ファイル\mode</Filter>
     </ClCompile>
@@ -259,9 +256,6 @@
     </ClInclude>
     <ClInclude Include="main.h">
       <Filter>ヘッダー ファイル\main</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayModeSelect.h">
-      <Filter>ヘッダー ファイル\mode</Filter>
     </ClInclude>
     <ClInclude Include="PlayNumberSelect.h">
       <Filter>ヘッダー ファイル\mode</Filter>
