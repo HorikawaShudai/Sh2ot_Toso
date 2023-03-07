@@ -74,6 +74,7 @@ void UninitEscapeClearResult()
 void UpdateEscapeClearResult()
 {
 	FADE Fade = GetFade();
+	bool ClearUi = GetbResultUi();
 
 	//ÉJÉÅÉâÇÃçXêVèàóù
 	UpdateCamera();
@@ -92,9 +93,18 @@ void UpdateEscapeClearResult()
 
 	UpdateResultUI();
 
-	if (Fade == FADE_NONE)
+
+
+	if (ClearUi == false)
 	{
-		if (GetKeyboardPress(DIK_RETURN) || GetGamepadPress(BUTTON_A, 0))
+		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadTrigger(BUTTON_A, 0))
+		{
+			SetbResultUi(true);
+		}
+	}
+	if (Fade == FADE_NONE && ClearUi == true)
+	{
+		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadTrigger(BUTTON_A, 0))
 		{
 			SetFade(MODE_RANKING);
 		}
