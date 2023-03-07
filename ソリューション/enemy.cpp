@@ -16,7 +16,8 @@
 #include <stdio.h>
 
 #define ENEMY_LIFE (7)		//オブジェクトの体力
-#define ENEMY_SPEED (3.0f) //敵の移動速度
+#define ENEMY_DASHSPEED (2.95f) //敵の移動速度
+#define ENEMY_NORMALSPEED (2.0f) //敵の移動速度
 
 #define	DETECT_SPEED (5000.0f) //探査波の速度
 #define	PLAYERDETECT_SPEED (1000.0f) //探査波の速度
@@ -258,7 +259,7 @@ void UpdateEnemy(void)
 				g_Enemy[nCntObject].rotDest = vecEnemy;
 				//座標の更新
 			
-				g_Enemy[nCntObject].move = D3DXVECTOR3(sinf(g_Enemy[nCntObject].rot.y)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nCntObject].rot.y)*ENEMY_SPEED);
+				g_Enemy[nCntObject].move = D3DXVECTOR3(sinf(g_Enemy[nCntObject].rot.y)*ENEMY_DASHSPEED, 0.0f, cosf(g_Enemy[nCntObject].rot.y)*ENEMY_DASHSPEED);
 				g_Enemy[nCntObject].pos += g_Enemy[nCntObject].move;
 		
 				//目標地点に到達したとき
@@ -798,17 +799,17 @@ void EnemyPatrol(int nEnemy)
 		{//移動処理
 			
 			//座標の更新
-			g_Enemy[nEnemy].move = D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y)*ENEMY_SPEED);
+			g_Enemy[nEnemy].move = D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y)*ENEMY_NORMALSPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y)*ENEMY_NORMALSPEED);
 
 	
 			if (g_Enemy[nEnemy].fDistanceLeft <= MOVE_DISTANCE_WALL && g_Enemy[nEnemy].fDistanceLeft < g_Enemy[nEnemy].fDistanceRight)
 			{
-				g_Enemy[nEnemy].move += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_SPEED);
+				g_Enemy[nEnemy].move += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_NORMALSPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * 0.5f)*ENEMY_NORMALSPEED);
 			}
 			
 			else if (g_Enemy[nEnemy].fDistanceRight <= MOVE_DISTANCE_WALL && g_Enemy[nEnemy].fDistanceRight < g_Enemy[nEnemy].fDistanceLeft)
 			{
-				g_Enemy[nEnemy].move += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_SPEED);
+				g_Enemy[nEnemy].move += D3DXVECTOR3(sinf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_NORMALSPEED, 0.0f, cosf(g_Enemy[nEnemy].rot.y + D3DX_PI * -0.5f)*ENEMY_NORMALSPEED);
 			}
 
 			g_Enemy[nEnemy].pos += g_Enemy[nEnemy].move;

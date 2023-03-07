@@ -14,6 +14,7 @@
 #include "EscapeTutorial.h"
 #include "game.h"
 #include "enemy.h"
+#include "light.h"
 
 //マクロ定義
 #define MAX_CAMERA				(5)		//カメラの最大数
@@ -574,19 +575,27 @@ void DeathCameraEnemy(int nCntCamera)
 				//敵の位置からプレイヤーの角度を求める
 				rotYDiff = atan2f((pEnemy->pos.x - g_aCamera[nCntCamera].posR.x), (pEnemy->pos.z - g_aCamera[nCntCamera].posR.z));
 
-				//
+				//カメラを敵の方向に向ける
 				g_aCamera[nCntCamera].rot.y = rotYDiff;
-
+				
+				//カメラが向いてる高さを敵の頭の方向へ向ける(固定値)
 				g_aCamera[nCntCamera].rot.x = 0.8f;
 
+				//カメラの角度をプレイヤーの角度に代入する
 				pPlayer[nCntCamera].rot.y = g_aCamera[nCntCamera].rot.y;
-
 				pPlayer[nCntCamera].rot.x = g_aCamera[nCntCamera].rot.x;
 
+				//プレイヤーが保持するライトの更新処理
+				SetLight(pPlayer[nCntCamera].LightIdx00, D3DLIGHT_SPOT, pPlayer[nCntCamera].LightColor, D3DXVECTOR3(pPlayer[nCntCamera].pos.x, pPlayer[nCntCamera].pos.y + 50.0f, pPlayer[nCntCamera].pos.z), D3DXVECTOR3(sinf(Getrot(nCntCamera).y), sinf(Getrot(nCntCamera).x), cosf(Getrot(nCntCamera).y)), 350.0f, 1.0f);
+
+				//死亡状態へ切り替える
 				if (pEnemy->state == ENEMYSTATE_PATROL)
-				{
+				{//敵の状態が巡回モードに切り替わったら
+
+					//プレイヤーの状態を死亡状態へ
 					pPlayer[nCntCamera].State = PLAYER_DEATH;
 
+					//敵のヒット判定をfalseへ
 					pEnemy->bHit = false;
 				}
 			}

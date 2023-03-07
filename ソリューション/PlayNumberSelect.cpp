@@ -145,28 +145,9 @@ void UninitPlayNumberSelect(void)
 void UpdatePlayNumberSelect(void)
 {
 	//プレイ人数の情報取得
-	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
-	PlayModeSelect PlayMode = GetPlayModeSelect();
 
-	if (PlayNumber.bUse == true)
-	{
-		//ステージ選択の関数
-		PlayerSelect();
-
-		//PlayMode.CurrentModeNumber = 0;
-	}
-	else if (PlayNumber.bUse == false)
-	{
-		//モード選択の更新処理
- 		UpdatePlayModeSelect();
-
-		//PlayNumber.CurrentSelectNumber = 3;
-	}
-
-	if (GetKeyboardTrigger(DIK_B) == true && g_PlayNumberSelect.bUse == false)
-	{//キー(B)が押された
-		g_PlayNumberSelect.bUse = true;
-	}
+	//ステージ選択の関数
+	PlayerSelect();
 
 	//3D
 	Update3DSelect();
@@ -403,7 +384,6 @@ void PlayerSelect(void)
 				g_PlayNumberSelect.CurrentSelectNumber = g_PlayNumberSelect.CurrentSelectNumber + 1;			//プレイ人数に合わせるため
 
 				SetFade(MODE_TUTORIAL);			//モードの設定(ゲーム画面に移行)
-				//SetFade(MODE_GAME);			//モードの設定(ゲーム画面に移行)
 			}
 			else if (g_PlayNumberSelect.CurrentSelectNumber == PLAYNUMBER_MAX)
 			{
@@ -412,6 +392,10 @@ void PlayerSelect(void)
 				g_PlayNumberSelect.bUse = false;
 			}
 			g_PlayNumberSelect.bPush = true;
+		}
+		else if (GetKeyboardTrigger(DIK_B) || GetGamepadTrigger(BUTTON_B, 0))
+		{
+			SetFade(MODE_TITLE);			//モードの設定(ゲーム画面に移行)
 		}
 	}
 }
