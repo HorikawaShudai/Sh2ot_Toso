@@ -225,6 +225,7 @@ void DrawTitle(void)
 {
 	//3D
 	Draw3DTitle();
+
 	if (bTitle == true)
 	{
 		//デバイスへのポインタを取得

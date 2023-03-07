@@ -6,7 +6,6 @@
 //======================================================================================
 #include <stdio.h>
 #include "PlayNumberSelect.h"
-#include "PlayModeSelect.h"
 #include "input.h"
 #include "fade.h"
 #include "game.h"
@@ -28,6 +27,12 @@
 #define NUM_POLY		(NUM_PLAYNUMBER)	//ポリゴンの数
 #define MAX_BUFF		(1)				//バッファの最大数
 
+#define POS_X			(350.0f)		//項目の位置(X)
+#define POS_Y			(200.0f)		//項目の位置(Y)
+#define SPACE_X			(200.0f)		//項目同士の間の広さ
+#define WIDTH_SIZE		(70.0f)			//項目の大きさ(X)
+#define HEIGHT_SIZE		(70.0f)			//項目の大きさ(Y)
+
 //***********************************
 //テクスチャファイル名
 //***********************************
@@ -47,7 +52,6 @@ void InitPlaySelectIcon(void);
 //更新
 void PlayerSelect(void);
 //描画
-void DrawPlayNumberselectBg(void);
 void DrawPlayNumberSelectIcon(void);
 
 //3D背景用
@@ -101,9 +105,6 @@ void InitPlayNumberSelect(void)
 
 	//3D
 	Init3DSelect();
-
-	//モード選択の初期化
-	InitPlayModeSelect();
 }
 
 //========================================================================
@@ -134,9 +135,6 @@ void UninitPlayNumberSelect(void)
 
 	//3D
 	Uninit3DSelect();
-
-	//モード選択
-	UninitPlayModeSelect();
 }
 
 //========================================================================
@@ -166,19 +164,11 @@ void DrawPlayNumberSelect(void)
 	//プレイ人数の情報取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 
-	if (g_PlayNumberSelect.bUse == true)
-	{
-		//選択アイコン
-		DrawPlayNumberSelectIcon();
-	}
-	else if (g_PlayNumberSelect.bUse == false)
-	{
-		//モード選択の描画処理
-		DrawPlayModeSelect();
-	}
-
 	//3D
 	Draw3DSelect();
+
+	//選択アイコン
+	DrawPlayNumberSelectIcon();
 }
 
 //========================================================================
@@ -196,13 +186,13 @@ void InitPlaySelectIcon(void)
 	{
 		if (nCntStage == 0)
 		{
-			g_PlayNumberSelect.pos = D3DXVECTOR3(400.0f, 200.0f, 0.0f);
+			g_PlayNumberSelect.pos = D3DXVECTOR3(POS_X, POS_Y, 0.0f);
 
 			//頂点座標の設定
-			pVtx[0].pos = D3DXVECTOR3(g_PlayNumberSelect.pos.x - 50.0f, g_PlayNumberSelect.pos.y, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(g_PlayNumberSelect.pos.x + 50.0f, g_PlayNumberSelect.pos.y, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(g_PlayNumberSelect.pos.x - 50.0f, g_PlayNumberSelect.pos.y + 100.0f, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(g_PlayNumberSelect.pos.x + 50.0f, g_PlayNumberSelect.pos.y + 100.0f, 0.0f);
+			pVtx[0].pos = D3DXVECTOR3(g_PlayNumberSelect.pos.x - WIDTH_SIZE, g_PlayNumberSelect.pos.y - HEIGHT_SIZE, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(g_PlayNumberSelect.pos.x + WIDTH_SIZE, g_PlayNumberSelect.pos.y - HEIGHT_SIZE, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(g_PlayNumberSelect.pos.x - WIDTH_SIZE, g_PlayNumberSelect.pos.y + HEIGHT_SIZE, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(g_PlayNumberSelect.pos.x + WIDTH_SIZE, g_PlayNumberSelect.pos.y + HEIGHT_SIZE, 0.0f);
 			//rhwの設定
 			for (int nCntrhw = 0; nCntrhw < 4; nCntrhw++)
 			{
@@ -221,15 +211,15 @@ void InitPlaySelectIcon(void)
 
 			pVtx += 4;					//頂点データを4つ分ずらす
 		}
-		else if (nCntStage < 5)
+		else
 		{
-			g_PlayNumberSelect.pos = D3DXVECTOR3(400.0f + 170.0f * nCntStage, 200.0f, 0.0f);
+			g_PlayNumberSelect.pos = D3DXVECTOR3(POS_X + SPACE_X * nCntStage, POS_Y, 0.0f);
 
 			//頂点座標の設定
-			pVtx[0].pos = D3DXVECTOR3(g_PlayNumberSelect.pos.x - 50.0f, g_PlayNumberSelect.pos.y, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(g_PlayNumberSelect.pos.x + 50.0f, g_PlayNumberSelect.pos.y, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(g_PlayNumberSelect.pos.x - 50.0f, g_PlayNumberSelect.pos.y + 100.0f, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(g_PlayNumberSelect.pos.x + 50.0f, g_PlayNumberSelect.pos.y + 100.0f, 0.0f);
+			pVtx[0].pos = D3DXVECTOR3(g_PlayNumberSelect.pos.x - WIDTH_SIZE, g_PlayNumberSelect.pos.y - HEIGHT_SIZE, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(g_PlayNumberSelect.pos.x + WIDTH_SIZE, g_PlayNumberSelect.pos.y - HEIGHT_SIZE, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(g_PlayNumberSelect.pos.x - WIDTH_SIZE, g_PlayNumberSelect.pos.y + HEIGHT_SIZE, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(g_PlayNumberSelect.pos.x + WIDTH_SIZE, g_PlayNumberSelect.pos.y + HEIGHT_SIZE, 0.0f);
 			//rhwの設定
 			for (int nCntrhw = 0; nCntrhw < 4; nCntrhw++)
 			{
