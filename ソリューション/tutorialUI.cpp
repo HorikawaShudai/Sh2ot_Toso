@@ -4,11 +4,13 @@
 #include "tutorialUI.h"
 #include "EscapeTutorial.h"
 #include "PlayNumberSelect.h"
+#include "input.h"
 
 //マクロ定義
-#define NUM_SSUI					(15)		//TUTORIALUIの種類数
+#define NUM_SSUI					(18)		//TUTORIALUIの種類数
 #define MAX_SSUI					(5)			//TUTORIALUIの最大使用数
-#define MAX_BUFF					(2)			//バッファの最大数
+#define MAX_BUFF					(3)			//バッファの最大数
+#define MAX_GUYDE					(3)			//ガイドの最大数
 
 #define POS_TUTORIALUI_ALL_X		(640.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_ALL_Y		(290.0f)	//「」のY座標の位置
@@ -56,6 +58,8 @@
 //プロトタイプ宣言
 void InitSkipUI(void);
 void DrawSkipUI(void);
+void InitGuydeUI(void);
+void DrawGuydeUI(void);
 
 //テクスチャファイル名
 const char *c_apTutorialUITexname[] =
@@ -75,6 +79,9 @@ const char *c_apTutorialUITexname[] =
 	"data\\TEXTURE\\TUTORIAL\\open_doar1.png",
 	"data\\TEXTURE\\TUTORIAL\\escape.png",
 	"data\\TEXTURE\\TUTORIAL\\skip.png",
+	"data\\TEXTURE\\TUTORIAL\\tutorial00.png",
+	"data\\TEXTURE\\TUTORIAL\\tutorial02.png",
+	"data\\TEXTURE\\TUTORIAL\\tutorial01.png",
 };
 
 //グローバル変数
@@ -96,7 +103,7 @@ void InitTutorialUI(void)
 
 	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
 
-							   //デバイスの所得
+	//デバイスの所得
 	pDevice = GetDevice();
 
 	//テクスチャの読み込み
@@ -129,6 +136,16 @@ void InitTutorialUI(void)
 		D3DPOOL_MANAGED,
 		&g_pVtxBuffTutorialUI[1],
 		NULL);
+
+	//頂点バッファの生成1
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * MAX_GUYDE,
+		D3DUSAGE_WRITEONLY,
+		FVF_VERTEX_2D,
+		D3DPOOL_MANAGED,
+		&g_pVtxBuffTutorialUI[2],
+		NULL);
+
+	InitGuydeUI();
 
 	VERTEX_2D*pVtx;	//頂点ポインタを所得
 
@@ -310,6 +327,44 @@ void InitSkipUI(void)
 	g_pVtxBuffTutorialUI[1]->Unlock();
 }
 
+//==============================================
+//画面にガイドUIを表示する
+//==============================================
+void InitGuydeUI(void)
+{
+	VERTEX_2D*pVtx;	//頂点ポインタを所得
+
+	//頂点バッファをロックし、頂点情報へのポインタを所得
+	g_pVtxBuffTutorialUI[2]->Lock(0, 0, (void**)&pVtx, 0);
+
+	//頂点座標の設定
+	pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(SCREEN_WIDTH, 0.0f, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(0.0f, SCREEN_HEIGHT, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f);
+
+	//頂点カラーの設定
+	pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+	//rhwの設定
+	pVtx[0].rhw = 1.0f;
+	pVtx[1].rhw = 1.0f;
+	pVtx[2].rhw = 1.0f;
+	pVtx[3].rhw = 1.0f;
+
+	//テクスチャ座標の設定
+	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+
+	//頂点バッファをアンロックする
+	g_pVtxBuffTutorialUI[2]->Unlock();
+}
+
 //====================================================================
 //タイトルの終了処理
 //====================================================================
@@ -341,6 +396,8 @@ void UninitTutorialUI(void)
 //====================================================================
 void UpdateTutorialUI(void)
 {
+	TUTORIAL_STATE Tutorial_State = GetEscapeTutorial();
+
 	switch (GetEscapeTutorial())
 	{
 	case TUTORIAL_STATE_STANDBY:
@@ -401,6 +458,11 @@ void DrawTutorialUI(void)
 	TUTORIAL_STATE Tutorial_State = GetEscapeTutorial();
 
 	int nCntBG;
+
+	if (Tutorial_State == TUTORIAL_STATE_GUYDE)
+	{
+		DrawGuydeUI();
+	}
 
 	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
 
@@ -565,7 +627,51 @@ void DrawSkipUI(void)
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,	//プリミティブの種類
 		0,						//プリミティブ(ポリゴン)数
 		2);
-	
+}
+
+//====================================================================
+//ガイドUIの描画処理
+//====================================================================
+void DrawGuydeUI(void)
+{
+	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
+
+	TUTORIAL_GUYDE Tutorial_Guyde = GetEscapeTutorialGuyde();
+
+	//デバイスの所得
+	pDevice = GetDevice();
+
+	//頂点バッファをデータストリームに設定
+	pDevice->SetStreamSource(0, g_pVtxBuffTutorialUI[2], 0, sizeof(VERTEX_2D));
+
+	//頂点フォーマットの設定
+	pDevice->SetFVF(FVF_VERTEX_2D);
+
+	if (Tutorial_Guyde == TUTORIAL_GUYDE_ESCAPE)
+	{
+		pDevice->SetTexture(0, g_apTextureTutorialUI[15]);
+	}
+
+	if (Tutorial_Guyde == TUTORIAL_GUYDE_KEY)
+	{
+		pDevice->SetTexture(0, g_apTextureTutorialUI[16]);
+	}
+
+	if (Tutorial_Guyde == TUTORIAL_GUYDE_HEALTH)
+	{
+		pDevice->SetTexture(0, g_apTextureTutorialUI[17]);
+	}
+
+	for (int nCntGuyde = 0; nCntGuyde < MAX_GUYDE; nCntGuyde++)
+	{
+		if (bUseTutorialUI[nCntGuyde] == true)
+		{
+			//ポリゴンの描画
+			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,	//プリミティブの種類
+				4 * nCntGuyde,						//プリミティブ(ポリゴン)数
+				2);
+		}
+	}
 }
 
 //====================================================================
