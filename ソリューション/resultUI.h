@@ -6,9 +6,9 @@
 //プレイヤーの状態
 typedef enum
 {
-	RESULTUI_NORMAL = 0,		//通常
-	RESULTUI_PERFECT,		//パーフェクト
-	RESULTUI_ALLPERFECT,		//オールパーフェクト
+	RESULTUI_ONLY = 0,		//1人生存(一人プレイを除く)
+	RESULTUI_TWO,			//二人以上全員未満生存
+	RESULTUI_PERFECT,		//全員生存の場合
 	RESULTUI_MAX
 }RESULTUI;
 
@@ -17,5 +17,7 @@ void InitResultUI(void);
 void UninitResultUI(void);
 void UpdateResultUI(void);
 void DrawResultUI(void);
-void SetResultUI(RESULTUI SetClear, bool Clear);
+void SetResultUI(RESULTUI SetClear);
+void SetbResultUi(bool bReseultUi);
+bool GetbResultUi(void);
 #endif
