@@ -36,6 +36,7 @@
 
 //グローバル変数宣言
 TUTORIAL_STATE g_EscapeTutorialState;
+TUTORIAL_GUYDE g_EscapeTutorialGuyde;
 int g_EscapeCounter;
 TUTORIAL_MODE g_EscapeTutorial;
 bool bpEscapeMove[NUM_PLAYER];
@@ -46,7 +47,8 @@ bool bpEscapeCamMove[NUM_PLAYER];
 //====================================================================
 void InitEscapeTutorial()
 {
-	g_EscapeTutorialState = TUTORIAL_STATE_STANDBY;
+	g_EscapeTutorialState = TUTORIAL_STATE_GUYDE;
+	g_EscapeTutorialGuyde = TUTORIAL_GUYDE_ESCAPE;
 	g_EscapeTutorial = MODE_MOVE;
 	g_EscapeCounter = 0;
 
@@ -238,6 +240,9 @@ void UpdateEscapeTutorial()
 	{
 		switch (g_EscapeTutorialState)
 		{
+		case TUTORIAL_STATE_GUYDE:
+			g_EscapeTutorialState = TUTORIAL_STATE_STANDBY;
+			break;
 		case TUTORIAL_STATE_STANDBY:
 			g_EscapeTutorialState = TUTORIAL_STATE_WAIT;
 			break;
@@ -245,12 +250,50 @@ void UpdateEscapeTutorial()
 			g_EscapeTutorialState = TUTORIAL_STATE_PLAY;
 			break;
 		case TUTORIAL_STATE_PLAY:
-			g_EscapeTutorialState = TUTORIAL_STATE_STANDBY;
 			break;
 		}
 	}
 
 #endif
+
+	//ガイドのページを進ませる処理
+	if (GetKeyboardTrigger(DIK_C) == true || GetGamepadTrigger(BUTTON_A, 0) == true)
+	{
+		switch (g_EscapeTutorialGuyde)
+		{
+		case TUTORIAL_GUYDE_ESCAPE:
+			g_EscapeTutorialGuyde = TUTORIAL_GUYDE_KEY;
+			break;
+
+		case TUTORIAL_GUYDE_KEY:
+			g_EscapeTutorialGuyde = TUTORIAL_GUYDE_HEALTH;
+			break;
+
+		case TUTORIAL_GUYDE_HEALTH:
+			g_EscapeTutorialGuyde = TUTORIAL_GUYDE_MAX;
+			break;
+		}
+	}
+
+	//ガイドのページを戻す処理
+	if (GetKeyboardTrigger(DIK_B) == true || GetGamepadTrigger(BUTTON_B, 0) == true)
+	{
+		switch (g_EscapeTutorialGuyde)
+		{
+		case TUTORIAL_GUYDE_HEALTH:
+			g_EscapeTutorialGuyde = TUTORIAL_GUYDE_KEY;
+			break;
+
+		case TUTORIAL_GUYDE_KEY:
+			g_EscapeTutorialGuyde = TUTORIAL_GUYDE_ESCAPE;
+			break;
+
+		case TUTORIAL_GUYDE_ESCAPE:
+			
+			break;
+		}
+	}
+
 	if (pFade == FADE_NONE)
 	{
 		if (GetKeyboardPress(DIK_RETURN))
@@ -267,6 +310,24 @@ void UpdateEscapeTutorial()
 
 	switch (g_EscapeTutorialState)
 	{
+	case TUTORIAL_STATE_GUYDE:	//スタンバイ状態
+
+			//チェックボックスを人数分オフにする
+			for (int nCntTutorial = 0; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber; nCntTutorial++)
+			{
+				SetCheckUI(nCntTutorial, false);
+			}
+
+			if (g_EscapeTutorialGuyde == TUTORIAL_GUYDE_MAX)
+			{
+				if (GetKeyboardTrigger(DIK_N) == true || GetGamepadTrigger(BUTTON_A, 0) == true)
+				{
+					g_EscapeTutorialState = TUTORIAL_STATE_STANDBY;
+				}
+			}
+
+		break;
+
 	case TUTORIAL_STATE_STANDBY:	//スタンバイ状態
 		SetPaperBG00(true);
 		SetTutorialUI(true,0);
@@ -514,6 +575,15 @@ TUTORIAL_STATE GetEscapeTutorial()
 {
 	return g_EscapeTutorialState;
 }
+
+//====================================================================
+//チュートリアル画面ガイドの状態管理
+//====================================================================
+TUTORIAL_GUYDE GetEscapeTutorialGuyde()
+{
+	return g_EscapeTutorialGuyde;
+}
+
 
 //====================================================================
 //チュートリアル画面の状態管理
