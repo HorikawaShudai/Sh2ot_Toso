@@ -47,8 +47,6 @@ void InitEscapeRanking()
 
 	InitRankingUI();
 
-	InitNumberUI();
-
 	InitRanKingNumber();
 
 	InitMeshField();
@@ -71,8 +69,6 @@ void UninitEscapeRanking()
 	UninitObjectLight();
 	UninitObjectWall();
 	UninitObjectPoly();
-
-	UninitNumberUI();
 
 	UninitRankingUI();
 
@@ -100,8 +96,6 @@ void UpdateEscapeRanking()
 	UpdateObjectLight();
 	UpdateObjectWall();
 	UpdateObjectPoly();
-
-	UpdateNumberUI();
 
 	UpdateRankingUI();
 
@@ -136,8 +130,6 @@ void DrawEscapeRanking()
 	DrawObjectLight();
 	DrawObjectWall();
 	DrawObjectPoly();
-
-	DrawNumberUI();
 
 	DrawRankingUI();
 

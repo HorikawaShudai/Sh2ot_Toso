@@ -126,6 +126,10 @@ void UpdateKey(void)
 	{
 		if (g_Key[nCntKey].bUse == true)
 		{
+#ifdef _DEBUG
+			PrintDebugProc("åÆ%dÇÃç¿ïWÅyX : %f | Y : %f | Z : %fÅz\n", nCntKey + 1, g_Key[nCntKey].pos.x, g_Key[nCntKey].pos.y, g_Key[nCntKey].pos.z);
+#endif // _DEBUG
+
 			g_Key[nCntKey].pos += g_Key[nCntKey].move;
 			g_Key[nCntKey].nCntMove++;
 			if (g_Key[nCntKey].nCntMove % 60 == 0)

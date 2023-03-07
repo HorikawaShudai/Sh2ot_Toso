@@ -2,29 +2,35 @@
 #include "RankingUI.h"
 #include "numberUI.h"
 #include "game.h"
+#include "time.h"
 
 //マクロ定義
-#define NUM_SSUI		(4)	//GAMEUIの種類数
+#define NUM_SSUI		(5)	//GAMEUIの種類数
 
-#define POS_RANKING_BG_X		(200.0f)	//「」のX座標の位置
-#define POS_RANKING_BG_Y		(400.0f)	//「」のY座標の位置
-#define SIZE_RANKING_BG_X		(20.0f)		//「」の幅
-#define SIZE_RANKING_BG_Y		(20.0f)		//「」の高さ
+#define POS_RANKING_BG_X		(640.0f)	//「」のX座標の位置
+#define POS_RANKING_BG_Y		(360.0f)	//「」のY座標の位置
+#define SIZE_RANKING_BG_X		(640.0f)	//「」の幅
+#define SIZE_RANKING_BG_Y		(360.0f)	//「」の高さ
 
-#define POS_SCORE_BG_X			(400.0f)	//「」のX座標の位置
-#define POS_SCORE_BG_Y			(400.0f)	//「」のY座標の位置
-#define SIZE_SCORE_BG_X			(20.0f)		//「」の幅
-#define SIZE_SCORE_BG_Y			(20.0f)		//「」の高さ
+#define POS_SCORE_BG_X			(860.0f)	//「」のX座標の位置
+#define POS_SCORE_BG_Y			(495.0f)	//「」のY座標の位置
+#define SIZE_SCORE_BG_X			(270.0f)		//「」の幅
+#define SIZE_SCORE_BG_Y			(400.0f)		//「」の高さ
 
-#define POS_PERFECT_BG_X		(1040.0f)	//「」のX座標の位置
-#define POS_PERFECT_BG_Y		(100.0f)	//「」のY座標の位置
-#define SIZE_PERFECT_BG_X		(150.0f)	//「」の幅
-#define SIZE_PERFECT_BG_Y		(75.0f)		//「」の高さ
+#define POS_PERFECT_BG_X		(720.0f)	//「」のX座標の位置
+#define POS_PERFECT_BG_Y		(420.0f)	//「」のY座標の位置
+#define SIZE_PERFECT_BG_X		(125.0f)	//「」の幅
+#define SIZE_PERFECT_BG_Y		(250.0f)		//「」の高さ
 
-#define POS_ALLPERFECT_BG_X		(200.0f)	//「」のX座標の位置
-#define POS_ALLPERFECT_BG_Y		(120.0f)	//「」のY座標の位置
+#define POS_ALLPERFECT_BG_X		(300.0f)	//「」のX座標の位置
+#define POS_ALLPERFECT_BG_Y		(200.0f)	//「」のY座標の位置
 #define SIZE_ALLPERFECT_BG_X	(200.0f)	//「」の幅
 #define SIZE_ALLPERFECT_BG_Y	(100.0f)	//「」の高さ
+
+#define POS_EXIT_BG_X			(300.0f)	//「」のX座標の位置
+#define POS_EXIT_BG_Y			(450.0f)	//「」のY座標の位置
+#define SIZE_EXIT_BG_X			(200.0f)	//「」の幅
+#define SIZE_EXIT_BG_Y			(100.0f)	//「」の高さ
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_apTextureRankingUI[NUM_SSUI] = {};	//テクスチャへのポインタ
@@ -38,37 +44,42 @@ bool g_bStageClear_Ranking;
 void InitRankingUI(void)
 {
 	int nCntBG;
-
-	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
-
-							   //デバイスの所得
-	pDevice = GetDevice();
+	LPDIRECT3DDEVICE9 pDevice = GetDevice(); //デバイスの所得
+	int *pTime = GetTime();
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\RankingBG.png",
+		"data\\TEXTURE\\RANKING\\Osumi00.png",
 		&g_apTextureRankingUI[0]);
 
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\Ranking_Score.png",
+		"data\\TEXTURE\\RANKING\\pepepepe.png",
 		&g_apTextureRankingUI[1]);
 
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\RankingPerfect.png",
+		"data\\TEXTURE\\RANKING\\RankUi.png",
 		&g_apTextureRankingUI[2]);
 
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\RankingAllPerfect.png",
+		"data\\TEXTURE\\RANKING\\pepepepe01.png",
 		&g_apTextureRankingUI[3]);
+
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\RANKING\\pepepepe01.png",
+		&g_apTextureRankingUI[4]);
 
 	//UIの表示設定
 	bUseRankingUI[0] = true;
 	bUseRankingUI[1] = true;
 	bUseRankingUI[2] = true;
 	bUseRankingUI[3] = true;
+	bUseRankingUI[4] = true;
 
-	//数字を呼び出す
-	SetNumberUI(D3DXVECTOR3(600.0f, 600.0f, 0.0f), 50.0f, 50.0f, 1, 0);
+	//タイムを呼び出す
+	for (int nCntTime = 0; nCntTime < 4; nCntTime++, pTime++)
+	{
+		SetNumberUI(D3DXVECTOR3(200.0f + nCntTime * 50.0f, 600.0f, 0.0f), 50.0f, 50.0f, *pTime, 0);
+	}
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * NUM_SSUI,
@@ -117,6 +128,14 @@ void InitRankingUI(void)
 			pVtx[1].pos = D3DXVECTOR3(POS_ALLPERFECT_BG_X + SIZE_ALLPERFECT_BG_X, POS_ALLPERFECT_BG_Y - SIZE_ALLPERFECT_BG_Y, 0.0f);
 			pVtx[2].pos = D3DXVECTOR3(POS_ALLPERFECT_BG_X - SIZE_ALLPERFECT_BG_X, POS_ALLPERFECT_BG_Y + SIZE_ALLPERFECT_BG_Y, 0.0f);
 			pVtx[3].pos = D3DXVECTOR3(POS_ALLPERFECT_BG_X + SIZE_ALLPERFECT_BG_X, POS_ALLPERFECT_BG_Y + SIZE_ALLPERFECT_BG_Y, 0.0f);
+			break;
+
+		case 4:
+			//頂点座標の設定
+			pVtx[0].pos = D3DXVECTOR3(POS_EXIT_BG_X - SIZE_EXIT_BG_X, POS_EXIT_BG_Y - SIZE_EXIT_BG_Y, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(POS_EXIT_BG_X + SIZE_EXIT_BG_X, POS_EXIT_BG_Y - SIZE_EXIT_BG_Y, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(POS_EXIT_BG_X - SIZE_EXIT_BG_X, POS_EXIT_BG_Y + SIZE_EXIT_BG_Y, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(POS_EXIT_BG_X + SIZE_EXIT_BG_X, POS_EXIT_BG_Y + SIZE_EXIT_BG_Y, 0.0f);
 			break;
 		}
 
@@ -214,30 +233,5 @@ void DrawRankingUI(void)
 //====================================================================
 void SetRankingUI(RANKING SetClear, bool Clear)
 {
-	g_bStageClear_Ranking = Clear;
 
-	bUseRankingUI[1] = true;
-	switch (SetClear)
-	{
-	case RANKING_NORMAL:
-
-		bUseRankingUI[2] = false;
-		bUseRankingUI[3] = false;
-
-		break;
-
-	case RANKING_PERFECT:
-
-		bUseRankingUI[2] = true;
-		bUseRankingUI[3] = false;
-
-		break;
-
-	case RANKING_ALLPERFECT:
-
-		bUseRankingUI[2] = true;
-		bUseRankingUI[3] = true;
-
-		break;
-	}
 }

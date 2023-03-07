@@ -8,8 +8,8 @@
 #define MAX_RANK (5)			//ランクの数
 #define NUM_PLACE (4)			//ランキングの桁数
 
-#define X_POS_GAME (800.0f)			//ゲーム画面の時のランキングのX座標
-#define Y_POS_GAME (250.0f)			//ゲーム画面の時のランキングのY座標
+#define X_POS_GAME (850.0f)			//ゲーム画面の時のランキングのX座標
+#define Y_POS_GAME (220.0f)			//ゲーム画面の時のランキングのY座標
 #define X_SIZE_GAME (40.0f)			//ゲーム画面の時のランキングの横幅
 #define Y_SIZE_GAME (40.0f)			//ゲーム画面の時のランキングの縦幅
 #define WIDE_SIZE_GAME_X (75.0f)	//ゲーム画面の時のランキング同士の幅
@@ -271,7 +271,7 @@ void SetRanking(int nRanKing)
 
 	switch (RankingType)
 	{
-	case RANKING_TYPE_VILLAIN:
+	case RANKING_TYPE_ESCAPE:
 		if (nRanKing > g_RanKingNumber[MAX_RANK - 1].nScore)
 		{
 			g_RanKingNumber[MAX_RANK - 1].nScore = nRanKing;
@@ -291,7 +291,7 @@ void SetRanking(int nRanKing)
 			}
 		}
 		break;
-	case RANKING_TYPE_ESCAPE:
+	case RANKING_TYPE_VILLAIN:
 		if (nRanKing < g_RanKingNumber[MAX_RANK - 1].nScore)
 		{
 			g_RanKingNumber[MAX_RANK - 1].nScore = nRanKing;

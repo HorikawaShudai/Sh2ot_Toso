@@ -30,6 +30,7 @@
 #include "EscapeTutorial.h"
 #include "key.h"
 #include "ChasePolygon.h"
+#include "time.h"
 #include "sound.h"
 
 //マクロ定義
@@ -971,6 +972,8 @@ void UpdatePlayer1(void)
 			{
 				g_GameEnd = true;
 				SetGameState(GAMESTATE_CLEAR_END, 60);
+				SetFalseCount(false);
+				SetRankTime();
 			}
 		}
 
@@ -981,6 +984,7 @@ void UpdatePlayer1(void)
 		{//全員死亡しているとき
 			g_GameEnd = true;
 			SetGameState(GAMESTATE_GAMEOVER_END, 340);
+			SetFalseCount(false);
 		}
 	}
 
