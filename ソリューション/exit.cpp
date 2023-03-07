@@ -12,7 +12,6 @@
 #include "debugproc.h"
 #include "exit.h"
 #include "PlayNumberSelect.h"
-#include "PlayModeSelect.h"
 #include "Fade.h"
 #include "player.h"
 #include "meshwall.h"
@@ -68,8 +67,6 @@ void InitExit(void)
 {
 	//デバイスの所得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
-	PlayModeSelect PlayMode = GetPlayModeSelect();
 
 	for (int nCntExit = 0; nCntExit < MAX_EXIT; nCntExit++)
 	{

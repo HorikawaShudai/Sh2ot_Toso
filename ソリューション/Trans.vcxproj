@@ -198,7 +198,6 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="playerBG.cpp" />
     <ClCompile Include="PlayNumberSelect.cpp" />
-    <ClCompile Include="PlayModeSelect.cpp" />
     <ClCompile Include="PolygonBG.cpp" />
     <ClCompile Include="RankingNumber.cpp" />
     <ClCompile Include="RankingUI.cpp" />
@@ -261,7 +260,6 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="playerBG.h" />
     <ClInclude Include="PlayNumberSelect.h" />
-    <ClInclude Include="PlayModeSelect.h" />
     <ClInclude Include="PolygonBG.h" />
     <ClInclude Include="RankingNumber.h" />
     <ClInclude Include="RankingUI.h" />

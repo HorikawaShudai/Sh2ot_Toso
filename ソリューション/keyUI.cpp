@@ -14,12 +14,12 @@
 #define MAX_KEY_TEX		(2)				//鍵のテクスチャ最大数
 
 #define KEYUIPOS_X_1	(60.0f)			//鍵UIのX位置1
-#define KEYUIPOS_Y_1	(50.0f)		//鍵UIのY位置1
+#define KEYUIPOS_Y_1	(50.0f)			//鍵UIのY位置1
 
 #define KEYUIPOS_X_2	(670.0f)		//鍵UIのX位置2
 #define KEYUIPOS_Y_2	(400.0f)		//鍵UIのY位置2
 
-#define KEYUI_WIDTH		(20.0f)			//鍵UIの幅
+#define KEYUI_WIDTH		(30.0f)			//鍵UIの幅
 #define KEYUI_HEIGHT	(20.0f)			//鍵UIの高さ
 #define KEYUI_INTERVAL	(50.0f)			//鍵UI同士の間隔
 
@@ -56,12 +56,12 @@ void InitKeyUI(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"Data\\TEXTURE\\nokey.png",
+		"Data\\TEXTURE\\NoCardKey.jpg",
 		&g_pTextureKeyUI[0]);
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"Data\\TEXTURE\\getkey.png",
+		"Data\\TEXTURE\\CardKey.jpg",
 		&g_pTextureKeyUI[1]);
 
 	//鍵UIの情報を初期化
