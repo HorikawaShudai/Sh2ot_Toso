@@ -44,7 +44,7 @@ void FadeUi(void);
 void InitResultUI(void)
 {
 	int nCntBG;
-
+	g_bStageClear_Result = false;
 	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
 
 							   //デバイスの所得

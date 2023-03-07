@@ -439,6 +439,7 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 
 	Player *pPlayer = GetPlayer();
+	pPlayer += nPlayer;
 
 	bool bHit = false;
 
@@ -457,12 +458,11 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 
 				{//アイテムとプレイヤーが当たった(X軸)
 					bHit = true;
-					g_KeyCount++;
-
 					if (pPlayer->bGetKey == false)
 					{
 						break;
 					}
+					g_KeyCount++;
 
 					if (g_KeyCount > PlayNumber.CurrentSelectNumber - 1)
 					{//鍵がプレイヤー人数分使われた場合
