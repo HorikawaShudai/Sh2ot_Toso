@@ -439,7 +439,7 @@ void DeathCameraEnemy(int nCntCamera)
 				SetLight(pPlayer[nCntCamera].LightIdx00, D3DLIGHT_SPOT, pPlayer[nCntCamera].LightColor, D3DXVECTOR3(pPlayer[nCntCamera].pos.x, pPlayer[nCntCamera].pos.y + 50.0f, pPlayer[nCntCamera].pos.z), D3DXVECTOR3(sinf(Getrot(nCntCamera).y), sinf(Getrot(nCntCamera).x), cosf(Getrot(nCntCamera).y)), 350.0f, 1.0f);
 
 				//Ž€–Só‘Ô‚ÖØ‚è‘Ö‚¦‚é
-				if (pEnemy->state == ENEMYSTATE_PATROL)
+				if (pEnemy->state == ENEMYSTATE_PATROL && pEnemy->StateCount <= 0)
 				{//“G‚Ìó‘Ô‚ª„‰ñƒ‚[ƒh‚ÉØ‚è‘Ö‚í‚Á‚½‚ç
 
 					//ƒvƒŒƒCƒ„[‚Ìó‘Ô‚ðŽ€–Só‘Ô‚Ö
