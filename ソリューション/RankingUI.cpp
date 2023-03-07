@@ -72,13 +72,26 @@ void InitRankingUI(void)
 	bUseRankingUI[0] = true;
 	bUseRankingUI[1] = true;
 	bUseRankingUI[2] = true;
-	bUseRankingUI[3] = true;
-	bUseRankingUI[4] = true;
 
-	//タイムを呼び出す
-	for (int nCntTime = 0; nCntTime < 4; nCntTime++, pTime++)
+	if (GetClear() == 1)
 	{
-		SetNumberUI(D3DXVECTOR3(200.0f + nCntTime * 50.0f, 600.0f, 0.0f), 50.0f, 50.0f, *pTime, 0);
+		bUseRankingUI[3] = true;
+		bUseRankingUI[4] = true;
+		//タイムを呼び出す
+		for (int nCntTime = 0; nCntTime < 4; nCntTime++, pTime++)
+		{
+			SetNumberUI(D3DXVECTOR3(200.0f + nCntTime * 50.0f, 600.0f, 0.0f), 50.0f, 50.0f, *pTime, 0);
+		}
+	}
+	else if (GetClear() == 2 || GetClear() == 3)
+	{
+		bUseRankingUI[3] = false;
+		bUseRankingUI[4] = true;
+	}
+	else
+	{
+		bUseRankingUI[3] = false;
+		bUseRankingUI[4] = false;
 	}
 
 	//頂点バッファの生成

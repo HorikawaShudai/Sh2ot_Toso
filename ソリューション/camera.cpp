@@ -1095,7 +1095,7 @@ void SelectNumberCamera(void)
 //ƒŠƒUƒ‹ƒg‰æ–Ê
 void ResultCamera(void)
 {
-	if (GetClear() == true)
+	if (GetClear() != 0)
 	{
 		g_aCamera[4].posV = D3DXVECTOR3(975.0f, 20.0f, -430.0f);
 		g_aCamera[4].posR = D3DXVECTOR3(420.0f, 100.0f, 500.0);

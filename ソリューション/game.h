@@ -22,6 +22,8 @@ void UpdateGame();
 void DrawGame();
 void SetGameState(GAMESTATE state, int nCounter);
 GAMESTATE GetGameState();
-bool GetClear(void);
+void SetClear(int ClearNumber);
+int GetClear(void);
+void ResetClear(void);
 
 #endif

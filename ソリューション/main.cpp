@@ -399,7 +399,7 @@ void Update(void)
 		UpdateGame();
 		break;
 	case MODE_RESULT:
-		if (GetClear() == true)
+		if (GetClear() != 0)
 		{
 			//UpdateResult();
 			UpdateEscapeClearResult();
@@ -449,7 +449,7 @@ void Draw(void)
 			DrawGame();
 			break;
 		case MODE_RESULT:
-			if (GetClear() == true)
+			if (GetClear() != 0)
 			{
 				DrawResult();
 				DrawEscapeClearResult();
@@ -518,7 +518,7 @@ void SetMode(MODE mode)
 		UninitGame();
 		break;
 	case MODE_RESULT:
-		if (GetClear() == true)
+		if (GetClear() != 0)
 		{
 			//UninitResult();
 			UninitEscapeClearResult();
@@ -557,7 +557,7 @@ void SetMode(MODE mode)
 		InitGame();
 		break;
 	case MODE_RESULT:
-		if (GetClear() == true)
+		if (GetClear() != 0)
 		{
 			//InitResult();
 			InitEscapeClearResult();
