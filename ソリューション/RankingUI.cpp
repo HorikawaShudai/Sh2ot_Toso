@@ -1,6 +1,8 @@
 #include "main.h"
 #include "RankingUI.h"
 #include "numberUI.h"
+#include "player.h"
+#include "PlayNumberSelect.h"
 #include "game.h"
 #include "time.h"
 
@@ -74,19 +76,35 @@ void InitRankingUI(void)
 	bUseRankingUI[2] = true;
 
 	if (GetClear() == 1)
-	{
+	{//全員クリア
 		bUseRankingUI[3] = true;
 		bUseRankingUI[4] = true;
 		//タイムを呼び出す
 		for (int nCntTime = 0; nCntTime < 4; nCntTime++, pTime++)
 		{
-			SetNumberUI(D3DXVECTOR3(200.0f + nCntTime * 50.0f, 600.0f, 0.0f), 50.0f, 50.0f, *pTime, 0);
+			switch (nCntTime)
+			{
+			case 0:
+			case 1:
+				SetNumberUI(D3DXVECTOR3(170.0f + nCntTime * 70.0f, 220.0f, 0.0f), 50.0f, 50.0f, *pTime, 0);
+				break;
+			case 2:
+			case 3:
+				SetNumberUI(D3DXVECTOR3(220.0f + nCntTime * 70.0f, 220.0f, 0.0f), 50.0f, 50.0f, *pTime, 0);
+				break;
+			}
+
+			SetNumberUI(D3DXVECTOR3(230.0f, 450.0f, 0.0f), 50.0f, 50.0f, GetPlayNumberSelect().CurrentSelectNumber, 0);
+			SetNumberUI(D3DXVECTOR3(360.0f, 480.0f, 0.0f), 50.0f, 50.0f, GetExitCount(), 0);
 		}
 	}
 	else if (GetClear() == 2 || GetClear() == 3)
-	{
+	{//一人でもクリア
 		bUseRankingUI[3] = false;
 		bUseRankingUI[4] = true;
+
+		SetNumberUI(D3DXVECTOR3(230.0f, 450.0f, 0.0f), 50.0f, 50.0f, GetPlayNumberSelect().CurrentSelectNumber, 0);
+		SetNumberUI(D3DXVECTOR3(360.0f, 480.0f, 0.0f), 50.0f, 50.0f, GetExitCount(), 0);
 	}
 	else
 	{
