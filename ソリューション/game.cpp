@@ -260,6 +260,8 @@ void UpdateGame()
 	//ポーズ情報の取得
 	Pause *pPause = GetPause();
 
+	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
+
 #ifdef _DEBUG
 	if (GetKeyboardTrigger(DIK_F2) == true)
 	{//f2が押されたとき
@@ -291,6 +293,11 @@ void UpdateGame()
 	{//ポーズが使われているとき
 		//ポーズの更新処理
 		UpdatePause();
+
+		for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
+		{//ポーズ中バイブを止める処理
+			GetGamepad_Vibrtion_false(nCntPlayer);
+		}
 	}
 
 	if (pPause->bUse == false && g_bEdit == false)
