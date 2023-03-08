@@ -9,10 +9,11 @@
 //プレイヤーのモーション
 typedef enum
 {
-	PLAYERBG_ACTION_WAIT = 0,
-	PLAYERBG_ACTION_MOVE,
-	PLAYERBG_ACTION_JUMP,
+	PLAYERBG_ACTION_WAIT1 = 0,
 	PLAYERBG_ACTION_WAIT2,
+	PLAYERBG_ACTION_WAIT3,
+	PLAYERBG_ACTION_WAIT4,
+	PLAYERBG_ACTION_RUNPOZE,
 	PLAYERBG_ACTION_MAX,
 
 }PLAYER_MOTION_TYPE;
@@ -95,4 +96,8 @@ void UpdatePlayerMotion(int nCnt);
 void SetPlayerMotion(PLAYER_MOTION_TYPE nType, int nCnt);
 void LoadPlayerMotion(int nPlayerBG);
 PlayerBG * GetPlayerBG(void);
+void InitResultPlayer(void);
+void UninitResultPlayer(void);
+void UpdateResultPlayer(void);
+void DrawResultPlayer(void);
 #endif
