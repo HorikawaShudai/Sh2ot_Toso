@@ -35,6 +35,7 @@
 #include "particle.h"
 #include "ChasePolygon.h"
 #include "LifePolygon.h"
+#include "NeedKeyPolygon.h"
 
 //エディットに使うオブジェクトの種類の構造体
 typedef enum
@@ -113,6 +114,8 @@ void InitGame()
 
 	//鍵UIの初期化処理
 	InitKeyUI();
+
+	InitNeedKeyPolygon();
 
 	//エフェクトの初期化
 	InitEffect();
@@ -227,6 +230,8 @@ void UninitGame()
 
 	//鍵UIの終了処理
 	UninitKeyUI();
+
+	UninitNeedKeyPolygon();
 
 	//エフェクトの終了処理
 	UninitEffect();
@@ -409,6 +414,8 @@ void UpdateGame()
 			//鍵UIの更新処理
 			UpdateKeyUI();
 
+			UpdateNeedKeyPolygon();
+
 			//エフェクトの更新処理
 			UpdateEffect();
 
@@ -564,6 +571,8 @@ void DrawGame()
 
 		//鍵UIの描画処理
 		DrawKeyUI();
+
+		DrawNeedKeyPolygon(nCnt);
 
 		if (pPlayer->bEnemyLeft == true || pPlayer->bEnemyRight == true)
 		{
