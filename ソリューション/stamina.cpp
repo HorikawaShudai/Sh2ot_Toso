@@ -7,6 +7,7 @@
 #include "stamina.h"
 #include "player.h"
 #include "PlayNumberSelect.h"
+#include "sound.h"
 
 //**********************************************
 //マクロ定義
@@ -354,6 +355,8 @@ void StaminaIAD(int nCntStamina)
 		//疲労状態にする
 		pPlayer[nCntStamina].MoveState = PLAYER_MOVESTATE_FATIGE;
 		g_aStamina[nCntStamina].bFatige = true;
+
+		PlaySound(SOUND_LABEL_SE_NO_RUN);
 	}
 
 	//色が0.0f以下、1.0f以上行かないように
