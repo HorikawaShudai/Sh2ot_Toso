@@ -12,52 +12,72 @@
 #define MAX_BUFF					(3)			//バッファの最大数
 #define MAX_GUYDE					(3)			//ガイドの最大数
 
+//UIの位置・サイズ設定
+//全体に表示されてる紙
 #define POS_TUTORIALUI_ALL_X		(640.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_ALL_Y		(290.0f)	//「」のY座標の位置
 #define SIZE_TUTORIALUI_ALL_X		(270.0f)	//「」の幅
 #define SIZE_TUTORIALUI_ALL_Y		(330.0f)	//「」の高さ
-
+//一人プレイ	一人目
 #define POS_TUTORIALUI_1_01_X		(640.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_1_01_Y		(630.0f)	//「」のY座標の位置
 #define SIZE_TUTORIALUI_1_01_X		(300.0f)	//「」の幅
 #define SIZE_TUTORIALUI_1_01_Y		(80.0f)		//「」の高さ
-
+//二人プレイ	一人プレイ
 #define POS_TUTORIALUI_2_01_X		(320.0f)	//「」のX座標の位置
-#define POS_TUTORIALUI_2_01_Y		(600.0f)	//「」のY座標の位置
-#define SIZE_TUTORIALUI_2_01_X		(150.0f)	//「」の幅
-#define SIZE_TUTORIALUI_2_01_Y		(60.0f)		//「」の高さ
-
+#define POS_TUTORIALUI_2_01_Y		(630.0f)	//「」のY座標の位置
+#define SIZE_TUTORIALUI_2_01_X		(200.0f)	//「」の幅
+#define SIZE_TUTORIALUI_2_01_Y		(70.0f)		//「」の高さ
+//二人プレイ
 #define POS_TUTORIALUI_2_02_X		(960.0f)	//「」のX座標の位置
-#define POS_TUTORIALUI_2_02_Y		(600.0f)	//「」のY座標の位置
-#define SIZE_TUTORIALUI_2_02_X		(150.0f)	//「」の幅
-#define SIZE_TUTORIALUI_2_02_Y		(60.0f)		//「」の高さ
-
+#define POS_TUTORIALUI_2_02_Y		(630.0f)	//「」のY座標の位置
+#define SIZE_TUTORIALUI_2_02_X		(200.0f)	//「」の幅
+#define SIZE_TUTORIALUI_2_02_Y		(70.0f)		//「」の高さ
+//三・四人プレイ	一人目
 #define POS_TUTORIALUI_34_01_X		(320.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_34_01_Y		(310.0f)	//「」のY座標の位置
 #define SIZE_TUTORIALUI_34_01_X		(150.0f)	//「」の幅
-#define SIZE_TUTORIALUI_34_01_Y		(25.0f)		//「」の高さ
-
+#define SIZE_TUTORIALUI_34_01_Y		(50.0f)		//「」の高さ
+//二人目
 #define POS_TUTORIALUI_34_02_X		(960.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_34_02_Y		(310.0f)	//「」のY座標の位置
 #define SIZE_TUTORIALUI_34_02_X		(150.0f)	//「」の幅
-#define SIZE_TUTORIALUI_34_02_Y		(25.0f)		//「」の高さ
-
+#define SIZE_TUTORIALUI_34_02_Y		(50.0f)		//「」の高さ
+//三人目
 #define POS_TUTORIALUI_34_03_X		(320.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_34_03_Y		(670.0f)	//「」のY座標の位置
 #define SIZE_TUTORIALUI_34_03_X		(150.0f)	//「」の幅
-#define SIZE_TUTORIALUI_34_03_Y		(25.0f)		//「」の高さ
-
+#define SIZE_TUTORIALUI_34_03_Y		(50.0f)		//「」の高さ
+//四人目
 #define POS_TUTORIALUI_34_04_X		(960.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_34_04_Y		(670.0f)	//「」のY座標の位置
 #define SIZE_TUTORIALUI_34_04_X		(150.0f)	//「」の幅
-#define SIZE_TUTORIALUI_34_04_Y		(25.0f)		//「」の高さ
+#define SIZE_TUTORIALUI_34_04_Y		(50.0f)		//「」の高さ
 
 #define UP_PAPERBG01				(100.0f)	//紙を取り出すときの上昇度
 #define UP_PAPERBG01_COUNTER_MAX	(100)		//紙を取り出す速さのカウンター
 
+#define SKIP_UI_POS_X				(1190.0f)	//スキップUIの位置x
+#define SKIP_UI_POS_Y				(15.0f)	//スキップUIの位置y
+#define SKIP_UI_SIZE_X				(90.0f)		//スキップUIの大きさx
+#define SKIP_UI_SIZE_Y				(20.0f)		//スキップUIの大きさy
+
+//**********************************************
+// 列挙型の定義
+//**********************************************
+typedef enum
+{
+	UISTATE_NONE = 0,
+	UISTATE_IN,
+	UISTATE_OUT,
+	UISTATE_MAX
+}UISate;
+
 //プロトタイプ宣言
 void InitSkipUI(void);
+void UpadeSkipUI(void);
 void DrawSkipUI(void);
+
 void InitGuydeUI(void);
 void DrawGuydeUI(void);
 
@@ -96,6 +116,8 @@ bool g_TutorialTEX_Change;			//テクスチャを切り替えるためのカウンター
 int TutorialUI_TrueCounter;			//紙を取り出すときのカウンター
 
 D3DXVECTOR3 pos;
+float g_fSkipCnt;
+UISate g_UIState;
 
 //====================================================================
 //タイトル画面の初期化処理
@@ -103,11 +125,14 @@ D3DXVECTOR3 pos;
 void InitTutorialUI(void)
 {
 	int nCntBG;
+	g_UIState = UISTATE_NONE;
 
 	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
 
 	//デバイスの所得
 	pDevice = GetDevice();
+
+	g_fSkipCnt = 0.0f;
 
 	//テクスチャの読み込み
 	for (int nCntUI = 0; nCntUI < NUM_SSUI; nCntUI++)
@@ -291,11 +316,11 @@ void InitTutorialUI(void)
 }
 
 //==============================================
-//画面にスキップUIを表示する
+//画面にスキップUIの初期化
 //==============================================
 void InitSkipUI(void)
 {
-	pos = D3DXVECTOR3(1160.0f, 690.0f, 0.0f);
+	pos = D3DXVECTOR3(SKIP_UI_POS_X, SKIP_UI_POS_Y, 0.0f);
 
 	VERTEX_2D*pVtx;	//頂点ポインタを所得
 
@@ -303,16 +328,16 @@ void InitSkipUI(void)
 	g_pVtxBuffTutorialUI[1]->Lock(0, 0, (void**)&pVtx, 0);
 
 	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(pos.x - 100, pos.y - 30, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(pos.x + 100, pos.y - 30, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(pos.x - 100, pos.y + 30, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(pos.x + 100, pos.y + 30, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(pos.x - SKIP_UI_SIZE_X, pos.y - SKIP_UI_SIZE_Y, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(pos.x + SKIP_UI_SIZE_X, pos.y - SKIP_UI_SIZE_Y, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(pos.x - SKIP_UI_SIZE_X, pos.y + SKIP_UI_SIZE_Y, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(pos.x + SKIP_UI_SIZE_X, pos.y + SKIP_UI_SIZE_Y, 0.0f);
 
 	//頂点カラーの設定
-	pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, g_fSkipCnt);
+	pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, g_fSkipCnt);
+	pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, g_fSkipCnt);
+	pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, g_fSkipCnt);
 
 	//rhwの設定
 	pVtx[0].rhw = 1.0f;
@@ -448,6 +473,47 @@ void UpdateTutorialUI(void)
 
 	//頂点バッファをアンロックする
 	g_pVtxBuffTutorialUI[0]->Unlock();
+
+
+	UpadeSkipUI();
+}
+
+//====================================================================
+//スキップUIの更新
+//====================================================================
+void UpadeSkipUI(void)
+{
+	VERTEX_2D*pVtx;	//頂点ポインタを所得
+
+	if (g_fSkipCnt >= 1.0f)
+	{
+		g_UIState = UISTATE_IN;
+	}
+	if (g_fSkipCnt <= 0.0f)
+	{
+		g_UIState = UISTATE_OUT;
+	}
+
+	if (g_UIState == UISTATE_IN)
+	{
+		g_fSkipCnt -= 0.01f;
+	}
+	if (g_UIState == UISTATE_OUT)
+	{
+		g_fSkipCnt += 0.01f;
+	}
+
+	//頂点バッファをロックし、両店情報へのポインタを所得
+	g_pVtxBuffTutorialUI[1]->Lock(0, 0, (void**)&pVtx, 0);
+
+	//頂点カラーの設定
+	pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, g_fSkipCnt);
+	pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, g_fSkipCnt);
+	pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, g_fSkipCnt);
+	pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, g_fSkipCnt);
+
+	//頂点バッファをアンロックする
+	g_pVtxBuffTutorialUI[1]->Unlock();
 }
 
 //====================================================================

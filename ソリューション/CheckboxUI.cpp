@@ -11,26 +11,45 @@
 //マクロ定義
 #define MAX_CHECK_TEX		(2)				//チェックボックスのテクスチャ最大数
 
-#define CHECKUIPOS_X_1		(300.0f)		//チェックボックスのUIのX位置1
-#define CHECKUIPOS_Y_1		(650.0f)		//チェックボックスのUIのY位置1
+//チェックボックスの位置
+//一・二プレイ
+#define CHECKUIPOS_X_0		(990.0f)		//チェックボックスのUIのX位置(1人目)
+#define CHECKUIPOS_Y_0		(680.0f)		//チェックボックスのUIのY位置(1人目)
 
-#define CHECKUIPOS_X_2		(1200.0f)		//チェックボックスのUIのX位置2
-#define CHECKUIPOS_Y_2		(700.0f)		//チェックボックスのUIのY位置2
+#define CHECKUIPOS_X_1		(550.0f)		//チェックボックスのUIのX位置(1人目)
+#define CHECKUIPOS_Y_1		(680.0f)		//チェックボックスのUIのY位置(1人目)
 
+#define CHECKUIPOS_X_2		(1140.0f)		//チェックボックスのUIのX位置(2人目)
+#define CHECKUIPOS_Y_2		(680.0f)		//チェックボックスのUIのY位置(2人目)
+
+//三・四人プレイ
+#define CHECKUIPOS_X_1_34	(550.0f)		//チェックボックスのUIのX位置(1人目)
+#define CHECKUIPOS_Y_1_34	(320.0f)		//チェックボックスのUIのY位置(1人目)
+
+#define CHECKUIPOS_X_2_34	(1190.0f)		//チェックボックスのUIのX位置(2人目)
+#define CHECKUIPOS_Y_2_34	(320.0f)		//チェックボックスのUIのY位置(2人目)
+
+#define CHECKUIPOS_X_3_34	(550.0f)		//チェックボックスのUIのX位置(3人目)
+#define CHECKUIPOS_Y_3_34	(680.0f)		//チェックボックスのUIのY位置(3人目)
+
+#define CHECKUIPOS_X_4_34	(1190.0f)		//チェックボックスのUIのX位置(4人目)
+#define CHECKUIPOS_Y_4_34	(680.0f)		//チェックボックスのUIのY位置(4人目)
+
+//全体に表示してる時
 #define CHECKUIPOS_X_3_0	(100.0f)		//チュートリアル用紙が出ているときのX位置(1人目)
-#define CHECKUIPOS_Y_3_0	(550.0f)			//チュートリアル用紙が出ているときのY位置(1人目)
+#define CHECKUIPOS_Y_3_0	(550.0f)		//チュートリアル用紙が出ているときのY位置(1人目)
 
-#define CHECKUIPOS_X_3_1	(200.0f)			//チュートリアル用紙が出ているときのX位置(2人目)
-#define CHECKUIPOS_Y_3_1	(550.0f)			//チュートリアル用紙が出ているときのY位置(2人目)
+#define CHECKUIPOS_X_3_1	(200.0f)		//チュートリアル用紙が出ているときのX位置(2人目)
+#define CHECKUIPOS_Y_3_1	(550.0f)		//チュートリアル用紙が出ているときのY位置(2人目)
 
-#define CHECKUIPOS_X_3_2	(900.0f)			//チュートリアル用紙が出ているときのX位置(3人目)
-#define CHECKUIPOS_Y_3_2	(550.0f)			//チュートリアル用紙が出ているときのY位置(3人目)
+#define CHECKUIPOS_X_3_2	(900.0f)		//チュートリアル用紙が出ているときのX位置(3人目)
+#define CHECKUIPOS_Y_3_2	(550.0f)		//チュートリアル用紙が出ているときのY位置(3人目)
 
-#define CHECKUIPOS_X_3_3	(1000.0f)			//チュートリアル用紙が出ているときのX位置(4人目)
-#define CHECKUIPOS_Y_3_3	(550.0f)			//チュートリアル用紙が出ているときのY位置(4人目)
+#define CHECKUIPOS_X_3_3	(1000.0f)		//チュートリアル用紙が出ているときのX位置(4人目)
+#define CHECKUIPOS_Y_3_3	(550.0f)		//チュートリアル用紙が出ているときのY位置(4人目)
 
-#define CHECKUI_WIDTH		(50.0f)			//チェックボックスのUIの幅
-#define CHECKUI_HEIGHT		(50.0f)			//チェックボックスのUIの高さ
+#define CHECKUI_WIDTH		(40.0f)			//チェックボックスのUIの幅
+#define CHECKUI_HEIGHT		(40.0f)			//チェックボックスのUIの高さ
 #define CHECKUI_INTERVAL	(50.0f)			//チェックボックスのUI同士の間隔
 
 #define UP_CHECKBOXUI				(100.0f)	//紙を取り出すときの上昇度
@@ -87,7 +106,6 @@ void InitCheckboxUI(void)
 	{
 		g_anCheckUI[nCntCheckUI].bUse = true;  //使っていることに
 	}
-
 
 	//鍵UIの情報を初期化
 	for (nCntCheckUI = 0; nCntCheckUI < PlayNumber.CurrentSelectNumber; nCntCheckUI++)
@@ -232,79 +250,78 @@ void UpdateCheckboxUI(void)
 
 	if (g_anCheckUI[0].bUse == true && g_anCheckUI[1].bUse == true && g_anCheckUI[2].bUse == true && g_anCheckUI[3].bUse == true)
 	{
-			switch (GetEscapeTutorial())
+		switch (GetEscapeTutorial())
+		{
+		case TUTORIAL_STATE_PLAY:
+			ChecboxUIWaitCount++;
+			if (ChecboxUIWaitCount >= UP_CHECKBOXUI_WAITCOUNTER)
 			{
-			case TUTORIAL_STATE_PLAY:
-				ChecboxUIWaitCount++;
-				if (ChecboxUIWaitCount >= UP_CHECKBOXUI_WAITCOUNTER)
+				ChecboxUIWaitCount = 0;
+				for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++, pPlayer++)
 				{
-					ChecboxUIWaitCount = 0;
-					for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++, pPlayer++)
-					{
-						pPlayer->MoveState = PLAYER_MOVESTATE_NORMAL;
-						GetGamepad_Vibrtion_false(nCntPlayer);
-					}
+					pPlayer->MoveState = PLAYER_MOVESTATE_NORMAL;
+					GetGamepad_Vibrtion_false(nCntPlayer);
+				}
 
-					switch (GetDoEscapeTutorial())
-					{
-					case MODE_MOVE:
-						//チュートリアル用紙をカメラ移動に
-						DoEscapeTutorial(MODE_DASH);
-						break;
-					case MODE_DASH:
-						//チュートリアル用紙をバイブに
-						DoEscapeTutorial(MODE_VIBE);
+				switch (GetDoEscapeTutorial())
+				{
+				case MODE_MOVE:
+					//チュートリアル用紙をカメラ移動に
+					DoEscapeTutorial(MODE_DASH);
+					break;
+				case MODE_DASH:
+					//チュートリアル用紙をバイブに
+					DoEscapeTutorial(MODE_VIBE);
 
-						SetEnemy(D3DXVECTOR3(-1050.0f, 0.0f, 100.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+					SetEnemy(D3DXVECTOR3(-1050.0f, 0.0f, 100.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
-						break;
-					case MODE_VIBE:
-						//チュートリアル用紙をステルスに
-						DoEscapeTutorial(MODE_STELTH);
-						break;
-					case MODE_STELTH:
-						//チュートリアル用紙を鍵をとるに
-						DoEscapeTutorial(MODE_GET_KEY);
+					break;
+				case MODE_VIBE:
+					//チュートリアル用紙をステルスに
+					DoEscapeTutorial(MODE_STELTH);
+					break;
+				case MODE_STELTH:
+					//チュートリアル用紙を鍵をとるに
+					DoEscapeTutorial(MODE_GET_KEY);
 
-						FalseEnemy();
+					FalseEnemy();
 
-						for (int nCntTutorial = 0; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber; nCntTutorial++)
-						{
-							SetKey(D3DXVECTOR3(-1150.0f + (50.0f * nCntTutorial), 3.0f, -50.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), KEY_TYPE_ITEM);
-						}
-
-						break;
-					case MODE_GET_KEY:
-						//チュートリアル用紙を脱出に
-						DoEscapeTutorial(MODE_ESCAPE);
-						break;
-					case MODE_ESCAPE:
-						//チュートリアル用紙をチュートリアル項目の終了に
-						DoEscapeTutorial(MODE_GOEXIT);
-						break;
-					case MODE_GOEXIT:
-						//チュートリアル用紙をチュートリアル項目の終了に
-						DoEscapeTutorial(MODE_END);
-						break;
-					}
-					//チェックボックスを人数分オフにする
 					for (int nCntTutorial = 0; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber; nCntTutorial++)
 					{
-						g_anCheckUI[nCntTutorial].bUse = false;
+						SetKey(D3DXVECTOR3(-1150.0f + (50.0f * nCntTutorial), 3.0f, -50.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), KEY_TYPE_ITEM);
 					}
-					SetEscapeTutorial(TUTORIAL_STATE_STANDBY);
-					//紙の音
-					PlaySound(SOUND_LABEL_PAPER);
+
+					break;
+				case MODE_GET_KEY:
+					//チュートリアル用紙を脱出に
+					DoEscapeTutorial(MODE_ESCAPE);
+					break;
+				case MODE_ESCAPE:
+					//チュートリアル用紙をチュートリアル項目の終了に
+					DoEscapeTutorial(MODE_GOEXIT);
+					break;
+				case MODE_GOEXIT:
+					//チュートリアル用紙をチュートリアル項目の終了に
+					DoEscapeTutorial(MODE_END);
+					break;
 				}
-				break;
-
-
-			case TUTORIAL_STATE_STANDBY:
-				SetEscapeTutorial(TUTORIAL_STATE_WAIT);
+				//チェックボックスを人数分オフにする
+				for (int nCntTutorial = 0; nCntTutorial < GetPlayNumberSelect().CurrentSelectNumber; nCntTutorial++)
+				{
+					g_anCheckUI[nCntTutorial].bUse = false;
+				}
+				SetEscapeTutorial(TUTORIAL_STATE_STANDBY);
 				//紙の音
 				PlaySound(SOUND_LABEL_PAPER);
-				break;
 			}
+			break;
+
+		case TUTORIAL_STATE_STANDBY:
+			SetEscapeTutorial(TUTORIAL_STATE_WAIT);
+			//紙の音
+			PlaySound(SOUND_LABEL_PAPER);
+			break;
+		}
 	}
 
 	VERTEX_2D *pVtx;    //頂点情報へのポインタ
@@ -318,31 +335,72 @@ void UpdateCheckboxUI(void)
 		//鍵UIの情報を初期化
 		for (nCntCheckUI = 0; nCntCheckUI < PlayNumber.CurrentSelectNumber; nCntCheckUI++)
 		{
-			if (nCntCheckUI == 0)
+			switch (PlayNumber.CurrentSelectNumber)
 			{
-				g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_1, CHECKUIPOS_Y_1, 0.0f);  //1人目の位置を初期化
-			}
+			case 1:
+				if (nCntCheckUI == 0)
+				{
+					g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_0, CHECKUIPOS_Y_0, 0.0f);  //1人目の位置を初期化
+				}
+				break;
 
-			if (nCntCheckUI == 1)
-			{
-				g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_2, CHECKUIPOS_Y_1, 0.0f);  //2人目の位置を初期化
-			}
+			case 2:
+				if (nCntCheckUI == 0)
+				{
+					g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_1, CHECKUIPOS_Y_1, 0.0f);  //1人目の位置を初期化
+				}
+				if (nCntCheckUI == 1)
+				{
+					g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_2, CHECKUIPOS_Y_1, 0.0f);  //2人目の位置を初期化
+				}
+				break;
 
-			if (nCntCheckUI == 2)
-			{
-				g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_1, CHECKUIPOS_Y_2, 0.0f);  //3人目の位置を初期化
-			}
+			case 3:
+				if (nCntCheckUI == 0)
+				{
+					g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_1_34, CHECKUIPOS_Y_1_34, 0.0f);  //1人目の位置を初期化
+				}
+				if (nCntCheckUI == 1)
+				{
+					g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_2_34, CHECKUIPOS_Y_2_34, 0.0f);  //2人目の位置を初期化
+				}
+				if (nCntCheckUI == 2)
+				{
+					g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_3_34, CHECKUIPOS_Y_3_34, 0.0f);  //3人目の位置を初期化
+				}
 
-			if (nCntCheckUI == 3)
-			{
-				g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_2, CHECKUIPOS_Y_2, 0.0f);  //4人目の位置を初期化
+				if (nCntCheckUI == 3)
+				{
+					g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_4_34, CHECKUIPOS_Y_4_34, 0.0f);  //4人目の位置を初期化
+				}
+				break;
+
+			case 4:
+				if (nCntCheckUI == 0)
+				{
+					g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_1_34, CHECKUIPOS_Y_1_34, 0.0f);  //1人目の位置を初期化
+				}
+				if (nCntCheckUI == 1)
+				{
+					g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_2_34, CHECKUIPOS_Y_2_34, 0.0f);  //2人目の位置を初期化
+				}
+				if (nCntCheckUI == 2)
+				{
+					g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_3_34, CHECKUIPOS_Y_3_34, 0.0f);  //3人目の位置を初期化
+				}
+
+				if (nCntCheckUI == 3)
+				{
+					g_anCheckUI[nCntCheckUI].pos = D3DXVECTOR3(CHECKUIPOS_X_4_34, CHECKUIPOS_Y_4_34, 0.0f);  //4人目の位置を初期化
+				}
+				break;
 			}
 
 			//頂点座標の設定
-			pVtx[0].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x - CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y - CHECKUI_HEIGHT, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x + CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y - CHECKUI_HEIGHT, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x - CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y + CHECKUI_HEIGHT, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x + CHECKUI_WIDTH + (nCntCheckUI * CHECKUI_INTERVAL), g_anCheckUI[nCntCheckUI].pos.y + CHECKUI_HEIGHT, 0.0f);
+			pVtx[0].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x - CHECKUI_WIDTH, g_anCheckUI[nCntCheckUI].pos.y - CHECKUI_HEIGHT, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x + CHECKUI_WIDTH, g_anCheckUI[nCntCheckUI].pos.y - CHECKUI_HEIGHT, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x - CHECKUI_WIDTH, g_anCheckUI[nCntCheckUI].pos.y + CHECKUI_HEIGHT, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(g_anCheckUI[nCntCheckUI].pos.x + CHECKUI_WIDTH, g_anCheckUI[nCntCheckUI].pos.y + CHECKUI_HEIGHT, 0.0f);
 
 			pVtx += 4;
 
