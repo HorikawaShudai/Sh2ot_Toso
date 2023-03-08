@@ -284,6 +284,7 @@ void UpdateEnemy(void)
 						if (g_Enemy[nCntObject].Tgpos == pPlayer->pos)
 						{
 							pPlayer->bChase = true;
+							g_Enemy[nCntObject].nTargetOld = g_Enemy[nCntObject].nTarget;
 							g_Enemy[nCntObject].nTarget = nCnt;
 						}
 						vecPlayer = pPlayer->pos - g_Enemy[nCntObject].pos;
@@ -342,7 +343,6 @@ void UpdateEnemy(void)
 						pPlayer++;
 					}
 					pPlayer->bChase = false;
-					g_Enemy[nCntObject].nTarget = -1;
 
 				}
 			}
