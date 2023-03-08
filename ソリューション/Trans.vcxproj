@@ -185,6 +185,7 @@
     <ClCompile Include="meshdome.cpp" />
     <ClCompile Include="meshfield.cpp" />
     <ClCompile Include="meshwall.cpp" />
+    <ClCompile Include="NeedKeyPolygon.cpp" />
     <ClCompile Include="NumberUI.cpp" />
     <ClCompile Include="object00.cpp" />
     <ClCompile Include="objectBG.cpp" />
@@ -247,6 +248,7 @@
     <ClInclude Include="meshdome.h" />
     <ClInclude Include="meshfield.h" />
     <ClInclude Include="meshwall.h" />
+    <ClInclude Include="NeedKeyPolygon.h" />
     <ClInclude Include="NumberUI.h" />
     <ClInclude Include="object00.h" />
     <ClInclude Include="objectBG.h" />
