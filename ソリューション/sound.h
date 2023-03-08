@@ -9,6 +9,7 @@
 typedef enum
 {
 	SOUND_LABEL_BGM_TITLE = 0,			// タイトルBGM(雨)
+	SOUND_LABEL_BGM_GAMEOVER,			//ゲームオーバーBGM(ノイズ)
 	SOUND_LABEL_THUNDER,				//雷の音
 	SOUND_LABEL_WIND,					//風の音
 	SOUND_LABEL_CHOICE,					//選択音

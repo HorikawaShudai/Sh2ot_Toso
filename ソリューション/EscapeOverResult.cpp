@@ -15,6 +15,7 @@
 #include "ResultUI.h"
 #include "fade.h"
 #include "input.h"
+#include "sound.h"
 
 //マクロ定義
 #define INIT_SCREENTEX_X0  (0.0f)  //テクスチャX軸の最初の位置
@@ -92,6 +93,8 @@ void InitEscapeOverResult()
 	//ステージの読み込み
 	SetStage(5);
 
+	//ゲームオーバーBGM(ノイズ)
+	PlaySound(SOUND_LABEL_BGM_GAMEOVER);
 	//InitResultUI();
 }
 
@@ -100,6 +103,9 @@ void InitEscapeOverResult()
 //====================================================================
 void UninitEscapeOverResult()
 {
+	//サウンドを止める
+	StopSound();
+
 	//テクスチャの破棄
 	if (g_pTextureOver != NULL)
 	{

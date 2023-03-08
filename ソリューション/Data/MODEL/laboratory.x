@@ -3223,7 +3223,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-   "TEXTURE\\Seamless_Dirty_Concrete_Wall_Texture_Texturise..jpg";
+   "Data\\TEXTURE\\Seamless_Dirty_Concrete_Wall_Texture_Texturise..jpg";
    }
   }
   Material {
@@ -3232,7 +3232,7 @@ Mesh {
    0.670000;0.670000;0.670000;;
    0.154980;0.178078;0.190000;;
    TextureFilename {
-   "TEXTURE\\istockphoto-913407540-612x612.jpg";
+   "Data\\TEXTURE\\istockphoto-913407540-612x612.jpg";
    }
   }
   Material {
@@ -3241,7 +3241,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "TEXTURE\\9e4be0aaebc23245b0abdd603c463399.jpg";
+    "Data\\TEXTURE\\\\9e4be0aaebc23245b0abdd603c463399.jpg";
    }
   }
   Material {
