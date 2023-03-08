@@ -33,6 +33,7 @@
 #include "player.h"
 #include "sound.h"
 #include "particle.h"
+#include "ChasePolygon.h"
 
 //グローバル変数宣言
 TUTORIAL_STATE g_EscapeTutorialState;
@@ -123,6 +124,8 @@ void InitEscapeTutorial()
 
 	InitActionHelpUI();
 
+	InitChasePolygon();
+
 	InitPolygonBG();
 
 	InitTime();
@@ -202,6 +205,8 @@ void UninitEscapeTutorial()
 	UninitExit();
 
 	UninitActionHelpUI();
+
+	UninitChasePolygon();
 
 	UninitTime();
 
@@ -424,6 +429,8 @@ void UpdateEscapeTutorial()
 	}
 	UpdateActionHelpUI();
 
+	UpdateChasePolygon();
+
 	UpdateTime();
 
 	UpdatePaperBG00();
@@ -499,6 +506,9 @@ void DrawEscapeTutorial()
 		//カメラのセット処理
 		SetCamera(nCnt);
 
+		//プレイヤーが保持するライトの描画処理
+		DrawLight(nCnt);
+
 		//メッシュウォールの描画処理
 		DrawMeshWall();
 
@@ -546,6 +556,8 @@ void DrawEscapeTutorial()
 
 		//パーティクルの描画
 		DrawParticle();
+
+		DrawChasePolygon(nCnt);
 
 		//鍵UIの描画処理
 		DrawKeyUI();
