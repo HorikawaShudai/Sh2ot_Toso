@@ -70,6 +70,7 @@ void InitCheckboxUI(void)
 
 	//グローバル宣言の初期化
 	g_NumPlayerCheckUI = 0;
+	ChecboxUITrueCounter = 0;
 	ChecboxUIWaitCount = 0;
 
 	//テクスチャの読み込み
