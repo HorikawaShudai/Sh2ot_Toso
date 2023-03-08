@@ -8,6 +8,7 @@
 #include"pause.h"
 #include"input.h"
 #include"fade.h"
+#include "sound.h"
 
 #define NUM_PAUSE_TEX		(4)			//テクスチャーの数
 #define PAUSE_MENU			(3)			//ポーズメニューの数
@@ -239,6 +240,9 @@ void UpdatePause()
 	{
 		if (GetKeyboardTrigger(DIK_S) == true || GetGamepadTrigger(BUTTON_DOWN, 0) == true || GetGamepad_LStick_Trigger(0, LSTICK_DOWN) == true)
 		{
+			//選択音
+			PlaySound(SOUND_LABEL_CHOICE);
+
 			//頂点バッファをロック
 			g_pVtxBuffPause[1]->Lock(0, 0, (void**)&pVtx, 0);
 
@@ -272,6 +276,9 @@ void UpdatePause()
 		}
 		else if (GetKeyboardTrigger(DIK_W) == true || GetGamepadTrigger(BUTTON_UP, 0) == true || GetGamepad_LStick_Trigger(0, LSTICK_UP) == true)
 		{
+			//選択音
+			PlaySound(SOUND_LABEL_CHOICE);
+
 			//頂点バッファをロック
 			g_pVtxBuffPause[1]->Lock(0, 0, (void**)&pVtx, 0);
 
@@ -306,6 +313,9 @@ void UpdatePause()
 
 		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadTrigger(BUTTON_A, 0))
 		{//決定キー(ENTERキー)が押された
+			//決定音
+			PlaySound(SOUND_LABEL_ENTER);
+
 			if (g_CurrentNumber == PAUSETYPE_CONTENUE)
 			{//g_CurrentNumberが0の時
 				//ポーズ状態を解除する
