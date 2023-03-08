@@ -8,36 +8,37 @@
 //マクロ定義
 #define MAX_SSUI					(4)			//TUTORIALUIの最大使用数
 
+//一人プレイ
 #define POS_TUTORIALUI_1_01_X		(640.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_1_01_Y		(620.0f)	//「」のY座標の位置
 #define SIZE_TUTORIALUI_1_01_X		(400.0f)	//「」の幅
 #define SIZE_TUTORIALUI_1_01_Y		(100.0f)	//「」の高さ
-
+//二人プレイ	一人目
 #define POS_TUTORIALUI_2_01_X		(320.0f)	//「」のX座標の位置
-#define POS_TUTORIALUI_2_01_Y		(600.0f)	//「」のY座標の位置
+#define POS_TUTORIALUI_2_01_Y		(630.0f)	//「」のY座標の位置
 #define SIZE_TUTORIALUI_2_01_X		(300.0f)	//「」の幅
-#define SIZE_TUTORIALUI_2_01_Y		(120.0f)	//「」の高さ
-
+#define SIZE_TUTORIALUI_2_01_Y		(80.0f)	//「」の高さ
+//二人目
 #define POS_TUTORIALUI_2_02_X		(960.0f)	//「」のX座標の位置
-#define POS_TUTORIALUI_2_02_Y		(600.0f)	//「」のY座標の位置
+#define POS_TUTORIALUI_2_02_Y		(630.0f)	//「」のY座標の位置
 #define SIZE_TUTORIALUI_2_02_X		(300.0f)	//「」の幅
-#define SIZE_TUTORIALUI_2_02_Y		(120.0f)		//「」の高さ
-
+#define SIZE_TUTORIALUI_2_02_Y		(80.0f)	//「」の高さ
+//三・四人プレイ	一人プレイ
 #define POS_TUTORIALUI_34_01_X		(320.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_34_01_Y		(310.0f)	//「」のY座標の位置
 #define SIZE_TUTORIALUI_34_01_X		(300.0f)	//「」の幅
 #define SIZE_TUTORIALUI_34_01_Y		(50.0f)		//「」の高さ
-
+//二人プレイ
 #define POS_TUTORIALUI_34_02_X		(960.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_34_02_Y		(310.0f)	//「」のY座標の位置
 #define SIZE_TUTORIALUI_34_02_X		(300.0f)	//「」の幅
 #define SIZE_TUTORIALUI_34_02_Y		(50.0f)		//「」の高さ
-
+//三人プレイ
 #define POS_TUTORIALUI_34_03_X		(320.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_34_03_Y		(670.0f)	//「」のY座標の位置
 #define SIZE_TUTORIALUI_34_03_X		(300.0f)	//「」の幅
 #define SIZE_TUTORIALUI_34_03_Y		(50.0f)		//「」の高さ
-
+//四人プレイ
 #define POS_TUTORIALUI_34_04_X		(960.0f)	//「」のX座標の位置
 #define POS_TUTORIALUI_34_04_Y		(670.0f)	//「」のY座標の位置
 #define SIZE_TUTORIALUI_34_04_X		(300.0f)	//「」の幅

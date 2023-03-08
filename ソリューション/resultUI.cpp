@@ -34,9 +34,10 @@ bool bUseResultUI[NUM_SSUI];		//頂点バッファへのポインタ
 bool g_bStageClear_Result;
 D3DXCOLOR g_FadeColor;
 D3DXCOLOR g_KeepColor;
+int g_nbCount;
 
 //プロトタイプ宣言
-void FadeUi(void);
+void FadeUi(int nTexNum);
 
 //====================================================================
 //タイトル画面の初期化処理
@@ -45,6 +46,10 @@ void InitResultUI(void)
 {
 	int nCntBG;
 	g_bStageClear_Result = false;
+	g_nbCount = 0;
+	g_FadeColor = D3DXCOLOR(0.0f,0.0f,0.0f,0.01f);
+	g_KeepColor = D3DXCOLOR(1.0f,1.0f,1.0f,1.0f);
+
 	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
 
 							   //デバイスの所得
@@ -196,9 +201,19 @@ void UninitResultUI(void)
 //====================================================================
 void UpdateResultUI(void)
 {
-	if (g_bStageClear_Result == true)
+	switch (g_bStageClear_Result)
 	{
-		FadeUi();
+	case false:
+		g_nbCount++;
+		if (g_nbCount == 300)
+		{
+			SetbResultUi(true);
+		}
+		break;
+
+	case true:
+		FadeUi(4);
+		break;
 	}
 }
 
@@ -293,7 +308,7 @@ void SetResultUI(RESULTUI SetClear)
 //====================================================================
 //UIの遷移処理
 //====================================================================
-void FadeUi(void)
+void FadeUi(int nTexNum)
 {
 	g_KeepColor.a -= g_FadeColor.a;
 	if (g_KeepColor.a<0.0f || g_KeepColor.a>1.0f)
@@ -306,7 +321,7 @@ void FadeUi(void)
 					//頂点バッファをロックし、両店情報へのポインタを所得
 	g_pVtxBuffResultUI->Lock(0, 0, (void**)&pVtx, 0);
 
-	pVtx += 16;
+	pVtx += 4* nTexNum;
 
 	//頂点カラーの設定
 	pVtx[0].col = D3DXCOLOR(g_KeepColor);

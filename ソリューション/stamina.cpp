@@ -1,12 +1,13 @@
 //======================================================================================
 //
 // スタミナ処理[title.cpp]
-// Author:
+// Author:小笠原 彪
 //
 //======================================================================================
 #include "stamina.h"
 #include "player.h"
 #include "PlayNumberSelect.h"
+#include "sound.h"
 
 //**********************************************
 //マクロ定義
@@ -19,6 +20,8 @@
 #define DEC_SPEED		(1.0f)					// スタミナの減るスピード
 #define RECOVERY_SPEED	(1.7f)					// スタミナの回復スピード
 #define TIRED_VALUE		(STAMINA_WIDTH / 3)		// 疲労ゲージの数値
+
+#define RECOVERY_FATIGESPEED	(0.75f)			// 疲労状態のスタミナの回復スピード
 
 #define STAMINA_POS_Y0		(700.0f)			// スタミナの位置Y	(プレイ人数が2人以下) 下配置
 #define STAMINA_POS_Y1		(340.0f)			// スタミナの位置Y	(プレイ人数が3人以上) 上配置
@@ -289,7 +292,9 @@ void UpdateStaminaGauge(void)
 	g_pVtxBuffStamina->Unlock();
 }
 
+//===============================================================
 // スタミナの増減処理
+//===============================================================
 void StaminaIAD(int nCntStamina)
 {
 	//プレイ人数情報の取得
@@ -298,12 +303,13 @@ void StaminaIAD(int nCntStamina)
 
 	//プレイヤーの状態がダッシュ状態の場合
 	if (pPlayer[nCntStamina].MoveState == PLAYER_MOVESTATE_DASH)
-	{
+	{//プレイヤーが走っている時
+
 		if (PlayNumber.CurrentSelectNumber == 1)
 		{//1人プレイの場合
 			g_aStamina[nCntStamina].fGaugeSize -= DEC_SPEED;			//スタミナを減らす
 		}
-		else if (PlayNumber.CurrentSelectNumber >= 2)
+		else
 		{//複数人の場合
 			g_aStamina[nCntStamina].fGaugeSize -= (DEC_SPEED * 0.65f);			//スタミナを減らす
 		}
@@ -312,17 +318,36 @@ void StaminaIAD(int nCntStamina)
 	}
 	else if(g_aStamina[nCntStamina].fGaugeSize <= g_fStaminaSize)
 	{//スタミナが減っていた場合
+
 		if (PlayNumber.CurrentSelectNumber == 1)
 		{//1人プレイの場合
-			g_aStamina[nCntStamina].fGaugeSize += RECOVERY_SPEED;			//スタミナを回復する
+
+			if (g_aStamina[nCntStamina].bFatige == false)
+			{
+				g_aStamina[nCntStamina].fGaugeSize += RECOVERY_SPEED;			//スタミナを回復する
+			}
+			else
+			{
+				g_aStamina[nCntStamina].fGaugeSize += RECOVERY_FATIGESPEED;			//スタミナを回復する
+			}
 		}
-		else if (PlayNumber.CurrentSelectNumber >= 2)
+		else
 		{//複数人プレイの場合
-			g_aStamina[nCntStamina].fGaugeSize += (RECOVERY_SPEED * 0.65f);			//スタミナを回復する
+
+			if (g_aStamina[nCntStamina].bFatige == false)
+			{
+				g_aStamina[nCntStamina].fGaugeSize += (RECOVERY_SPEED * 0.65f);			//スタミナを回復する
+			}
+			else
+			{
+				g_aStamina[nCntStamina].fGaugeSize += RECOVERY_FATIGESPEED;			//スタミナを回復する
+			}
 		}
+
 		//疲労状態の時のゲージ状態
 		if (g_aStamina[nCntStamina].fGaugeSize > TIRED_VALUE)
 		{//疲労ゲージより回復したら
+
 			g_aStamina[nCntStamina].col.r = 0.5f;			//色を変更する
 
 			//通常状態にする
@@ -354,6 +379,8 @@ void StaminaIAD(int nCntStamina)
 		//疲労状態にする
 		pPlayer[nCntStamina].MoveState = PLAYER_MOVESTATE_FATIGE;
 		g_aStamina[nCntStamina].bFatige = true;
+
+		PlaySound(SOUND_LABEL_SE_NO_RUN);
 	}
 
 	//色が0.0f以下、1.0f以上行かないように
