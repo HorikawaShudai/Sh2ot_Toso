@@ -18,15 +18,16 @@
 #include "sound.h"
 
 //マクロ定義
-#define INIT_SCREENTEX_X0  (0.0f)  //テクスチャX軸の最初の位置
-#define INIT_SCREENTEX_Y0  (0.0f)  //テクスチャY軸の最初の位置
+#define INIT_SCREENTEX_X0  (0.0f)	   //テクスチャX軸の最初の位置
+#define INIT_SCREENTEX_Y0  (0.0f)      //テクスチャY軸の最初の位置
 
 #define INIT_SCREENTEX_X1  (1280.0f)  //テクスチャX軸の右側の位置
-#define INIT_SCREENTEX_Y1  (720.0f)  //テクスチャY軸の最初の位置
+#define INIT_SCREENTEX_Y1  (720.0f)   //テクスチャY軸の最初の位置
 
 //グローバル変数宣言
-LPDIRECT3DTEXTURE9 g_pTextureOver = NULL;	//テクスチャのポインタ
+LPDIRECT3DTEXTURE9 g_pTextureOver = NULL;			//テクスチャのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffOver = NULL;		//頂点バッファへのポインタ
+int ntransition;									//遷移するまでの時間								
 
 //====================================================================
 //透走モードのゲームオーバーリザルト画面の初期化処理
@@ -37,6 +38,9 @@ void InitEscapeOverResult()
 
 	//デバイスの所得
 	pDevice = GetDevice();
+
+	//遷移する時間までの初期化
+	ntransition = 0;
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
@@ -152,12 +156,15 @@ void UpdateEscapeOverResult()
 
 	//UpdateResultUI();
 
+	//タイトル画面へ遷移
 	if (Fade == FADE_NONE)
 	{
-		if (GetKeyboardPress(DIK_RETURN) || GetGamepadPress(BUTTON_A, 0))
+		if (GetKeyboardPress(DIK_RETURN) || GetGamepadPress(BUTTON_A, 0) || ntransition >= 420)
 		{
 			SetFade(MODE_TITLE);
 		}
+		//遷移する時間までを加算
+		ntransition++;
 	}
 }
 
