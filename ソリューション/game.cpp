@@ -313,117 +313,121 @@ void UpdateGame()
 		}
 	}
 
+	if (pPause->bUse == false)
+	{//ポーズ状態じゃないとき
+
 	//カメラの更新処理
-	UpdateCamera();
+		UpdateCamera();
 
-	//ライトの更新処理
-	UpdateLight();
+		//ライトの更新処理
+		UpdateLight();
 
-	//UpdateSpotLight();
+		//UpdateSpotLight();
 
-	//メッシュの壁の更新処理
-	UpdateMeshWall();
+		//メッシュの壁の更新処理
+		UpdateMeshWall();
 
-	//オブジェクトの更新処理
-	UpdateObject00();
-	UpdateObjectBG();
-	UpdateObjectLight();
-	UpdateObjectWall();
-	UpdateObjectPoly();
+		//オブジェクトの更新処理
+		UpdateObject00();
+		UpdateObjectBG();
+		UpdateObjectLight();
+		UpdateObjectWall();
+		UpdateObjectPoly();
 
-	if (g_bEdit == true)
-	{//エディットモードの時
+		if (g_bEdit == true)
+		{//エディットモードの時
 
-		//エディットの更新処理
-		UpdateEdit();
+			//エディットの更新処理
+			UpdateEdit();
 
-		switch (g_bBG_Edit)
-		{
-		case EDIT_TYPE_NORMAL:
-			//エディットモードのオブジェクトの更新処理
-			UpdateEditObject00();
-			break;
-		case EDIT_TYPE_BG:
-			//エディットモードのオブジェクトBGの更新処理
-			UpdateEditObjectBG();
-			break;
-		case EDIT_TYPE_POLY:
-			//エディットモードのオブジェクトPolyの更新処理
-			UpdateEditObjectPoly();
-			break;
-		case EDIT_TYPE_WALL:
-			//エディットモードのオブジェクトWallの更新処理
-			UpdateEditObjectWall();
-			break;
-		case EDIT_TYPE_LIGHT:
-			//エディットモードのオブジェクトLightの更新処理
-			UpdateEditObjectLight();
-			break;
+			switch (g_bBG_Edit)
+			{
+			case EDIT_TYPE_NORMAL:
+				//エディットモードのオブジェクトの更新処理
+				UpdateEditObject00();
+				break;
+			case EDIT_TYPE_BG:
+				//エディットモードのオブジェクトBGの更新処理
+				UpdateEditObjectBG();
+				break;
+			case EDIT_TYPE_POLY:
+				//エディットモードのオブジェクトPolyの更新処理
+				UpdateEditObjectPoly();
+				break;
+			case EDIT_TYPE_WALL:
+				//エディットモードのオブジェクトWallの更新処理
+				UpdateEditObjectWall();
+				break;
+			case EDIT_TYPE_LIGHT:
+				//エディットモードのオブジェクトLightの更新処理
+				UpdateEditObjectLight();
+				break;
+			}
 		}
-	}
 
-	if (pPause->bUse == false && g_bEdit == false)
-	{//ポーズ状態じゃないときかつエディット状態じゃないとき
+		if (g_bEdit == false)
+		{//エディット状態じゃないとき
 
 #ifdef _DEBUG
-		PrintDebugProc("カメラの視点移動【W】【A】【S】【D】\n");
-		PrintDebugProc("カメラの注視点移動 【I】【J】【K】【L】\n");
-		PrintDebugProc("カメラの上下移動 【左SHIFT】【左CTRL】\n");
-		PrintDebugProc("プレイヤーの移動移動 【T】【F】【G】【H】\n");
-		PrintDebugProc("デバッグ表示のオン/オフ 【F1】\n");
-		PrintDebugProc("エディットモードのオン/オフ 【F2】\n");
-		PrintDebugProc("ゲーム用と背景用オブジェクトの切り替え 【F3】\n");
-		PrintDebugProc("プレイヤーの視点切り替え 【F4】\n");
-		PrintDebugProc("プレイヤーカメラと観察用カメラの切り替え 【F5】\n");
-		PrintDebugProc("バイブレーションをオンにする 【F6】\n");
-		PrintDebugProc("バイブレーションをオフにする 【F7】\n");
-		PrintDebugProc("ナイトビジョンのオン/オフ 【F8】\n");
-		PrintDebugProc("エディットモード時のセーブ 【F9】\n");
-		PrintDebugProc("ワイヤーフレームのオン/オフ【F11】\n");
+			PrintDebugProc("カメラの視点移動【W】【A】【S】【D】\n");
+			PrintDebugProc("カメラの注視点移動 【I】【J】【K】【L】\n");
+			PrintDebugProc("カメラの上下移動 【左SHIFT】【左CTRL】\n");
+			PrintDebugProc("プレイヤーの移動移動 【T】【F】【G】【H】\n");
+			PrintDebugProc("デバッグ表示のオン/オフ 【F1】\n");
+			PrintDebugProc("エディットモードのオン/オフ 【F2】\n");
+			PrintDebugProc("ゲーム用と背景用オブジェクトの切り替え 【F3】\n");
+			PrintDebugProc("プレイヤーの視点切り替え 【F4】\n");
+			PrintDebugProc("プレイヤーカメラと観察用カメラの切り替え 【F5】\n");
+			PrintDebugProc("バイブレーションをオンにする 【F6】\n");
+			PrintDebugProc("バイブレーションをオフにする 【F7】\n");
+			PrintDebugProc("ナイトビジョンのオン/オフ 【F8】\n");
+			PrintDebugProc("エディットモード時のセーブ 【F9】\n");
+			PrintDebugProc("ワイヤーフレームのオン/オフ【F11】\n");
 #endif // _DEBUG
 
-		//床の更新処理
-		UpdateMeshField();
+			//床の更新処理
+			UpdateMeshField();
 
-		//プレイヤーの更新処理
-		UpdatePlayer();
+			//プレイヤーの更新処理
+			UpdatePlayer();
 
-		//敵の更新処理
-		UpdateEnemy();
+			//敵の更新処理
+			UpdateEnemy();
 
-		//ヘルプUIの更新処理
-		UpdateActionHelpUI();
+			//ヘルプUIの更新処理
+			UpdateActionHelpUI();
 
-		//スタミナの更新処理
-		UpdateStamina();
+			//スタミナの更新処理
+			UpdateStamina();
 
-		//ライフの更新処理
-		UpdateLife();
+			//ライフの更新処理
+			UpdateLife();
 
-		//鍵の更新処理
-		UpdateKey();
+			//鍵の更新処理
+			UpdateKey();
 
-		//鍵UIの更新処理
-		UpdateKeyUI();
+			//鍵UIの更新処理
+			UpdateKeyUI();
 
-		//エフェクトの更新処理
-		UpdateEffect();
+			//エフェクトの更新処理
+			UpdateEffect();
 
-		//パーティクルの更新処理
-		UpdateParticle();
+			//パーティクルの更新処理
+			UpdateParticle();
 
-		//出口の更新処理
-		UpdateExit();
+			//出口の更新処理
+			UpdateExit();
 
-		//タイムの更新処理
-		UpdateTime();
-		
-		UpdateLifePolygon();
+			//タイムの更新処理
+			UpdateTime();
 
-		UpdateChasePolygon();
+			UpdateLifePolygon();
 
-		//ダメージリアクション用ポリゴンの更新処理
-		UpdatePolygonBG();
+			UpdateChasePolygon();
+
+			//ダメージリアクション用ポリゴンの更新処理
+			UpdatePolygonBG();
+		}
 	}
 
 

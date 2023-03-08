@@ -46,7 +46,7 @@ bool bWire;				//ワイヤーフレームを使っているかどうか
 bool g_bNightVision;			//視野の確保を使っているかどうか
 int g_nCountFPS = 0;
 
-MODE g_mode = MODE_TUTORIAL;	//開始時点のモード
+MODE g_mode = MODE_GAME;	//開始時点のモード
 
  //=============================================
  //メイン関数
