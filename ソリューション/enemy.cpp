@@ -231,9 +231,11 @@ void UpdateEnemy(void)
 					float DetectRot = g_Enemy[nCntObject].rot.y - D3DXToRadian(45.0f) + D3DXToRadian(7.5f * (g_nDetect % 12));
 					if (DetectPlayer(g_Enemy[nCntObject].pos, DetectRot, nCntObject) == true)
 					{
-						//モーションの設定処理
-						g_Enemy[nCntObject].MotionType = ENEMY_ACTION_DASH;
-						SetEnemyMotion(g_Enemy[nCntObject].MotionType, nCntObject);
+						if (g_Enemy[nCntObject].MotionType != ENEMY_ACTION_DASH)
+						{
+							//モーションの設定処理
+							SetEnemyMotion(ENEMY_ACTION_DASH, nCntObject);
+						}
 
 						g_Enemy[nCntObject].state = ENEMYSTATE_CHASE;
 
@@ -292,6 +294,12 @@ void UpdateEnemy(void)
 						}
 						if (g_Enemy[nCntObject].Tgpos == pPlayer->pos)
 						{
+							if (g_Enemy[nCntObject].MotionType != ENEMY_ACTION_DASH)
+							{
+								//モーションの設定処理
+								SetEnemyMotion(ENEMY_ACTION_DASH, nCntObject);
+							}
+
 							pPlayer->bChase = true;
 							g_Enemy[nCntObject].nTargetOld = g_Enemy[nCntObject].nTarget;
 							g_Enemy[nCntObject].nTarget = nCnt;
@@ -300,9 +308,11 @@ void UpdateEnemy(void)
 						//目標地点に到達したとき
 						if (vecPlayer.x < 30.0f && vecPlayer.x > -30.0f && vecPlayer.z < 30.0f && vecPlayer.z > -30.0f)
 						{
-							//モーションの設定処理
-							g_Enemy[nCntObject].MotionType = ENEMY_ACTION_ATTACK;
-							SetEnemyMotion(g_Enemy[nCntObject].MotionType, nCntObject);
+							if (g_Enemy[nCntObject].MotionType != ENEMY_ACTION_ATTACK)
+							{
+								//モーションの設定処理
+								SetEnemyMotion(ENEMY_ACTION_ATTACK, nCntObject);
+							}
 
 							g_Enemy[nCntObject].state = ENEMYSTATE_ATTACK;
 							g_Enemy[nCntObject].StateCount = ATTACK_COUNT;
@@ -364,9 +374,11 @@ void UpdateEnemy(void)
 				{
 				case ENEMYSTATE_SEEK:
 
-					//モーションの設定処理
-					g_Enemy[nCntObject].MotionType = ENEMY_ACTION_MOVE;
-					SetEnemyMotion(g_Enemy[nCntObject].MotionType, nCntObject);
+					if (g_Enemy[nCntObject].MotionType != ENEMY_ACTION_MOVE)
+					{
+						//モーションの設定処理
+						SetEnemyMotion(ENEMY_ACTION_MOVE, nCntObject);
+					}
 
 					g_Enemy[nCntObject].state = ENEMYSTATE_PATROL;
 					if (g_Enemy[nCntObject].nTarget >= 0)
@@ -384,9 +396,11 @@ void UpdateEnemy(void)
 					break;
 				case ENEMYSTATE_ATTACK:
 
-					//モーションの設定処理
-					g_Enemy[nCntObject].MotionType = ENEMY_ACTION_MOVE;
-					SetEnemyMotion(g_Enemy[nCntObject].MotionType, nCntObject);
+					if (g_Enemy[nCntObject].MotionType != ENEMY_ACTION_MOVE)
+					{
+						//モーションの設定処理
+						SetEnemyMotion(ENEMY_ACTION_MOVE, nCntObject);
+					}
 
 					g_Enemy[nCntObject].state = ENEMYSTATE_PATROL;
 					break;
@@ -936,15 +950,13 @@ void UpdateEnemyMotion(int nCnt)
 //====================================================================
 void SetEnemyMotion(ENEMY_MOTION_TYPE nType, int nCnt)
 {
-	if (g_Enemy[nCnt].g_bMotion == true)
-	{
-		g_Enemy[nCnt].bLoopMotion = g_Enemy[nCnt].aMotionInfo[nType].bLoop;	//ループするかどうか
-		g_Enemy[nCnt].nNumkey = g_Enemy[nCnt].aMotionInfo[nType].NumKey;		//キーの総数
-		g_Enemy[nCnt].nkey = 0;											//現在のキーNo.
-		g_Enemy[nCnt].nCounterMotion = 0;								//モーションのカウンター
-		g_Enemy[nCnt].g_nNextKey = g_Enemy[nCnt].nkey + 1;
-		g_Enemy[nCnt].g_bMotion = false;
-	}
+	g_Enemy[nCnt].MotionType = nType;
+	g_Enemy[nCnt].bLoopMotion = g_Enemy[nCnt].aMotionInfo[nType].bLoop;	//ループするかどうか
+	g_Enemy[nCnt].nNumkey = g_Enemy[nCnt].aMotionInfo[nType].NumKey;		//キーの総数
+	g_Enemy[nCnt].nkey = 0;											//現在のキーNo.
+	g_Enemy[nCnt].nCounterMotion = 0;								//モーションのカウンター
+	g_Enemy[nCnt].g_nNextKey = g_Enemy[nCnt].nkey + 1;
+	g_Enemy[nCnt].g_bMotion = false;
 }
 
 //====================================================================
