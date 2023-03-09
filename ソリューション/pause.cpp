@@ -47,7 +47,7 @@ int g_CurrentNumber;
 //========================================================================
 //ポーズの初期化処理
 //========================================================================
-void InitPause()
+void InitPause(void)
 {
 	//デバイスへのポインタ
 	LPDIRECT3DDEVICE9 pDevice;
@@ -65,6 +65,7 @@ void InitPause()
 	}
 
 	//構造体の初期化
+	g_Pause.pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	g_Pause.bUse = false;
 
 	//グローバル宣言の初期化
@@ -198,7 +199,7 @@ void InitMenu(void)
 //========================================================================
 //ポーズの終了処理
 //========================================================================
-void UninitPause()
+void UninitPause(void)
 {
 	int nCntPause;						//forカウント用
 
@@ -317,17 +318,17 @@ void UpdatePause()
 			PlaySound(SOUND_LABEL_ENTER);
 
 			if (g_CurrentNumber == PAUSETYPE_CONTENUE)
-			{//g_CurrentNumberが0の時
+			{//番号が0の時
 				//ポーズ状態を解除する
 				pPause->bUse = false;
 			}
 			else if (g_CurrentNumber == PAUSETYPE_RETRY)
-			{//g_CurrentNumberが1の時
+			{//番号が1の時
 				 //モードの設定(ゲーム画面に移行)
 				SetFade(MODE_GAME);
 			}
 			else if (g_CurrentNumber == PAUSETYPE_TITLE)
-			{//g_CurrentNumberが2の時
+			{//番号が2の時
 				 //モードの設定(タイトル画面に移行)
 				SetFade(MODE_TITLE);
 			}
@@ -338,7 +339,7 @@ void UpdatePause()
 //========================================================================
 //ポーズの描画処理
 //========================================================================
-void DrawPause()
+void DrawPause(void)
 {
 	//デバイスへのポインタ
 	LPDIRECT3DDEVICE9 pDevice;
