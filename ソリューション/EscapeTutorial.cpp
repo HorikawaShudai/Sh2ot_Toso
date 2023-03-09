@@ -576,8 +576,11 @@ void DrawEscapeTutorial()
 
 	DrawTutorialUI();
 
-	//チェックボックスの描画
-	DrawCheckboxUI();
+	if (g_EscapeTutorial != MODE_GOEXIT || g_EscapeTutorialState != TUTORIAL_STATE_PLAY)
+	{
+		//チェックボックスの描画
+		DrawCheckboxUI();
+	}
 }
 
 //====================================================================
