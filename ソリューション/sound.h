@@ -24,7 +24,7 @@ typedef enum
 	SOUND_LABEL_SE_NOKEY,				//鍵を持っていないときのドアの音
 	SOUND_LABEL_SE_UNLOCKKEY,			//ドアの鍵が開く音
 	SOUND_LABEL_SE_NO_RUN,				//息切れ音
-	SOUND_LABEL_SE_ENEMYFIND,
+	SOUND_LABEL_SE_ENEMYFIND,			//敵に見つかる音
 	SOUND_LABEL_MAX,
 } SOUND_LABEL;
 
