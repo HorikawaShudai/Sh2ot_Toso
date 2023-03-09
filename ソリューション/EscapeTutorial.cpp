@@ -34,6 +34,7 @@
 #include "sound.h"
 #include "particle.h"
 #include "ChasePolygon.h"
+#include "NeedKeyPolygon.h"
 
 //グローバル変数宣言
 TUTORIAL_STATE g_EscapeTutorialState;
@@ -116,11 +117,10 @@ void InitEscapeTutorial()
 	//出口の初期化処理
 	InitExit();
 
-	//出口を読み込む
-	LoadExit(2);
-
 	////スコアアイテムの初期化
 	//InitItem();
+
+	InitNeedKeyPolygon();
 
 	InitActionHelpUI();
 
@@ -143,6 +143,9 @@ void InitEscapeTutorial()
 
 	//フォグの設定
 	SetFog(D3DFOG_LINEAR, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.5f), 10.0f, 1000.0f, 0.1f);
+
+	//出口を読み込む
+	LoadExit(2);
 
 	//ステージの読み込み
 	SetStage(4);
@@ -204,6 +207,8 @@ void UninitEscapeTutorial()
 	//出口の終了処理
 	UninitExit();
 
+	UninitNeedKeyPolygon();
+
 	UninitActionHelpUI();
 
 	UninitChasePolygon();
@@ -264,14 +269,21 @@ void UpdateEscapeTutorial()
 	//ガイドのページを進ませる処理
 	if (GetKeyboardTrigger(DIK_C) == true || GetGamepadTrigger(BUTTON_A, 0) == true)
 	{
+
 		switch (g_EscapeTutorialGuyde)
 		{
 		case TUTORIAL_GUYDE_ESCAPE:
 			g_EscapeTutorialGuyde = TUTORIAL_GUYDE_KEY;
+
+			//紙をめくる音
+			PlaySound(SOUND_LABEL_PAPER);
 			break;
 
 		case TUTORIAL_GUYDE_KEY:
 			g_EscapeTutorialGuyde = TUTORIAL_GUYDE_HEALTH;
+
+			//紙をめくる音
+			PlaySound(SOUND_LABEL_PAPER);
 			break;
 
 		case TUTORIAL_GUYDE_HEALTH:
@@ -287,10 +299,16 @@ void UpdateEscapeTutorial()
 		{
 		case TUTORIAL_GUYDE_HEALTH:
 			g_EscapeTutorialGuyde = TUTORIAL_GUYDE_KEY;
+
+			//紙をめくる音
+			PlaySound(SOUND_LABEL_PAPER);
 			break;
 
 		case TUTORIAL_GUYDE_KEY:
 			g_EscapeTutorialGuyde = TUTORIAL_GUYDE_ESCAPE;
+
+			//紙をめくる音
+			PlaySound(SOUND_LABEL_PAPER);
 			break;
 
 		case TUTORIAL_GUYDE_ESCAPE:
@@ -427,6 +445,8 @@ void UpdateEscapeTutorial()
 		//出口の更新処理
 		UpdateExit();
 	}
+	UpdateNeedKeyPolygon();
+
 	UpdateActionHelpUI();
 
 	UpdateChasePolygon();
@@ -531,6 +551,8 @@ void DrawEscapeTutorial()
 			DrawEnemy();
 		}
 
+		DrawNeedKeyPolygon(nCnt);
+
 		//ヘルプUIの描画処理
 		DrawActionHelpUI(nCnt, pPlayer->bGetKey);
 
@@ -576,8 +598,11 @@ void DrawEscapeTutorial()
 
 	DrawTutorialUI();
 
-	//チェックボックスの描画
-	DrawCheckboxUI();
+	if (g_EscapeTutorial != MODE_GOEXIT || g_EscapeTutorialState != TUTORIAL_STATE_PLAY)
+	{
+		//チェックボックスの描画
+		DrawCheckboxUI();
+	}
 }
 
 //====================================================================
