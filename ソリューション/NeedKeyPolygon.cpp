@@ -8,6 +8,9 @@
 
 //マクロ定義
 #define NEEDKEYPOLYGON_SIZE (5.0f)	//ヘルプUIの大きさ
+#define NEEDKEYPOLYGONNUMBER_SIZE (2.0f)	//ヘルプUIの大きさ
+#define NEEDKEYPOLYGONNUMBER_X (2.0f)	//ヘルプUIの大きさ
+#define NEEDKEYPOLYGONNUMBER_Y (0.5f)	//ヘルプUIの大きさ
 
 //プロトタイプ宣言
 
@@ -27,7 +30,7 @@ void InitNeedKeyPolygon(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\TUTORIAL\\GetUi.png",
+		"data\\TEXTURE\\ExitNumber.png",
 		&g_pTextureNeedKeyPolygon[NEEDKEYPOLYGON_CENTER]);
 
 	//テクスチャの読み込み
@@ -43,7 +46,16 @@ void InitNeedKeyPolygon(void)
 	for (nCntUI = 0; nCntUI < MAX_NEEDKEYPOLYGON; nCntUI++)
 	{
 		g_aNeedKeyPolygon[nCntUI].pos = D3DXVECTOR3(0.0f, 50.0f, 0.0f);
-		g_aNeedKeyPolygon[nCntUI].fSize = NEEDKEYPOLYGON_SIZE;
+		switch (nCntUI)
+		{
+		case 0:
+			g_aNeedKeyPolygon[nCntUI].fSize = NEEDKEYPOLYGON_SIZE;
+			break;
+		case 1:
+		case 2:
+			g_aNeedKeyPolygon[nCntUI].fSize = NEEDKEYPOLYGONNUMBER_SIZE;
+			break;
+		}
 		g_aNeedKeyPolygon[nCntUI].bUse = true;
 	}
 
@@ -140,12 +152,6 @@ void UpdateNeedKeyPolygon(void)
 	{
 		if (g_aNeedKeyPolygon[nCntUI].bUse == true)
 		{
-			//頂点座標の設定 
-			pVtx[0].pos = D3DXVECTOR3(-g_aNeedKeyPolygon[nCntUI].fSize, +g_aNeedKeyPolygon[nCntUI].fSize, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(+g_aNeedKeyPolygon[nCntUI].fSize, +g_aNeedKeyPolygon[nCntUI].fSize, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(-g_aNeedKeyPolygon[nCntUI].fSize, -g_aNeedKeyPolygon[nCntUI].fSize, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(+g_aNeedKeyPolygon[nCntUI].fSize, -g_aNeedKeyPolygon[nCntUI].fSize, 0.0f);
-
 			switch (nCntUI)
 			{
 			case 0:
@@ -198,8 +204,8 @@ void DrawNeedKeyPolygon(int nCntPlayer)
 	//pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
 	//pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
-	//ライトを無効にする
-	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	////ライトを無効にする
+	//pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	//アルファテストを有効にする
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
@@ -237,10 +243,13 @@ void DrawNeedKeyPolygon(int nCntPlayer)
 		//テクスチャの設定
 		pDevice->SetTexture(0, g_pTextureNeedKeyPolygon[nCntUI]);
 
-		//ポリゴンの描画
-		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,	//プリミティブの種類
-			4 * nCntUI,										//プリミティブ(ポリゴン)数
-			2);
+		if (g_aNeedKeyPolygon[nCntUI].bUse == true)
+		{
+			//ポリゴンの描画
+			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,	//プリミティブの種類
+				4 * nCntUI,										//プリミティブ(ポリゴン)数
+				2);
+		}
 	}
 
 	//アルファテストを無効にする
@@ -252,8 +261,8 @@ void DrawNeedKeyPolygon(int nCntPlayer)
 	//pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
 	//pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 
-	//ライトを有効にする
-	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+	////ライトを有効にする
+	//pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 
 //====================================================================
@@ -262,8 +271,8 @@ void DrawNeedKeyPolygon(int nCntPlayer)
 void SetNeedKeyPolygon(D3DXVECTOR3 pos)
 {
 	g_aNeedKeyPolygon[0].pos = pos;
-	g_aNeedKeyPolygon[1].pos = D3DXVECTOR3(pos.x - 10.0f, pos.y, pos.z);
-	g_aNeedKeyPolygon[2].pos = D3DXVECTOR3(pos.x + 10.0f, pos.y, pos.z);
+	g_aNeedKeyPolygon[1].pos = D3DXVECTOR3(pos.x - NEEDKEYPOLYGONNUMBER_X, pos.y - NEEDKEYPOLYGONNUMBER_Y + 0.5f, pos.z);
+	g_aNeedKeyPolygon[2].pos = D3DXVECTOR3(pos.x + NEEDKEYPOLYGONNUMBER_X, pos.y + NEEDKEYPOLYGONNUMBER_Y + 0.5f, pos.z);
 }
 
 //====================================================================
