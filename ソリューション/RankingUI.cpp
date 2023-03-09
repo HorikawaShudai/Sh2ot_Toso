@@ -94,8 +94,8 @@ void InitRankingUI(void)
 				break;
 			}
 
-			SetNumberUI(D3DXVECTOR3(230.0f, 450.0f, 0.0f), 40.0f, 40.0f, GetPlayNumberSelect().CurrentSelectNumber, 0);
-			SetNumberUI(D3DXVECTOR3(360.0f, 480.0f, 0.0f), 40.0f, 40.0f, GetExitCount(), 0);
+			SetNumberUI(D3DXVECTOR3(230.0f, 450.0f, 0.0f), 40.0f, 40.0f, GetExitCount(), 0);
+			SetNumberUI(D3DXVECTOR3(360.0f, 480.0f, 0.0f), 40.0f, 40.0f, GetPlayNumberSelect().CurrentSelectNumber, 0);
 		}
 	}
 	else if (GetClear() == 2 || GetClear() == 3)
@@ -103,8 +103,8 @@ void InitRankingUI(void)
 		bUseRankingUI[3] = false;
 		bUseRankingUI[4] = true;
 
-		SetNumberUI(D3DXVECTOR3(230.0f, 450.0f, 0.0f), 40.0f, 40.0f, GetPlayNumberSelect().CurrentSelectNumber, 0);
-		SetNumberUI(D3DXVECTOR3(360.0f, 480.0f, 0.0f), 40.0f, 40.0f, GetExitCount(), 0);
+		SetNumberUI(D3DXVECTOR3(230.0f, 450.0f, 0.0f), 40.0f, 40.0f, GetExitCount(), 0);
+		SetNumberUI(D3DXVECTOR3(360.0f, 480.0f, 0.0f), 40.0f, 40.0f, GetPlayNumberSelect().CurrentSelectNumber, 0);
 	}
 	else
 	{

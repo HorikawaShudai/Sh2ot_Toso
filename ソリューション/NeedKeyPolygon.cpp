@@ -157,17 +157,17 @@ void UpdateNeedKeyPolygon(void)
 				break;
 			case 1:
 				//テクスチャ座標の設定
-				pVtx[0].tex = D3DXVECTOR2(0.0f + GetKeyCount() * 0.1f, 0.0f);
-				pVtx[1].tex = D3DXVECTOR2(0.1f + GetKeyCount() * 0.1f, 0.0f);
-				pVtx[2].tex = D3DXVECTOR2(0.0f + GetKeyCount() * 0.1f, 1.0f);
-				pVtx[3].tex = D3DXVECTOR2(0.1f + GetKeyCount() * 0.1f, 1.0f);
-				break;
-			case 2:
-				//テクスチャ座標の設定
 				pVtx[0].tex = D3DXVECTOR2(0.0f + GetPlayNumberSelect().CurrentSelectNumber * 0.1f, 0.0f);
 				pVtx[1].tex = D3DXVECTOR2(0.1f + GetPlayNumberSelect().CurrentSelectNumber * 0.1f, 0.0f);
 				pVtx[2].tex = D3DXVECTOR2(0.0f + GetPlayNumberSelect().CurrentSelectNumber * 0.1f, 1.0f);
 				pVtx[3].tex = D3DXVECTOR2(0.1f + GetPlayNumberSelect().CurrentSelectNumber * 0.1f, 1.0f);
+				break;
+			case 2:
+				//テクスチャ座標の設定
+				pVtx[0].tex = D3DXVECTOR2(0.0f + GetKeyCount() * 0.1f, 0.0f);
+				pVtx[1].tex = D3DXVECTOR2(0.1f + GetKeyCount() * 0.1f, 0.0f);
+				pVtx[2].tex = D3DXVECTOR2(0.0f + GetKeyCount() * 0.1f, 1.0f);
+				pVtx[3].tex = D3DXVECTOR2(0.1f + GetKeyCount() * 0.1f, 1.0f);
 				break;
 			}
 		}
