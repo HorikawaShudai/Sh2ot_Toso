@@ -55,7 +55,6 @@
 #define PLAYER_HITCOUNTER		(60)			//プレイヤーのヒット状態の長さ
 
 //プロトタイプ
-void UpdatePlayer0(void);
 void UpdatePlayer1(void);
 
 void ResPlayerMove(int nCnt);					//プレイヤーそれぞれに対応
@@ -212,212 +211,8 @@ void UninitPlayer(void)
 //====================================================================
 void UpdatePlayer(void)
 {
-	//#ifdef _DEBUG
-	////個別
-	//UpdatePlayer0();
-	//#endif
-
 	//複数
 	UpdatePlayer1();
-}
-
-//====================================================================
-//プレイヤーの更新処理(一つのコントローラ対応)
-//====================================================================
-void UpdatePlayer0(void)
-{
-	//チュートリアルの項目情報を与える処理
-	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
-
-	//ポインタ情報の取得
-	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
-	int CurrentCamera = GetCurrentCamera();
-
-	//カメラ番号をプレイヤーに代入
-	int nSelectPlayer = GetCurrentCamera();
-
-	//プレイヤーの状態管理
-	PlayerState(nSelectPlayer);
-
-	if (g_aPlayer[nSelectPlayer].bUse == true && g_aPlayer[nSelectPlayer].State == PLAYER_NORMAL)
-	{
-#ifdef _DEBUG
-		//バイブレーション
-		if (GetKeyboardTrigger(DIK_F6) == true)
-		{
-			PlayerSetVibrtion(nSelectPlayer, 60, 0, 60000, 0);
-		}
-		if (GetKeyboardTrigger(DIK_F7) == true)
-		{
-			GetGamepad_Vibrtion_false(nSelectPlayer);
-		}
-#endif
-
-		//バイブレーションの更新処理
-		PlayerVibrtionUpdate(nSelectPlayer);
-
-		g_aPlayer[nSelectPlayer].posOld = g_aPlayer[nSelectPlayer].pos;
-
-		//減衰係数
-		g_aPlayer[nSelectPlayer].move.x = g_aPlayer[nSelectPlayer].move.x * 0.5f;
-		g_aPlayer[nSelectPlayer].move.z = g_aPlayer[nSelectPlayer].move.z * 0.5f;
-
-		//値の切り捨て
-		if (g_aPlayer[nSelectPlayer].move.x <= 0.005f && g_aPlayer[nSelectPlayer].move.x >= -0.005f)
-		{
-			g_aPlayer[nSelectPlayer].move.x = 0.0f;
-		}
-		if (g_aPlayer[nSelectPlayer].move.z <= 0.005f && g_aPlayer[nSelectPlayer].move.z >= -0.005f)
-		{
-			g_aPlayer[nSelectPlayer].move.z = 0.0f;
-		}
-
-#ifdef _DEBUG
-		if (GetKeyboardTrigger(DIK_F5) == true)
-		{//キーが押された場合
-			g_bPlayerOps = g_bPlayerOps ? false : true;			//観察用モードに変更
-		}
-#endif
-
-		if (g_bPlayerOps == false)
-		{
-			//プレイヤーの移動入力処理----------
-			PlayerMoveInput(nSelectPlayer);
-
-			//移動時にプレイヤーの向きを補正する----------
-			PlayerRotUpdate(nSelectPlayer);
-		}
-
-		//位置更新(入力による動き)
-		g_aPlayer[nSelectPlayer].pos += g_aPlayer[nSelectPlayer].move;
-
-		//オブジェクトとの当たり判定
-		CollisionObjectPoly(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 50.0f, 10.0f), 10.0f);
-		CollisionObjectWall(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 50.0f, 10.0f), 10.0f);
-		//	CollisionObjectPoly(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 50.0f, 10.0f), 10.0f);
-		//外積の当たり判定
-		//CollisionOuterProductObject00(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move);
-
-		//出口との当たり判定
-		CollisionExi(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
-
-		//プレイヤーと敵との距離
-		PlayerDistance(nSelectPlayer);
-
-		//プレイヤーが保持するライトの更新処理
-		SetLight(g_aPlayer[nSelectPlayer].LightIdx00, D3DLIGHT_SPOT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(g_aPlayer[nSelectPlayer].pos.x, g_aPlayer[nSelectPlayer].pos.y + 50.0f, g_aPlayer[nSelectPlayer].pos.z), D3DXVECTOR3(sinf(Getrot(CurrentCamera).y), sinf(Getrot(CurrentCamera).x), cosf(Getrot(CurrentCamera).y)), PLAYER_LIGHT, 1.0f);
-
-		//ヘルプUIの表示
-		if (g_aPlayer[nSelectPlayer].bGetKey == false)
-		{
-			CollisionKeyHelpUI(&g_aPlayer[nSelectPlayer].pos, 30.0f);
-		}
-		if (g_aPlayer[nSelectPlayer].bGetKey == true)
-		{
-			CollisionExitHelpUI(&g_aPlayer[nSelectPlayer].pos, 30.0f);
-		}
-
-		//鍵の入手処理
-		if (g_aPlayer[nSelectPlayer].bGetKey == false)
-		{//プレイヤーが鍵を持っていない場合
-			if (GetKeyboardTrigger(DIK_E) == true || GetGamepadTrigger(BUTTON_A, nSelectPlayer) || GetGamepadTrigger(BUTTON_B, nSelectPlayer))
-			{//Eキー入力
-				if (CollisionKey(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nSelectPlayer) == true)
-				{//鍵を入手出来た場合
-					g_aPlayer[nSelectPlayer].bGetKey = true;	//鍵を入手状態にする
-					SetKeyUI(nSelectPlayer, true);				//鍵UIを表示する
-
-					g_aPlayer[nSelectPlayer].bCheck = true;
-
-					//鍵をゲットしたとき
-					if (do_Tutorial == MODE_GET_KEY)
-					{
-						//チェックをつける処理
-						SetCheckUI(nSelectPlayer, true);
-					}
-				}
-			}
-		}
-
-		//脱出処理
-		if (g_aPlayer[nSelectPlayer].bGetKey == true)
-		{//プレイヤーが鍵を持っている場合
-			if (GetKeyboardTrigger(DIK_E) == true || GetGamepadTrigger(BUTTON_A, nSelectPlayer) || GetGamepadTrigger(BUTTON_B, nSelectPlayer))
-			{//Eキー入力
-				if (CollisionExit(&g_aPlayer[nSelectPlayer].pos, &g_aPlayer[nSelectPlayer].posOld, &g_aPlayer[nSelectPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 30.0f, nSelectPlayer) == true)
-				{//鍵を入手出来た場合
-
-					g_aPlayer[nSelectPlayer].bGetKey = false;	//鍵を入手してない状態にする
-					SetKeyUI(nSelectPlayer, false);			//鍵UIを非表示にする
-
-															//チュートリアルモード脱出の時
-					if (do_Tutorial == MODE_ESCAPE)
-					{
-						//チェックをつける
-						SetCheckUI(nSelectPlayer, true);
-
-						do_Tutorial = MODE_GOEXIT;
-					}
-
-					if (do_Tutorial == MODE_GOEXIT)
-					{
-						do_Tutorial = MODE_END;
-					}
-				}
-			}
-		}
-
-		//一周した時の向きの補正
-		if (g_aPlayer[nSelectPlayer].rot.y > D3DX_PI * 1.0f)
-		{
-			g_aPlayer[nSelectPlayer].rot.y -= D3DX_PI * 2.0f;
-		}
-		else if (g_aPlayer[nSelectPlayer].rot.y < -D3DX_PI * 1.0f)
-		{
-			g_aPlayer[nSelectPlayer].rot.y += D3DX_PI * 2.0f;
-		}
-
-		//体力が減るかどうかテスト用
-		if (GetKeyboardTrigger(DIK_M) == true)
-		{
-			PlayerHit(nSelectPlayer, 1);
-		}
-	}
-
-	//ゲーム終了処理
-	if (g_GameEnd == false)
-	{
-		if (g_aPlayer[0].bExit == true && g_aPlayer[1].bExit == true && g_aPlayer[2].bExit == true && g_aPlayer[3].bExit == true)
-		{
-			//チュートリアルモード脱出の時
-			if (GetMode() == MODE_TUTORIAL)
-			{
-				g_GameEnd = true;
-				SetFade(MODE_GAME);
-			}
-			if (GetMode() == MODE_GAME)
-			{
-				g_GameEnd = true;
-				SetGameState(GAMESTATE_CLEAR_END, 60);
-			}
-		}
-
-		if (g_aPlayer[0].bUse == false && g_aPlayer[1].bUse == false && g_aPlayer[2].bUse == false && g_aPlayer[3].bUse == false)
-		{
-			g_GameEnd = true;
-			SetGameState(GAMESTATE_GAMEOVER_END, 250);
-		}
-	}
-
-#ifdef _DEBUG
-		PrintDebugProc("【F3】でプレイヤー切り替え：【プレイヤー%d】\n", nSelectPlayer + 1);
-
-		for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
-		{
-			PrintDebugProc("プレイヤー%d人目の座標【X : %f | Y : %f | Z : %f】\n", nCntPlayer, g_aPlayer[nCntPlayer].pos.x, g_aPlayer[nCntPlayer].pos.y, g_aPlayer[nCntPlayer].pos.z);
-			PrintDebugProc("プレイヤー%d人目の移動量【X : %f | Y : %f | Z : %f】\n", nCntPlayer, g_aPlayer[nCntPlayer].move.x, g_aPlayer[nCntPlayer].move.y, g_aPlayer[nCntPlayer].move.z);
-		}
-#endif
 }
 
 //====================================================================
@@ -797,13 +592,14 @@ void UpdatePlayer1(void)
 			//オブジェクトとの当たり判定
 			CollisionObject00(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 50.0f, 10.0f), 10.0f);
 			CollisionObjectWall(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 50.0f, 10.0f), 10.0f);
+
 			//外積の当たり判定
 			//CollisionOuterProductObject00(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move);
 
 			if (g_aPlayer[nCntPlayer].bExit == false)
 			{//脱出していない状態の時
 
-			 //出口との当たり判定
+				//出口との当たり判定
 				CollisionExi(&g_aPlayer[nCntPlayer].pos, &g_aPlayer[nCntPlayer].posOld, &g_aPlayer[nCntPlayer].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f);
 			}
 
@@ -872,9 +668,6 @@ void UpdatePlayer1(void)
 
 						//ドアのカギを解除する音
 						PlaySound(SOUND_LABEL_SE_UNLOCKKEY);
-
-						//ドアの開閉音
-						PlaySound(SOUND_LABEL_SE_DOOR);
 
 						g_aPlayer[nCntPlayer].bGetKey = false;	//鍵を入手してない状態にする
 						SetKeyUI(nCntPlayer, false);			//鍵UIを非表示にする
@@ -1889,6 +1682,7 @@ void PlayerHit(int nCnt, int nDamage)
 			{
 				g_aPlayer[nCnt].bGetKey = false;
 				SetKey(D3DXVECTOR3(g_aPlayer[nCnt].pos.x, g_aPlayer[nCnt].pos.y + 3.0f, g_aPlayer[nCnt].pos.z), D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.1f, 0.0f), 0);
+				SetKeyUI(nCnt, false);					//鍵UIを表示する
 			}
 		}
 

@@ -8,6 +8,7 @@
 #include"pause.h"
 #include"input.h"
 #include"fade.h"
+#include "sound.h"
 
 #define NUM_PAUSE_TEX		(4)			//テクスチャーの数
 #define PAUSE_MENU			(3)			//ポーズメニューの数
@@ -46,7 +47,7 @@ int g_CurrentNumber;
 //========================================================================
 //ポーズの初期化処理
 //========================================================================
-void InitPause()
+void InitPause(void)
 {
 	//デバイスへのポインタ
 	LPDIRECT3DDEVICE9 pDevice;
@@ -64,6 +65,7 @@ void InitPause()
 	}
 
 	//構造体の初期化
+	g_Pause.pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	g_Pause.bUse = false;
 
 	//グローバル宣言の初期化
@@ -197,7 +199,7 @@ void InitMenu(void)
 //========================================================================
 //ポーズの終了処理
 //========================================================================
-void UninitPause()
+void UninitPause(void)
 {
 	int nCntPause;						//forカウント用
 
@@ -239,6 +241,9 @@ void UpdatePause()
 	{
 		if (GetKeyboardTrigger(DIK_S) == true || GetGamepadTrigger(BUTTON_DOWN, 0) == true || GetGamepad_LStick_Trigger(0, LSTICK_DOWN) == true)
 		{
+			//選択音
+			PlaySound(SOUND_LABEL_CHOICE);
+
 			//頂点バッファをロック
 			g_pVtxBuffPause[1]->Lock(0, 0, (void**)&pVtx, 0);
 
@@ -272,6 +277,9 @@ void UpdatePause()
 		}
 		else if (GetKeyboardTrigger(DIK_W) == true || GetGamepadTrigger(BUTTON_UP, 0) == true || GetGamepad_LStick_Trigger(0, LSTICK_UP) == true)
 		{
+			//選択音
+			PlaySound(SOUND_LABEL_CHOICE);
+
 			//頂点バッファをロック
 			g_pVtxBuffPause[1]->Lock(0, 0, (void**)&pVtx, 0);
 
@@ -306,18 +314,21 @@ void UpdatePause()
 
 		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadTrigger(BUTTON_A, 0))
 		{//決定キー(ENTERキー)が押された
+			//決定音
+			PlaySound(SOUND_LABEL_ENTER);
+
 			if (g_CurrentNumber == PAUSETYPE_CONTENUE)
-			{//g_CurrentNumberが0の時
+			{//番号が0の時
 				//ポーズ状態を解除する
 				pPause->bUse = false;
 			}
 			else if (g_CurrentNumber == PAUSETYPE_RETRY)
-			{//g_CurrentNumberが1の時
+			{//番号が1の時
 				 //モードの設定(ゲーム画面に移行)
 				SetFade(MODE_GAME);
 			}
 			else if (g_CurrentNumber == PAUSETYPE_TITLE)
-			{//g_CurrentNumberが2の時
+			{//番号が2の時
 				 //モードの設定(タイトル画面に移行)
 				SetFade(MODE_TITLE);
 			}
@@ -328,7 +339,7 @@ void UpdatePause()
 //========================================================================
 //ポーズの描画処理
 //========================================================================
-void DrawPause()
+void DrawPause(void)
 {
 	//デバイスへのポインタ
 	LPDIRECT3DDEVICE9 pDevice;

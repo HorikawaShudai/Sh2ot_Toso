@@ -19,6 +19,8 @@
 #include "ActionHelpUI.h"
 #include "EscapeTutorial.h"
 #include "CheckboxUI.h"
+#include "NeedKeyPolygon.h"
+#include "sound.h"
 
 const char *c_apExit[] =					//モデルデータ読み込み
 {
@@ -287,6 +289,7 @@ void DoorOpen(void)
 					g_aExit[nCntExit].parts[3].nExitOKcnt = 0;
 					g_aExit[nCntExit].parts[4].nExitOKcnt = 0;
 					g_aExit[nCntExit].bExitOK = true;
+					FalseNeedKeyPolygon();
 				}
 			}
 		}
@@ -370,6 +373,7 @@ void SetExit(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nType, int nNumExit)
 			{
 				g_aExit[nNumExit].PseudoCenter = D3DXVECTOR3(g_aExit[nNumExit].parts[nCntExit1].pos.x, g_aExit[nNumExit].parts[nCntExit1].pos.y - 100.0f, g_aExit[nNumExit].parts[nCntExit1].pos.z);
 				g_aExit[nNumExit].IndexUI = SetActionHelpUI(D3DXVECTOR3(g_aExit[nNumExit].PseudoCenter.x + sinf(g_aExit[nNumExit].parts[nCntExit1].rot.y) * 15.0f, g_aExit[nNumExit].PseudoCenter.y + 38.0f, g_aExit[nNumExit].PseudoCenter.z + cosf(g_aExit[nNumExit].parts[nCntExit1].rot.y) * 15.0f), 2.5f, ACTIONHELPUI_DOOR);
+				SetNeedKeyPolygon(D3DXVECTOR3(g_aExit[nNumExit].PseudoCenter.x + sinf(g_aExit[nNumExit].parts[nCntExit1].rot.y) * 15.0f, g_aExit[nNumExit].PseudoCenter.y + 50.0f, g_aExit[nNumExit].PseudoCenter.z + cosf(g_aExit[nNumExit].parts[nCntExit1].rot.y) * 15.0f));
 			}
 
 			g_aExit[nNumExit].parts[nCntExit1].bUse = true;
@@ -470,6 +474,9 @@ bool CollisionExit(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, 
 						g_aExit[nCntExit].parts[3].bExitOK = true;
 						g_aExit[nCntExit].parts[4].bExitOK = true;
 						FalseActionHelpUI(g_aExit[nCntExit].IndexUI);
+
+						//ドアの開閉音
+						PlaySound(SOUND_LABEL_SE_DOOR);
 					}
 
 					break;
@@ -722,3 +729,10 @@ void LoadExit(int SetNumber)
 	}
 }
 
+//====================================================================
+//鍵の使用数の所得
+//====================================================================
+int GetKeyCount(void)
+{
+	return g_KeyCount;
+}

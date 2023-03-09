@@ -35,6 +35,7 @@
 #include "particle.h"
 #include "ChasePolygon.h"
 #include "LifePolygon.h"
+#include "NeedKeyPolygon.h"
 
 //エディットに使うオブジェクトの種類の構造体
 typedef enum
@@ -114,6 +115,8 @@ void InitGame()
 	//鍵UIの初期化処理
 	InitKeyUI();
 
+	InitNeedKeyPolygon();
+
 	//エフェクトの初期化
 	InitEffect();
 
@@ -165,7 +168,9 @@ void InitGame()
 
 	}
 	SetEnemy(D3DXVECTOR3(-2162.46f, 0.0f, 1529.39f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	SetEnemy(D3DXVECTOR3(160.0f,  0.0f, 300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	SetEnemy(D3DXVECTOR3(-925.0f,  0.0f,1850.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+
+	SetEnemy(D3DXVECTOR3(160.0f, 0.0f, 300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 	//プレイヤーの数だけ鍵を設置する
 	PatternSetKey(GetPlayNumberSelect().CurrentSelectNumber);
@@ -228,6 +233,8 @@ void UninitGame()
 	//鍵UIの終了処理
 	UninitKeyUI();
 
+	UninitNeedKeyPolygon();
+
 	//エフェクトの終了処理
 	UninitEffect();
 
@@ -284,7 +291,7 @@ void UpdateGame()
 
 #endif
 
-	if (GetKeyboardTrigger(DIK_P) == true || GetGamepadTrigger(BUTTON_START, 0) == true)
+	if (GetKeyboardTrigger(DIK_P) == true || GetGamepadTrigger(BUTTON_START, 0) == true || GetGamepadTrigger(BUTTON_START, 1) == true || GetGamepadTrigger(BUTTON_START, 2) == true || GetGamepadTrigger(BUTTON_START, 3) == true)
 	{//ポーズ処理
 		pPause->bUse = pPause->bUse ? false : true;
 	}
@@ -298,6 +305,11 @@ void UpdateGame()
 		{//ポーズ中バイブを止める処理
 			GetGamepad_Vibrtion_false(nCntPlayer);
 		}
+	}
+	if (GetKeyboardTrigger(DIK_P) == true || GetGamepadTrigger(BUTTON_START, 0) == true && pPause->bUse == false)
+	{
+		//ポーズを閉じた時選択を最初に戻す
+		InitPause();
 	}
 
 	if (pPause->bUse == false && g_bEdit == false)
@@ -408,6 +420,8 @@ void UpdateGame()
 
 			//鍵UIの更新処理
 			UpdateKeyUI();
+
+			UpdateNeedKeyPolygon();
 
 			//エフェクトの更新処理
 			UpdateEffect();
@@ -564,6 +578,8 @@ void DrawGame()
 
 		//鍵UIの描画処理
 		DrawKeyUI();
+
+		DrawNeedKeyPolygon(nCnt);
 
 		if (pPlayer->bEnemyLeft == true || pPlayer->bEnemyRight == true)
 		{

@@ -12,7 +12,7 @@
 #include "objectPoly.h"
 
 //マクロ定義
-#define MAX_ENEMY (2)		//敵最大数
+#define MAX_ENEMY (3)		//敵最大数
 
 #define MAX_ENEMY_MODEL (32)	//モデルの最大数
 #define MAX_ENEMY_PARTS (32)	//パーツの総数

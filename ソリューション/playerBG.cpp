@@ -17,6 +17,7 @@
 #include "fade.h"
 #include "PlayNumberSelect.h"
 #include <stdio.h>
+#include "player.h"
 
 #define PLAYERBG_SPEED (3.25f)			//プレイヤーのスピード
 #define PLAYERBG_ROT_SPEED (0.2f)		//プレイヤーの回転スピード
@@ -76,19 +77,19 @@ void InitPlayerBG(void)
 		switch (nCntPlayerBG)
 		{
 		case 0:
-			g_PlayerBG[nCntPlayerBG].MotionType = PLAYERBG_ACTION_WAIT;
+			g_PlayerBG[nCntPlayerBG].MotionType = PLAYERBG_ACTION_WAIT1;
 			SetPlayerMotion(g_PlayerBG[nCntPlayerBG].MotionType, nCntPlayerBG);
 			break;
 		case 1:
-			g_PlayerBG[nCntPlayerBG].MotionType = PLAYERBG_ACTION_MOVE;
+			g_PlayerBG[nCntPlayerBG].MotionType = PLAYERBG_ACTION_WAIT2;
 			SetPlayerMotion(g_PlayerBG[nCntPlayerBG].MotionType, nCntPlayerBG);
 			break;
 		case 2:
-			g_PlayerBG[nCntPlayerBG].MotionType = PLAYERBG_ACTION_JUMP;
+			g_PlayerBG[nCntPlayerBG].MotionType = PLAYERBG_ACTION_WAIT3;
 			SetPlayerMotion(g_PlayerBG[nCntPlayerBG].MotionType, nCntPlayerBG);
 			break;
 		case 3:
-			g_PlayerBG[nCntPlayerBG].MotionType = PLAYERBG_ACTION_WAIT2;
+			g_PlayerBG[nCntPlayerBG].MotionType = PLAYERBG_ACTION_WAIT4;
 			SetPlayerMotion(g_PlayerBG[nCntPlayerBG].MotionType, nCntPlayerBG);
 			break;
 		}
@@ -572,4 +573,219 @@ void DrawPlayerBG(void)
 PlayerBG * GetPlayerBG(void)
 {
 	return &g_PlayerBG[0];
+}
+
+//====================================================================
+//プレイヤーの初期化処理(リザルト用)
+//====================================================================
+void InitResultPlayer(void)
+{
+	//デバイスの所得
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+	D3DXMATERIAL *pMat;	//マテリアルへのポインタ
+
+	for (int nCntPlayerBG = 0; nCntPlayerBG < GetExitCount(); nCntPlayerBG++)
+	{
+		g_PlayerBG[nCntPlayerBG].pos = D3DXVECTOR3(850.0f + nCntPlayerBG * 40.0f, 0.0f, -260.0f + nCntPlayerBG * 50.0f);
+		g_PlayerBG[nCntPlayerBG].posOld = g_PlayerBG[nCntPlayerBG].pos;
+		g_PlayerBG[nCntPlayerBG].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_PlayerBG[nCntPlayerBG].NormarizeMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_PlayerBG[nCntPlayerBG].rot = D3DXVECTOR3(0.0f, -0.7f, 0.0f);
+		g_PlayerBG[nCntPlayerBG].vtxMin = D3DXVECTOR3(1000.0f, 1000.0f, 1000.0f);
+		g_PlayerBG[nCntPlayerBG].vtxMax = D3DXVECTOR3(-1000.0f, -1000.0f, -1000.0f);
+		g_PlayerBG[nCntPlayerBG].g_bMotion = true;
+
+		g_PlayerBG[nCntPlayerBG].g_nNextKey = 1;
+
+		switch (nCntPlayerBG)
+		{
+		case 0:
+			g_PlayerBG[nCntPlayerBG].MotionType = PLAYERBG_ACTION_RUNPOZE;
+			SetPlayerMotion(g_PlayerBG[nCntPlayerBG].MotionType, nCntPlayerBG);
+			break;
+		case 1:
+			g_PlayerBG[nCntPlayerBG].MotionType = PLAYERBG_ACTION_RUNPOZE;
+			SetPlayerMotion(g_PlayerBG[nCntPlayerBG].MotionType, nCntPlayerBG);
+			break;
+		case 2:
+			g_PlayerBG[nCntPlayerBG].MotionType = PLAYERBG_ACTION_RUNPOZE;
+			SetPlayerMotion(g_PlayerBG[nCntPlayerBG].MotionType, nCntPlayerBG);
+			break;
+		case 3:
+			g_PlayerBG[nCntPlayerBG].MotionType = PLAYERBG_ACTION_RUNPOZE;
+			SetPlayerMotion(g_PlayerBG[nCntPlayerBG].MotionType, nCntPlayerBG);
+			break;
+		}
+		g_PlayerBG[nCntPlayerBG].bUse = true;
+
+		//外部ファイルからキャラクター情報を読み込む処理
+		LoadPlayerMotion(nCntPlayerBG);
+
+		for (int nCntModel = 0; nCntModel < g_PlayerBG[nCntPlayerBG].nNumModel; nCntModel++)
+		{
+			//Xファイルの読み込み
+			D3DXLoadMeshFromX(c_apPlayerBG[nCntModel],
+				D3DXMESH_SYSTEMMEM,
+				pDevice,
+				NULL,
+				&g_pBuffMatPlayerBG[nCntModel],
+				NULL,
+				&g_PlayerBG[nCntPlayerBG].aModel[nCntModel].g_dwNumMatPlayerBG,
+				&g_pMeshPlayerBG[nCntModel]);
+
+
+			//マテリアル情報に対するポインタを所得
+			pMat = (D3DXMATERIAL*)g_pBuffMatPlayerBG[nCntModel]->GetBufferPointer();
+
+			for (int nCntMat = 0; nCntMat < (int)g_PlayerBG[nCntPlayerBG].aModel[nCntModel].g_dwNumMatPlayerBG; nCntMat++)
+			{
+				if (pMat[nCntMat].pTextureFilename != NULL)
+				{
+					//テクスチャの読み込み
+					D3DXCreateTextureFromFile(pDevice,
+						pMat[nCntMat].pTextureFilename,
+						&g_PlayerBG[nCntPlayerBG].aModel[nCntModel].g_pTexturePlayerBG[nCntMat]);
+				}
+			}
+		}
+	}
+}
+
+//====================================================================
+//プレイヤーの終了処理(リザルト用)
+//====================================================================
+void UninitResultPlayer(void)
+{
+	for (int nCntPlayerBG = 0; nCntPlayerBG < GetExitCount(); nCntPlayerBG++)
+	{
+		for (int nCntModel = 0; nCntModel < g_PlayerBG[nCntPlayerBG].nNumModel; nCntModel++)
+		{
+			for (int nCntMat = 0; nCntMat < (int)g_PlayerBG[nCntPlayerBG].aModel[nCntModel].g_dwNumMatPlayerBG; nCntMat++)
+			{
+				//テクスチャの破棄
+				if (g_PlayerBG[nCntPlayerBG].aModel[nCntModel].g_pTexturePlayerBG[nCntMat] != NULL)
+				{
+					g_PlayerBG[nCntPlayerBG].aModel[nCntModel].g_pTexturePlayerBG[nCntMat]->Release();
+					g_PlayerBG[nCntPlayerBG].aModel[nCntModel].g_pTexturePlayerBG[nCntMat] = NULL;
+				}
+			}
+		}
+
+		for (int nCntModel = 0; nCntModel < g_PlayerBG[nCntPlayerBG].nNumModel; nCntModel++)
+		{
+			//メッシュの破棄
+			if (g_pMeshPlayerBG[nCntModel] != NULL)
+			{
+				g_pMeshPlayerBG[nCntModel]->Release();
+				g_pMeshPlayerBG[nCntModel] = NULL;
+			}
+
+			//マテリアルの破棄
+			if (g_pBuffMatPlayerBG[nCntModel] != NULL)
+			{
+				g_pBuffMatPlayerBG[nCntModel]->Release();
+				g_pBuffMatPlayerBG[nCntModel] = NULL;
+			}
+		}
+	}
+}
+
+//====================================================================
+//プレイヤーの更新処理(リザルト用)
+//====================================================================
+void UpdateResultPlayer(void)
+{
+	//モーションの更新処理
+	for (int nCntPlayerBG = 0; nCntPlayerBG <  GetExitCount(); nCntPlayerBG++)
+	{
+		UpdatePlayerMotion(nCntPlayerBG);
+	}
+}
+
+//====================================================================
+//プレイヤーの描画処理(リザルト用)
+//====================================================================
+void DrawResultPlayer(void)
+{
+	//デバイスの所得
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+	D3DXMATRIX mtxRot, mtxTrans;	//計算用マトリックス
+	D3DMATERIAL9 matDef;			//現在のマテリアル保存用
+	D3DXMATERIAL *pMat;				//マテリアルデータへのポインタ
+
+	for (int nCntPlayerBG = 0; nCntPlayerBG <  GetExitCount(); nCntPlayerBG++)
+	{
+		//ワールドマトリックスの初期化
+		D3DXMatrixIdentity(&g_PlayerBG[nCntPlayerBG].mtxWorld);
+
+		//向きを反映
+		D3DXMatrixRotationYawPitchRoll(&mtxRot, g_PlayerBG[nCntPlayerBG].rot.y, g_PlayerBG[nCntPlayerBG].rot.x, g_PlayerBG[nCntPlayerBG].rot.z);
+		D3DXMatrixMultiply(&g_PlayerBG[nCntPlayerBG].mtxWorld, &g_PlayerBG[nCntPlayerBG].mtxWorld, &mtxRot);
+
+		//位置を反映
+		D3DXMatrixTranslation(&mtxTrans, g_PlayerBG[nCntPlayerBG].pos.x, g_PlayerBG[nCntPlayerBG].pos.y, g_PlayerBG[nCntPlayerBG].pos.z);
+		D3DXMatrixMultiply(&g_PlayerBG[nCntPlayerBG].mtxWorld, &g_PlayerBG[nCntPlayerBG].mtxWorld, &mtxTrans);
+
+		//ワールドマトリックスの設定
+		pDevice->SetTransform(D3DTS_WORLD, &g_PlayerBG[nCntPlayerBG].mtxWorld);
+
+		//現在のマテリアルを所得
+		pDevice->GetMaterial(&matDef);
+
+		//全モデル(パーツ)の描画
+		for (int nCntModel = 0; nCntModel < g_PlayerBG[nCntPlayerBG].nNumModel; nCntModel++)
+		{
+			D3DXMATRIX mtxRotModel, mtxTransModel;	//計算用マトリックス
+			D3DXMATRIX mtxParent;	//親のマトリックス
+
+									//パーツのマトリックスを初期化
+			D3DXMatrixIdentity(&g_PlayerBG[nCntPlayerBG].aModel[nCntModel].mtxWorld);
+
+			//パーツの向きを反映
+			D3DXMatrixRotationYawPitchRoll(&mtxRotModel, g_PlayerBG[nCntPlayerBG].aModel[nCntModel].rot.y, g_PlayerBG[nCntPlayerBG].aModel[nCntModel].rot.x, g_PlayerBG[nCntPlayerBG].aModel[nCntModel].rot.z);
+			D3DXMatrixMultiply(&g_PlayerBG[nCntPlayerBG].aModel[nCntModel].mtxWorld, &g_PlayerBG[nCntPlayerBG].aModel[nCntModel].mtxWorld, &mtxRotModel);
+
+			//パーツの位置を反映
+			D3DXMatrixTranslation(&mtxTransModel, g_PlayerBG[nCntPlayerBG].aModel[nCntModel].pos.x, g_PlayerBG[nCntPlayerBG].aModel[nCntModel].pos.y, g_PlayerBG[nCntPlayerBG].aModel[nCntModel].pos.z);
+			D3DXMatrixMultiply(&g_PlayerBG[nCntPlayerBG].aModel[nCntModel].mtxWorld, &g_PlayerBG[nCntPlayerBG].aModel[nCntModel].mtxWorld, &mtxTransModel);
+
+			//パーツの「親のマトリックス」を設定
+			if (g_PlayerBG[nCntPlayerBG].aModel[nCntModel].nIndexModelParent != -1)
+			{//親モデルがある場合
+				mtxParent = g_PlayerBG[nCntPlayerBG].aModel[g_PlayerBG[nCntPlayerBG].aModel[nCntModel].nIndexModelParent].mtxWorld;	//親モデルのインデックスのマトリックスを指定する
+			}
+			else
+			{//親モデルがない場合
+				mtxParent = g_PlayerBG[nCntPlayerBG].mtxWorld;	//プレイヤーのマトリックスを指定する
+			}
+
+			//算出した「パーツのワールドマトリックス」と「親のマトリックス」を掛け合わせる
+			D3DXMatrixMultiply(&g_PlayerBG[nCntPlayerBG].aModel[nCntModel].mtxWorld,
+				&g_PlayerBG[nCntPlayerBG].aModel[nCntModel].mtxWorld,
+				&mtxParent);
+
+			//パーツのワールドマトリックスを設定
+			pDevice->SetTransform(D3DTS_WORLD, &g_PlayerBG[nCntPlayerBG].aModel[nCntModel].mtxWorld);
+
+			//マテリアルデータへのポインタを所得する
+			pMat = (D3DXMATERIAL*)g_pBuffMatPlayerBG[nCntModel]->GetBufferPointer();
+
+			for (int nCntMat = 0; nCntMat < (int)g_PlayerBG[nCntPlayerBG].aModel[nCntModel].g_dwNumMatPlayerBG; nCntMat++)
+			{
+				//マテリアルの設定
+				pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
+
+				if (g_PlayerBG[nCntPlayerBG].bUse == true)
+				{
+					//テクスチャの設定
+					pDevice->SetTexture(0, g_PlayerBG[nCntPlayerBG].aModel[nCntModel].g_pTexturePlayerBG[nCntMat]);
+
+					//プレイヤー(パーツ)の描画
+					g_pMeshPlayerBG[nCntModel]->DrawSubset(nCntMat);
+				}
+			}
+		}
+		//保存していたマテリアルを戻す
+		pDevice->SetMaterial(&matDef);
+	}
 }
