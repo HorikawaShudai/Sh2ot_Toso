@@ -414,36 +414,38 @@ void DeathCameraEnemy(int nCntCamera)
 	ENEMY *pEnemy = GetEnemy();
 	PlayNumberSelect NumberSelect = GetPlayNumberSelect();
 
+	pPlayer += nCntCamera;
+
 	float rotYDiff;
 
-	if (pPlayer[nCntCamera].nLife <= 0)
+	if (pPlayer->nLife <= 0)
 	{
 		for (int nCnt = 0; nCnt < MAX_ENEMY; nCnt++, pEnemy++)
 		{
 			if (pEnemy->bHit == true)
 			{
 				//敵の位置からプレイヤーの角度を求める
-				rotYDiff = atan2f((pEnemy->pos.x - g_aCamera[nCntCamera].posR.x), (pEnemy->pos.z - g_aCamera[nCntCamera].posR.z));
+				rotYDiff = atan2f((pEnemy->pos.x - g_aCamera->posR.x), (pEnemy->pos.z - g_aCamera->posR.z));
 
 				//カメラを敵の方向に向ける
-				g_aCamera[nCntCamera].rot.y = rotYDiff;
+				g_aCamera->rot.y = rotYDiff;
 				
 				//カメラが向いてる高さを敵の頭の方向へ向ける(固定値)
-				g_aCamera[nCntCamera].rot.x = 0.85f;
+				g_aCamera->rot.x = 0.85f;
 
 				//カメラの角度をプレイヤーの角度に代入する
-				pPlayer[nCntCamera].rot.y = g_aCamera[nCntCamera].rot.y;
-				pPlayer[nCntCamera].rot.x = g_aCamera[nCntCamera].rot.x;
+				pPlayer->rot.y = g_aCamera->rot.y;
+				pPlayer->rot.x = g_aCamera->rot.x;
 
 				//プレイヤーが保持するライトの更新処理
-				SetLight(pPlayer[nCntCamera].LightIdx00, D3DLIGHT_SPOT, pPlayer[nCntCamera].LightColor, D3DXVECTOR3(pPlayer[nCntCamera].pos.x, pPlayer[nCntCamera].pos.y + 50.0f, pPlayer[nCntCamera].pos.z), D3DXVECTOR3(sinf(Getrot(nCntCamera).y), sinf(Getrot(nCntCamera).x), cosf(Getrot(nCntCamera).y)), 350.0f, 1.0f);
+				SetLight(pPlayer->LightIdx00, D3DLIGHT_SPOT, pPlayer->LightColor, D3DXVECTOR3(pPlayer->pos.x, pPlayer->pos.y + 50.0f, pPlayer->pos.z), D3DXVECTOR3(sinf(Getrot(nCntCamera).y), sinf(Getrot(nCntCamera).x), cosf(Getrot(nCntCamera).y)), 350.0f, 1.0f);
 
 				//死亡状態へ切り替える
 				if (pEnemy->state == ENEMYSTATE_PATROL && pEnemy->StateCount <= 0)
 				{//敵の状態が巡回モードに切り替わったら
 
 					//プレイヤーの状態を死亡状態へ
-					pPlayer[nCntCamera].State = PLAYER_DEATH;
+					pPlayer->State = PLAYER_DEATH;
 
 					//敵のヒット判定をfalseへ
 					pEnemy->bHit = false;
@@ -461,27 +463,29 @@ void DeathCamera(int nCntCamera)
 	//プレイヤー情報の取得
 	Player *pPlayer = GetPlayer();
 
+	pPlayer += nCntCamera;
+
 	//上に向かせるまでのカウント
 	g_nCount1[nCntCamera]++;
 
 	//カメラを下に落とす
-	if (g_aCamera[nCntCamera].posV.y >= DEATHCAMERA_POS_Y)
+	if (g_aCamera->posV.y >= DEATHCAMERA_POS_Y)
 	{//カメラの位置が宇内以上の時
 		//カメラを落とす
-		g_aCamera[nCntCamera].posR.y -= DEATHCAMERA_SPEED;
-		g_aCamera[nCntCamera].posV.y -= DEATHCAMERA_SPEED;
+		g_aCamera->posR.y -= DEATHCAMERA_SPEED;
+		g_aCamera->posV.y -= DEATHCAMERA_SPEED;
 
 		//カウントを初期化する
 		g_Acc[nCntCamera] = 0;
 	}
-	else if (g_aCamera[nCntCamera].rot.x <= DEATHCAMERA_ROTEND && g_nCount1[nCntCamera] >= DEATHCAMERA_TIME)
+	else if (g_aCamera->rot.x <= DEATHCAMERA_ROTEND && g_nCount1[nCntCamera] >= DEATHCAMERA_TIME)
 	{//カメラの向きが数値以下かつカウントより上の時
 		//速さを徐々に増やす
 		g_Acc[nCntCamera] += DEATHCAMERA_UPSPEED;
 
 		//カメラを上に傾ける
-		g_aCamera[nCntCamera].rot.x += DEATHCAMERA_UPSPEED + g_Acc[nCntCamera];
-		g_aCamera[nCntCamera].rot.z += DEATHCAMERA_UPSPEED + g_Acc[nCntCamera];
+		g_aCamera->rot.x += DEATHCAMERA_UPSPEED + g_Acc[nCntCamera];
+		g_aCamera->rot.z += DEATHCAMERA_UPSPEED + g_Acc[nCntCamera];
 
 		//カウントを初期化
 		g_nCount1[nCntCamera] = 0;

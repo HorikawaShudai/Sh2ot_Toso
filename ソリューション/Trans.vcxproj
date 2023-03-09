@@ -171,7 +171,6 @@
     <ClCompile Include="EscapeTutorial.cpp" />
     <ClCompile Include="exit.cpp" />
     <ClCompile Include="Fade.cpp" />
-    <ClCompile Include="field.cpp" />
     <ClCompile Include="Fog.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="input.cpp" />
@@ -234,7 +233,6 @@
     <ClInclude Include="EscapeTutorial.h" />
     <ClInclude Include="exit.h" />
     <ClInclude Include="Fade.h" />
-    <ClInclude Include="field.h" />
     <ClInclude Include="fog.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="input.h" />
