@@ -16,6 +16,7 @@
 #include "meshdome.h"
 #include "meshcylinder.h"
 #include "numberUI.h"
+#include "playerBG.h"
 
 //グローバル変数宣言
 
@@ -36,6 +37,7 @@ void InitEscapeClearResult()
 
 	InitObject00();
 	InitObjectBG();
+	InitResultPlayer();
 
 	//ステージの読み込み
 	SetStage(3);
@@ -43,6 +45,8 @@ void InitEscapeClearResult()
 	InitNumberUI();
 
 	InitResultUI();
+
+
 }
 
 //====================================================================
@@ -62,10 +66,12 @@ void UninitEscapeClearResult()
 
 	UninitObject00();
 	UninitObjectBG();
+	UninitResultPlayer();
 
 	UninitNumberUI();
 
 	UninitResultUI();
+
 }
 
 //====================================================================
@@ -88,6 +94,7 @@ void UpdateEscapeClearResult()
 
 	UpdateObject00();
 	UpdateObjectBG();
+	UpdateResultPlayer();
 
 	UpdateNumberUI();
 
@@ -133,6 +140,7 @@ void DrawEscapeClearResult()
 
 	DrawObject00();
 	DrawObjectBG();
+	DrawResultPlayer();
 
 	DrawNumberUI();
 
