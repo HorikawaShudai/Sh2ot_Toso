@@ -264,14 +264,21 @@ void UpdateEscapeTutorial()
 	//ガイドのページを進ませる処理
 	if (GetKeyboardTrigger(DIK_C) == true || GetGamepadTrigger(BUTTON_A, 0) == true)
 	{
+
 		switch (g_EscapeTutorialGuyde)
 		{
 		case TUTORIAL_GUYDE_ESCAPE:
 			g_EscapeTutorialGuyde = TUTORIAL_GUYDE_KEY;
+
+			//紙をめくる音
+			PlaySound(SOUND_LABEL_PAPER);
 			break;
 
 		case TUTORIAL_GUYDE_KEY:
 			g_EscapeTutorialGuyde = TUTORIAL_GUYDE_HEALTH;
+
+			//紙をめくる音
+			PlaySound(SOUND_LABEL_PAPER);
 			break;
 
 		case TUTORIAL_GUYDE_HEALTH:
@@ -287,10 +294,16 @@ void UpdateEscapeTutorial()
 		{
 		case TUTORIAL_GUYDE_HEALTH:
 			g_EscapeTutorialGuyde = TUTORIAL_GUYDE_KEY;
+
+			//紙をめくる音
+			PlaySound(SOUND_LABEL_PAPER);
 			break;
 
 		case TUTORIAL_GUYDE_KEY:
 			g_EscapeTutorialGuyde = TUTORIAL_GUYDE_ESCAPE;
+
+			//紙をめくる音
+			PlaySound(SOUND_LABEL_PAPER);
 			break;
 
 		case TUTORIAL_GUYDE_ESCAPE:
