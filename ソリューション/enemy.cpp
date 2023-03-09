@@ -13,6 +13,7 @@
 #include "debugproc.h"
 #include "Effect.h"
 #include "objectPoly.h"
+#include "exit.h"
 #include <stdio.h>
 #include "sound.h"
 
@@ -211,7 +212,12 @@ void UpdateEnemy(void)
 			{
 				g_Enemy[nCntObject].rot.y += (g_Enemy[nCntObject].rotDest.y - g_Enemy[nCntObject].rot.y) * 0.3f;
 			}
-		
+
+			//出口との当たり判定
+			if (CollisionExi(&g_Enemy[nCntObject].pos, &g_Enemy[nCntObject].posOld, &g_Enemy[nCntObject].move, D3DXVECTOR3(-10.0f, -10.0f, -10.0f), D3DXVECTOR3(10.0f, 10.0f, 10.0f), 10.0f))
+			{//当たったら手レポさせる
+				TeleportationEnemy(&g_Enemy[nCntObject].pos);
+			}
 
 			//方向転換のクールタイム
 			if (g_Enemy[nCntObject].nCoolTurn <= 0)

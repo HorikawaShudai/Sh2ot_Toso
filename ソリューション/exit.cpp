@@ -288,6 +288,7 @@ void DoorOpen(void)
 					g_aExit[nCntExit].parts[3].nExitOKcnt = 0;
 					g_aExit[nCntExit].parts[4].nExitOKcnt = 0;
 					g_aExit[nCntExit].bExitOK = true;
+					FalseNeedKeyPolygon();
 				}
 			}
 		}
