@@ -241,11 +241,6 @@ void UpdateEscapeTutorial()
 	int nPlayer = GetCurrentCamera();
 
 #ifdef _DEBUG
-	if (GetKeyboardPress(DIK_RETURN))
-	{//ENTERキーを押したときリザルトにフェード
-		SetFade(MODE_GAME);
-	}
-
 	if (GetKeyboardTrigger(DIK_V))
 	{
 		switch (g_EscapeTutorialState)
@@ -267,7 +262,7 @@ void UpdateEscapeTutorial()
 #endif
 
 	//ガイドのページを進ませる処理
-	if (GetKeyboardTrigger(DIK_C) == true || GetGamepadTrigger(BUTTON_A, 0) == true)
+	if (GetKeyboardTrigger(DIK_D) == true || GetGamepadTrigger(BUTTON_A, 0) == true)
 	{
 
 		switch (g_EscapeTutorialGuyde)
@@ -293,7 +288,7 @@ void UpdateEscapeTutorial()
 	}
 
 	//ガイドのページを戻す処理
-	if (GetKeyboardTrigger(DIK_B) == true || GetGamepadTrigger(BUTTON_B, 0) == true)
+	if (GetKeyboardTrigger(DIK_A) == true || GetGamepadTrigger(BUTTON_B, 0) == true)
 	{
 		switch (g_EscapeTutorialGuyde)
 		{
@@ -319,11 +314,6 @@ void UpdateEscapeTutorial()
 
 	if (pFade == FADE_NONE)
 	{
-		if (GetKeyboardPress(DIK_RETURN))
-		{//ENTERキーを押したときリザルトにフェード
-			SetFade(MODE_GAME);
-		}
-
 		if (GetKeyboardPress(DIK_RETURN) || GetGamepadTrigger(BUTTON_START, 0) == true)
 		{//ENTERキーを押したときリザルトにフェード
 			SetFade(MODE_GAME);
