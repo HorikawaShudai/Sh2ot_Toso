@@ -9,7 +9,7 @@
 
 //マクロ定義
 //#define SET_STAGE_TEXT ("data\\TEXT\\Map_tousou2.txt")		//スタートメッセージがあるかどうかの確認
-#define SET_STAGE_TEXT ("data\\TEXT\\result_tousou.txt")		//スタートメッセージがあるかどうかの確認
+#define SET_STAGE_TEXT ("data\\TEXT\\Map_tousou2.txt")		//スタートメッセージがあるかどうかの確認
 
 //プロトタイプ宣言
 void InitEdit(void);
