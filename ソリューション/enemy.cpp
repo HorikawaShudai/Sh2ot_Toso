@@ -14,6 +14,7 @@
 #include "Effect.h"
 #include "objectPoly.h"
 #include <stdio.h>
+#include "sound.h"
 
 #define ENEMY_LIFE (7)		//オブジェクトの体力
 #define ENEMY_DASHSPEED (2.95f) //敵の移動速度
@@ -229,6 +230,8 @@ void UpdateEnemy(void)
 						SetEnemyMotion(g_Enemy[nCntObject].MotionType, nCntObject);
 
 						g_Enemy[nCntObject].state = ENEMYSTATE_CHASE;
+
+						PlaySound(SOUND_LABEL_SE_ENEMYFIND);
 					}
 				
 			}
@@ -716,6 +719,9 @@ void EnemyPatrol(int nEnemy)
 				if (DetectPlayer(g_Enemy[nEnemy].pos, rot.y, nEnemy) == true)
 				{
 					g_Enemy[nEnemy].state = ENEMYSTATE_CHASE;
+
+					PlaySound(SOUND_LABEL_SE_ENEMYFIND);
+
 					break;
 				}
 			}
