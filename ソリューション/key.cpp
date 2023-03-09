@@ -411,7 +411,8 @@ void PatternSetKey(int nNumPlayer)
 	switch (nNumPlayer)
 	{
 	case 1:
-		bnNum = rand() % 12;
+		bnNum = rand() % 4;
+		bnNum += 2;
 		SetKey(KeyPos[bnNum], D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0);
 		break;
 	case 2:

@@ -1685,6 +1685,7 @@ void PlayerHit(int nCnt, int nDamage)
 			{
 				g_aPlayer[nCnt].bGetKey = false;
 				SetKey(D3DXVECTOR3(g_aPlayer[nCnt].pos.x, g_aPlayer[nCnt].pos.y + 3.0f, g_aPlayer[nCnt].pos.z), D3DXVECTOR3(0.0f, 0.1f, 0.0f), D3DXVECTOR3(0.0f, 0.1f, 0.0f), 0);
+				SetKeyUI(nCnt, false);					//Œ®UI‚ð•\Ž¦‚·‚é
 			}
 		}
 
