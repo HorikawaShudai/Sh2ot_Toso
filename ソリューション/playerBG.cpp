@@ -590,7 +590,7 @@ void InitResultPlayer(void)
 		g_PlayerBG[nCntPlayerBG].posOld = g_PlayerBG[nCntPlayerBG].pos;
 		g_PlayerBG[nCntPlayerBG].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_PlayerBG[nCntPlayerBG].NormarizeMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		g_PlayerBG[nCntPlayerBG].rot = D3DXVECTOR3(0.0f, 0.4f, 0.0f);
+		g_PlayerBG[nCntPlayerBG].rot = D3DXVECTOR3(0.0f, -0.4f, 0.0f);
 		g_PlayerBG[nCntPlayerBG].vtxMin = D3DXVECTOR3(1000.0f, 1000.0f, 1000.0f);
 		g_PlayerBG[nCntPlayerBG].vtxMax = D3DXVECTOR3(-1000.0f, -1000.0f, -1000.0f);
 		g_PlayerBG[nCntPlayerBG].g_bMotion = true;

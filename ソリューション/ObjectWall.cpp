@@ -30,11 +30,11 @@ int g_ObjectWallCount;								//オブジェクトの数
 
 const char *c_apModelWallObj[] =					//モデルデータ読み込み
 {
-	"Data\\MODEL\\HighPolyWall1.x",				//ポリゴン数の多い壁
-	"Data\\MODEL\\HighPolyWall7.x",				//壁(メインホール)
-	"Data\\MODEL\\HighPolyWall6.x",				//壁(ノーマルコンクリ)
-	"Data\\MODEL\\HighPolyWall5.x",				//壁(雨濡れコンクリ)
-	"Data\\MODEL\\HighPolyWall8.x",				//壁(白タイル)
+	"Data\\MODEL\\tyuPolyWall.x",				//ポリゴン数の多い壁
+	"Data\\MODEL\\tyuPolyWall1.x",				//壁(メインホール)
+	"Data\\MODEL\\tyuPolyWall2.x",				//壁(ノーマルコンクリ)
+	"Data\\MODEL\\tyuPolyWall3.x",				//壁(雨濡れコンクリ)
+	"Data\\MODEL\\tyuPolyWall4.x",				//壁(白タイル)
 };
 
 //====================================================================
