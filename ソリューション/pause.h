@@ -10,7 +10,7 @@ typedef struct
 {
 	D3DXVECTOR3 pos;				//位置
 	D3DXCOLOR col;					//色
-	bool bUse;					//ポーズを使っているか
+	bool bUse;						//ポーズを使っているか
 }Pause;
 
 //プロトタイプ宣言

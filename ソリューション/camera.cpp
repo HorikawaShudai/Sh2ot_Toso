@@ -850,10 +850,10 @@ void PlayerCamera(void)
 				//右スティックの左右視点移動入力
 				g_aCamera[nCntCamera].rot.y += GetGamepad_Stick_Right(nCntCamera).x * CAMERA_VR_SPEED;
 
-				if (GetMousePress(PUSH_LEFT) == true || GetMousePress(PUSH_RIGHT) == true)
+				/*if (GetMousePress(PUSH_LEFT) == true || GetMousePress(PUSH_RIGHT) == true)
 				{
 					g_aCamera[nCntCamera].rot.y += GetMouseMove().x * CAMERA_VR_SPEED;
-				}
+				}*/
 
 				//一周した時の向きの補正
 				if (g_aCamera[nCntCamera].rot.y > D3DX_PI * 1.0f)
