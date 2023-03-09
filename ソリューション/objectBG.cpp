@@ -65,6 +65,11 @@ const char *c_apModelObj01[] =					//モデルデータ読み込み
 	"Data\\MODEL\\escape.x",				//出口看板
 	"Data\\MODEL\\fire_extingisher.x",		//消火器
 	"Data\\MODEL\\laboratory.x",			//施設
+	"Data\\MODEL\\tree000.x",				//木
+	"Data\\MODEL\\door1.x",					//ドア
+	"Data\\MODEL\\door2.x",					//ドア
+	"Data\\MODEL\\door3.x",					//ドア
+	"Data\\MODEL\\door4.x",					//ドア
 };
 
 //====================================================================
