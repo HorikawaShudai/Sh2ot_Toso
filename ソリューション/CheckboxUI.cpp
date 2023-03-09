@@ -470,6 +470,8 @@ void DrawCheckboxUI(void)
 	//プレイ人数情報の取得
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 
+	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
+
 	//頂点バッファをデータストリームに設定
 	pDevice->SetStreamSource(0, g_pVtxBuffCheckUI, 0, sizeof(VERTEX_2D));
 

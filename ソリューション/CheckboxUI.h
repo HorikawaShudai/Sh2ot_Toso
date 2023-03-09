@@ -10,5 +10,4 @@ void UpdateCheckboxUI(void);
 void DrawCheckboxUI(void);
 void SetCheckUI(int nPlayer, bool SetCheck);
 void MovePosCheckUI(int nPlayer, bool SetCheck);
-void ResetCheckUI(int nPlayer);
 #endif
