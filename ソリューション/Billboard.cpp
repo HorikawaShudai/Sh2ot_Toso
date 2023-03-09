@@ -85,7 +85,7 @@ void InitMoon(void)
 {
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	g_Moon.pos = D3DXVECTOR3(800.0f, 1000.0f, 1300.0f);
+	g_Moon.pos = D3DXVECTOR3(1400.0f, 1400.0f, 1300.0f);
 	g_Moon.bUse = false;
 
 	//頂点バッファの生成
