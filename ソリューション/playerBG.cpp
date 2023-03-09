@@ -586,11 +586,11 @@ void InitResultPlayer(void)
 
 	for (int nCntPlayerBG = 0; nCntPlayerBG < GetExitCount(); nCntPlayerBG++)
 	{
-		g_PlayerBG[nCntPlayerBG].pos = D3DXVECTOR3(750.0f + nCntPlayerBG * 40.0f, 0.0f, -40.0f);
+		g_PlayerBG[nCntPlayerBG].pos = D3DXVECTOR3(850.0f + nCntPlayerBG * 40.0f, 0.0f, -260.0f + nCntPlayerBG * 50.0f);
 		g_PlayerBG[nCntPlayerBG].posOld = g_PlayerBG[nCntPlayerBG].pos;
 		g_PlayerBG[nCntPlayerBG].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_PlayerBG[nCntPlayerBG].NormarizeMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		g_PlayerBG[nCntPlayerBG].rot = D3DXVECTOR3(0.0f, -0.4f, 0.0f);
+		g_PlayerBG[nCntPlayerBG].rot = D3DXVECTOR3(0.0f, -0.7f, 0.0f);
 		g_PlayerBG[nCntPlayerBG].vtxMin = D3DXVECTOR3(1000.0f, 1000.0f, 1000.0f);
 		g_PlayerBG[nCntPlayerBG].vtxMax = D3DXVECTOR3(-1000.0f, -1000.0f, -1000.0f);
 		g_PlayerBG[nCntPlayerBG].g_bMotion = true;
