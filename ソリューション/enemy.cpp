@@ -235,11 +235,12 @@ void UpdateEnemy(void)
 						{
 							//ƒ‚[ƒVƒ‡ƒ“‚ÌÝ’èˆ—
 							SetEnemyMotion(ENEMY_ACTION_DASH, nCntObject);
+
+							//“G‚Ì”­Œ©‰¹
+							PlaySound(SOUND_LABEL_SE_ENEMYFIND);
 						}
 
 						g_Enemy[nCntObject].state = ENEMYSTATE_CHASE;
-
-						PlaySound(SOUND_LABEL_SE_ENEMYFIND);
 					}
 				
 			}
@@ -298,6 +299,9 @@ void UpdateEnemy(void)
 							{
 								//ƒ‚[ƒVƒ‡ƒ“‚ÌÝ’èˆ—
 								SetEnemyMotion(ENEMY_ACTION_DASH, nCntObject);
+
+								//“G‚Ì”­Œ©‰¹
+								PlaySound(SOUND_LABEL_SE_ENEMYFIND);
 							}
 
 							pPlayer->bChase = true;
@@ -739,9 +743,6 @@ void EnemyPatrol(int nEnemy)
 				if (DetectPlayer(g_Enemy[nEnemy].pos, rot.y, nEnemy) == true)
 				{
 					g_Enemy[nEnemy].state = ENEMYSTATE_CHASE;
-
-					PlaySound(SOUND_LABEL_SE_ENEMYFIND);
-
 					break;
 				}
 			}

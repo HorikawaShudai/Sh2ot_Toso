@@ -669,9 +669,6 @@ void UpdatePlayer1(void)
 						//ドアのカギを解除する音
 						PlaySound(SOUND_LABEL_SE_UNLOCKKEY);
 
-						//ドアの開閉音
-						PlaySound(SOUND_LABEL_SE_DOOR);
-
 						g_aPlayer[nCntPlayer].bGetKey = false;	//鍵を入手してない状態にする
 						SetKeyUI(nCntPlayer, false);			//鍵UIを非表示にする
 						g_aPlayer[nCntPlayer].ExitHelpUI = false;
