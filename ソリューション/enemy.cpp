@@ -250,13 +250,13 @@ void UpdateEnemy(void)
 			{
 				
 				EnemyPatrol(nCntObject);
+				
+				CollisionObjectWall(&g_Enemy[nCntObject].pos, &g_Enemy[nCntObject].posOld, &g_Enemy[nCntObject].move, D3DXVECTOR3(-1.0f, -1.0f, -1.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f), 1.0f);
+				CollisionObjectPoly(&g_Enemy[nCntObject].pos, &g_Enemy[nCntObject].posOld, &g_Enemy[nCntObject].move, D3DXVECTOR3(-1.0f, -1.0f, -1.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f), 1.0f);
 				if (g_Enemy[nCntObject].pos == g_Enemy[nCntObject].posOld)
 				{
 					EnemyDirection(nCntObject);
 				}
-				CollisionObjectWall(&g_Enemy[nCntObject].pos, &g_Enemy[nCntObject].posOld, &g_Enemy[nCntObject].move, D3DXVECTOR3(-1.0f, -1.0f, -1.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f), 1.0f);
-				CollisionObjectPoly(&g_Enemy[nCntObject].pos, &g_Enemy[nCntObject].posOld, &g_Enemy[nCntObject].move, D3DXVECTOR3(-1.0f, -1.0f, -1.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f), 1.0f);
-			
 
 			}
 
@@ -322,7 +322,7 @@ void UpdateEnemy(void)
 								//ÉÇÅ[ÉVÉáÉìÇÃê›íËèàóù
 								SetEnemyMotion(ENEMY_ACTION_ATTACK, nCntObject);
 							}
-
+							g_Enemy[nCntObject].rot.y = atan2f(vecPlayer.x, vecPlayer.z);
 							g_Enemy[nCntObject].state = ENEMYSTATE_ATTACK;
 							g_Enemy[nCntObject].StateCount = ATTACK_COUNT;
 							PlayerHit(nCnt, 1);
