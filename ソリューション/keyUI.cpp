@@ -13,10 +13,10 @@
 //マクロ定義
 #define MAX_KEY_TEX		(2)				//鍵のテクスチャ最大数
 
-#define KEYUIPOS_X_1	(60.0f)			//鍵UIのX位置1
+#define KEYUIPOS_X_1	(130.0f)			//鍵UIのX位置1
 #define KEYUIPOS_Y_1	(50.0f)			//鍵UIのY位置1
 
-#define KEYUIPOS_X_2	(670.0f)		//鍵UIのX位置2
+#define KEYUIPOS_X_2	(780.0f)		//鍵UIのX位置2
 #define KEYUIPOS_Y_2	(400.0f)		//鍵UIのY位置2
 
 #define KEYUI_WIDTH		(30.0f)			//鍵UIの幅
@@ -106,10 +106,10 @@ void InitKeyUI(void)
 	for (int nCnt = 0; nCnt < PlayNumber.CurrentSelectNumber; nCnt++)
 	{
 		//頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(g_anKeyUI[nCnt].pos.x - KEYUI_WIDTH + (nCntKeyUI * KEYUI_INTERVAL), g_anKeyUI[nCnt].pos.y - KEYUI_HEIGHT, 0.0f);
-		pVtx[1].pos = D3DXVECTOR3(g_anKeyUI[nCnt].pos.x + KEYUI_WIDTH + (nCntKeyUI * KEYUI_INTERVAL), g_anKeyUI[nCnt].pos.y - KEYUI_HEIGHT, 0.0f);
-		pVtx[2].pos = D3DXVECTOR3(g_anKeyUI[nCnt].pos.x - KEYUI_WIDTH + (nCntKeyUI * KEYUI_INTERVAL), g_anKeyUI[nCnt].pos.y + KEYUI_HEIGHT, 0.0f);
-		pVtx[3].pos = D3DXVECTOR3(g_anKeyUI[nCnt].pos.x + KEYUI_WIDTH + (nCntKeyUI * KEYUI_INTERVAL), g_anKeyUI[nCnt].pos.y + KEYUI_HEIGHT, 0.0f);
+		pVtx[0].pos = D3DXVECTOR3(g_anKeyUI[nCnt].pos.x - KEYUI_WIDTH , g_anKeyUI[nCnt].pos.y - KEYUI_HEIGHT, 0.0f);
+		pVtx[1].pos = D3DXVECTOR3(g_anKeyUI[nCnt].pos.x + KEYUI_WIDTH , g_anKeyUI[nCnt].pos.y - KEYUI_HEIGHT, 0.0f);
+		pVtx[2].pos = D3DXVECTOR3(g_anKeyUI[nCnt].pos.x - KEYUI_WIDTH , g_anKeyUI[nCnt].pos.y + KEYUI_HEIGHT, 0.0f);
+		pVtx[3].pos = D3DXVECTOR3(g_anKeyUI[nCnt].pos.x + KEYUI_WIDTH , g_anKeyUI[nCnt].pos.y + KEYUI_HEIGHT, 0.0f);
 
 		//rhwの設定
 		pVtx[0].rhw = 1.0f;
