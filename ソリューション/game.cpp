@@ -169,7 +169,6 @@ void InitGame()
 	}
 	SetEnemy(D3DXVECTOR3(-2162.46f, 0.0f, 1529.39f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	SetEnemy(D3DXVECTOR3(-1045.0f,  0.0f,1750.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-
 	SetEnemy(D3DXVECTOR3(160.0f, 0.0f, 300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 	//プレイヤーの数だけ鍵を設置する
@@ -291,7 +290,7 @@ void UpdateGame()
 
 #endif
 
-	if (GetKeyboardTrigger(DIK_P) == true || GetGamepadTrigger(BUTTON_START, 0) == true || GetGamepadTrigger(BUTTON_START, 1) == true || GetGamepadTrigger(BUTTON_START, 2) == true || GetGamepadTrigger(BUTTON_START, 3) == true)
+	if (GetKeyboardTrigger(DIK_P) == true || GetGamepadTrigger(BUTTON_START, 0) == true)
 	{//ポーズ処理
 		pPause->bUse = pPause->bUse ? false : true;
 	}
@@ -564,9 +563,6 @@ void DrawGame()
 		//スタミナの描画処理
 		DrawStamina();
 
-		//ライフの描画処理
-		DrawLife();
-
 		//鍵の描画処理
 		DrawKey();
 
@@ -589,6 +585,9 @@ void DrawGame()
 		DrawLifePolygon();
 
 		DrawPolygonBG();
+
+		//ライフの描画処理
+		DrawLife();
 
 		//フォグの描画
 		DrawFog();

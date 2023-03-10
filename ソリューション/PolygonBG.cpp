@@ -51,6 +51,7 @@ void InitPolygonBG(void)
 		g_PolygonBG[nCntBG].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.1f);
 		g_PolygonBG[nCntBG].nLife = 0;
 		g_PolygonBG[nCntBG].nType = 0;
+		g_PolygonBG[nCntBG].KuroPolyA = 0.0f;
 	}
 
 	//頂点バッファの生成
@@ -132,20 +133,27 @@ void UpdatePolygonBG(void)
 	{
 		if (g_PolygonBG[nCntBG].bUse == true)
 		{
-			if (g_PolygonBG[nCntBG].nLife <= 0)
+			if (g_PolygonBG[nCntBG].nType == 4)
 			{
-				g_PolygonBG[nCntBG].bUse = false;
+				g_PolygonBG[nCntBG].KuroPolyA += 0.005f;
 			}
 			else
 			{
-				g_PolygonBG[nCntBG].nLife--;
+				if (g_PolygonBG[nCntBG].nLife <= 0)
+				{
+					g_PolygonBG[nCntBG].bUse = false;
+				}
+				else
+				{
+					g_PolygonBG[nCntBG].nLife--;
+				}
 			}
 		}
 	}
 
 	VERTEX_2D*pVtx;	//頂点ポインタを所得
 
-					//頂点バッファをロックし、両店情報へのポインタを所得
+	//頂点バッファをロックし、両店情報へのポインタを所得
 	g_pVtxBuffPolygonBG->Lock(0, 0, (void**)&pVtx, 0);
 
 	for (int nCntBG = 0; nCntBG < MAX_SSUI; nCntBG++)
@@ -158,11 +166,22 @@ void UpdatePolygonBG(void)
 			pVtx[2].pos = D3DXVECTOR3(g_PolygonBG[nCntBG].pos.x - g_PolygonBG[nCntBG].fWidth, g_PolygonBG[nCntBG].pos.y + g_PolygonBG[nCntBG].fHeight, 0.0f);
 			pVtx[3].pos = D3DXVECTOR3(g_PolygonBG[nCntBG].pos.x + g_PolygonBG[nCntBG].fWidth, g_PolygonBG[nCntBG].pos.y + g_PolygonBG[nCntBG].fHeight, 0.0f);
 
-			//頂点カラーの設定
-			pVtx[0].col = g_PolygonBG[nCntBG].col;
-			pVtx[1].col = g_PolygonBG[nCntBG].col;
-			pVtx[2].col = g_PolygonBG[nCntBG].col;
-			pVtx[3].col = g_PolygonBG[nCntBG].col;
+			if (g_PolygonBG[nCntBG].nType == 4)
+			{
+				//頂点カラーの設定
+				pVtx[0].col = D3DXCOLOR(0.0f, 0.0f, 0.0f, g_PolygonBG[nCntBG].KuroPolyA);
+				pVtx[1].col = D3DXCOLOR(0.0f, 0.0f, 0.0f, g_PolygonBG[nCntBG].KuroPolyA);
+				pVtx[2].col = D3DXCOLOR(0.0f, 0.0f, 0.0f, g_PolygonBG[nCntBG].KuroPolyA);
+				pVtx[3].col = D3DXCOLOR(0.0f, 0.0f, 0.0f, g_PolygonBG[nCntBG].KuroPolyA);
+			}
+			else
+			{
+				//頂点カラーの設定
+				pVtx[0].col = g_PolygonBG[nCntBG].col;
+				pVtx[1].col = g_PolygonBG[nCntBG].col;
+				pVtx[2].col = g_PolygonBG[nCntBG].col;
+				pVtx[3].col = g_PolygonBG[nCntBG].col;
+			}
 		}
 
 		pVtx += 4;	//頂点データのポインタを４つ分進める
@@ -181,7 +200,7 @@ void DrawPolygonBG(void)
 
 	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
 
-							   //デバイスの所得
+	//デバイスの所得
 	pDevice = GetDevice();
 
 	//頂点バッファをデータストリームに設定
