@@ -11,6 +11,7 @@ typedef struct
 	float fHeight;		//高さ
 	int nLife;			//寿命
 	int nType;			//種類
+	float KuroPolyA;	//黒いポリゴンのα値
 	bool bUse;			//使用しているかどうか
 }PolygonBG;
 

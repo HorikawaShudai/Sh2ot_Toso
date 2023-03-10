@@ -549,9 +549,6 @@ void DrawEscapeTutorial()
 		//スタミナの描画処理
 		DrawStamina();
 
-		//ライフの描画処理
-		DrawLife();
-
 		DrawTime();
 
 		////スコアの描画処理
@@ -575,6 +572,9 @@ void DrawEscapeTutorial()
 		DrawKeyUI();
 
 		DrawPolygonBG();
+
+		//ライフの描画処理
+		DrawLife();
 
 		//フォグの描画
 		DrawFog();
