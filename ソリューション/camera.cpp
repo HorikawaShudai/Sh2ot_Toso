@@ -38,11 +38,12 @@
 #define DAMAGECAMERA_UPSPEED	(0.009f)	//下に向けた角度から前に向かせる速さ
 
 //死んだ時のカメラ設定
-#define DEATHCAMERA_POS_Y		(8.0f)		//カメラが下にどこまで落ちるか
+#define DEATHCAMERA_DOWNPOS_Y	(8.0f)		//カメラが下にどこまで落ちるか
 #define DEATHCAMERA_SPEED		(1.0f)		//カメラが下に落ちる速さ
 #define DEATHCAMERA_ROTEND		(1.0f)		//カメラ上に向ける限界
 #define DEATHCAMERA_TIME		(120)		//カメラが動かない時間
-#define DEATHCAMERA_UPSPEED		(0.001f)		//
+#define DEATHCAMERA_UPSPEED		(0.001f)	//カメラの昇天の速さ
+#define DEATHCAMERA_POS_Y		(55.0f)		//カメラの高さ
 
 //プロトタイプ宣言
 void TpsCamera(void);						//観察用カメラ
@@ -415,7 +416,7 @@ void DeathCameraEnemy(int nCntCamera)
 	pPlayer += nCntCamera;
 
 	float rotYDiff;
-	float posYDiff;
+	D3DXVECTOR3 posLength;
 
 	if (pPlayer->nLife <= 0)
 	{
@@ -426,9 +427,20 @@ void DeathCameraEnemy(int nCntCamera)
 				//敵の位置からプレイヤーの角度を求める
 				rotYDiff = atan2f((pEnemy->pos.x - g_aCamera[nCntCamera].posR.x), (pEnemy->pos.z - g_aCamera[nCntCamera].posR.z));
 
-				posYDiff = sqrtf((pEnemy->pos.x - pPlayer->pos.x) * (pEnemy->pos.x - pPlayer->pos.x) +
-								(pEnemy->pos.z - pPlayer->pos.z) * (pEnemy->pos.z - pPlayer->pos.z));
+				//敵とプレイヤーとの距離を求める
+				posLength = D3DXVECTOR3(pPlayer->pos.x + sinf(pPlayer->rot.x + 5.0f), 0.0f, pPlayer->pos.z + cosf(pPlayer->rot.z + 5.0f));
 
+				//プレイヤーの高さを上げる
+				pPlayer->pos.y = DEATHCAMERA_POS_Y;
+
+				//プレイヤーの距離に代入
+				g_aCamera[nCntCamera].posV.z = posLength.z;
+				g_aCamera[nCntCamera].posV.x = posLength.x;
+
+				//プレイヤーの高さをカメラの高さに代入
+				g_aCamera[nCntCamera].posV.y = pPlayer->pos.y;
+				g_aCamera[nCntCamera].posR.y = pPlayer->pos.y;
+				
 				//カメラを敵の方向に向ける
 				g_aCamera[nCntCamera].rot.y = rotYDiff;
 				
@@ -442,20 +454,16 @@ void DeathCameraEnemy(int nCntCamera)
 				//プレイヤーが保持するライトの更新処理
 				SetLight(pPlayer->LightIdx00, D3DLIGHT_SPOT, pPlayer->LightColor, D3DXVECTOR3(pPlayer->pos.x, pPlayer->pos.y, pPlayer->pos.z), D3DXVECTOR3(sinf(Getrot(nCntCamera).y), sinf(Getrot(nCntCamera).x), cosf(Getrot(nCntCamera).y)), 350.0f, 1.0f);
 
-				pPlayer->pos.y = 50.0f;
-				g_aCamera[nCntCamera].posV.y = pPlayer->pos.y;
-				g_aCamera[nCntCamera].posR.y = pPlayer->pos.y;
-
 				//死亡状態へ切り替える
-				//if (pEnemy->state == ENEMYSTATE_PATROL && pEnemy->StateCount <= 0)
-				//{//敵の状態が巡回モードに切り替わったら
+				if (pEnemy->state == ENEMYSTATE_PATROL && pEnemy->StateCount <= 0)
+				{//敵の状態が巡回モードに切り替わったら
 
-				//	//プレイヤーの状態を死亡状態へ
-				//	pPlayer->State = PLAYER_DEATH;
+					//プレイヤーの状態を死亡状態へ
+					pPlayer->State = PLAYER_DEATH;
 
-				//	//敵のヒット判定をfalseへ
-				//	pEnemy->bHit = false;
-				//}
+					//敵のヒット判定をfalseへ
+					pEnemy->bHit = false;
+				}
 			}
 		}
 	}
@@ -475,7 +483,7 @@ void DeathCamera(int nCntCamera)
 	g_nCount1[nCntCamera]++;
 
 	//カメラを下に落とす
-	if (g_aCamera->posV.y >= DEATHCAMERA_POS_Y)
+	if (g_aCamera->posV.y >= DEATHCAMERA_DOWNPOS_Y)
 	{//カメラの位置が宇内以上の時
 		//カメラを落とす
 		g_aCamera->posR.y -= DEATHCAMERA_SPEED;
