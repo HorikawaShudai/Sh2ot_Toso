@@ -124,6 +124,7 @@ void InitPlayer(void)
 #endif
 		g_aPlayer[nCntPlayer].bEnemyRight = false;
 		g_aPlayer[nCntPlayer].bEnemyLeft = false;
+		g_aPlayer[nCntPlayer].bKuroPoly = false;
 
 		g_bPlayerOps = false;
 		g_GameEnd = false;
@@ -1255,40 +1256,44 @@ void PlayerState(int nCnt)
 		//死んだプレイヤーのバイブレーションをオフにする
 		GetGamepad_Vibrtion_false(nCnt);
 
-		switch (PlayNumber.CurrentSelectNumber)
+		if (g_aPlayer[nCnt].bKuroPoly == false)
 		{
-		case 1:
-			SetPolygonBG(D3DXVECTOR3(640.0f, 360.0f, 0.0f), 640.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
-			break;
-		case 2:
-			SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 360.0f, 0.0f), 320.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
-			break;
-		case 3:
-			if (nCnt == 2)
-			{//3
-				SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
-			}
-			else
-			{//12
-				SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
-			}
-			break;
-		case 4:
-			if (nCnt == 3)
-			{//4
-				SetPolygonBG(D3DXVECTOR3(960.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
-			}
-			else if (nCnt == 2)
-			{//3
-				SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
-			}
-			else
-			{//12
-				SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
-			}
-			break;
-		}
+			g_aPlayer[nCnt].bKuroPoly = true;
 
+			switch (PlayNumber.CurrentSelectNumber)
+			{
+			case 1:
+				SetPolygonBG(D3DXVECTOR3(640.0f, 360.0f, 0.0f), 640.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+				break;
+			case 2:
+				SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 360.0f, 0.0f), 320.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+				break;
+			case 3:
+				if (nCnt == 2)
+				{//3
+					SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+				}
+				else
+				{//12
+					SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+				}
+				break;
+			case 4:
+				if (nCnt == 3)
+				{//4
+					SetPolygonBG(D3DXVECTOR3(960.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+				}
+				else if (nCnt == 2)
+				{//3
+					SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+				}
+				else
+				{//12
+					SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+				}
+				break;
+			}
+		}
 		break;
 	case PLAYER_EXSIT:
 
@@ -1302,38 +1307,43 @@ void PlayerState(int nCnt)
 		g_aPlayer[nCnt].pos.z += posDest.z * 0.0006f;
 		SetLife(0, nCnt);
 
-		switch (PlayNumber.CurrentSelectNumber)
+		if (g_aPlayer[nCnt].bKuroPoly == false)
 		{
-		case 1:
-			SetPolygonBG(D3DXVECTOR3(640.0f, 360.0f, 0.0f), 640.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
-			break;
-		case 2:
-			SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 360.0f, 0.0f), 320.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
-			break;
-		case 3:
-			if (nCnt == 2)
-			{//3
-				SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+			g_aPlayer[nCnt].bKuroPoly = true;
+
+			switch (PlayNumber.CurrentSelectNumber)
+			{
+			case 1:
+				SetPolygonBG(D3DXVECTOR3(640.0f, 360.0f, 0.0f), 640.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+				break;
+			case 2:
+				SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 360.0f, 0.0f), 320.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+				break;
+			case 3:
+				if (nCnt == 2)
+				{//3
+					SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+				}
+				else
+				{//12
+					SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+				}
+				break;
+			case 4:
+				if (nCnt == 3)
+				{//4
+					SetPolygonBG(D3DXVECTOR3(960.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+				}
+				else if (nCnt == 2)
+				{//3
+					SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+				}
+				else
+				{//12
+					SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+				}
+				break;
 			}
-			else
-			{//12
-				SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
-			}
-			break;
-		case 4:
-			if (nCnt == 3)
-			{//4
-				SetPolygonBG(D3DXVECTOR3(960.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
-			}
-			else if (nCnt == 2)
-			{//3
-				SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
-			}
-			else
-			{//12
-				SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
-			}
-			break;
 		}
 		break;
 	}

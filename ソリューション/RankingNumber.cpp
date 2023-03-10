@@ -83,7 +83,7 @@ void InitRanKingNumber(void)
 		aTexU[1] = g_RanKingNumber[nCntMax].nScore % 1000 / 100;
 		aTexU[2] = g_RanKingNumber[nCntMax].nScore % 100 / 10;
 		aTexU[3] = g_RanKingNumber[nCntMax].nScore % 10 / 1;
-		SetNumberUI(D3DXVECTOR3(X_POS_GAME + 350.0f, Y_POS_GAME + nCntMax * WIDE_SIZE_GAME_Y, 0.0f), X_SIZE_GAME, Y_SIZE_GAME, g_RanKingNumber[nCntMax].nPlayer, 0);
+		SetNumberUI(D3DXVECTOR3(X_POS_GAME + 330.0f, Y_POS_GAME + nCntMax * WIDE_SIZE_GAME_Y, 0.0f), X_SIZE_GAME, Y_SIZE_GAME, g_RanKingNumber[nCntMax].nPlayer, 0);
 
 		for (nCntNum = 0; nCntNum < NUM_PLACE; nCntNum++)
 		{
