@@ -4,7 +4,7 @@
 #include "game.h"
 
 //マクロ定義
-#define MAX_SSUI		(32)//PolygonBGの種類数
+#define MAX_SSUI		(64)//PolygonBGの種類数
 #define NUM_POLYUI		(5)	//PolygonBGの種類数
 
 //グローバル変数

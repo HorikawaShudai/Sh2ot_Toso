@@ -72,6 +72,7 @@ typedef struct
 	bool bChase;								//敵に追いかけられているかどうか
 	bool bEnemyRight;							//敵が右にいるかどうか
 	bool bEnemyLeft;							//敵が左にいるかどうか
+	bool bKuroPoly;								//死亡または脱出の時のポリゴンが存在しているかどうか
 }Player;
 
 //プロトタイプ宣言
