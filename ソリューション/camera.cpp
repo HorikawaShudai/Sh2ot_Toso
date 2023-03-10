@@ -416,7 +416,7 @@ void DeathCameraEnemy(int nCntCamera)
 	pPlayer += nCntCamera;
 
 	float rotYDiff;
-	D3DXVECTOR3 posLength;
+	float posAngle;
 
 	if (pPlayer->nLife <= 0)
 	{
@@ -427,15 +427,10 @@ void DeathCameraEnemy(int nCntCamera)
 				//敵の位置からプレイヤーの角度を求める
 				rotYDiff = atan2f((pEnemy->pos.x - g_aCamera[nCntCamera].posR.x), (pEnemy->pos.z - g_aCamera[nCntCamera].posR.z));
 
-				//敵とプレイヤーとの距離を求める
-				posLength = D3DXVECTOR3(pPlayer->pos.x + sinf(pPlayer->rot.x + 5.0f), 0.0f, pPlayer->pos.z + cosf(pPlayer->rot.z + 5.0f));
+				posAngle = atan2f((pEnemy->pos.x - pPlayer->pos.x), (pEnemy->pos.z - pPlayer->pos.z));
 
 				//プレイヤーの高さを上げる
 				pPlayer->pos.y = DEATHCAMERA_POS_Y;
-
-				//プレイヤーの距離に代入
-				g_aCamera[nCntCamera].posV.z = posLength.z;
-				g_aCamera[nCntCamera].posV.x = posLength.x;
 
 				//プレイヤーの高さをカメラの高さに代入
 				g_aCamera[nCntCamera].posV.y = pPlayer->pos.y;
@@ -445,7 +440,7 @@ void DeathCameraEnemy(int nCntCamera)
 				g_aCamera[nCntCamera].rot.y = rotYDiff;
 				
 				//カメラが向いてる高さを敵の頭の方向へ向ける(固定値)
-				g_aCamera[nCntCamera].rot.x = 0.85f;
+				g_aCamera[nCntCamera].rot.x = 0.80f;
 
 				//カメラの角度をプレイヤーの角度に代入する
 				pPlayer->rot.y = g_aCamera[nCntCamera].rot.y;
