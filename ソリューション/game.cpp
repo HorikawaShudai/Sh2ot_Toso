@@ -291,7 +291,7 @@ void UpdateGame()
 
 #endif
 
-	if (GetKeyboardTrigger(DIK_P) == true || GetGamepadTrigger(BUTTON_START, 0) == true || GetGamepadTrigger(BUTTON_START, 1) == true || GetGamepadTrigger(BUTTON_START, 2) == true || GetGamepadTrigger(BUTTON_START, 3) == true)
+	if (GetKeyboardTrigger(DIK_P) == true || GetGamepadTrigger(BUTTON_START, 0) == true)
 	{//ƒ|[ƒYˆ—
 		pPause->bUse = pPause->bUse ? false : true;
 	}
