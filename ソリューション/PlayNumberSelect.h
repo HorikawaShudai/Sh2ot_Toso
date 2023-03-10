@@ -26,7 +26,7 @@ typedef enum
 typedef struct
 {
 	D3DXVECTOR3 pos;					//ˆÊ’u
-	int CurrentSelectNumber = 1;
+	int CurrentSelectNumber = 4;
 	bool bUse;							//Žg‚í‚ê‚Ä‚¢‚é‚©
 	bool bPush;							//‘I‘ð‚µ‚½‚©‚Ç‚¤‚©‚Ì”»’f
 } PlayNumberSelect;
