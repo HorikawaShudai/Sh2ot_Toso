@@ -714,11 +714,13 @@ void UpdatePlayer1(void)
 				g_aPlayer[nCntPlayer].rot.y += D3DX_PI * 2.0f;
 			}
 
+#ifdef _DEBUG
 			//体力が減るかどうかテスト用
 			if (GetKeyboardTrigger(DIK_M) == true)
 			{
 				PlayerHit(nCntPlayer, 1);
 			}
+#endif
 		}
 		else if (g_aPlayer[nCntPlayer].bUse == false && g_aPlayer[nCntPlayer].State != PLAYER_DEATH)
 		{
