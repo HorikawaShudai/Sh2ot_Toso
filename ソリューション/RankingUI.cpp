@@ -14,14 +14,14 @@
 #define SIZE_RANKING_BG_X		(640.0f)	//「」の幅
 #define SIZE_RANKING_BG_Y		(360.0f)	//「」の高さ
 
-#define POS_SCORE_BG_X			(810.0f)	//「」のX座標の位置
+#define POS_SCORE_BG_X			(875.0f)	//「」のX座標の位置
 #define POS_SCORE_BG_Y			(495.0f)	//「」のY座標の位置
-#define SIZE_SCORE_BG_X			(270.0f)		//「」の幅
+#define SIZE_SCORE_BG_X			(340.0f)		//「」の幅
 #define SIZE_SCORE_BG_Y			(400.0f)		//「」の高さ
 
 #define POS_PERFECT_BG_X		(680.0f)	//「」のX座標の位置
-#define POS_PERFECT_BG_Y		(420.0f)	//「」のY座標の位置
-#define SIZE_PERFECT_BG_X		(125.0f)	//「」の幅
+#define POS_PERFECT_BG_Y		(430.0f)	//「」のY座標の位置
+#define SIZE_PERFECT_BG_X		(115.0f)	//「」の幅
 #define SIZE_PERFECT_BG_Y		(250.0f)		//「」の高さ
 
 #define POS_ALLPERFECT_BG_X		(250.0f)	//「」のX座標の位置
