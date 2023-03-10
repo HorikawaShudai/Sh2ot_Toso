@@ -17,8 +17,6 @@
 #include "light.h"
 
 //マクロ定義
-#define MAX_CAMERA				(5)		//カメラの最大数
-
 #define CAMERA_DISTANCE			(5.0f)		//視点と注視点の距離
 #define MODEL_DISTANCE			(10.0f)		//モデルと注視点の距離
 #define CAMERA_SPEED			(2.5f)		//カメラの移動スピード
@@ -417,6 +415,7 @@ void DeathCameraEnemy(int nCntCamera)
 	pPlayer += nCntCamera;
 
 	float rotYDiff;
+	float posYDiff;
 
 	if (pPlayer->nLife <= 0)
 	{
@@ -426,6 +425,9 @@ void DeathCameraEnemy(int nCntCamera)
 			{
 				//敵の位置からプレイヤーの角度を求める
 				rotYDiff = atan2f((pEnemy->pos.x - g_aCamera[nCntCamera].posR.x), (pEnemy->pos.z - g_aCamera[nCntCamera].posR.z));
+
+				posYDiff = sqrtf((pEnemy->pos.x - pPlayer->pos.x) * (pEnemy->pos.x - pPlayer->pos.x) +
+								(pEnemy->pos.z - pPlayer->pos.z) * (pEnemy->pos.z - pPlayer->pos.z));
 
 				//カメラを敵の方向に向ける
 				g_aCamera[nCntCamera].rot.y = rotYDiff;
@@ -438,18 +440,22 @@ void DeathCameraEnemy(int nCntCamera)
 				pPlayer->rot.x = g_aCamera[nCntCamera].rot.x;
 
 				//プレイヤーが保持するライトの更新処理
-				SetLight(pPlayer->LightIdx00, D3DLIGHT_SPOT, pPlayer->LightColor, D3DXVECTOR3(pPlayer->pos.x, pPlayer->pos.y + 50.0f, pPlayer->pos.z), D3DXVECTOR3(sinf(Getrot(nCntCamera).y), sinf(Getrot(nCntCamera).x), cosf(Getrot(nCntCamera).y)), 350.0f, 1.0f);
+				SetLight(pPlayer->LightIdx00, D3DLIGHT_SPOT, pPlayer->LightColor, D3DXVECTOR3(pPlayer->pos.x, pPlayer->pos.y, pPlayer->pos.z), D3DXVECTOR3(sinf(Getrot(nCntCamera).y), sinf(Getrot(nCntCamera).x), cosf(Getrot(nCntCamera).y)), 350.0f, 1.0f);
+
+				pPlayer->pos.y = 50.0f;
+				g_aCamera[nCntCamera].posV.y = pPlayer->pos.y;
+				g_aCamera[nCntCamera].posR.y = pPlayer->pos.y;
 
 				//死亡状態へ切り替える
-				if (pEnemy->state == ENEMYSTATE_PATROL && pEnemy->StateCount <= 0)
-				{//敵の状態が巡回モードに切り替わったら
+				//if (pEnemy->state == ENEMYSTATE_PATROL && pEnemy->StateCount <= 0)
+				//{//敵の状態が巡回モードに切り替わったら
 
-					//プレイヤーの状態を死亡状態へ
-					pPlayer->State = PLAYER_DEATH;
+				//	//プレイヤーの状態を死亡状態へ
+				//	pPlayer->State = PLAYER_DEATH;
 
-					//敵のヒット判定をfalseへ
-					pEnemy->bHit = false;
-				}
+				//	//敵のヒット判定をfalseへ
+				//	pEnemy->bHit = false;
+				//}
 			}
 		}
 	}
@@ -772,7 +778,7 @@ void PlayerCamera(void)
 	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
 	MODE mode = GetMode();
 
-	for (int nCntCamera = 0; nCntCamera < MAX_CAMERA; nCntCamera++)
+	for (int nCntCamera = 0; nCntCamera < PlayNumber.CurrentSelectNumber; nCntCamera++)
 	{
 		if (g_aCamera[nCntCamera].bUse == true && pPlayer[nCntCamera].bUse == true)
 		{

@@ -993,7 +993,7 @@ void ResPlayerMove(int nCnt)
 				}
 			}
 		}
-		else if (fabsf(GetGamepad_Stick_Left(nCnt).y) + fabsf(GetGamepad_Stick_Left(nCnt).x) < 0.95f)
+		else if ((fabsf(GetGamepad_Stick_Left(nCnt).y) + fabsf(GetGamepad_Stick_Left(nCnt).x) < 0.95f) || GetGamepadPress(BUTTON_L, nCnt))
 		{//左スティックを倒し切っていない状態のとき
 
 			g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_STEALTHSPEED;
