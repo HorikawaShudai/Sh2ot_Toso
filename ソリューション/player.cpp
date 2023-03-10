@@ -1741,8 +1741,8 @@ void PlayerHit(int nCnt, int nDamage)
 
 		else
 		{
-			////ダメージ音(ライフが1の時)
-			//PlaySound(SOUND_LABEL_SE_DAMAGE);
+			//ダメージ音(ライフが1の時)
+			PlaySound(SOUND_LABEL_SE_DEATH);
 		}
 
 		if (g_aPlayer[nCnt].nLife <= 0)
