@@ -10,6 +10,9 @@
 
 #include "main.h"
 
+//マクロ定義
+#define MAX_CAMERA				(5)		//カメラの最大数
+
 //カメラ状態の列挙型の定義
 typedef enum
 {
