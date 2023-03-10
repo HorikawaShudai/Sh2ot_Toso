@@ -18,6 +18,6 @@ void DrawRanKingNumber(void);
 void ResetRanKing(void);
 void SaveData(void);
 void LoadData(void);
-void SetRanking(int nRanKing);
+void SetRanking(int nRanKing, int nPlayer);
 void StartRanKing(void);
 #endif

@@ -6,6 +6,7 @@
 //========================================================================================
 #include "main.h"
 #include "player.h"
+#include "PlayNumberSelect.h"
 #include "game.h"
 #include "result.h"
 #include "time.h"
@@ -354,7 +355,7 @@ void DrawTime(void)
 //====================================================================
 void SetRankTime(void)
 {
-	SetRanking(g_nTime);
+	SetRanking(g_nTime, GetPlayNumberSelect().CurrentSelectNumber);
 }
 
 //====================================================================
