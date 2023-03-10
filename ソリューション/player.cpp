@@ -39,7 +39,7 @@
 #define PLAYER_ROT_SPEED		(0.2f)			//プレイヤーの回転スピード
 #define PLAYER_JUMP				(12.0f)			//プレイヤーのジャンプ力
 #define PLAYER_LIFE				(3)				//プレイヤーの初期ライフ
-#define PLAYER_COLLISIONSIZE	(15.0f)			//プレイヤーの当たり判定の大きさ
+#define PLAYER_COLLISIONSIZE	(10.0f)			//プレイヤーの当たり判定の大きさ
 #define PLAYER_LIGHT			(350.0f)		//プレイヤーの当たり判定の大きさ
 #define ENEMY_SE_SPEED			(60)			//敵の足音を鳴らす間隔
 #define PLAYER_SE_WALK			(40)			//プレイヤーの足音を鳴らす間隔(歩き)
@@ -993,7 +993,7 @@ void ResPlayerMove(int nCnt)
 				}
 			}
 		}
-		else if (fabsf(GetGamepad_Stick_Left(nCnt).y) + fabsf(GetGamepad_Stick_Left(nCnt).x) < 0.95f)
+		else if ((fabsf(GetGamepad_Stick_Left(nCnt).y) + fabsf(GetGamepad_Stick_Left(nCnt).x) < 0.95f) || GetGamepadPress(BUTTON_L, nCnt))
 		{//左スティックを倒し切っていない状態のとき
 
 			g_aPlayer[nCnt].NormarizeMove.x *= PLAYER_STEALTHSPEED;
@@ -1254,6 +1254,41 @@ void PlayerState(int nCnt)
 	case PLAYER_DEATH:
 		//死んだプレイヤーのバイブレーションをオフにする
 		GetGamepad_Vibrtion_false(nCnt);
+
+		switch (PlayNumber.CurrentSelectNumber)
+		{
+		case 1:
+			SetPolygonBG(D3DXVECTOR3(640.0f, 360.0f, 0.0f), 640.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+			break;
+		case 2:
+			SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 360.0f, 0.0f), 320.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+			break;
+		case 3:
+			if (nCnt == 2)
+			{//3
+				SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+			}
+			else
+			{//12
+				SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+			}
+			break;
+		case 4:
+			if (nCnt == 3)
+			{//4
+				SetPolygonBG(D3DXVECTOR3(960.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+			}
+			else if (nCnt == 2)
+			{//3
+				SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+			}
+			else
+			{//12
+				SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+			}
+			break;
+		}
+
 		break;
 	case PLAYER_EXSIT:
 
@@ -1266,6 +1301,40 @@ void PlayerState(int nCnt)
 		g_aPlayer[nCnt].pos.x += posDest.x * 0.005f;
 		g_aPlayer[nCnt].pos.z += posDest.z * 0.0006f;
 		SetLife(0, nCnt);
+
+		switch (PlayNumber.CurrentSelectNumber)
+		{
+		case 1:
+			SetPolygonBG(D3DXVECTOR3(640.0f, 360.0f, 0.0f), 640.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+			break;
+		case 2:
+			SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 360.0f, 0.0f), 320.0f, 360.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+			break;
+		case 3:
+			if (nCnt == 2)
+			{//3
+				SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+			}
+			else
+			{//12
+				SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+			}
+			break;
+		case 4:
+			if (nCnt == 3)
+			{//4
+				SetPolygonBG(D3DXVECTOR3(960.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+			}
+			else if (nCnt == 2)
+			{//3
+				SetPolygonBG(D3DXVECTOR3(320.0f, 540.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+			}
+			else
+			{//12
+				SetPolygonBG(D3DXVECTOR3(320.0f + nCnt * 640.0f, 180.0f, 0.0f), 320.0f, 180.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f), 30, 4);
+			}
+			break;
+		}
 		break;
 	}
 }
@@ -1452,7 +1521,6 @@ void PlayerDistance(int nCnt)
 			{
 				g_aPlayer[nCnt].bEnemyLeft = false;
 			}
-
 		}
 	}
 }
@@ -1507,20 +1575,20 @@ D3DXVECTOR3 CollisionOuterProductPlayer(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld,
 				switch (nLine)
 				{//紙片の当たり判定
 				case 0:
-					pos0 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + -25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + 25.0f);
-					pos1 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + 25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + 25.0f);
+					pos0 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + -PLAYER_COLLISIONSIZE, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + PLAYER_COLLISIONSIZE);
+					pos1 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + PLAYER_COLLISIONSIZE, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + PLAYER_COLLISIONSIZE);
 					break;
 				case 1:
-					pos0 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + 25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + 25.0f);
-					pos1 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + 25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + -25.0f);
+					pos0 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + PLAYER_COLLISIONSIZE, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + PLAYER_COLLISIONSIZE);
+					pos1 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + PLAYER_COLLISIONSIZE, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + -PLAYER_COLLISIONSIZE);
 					break;
 				case 2:
-					pos0 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + 25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + -25.0f);
-					pos1 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + -25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + -25.0f);
+					pos0 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + PLAYER_COLLISIONSIZE, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + -PLAYER_COLLISIONSIZE);
+					pos1 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + -PLAYER_COLLISIONSIZE, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + -PLAYER_COLLISIONSIZE);
 					break;
 				case 3:
-					pos0 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + -25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + -25.0f);
-					pos1 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + -25.0f, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + 25.0f);
+					pos0 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + -PLAYER_COLLISIONSIZE, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + -PLAYER_COLLISIONSIZE);
+					pos1 = D3DXVECTOR3(g_aPlayer[nCnt].pos.x + -PLAYER_COLLISIONSIZE, g_aPlayer[nCnt].pos.y, g_aPlayer[nCnt].pos.z + PLAYER_COLLISIONSIZE);
 					break;
 				default:
 					break;

@@ -380,7 +380,10 @@ void StaminaIAD(int nCntStamina)
 		pPlayer[nCntStamina].MoveState = PLAYER_MOVESTATE_FATIGE;
 		g_aStamina[nCntStamina].bFatige = true;
 
-		PlaySound(SOUND_LABEL_SE_NO_RUN);
+		if (pPlayer[nCntStamina].State != PLAYER_EXSIT)
+		{
+			PlaySound(SOUND_LABEL_SE_NO_RUN);
+		}
 	}
 
 	//êFÇ™0.0fà»â∫ÅA1.0fà»è„çsÇ©Ç»Ç¢ÇÊÇ§Ç…

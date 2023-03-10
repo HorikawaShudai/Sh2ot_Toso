@@ -17,8 +17,6 @@
 #include "light.h"
 
 //マクロ定義
-#define MAX_CAMERA				(5)		//カメラの最大数
-
 #define CAMERA_DISTANCE			(5.0f)		//視点と注視点の距離
 #define MODEL_DISTANCE			(10.0f)		//モデルと注視点の距離
 #define CAMERA_SPEED			(2.5f)		//カメラの移動スピード
@@ -40,11 +38,12 @@
 #define DAMAGECAMERA_UPSPEED	(0.009f)	//下に向けた角度から前に向かせる速さ
 
 //死んだ時のカメラ設定
-#define DEATHCAMERA_POS_Y		(8.0f)		//カメラが下にどこまで落ちるか
+#define DEATHCAMERA_DOWNPOS_Y	(8.0f)		//カメラが下にどこまで落ちるか
 #define DEATHCAMERA_SPEED		(1.0f)		//カメラが下に落ちる速さ
 #define DEATHCAMERA_ROTEND		(1.0f)		//カメラ上に向ける限界
 #define DEATHCAMERA_TIME		(120)		//カメラが動かない時間
-#define DEATHCAMERA_UPSPEED		(0.001f)		//
+#define DEATHCAMERA_UPSPEED		(0.001f)	//カメラの昇天の速さ
+#define DEATHCAMERA_POS_Y		(55.0f)		//カメラの高さ
 
 //プロトタイプ宣言
 void TpsCamera(void);						//観察用カメラ
@@ -417,6 +416,7 @@ void DeathCameraEnemy(int nCntCamera)
 	pPlayer += nCntCamera;
 
 	float rotYDiff;
+	D3DXVECTOR3 posLength;
 
 	if (pPlayer->nLife <= 0)
 	{
@@ -425,20 +425,34 @@ void DeathCameraEnemy(int nCntCamera)
 			if (pEnemy->bHit == true)
 			{
 				//敵の位置からプレイヤーの角度を求める
-				rotYDiff = atan2f((pEnemy->pos.x - g_aCamera->posR.x), (pEnemy->pos.z - g_aCamera->posR.z));
+				rotYDiff = atan2f((pEnemy->pos.x - g_aCamera[nCntCamera].posR.x), (pEnemy->pos.z - g_aCamera[nCntCamera].posR.z));
 
+				//敵とプレイヤーとの距離を求める
+				posLength = D3DXVECTOR3(pPlayer->pos.x + sinf(pPlayer->rot.x + 5.0f), 0.0f, pPlayer->pos.z + cosf(pPlayer->rot.z + 5.0f));
+
+				//プレイヤーの高さを上げる
+				pPlayer->pos.y = DEATHCAMERA_POS_Y;
+
+				//プレイヤーの距離に代入
+				g_aCamera[nCntCamera].posV.z = posLength.z;
+				g_aCamera[nCntCamera].posV.x = posLength.x;
+
+				//プレイヤーの高さをカメラの高さに代入
+				g_aCamera[nCntCamera].posV.y = pPlayer->pos.y;
+				g_aCamera[nCntCamera].posR.y = pPlayer->pos.y;
+				
 				//カメラを敵の方向に向ける
-				g_aCamera->rot.y = rotYDiff;
+				g_aCamera[nCntCamera].rot.y = rotYDiff;
 				
 				//カメラが向いてる高さを敵の頭の方向へ向ける(固定値)
-				g_aCamera->rot.x = 0.85f;
+				g_aCamera[nCntCamera].rot.x = 0.85f;
 
 				//カメラの角度をプレイヤーの角度に代入する
-				pPlayer->rot.y = g_aCamera->rot.y;
-				pPlayer->rot.x = g_aCamera->rot.x;
+				pPlayer->rot.y = g_aCamera[nCntCamera].rot.y;
+				pPlayer->rot.x = g_aCamera[nCntCamera].rot.x;
 
 				//プレイヤーが保持するライトの更新処理
-				SetLight(pPlayer->LightIdx00, D3DLIGHT_SPOT, pPlayer->LightColor, D3DXVECTOR3(pPlayer->pos.x, pPlayer->pos.y + 50.0f, pPlayer->pos.z), D3DXVECTOR3(sinf(Getrot(nCntCamera).y), sinf(Getrot(nCntCamera).x), cosf(Getrot(nCntCamera).y)), 350.0f, 1.0f);
+				SetLight(pPlayer->LightIdx00, D3DLIGHT_SPOT, pPlayer->LightColor, D3DXVECTOR3(pPlayer->pos.x, pPlayer->pos.y, pPlayer->pos.z), D3DXVECTOR3(sinf(Getrot(nCntCamera).y), sinf(Getrot(nCntCamera).x), cosf(Getrot(nCntCamera).y)), 350.0f, 1.0f);
 
 				//死亡状態へ切り替える
 				if (pEnemy->state == ENEMYSTATE_PATROL && pEnemy->StateCount <= 0)
@@ -469,7 +483,7 @@ void DeathCamera(int nCntCamera)
 	g_nCount1[nCntCamera]++;
 
 	//カメラを下に落とす
-	if (g_aCamera->posV.y >= DEATHCAMERA_POS_Y)
+	if (g_aCamera->posV.y >= DEATHCAMERA_DOWNPOS_Y)
 	{//カメラの位置が宇内以上の時
 		//カメラを落とす
 		g_aCamera->posR.y -= DEATHCAMERA_SPEED;
@@ -772,7 +786,7 @@ void PlayerCamera(void)
 	TUTORIAL_MODE do_Tutorial = GetDoEscapeTutorial();
 	MODE mode = GetMode();
 
-	for (int nCntCamera = 0; nCntCamera < MAX_CAMERA; nCntCamera++)
+	for (int nCntCamera = 0; nCntCamera < PlayNumber.CurrentSelectNumber; nCntCamera++)
 	{
 		if (g_aCamera[nCntCamera].bUse == true && pPlayer[nCntCamera].bUse == true)
 		{

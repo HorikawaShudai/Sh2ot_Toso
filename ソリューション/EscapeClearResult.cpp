@@ -19,12 +19,15 @@
 #include "playerBG.h"
 
 //グローバル変数宣言
+int g_nFadeCount;		//自動遷移用変数
 
 //====================================================================
 //透走モードのクリアリザルト画面の初期化処理
 //====================================================================
 void InitEscapeClearResult()
 {
+	g_nFadeCount = 0;
+
 	//カメラの初期化処理
 	InitCamera();
 
@@ -111,7 +114,8 @@ void UpdateEscapeClearResult()
 	}
 	if (Fade == FADE_NONE && ClearUi == true)
 	{
-		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadTrigger(BUTTON_A, 0))
+		g_nFadeCount++;
+		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadTrigger(BUTTON_A, 0) || g_nFadeCount == 1200)
 		{
 			SetFade(MODE_RANKING);
 		}

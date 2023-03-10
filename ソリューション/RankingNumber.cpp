@@ -1,5 +1,6 @@
 #include "main.h"
 #include "RankingNumber.h"
+#include "NumberUI.h"
 #include "input.h"
 #include "fade.h"
 #include <stdio.h>
@@ -8,7 +9,7 @@
 #define MAX_RANK (5)			//ランクの数
 #define NUM_PLACE (4)			//ランキングの桁数
 
-#define X_POS_GAME (850.0f)			//ゲーム画面の時のランキングのX座標
+#define X_POS_GAME (800.0f)			//ゲーム画面の時のランキングのX座標
 #define Y_POS_GAME (220.0f)			//ゲーム画面の時のランキングのY座標
 #define X_SIZE_GAME (40.0f)			//ゲーム画面の時のランキングの横幅
 #define Y_SIZE_GAME (40.0f)			//ゲーム画面の時のランキングの縦幅
@@ -21,6 +22,7 @@ typedef struct
 {
 	D3DXVECTOR3 pos;
 	int nScore;
+	int nPlayer;
 }RanKingNumber;
 
 //グローバル変数
@@ -72,7 +74,7 @@ void InitRanKingNumber(void)
 
 	VERTEX_2D*pVtx;	//頂点ポインタを所得
 
-					//頂点バッファをロックし、両店情報へのポインタを所得
+	//頂点バッファをロックし、両店情報へのポインタを所得
 	g_pVtxBuffRanKingNumber->Lock(0, 0, (void**)&pVtx, 0);
 
 	for (nCntMax = 0; nCntMax < MAX_RANK; nCntMax++)
@@ -81,6 +83,7 @@ void InitRanKingNumber(void)
 		aTexU[1] = g_RanKingNumber[nCntMax].nScore % 1000 / 100;
 		aTexU[2] = g_RanKingNumber[nCntMax].nScore % 100 / 10;
 		aTexU[3] = g_RanKingNumber[nCntMax].nScore % 10 / 1;
+		SetNumberUI(D3DXVECTOR3(X_POS_GAME + 330.0f, Y_POS_GAME + nCntMax * WIDE_SIZE_GAME_Y, 0.0f), X_SIZE_GAME, Y_SIZE_GAME, g_RanKingNumber[nCntMax].nPlayer, 0);
 
 		for (nCntNum = 0; nCntNum < NUM_PLACE; nCntNum++)
 		{
@@ -278,7 +281,7 @@ void DrawRanKingNumber(void)
 //====================================================================
 //ランキングの設定処理
 //====================================================================
-void SetRanking(int nRanKing)
+void SetRanking(int nRanKing ,int nPlayer)
 {
 	int nCount1;
 	int nCount2;
@@ -290,6 +293,7 @@ void SetRanking(int nRanKing)
 		if (nRanKing > g_RanKingNumber[MAX_RANK - 1].nScore)
 		{
 			g_RanKingNumber[MAX_RANK - 1].nScore = nRanKing;
+			g_RanKingNumber[MAX_RANK - 1].nPlayer = nPlayer;
 			g_HighScore = nRanKing;
 
 			for (nCount1 = 0; nCount1 < MAX_RANK; nCount1++)
@@ -301,6 +305,10 @@ void SetRanking(int nRanKing)
 						nData = g_RanKingNumber[nCount1].nScore;
 						g_RanKingNumber[nCount1].nScore = g_RanKingNumber[nCount2].nScore;
 						g_RanKingNumber[nCount2].nScore = nData;
+
+						nData = g_RanKingNumber[nCount1].nPlayer;
+						g_RanKingNumber[nCount1].nPlayer = g_RanKingNumber[nCount2].nPlayer;
+						g_RanKingNumber[nCount2].nPlayer = nData;
 					}
 				}
 			}
@@ -321,6 +329,10 @@ void SetRanking(int nRanKing)
 						nData = g_RanKingNumber[nCount1].nScore;
 						g_RanKingNumber[nCount1].nScore = g_RanKingNumber[nCount2].nScore;
 						g_RanKingNumber[nCount2].nScore = nData;
+
+						nData = g_RanKingNumber[nCount1].nPlayer;
+						g_RanKingNumber[nCount1].nPlayer = g_RanKingNumber[nCount2].nPlayer;
+						g_RanKingNumber[nCount2].nPlayer = nData;
 					}
 				}
 			}
@@ -371,6 +383,7 @@ void SaveData(void)
 		for (nCount = 0; nCount < MAX_RANK; nCount++)
 		{
 			fprintf(pFile, "%d\n", g_RanKingNumber[nCount].nScore);		 //&(アンパサンド)を付けない！
+			fprintf(pFile, "%d\n", g_RanKingNumber[nCount].nPlayer);
 		}
 
 		//ファイルを閉じる
@@ -412,6 +425,7 @@ void LoadData(void)
 		for (nCount = 0; nCount < MAX_RANK; nCount++)
 		{
 			fscanf(pFile, "%d", &g_RanKingNumber[nCount].nScore);
+			fscanf(pFile, "%d", &g_RanKingNumber[nCount].nPlayer);
 		}
 
 		//ファイルを閉じる

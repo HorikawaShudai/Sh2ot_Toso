@@ -248,7 +248,6 @@ void UpdateEnemy(void)
 			
 			if (g_Enemy[nCntObject].state == ENEMYSTATE_PATROL)
 			{
-				
 				EnemyPatrol(nCntObject);
 				
 				CollisionObjectWall(&g_Enemy[nCntObject].pos, &g_Enemy[nCntObject].posOld, &g_Enemy[nCntObject].move, D3DXVECTOR3(-1.0f, -1.0f, -1.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f), 1.0f);
@@ -257,7 +256,7 @@ void UpdateEnemy(void)
 				{
 					EnemyDirection(nCntObject);
 				}
-
+			
 			}
 
 			if (g_Enemy[nCntObject].state == ENEMYSTATE_CHASE)
@@ -326,12 +325,15 @@ void UpdateEnemy(void)
 							g_Enemy[nCntObject].state = ENEMYSTATE_ATTACK;
 							g_Enemy[nCntObject].StateCount = ATTACK_COUNT;
 							PlayerHit(nCnt, 1);
-							g_Enemy[nCntObject].bHit = true;
 							pPlayer->bChase = false;
 							g_Enemy[nCntObject].nTarget = -1;
 							if (pPlayer->nLife > 0)
 							{
 								TeleportationEnemy(&g_Enemy[nCntObject].pos);
+							}
+							if (pPlayer->nLife <= 0)
+							{
+								g_Enemy[nCntObject].bHit = true;
 							}
 						}
 					}

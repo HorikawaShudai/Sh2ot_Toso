@@ -14,22 +14,22 @@
 #define SIZE_RANKING_BG_X		(640.0f)	//「」の幅
 #define SIZE_RANKING_BG_Y		(360.0f)	//「」の高さ
 
-#define POS_SCORE_BG_X			(860.0f)	//「」のX座標の位置
+#define POS_SCORE_BG_X			(875.0f)	//「」のX座標の位置
 #define POS_SCORE_BG_Y			(495.0f)	//「」のY座標の位置
-#define SIZE_SCORE_BG_X			(270.0f)		//「」の幅
+#define SIZE_SCORE_BG_X			(340.0f)		//「」の幅
 #define SIZE_SCORE_BG_Y			(400.0f)		//「」の高さ
 
-#define POS_PERFECT_BG_X		(720.0f)	//「」のX座標の位置
-#define POS_PERFECT_BG_Y		(420.0f)	//「」のY座標の位置
-#define SIZE_PERFECT_BG_X		(125.0f)	//「」の幅
+#define POS_PERFECT_BG_X		(680.0f)	//「」のX座標の位置
+#define POS_PERFECT_BG_Y		(430.0f)	//「」のY座標の位置
+#define SIZE_PERFECT_BG_X		(115.0f)	//「」の幅
 #define SIZE_PERFECT_BG_Y		(250.0f)		//「」の高さ
 
-#define POS_ALLPERFECT_BG_X		(300.0f)	//「」のX座標の位置
+#define POS_ALLPERFECT_BG_X		(250.0f)	//「」のX座標の位置
 #define POS_ALLPERFECT_BG_Y		(200.0f)	//「」のY座標の位置
 #define SIZE_ALLPERFECT_BG_X	(200.0f)	//「」の幅
 #define SIZE_ALLPERFECT_BG_Y	(100.0f)	//「」の高さ
 
-#define POS_EXIT_BG_X			(300.0f)	//「」のX座標の位置
+#define POS_EXIT_BG_X			(250.0f)	//「」のX座標の位置
 #define POS_EXIT_BG_Y			(450.0f)	//「」のY座標の位置
 #define SIZE_EXIT_BG_X			(200.0f)	//「」の幅
 #define SIZE_EXIT_BG_Y			(100.0f)	//「」の高さ
@@ -86,16 +86,16 @@ void InitRankingUI(void)
 			{
 			case 0:
 			case 1:
-				SetNumberUI(D3DXVECTOR3(170.0f + nCntTime * 70.0f, 220.0f, 0.0f), 50.0f, 50.0f, *pTime, 0);
+				SetNumberUI(D3DXVECTOR3(120.0f + nCntTime * 70.0f, 220.0f, 0.0f), 50.0f, 50.0f, *pTime, 0);
 				break;
 			case 2:
 			case 3:
-				SetNumberUI(D3DXVECTOR3(220.0f + nCntTime * 70.0f, 220.0f, 0.0f), 50.0f, 50.0f, *pTime, 0);
+				SetNumberUI(D3DXVECTOR3(170.0f + nCntTime * 70.0f, 220.0f, 0.0f), 50.0f, 50.0f, *pTime, 0);
 				break;
 			}
 
-			SetNumberUI(D3DXVECTOR3(230.0f, 450.0f, 0.0f), 40.0f, 40.0f, GetExitCount(), 0);
-			SetNumberUI(D3DXVECTOR3(360.0f, 480.0f, 0.0f), 40.0f, 40.0f, GetPlayNumberSelect().CurrentSelectNumber, 0);
+			SetNumberUI(D3DXVECTOR3(180.0f, 450.0f, 0.0f), 40.0f, 40.0f, GetExitCount(), 0);
+			SetNumberUI(D3DXVECTOR3(310.0f, 480.0f, 0.0f), 40.0f, 40.0f, GetPlayNumberSelect().CurrentSelectNumber, 0);
 		}
 	}
 	else if (GetClear() == 2 || GetClear() == 3)
@@ -103,8 +103,8 @@ void InitRankingUI(void)
 		bUseRankingUI[3] = false;
 		bUseRankingUI[4] = true;
 
-		SetNumberUI(D3DXVECTOR3(230.0f, 450.0f, 0.0f), 40.0f, 40.0f, GetExitCount(), 0);
-		SetNumberUI(D3DXVECTOR3(360.0f, 480.0f, 0.0f), 40.0f, 40.0f, GetPlayNumberSelect().CurrentSelectNumber, 0);
+		SetNumberUI(D3DXVECTOR3(180.0f, 450.0f, 0.0f), 40.0f, 40.0f, GetExitCount(), 0);
+		SetNumberUI(D3DXVECTOR3(310.0f, 480.0f, 0.0f), 40.0f, 40.0f, GetPlayNumberSelect().CurrentSelectNumber, 0);
 	}
 	else
 	{
