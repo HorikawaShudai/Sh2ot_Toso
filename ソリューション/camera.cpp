@@ -425,17 +425,17 @@ void DeathCameraEnemy(int nCntCamera)
 			if (pEnemy->bHit == true)
 			{
 				//敵の位置からプレイヤーの角度を求める
-				rotYDiff = atan2f((pEnemy->pos.x - g_aCamera->posR.x), (pEnemy->pos.z - g_aCamera->posR.z));
+				rotYDiff = atan2f((pEnemy->pos.x - g_aCamera[nCntCamera].posR.x), (pEnemy->pos.z - g_aCamera[nCntCamera].posR.z));
 
 				//カメラを敵の方向に向ける
-				g_aCamera->rot.y = rotYDiff;
+				g_aCamera[nCntCamera].rot.y = rotYDiff;
 				
 				//カメラが向いてる高さを敵の頭の方向へ向ける(固定値)
-				g_aCamera->rot.x = 0.85f;
+				g_aCamera[nCntCamera].rot.x = 0.85f;
 
 				//カメラの角度をプレイヤーの角度に代入する
-				pPlayer->rot.y = g_aCamera->rot.y;
-				pPlayer->rot.x = g_aCamera->rot.x;
+				pPlayer->rot.y = g_aCamera[nCntCamera].rot.y;
+				pPlayer->rot.x = g_aCamera[nCntCamera].rot.x;
 
 				//プレイヤーが保持するライトの更新処理
 				SetLight(pPlayer->LightIdx00, D3DLIGHT_SPOT, pPlayer->LightColor, D3DXVECTOR3(pPlayer->pos.x, pPlayer->pos.y + 50.0f, pPlayer->pos.z), D3DXVECTOR3(sinf(Getrot(nCntCamera).y), sinf(Getrot(nCntCamera).x), cosf(Getrot(nCntCamera).y)), 350.0f, 1.0f);
