@@ -639,9 +639,15 @@ D3DXVECTOR3 CollisionOuterProductObjectWall(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPos
 				}
 			}
 		}
+		
 	}
-
-	return pos[0];
+	if (nPosCount > 0)
+	{
+		return pos[0];
+	}
+	
+	return D3DXVECTOR3(FLT_MAX, FLT_MAX, FLT_MAX);
+	
 }
 //====================================================================
 //ƒvƒŒƒCƒ„[‚Æ‚Ì“–‚½‚è”»’èˆ—

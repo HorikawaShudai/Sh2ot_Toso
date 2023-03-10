@@ -25,8 +25,9 @@
 #define	PLAYERDETECT_SPEED (1000.0f) //探査波の速度
 
 #define TURN_DISTANCE_WALL (150.0f) //曲がるまでの壁との距離
-#define TURN_DISTANCE_CORNER (300.0f) //曲がり角と認識する距離
-#define MOVE_DISTANCE_WALL (100.0f) //左右の壁と保つ距離
+#define TURN_DISTANCE_CORNER (600.0f) //曲がり角と認識する距離
+#define TURN_DISTANCE (300.0f) //道と認識する距離
+#define MOVE_DISTANCE_WALL (200.0f) //左右の壁と保つ距離
 
 #define ATTACK_SEEK			(30)
 #define ATTACK_COUNT		(200)
@@ -249,6 +250,10 @@ void UpdateEnemy(void)
 			{
 				
 				EnemyPatrol(nCntObject);
+				if (g_Enemy[nCntObject].pos == g_Enemy[nCntObject].posOld)
+				{
+					EnemyDirection(nCntObject);
+				}
 				CollisionObjectWall(&g_Enemy[nCntObject].pos, &g_Enemy[nCntObject].posOld, &g_Enemy[nCntObject].move, D3DXVECTOR3(-1.0f, -1.0f, -1.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f), 1.0f);
 				CollisionObjectPoly(&g_Enemy[nCntObject].pos, &g_Enemy[nCntObject].posOld, &g_Enemy[nCntObject].move, D3DXVECTOR3(-1.0f, -1.0f, -1.0f), D3DXVECTOR3(1.0f, 1.0f, 1.0f), 1.0f);
 			
@@ -335,7 +340,7 @@ void UpdateEnemy(void)
 
 			if (g_Enemy[nCntObject].state == ENEMYSTATE_SEEK)
 			{//探索状態の時
-				g_Enemy[nCntObject].rotDest.y += D3DX_PI / 20;
+				g_Enemy[nCntObject].rotDest.y += D3DX_PI / 30;
 			}
 
 			//角度の正常化
@@ -418,6 +423,7 @@ void UpdateEnemy(void)
 
 			//モーションの更新処理
 			UpdateEnemyMotion(nCntObject);
+		
 		}
 	}
 }
@@ -788,7 +794,7 @@ void EnemyPatrol(int nEnemy)
 		if (g_Enemy[nEnemy].fDistanceFront <= TURN_DISTANCE_WALL || g_Enemy[nEnemy].MoveState == ENEMYMOVE_NONE)
 		{
 			EnemyDirection(nEnemy);
-			g_Enemy[nEnemy].nCoolTurn = 30;
+			g_Enemy[nEnemy].nCoolTurn = 120;
 
 		}
 		
@@ -849,22 +855,22 @@ void EnemyDirection(int nEnemy)
 	{//ランダムに移動方向を決定
 		nCount++;
 		int nRand = rand() % 4;
-		if (g_Enemy[nEnemy].fDistanceN >= TURN_DISTANCE_WALL  && nRand == 0 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_S)
+		if (g_Enemy[nEnemy].fDistanceN >= TURN_DISTANCE  && nRand == 0 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_S)
 		{
 			g_Enemy[nEnemy].MoveState = ENEMYMOVE_N;
 			break;
 		}
-		else if (g_Enemy[nEnemy].fDistanceS >= TURN_DISTANCE_WALL  && nRand == 1 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_N)
+		else if (g_Enemy[nEnemy].fDistanceS >= TURN_DISTANCE  && nRand == 1 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_N)
 		{
 			g_Enemy[nEnemy].MoveState = ENEMYMOVE_S;
 			break;
 		}
-		else if (g_Enemy[nEnemy].fDistanceW >= TURN_DISTANCE_WALL  && nRand == 2 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_E)
+		else if (g_Enemy[nEnemy].fDistanceW >= TURN_DISTANCE  && nRand == 2 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_E)
 		{
 			g_Enemy[nEnemy].MoveState = ENEMYMOVE_W;
 			break;
 		}
-		else if (g_Enemy[nEnemy].fDistanceE >= TURN_DISTANCE_WALL  && nRand == 3 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_W)
+		else if (g_Enemy[nEnemy].fDistanceE >= TURN_DISTANCE  && nRand == 3 && g_Enemy[nEnemy].MoveState != ENEMYMOVE_W)
 		{
 			g_Enemy[nEnemy].MoveState = ENEMYMOVE_E;
 			break;
