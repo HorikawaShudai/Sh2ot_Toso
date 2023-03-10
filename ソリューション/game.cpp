@@ -564,9 +564,6 @@ void DrawGame()
 		//スタミナの描画処理
 		DrawStamina();
 
-		//ライフの描画処理
-		DrawLife();
-
 		//鍵の描画処理
 		DrawKey();
 
@@ -589,6 +586,9 @@ void DrawGame()
 		DrawLifePolygon();
 
 		DrawPolygonBG();
+
+		//ライフの描画処理
+		DrawLife();
 
 		//フォグの描画
 		DrawFog();
