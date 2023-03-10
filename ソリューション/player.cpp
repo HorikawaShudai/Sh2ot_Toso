@@ -31,6 +31,7 @@
 #include "ChasePolygon.h"
 #include "time.h"
 #include "sound.h"
+#include "Effect.h"
 
 //マクロ定義
 #define PLAYER_STEALTHSPEED		(0.3f)			//プレイヤーのステルススピード
@@ -214,6 +215,22 @@ void UpdatePlayer(void)
 {
 	//複数
 	UpdatePlayer1();
+	for (int nCnt = 0; nCnt < NUM_PLAYER; nCnt++)
+	{
+		D3DXVECTOR3 Pos;
+		for (int nEffect = 0; nEffect < 1; nEffect++)
+		{
+			Pos = g_aPlayer[nCnt].pos;
+			Pos.x += rand()%2000 - 1000.0f;
+			Pos.z += rand() % 2000 - 1000.0f;
+			D3DXVECTOR3 move (((float)(rand() % 2 - 1) / 20.0f), ((float)(rand() % 1 + 1) / 10.0f), ((float)(rand() % 2 - 1) / 20.0f));
+		
+
+			SetEffect(Pos, D3DXCOLOR(0.12f, 0.12f, 0.1f, 0.1f), move, ((float)(rand() % 15 + 1)) / 10.0f, rand() % 1200, 0);
+		}
+		
+
+	}
 }
 
 //====================================================================

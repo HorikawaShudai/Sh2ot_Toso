@@ -9,7 +9,7 @@
 
 
 //プロトタイプ宣言
-#define MAX_Effect (4048)
+#define MAX_Effect (40480)
 #define NUM_EFFECT (2)
 
 //構造体を宣言
