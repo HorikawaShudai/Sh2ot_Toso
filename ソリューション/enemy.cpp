@@ -792,15 +792,16 @@ void EnemyPatrol(int nEnemy)
 		//PrintDebugProc("Enemy%d前:%f\n", nEnemy, g_Enemy[nEnemy].fDistanceFront);
 
 		PrintDebugProc("\nEnemy%d(左)(右)(前):(%f)(%f)(%f)\n", nEnemy, g_Enemy[nEnemy].fDistanceLeft, g_Enemy[nEnemy].fDistanceRight, g_Enemy[nEnemy].fDistanceFront);
+		PrintDebugProc("\nEnemy%d(x)(z)(rot):(%f)(%f)(%f)\n", nEnemy, g_Enemy[nEnemy].pos.x, g_Enemy[nEnemy].pos.z, g_Enemy[nEnemy].rot.y);
 #endif // DEBUG
-
+		
 
 		//自身の進む方向に壁があった場合
 
 		if ((g_Enemy[nEnemy].fDistanceFront <= TURN_DISTANCE_WALL || g_Enemy[nEnemy].MoveState == ENEMYMOVE_NONE) && g_Enemy[nEnemy].rot == g_Enemy[nEnemy].rotDest)
 		{
 			EnemyDirection(nEnemy);
-			g_Enemy[nEnemy].nCoolTurn = 120;
+			
 
 		}
 		
@@ -809,12 +810,12 @@ void EnemyPatrol(int nEnemy)
 		if (g_Enemy[nEnemy].fDistanceLeft >= TURN_DISTANCE_CORNER && 	g_Enemy[nEnemy].nCoolTurn <= 0)
 		{
 			EnemyDirection(nEnemy);
-			g_Enemy[nEnemy].nCoolTurn = 120;
+			g_Enemy[nEnemy].nCoolTurn = 60;
 		}
 		if (g_Enemy[nEnemy].fDistanceRight >= TURN_DISTANCE_CORNER && 	g_Enemy[nEnemy].nCoolTurn <= 0)
 		{
 			EnemyDirection(nEnemy);
-			g_Enemy[nEnemy].nCoolTurn = 120;
+			g_Enemy[nEnemy].nCoolTurn = 60;
 		}
 
 		if (g_Enemy[nEnemy].MoveState == ENEMYMOVE_N)
@@ -905,6 +906,12 @@ void EnemyDirection(int nEnemy)
 			break;
 		}
 		
+		if (g_Enemy[nEnemy].fDistanceN < TURN_DISTANCE &&g_Enemy[nEnemy].fDistanceS < TURN_DISTANCE &&g_Enemy[nEnemy].fDistanceW < TURN_DISTANCE &&g_Enemy[nEnemy].fDistanceE < TURN_DISTANCE )
+		{
+			TeleportationEnemy(&g_Enemy[nEnemy].pos);
+			break;
+		}
+
 		else if (nCount >= 200)
 		{
 			switch (g_Enemy[nEnemy].MoveState)
