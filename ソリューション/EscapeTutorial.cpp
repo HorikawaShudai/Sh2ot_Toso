@@ -333,7 +333,7 @@ void UpdateEscapeTutorial()
 
 			if (g_EscapeTutorialGuyde == TUTORIAL_GUYDE_MAX)
 			{
-				if (GetKeyboardTrigger(DIK_N) == true || GetGamepadTrigger(BUTTON_A, 0) == true)
+				if (GetKeyboardTrigger(DIK_D) == true || GetGamepadTrigger(BUTTON_A, 0) == true)
 				{
 					g_EscapeTutorialState = TUTORIAL_STATE_STANDBY;
 				}
