@@ -45,10 +45,10 @@ SOUNDINFO g_aSoundInfo[SOUND_LABEL_MAX] =
 	{ "Data/SE/no_stamina.wav",0},				//息切れ音
 	{ "Data/SE/danger.wav",0},					//敵発券音
 	{ "Data/SE/death_1.wav",0},					//死亡音
-{"Data/BGM/rain_silent.wav",-1},			//ゲーム内BGM
-{ "Data/SE/normal_noize.wav",0}.			//普通のノイズ
-	{ "Data/SE/small_noize.wav",0}.				//小さめのノイズ
-	{ "Data/SE/big_noize.wav",0}.				//大きいノイズ
+	{"Data/BGM/rain_silent.wav",-1},			//ゲーム内BGM
+	{ "Data/SE/normal_noize.wav",0},			//普通のノイズ
+	{ "Data/SE/small_noize.wav",0},				//小さめのノイズ
+	{ "Data/SE/big_noize.wav",0},				//大きいノイズ
 };
 
 //=============================================================================
