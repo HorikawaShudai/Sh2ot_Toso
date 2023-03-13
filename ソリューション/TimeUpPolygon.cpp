@@ -5,6 +5,7 @@
 #include "PlayNumberSelect.h"
 #include "game.h"
 #include "time.h"
+#include "sound.h"
 
 //É}ÉNÉçíËã`
 #define NUM_SSUI		(5)	//GAMEUIÇÃéÌóﬁêî
@@ -214,10 +215,12 @@ void UpdateTimeUpPolygon(void)
 			case 0:
 				g_TimeUpCount = COUNT01;
 				bUseTimeUpPolygon[0] = false;
+	
 				break;
 			case 1:
 				g_TimeUpCount = COUNT02;
 				bUseTimeUpPolygon[0] = true;
+				PlaySound(SOUND_LABEL_SE_NORMAL_NOIZE);
 				break;
 			case 2:
 				g_TimeUpCount = COUNT03;
@@ -226,6 +229,8 @@ void UpdateTimeUpPolygon(void)
 			case 3:
 				g_TimeUpCount = COUNT04;
 				bUseTimeUpPolygon[0] = true;
+				PlaySound(SOUND_LABEL_SE_BIG_NOIZE);
+
 				break;
 			case 4:
 				g_TimeUpCount = COUNT05;
@@ -333,4 +338,6 @@ void SetTimeUpPolygon(void)
 {
 	g_TimeUpNumber = 0;
 	bUseTimeUpPolygon[0] = true;
+
+	PlaySound(SOUND_LABEL_SE_SMALL_NOIZE);
 }
