@@ -8,6 +8,7 @@
 #include "stage.h"
 #include "resultUI.h"
 #include "light.h"
+#include "sound.h"
 
 //ƒ}ƒNƒ’è‹`
 #define NUM_Result (1) //”wŒi‚Ì”
@@ -128,8 +129,11 @@ void UpdateResult(void)
 
 	if (Fade == FADE_NONE)
 	{
-		if (GetKeyboardPress(DIK_RETURN) || GetGamepadPress(BUTTON_A, 0))
+		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadTrigger(BUTTON_A, 0))
 		{
+			//Œˆ’è‰¹
+			PlaySound(SOUND_LABEL_ENTER);
+
 			SetFade(MODE_TITLE);
 		}
 	}

@@ -4,6 +4,7 @@
 #include "input.h"
 #include "fade.h"
 #include <stdio.h>
+#include "sound.h"
 
 //マクロ定義
 #define MAX_RANK (5)			//ランクの数
@@ -200,6 +201,9 @@ void UpdateRanKingNumber(void)
 	{
 		if (GetKeyboardTrigger(DIK_RETURN) == true || GetGamepadTrigger(BUTTON_START, 0) == true || GetGamepadTrigger(BUTTON_A, 0) == true || GetGamepadTrigger(BUTTON_B, 0) == true || g_RankingCounter == 0)
 		{//ENTERキーが押された
+
+			//決定音
+			PlaySound(SOUND_LABEL_ENTER);
 
 			g_RankingCounter = -1;
 

@@ -17,6 +17,7 @@
 #include "meshcylinder.h"
 #include "numberUI.h"
 #include "playerBG.h"
+#include "sound.h"
 
 //グローバル変数宣言
 int g_nFadeCount;		//自動遷移用変数
@@ -109,6 +110,9 @@ void UpdateEscapeClearResult()
 	{
 		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadTrigger(BUTTON_A, 0))
 		{
+			//決定音
+			PlaySound(SOUND_LABEL_ENTER);
+
 			SetbResultUi(true);
 		}
 	}
@@ -117,6 +121,9 @@ void UpdateEscapeClearResult()
 		g_nFadeCount++;
 		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadTrigger(BUTTON_A, 0) || g_nFadeCount == 1200)
 		{
+			//決定音
+			PlaySound(SOUND_LABEL_ENTER);
+
 			SetFade(MODE_RANKING);
 		}
 	}

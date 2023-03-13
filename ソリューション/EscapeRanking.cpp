@@ -19,6 +19,7 @@
 #include "time.h"
 #include "meshfield.h"
 #include "numberUI.h"
+#include "sound.h"
 
 //ƒOƒ[ƒoƒ‹•Ï”éŒ¾
 
