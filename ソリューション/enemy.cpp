@@ -315,7 +315,7 @@ void UpdateEnemy(void)
 						}
 						vecPlayer = pPlayer->pos - g_Enemy[nCntObject].pos;
 						//目標地点に到達したとき
-						if (vecPlayer.x < 30.0f && vecPlayer.x > -30.0f && vecPlayer.z < 30.0f && vecPlayer.z > -30.0f)
+						if (vecPlayer.x < 30.0f && vecPlayer.x > -30.0f && vecPlayer.z < 30.0f && vecPlayer.z > -30.0f && nCnt == g_Enemy[nCntObject].nTarget)
 						{
 							if (g_Enemy[nCntObject].MotionType != ENEMY_ACTION_ATTACK)
 							{

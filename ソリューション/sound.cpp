@@ -28,7 +28,7 @@ DWORD g_aSizeAudio[SOUND_LABEL_MAX] = {};					// オーディオデータサイズ
 SOUNDINFO g_aSoundInfo[SOUND_LABEL_MAX] =
 {
 	{ "Data/BGM/rain.wav", -1 },				// タイトルBGM
-	{ "Data/BGM/gameover1.wav",-1 },				//ゲームーバーBGM
+	{ "Data/BGM/gameover1.wav",-1 },			//ゲームーバーBGM
 	{ "Data/SE/Thunder.wav",0},					//雷の音
 	{ "Data/SE/wind.wav",0 },					//風の音
 	{ "Data/SE/choise.wav",0},					//選択音
@@ -45,6 +45,7 @@ SOUNDINFO g_aSoundInfo[SOUND_LABEL_MAX] =
 	{ "Data/SE/no_stamina.wav",0},				//息切れ音
 	{ "Data/SE/danger.wav",0},					//敵発券音
 	{ "Data/SE/death_1.wav",0},					//死亡音
+	{"Data/BGM/rain_silent.wav",-1},			//ゲーム内BGM
 };
 
 //=============================================================================

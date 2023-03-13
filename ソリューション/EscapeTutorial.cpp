@@ -314,8 +314,12 @@ void UpdateEscapeTutorial()
 
 	if (pFade == FADE_NONE)
 	{
-		if (GetKeyboardPress(DIK_RETURN) || GetGamepadTrigger(BUTTON_START, 0) == true)
+		if (GetKeyboardTrigger(DIK_RETURN) || GetGamepadTrigger(BUTTON_START, 0) == true)
 		{//ENTERキーを押したときリザルトにフェード
+
+		 //決定音
+			PlaySound(SOUND_LABEL_ENTER);
+
 			SetFade(MODE_GAME);
 		}
 	}
@@ -333,7 +337,7 @@ void UpdateEscapeTutorial()
 
 			if (g_EscapeTutorialGuyde == TUTORIAL_GUYDE_MAX)
 			{
-				if (GetKeyboardTrigger(DIK_N) == true || GetGamepadTrigger(BUTTON_A, 0) == true)
+				if (GetKeyboardTrigger(DIK_D) == true || GetGamepadTrigger(BUTTON_A, 0) == true)
 				{
 					g_EscapeTutorialState = TUTORIAL_STATE_STANDBY;
 				}
