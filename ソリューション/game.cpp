@@ -36,6 +36,7 @@
 #include "ChasePolygon.h"
 #include "LifePolygon.h"
 #include "NeedKeyPolygon.h"
+#include "TimeUpPolygon.h"
 
 //エディットに使うオブジェクトの種類の構造体
 typedef enum
@@ -178,6 +179,8 @@ void InitGame()
 
 	InitLifePolygon();
 
+	InitTimeUpPolygon();
+
 	//ステージの読み込み
 	SetStage(0);
 }
@@ -251,6 +254,8 @@ void UninitGame()
 
 	UninitPolygonBG();
 
+	UninitTimeUpPolygon();
+
 	//ポーズの終了処理
 	UninitPause();
 
@@ -290,7 +295,7 @@ void UpdateGame()
 
 #endif
 
-	if (GetKeyboardTrigger(DIK_P) == true || GetGamepadTrigger(BUTTON_START, 0) == true)
+	if (GetKeyboardTrigger(DIK_P) == true || GetGamepadTrigger(BUTTON_START, 0) == true && pPause->bUse == false)
 	{//ポーズ処理
 		pPause->bUse = pPause->bUse ? false : true;
 	}
@@ -311,6 +316,7 @@ void UpdateGame()
 		InitPause();
 	}
 
+#ifdef _DEBUG
 	if (pPause->bUse == false && g_bEdit == false)
 	{//ポーズ状態じゃないときかつエディット状態じゃないとき
 		FADE Fade = GetFade();
@@ -323,8 +329,9 @@ void UpdateGame()
 			}
 		}
 	}
+#endif
 
-	if (pPause->bUse == false)
+	if (pPause->bUse == false && GetTimeCount() == true)
 	{//ポーズ状態じゃないとき
 
 	//カメラの更新処理
@@ -443,6 +450,10 @@ void UpdateGame()
 		}
 	}
 
+	if (g_bGameClear == 0)
+	{//クリアしていない状態の時
+		UpdateTimeUpPolygon();
+	}
 
 	switch (gGameState)
 	{
@@ -598,6 +609,8 @@ void DrawGame()
 
 	//タイムの描画処理
 	DrawTime();
+
+	DrawTimeUpPolygon();
 
 	if (pPause->bUse == true)
 	{//ポーズ中だった場合

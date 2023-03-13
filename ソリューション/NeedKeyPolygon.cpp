@@ -46,6 +46,7 @@ void InitNeedKeyPolygon(void)
 	for (nCntUI = 0; nCntUI < MAX_NEEDKEYPOLYGON; nCntUI++)
 	{
 		g_aNeedKeyPolygon[nCntUI].pos = D3DXVECTOR3(0.0f, 50.0f, 0.0f);
+		g_aNeedKeyPolygon[nCntUI].rot = D3DXVECTOR3(0.0f, 3.14f, 0.0f);
 		switch (nCntUI)
 		{
 		case 0:
@@ -145,7 +146,7 @@ void UpdateNeedKeyPolygon(void)
 
 	VERTEX_3D*pVtx;	//頂点ポインタを所得
 
-					//頂点バッファをロックし、両店情報へのポインタを所得
+	//頂点バッファをロックし、両店情報へのポインタを所得
 	g_pVtxBuffNeedKeyPolygon->Lock(0, 0, (void**)&pVtx, 0);
 
 	for (nCntUI = 0; nCntUI < MAX_NEEDKEYPOLYGON; nCntUI++)
@@ -197,8 +198,8 @@ void DrawNeedKeyPolygon(int nCntPlayer)
 
 	//デバイスの所得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	D3DXMATRIX mtxTrans;	//計算用マトリックス
-	D3DXMATRIX mtxView;	//ビューマトリックス所得用
+	D3DXMATRIX mtxRot,mtxTrans;	//計算用マトリックス
+	//D3DXMATRIX mtxView;	//ビューマトリックス所得用
 
 	////Zテストを無効にする
 	//pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
@@ -217,14 +218,19 @@ void DrawNeedKeyPolygon(int nCntPlayer)
 		//ワールドマトリックスの初期化
 		D3DXMatrixIdentity(&g_aNeedKeyPolygon[nCntUI].mtxWorld);
 
-		//ビューマトリックスを所得
-		pDevice->GetTransform(D3DTS_VIEW, &mtxView);
+		////ビューマトリックスを所得
+		//pDevice->GetTransform(D3DTS_VIEW, &mtxView);
 
-		//ポリゴンをカメラに対して正面を向ける
-		D3DXMatrixInverse(&g_aNeedKeyPolygon[nCntUI].mtxWorld, NULL, &mtxView);	//逆行列を求める
-		g_aNeedKeyPolygon[nCntUI].mtxWorld._41 = 0.0f;
-		g_aNeedKeyPolygon[nCntUI].mtxWorld._42 = 0.0f;
-		g_aNeedKeyPolygon[nCntUI].mtxWorld._43 = 0.0f;
+		////ポリゴンをカメラに対して正面を向ける
+		//D3DXMatrixInverse(&g_aNeedKeyPolygon[nCntUI].mtxWorld, NULL, &mtxView);	//逆行列を求める
+		//g_aNeedKeyPolygon[nCntUI].mtxWorld._41 = 0.0f;
+		//g_aNeedKeyPolygon[nCntUI].mtxWorld._42 = 0.0f;
+		//g_aNeedKeyPolygon[nCntUI].mtxWorld._43 = 0.0f;
+
+		//向きを反映
+		D3DXMatrixRotationYawPitchRoll(&mtxRot, g_aNeedKeyPolygon[nCntUI].rot.y, g_aNeedKeyPolygon[nCntUI].rot.x, g_aNeedKeyPolygon[nCntUI].rot.z);
+
+		D3DXMatrixMultiply(&g_aNeedKeyPolygon[nCntUI].mtxWorld, &g_aNeedKeyPolygon[nCntUI].mtxWorld, &mtxRot);
 
 		//位置を反映
 		D3DXMatrixTranslation(&mtxTrans, g_aNeedKeyPolygon[nCntUI].pos.x, g_aNeedKeyPolygon[nCntUI].pos.y, g_aNeedKeyPolygon[nCntUI].pos.z);
