@@ -56,6 +56,10 @@ typedef enum
 	OBJECTBG_NTYPE41,			//ドア
 	OBJECTBG_NTYPE42,			//ドア
 	OBJECTBG_NTYPE43,			//カーペット
+	OBJECTBG_NTYPE44,			//収容所エリア案内
+	OBJECTBG_NTYPE45,			//オフィスエリア案内
+	OBJECTBG_NTYPE46,			//研究所エリア案内
+	OBJECTBG_NTYPE47,			//やじるし
 	OBJECTBG_NTYPE_MAX,
 
 }OBJECTBG_NTYPE;

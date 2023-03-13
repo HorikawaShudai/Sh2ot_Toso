@@ -71,6 +71,10 @@ const char *c_apModelObj01[] =					//モデルデータ読み込み
 	"Data\\MODEL\\door3.x",					//ドア
 	"Data\\MODEL\\door4.x",					//ドア
 	"Data\\MODEL\\carpet.x",				//カーペット
+	"Data\\MODEL\\JailArea.x",				//収容所エリア案内
+	"Data\\MODEL\\OfficeArea.x",			//オフィスエリア案内
+	"Data\\MODEL\\ResearchArea.x",			//研究所エリア案内
+	"Data\\MODEL\\Arrow.x",					//やじるし
 };
 
 //====================================================================

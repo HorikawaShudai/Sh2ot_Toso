@@ -270,10 +270,10 @@ void UpdateTimeUpPolygon(void)
 				}
 				else if (g_TimeUpNumber == 2)
 				{
-					pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.4f);
-					pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.4f);
-					pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.4f);
-					pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.4f);
+					pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.7f);
+					pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.7f);
+					pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.7f);
+					pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.7f);
 				}
 				else
 				{
