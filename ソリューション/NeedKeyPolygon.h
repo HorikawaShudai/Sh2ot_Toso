@@ -17,6 +17,7 @@ typedef enum
 typedef struct
 {
 	D3DXVECTOR3 pos;							//位置
+	D3DXVECTOR3 rot;							//位置
 	D3DXMATRIX mtxWorld;						//ワールドマトリックス
 	float fSize;								//サイズ
 	bool bUse;									//使用しているかどうか

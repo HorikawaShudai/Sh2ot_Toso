@@ -11,6 +11,7 @@
 #include "result.h"
 #include "time.h"
 #include "RankingNumber.h"
+#include "TimeUpPolygon.h"
 
 //マクロ定義
 #define NUM_PLACE (4)			//タイムの桁数
@@ -27,6 +28,7 @@ int g_nTime;										//タイムの値
 int g_nMaxTime;										//タイムの最大値
 int g_aTexU[NUM_PLACE];								//テクスチャの読み込み位置
 bool g_bTimeCount;									//時間をすすめるかどうか
+bool g_bSetTimePolygon;								//時間終了用ポリゴンを表示しているかどうか
 float g_TimeWait;									//時間が終わった時の余韻
 float g_TimeStart;									//時間が終わった時の表示
 
@@ -54,6 +56,7 @@ void InitTime(void)
 	g_nCountTime = 0;
 
 	g_bTimeCount = true;
+	g_bSetTimePolygon = false;
 	g_TimeWait = 0.0f;									//時間が終わった時の余韻
 	g_TimeStart = 0.0f;									//時間が終わった時の表示
 
@@ -315,9 +318,14 @@ void UpdateTime(void)
 		g_pVtxBuffTime->Unlock();
 	}
 
-	if (g_aTexU[0] == 0 && g_aTexU[1] == 0 && g_aTexU[2] == 0 && g_aTexU[3] == 0)
+	if (g_aTexU[0] == 0 && g_aTexU[1] == 0 && g_aTexU[2] == 0 && g_aTexU[3] == 5 && g_bSetTimePolygon == false)
 	{//制限時間が０になったとき
-		PlayerAllDown();
+		g_bSetTimePolygon = true;
+		SetTimeUpPolygon();
+	}
+
+	if (g_aTexU[0] == 0 && g_aTexU[1] == 0 && g_aTexU[2] == 0 && g_aTexU[3] == 0 && g_bTimeCount == true)
+	{//制限時間が０になったとき
 		g_bTimeCount = false;
 	}
 }

@@ -167,8 +167,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePlev, LPSTR lpCmdline
 	return (int)msg.wParam;
 
 	return 0;
-
-
 }
 //=============================================
 //ウィンドウプロシージャ
