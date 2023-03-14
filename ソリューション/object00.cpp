@@ -400,7 +400,7 @@ void DrawEditObject00(void)
 	D3DXMATERIAL *pMat;				//マテリアルデータへのポインタ
 
 
-		//ワールドマトリックスの初期化
+	//ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&g_Object00[EditIndex].mtxWorld);
 
 	//向きを反映

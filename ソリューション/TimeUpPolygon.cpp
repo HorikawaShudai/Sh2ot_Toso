@@ -1,0 +1,343 @@
+#include "main.h"
+#include "TimeUpPolygon.h"
+#include "numberUI.h"
+#include "player.h"
+#include "PlayNumberSelect.h"
+#include "game.h"
+#include "time.h"
+#include "sound.h"
+
+//マクロ定義
+#define NUM_SSUI		(5)	//GAMEUIの種類数
+
+#define POS_RANKING_BG_X		(640.0f)	//「」のX座標の位置
+#define POS_RANKING_BG_Y		(360.0f)	//「」のY座標の位置
+#define SIZE_RANKING_BG_X		(640.0f)	//「」の幅
+#define SIZE_RANKING_BG_Y		(360.0f)	//「」の高さ
+
+#define POS_SCORE_BG_X			(640.0f)	//「」のX座標の位置
+#define POS_SCORE_BG_Y			(360.0f)	//「」のY座標の位置
+#define SIZE_SCORE_BG_X			(640.0f)	//「」の幅
+#define SIZE_SCORE_BG_Y			(360.0f)	//「」の高さ
+
+#define POS_PERFECT_BG_X		(640.0f)	//「」のX座標の位置
+#define POS_PERFECT_BG_Y		(360.0f)	//「」のY座標の位置
+#define SIZE_PERFECT_BG_X		(640.0f)	//「」の幅
+#define SIZE_PERFECT_BG_Y		(360.0f)	//「」の高さ
+
+#define POS_ALLPERFECT_BG_X		(250.0f)	//「」のX座標の位置
+#define POS_ALLPERFECT_BG_Y		(200.0f)	//「」のY座標の位置
+#define SIZE_ALLPERFECT_BG_X	(200.0f)	//「」の幅
+#define SIZE_ALLPERFECT_BG_Y	(100.0f)	//「」の高さ
+
+#define POS_EXIT_BG_X			(250.0f)	//「」のX座標の位置
+#define POS_EXIT_BG_Y			(450.0f)	//「」のY座標の位置
+#define SIZE_EXIT_BG_X			(200.0f)	//「」の幅
+#define SIZE_EXIT_BG_Y			(100.0f)	//「」の高さ
+
+#define COUNT00			(110)	//スタートカウント
+#define COUNT01			(25)	//カウント
+#define COUNT02			(150)	//カウント
+#define COUNT03			(35)	//カウント
+#define COUNT04			(180)	//カウント
+#define COUNT05			(180)	//エンドカウント
+
+//グローバル変数
+LPDIRECT3DTEXTURE9 g_apTextureTimeUpPolygon[NUM_SSUI] = {};	//テクスチャへのポインタ
+LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffTimeUpPolygon = NULL;		//頂点バッファへのポインタ
+bool bUseTimeUpPolygon[NUM_SSUI];		//ポリゴンを使っているかどうか
+int g_RandTimeUpAnime;		//アニメーション用の変数
+int g_TimeUpNumber;		//タイムオーバー演出の段階用変数
+int g_TimeUpCount;		//タイムオーバーの段階の余韻用の変数
+
+//====================================================================
+//タイトル画面の初期化処理
+//====================================================================
+void InitTimeUpPolygon(void)
+{
+	int nCntBG;
+	LPDIRECT3DDEVICE9 pDevice = GetDevice(); //デバイスの所得
+	int *pTime = GetTime();
+
+	//テクスチャの読み込み
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\sunaarasi.png",
+		&g_apTextureTimeUpPolygon[0]);
+
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\RANKING\\pepepepe02.png",
+		&g_apTextureTimeUpPolygon[1]);
+
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\RANKING\\RankUi.png",
+		&g_apTextureTimeUpPolygon[2]);
+
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\RANKING\\pepepepe01.png",
+		&g_apTextureTimeUpPolygon[3]);
+
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\RANKING\\pepepepe03.png",
+		&g_apTextureTimeUpPolygon[4]);
+
+	//グローバル変数初期化
+	g_RandTimeUpAnime = 0;
+	g_TimeUpNumber = -1;
+	g_TimeUpCount = COUNT00;
+
+	//UIの表示設定
+	bUseTimeUpPolygon[0] = false;
+	bUseTimeUpPolygon[1] = false;
+	bUseTimeUpPolygon[2] = false;
+	bUseTimeUpPolygon[3] = false;
+	bUseTimeUpPolygon[4] = false;
+
+	//頂点バッファの生成
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * NUM_SSUI,
+		D3DUSAGE_WRITEONLY,
+		FVF_VERTEX_2D,
+		D3DPOOL_MANAGED,
+		&g_pVtxBuffTimeUpPolygon,
+		NULL);
+
+	VERTEX_2D*pVtx;	//頂点ポインタを所得
+
+	//頂点バッファをロックし、両店情報へのポインタを所得
+	g_pVtxBuffTimeUpPolygon->Lock(0, 0, (void**)&pVtx, 0);
+
+	for (nCntBG = 0; nCntBG < NUM_SSUI; nCntBG++)
+	{
+		switch (nCntBG)
+		{
+		case 0:
+			//頂点座標の設定
+			pVtx[0].pos = D3DXVECTOR3(POS_RANKING_BG_X - SIZE_RANKING_BG_X, POS_RANKING_BG_Y - SIZE_RANKING_BG_Y, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(POS_RANKING_BG_X + SIZE_RANKING_BG_X, POS_RANKING_BG_Y - SIZE_RANKING_BG_Y, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(POS_RANKING_BG_X - SIZE_RANKING_BG_X, POS_RANKING_BG_Y + SIZE_RANKING_BG_Y, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(POS_RANKING_BG_X + SIZE_RANKING_BG_X, POS_RANKING_BG_Y + SIZE_RANKING_BG_Y, 0.0f);
+			break;
+
+		case 1:
+			//頂点座標の設定
+			pVtx[0].pos = D3DXVECTOR3(POS_SCORE_BG_X - SIZE_SCORE_BG_X, POS_SCORE_BG_Y - SIZE_SCORE_BG_Y, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(POS_SCORE_BG_X + SIZE_SCORE_BG_X, POS_SCORE_BG_Y - SIZE_SCORE_BG_Y, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(POS_SCORE_BG_X - SIZE_SCORE_BG_X, POS_SCORE_BG_Y + SIZE_SCORE_BG_Y, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(POS_SCORE_BG_X + SIZE_SCORE_BG_X, POS_SCORE_BG_Y + SIZE_SCORE_BG_Y, 0.0f);
+			break;
+
+		case 2:
+			//頂点座標の設定
+			pVtx[0].pos = D3DXVECTOR3(POS_PERFECT_BG_X - SIZE_PERFECT_BG_X, POS_PERFECT_BG_Y - SIZE_PERFECT_BG_Y, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(POS_PERFECT_BG_X + SIZE_PERFECT_BG_X, POS_PERFECT_BG_Y - SIZE_PERFECT_BG_Y, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(POS_PERFECT_BG_X - SIZE_PERFECT_BG_X, POS_PERFECT_BG_Y + SIZE_PERFECT_BG_Y, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(POS_PERFECT_BG_X + SIZE_PERFECT_BG_X, POS_PERFECT_BG_Y + SIZE_PERFECT_BG_Y, 0.0f);
+			break;
+
+		case 3:
+			//頂点座標の設定
+			pVtx[0].pos = D3DXVECTOR3(POS_ALLPERFECT_BG_X - SIZE_ALLPERFECT_BG_X, POS_ALLPERFECT_BG_Y - SIZE_ALLPERFECT_BG_Y, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(POS_ALLPERFECT_BG_X + SIZE_ALLPERFECT_BG_X, POS_ALLPERFECT_BG_Y - SIZE_ALLPERFECT_BG_Y, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(POS_ALLPERFECT_BG_X - SIZE_ALLPERFECT_BG_X, POS_ALLPERFECT_BG_Y + SIZE_ALLPERFECT_BG_Y, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(POS_ALLPERFECT_BG_X + SIZE_ALLPERFECT_BG_X, POS_ALLPERFECT_BG_Y + SIZE_ALLPERFECT_BG_Y, 0.0f);
+			break;
+
+		case 4:
+			//頂点座標の設定
+			pVtx[0].pos = D3DXVECTOR3(POS_EXIT_BG_X - SIZE_EXIT_BG_X, POS_EXIT_BG_Y - SIZE_EXIT_BG_Y, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(POS_EXIT_BG_X + SIZE_EXIT_BG_X, POS_EXIT_BG_Y - SIZE_EXIT_BG_Y, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(POS_EXIT_BG_X - SIZE_EXIT_BG_X, POS_EXIT_BG_Y + SIZE_EXIT_BG_Y, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(POS_EXIT_BG_X + SIZE_EXIT_BG_X, POS_EXIT_BG_Y + SIZE_EXIT_BG_Y, 0.0f);
+			break;
+		}
+
+		//頂点カラーの設定
+		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+		//rhwの設定
+		pVtx[0].rhw = 1.0f;
+		pVtx[1].rhw = 1.0f;
+		pVtx[2].rhw = 1.0f;
+		pVtx[3].rhw = 1.0f;
+
+		//テクスチャ座標の設定
+		pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+		pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+		pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+		pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+
+		pVtx += 4;	//頂点データのポインタを４つ分進める
+	}
+
+	//頂点バッファをアンロックする
+	g_pVtxBuffTimeUpPolygon->Unlock();
+}
+
+//====================================================================
+//タイトルの終了処理
+//====================================================================
+void UninitTimeUpPolygon(void)
+{
+	int nCntBG;
+	for (nCntBG = 0; nCntBG < NUM_SSUI; nCntBG++)
+	{
+		//テクスチャの破棄
+		if (g_apTextureTimeUpPolygon[nCntBG] != NULL)
+		{
+			g_apTextureTimeUpPolygon[nCntBG]->Release();
+			g_apTextureTimeUpPolygon[nCntBG] = NULL;
+		}
+	}
+
+	//頂点バッファの破棄
+	if (g_pVtxBuffTimeUpPolygon != NULL)
+	{
+		g_pVtxBuffTimeUpPolygon->Release();
+		g_pVtxBuffTimeUpPolygon = NULL;
+	}
+}
+
+//====================================================================
+//タイトル画面の更新処理
+//====================================================================
+void UpdateTimeUpPolygon(void)
+{
+	if (g_TimeUpNumber != -1)
+	{
+		//タイムの段階変更処理
+		g_TimeUpCount--;
+		if (g_TimeUpCount <= 0)
+		{
+			switch (g_TimeUpNumber)
+			{
+			case 0:
+				g_TimeUpCount = COUNT01;
+				bUseTimeUpPolygon[0] = false;
+	
+				break;
+			case 1:
+				g_TimeUpCount = COUNT02;
+				bUseTimeUpPolygon[0] = true;
+				PlaySound(SOUND_LABEL_SE_NORMAL_NOIZE);
+				break;
+			case 2:
+				g_TimeUpCount = COUNT03;
+				bUseTimeUpPolygon[0] = false;
+				break;
+			case 3:
+				g_TimeUpCount = COUNT04;
+				bUseTimeUpPolygon[0] = true;
+				PlaySound(SOUND_LABEL_SE_BIG_NOIZE);
+
+				break;
+			case 4:
+				g_TimeUpCount = COUNT05;
+				bUseTimeUpPolygon[0] = false;
+				bUseTimeUpPolygon[1] = true;
+				bUseTimeUpPolygon[2] = true;
+				break;
+			case 5:
+				g_TimeUpNumber = -2;
+				SetGameState(GAMESTATE_GAMEOVER_END, 180);
+				break;
+			}
+
+			g_TimeUpNumber++;
+		}
+
+		//砂嵐ポリゴン用の乱数処理
+		g_RandTimeUpAnime = rand() % 101;
+		float fRand = ((float)g_RandTimeUpAnime) * 0.1f;
+
+		VERTEX_2D*pVtx;	//頂点ポインタを所得
+
+		//頂点バッファをロックし、両店情報へのポインタを所得
+		g_pVtxBuffTimeUpPolygon->Lock(0, 0, (void**)&pVtx, 0);
+
+		for (int nCntBG = 0; nCntBG < NUM_SSUI; nCntBG++)
+		{
+			if (nCntBG == 0)
+			{
+				//頂点カラーの設定
+				if (g_TimeUpNumber == 0)
+				{
+					pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.4f);
+					pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.4f);
+					pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.4f);
+					pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.4f);
+				}
+				else if (g_TimeUpNumber == 2)
+				{
+					pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.7f);
+					pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.7f);
+					pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.7f);
+					pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.7f);
+				}
+				else
+				{
+					pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+					pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+					pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+					pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+				}
+
+				//テクスチャ座標の設定
+				pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+				pVtx[1].tex = D3DXVECTOR2(fRand + 1.0f, 0.0f);
+				pVtx[2].tex = D3DXVECTOR2(0.0f, fRand + 1.0f);
+				pVtx[3].tex = D3DXVECTOR2(fRand + 1.0f, fRand + 1.0f);
+			}
+
+			pVtx += 4;	//頂点データのポインタを４つ分進める
+		}
+
+		//頂点バッファをアンロックする
+		g_pVtxBuffTimeUpPolygon->Unlock();
+	}
+}
+
+//====================================================================
+//タイトル画面の描画処理
+//====================================================================
+void DrawTimeUpPolygon(void)
+{
+	int nCntBG;
+
+	LPDIRECT3DDEVICE9 pDevice; //デバイスへのポインタ
+
+							   //デバイスの所得
+	pDevice = GetDevice();
+
+	//頂点バッファをデータストリームに設定
+	pDevice->SetStreamSource(0, g_pVtxBuffTimeUpPolygon, 0, sizeof(VERTEX_2D));
+
+	//頂点フォーマットの設定
+	pDevice->SetFVF(FVF_VERTEX_2D);
+
+	for (nCntBG = 0; nCntBG < NUM_SSUI; nCntBG++)
+	{
+		//テクスチャの設定
+		pDevice->SetTexture(0, g_apTextureTimeUpPolygon[nCntBG]);
+
+		if (bUseTimeUpPolygon[nCntBG] == true)
+		{
+			//ポリゴンの描画
+			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,	//プリミティブの種類
+				4 * nCntBG,						//プリミティブ(ポリゴン)数
+				2);
+		}
+	}
+}
+
+//====================================================================
+//タイムアップの設定処理
+//====================================================================
+void SetTimeUpPolygon(void)
+{
+	g_TimeUpNumber = 0;
+	bUseTimeUpPolygon[0] = true;
+
+	PlaySound(SOUND_LABEL_SE_SMALL_NOIZE);
+}

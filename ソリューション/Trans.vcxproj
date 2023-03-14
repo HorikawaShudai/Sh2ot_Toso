@@ -211,6 +211,7 @@
     <ClCompile Include="stamina.cpp" />
     <ClCompile Include="Thunder.cpp" />
     <ClCompile Include="time.cpp" />
+    <ClCompile Include="TimeUpPolygon.cpp" />
     <ClCompile Include="title.cpp" />
     <ClCompile Include="tutorialUI.cpp" />
     <ClCompile Include="VillainRanking.cpp" />
@@ -273,6 +274,7 @@
     <ClInclude Include="stamina.h" />
     <ClInclude Include="Thunder.h" />
     <ClInclude Include="time.h" />
+    <ClInclude Include="TimeUpPolygon.h" />
     <ClInclude Include="title.h" />
     <ClInclude Include="tutorialUI.h" />
     <ClInclude Include="VillainRanking.h" />

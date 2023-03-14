@@ -373,7 +373,7 @@ void SetExit(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nType, int nNumExit)
 			{
 				g_aExit[nNumExit].PseudoCenter = D3DXVECTOR3(g_aExit[nNumExit].parts[nCntExit1].pos.x, g_aExit[nNumExit].parts[nCntExit1].pos.y - 100.0f, g_aExit[nNumExit].parts[nCntExit1].pos.z);
 				g_aExit[nNumExit].IndexUI = SetActionHelpUI(D3DXVECTOR3(g_aExit[nNumExit].PseudoCenter.x + sinf(g_aExit[nNumExit].parts[nCntExit1].rot.y) * 15.0f, g_aExit[nNumExit].PseudoCenter.y + 38.0f, g_aExit[nNumExit].PseudoCenter.z + cosf(g_aExit[nNumExit].parts[nCntExit1].rot.y) * 15.0f), 2.5f, ACTIONHELPUI_DOOR);
-				SetNeedKeyPolygon(D3DXVECTOR3(g_aExit[nNumExit].PseudoCenter.x + sinf(g_aExit[nNumExit].parts[nCntExit1].rot.y) * 15.0f, g_aExit[nNumExit].PseudoCenter.y + 50.0f, g_aExit[nNumExit].PseudoCenter.z + cosf(g_aExit[nNumExit].parts[nCntExit1].rot.y) * 15.0f));
+				SetNeedKeyPolygon(D3DXVECTOR3(g_aExit[nNumExit].PseudoCenter.x + sinf(g_aExit[nNumExit].parts[nCntExit1].rot.y) * 5.0f, g_aExit[nNumExit].PseudoCenter.y + 50.0f, g_aExit[nNumExit].PseudoCenter.z + cosf(g_aExit[nNumExit].parts[nCntExit1].rot.y) * 5.0f));
 			}
 
 			g_aExit[nNumExit].parts[nCntExit1].bUse = true;
