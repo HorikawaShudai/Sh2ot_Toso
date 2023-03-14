@@ -772,7 +772,7 @@ void UpdatePlayer1(void)
 			{
 				g_GameEnd = true;
 				SetGameState(GAMESTATE_CLEAR_END, 60);
-				SetFalseCount(false);
+				//SetFalseCount(false);
 				SetRankTime();
 
 				if (g_ExitCount == PlayNumber.CurrentSelectNumber)
@@ -797,7 +797,7 @@ void UpdatePlayer1(void)
 		{//‘SˆõŽ€–S‚µ‚Ä‚¢‚é‚Æ‚«
 			g_GameEnd = true;
 			SetGameState(GAMESTATE_GAMEOVER_END, 340);
-			SetFalseCount(false);
+			//SetFalseCount(false);
 		}
 	}
 
