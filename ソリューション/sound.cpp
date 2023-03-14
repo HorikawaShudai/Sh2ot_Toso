@@ -49,6 +49,7 @@ SOUNDINFO g_aSoundInfo[SOUND_LABEL_MAX] =
 	{ "Data/SE/normal_noize.wav",0},			//普通のノイズ
 	{ "Data/SE/small_noize.wav",0},				//小さめのノイズ
 	{ "Data/SE/big_noize.wav",0},				//大きいノイズ
+	{ "Data/BGM/result0.wav",-1},				//クリアリザルトBGM
 };
 
 //=============================================================================

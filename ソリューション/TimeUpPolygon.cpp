@@ -25,15 +25,10 @@
 #define SIZE_PERFECT_BG_X		(640.0f)	//「」の幅
 #define SIZE_PERFECT_BG_Y		(360.0f)	//「」の高さ
 
-#define POS_ALLPERFECT_BG_X		(250.0f)	//「」のX座標の位置
-#define POS_ALLPERFECT_BG_Y		(200.0f)	//「」のY座標の位置
-#define SIZE_ALLPERFECT_BG_X	(200.0f)	//「」の幅
-#define SIZE_ALLPERFECT_BG_Y	(100.0f)	//「」の高さ
-
-#define POS_EXIT_BG_X			(250.0f)	//「」のX座標の位置
-#define POS_EXIT_BG_Y			(450.0f)	//「」のY座標の位置
-#define SIZE_EXIT_BG_X			(200.0f)	//「」の幅
-#define SIZE_EXIT_BG_Y			(100.0f)	//「」の高さ
+#define POS_ALLPERFECT_BG_X		(640.0f)	//「」のX座標の位置
+#define POS_ALLPERFECT_BG_Y		(600.0f)	//「」のY座標の位置
+#define SIZE_ALLPERFECT_BG_X	(400.0f)	//「」の幅
+#define SIZE_ALLPERFECT_BG_Y	(50.0f)	//「」の高さ
 
 #define COUNT00			(110)	//スタートカウント
 #define COUNT01			(25)	//カウント
@@ -64,21 +59,17 @@ void InitTimeUpPolygon(void)
 		"data\\TEXTURE\\sunaarasi.png",
 		&g_apTextureTimeUpPolygon[0]);
 
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\RANKING\\pepepepe02.png",
-		&g_apTextureTimeUpPolygon[1]);
+	//D3DXCreateTextureFromFile(pDevice,
+	//	"data\\TEXTURE\\viewflame.pn",
+	//	&g_apTextureTimeUpPolygon[1]);
 
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\RANKING\\RankUi.png",
+		"data\\TEXTURE\\viewflame.png",
 		&g_apTextureTimeUpPolygon[2]);
 
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\RANKING\\pepepepe01.png",
+		"data\\TEXTURE\\RESULT\\End_Text.png",
 		&g_apTextureTimeUpPolygon[3]);
-
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\RANKING\\pepepepe03.png",
-		&g_apTextureTimeUpPolygon[4]);
 
 	//グローバル変数初期化
 	g_RandTimeUpAnime = 0;
@@ -140,21 +131,23 @@ void InitTimeUpPolygon(void)
 			pVtx[2].pos = D3DXVECTOR3(POS_ALLPERFECT_BG_X - SIZE_ALLPERFECT_BG_X, POS_ALLPERFECT_BG_Y + SIZE_ALLPERFECT_BG_Y, 0.0f);
 			pVtx[3].pos = D3DXVECTOR3(POS_ALLPERFECT_BG_X + SIZE_ALLPERFECT_BG_X, POS_ALLPERFECT_BG_Y + SIZE_ALLPERFECT_BG_Y, 0.0f);
 			break;
-
-		case 4:
-			//頂点座標の設定
-			pVtx[0].pos = D3DXVECTOR3(POS_EXIT_BG_X - SIZE_EXIT_BG_X, POS_EXIT_BG_Y - SIZE_EXIT_BG_Y, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(POS_EXIT_BG_X + SIZE_EXIT_BG_X, POS_EXIT_BG_Y - SIZE_EXIT_BG_Y, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(POS_EXIT_BG_X - SIZE_EXIT_BG_X, POS_EXIT_BG_Y + SIZE_EXIT_BG_Y, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(POS_EXIT_BG_X + SIZE_EXIT_BG_X, POS_EXIT_BG_Y + SIZE_EXIT_BG_Y, 0.0f);
-			break;
 		}
-
-		//頂点カラーの設定
-		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		if (nCntBG == 1)
+		{
+			//頂点カラーの設定
+			pVtx[0].col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f);
+			pVtx[1].col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f);
+			pVtx[2].col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f);
+			pVtx[3].col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f);
+		}
+		else
+		{
+			//頂点カラーの設定
+			pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+			pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+			pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+			pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		}
 
 		//rhwの設定
 		pVtx[0].rhw = 1.0f;
@@ -237,6 +230,7 @@ void UpdateTimeUpPolygon(void)
 				bUseTimeUpPolygon[0] = false;
 				bUseTimeUpPolygon[1] = true;
 				bUseTimeUpPolygon[2] = true;
+				bUseTimeUpPolygon[3] = true;
 				break;
 			case 5:
 				g_TimeUpNumber = -2;

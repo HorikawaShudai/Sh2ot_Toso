@@ -50,7 +50,7 @@ void InitEscapeClearResult()
 
 	InitResultUI();
 
-
+	PlaySound(SOUND_LABEL_BGM_CLEAR);
 }
 
 //====================================================================
@@ -58,6 +58,8 @@ void InitEscapeClearResult()
 //====================================================================
 void UninitEscapeClearResult()
 {
+	StopSound();
+
 	//ƒJƒƒ‰‚ÌI—¹ˆ—
 	UninitCamera();
 

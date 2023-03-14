@@ -44,7 +44,7 @@ void InitEscapeOverResult()
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\RESULT\\GAME OVER.png",
+		"data\\TEXTURE\\RESULT\\GAME_OVER.png",
 		&g_pTextureOver);
 
 	//頂点バッファの生成
