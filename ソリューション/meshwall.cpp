@@ -11,7 +11,7 @@
 #define HEIGHT_SIZE (5)			//縦の頂点数
 #define WAIGHT_CENTER (0.5f)	//横の原点(0.0f～1.0f)
 #define HEIGHT_CENTER (1.0f)	//縦の原点(0.0f～1.0f)
-#define FIELD_SIZE (15.0f)		//壁一枚の大きさ
+#define FIELD_SIZE (20.0f)		//壁一枚の大きさ
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureMeshWall;			//テクスチャのポインタ

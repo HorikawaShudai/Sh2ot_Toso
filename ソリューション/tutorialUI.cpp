@@ -15,7 +15,7 @@
 //UIの位置・サイズ設定
 //全体に表示されてる紙
 #define POS_TUTORIALUI_ALL_X		(640.0f)	//「」のX座標の位置
-#define POS_TUTORIALUI_ALL_Y		(290.0f)	//「」のY座標の位置
+#define POS_TUTORIALUI_ALL_Y		(275.0f)	//「」のY座標の位置
 #define SIZE_TUTORIALUI_ALL_X		(270.0f)	//「」の幅
 #define SIZE_TUTORIALUI_ALL_Y		(330.0f)	//「」の高さ
 //一人プレイ	一人目
