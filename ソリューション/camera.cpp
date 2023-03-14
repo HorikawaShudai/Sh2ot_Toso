@@ -854,10 +854,23 @@ void PlayerCamera(void)
 				{
 					g_aCamera[nCntCamera].rot.y -= CAMERA_VR_SPEED;
 
+					//チュートリアル項目がカメラムーブの時
+					if (mode == MODE_TUTORIAL && do_Tutorial == MODE_MOVE)
+					{
+						//カメラを移動したことにする
+						CamMoveTCheck(nCntCamera, true);
+					}
 				}
 				if (GetKeyboardPress(DIK_L) == true)
 				{
 					g_aCamera[nCntCamera].rot.y += CAMERA_VR_SPEED;
+
+					//チュートリアル項目がカメラムーブの時
+					if (mode == MODE_TUTORIAL && do_Tutorial == MODE_MOVE)
+					{
+						//カメラを移動したことにする
+						CamMoveTCheck(nCntCamera, true);
+					}
 				}
 
 				//右スティックの左右視点移動入力

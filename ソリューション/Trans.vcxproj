@@ -173,6 +173,7 @@
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="Fog.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="GameLoad.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="key.cpp" />
     <ClCompile Include="keyUI.cpp" />
@@ -236,6 +237,7 @@
     <ClInclude Include="Fade.h" />
     <ClInclude Include="fog.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="GameLoad.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="key.h" />
     <ClInclude Include="keyUI.h" />

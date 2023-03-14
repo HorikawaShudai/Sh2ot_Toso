@@ -105,9 +105,9 @@ void InitTime(void)
 
 	//時間の初期化処理
 	g_aTexU[0] = 0;
-	g_aTexU[1] = 4;
+	g_aTexU[1] = 0;
 	g_aTexU[2] = 0;
-	g_aTexU[3] = 0;
+	g_aTexU[3] = 9;
 
 	g_nMaxTime = (g_aTexU[3] + g_aTexU[2] * 10 + g_aTexU[1] * 60 + g_aTexU[0] * 600) * 60;
 	g_nTime = (g_aTexU[3] + g_aTexU[2] * 10 + g_aTexU[1] * 60 + g_aTexU[0] * 600);
@@ -244,7 +244,7 @@ void UninitTime(void)
 //====================================================================
 void UpdateTime(void)
 {
-	if (g_bTimeCount == true)
+	if (g_bTimeCount == true && GetClear() == 0)
 	{//タイムのカウントダウンが可能な時
 		int nCntTime;
 		g_nCountTime++;	//カウントを増やす

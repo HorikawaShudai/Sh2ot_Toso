@@ -298,9 +298,14 @@ void UpdateGame()
 
 #endif
 
-	if (GetKeyboardTrigger(DIK_P) == true || GetGamepadTrigger(BUTTON_START, 0) == true && pPause->bUse == false)
+	if (GetKeyboardTrigger(DIK_P) == true || GetGamepadTrigger(BUTTON_START, 0) == true)
 	{//ポーズ処理
 		pPause->bUse = pPause->bUse ? false : true;
+	}
+	else if (GetKeyboardTrigger(DIK_P) == true || GetGamepadTrigger(BUTTON_START, 0) == true && pPause->bUse == false)
+	{
+		//ポーズを閉じた時選択を最初に戻す
+		InitPause();
 	}
 
 	if (pPause->bUse == true)
@@ -312,11 +317,6 @@ void UpdateGame()
 		{//ポーズ中バイブを止める処理
 			GetGamepad_Vibrtion_false(nCntPlayer);
 		}
-	}
-	if (GetKeyboardTrigger(DIK_P) == true || GetGamepadTrigger(BUTTON_START, 0) == true && pPause->bUse == false)
-	{
-		//ポーズを閉じた時選択を最初に戻す
-		InitPause();
 	}
 
 #ifdef _DEBUG

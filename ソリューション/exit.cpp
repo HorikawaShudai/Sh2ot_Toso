@@ -318,9 +318,9 @@ void ExsitClossLine(int nCntExit)
 			D3DXVECTOR3 Cross;				//åì_ÇÃèÍèä
 
 			//èÍèäÇÃåvéZ
-			pos0 = MeshWall.pos + D3DXVECTOR3(cosf(MeshWall.rot.y) + 50.0f, 0.0f, sinf(MeshWall.rot.y));
+			pos0 = MeshWall.pos + D3DXVECTOR3(cosf(MeshWall.rot.y) + 100.0f, 0.0f, sinf(MeshWall.rot.y));
 
-			pos1 = MeshWall.pos + D3DXVECTOR3(cosf(MeshWall.rot.y) - 50.0f, 0.0f, sinf(MeshWall.rot.y));
+			pos1 = MeshWall.pos + D3DXVECTOR3(cosf(MeshWall.rot.y) - 100.0f, 0.0f, sinf(MeshWall.rot.y));
 
 			//pos0Ç∆pos1Ç∆ÇÃãóó£ä‘
 			g_vecLine = pos1 - pos0;
