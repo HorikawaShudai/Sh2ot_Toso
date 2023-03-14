@@ -19,6 +19,7 @@
 #include "RankingNumber.h"
 #include "input.h"
 #include "sound.h"
+#include "GameLoad.h"
 
 //マクロ定義
 #define CLASS_NAME "WindowClass"     //ウィンドウクラスの名前
@@ -46,7 +47,7 @@ bool bWire;				//ワイヤーフレームを使っているかどうか
 bool g_bNightVision;			//視野の確保を使っているかどうか
 int g_nCountFPS = 0;
 
-MODE g_mode = MODE_TITLE;	//開始時点のモード
+MODE g_mode = MODE_LOADGAME;	//開始時点のモード
 
  //=============================================
  //メイン関数
@@ -407,9 +408,10 @@ void Update(void)
 		}
 		break;
 	case MODE_RANKING:
-		
 			UpdateEscapeRanking();
-		
+		break;
+	case MODE_LOADGAME:
+		UpdateGameLoad();
 		break;
 	}
 
@@ -453,9 +455,10 @@ void Draw(void)
 			}
 			break;
 		case MODE_RANKING:
-			
 				DrawEscapeRanking();
-			
+			break;
+		case MODE_LOADGAME:
+			DrawGameLoad();
 			break;
 		}
 
@@ -518,9 +521,10 @@ void SetMode(MODE mode)
 		}
 		break;
 	case MODE_RANKING:
-		
 			UninitEscapeRanking();
-		
+		break;
+	case MODE_LOADGAME:
+		UninitGameLoad();
 		break;
 	}
 
@@ -553,9 +557,10 @@ void SetMode(MODE mode)
 		}
 		break;
 	case MODE_RANKING:
-		
 			InitEscapeRanking();
-		
+		break;
+	case MODE_LOADGAME:
+		InitGameLoad();
 		break;
 	}
 }
