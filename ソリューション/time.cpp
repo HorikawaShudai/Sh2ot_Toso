@@ -244,7 +244,7 @@ void UninitTime(void)
 //====================================================================
 void UpdateTime(void)
 {
-	if (g_bTimeCount == true)
+	if (g_bTimeCount == true && GetClear() == 0)
 	{//タイムのカウントダウンが可能な時
 		int nCntTime;
 		g_nCountTime++;	//カウントを増やす
