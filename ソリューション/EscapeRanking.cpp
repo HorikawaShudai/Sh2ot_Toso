@@ -51,6 +51,8 @@ void InitEscapeRanking()
 	InitRanKingNumber();
 
 	InitMeshField();
+
+	PlaySound(SOUND_LABEL_BGM_GAMESOUND);
 }
 
 //====================================================================
@@ -58,6 +60,8 @@ void InitEscapeRanking()
 //====================================================================
 void UninitEscapeRanking()
 {
+	StopSound();
+
 	//ƒJƒƒ‰‚ÌI—¹ˆ—
 	UninitCamera();
 
