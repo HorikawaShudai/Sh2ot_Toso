@@ -105,9 +105,9 @@ void InitTime(void)
 
 	//ŠÔ‚Ì‰Šú‰»ˆ—
 	g_aTexU[0] = 0;
-	g_aTexU[1] = 0;
+	g_aTexU[1] = 4;
 	g_aTexU[2] = 0;
-	g_aTexU[3] = 9;
+	g_aTexU[3] = 0;
 
 	g_nMaxTime = (g_aTexU[3] + g_aTexU[2] * 10 + g_aTexU[1] * 60 + g_aTexU[0] * 600) * 60;
 	g_nTime = (g_aTexU[3] + g_aTexU[2] * 10 + g_aTexU[1] * 60 + g_aTexU[0] * 600);
