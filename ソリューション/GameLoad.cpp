@@ -9,21 +9,28 @@
 #include "Input.h"
 
 //マクロ定義
-#define MAX_TEX		(2)				//テクスチャの最大数
-#define NUM_BACK	(3)				//使う枚数
+#define MAX_TEX		(6)				//テクスチャの最大数
+#define NUM_BACK	(7)				//使う枚数
 #define HEIGHT_TEX	(200.0f)		//テクスチャの幅
 #define WIDTH_TEX	(200.0f)		//テクスチャの高さ
 #define TEX_POS_X	(640.0f)		//中心座標(X)
 #define TEX_POS_Y	(360.0f)		//中心座標(Y)
 #define FADE_COUNT	(120)			//自動遷移のカウント
 
-#define EACHICON_SIZE	(50.0f)		//個人アイコンのサイズ
+#define EACHICON_POSX	(120.0f)		//横の位置
+#define EACHICON_POSY	(600.0f)		//縦の位置
+#define EACHICON_SPACE	(260.0f)		//アイコン同士の距離
+#define EACHICON_SIZE	(100.0f)		//個人アイコンのサイズ
 
 //テクスチャファイル名
 const char *c_paIconTexname[] =
 {
 	"Data\\TEXTURE\\Sh2ot_Logo.png",			//チームロゴ
-	"Data\\TEXTURE\\ICON\\Name_Icon00.png",		//小笠原のアイコン
+	"Data\\TEXTURE\\ICON\\Sakamoto_Icon.png",	//坂本のアイコン
+	"Data\\TEXTURE\\ICON\\Logo_Hosyu.jpg",		//堀川のアイコン
+	"Data\\TEXTURE\\ICON\\yuki_icon.png",		//早川のアイコン
+	"Data\\TEXTURE\\ICON\\Oga_Icon.png",		//小笠原のアイコン
+	"Data\\TEXTURE\\ICON\\logo.png",			//丹野のアイコン
 };
 
 //グローバル変数宣言
@@ -72,6 +79,7 @@ void InitGameLoad(void)
 		switch (nCnt)
 		{
 		case 0:
+
 			//頂点座標の設定
 			pVtx[0].pos = D3DXVECTOR3(g_Texpos.x - TEX_POS_X, g_Texpos.y - TEX_POS_Y, 0.0f);
 			pVtx[1].pos = D3DXVECTOR3(g_Texpos.x + TEX_POS_X, g_Texpos.y - TEX_POS_Y, 0.0f);
@@ -84,6 +92,8 @@ void InitGameLoad(void)
 			pVtx[3].col = D3DXCOLOR(0.85f, 0.85f, 0.85f, 1.0f);
 			break;
 		case 1:
+
+			g_Texpos = D3DXVECTOR3(TEX_POS_X, 200.0f, 0.0f);
 
 			//頂点座標の設定
 			pVtx[0].pos = D3DXVECTOR3(g_Texpos.x - HEIGHT_TEX, g_Texpos.y - WIDTH_TEX, 0.0f);
@@ -99,13 +109,13 @@ void InitGameLoad(void)
 
 		default:
 
-			g_Texpos = D3DXVECTOR3(50.0f + (150.0f * (nCnt - 2)), 600.0f, 0.0f);
+			g_Texpos = D3DXVECTOR3(EACHICON_POSX + (EACHICON_SPACE * (nCnt - 2)), EACHICON_POSY, 0.0f);
 
 			//頂点座標の設定
-			pVtx[0].pos = D3DXVECTOR3(g_Texpos.x - EACHICON_SIZE, 600.0f - EACHICON_SIZE, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(g_Texpos.x + EACHICON_SIZE, 600.0f - EACHICON_SIZE, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(g_Texpos.x - EACHICON_SIZE, 600.0f + EACHICON_SIZE, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(g_Texpos.x + EACHICON_SIZE, 600.0f + EACHICON_SIZE, 0.0f);
+			pVtx[0].pos = D3DXVECTOR3(g_Texpos.x - EACHICON_SIZE, g_Texpos.y - EACHICON_SIZE, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(g_Texpos.x + EACHICON_SIZE, g_Texpos.y - EACHICON_SIZE, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(g_Texpos.x - EACHICON_SIZE, g_Texpos.y + EACHICON_SIZE, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(g_Texpos.x + EACHICON_SIZE, g_Texpos.y + EACHICON_SIZE, 0.0f);
 			//頂点カラーの設定
 			pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 			pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
