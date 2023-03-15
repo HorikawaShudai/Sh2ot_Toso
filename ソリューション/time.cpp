@@ -12,6 +12,7 @@
 #include "time.h"
 #include "RankingNumber.h"
 #include "TimeUpPolygon.h"
+#include "input.h"
 
 //マクロ定義
 #define NUM_PLACE (4)			//タイムの桁数
@@ -327,6 +328,10 @@ void UpdateTime(void)
 	if (g_aTexU[0] == 0 && g_aTexU[1] == 0 && g_aTexU[2] == 0 && g_aTexU[3] == 0 && g_bTimeCount == true)
 	{//制限時間が０になったとき
 		g_bTimeCount = false;
+		for (int nCntPlayer = 0; nCntPlayer < 4; nCntPlayer++)
+		{
+			GetGamepad_Vibrtion_false(nCntPlayer);
+		}
 	}
 }
 
