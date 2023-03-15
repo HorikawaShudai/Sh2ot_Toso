@@ -16,9 +16,6 @@
     <Filter Include="ソース ファイル\mode">
       <UniqueIdentifier>{4d60d284-5655-4cd3-8f2d-05ea552dee6f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\mode">
-      <UniqueIdentifier>{ac1009ab-1183-40da-9cda-a195ba39ff69}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\main">
       <UniqueIdentifier>{e032ad04-9813-4472-baa8-e07c24316e9e}</UniqueIdentifier>
     </Filter>
@@ -54,6 +51,9 @@
     </Filter>
     <Filter Include="ソース ファイル\UI">
       <UniqueIdentifier>{5b91d6a8-9331-4dab-878d-94f219db7582}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\system\mode">
+      <UniqueIdentifier>{ac1009ab-1183-40da-9cda-a195ba39ff69}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -246,13 +246,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
-      <Filter>ヘッダー ファイル\mode</Filter>
+      <Filter>ヘッダー ファイル\system\mode</Filter>
     </ClInclude>
     <ClInclude Include="result.h">
-      <Filter>ヘッダー ファイル\mode</Filter>
+      <Filter>ヘッダー ファイル\system\mode</Filter>
     </ClInclude>
     <ClInclude Include="title.h">
-      <Filter>ヘッダー ファイル\mode</Filter>
+      <Filter>ヘッダー ファイル\system\mode</Filter>
     </ClInclude>
     <ClInclude Include="enemy.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -264,22 +264,22 @@
       <Filter>ヘッダー ファイル\main</Filter>
     </ClInclude>
     <ClInclude Include="PlayNumberSelect.h">
-      <Filter>ヘッダー ファイル\mode</Filter>
+      <Filter>ヘッダー ファイル\system\mode</Filter>
     </ClInclude>
     <ClInclude Include="EscapeClearResult.h">
-      <Filter>ヘッダー ファイル\mode</Filter>
+      <Filter>ヘッダー ファイル\system\mode</Filter>
     </ClInclude>
     <ClInclude Include="EscapeOverResult.h">
-      <Filter>ヘッダー ファイル\mode</Filter>
+      <Filter>ヘッダー ファイル\system\mode</Filter>
     </ClInclude>
     <ClInclude Include="VillainResult.h">
-      <Filter>ヘッダー ファイル\mode</Filter>
+      <Filter>ヘッダー ファイル\system\mode</Filter>
     </ClInclude>
     <ClInclude Include="EscapeRanking.h">
-      <Filter>ヘッダー ファイル\mode</Filter>
+      <Filter>ヘッダー ファイル\system\mode</Filter>
     </ClInclude>
     <ClInclude Include="VillainRanking.h">
-      <Filter>ヘッダー ファイル\mode</Filter>
+      <Filter>ヘッダー ファイル\system\mode</Filter>
     </ClInclude>
     <ClInclude Include="meshcylinder.h">
       <Filter>ヘッダー ファイル\Map\mesh</Filter>
@@ -384,7 +384,7 @@
       <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
     <ClInclude Include="EscapeTutorial.h">
-      <Filter>ヘッダー ファイル\mode</Filter>
+      <Filter>ヘッダー ファイル\system\mode</Filter>
     </ClInclude>
     <ClInclude Include="paperBG00.h">
       <Filter>ヘッダー ファイル\UI</Filter>
@@ -393,7 +393,7 @@
       <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
     <ClInclude Include="VillainTutorial.h">
-      <Filter>ヘッダー ファイル\mode</Filter>
+      <Filter>ヘッダー ファイル\system\mode</Filter>
     </ClInclude>
     <ClInclude Include="ChasePolygon.h">
       <Filter>ヘッダー ファイル\decoration</Filter>
@@ -429,7 +429,7 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameLoad.h">
-      <Filter>ヘッダー ファイル\mode</Filter>
+      <Filter>ヘッダー ファイル\system\mode</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

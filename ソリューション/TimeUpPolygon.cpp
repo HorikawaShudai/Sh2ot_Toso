@@ -197,11 +197,13 @@ void UninitTimeUpPolygon(void)
 //====================================================================
 void UpdateTimeUpPolygon(void)
 {
+	MODE mode = GetMode();
+
 	if (g_TimeUpNumber != -1)
 	{
 		//タイムの段階変更処理
 		g_TimeUpCount--;
-		if (g_TimeUpCount <= 0)
+		if (g_TimeUpCount <= 0 && mode == MODE_GAME)
 		{
 			switch (g_TimeUpNumber)
 			{
@@ -330,8 +332,12 @@ void DrawTimeUpPolygon(void)
 //====================================================================
 void SetTimeUpPolygon(void)
 {
+	MODE mode = GetMode();
 	g_TimeUpNumber = 0;
 	bUseTimeUpPolygon[0] = true;
 
-	PlaySound(SOUND_LABEL_SE_SMALL_NOIZE);
+	if (mode == MODE_GAME)
+	{
+		PlaySound(SOUND_LABEL_SE_SMALL_NOIZE);
+	}
 }

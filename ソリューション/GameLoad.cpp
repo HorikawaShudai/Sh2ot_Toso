@@ -13,7 +13,7 @@
 #define WIDTH_TEX	(200.0f)	//テクスチャの高さ
 #define TEX_POS_X	(640.0f)	//中心座標(X)
 #define TEX_POS_Y	(360.0f)	//中心座標(Y)
-#define FADE_COUNT	(300)		//自動遷移のカウント
+#define FADE_COUNT	(120)		//自動遷移のカウント
 
 //グローバル変数宣言
 LPDIRECT3DTEXTURE9 g_pTextureGameLoad = NULL;
@@ -129,6 +129,7 @@ void UpdateGameLoad(void)
 	else if (bCount == true)
 	{
 		g_FCount++;
+
 		//カウントが一定数、または特定ボタンで遷移
 		if (g_FCount == FADE_COUNT || GetGamepadTrigger(BUTTON_START,0) || GetGamepadTrigger(BUTTON_A, 0) || GetKeyboardTrigger(DIK_RETURN) && bFade == FADE_NONE)
 		{

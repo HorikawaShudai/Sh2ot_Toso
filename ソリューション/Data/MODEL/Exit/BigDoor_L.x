@@ -931,7 +931,7 @@ Mesh {
    0.550000;0.550000;0.550000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\Student\\Pictures\\ゲーム用素材\\テクスチャ\\metal02.jpg";
+    "Data\\TEXTURE\\metal02.jpg";
    }
   }
   Material {
