@@ -14,13 +14,13 @@
 //チェックボックスの位置
 //一・二プレイ
 #define CHECKUIPOS_X_0		(990.0f)		//チェックボックスのUIのX位置(1人目)
-#define CHECKUIPOS_Y_0		(680.0f)		//チェックボックスのUIのY位置(1人目)
+#define CHECKUIPOS_Y_0		(670.0f)		//チェックボックスのUIのY位置(1人目)
 
 #define CHECKUIPOS_X_1		(550.0f)		//チェックボックスのUIのX位置(1人目)
-#define CHECKUIPOS_Y_1		(680.0f)		//チェックボックスのUIのY位置(1人目)
+#define CHECKUIPOS_Y_1		(670.0f)		//チェックボックスのUIのY位置(1人目)
 
-#define CHECKUIPOS_X_2		(1140.0f)		//チェックボックスのUIのX位置(2人目)
-#define CHECKUIPOS_Y_2		(680.0f)		//チェックボックスのUIのY位置(2人目)
+#define CHECKUIPOS_X_2		(1190.0f)		//チェックボックスのUIのX位置(2人目)
+#define CHECKUIPOS_Y_2		(670.0f)		//チェックボックスのUIのY位置(2人目)
 
 //三・四人プレイ
 #define CHECKUIPOS_X_1_34	(550.0f)		//チェックボックスのUIのX位置(1人目)
