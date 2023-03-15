@@ -8,15 +8,33 @@
 #include "Fade.h"
 #include "Input.h"
 
-#define NUM_BACK	(2)			//使う枚数
-#define HEIGHT_TEX	(200.0f)	//テクスチャの幅
-#define WIDTH_TEX	(200.0f)	//テクスチャの高さ
-#define TEX_POS_X	(640.0f)	//中心座標(X)
-#define TEX_POS_Y	(360.0f)	//中心座標(Y)
-#define FADE_COUNT	(120)		//自動遷移のカウント
+//マクロ定義
+#define MAX_TEX		(6)				//テクスチャの最大数
+#define NUM_BACK	(7)				//使う枚数
+#define HEIGHT_TEX	(200.0f)		//テクスチャの幅
+#define WIDTH_TEX	(200.0f)		//テクスチャの高さ
+#define TEX_POS_X	(640.0f)		//中心座標(X)
+#define TEX_POS_Y	(360.0f)		//中心座標(Y)
+#define FADE_COUNT	(120)			//自動遷移のカウント
+
+#define EACHICON_POSX	(120.0f)		//横の位置
+#define EACHICON_POSY	(600.0f)		//縦の位置
+#define EACHICON_SPACE	(260.0f)		//アイコン同士の距離
+#define EACHICON_SIZE	(100.0f)		//個人アイコンのサイズ
+
+//テクスチャファイル名
+const char *c_paIconTexname[] =
+{
+	"Data\\TEXTURE\\Sh2ot_Logo.png",			//チームロゴ
+	"Data\\TEXTURE\\ICON\\Sakamoto_Icon.png",	//坂本のアイコン
+	"Data\\TEXTURE\\ICON\\Logo_Hosyu.jpg",		//堀川のアイコン
+	"Data\\TEXTURE\\ICON\\yuki_icon.png",		//早川のアイコン
+	"Data\\TEXTURE\\ICON\\Oga_Icon.png",		//小笠原のアイコン
+	"Data\\TEXTURE\\ICON\\logo.png",			//丹野のアイコン
+};
 
 //グローバル変数宣言
-LPDIRECT3DTEXTURE9 g_pTextureGameLoad = NULL;
+LPDIRECT3DTEXTURE9 g_pTextureGameLoad[NUM_BACK] = {};
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffGameLoad = NULL;
 bool bCount;										//自動遷移開始
 int g_FCount;										//カウント用変数
@@ -35,8 +53,12 @@ void InitGameLoad(void)
 	//デバイスのポインタ
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	D3DXCreateTextureFromFile(pDevice, "Data\\TEXTURE\\Sh2ot_Logo.png", &g_pTextureGameLoad);
+	for (int nCntTex = 0; nCntTex < MAX_TEX; nCntTex++)
+	{//テクスチャの読み込み
+		D3DXCreateTextureFromFile(pDevice, c_paIconTexname[nCntTex], &g_pTextureGameLoad[nCntTex]);
+	}
 
+	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * NUM_BACK,
 		D3DUSAGE_WRITEONLY,
 		FVF_VERTEX_2D,
@@ -57,6 +79,7 @@ void InitGameLoad(void)
 		switch (nCnt)
 		{
 		case 0:
+
 			//頂点座標の設定
 			pVtx[0].pos = D3DXVECTOR3(g_Texpos.x - TEX_POS_X, g_Texpos.y - TEX_POS_Y, 0.0f);
 			pVtx[1].pos = D3DXVECTOR3(g_Texpos.x + TEX_POS_X, g_Texpos.y - TEX_POS_Y, 0.0f);
@@ -70,6 +93,8 @@ void InitGameLoad(void)
 			break;
 		case 1:
 
+			g_Texpos = D3DXVECTOR3(TEX_POS_X, 200.0f, 0.0f);
+
 			//頂点座標の設定
 			pVtx[0].pos = D3DXVECTOR3(g_Texpos.x - HEIGHT_TEX, g_Texpos.y - WIDTH_TEX, 0.0f);
 			pVtx[1].pos = D3DXVECTOR3(g_Texpos.x + HEIGHT_TEX, g_Texpos.y - WIDTH_TEX, 0.0f);
@@ -81,6 +106,22 @@ void InitGameLoad(void)
 			pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 			pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 			break;
+
+		default:
+
+			g_Texpos = D3DXVECTOR3(EACHICON_POSX + (EACHICON_SPACE * (nCnt - 2)), EACHICON_POSY, 0.0f);
+
+			//頂点座標の設定
+			pVtx[0].pos = D3DXVECTOR3(g_Texpos.x - EACHICON_SIZE, g_Texpos.y - EACHICON_SIZE, 0.0f);
+			pVtx[1].pos = D3DXVECTOR3(g_Texpos.x + EACHICON_SIZE, g_Texpos.y - EACHICON_SIZE, 0.0f);
+			pVtx[2].pos = D3DXVECTOR3(g_Texpos.x - EACHICON_SIZE, g_Texpos.y + EACHICON_SIZE, 0.0f);
+			pVtx[3].pos = D3DXVECTOR3(g_Texpos.x + EACHICON_SIZE, g_Texpos.y + EACHICON_SIZE, 0.0f);
+			//頂点カラーの設定
+			pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+			pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+			pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+			pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+				break;
 		}
 		//rhwの設定
 		pVtx[0].rhw = 1.0f;
@@ -99,10 +140,13 @@ void InitGameLoad(void)
 //============================================
 void UninitGameLoad(void)
 {
-	if (g_pTextureGameLoad != NULL)
+	for (int nCntTex = 0; nCntTex < MAX_TEX; nCntTex++)
 	{
-		g_pTextureGameLoad->Release();
-		g_pTextureGameLoad = NULL;
+		if (g_pTextureGameLoad[nCntTex] != NULL)
+		{
+			g_pTextureGameLoad[nCntTex]->Release();
+			g_pTextureGameLoad[nCntTex] = NULL;
+		}
 	}
 	if (g_pVtxBuffGameLoad != NULL)
 	{
@@ -155,15 +199,15 @@ void DrawGameLoad(void)
 	for (int nCnt = 0; nCnt < NUM_BACK; nCnt++)
 	{
 		//テクスチャの設定
-		switch (nCnt)
+		if (nCnt == 0)
 		{
-		case 0:
 			pDevice->SetTexture(0, NULL);
-			break;
-		case 1:
-			pDevice->SetTexture(0, g_pTextureGameLoad);
-			break;
 		}
+		else
+		{
+			pDevice->SetTexture(0, g_pTextureGameLoad[nCnt - 1]);
+		}
+
 		//ポリゴンの描画
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 4* nCnt, 2);
 	}
