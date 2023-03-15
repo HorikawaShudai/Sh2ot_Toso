@@ -128,8 +128,6 @@ void InitEscapeTutorial()
 
 	InitPolygonBG();
 
-	InitTime();
-
 	InitPaperBG00();
 	InitPaperBG01();
 
@@ -212,8 +210,6 @@ void UninitEscapeTutorial()
 	UninitActionHelpUI();
 
 	UninitChasePolygon();
-
-	UninitTime();
 
 	UninitPaperBG00();
 	UninitPaperBG01();
@@ -445,8 +441,6 @@ void UpdateEscapeTutorial()
 
 	UpdateChasePolygon();
 
-	UpdateTime();
-
 	UpdatePaperBG00();
 	UpdatePaperBG01();
 
@@ -552,8 +546,6 @@ void DrawEscapeTutorial()
 
 		//スタミナの描画処理
 		DrawStamina();
-
-		DrawTime();
 
 		////スコアの描画処理
 		//DrawScore();
