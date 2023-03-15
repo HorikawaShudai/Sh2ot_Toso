@@ -773,11 +773,11 @@ void UpdatePlayer1(void)
 				g_GameEnd = true;
 				SetGameState(GAMESTATE_CLEAR_END, 60);
 				//SetFalseCount(false);
-				SetRankTime();
 
 				if (g_ExitCount == PlayNumber.CurrentSelectNumber)
 				{//全員脱出出来た場合
 					SetClear(1);
+					SetRankTime();
 				}
 				else if (g_ExitCount != 1)
 				{//全員ではないが脱出出来た場合

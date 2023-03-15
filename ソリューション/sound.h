@@ -31,6 +31,7 @@ typedef enum
 	SOUND_LABEL_SE_SMALL_NOIZE,			//小さめのノイズの音
 	SOUND_LABEL_SE_BIG_NOIZE,			//大き目のノイズの音
 	SOUND_LABEL_BGM_CLEAR,				//クリア画面のBGM
+	SOUND_LABEL_BGM_HEARTBEAT,			//心音
 	SOUND_LABEL_MAX,
 } SOUND_LABEL;
 
