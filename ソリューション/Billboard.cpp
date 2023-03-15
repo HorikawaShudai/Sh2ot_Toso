@@ -8,7 +8,7 @@
 #include "Input.h"
 
 //ƒ}ƒNƒ’è‹`
-#define MAX_RAIN	(2000)	//‰J‚ÌÅ‘å”
+#define MAX_RAIN	(400)	//‰J‚ÌÅ‘å”
 #define RAIN_HEIGHT	(10.0f)	//‰J‚Ì‚‚³
 #define RAIN_WIDTH	(0.2f)	//‰J‚Ì•
 
@@ -256,6 +256,15 @@ void UpdateRain(void)
 {
 	if (g_bRain == true)
 	{
+		SetRain();
+		SetRain();
+		SetRain();
+		SetRain();
+		SetRain();
+		SetRain();
+		SetRain();
+		SetRain();
+		SetRain();
 		SetRain();
 
 		for (int nRain = 0; nRain < MAX_RAIN; nRain++)
