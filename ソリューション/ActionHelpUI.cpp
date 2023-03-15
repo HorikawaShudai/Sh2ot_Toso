@@ -1,6 +1,7 @@
 #include "main.h"
 #include "ActionHelpUI.h"
 #include "player.h"
+#include "camera.h"
 #include "sound.h"
 
 //マクロ定義
@@ -153,7 +154,9 @@ void DrawActionHelpUI(int nCntPlayer,bool GetKey)
 {
 	//プレイヤー情報の取得
 	Player *pPlayer = GetPlayer();
+	Camera *pCamera = GetCamera();
 	pPlayer += nCntPlayer;
+	pCamera += nCntPlayer;
 
 	int nCntUI;
 

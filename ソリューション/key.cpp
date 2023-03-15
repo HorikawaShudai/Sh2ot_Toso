@@ -244,7 +244,7 @@ void SetKey(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, int nType)
 			g_Key[nCntKey].move = move;
 			g_Key[nCntKey].rot = rot;
 			g_Key[nCntKey].nType = nType;
-			g_Key[nCntKey].IndexUI = SetActionHelpUI(D3DXVECTOR3(g_Key[nCntKey].pos.x, 43.0f, g_Key[nCntKey].pos.z), 4.0f, ACTIONHELPUI_KEY);
+			g_Key[nCntKey].IndexUI = SetActionHelpUI(D3DXVECTOR3(g_Key[nCntKey].pos.x, 30.0f, g_Key[nCntKey].pos.z), 4.0f, ACTIONHELPUI_KEY);
 			g_Key[nCntKey].bUse = true;
 
 			int nNumVtx;		//í∏ì_êî
