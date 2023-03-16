@@ -302,7 +302,7 @@ void UpdateGame()
 	{//ƒ|[ƒYˆ—
 		for (int nCnt = 0; nCnt < PlayNumber.CurrentSelectNumber; nCnt++, pPlayer++)
 		{
-			if (pPlayer->State == PLAYER_NORMAL)
+			if (pPlayer->State != PLAYER_DEATH)
 			{
 				pPause->bUse = pPause->bUse ? false : true;
 			}
