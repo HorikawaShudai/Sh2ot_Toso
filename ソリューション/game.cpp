@@ -273,7 +273,7 @@ void UpdateGame()
 {
 	//ポーズ情報の取得
 	Pause *pPause = GetPause();
-
+	Player *pPlayer = GetPlayer();
 	PlayNumberSelect PlayNumber = GetPlayNumberSelect();
 
 #ifdef _DEBUG
@@ -300,9 +300,15 @@ void UpdateGame()
 
 	if (GetKeyboardTrigger(DIK_P) == true || GetGamepadTrigger(BUTTON_START, 0) == true)
 	{//ポーズ処理
-		pPause->bUse = pPause->bUse ? false : true;
+		for (int nCnt = 0; nCnt < PlayNumber.CurrentSelectNumber; nCnt++, pPlayer++)
+		{
+			if (pPlayer->State == PLAYER_NORMAL)
+			{
+				pPause->bUse = pPause->bUse ? false : true;
+			}
+		}
 	}
-	else if (GetKeyboardTrigger(DIK_P) == true || GetGamepadTrigger(BUTTON_START, 0) == true && pPause->bUse == false)
+	if (GetKeyboardTrigger(DIK_P) == true || GetGamepadTrigger(BUTTON_START, 0) == true && pPause->bUse == false)
 	{
 		//ポーズを閉じた時選択を最初に戻す
 		InitPause();
@@ -312,7 +318,7 @@ void UpdateGame()
 	{//ポーズが使われているとき
 		//ポーズの更新処理
 		UpdatePause();
-
+			
 		for (int nCntPlayer = 0; nCntPlayer < PlayNumber.CurrentSelectNumber; nCntPlayer++)
 		{//ポーズ中バイブを止める処理
 			GetGamepad_Vibrtion_false(nCntPlayer);
