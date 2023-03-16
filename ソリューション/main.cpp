@@ -81,8 +81,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePlev, LPSTR lpCmdline
 	HWND hWnd; //ウィンドウハンドル
 	MSG msg;
 
-
-
 	AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
 
 	//ウィンドウクラスの登録
@@ -114,7 +112,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePlev, LPSTR lpCmdline
 	srand(dwExecLastTime);
 
 	//初期化設定
-	if (FAILED(Init(hInstance, hWnd, TRUE)))
+	if (FAILED(Init(hInstance, hWnd, FALSE)))
 	{
 		return -1;
 	};
