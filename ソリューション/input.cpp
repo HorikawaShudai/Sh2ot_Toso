@@ -624,7 +624,7 @@ void GetGamepad_Vibrtion(int nPlayer, int nLeftPower, int RightPoewr)
 }
 
 //====================================================================
-//ゲームパッドの左のバイブレーションの処理
+//ゲームパッドのバイブレーション処理
 //====================================================================
 void GetGamepad_Vibrtion_false(int nPlayer)
 {
