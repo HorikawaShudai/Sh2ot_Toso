@@ -16,8 +16,8 @@
 
 #define POS_SCORE_BG_X			(875.0f)	//「」のX座標の位置
 #define POS_SCORE_BG_Y			(495.0f)	//「」のY座標の位置
-#define SIZE_SCORE_BG_X			(340.0f)		//「」の幅
-#define SIZE_SCORE_BG_Y			(400.0f)		//「」の高さ
+#define SIZE_SCORE_BG_X			(340.0f)	//「」の幅
+#define SIZE_SCORE_BG_Y			(400.0f)	//「」の高さ
 
 #define POS_PERFECT_BG_X		(680.0f)	//「」のX座標の位置
 #define POS_PERFECT_BG_Y		(430.0f)	//「」のY座標の位置
