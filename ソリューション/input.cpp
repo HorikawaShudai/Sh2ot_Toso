@@ -248,11 +248,11 @@ HRESULT InitGamepad(HWND hWnd)
 		memset(&g_JoyKeyStateTrigger[nCount], 0, sizeof(XINPUT_STATE));
 		memset(&g_JoyKeyStateRelease[nCount], 0, sizeof(XINPUT_STATE));
 
-		g_aJoyPad[MAX_PLAYER].LStickInput = LSTICK_UP;
-		g_aJoyPad[MAX_PLAYER].OutputDOK = false;
-		g_aJoyPad[MAX_PLAYER].OutputUOK = false;
-		g_aJoyPad[MAX_PLAYER].OutputLOK = false;
-		g_aJoyPad[MAX_PLAYER].OutputROK = false;
+		g_aJoyPad[nCount].LStickInput = LSTICK_UP;
+		g_aJoyPad[nCount].OutputDOK = false;
+		g_aJoyPad[nCount].OutputUOK = false;
+		g_aJoyPad[nCount].OutputLOK = false;
+		g_aJoyPad[nCount].OutputROK = false;
 	}
 	return S_OK;
 }
